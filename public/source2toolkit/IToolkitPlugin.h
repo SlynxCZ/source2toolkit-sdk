@@ -35,14 +35,28 @@ enum
 };
 
 /* =========================
+   Export system (CreateInterface)
+   ========================= */
+
+#define TOOLKIT_INTERFACE_NAME "S2ToolkitPlugin001"
+#define TOOLKIT_PLAPI_VERSION 1
+#define TOOLKIT_PLAPI_NAME "IToolkitPlugin"
+
+/* =========================
    Plugin Interface
    ========================= */
 
 class IToolkitPlugin
 {
 public:
+    virtual int GetApiVersion()
+    {
+        return TOOLKIT_PLAPI_VERSION;
+    }
+
     virtual ~IToolkitPlugin() = default;
 
+public:
     virtual bool Load(PluginId id, IToolkitAPI* api, char* error, size_t maxlen, bool late) = 0;
 
     virtual bool Unload(char* error, size_t maxlen)
@@ -95,16 +109,10 @@ public:
 };
 
 /* =========================
-   Export system (CreateInterface)
-   ========================= */
-
-#define TOOLKIT_INTERFACE_NAME "S2ToolkitPlugin001"
-
-/* =========================
    Plugin exposure
    ========================= */
 
-#define PL_EXPOSURE_FUNC(name, var)	EXPOSE_SINGLE_INTERFACE_GLOBALVAR(ISmmPlugin, ISmmPlugin, METAMOD_PLAPI_NAME, var);
+#define PL_EXPOSURE_FUNC(name, var)	EXPOSE_SINGLE_INTERFACE_GLOBALVAR(IToolkitPlugin, IToolkitPlugin, TOOLKIT_PLAPI_NAME, var);
 
 /* =========================
    Globals
