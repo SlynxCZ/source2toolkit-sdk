@@ -177,7 +177,7 @@ public:
 	}
 
  /**
-  * @brief Same as GET_V_IFACE, except searches for any.
+  * @brief Same as GET_IFACE, except searches for any.
   *
   * @param v_factory	Factory method to use from IToolkitApi (such as engineFactory).
   * @param v_var		Variable name to store into.
@@ -194,5 +194,19 @@ public:
 		} \
 		return false; \
 	}
+
+/**
+ * @brief Get interface from Source2Toolkit (plugin system).
+ */
+#define GET_IFACE_TOOLKIT(v_var, v_type, v_name) \
+    v_var = (v_type*)g_ToolkitAPI->ToolkitFactory(v_name, nullptr, nullptr); \
+    if (!v_var) \
+    { \
+        if (error && maxlen) \
+        { \
+            g_ToolkitAPI->Format(error, maxlen, "Could not find toolkit interface: %s", v_name); \
+        } \
+        return false; \
+    }
 
 #endif //_INCLUDE_ITOOLKIT_PLUGIN_H
