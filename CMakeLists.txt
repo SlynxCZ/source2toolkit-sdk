@@ -13,6 +13,7 @@ if (LINUX)
     if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
         add_compile_definitions(_GLIBCXX_USE_CXX11_ABI=0)
     endif ()
+    set(CMAKE_STATIC_LIBRARY_PREFIX "")
 endif ()
 
 # =========================
