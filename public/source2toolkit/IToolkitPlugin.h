@@ -98,30 +98,13 @@ public:
    Export system (CreateInterface)
    ========================= */
 
-#define PL_EXPOSURE CreateInterface
-#define PL_EXPOSURE_C "CreateInterface"
-
-#if defined(_WIN32)
-    #define TOOLKIT_API extern "C" __declspec(dllexport)
-#else
-    #define TOOLKIT_API extern "C" __attribute__((visibility("default")))
-#endif
-
 #define TOOLKIT_INTERFACE_NAME "S2ToolkitPlugin001"
 
 /* =========================
    Plugin exposure
    ========================= */
 
-#define PL_EXPOSURE_FUNC(name, var) \
-    TOOLKIT_API void* PL_EXPOSURE(const char* nameStr, int* code) { \
-        if (nameStr && std::strcmp(nameStr, TOOLKIT_INTERFACE_NAME) == 0) { \
-            if (code) *code = TOOLKIT_IFACE_OK; \
-            return static_cast<void*>(&var); \
-        } \
-        if (code) *code = TOOLKIT_IFACE_FAILED; \
-        return nullptr; \
-    }
+#define PL_EXPOSURE_FUNC(name, var)	EXPOSE_SINGLE_INTERFACE_GLOBALVAR(ISmmPlugin, ISmmPlugin, METAMOD_PLAPI_NAME, var);
 
 /* =========================
    Globals
