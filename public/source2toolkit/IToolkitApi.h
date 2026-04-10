@@ -60,7 +60,7 @@ public:
     virtual void* ToolkitFactory(const char *iface, int *ret, PluginId *id) = 0;
     virtual void* MetaFactory(const char *iface, int *ret, PluginId *id) = 0;
 
-    virtual const char* GetBaseDir() =0;
+    virtual const char* GetBaseDir() = 0;
 
     virtual size_t Format(char *buffer, size_t maxlength, const char *format, ...) = 0;
     virtual size_t FormatArgs(char *buffer, size_t maxlength, const char *format, va_list ap) = 0;
