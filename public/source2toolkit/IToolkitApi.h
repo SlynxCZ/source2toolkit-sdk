@@ -7,6 +7,7 @@
 #define _INCLUDE_ITOOLKIT_API_H
 
 #pragma once
+#include "eiface.h"
 
 #include <cstddef>
 #include <cstdint>

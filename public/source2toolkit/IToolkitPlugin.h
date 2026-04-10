@@ -7,6 +7,7 @@
 #define _INCLUDE_ITOOLKIT_PLUGIN_H
 
 #pragma once
+#include "interfaces/interfaces.h"
 
 #include <cstddef>
 #include <cstring>
