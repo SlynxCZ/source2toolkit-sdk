@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.18)
 project(source2toolkit-sdk CXX)
 
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # =========================
 # HL2SDK
@@ -17,20 +18,103 @@ set(CSGO_PROTO_DIR ${CMAKE_CURRENT_SOURCE_DIR}/vendor/Protobufs/csgo)
 
 if (UNIX AND NOT APPLE)
     set(LINUX TRUE)
-endif ()
+endif()
 
 if (WIN32 AND NOT MSVC)
-    message(FATAL "MSVC restricted.")
-endif ()
+    message(FATAL_ERROR "MSVC restricted.")
+endif()
 
 # =========================
-# PROTOBUF GENERATION
+# PROTOBUF
 # =========================
 
 include(protobuf.cmake)
 
 # =========================
-# SDK STATIC LIB
+# GLOBAL CONFIG
+# =========================
+
+add_library(source2toolkit-config INTERFACE)
+
+target_compile_definitions(source2toolkit-config INTERFACE
+        META_IS_SOURCE2
+        _ITERATOR_DEBUG_LEVEL=0
+
+        $<$<PLATFORM_ID:Linux>:
+        _LINUX POSIX LINUX GNUC COMPILER_GCC PLATFORM_64BITS
+        _FILE_OFFSET_BITS=64
+        _GLIBCXX_USE_CXX11_ABI=0
+
+        stricmp=strcasecmp
+        _stricmp=strcasecmp
+        strnicmp=strncasecmp
+        _strnicmp=strncasecmp
+        _snprintf=snprintf
+        _vsnprintf=vsnprintf
+        _alloca=alloca
+        strcmpi=strcasecmp
+        >
+
+        $<$<PLATFORM_ID:Windows>:
+        COMPILER_MSVC COMPILER_MSVC64
+        _WIN32 _WINDOWS
+        _ALLOW_KEYWORD_MACROS
+        __STDC_LIMIT_MACROS
+
+        _CRT_SECURE_NO_WARNINGS=1
+        _CRT_SECURE_NO_DEPRECATE=1
+        _CRT_NONSTDC_NO_DEPRECATE=1
+        >
+)
+
+target_compile_options(source2toolkit-config INTERFACE
+        $<$<PLATFORM_ID:Linux>:
+        -fPIC
+        -fno-strict-aliasing
+        -fno-threadsafe-statics
+
+        -Wall
+        -Wno-uninitialized
+        -Wno-switch
+        -Wno-unused
+        -Wno-non-virtual-dtor
+        -Wno-overloaded-virtual
+        -Wno-conversion-null
+        -Wno-write-strings
+        -Wno-invalid-offsetof
+        -Wno-reorder
+        -Wno-error=stringop-overflow
+
+        -mfpmath=sse
+        -msse
+        -fvisibility=default
+        >
+
+        $<$<PLATFORM_ID:Windows>:
+        /wd4819
+        /wd4828
+        /wd5033
+        /wd4005
+        /permissive-
+        /utf-8
+        /MP
+        >
+)
+
+target_link_options(source2toolkit-config INTERFACE
+        $<$<PLATFORM_ID:Linux>:
+        -Wl,--exclude-libs=libprotobuf.a
+        >
+
+        $<$<PLATFORM_ID:Windows>:
+        $<$<CONFIG:RELEASE>:/OPT:REF>
+        $<$<CONFIG:RELEASE>:/OPT:ICF>
+        $<$<CONFIG:DEBUG>:/NODEFAULTLIB:libcmt>
+        >
+)
+
+# =========================
+# SDK LIB
 # =========================
 
 file(GLOB_RECURSE SOURCE_FILES
@@ -51,6 +135,10 @@ list(APPEND SOURCE_FILES
 
 add_library(source2toolkit-sdk STATIC ${SOURCE_FILES})
 
+target_link_libraries(source2toolkit-sdk PUBLIC
+        source2toolkit-config
+)
+
 target_include_directories(source2toolkit-sdk PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/public
 
@@ -70,62 +158,10 @@ target_include_directories(source2toolkit-sdk PUBLIC
 )
 
 # =========================
-# DEFINES
-# =========================
-
-target_compile_definitions(source2toolkit-sdk PUBLIC
-        META_IS_SOURCE2
-        _ITERATOR_DEBUG_LEVEL=0
-)
-
-# =========================
-# PLATFORM FLAGS + LINK
+# LINK SDK DEPENDENCIES
 # =========================
 
 if (LINUX)
-    target_compile_definitions(source2toolkit-sdk PUBLIC
-            _LINUX POSIX LINUX GNUC COMPILER_GCC PLATFORM_64BITS
-            _FILE_OFFSET_BITS=64
-            _GLIBCXX_USE_CXX11_ABI=0
-
-            stricmp=strcasecmp
-            _stricmp=strcasecmp
-            strnicmp=strncasecmp
-            _strnicmp=strncasecmp
-            _snprintf=snprintf
-            _vsnprintf=vsnprintf
-            _alloca=alloca
-            strcmpi=strcasecmp
-    )
-
-    target_compile_options(source2toolkit-sdk PUBLIC
-            -fPIC
-            -fno-strict-aliasing
-            -fno-threadsafe-statics
-
-            -Wall
-            -Wno-uninitialized
-            -Wno-switch
-            -Wno-unused
-            -Wno-non-virtual-dtor
-            -Wno-overloaded-virtual
-            -Wno-conversion-null
-            -Wno-write-strings
-            -Wno-invalid-offsetof
-            -Wno-reorder
-            -Wno-error=stringop-overflow
-
-            -mfpmath=sse
-            -msse
-            -fvisibility=default
-    )
-
-    target_link_options(source2toolkit-sdk PUBLIC
-            -static-libgcc
-            -static-libstdc++
-            -Wl,--exclude-libs=libprotobuf.a
-    )
-
     target_link_libraries(source2toolkit-sdk PUBLIC
             ${SOURCESDK_LIB}/linux64/libtier0.so
             ${SOURCESDK_LIB}/linux64/tier1.a
@@ -137,33 +173,6 @@ if (LINUX)
 endif()
 
 if (WIN32)
-    target_compile_definitions(source2toolkit-sdk PUBLIC
-            COMPILER_MSVC COMPILER_MSVC64
-            _WIN32 _WINDOWS
-            _ALLOW_KEYWORD_MACROS
-            __STDC_LIMIT_MACROS
-
-            _CRT_SECURE_NO_WARNINGS=1
-            _CRT_SECURE_NO_DEPRECATE=1
-            _CRT_NONSTDC_NO_DEPRECATE=1
-    )
-
-    target_compile_options(source2toolkit-sdk PUBLIC
-            /wd4819
-            /wd4828
-            /wd5033
-            /wd4005
-            /permissive-
-            /utf-8
-            /MP
-    )
-
-    target_link_options(source2toolkit-sdk PUBLIC
-            $<$<CONFIG:RELEASE>:/OPT:REF>
-            $<$<CONFIG:RELEASE>:/OPT:ICF>
-            $<$<CONFIG:DEBUG>:/NODEFAULTLIB:libcmt>
-    )
-
     target_link_libraries(source2toolkit-sdk PUBLIC
             ${SOURCESDK_LIB}/public/win64/tier0.lib
             ${SOURCESDK_LIB}/public/win64/tier1.lib
@@ -175,7 +184,7 @@ if (WIN32)
 endif()
 
 # =========================
-# HELPER FUNCTION
+# HELPER
 # =========================
 
 function(add_s2toolkit_plugin name)
