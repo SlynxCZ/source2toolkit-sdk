@@ -19,7 +19,7 @@
 
 #pragma once
 #ifdef SOURCE2TOOLKIT_CORE
-#include "log.h"
+#include "utils/log.h"
 #endif
 #include "platform.h"
 
