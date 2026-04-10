@@ -2,11 +2,6 @@ cmake_minimum_required(VERSION 3.18)
 project(source2toolkit-sdk CXX)
 
 option(SOURCE2TOOLKIT_CORE "Build core toolkit" OFF)
-if (SOURCE2TOOLKIT_CORE)
-    target_include_directories(source2toolkit-sdk PUBLIC
-            ${CMAKE_CURRENT_SOURCE_DIR}/../../src
-    )
-endif()
 
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 set(CMAKE_CXX_STANDARD 20)
@@ -156,6 +151,12 @@ list(APPEND SOURCE_FILES
 )
 
 add_library(source2toolkit-sdk STATIC ${SOURCE_FILES})
+
+if (SOURCE2TOOLKIT_CORE)
+    target_include_directories(source2toolkit-sdk PUBLIC
+            ${CMAKE_CURRENT_SOURCE_DIR}/../../src
+    )
+endif()
 
 target_link_libraries(source2toolkit-sdk PUBLIC
         source2toolkit-config
