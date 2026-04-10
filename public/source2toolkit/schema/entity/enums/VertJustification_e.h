@@ -1,0 +1,10 @@
+#pragma once
+#include <cstdint>
+
+enum class VertJustification_e : uint32_t
+{
+    VERT_JUSTIFICATION_TOP = 0,
+    VERT_JUSTIFICATION_CENTER = 1,
+    VERT_JUSTIFICATION_BOTTOM = 2,
+    VERT_JUSTIFICATION_NONE = 3,
+};

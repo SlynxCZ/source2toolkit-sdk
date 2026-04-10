@@ -219,7 +219,7 @@ internal static partial class Program
 
     public static void Main(string[] args)
     {
-        var outputPath = args.FirstOrDefault() ?? "../../../../../src/schema/entity";
+        var outputPath = args.FirstOrDefault() ?? "../../../../../public/source2toolkit/schema/entity";
 
         // Concat together all enums and classes
         var allEnums = new SortedDictionary<string, SchemaEnum>();
@@ -553,8 +553,9 @@ internal static partial class Program
         builder.AppendLine("#include \"utlsymbollarge.h\"");
         builder.AppendLine("#include \"utlstring.h\"");
         builder.AppendLine("#include \"utlstringtoken.h\"");
-        builder.AppendLine("#include \"schema/entityio.h\"");
-        builder.AppendLine("#include \"schema/schema.h\"");
+        builder.AppendLine("#include \"source2toolkit/IToolkitTypes.h\"");
+        builder.AppendLine("#include \"source2toolkit/schema/entityio.h\"");
+        builder.AppendLine("#include \"source2toolkit/schema/schema.h\"");
         builder.AppendLine("#include <cstdint>");
         builder.AppendLine();
 

@@ -1,0 +1,9 @@
+#pragma once
+#include <cstdint>
+
+enum class WorldTextPanelHorizontalAlign_t : uint32_t
+{
+    WORLDTEXT_HORIZONTAL_ALIGN_LEFT = 0,
+    WORLDTEXT_HORIZONTAL_ALIGN_CENTER = 1,
+    WORLDTEXT_HORIZONTAL_ALIGN_RIGHT = 2,
+};

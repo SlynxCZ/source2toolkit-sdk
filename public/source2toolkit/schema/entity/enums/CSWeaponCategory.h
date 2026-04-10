@@ -1,0 +1,13 @@
+#pragma once
+#include <cstdint>
+
+enum class CSWeaponCategory : uint32_t
+{
+    WEAPONCATEGORY_OTHER = 0,
+    WEAPONCATEGORY_MELEE = 1,
+    WEAPONCATEGORY_SECONDARY = 2,
+    WEAPONCATEGORY_SMG = 3,
+    WEAPONCATEGORY_RIFLE = 4,
+    WEAPONCATEGORY_HEAVY = 5,
+    WEAPONCATEGORY_COUNT = 6,
+};

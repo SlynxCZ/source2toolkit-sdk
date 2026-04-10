@@ -7,6 +7,8 @@
 #define _INCLUDE_ITOOLKIT_COMMANDS_H
 
 #pragma once
+#include "IToolkitTypes.h"
+
 #include "convar.h"
 #include "eiface.h"
 
@@ -19,8 +21,8 @@
    Forward declarations
    ========================= */
 
-using ChatHandler = std::function<void(const CCommandContext&, const CCommand&, uint8_t)>;
-using CommandHandler = std::function<uint8_t(const CCommandContext&, const CCommand&, uint8_t)>;
+using ChatHandler = std::function<void(const CCommandContext&, const CCommand&, Mode)>;
+using CommandHandler = std::function<Action(const CCommandContext&, const CCommand&, Mode)>;
 
 /* =========================
    Core Toolkit Commands
@@ -29,9 +31,11 @@ using CommandHandler = std::function<uint8_t(const CCommandContext&, const CComm
 class IToolkitCommands
 {
 public:
-   virtual void RegChatListener(const char* pchName, ChatHandler handler) = 0;
-   virtual void RegConCommand(const char* pchName, ChatHandler handler) = 0;
-   virtual void RegConListener(const char* pchName, CommandHandler handler, uint8_t mode) = 0;
+    virtual ~IToolkitCommands() = default;
+
+    virtual void RegChatListener(const char* pchName, ChatHandler handler) = 0;
+    virtual void RegConCommand(const char* pchName, ChatHandler handler) = 0;
+    virtual void RegConListener(const char* pchName, CommandHandler handler, Mode mode) = 0;
 };
 
 #endif //_INCLUDE_ITOOLKIT_COMMANDS_H

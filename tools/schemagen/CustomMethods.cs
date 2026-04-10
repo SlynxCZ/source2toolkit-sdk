@@ -13,7 +13,7 @@ public static class CustomMethods
             "template<typename T>\n    static T* New(const char* pszClassName)\n    {    \n        return reinterpret_cast<T*>(CreateEntityByName(pszClassName));\n    }",
 
             "/// <summary>Get entity by index.</summary>",
-            "template<typename T>\n    static T* FromIndex(int iIndex)\n    {    \n        return reinterpret_cast<T*>(shared::g_pEntitySystem->GetEntityInstance(CEntityIndex(iIndex)));\n    }",
+            "template<typename T>\n    static T* FromIndex(int iIndex)\n    {    \n        return reinterpret_cast<T*>(GetEntitySystem()->GetEntityInstance(CEntityIndex(iIndex)));\n    }",
 
             "/// <summary>Get entity by entity index.</summary>",
             "template<typename T>\n    static T* FromIndex(CEntityIndex index)\n    {    \n        return FromIndex<T>(index.Get());\n    }",
@@ -25,7 +25,7 @@ public static class CustomMethods
             "void AddEntityIOEvent(const char* pszInput, CEntityInstance* pActivator = nullptr, CEntityInstance* pCaller = nullptr, const char* pszValue = \"\", float flDelay = 0.0f);",
 
             "/// <summary>Add signle entity IO listener.</summary>",
-            "CEntityIOListenerHandle* AddSingleEntityIOListener(const char* pszOutput, std::function<KHook::Action(const char*,CEntityInstance*, CEntityInstance*, float, Mode)> callback, Mode mode);",
+            "CEntityIOListenerHandle* AddSingleEntityIOListener(const char* pszOutput, std::function<Action(const char*,CEntityInstance*, CEntityInstance*, float, Mode)> callback, Mode mode);",
 
             "/// <summary>Get absolute origin.</summary>",
             "Vector GetAbsOrigin();",

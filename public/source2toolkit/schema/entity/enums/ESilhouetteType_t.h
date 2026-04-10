@@ -1,0 +1,10 @@
+#pragma once
+#include <cstdint>
+
+enum class ESilhouetteType_t : uint32_t
+{
+    SILHOUETTE_NONE = 0,
+    SILHOUETTE_LIGHT = 1,
+    SILHOUETTE_ENVMAP = 2,
+    SILHOUETTE_LPV = 4,
+};

@@ -30,9 +30,11 @@ class Timer;
 class IToolkitScheduler
 {
 public:
-   virtual void NextFrame(std::function<void()> &&task) = 0;
-   virtual Timer* AddTimer(float interval, TimerCallback callback, int flags = 0);
-   virtual void KillTimer(Timer* timer) = 0;
+    virtual ~IToolkitScheduler() = default;
+
+    virtual void NextFrame(std::function<void()> &&task) = 0;
+    virtual Timer* AddTimer(float interval, TimerCallback callback, int flags = 0);
+    virtual void KillTimer(Timer* timer) = 0;
 };
 
 #endif //_INCLUDE_ITOOLKIT_SCHEDULER_H

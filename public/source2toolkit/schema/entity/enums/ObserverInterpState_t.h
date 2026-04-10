@@ -1,0 +1,10 @@
+#pragma once
+#include <cstdint>
+
+enum class ObserverInterpState_t : uint32_t
+{
+    OBSERVER_INTERP_NONE = 0,
+    OBSERVER_INTERP_STARTING = 1,
+    OBSERVER_INTERP_TRAVELING = 2,
+    OBSERVER_INTERP_SETTLING = 3,
+};

@@ -1,0 +1,10 @@
+#pragma once
+#include <cstdint>
+
+enum class CFuncMover::TransitionToPathNodeAction_t : uint32_t
+{
+    TRANSITION_TO_PATH_NODE_ACTION_NONE = 0,
+    TRANSITION_TO_PATH_NODE_ACTION_START_FORWARD = 1,
+    TRANSITION_TO_PATH_NODE_ACTION_START_REVERSE = 2,
+    TRANSITION_TO_PATH_NODE_TRANSITIONING = 3,
+};

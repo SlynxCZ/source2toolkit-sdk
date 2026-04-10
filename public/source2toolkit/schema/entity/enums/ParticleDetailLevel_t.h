@@ -1,0 +1,10 @@
+#pragma once
+#include <cstdint>
+
+enum class ParticleDetailLevel_t : uint32_t
+{
+    PARTICLEDETAIL_LOW = 0,
+    PARTICLEDETAIL_MEDIUM = 1,
+    PARTICLEDETAIL_HIGH = 2,
+    PARTICLEDETAIL_ULTRA = 3,
+};

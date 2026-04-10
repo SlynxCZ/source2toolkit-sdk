@@ -254,6 +254,8 @@ private:
 class IToolkitTrace
 {
 public:
+    virtual ~IToolkitTrace() = default;
+
     virtual bool TraceShape(const Vector& vecStart, const QAngle& angAngles, CEntityInstance* pIgnoreEntity, TraceOptions* pTraceOptions, CGameTrace* pGameTrace) = 0;
     virtual bool TraceEndShape(const Vector& vecStart, const Vector& vecEnd, CEntityInstance* pIgnoreEntity, TraceOptions* pTraceOptions, CGameTrace* pGameTrace) = 0;
     virtual bool TraceHullShape(const Vector& vecStart, const Vector& vecEnd, const Vector& vecMins, const Vector& vecMaxs, CEntityInstance* pIgnoreEntity, TraceOptions* pTraceOptions, CGameTrace* pGameTrace) = 0;

@@ -21,12 +21,13 @@
 class IToolkitGameConfig
 {
 public:
-   virtual const char* GetLibrary(const char* pchName) = 0;
-   virtual const char* GetSignature(const char* pchName) = 0;
-   virtual const char* GetSymbol(const char* name) = 0;
-   virtual const char* GetPatch(const char* pchName) = 0;
-   virtual int GetOffset(const char* pchName) = 0;
-   virtual void* GetAddress(const char* pchName);
+    virtual ~IToolkitGameConfig() = default;
+
+    virtual const char* GetLibrary(const char* pchName) = 0;
+    virtual const char* GetSignature(const char* pchName) = 0;
+    virtual const char* GetSymbol(const char* name) = 0;
+    virtual const char* GetPatch(const char* pchName) = 0;
+    virtual int GetOffset(const char* pchName) = 0;
 };
 
 #endif //_INCLUDE_ITOOLKIT_GAMECONFIG_H

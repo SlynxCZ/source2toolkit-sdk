@@ -1,0 +1,11 @@
+#pragma once
+#include <cstdint>
+
+enum class ParticleColorBlendMode_t : uint32_t
+{
+    PARTICLEBLEND_DEFAULT = 0,
+    PARTICLEBLEND_OVERLAY = 1,
+    PARTICLEBLEND_DARKEN = 2,
+    PARTICLEBLEND_LIGHTEN = 3,
+    PARTICLEBLEND_MULTIPLY = 4,
+};

@@ -1,0 +1,11 @@
+#pragma once
+#include <cstdint>
+
+enum class AnimParamVectorType_t : uint32_t
+{
+    ANIMPARAM_VECTOR_TYPE_NONE = 0,
+    ANIMPARAM_VECTOR_TYPE_POSITION_WS = 1,
+    ANIMPARAM_VECTOR_TYPE_POSITION_LS = 2,
+    ANIMPARAM_VECTOR_TYPE_DIRECTION_WS = 3,
+    ANIMPARAM_VECTOR_TYPE_DIRECTION_LS = 4,
+};

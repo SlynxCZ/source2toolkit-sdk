@@ -19,19 +19,28 @@
    ========================= */
 
 using PluginId = int;
-class IToolkitAPI;
+class IGameEventManager2;
 class CGlobalVars;
+class ICvar;
+class ISource2Server;
+class IGameEventSystem;
+class INetworkMessages;
+class INetworkServerService;
+class CGameEntitySystem;
+class CSchemaSystem;
+class IGameEventManager2;
+class IToolkitAPI;
+class IToolkitScheduler;
+class IToolkitTrace;
+class IToolkitGameConfig;
+class IToolkitEntityIO;
+class IToolkitEvents;
+class IToolkitCommands;
+class IToolkitAddresses;
 class IToolkitListener;
 class IToolkitPlugin;
 
 typedef void* (*CreateInterfaceFn)(const char *pName, int *pReturnCode);
-
-enum class Mode : uint8_t {
-    // Hook callback has been called before original function
-    Pre = 0,
-    // Hook callback has been called after original function
-    Post
-};
 
 /* =========================
    Core Toolkit API
@@ -60,6 +69,24 @@ public:
     virtual void* ToolkitFactory(const char *iface, int *ret, PluginId *id) = 0;
     virtual void* MetaFactory(const char *iface, int *ret, PluginId *id) = 0;
 
+    virtual IToolkitAddresses* Addresses() = 0;
+    virtual IToolkitCommands* Commands() = 0;
+    virtual IToolkitEntityIO* EntityIO() = 0;
+    virtual IToolkitEvents* Events() = 0;
+    virtual IToolkitGameConfig* GameConfig() = 0;
+    virtual IToolkitScheduler* Scheduler() = 0;
+    virtual IToolkitTrace* Trace() = 0;
+
+    virtual IGameEventManager2* GetGameEventManager() = 0;
+    virtual CGlobalVars* GetGlobalVars() = 0;
+    virtual ICvar* GetCVar() = 0;
+    virtual ISource2Server* GetSource2Server() = 0;
+    virtual IVEngineServer* GetEngineServer() = 0;
+    virtual IGameEventSystem* GetGameEventSystem() = 0;
+    virtual INetworkMessages* GetNetworkMessages() = 0;
+    virtual INetworkServerService* GetNetworkServerService() = 0;
+    virtual CGameEntitySystem* GetEntitySystem() = 0;
+    virtual CSchemaSystem* GetSchemaSystem() = 0;
     virtual const char* GetBaseDir() = 0;
 
     virtual size_t Format(char *buffer, size_t maxlength, const char *format, ...) = 0;

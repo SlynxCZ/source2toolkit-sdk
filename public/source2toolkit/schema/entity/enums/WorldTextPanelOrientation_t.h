@@ -1,0 +1,9 @@
+#pragma once
+#include <cstdint>
+
+enum class WorldTextPanelOrientation_t : uint32_t
+{
+    WORLDTEXT_ORIENTATION_DEFAULT = 0,
+    WORLDTEXT_ORIENTATION_FACEUSER = 1,
+    WORLDTEXT_ORIENTATION_FACEUSER_UPRIGHT = 2,
+};

@@ -2,17 +2,28 @@
 // Created by Michal Přikryl on 02.03.2026.
 // Copyright (c) 2026 slynxcz. All rights reserved.
 //
-#include "core/shared.h"
+#include "source2toolkit/schema/schema.h"
+#include "source2toolkit/utils/virtual.h"
 
-#include "schema.h"
+#ifdef SOURCE2TOOLKIT_CORE
+#include "core/shared.h"
+#include "core/gameconfig.h"
+#else
+#include "source2toolkit/IToolkitApi.h"
+#include "source2toolkit/IToolkitGameConfig.h"
+#include "source2toolkit/IToolkitPlugin.h"
+#include "source2toolkit/IToolkitTypes.h"
+#endif
+
 #include "platform.h"
 #include "edict.h"
+#include "iserver.h"
+#include "networksystem/inetworkmessages.h"
 #include "schemasystem/schemasystem.h"
 #include "entity2/entityidentity.h"
 #include "entity2/entityinstance.h"
 #include "tier0/memdbgon.h"
 #include "tier1/utlmap.h"
-
 #include <map>
 
 #ifdef _WIN32
@@ -92,7 +103,7 @@ static void InitSchemaKeyValueMap(SchemaClassInfoData_t* pClassInfo, SchemaKeyVa
 
 static bool InitSchemaFieldsForClass(SchemaTableMap_t& tableMap, const char* className, uint32_t classKey)
 {
-    CSchemaSystemTypeScope* pType = shared::g_pSchemaSystem->FindTypeScopeForModule(MODULE_PREFIX "server" MODULE_EXT);
+    CSchemaSystemTypeScope* pType = g_ToolkitAPI->GetSchemaSystem()->FindTypeScopeForModule(MODULE_PREFIX "server" MODULE_EXT);
 
     if (!pType)
         return false;
@@ -104,7 +115,9 @@ static bool InitSchemaFieldsForClass(SchemaTableMap_t& tableMap, const char* cla
         SchemaKeyValueMap_t map;
         tableMap.insert(std::make_pair(classKey, map));
 
+#ifdef SOURCE2TOOLKIT_CORE
         FP_WARN("InitSchemaFieldsForClass(): '{}' was not found!", className);
+#endif
         return false;
     }
 
@@ -122,7 +135,7 @@ int16_t schema::FindChainOffset(const char* className, uint32_t classNameHash)
 
 int16_t schema::FindChainOffset(const char* className)
 {
-    CSchemaSystemTypeScope* pType = shared::g_pSchemaSystem->FindTypeScopeForModule(MODULE_PREFIX "server" MODULE_EXT);
+    CSchemaSystemTypeScope* pType = g_ToolkitAPI->GetSchemaSystem()->FindTypeScopeForModule(MODULE_PREFIX "server" MODULE_EXT);
 
     if (!pType)
         return false;
@@ -165,7 +178,9 @@ SchemaKey schema::GetOffset(const char* className, uint32_t classKey, const char
     if (tableMap.find(memberKey) == tableMap.end())
     {
         if (memberKey != g_ChainKey)
+#ifdef SOURCE2TOOLKIT_CORE
             FP_WARN("schema::GetOffset(): '{}' was not found in '{}'!\n", memberName, className);
+#endif
 
         return {0, 0};
     }
@@ -175,7 +190,7 @@ SchemaKey schema::GetOffset(const char* className, uint32_t classKey, const char
 
 int32_t schema::GetServerOffset(const char* pszClassName, const char* pszPropName)
 {
-    SchemaClassInfoData_t* pClassInfo = shared::g_pSchemaSystem->FindTypeScopeForModule(MODULE_PREFIX "server" MODULE_EXT)->FindDeclaredClass(pszClassName).Get();
+    SchemaClassInfoData_t* pClassInfo = g_ToolkitAPI->GetSchemaSystem()->FindTypeScopeForModule(MODULE_PREFIX "server" MODULE_EXT)->FindDeclaredClass(pszClassName).Get();
     if (pClassInfo)
     {
         for (int i = 0; i < pClassInfo->m_nFieldCount; i++)
@@ -193,7 +208,7 @@ int32_t schema::GetServerOffset(const char* pszClassName, const char* pszPropNam
 }
 
 int32_t schema::GetClassSize(const char* className) {
-    CSchemaSystemTypeScope *pType = shared::g_pSchemaSystem->FindTypeScopeForModule(
+    CSchemaSystemTypeScope *pType = g_ToolkitAPI->GetSchemaSystem()->FindTypeScopeForModule(
         MODULE_PREFIX "server" MODULE_EXT);
 
     SchemaClassInfoData_t *pClassInfo = pType->FindDeclaredClass(className).Get();

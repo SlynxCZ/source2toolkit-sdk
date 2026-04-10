@@ -1,0 +1,9 @@
+#pragma once
+#include <cstdint>
+
+enum class IKTargetCoordinateSystem : uint32_t
+{
+    IKTARGETCOORDINATESYSTEM_WorldSpace = 0,
+    IKTARGETCOORDINATESYSTEM_ModelSpace = 1,
+    IKTARGETCOORDINATESYSTEM_COUNT = 2,
+};

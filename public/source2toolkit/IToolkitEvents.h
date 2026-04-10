@@ -7,6 +7,8 @@
 #define _INCLUDE_ITOOLKIT_EVENTS_H
 
 #pragma once
+#include "IToolkitTypes.h"
+
 #include "igameevents.h"
 #include "eiface.h"
 
@@ -19,7 +21,7 @@
    Forward declarations
    ========================= */
 
-using GameEventHandler = std::function<uint8_t(IGameEvent* event, uint8_t mode, bool& dontBroadcast)>;
+using GameEventHandler = std::function<Action(IGameEvent* event, Mode mode, bool& dontBroadcast)>;
 
 /* =========================
    Core Toolkit Events
@@ -28,7 +30,9 @@ using GameEventHandler = std::function<uint8_t(IGameEvent* event, uint8_t mode, 
 class IToolkitEvents
 {
 public:
-   virtual void RegGameEvent(const char* pchName, GameEventHandler handler, uint8_t mode) = 0;
+    virtual ~IToolkitEvents() = default;
+
+    virtual void RegGameEvent(const char* pchName, GameEventHandler handler, Mode mode) = 0;
 };
 
 #endif //_INCLUDE_ITOOLKIT_EVENTS_H

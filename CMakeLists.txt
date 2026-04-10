@@ -133,6 +133,9 @@ file(GLOB_RECURSE SOURCE_FILES
         public/*.cpp
         public/*.h
         public/*.hpp
+        src/*.cpp
+        src/*.h
+        src/*.hpp
 )
 
 list(APPEND SOURCE_FILES
