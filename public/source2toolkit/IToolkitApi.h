@@ -47,7 +47,7 @@ public:
 
     virtual void AddListener(IToolkitPlugin *plugin, IToolkitListener *pListener) = 0;
 
-    virtual void* QueryInterface(CreateInterfaceFn fn, const char *iface, int min) = 0;
+    virtual void* QueryInterface(CreateInterfaceFn fn, const char *iface, int min=-1) = 0;
     virtual void* InterfaceSearch(CreateInterfaceFn fn, const char *iface, int max, int *ret) = 0;
     virtual int FormatIface(char iface[], size_t maxlength) = 0;
 
