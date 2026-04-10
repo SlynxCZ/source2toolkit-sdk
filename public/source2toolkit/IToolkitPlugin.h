@@ -174,12 +174,12 @@ public:
  * @param v_name		Interface name.
  */
 #define GET_IFACE_CURRENT(v_factory, v_var, v_type, v_name) \
-	v_var = (v_type *)g_ToolkitAPI->QueryInterface(ismm->v_factory(), v_name); \
+	v_var = (v_type *)g_ToolkitAPI->QueryInterface(g_ToolkitAPI->v_factory(), v_name); \
 	if (!v_var) \
 	{ \
 		if (error && maxlen) \
 		{ \
-			ismm->Format(error, maxlen, "Could not find interface: %s", v_name); \
+			g_ToolkitAPI->Format(error, maxlen, "Could not find interface: %s", v_name); \
 		} \
 		return false; \
 	}
@@ -193,12 +193,12 @@ public:
   * @param v_name		Interface name.
   */
 #define GET_IFACE_ANY(v_factory, v_var, v_type, v_name) \
-	v_var = (v_type *)g_ToolkitAPI->QueryInterface(ismm->v_factory(), v_name, 0); \
+	v_var = (v_type *)g_ToolkitAPI->QueryInterface(g_ToolkitAPI->v_factory(), v_name, 0); \
 	if (!v_var) \
 	{ \
 		if (error && maxlen) \
 		{ \
-			ismm->Format(error, maxlen, "Could not find interface: %s", v_name); \
+			g_ToolkitAPI->Format(error, maxlen, "Could not find interface: %s", v_name); \
 		} \
 		return false; \
 	}
