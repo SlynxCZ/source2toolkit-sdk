@@ -1,0 +1,199 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Text.RegularExpressions;
+
+namespace Source2Toolkit.SchemaGen;
+
+public record SchemaFieldType
+{
+    public SchemaFieldType(string Name,
+        SchemaTypeCategory Category,
+        SchemaAtomicCategory? Atomic,
+        SchemaFieldType? Inner)
+    {
+        this.Name = Name;
+        this.Category = Category;
+        this.Atomic = Atomic;
+        this.Inner = Inner;
+
+        // According to dev notes these currently have the same memory layout
+        if (this.Name == "VectorWS")
+        {
+            this.Name = "Vector";
+        }
+
+        // Kick this can
+        if (this.Name == "CTransformWS")
+        {
+            this.Name = "CTransform";
+        }
+
+        // First member is pointing to m_pEntity
+        else if (this.Name == "CNetworkVarChainer")
+        {
+            this.Name = "CEntityInstance*";
+        }
+
+        if (this.Name == "GameTime_t" || this.Name == "CNetworkedQuantizedFloat")
+        {
+            this.Category = SchemaTypeCategory.Builtin;
+            this.Name = "float32";
+        }
+        else if
+            (this.Name == "CPlayerSlot" || this.Name == "HSequence" || this.Name == "CSplitScreenSlot" || this.Name == "GameTick_t")
+        {
+            this.Category = SchemaTypeCategory.Builtin;
+            this.Name = "int32";
+        }
+        else if (this.Name == "AmmoIndex_t")
+        {
+            this.Category = SchemaTypeCategory.Builtin;
+            this.Name = "uint8";
+        }
+        else if (this.Name == "CBitVec< 64 >" || this.Name == "CTypedBitVec< 64 >")
+        {
+            this.Category = SchemaTypeCategory.FixedArray;
+            this.Inner = new SchemaFieldType("uint8", SchemaTypeCategory.Builtin, null, null);
+            this.Name = "uint8[8]";
+        }
+    }
+
+    public bool IsString =>
+        (Category == SchemaTypeCategory.FixedArray || Category == SchemaTypeCategory.Ptr)
+        && Inner!.Category == SchemaTypeCategory.Builtin
+        && Inner.Name == "char";
+
+    public bool IsDeclared => Category is SchemaTypeCategory.DeclaredClass or SchemaTypeCategory.DeclaredEnum;
+
+    public bool TryGetArrayElementType([NotNullWhen(true)] out SchemaFieldType? elementType)
+    {
+        if (Category == SchemaTypeCategory.FixedArray && !IsString)
+        {
+            elementType = Inner!;
+            return true;
+        }
+        else
+        {
+            elementType = null;
+            return false;
+        }
+    }
+
+    private static string BuiltinToCsKeyword(string name) => name switch
+    {
+        "float32" => "float",
+        "float64" => "double",
+        "int8" => "sbyte",
+        "int16" => "Int16",
+        "int32" => "Int32",
+        "int64" => "Int64",
+        "uint8" => "byte",
+        "uint16" => "UInt16",
+        "uint32" => "UInt32",
+        "uint64" => "UInt64",
+        "bool" => "bool",
+        "char" => "char",
+        _ => throw new ArgumentOutOfRangeException(nameof(name), name, $"Unknown built-in: {name}")
+    };
+
+    private static string AtomicToCsTypeName(string name, SchemaAtomicCategory atomic, SchemaFieldType? inner) =>
+        atomic switch
+        {
+            SchemaAtomicCategory.Basic => name switch
+            {
+                "CUtlString" or "CUtlSymbolLarge" or "CGlobalSymbol" => "string",
+                "CEntityHandle" => "CHandle<CEntityInstance>",
+                "CNetworkedQuantizedFloat" => "float",
+                "RotationVector" => "Vector",
+                _ => name
+            },
+            SchemaAtomicCategory.T => $"{name.Split('<')[0]}<{inner!.CsTypeName}>",
+            SchemaAtomicCategory.Collection => $"NetworkedVector<{inner!.CsTypeName}>",
+            SchemaAtomicCategory.Unknown => "CBitVec",
+            SchemaAtomicCategory.TT => "Unknown",
+            _ => throw new ArgumentOutOfRangeException(nameof(atomic), atomic, $"Unsupported atomic: {atomic}, {name}, {inner?.CsTypeName}")
+        };
+
+    public string CsTypeName => Category switch
+    {
+        SchemaTypeCategory.Builtin => BuiltinToCsKeyword(Name),
+        SchemaTypeCategory.Ptr => IsString
+            ? "string"
+            : $"{Inner!.CsTypeName}?",
+        SchemaTypeCategory.FixedArray => IsString
+            ? "string"
+            : $"{Inner!.CsTypeName}[]",
+        SchemaTypeCategory.Atomic => AtomicToCsTypeName(Name, Atomic!.Value, Inner),
+        SchemaTypeCategory.DeclaredClass => Name,
+        SchemaTypeCategory.DeclaredEnum => Name,
+        _ => throw new ArgumentOutOfRangeException(nameof(Category), Category, $"Unsupported type category: {Category}")
+    };
+
+    private static string BuiltinToCpp(string name) => name switch
+    {
+        "float32" => "float",
+        "float64" => "double",
+        "int8" => "int8_t",
+        "int16" => "int16_t",
+        "int32" => "int32_t",
+        "int64" => "int64_t",
+        "uint8" => "uint8_t",
+        "uint16" => "uint16_t",
+        "uint32" => "uint32_t",
+        "uint64" => "uint64_t",
+        "bool" => "bool",
+        "char" => "char",
+        _ => name
+    };
+
+    private static string AtomicToCpp(string name, SchemaAtomicCategory atomic, SchemaFieldType? inner)
+    {
+        return atomic switch
+        {
+            SchemaAtomicCategory.Basic => name,
+            SchemaAtomicCategory.T => $"{name.Split('<')[0]}<{inner!.CppTypeName}>",
+            SchemaAtomicCategory.Collection => $"CUtlVector<{inner!.CppTypeName}>",
+            _ => name
+        };
+    }
+
+    public string CppTypeName => Category switch
+    {
+        SchemaTypeCategory.Builtin => BuiltinToCpp(Name),
+        SchemaTypeCategory.DeclaredClass => Name,
+        SchemaTypeCategory.DeclaredEnum => Name,
+        SchemaTypeCategory.Atomic => AtomicToCpp(Name, Atomic!.Value, Inner),
+        SchemaTypeCategory.FixedArray => Inner!.CppTypeName,
+        SchemaTypeCategory.Ptr => Inner!.CppTypeName + "*",
+        _ => "void"
+    };
+
+    public string Name { get; init; }
+    public SchemaTypeCategory Category { get; init; }
+    public SchemaAtomicCategory? Atomic { get; init; }
+    public SchemaFieldType? Inner { get; init; }
+
+    public int? ArraySize
+    {
+        get
+        {
+            if (Category == SchemaTypeCategory.FixedArray)
+            {
+                // Extract number from name, e.g. `uint16[2]`
+                var match = Regex.Match(this.Name, @"\[(\d+)\]$");
+                return match.Success ? int.Parse(match.Groups[1].Value) : null;
+            }
+
+            return null;
+        }
+    }
+
+    public void Deconstruct(out string Name, out SchemaTypeCategory Category, out SchemaAtomicCategory? Atomic,
+        out SchemaFieldType? Inner, out int? ArraySize)
+    {
+        Name = this.Name;
+        Category = this.Category;
+        Atomic = this.Atomic;
+        Inner = this.Inner;
+        ArraySize = this.ArraySize;
+    }
+}
