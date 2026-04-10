@@ -7,11 +7,9 @@ set(CMAKE_CXX_STANDARD 20)
 # HL2SDK
 # =========================
 
-set(SOURCESDK_DIR ${CMAKE_CURRENT_SOURCE_DIR}/vendor/hl2sdk)
-set(CSGO_PROTO_DIR ${CMAKE_CURRENT_SOURCE_DIR}/vendor/Protobufs)
-
-set(SOURCESDK ${SOURCESDK_DIR}/cs2)
+set(SOURCESDK ${CMAKE_CURRENT_SOURCE_DIR}/vendor/hl2sdk-cs2)
 set(SOURCESDK_LIB ${SOURCESDK}/lib)
+set(CSGO_PROTO_DIR ${CMAKE_CURRENT_SOURCE_DIR}/vendor/Protobufs/csgo)
 
 # =========================
 # PLATFORM
@@ -19,139 +17,159 @@ set(SOURCESDK_LIB ${SOURCESDK}/lib)
 
 if (UNIX AND NOT APPLE)
     set(LINUX TRUE)
-endif()
+endif ()
+
+if (WIN32 AND NOT MSVC)
+    message(FATAL "MSVC restricted.")
+endif ()
 
 # =========================
 # PROTOBUF GENERATION
 # =========================
 
-set(PROTO_TARGETS
-        ${CSGO_PROTO_DIR}/network_connection.proto
-        ${CSGO_PROTO_DIR}/networkbasetypes.proto
-        ${CSGO_PROTO_DIR}/cs_gameevents.proto
-        ${CSGO_PROTO_DIR}/cs_usercmd.proto
-        ${CSGO_PROTO_DIR}/base_gcmessages.proto
-        ${CSGO_PROTO_DIR}/econ_gcmessages.proto
-        ${CSGO_PROTO_DIR}/engine_gcmessages.proto
-        ${CSGO_PROTO_DIR}/gcsdk_gcmessages.proto
-        ${CSGO_PROTO_DIR}/gcsystemmsgs.proto
-        ${CSGO_PROTO_DIR}/cstrike15_gcmessages.proto
-        ${CSGO_PROTO_DIR}/cstrike15_usermessages.proto
-        ${CSGO_PROTO_DIR}/source2_steam_stats.proto
-        ${CSGO_PROTO_DIR}/netmessages.proto
-        ${CSGO_PROTO_DIR}/networksystem_protomessages
-        ${CSGO_PROTO_DIR}/steammessages.proto
-        ${CSGO_PROTO_DIR}/usercmd.proto
-        ${CSGO_PROTO_DIR}/usermessages.proto
-        ${CSGO_PROTO_DIR}/gameevents.proto
-        ${CSGO_PROTO_DIR}/clientmessages.proto
-        ${CSGO_PROTO_DIR}/te.proto
-)
-
-if(UNIX)
-    set(PROTOC_EXECUTABLE ${SOURCESDK_DIR}/devtools/bin/linux/protoc)
-else()
-    set(PROTOC_EXECUTABLE ${SOURCESDK_DIR}/devtools/bin/protoc.exe)
-endif()
-
-foreach(PROTO ${PROTO_TARGETS})
-    get_filename_component(NAME ${PROTO} NAME_WLE)
-    list(APPEND PROTO_OUTPUT ${CMAKE_BINARY_DIR}/protobuf/${NAME}.pb.cc)
-    list(APPEND PROTO_HEADERS ${CMAKE_BINARY_DIR}/protobuf/${NAME}.pb.h)
-    list(APPEND PROTO_INPUT ${PROTO})
-endforeach()
-
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/protobuf)
-
-add_custom_command(
-        OUTPUT ${PROTO_OUTPUT}
-        COMMAND ${PROTOC_EXECUTABLE}
-        --proto_path=${CSGO_PROTO_DIR}
-        --cpp_out=${CMAKE_BINARY_DIR}/protobuf
-        ${PROTO_INPUT}
-        DEPENDS ${PROTO_INPUT}
-)
-
-add_library(Protobufs STATIC ${PROTO_OUTPUT})
-
-target_include_directories(Protobufs PUBLIC
-        ${CMAKE_BINARY_DIR}/protobuf
-        ${SOURCESDK_DIR}/thirdparty/protobuf-3.21.8/src
-)
-
-if (LINUX)
-    target_link_libraries(Protobufs PUBLIC
-            ${SOURCESDK_DIR}/lib/linux64/release/libprotobuf.a
-    )
-else()
-    target_link_libraries(Protobufs PUBLIC
-            ${SOURCESDK_DIR}/lib/public/win64/2015/libprotobuf.lib
-    )
-endif()
+include(protobuf.cmake)
 
 # =========================
-# SDK TARGET
+# SDK STATIC LIB
 # =========================
 
-add_library(source2toolkit-sdk INTERFACE)
+file(GLOB_RECURSE SOURCE_FILES
+        public/*.cpp
+        public/*.h
+        public/*.hpp
+)
 
-# includes
-target_include_directories(source2toolkit-sdk INTERFACE
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
+list(APPEND SOURCE_FILES
+        ${SOURCESDK}/public/tier0/memoverride.cpp
+        ${SOURCESDK}/tier1/generichash.cpp
+        ${SOURCESDK}/tier1/keyvalues3.cpp
+        ${SOURCESDK}/tier1/convar.cpp
+        ${SOURCESDK}/entity2/entityidentity.cpp
+        ${SOURCESDK}/entity2/entitysystem.cpp
+        ${SOURCESDK}/entity2/entitykeyvalues.cpp
+)
+
+add_library(source2toolkit-sdk STATIC ${SOURCE_FILES})
+
+target_include_directories(source2toolkit-sdk PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/public
 
         ${SOURCESDK}
+        ${SOURCESDK}/thirdparty/protobuf-3.21.8/src
+        ${SOURCESDK}/common
+        ${SOURCESDK}/game/shared
+        ${SOURCESDK}/game/server
         ${SOURCESDK}/public
+        ${SOURCESDK}/public/engine
+        ${SOURCESDK}/public/mathlib
         ${SOURCESDK}/public/tier0
         ${SOURCESDK}/public/tier1
         ${SOURCESDK}/public/entity2
-        ${SOURCESDK}/public/mathlib
-        ${SOURCESDK}/public/engine
-        ${SOURCESDK}/game/server
-
-        ${SOURCESDK}/thirdparty/protobuf-3.21.8/src
+        ${SOURCESDK}/public/game/server
+        ${SOURCESDK}/public/schemasystem
 )
 
-# defines
-target_compile_definitions(source2toolkit-sdk INTERFACE
+# =========================
+# DEFINES
+# =========================
+
+target_compile_definitions(source2toolkit-sdk PUBLIC
         META_IS_SOURCE2
         _ITERATOR_DEBUG_LEVEL=0
 )
 
-# linux flags
+# =========================
+# PLATFORM FLAGS + LINK
+# =========================
+
 if (LINUX)
-    target_compile_definitions(source2toolkit-sdk INTERFACE
+    target_compile_definitions(source2toolkit-sdk PUBLIC
             _LINUX POSIX LINUX GNUC COMPILER_GCC PLATFORM_64BITS
             _FILE_OFFSET_BITS=64
             _GLIBCXX_USE_CXX11_ABI=0
+
+            stricmp=strcasecmp
+            _stricmp=strcasecmp
+            strnicmp=strncasecmp
+            _strnicmp=strncasecmp
+            _snprintf=snprintf
+            _vsnprintf=vsnprintf
+            _alloca=alloca
+            strcmpi=strcasecmp
     )
 
-    target_compile_options(source2toolkit-sdk INTERFACE
+    target_compile_options(source2toolkit-sdk PUBLIC
             -fPIC
             -fno-strict-aliasing
             -fno-threadsafe-statics
+
+            -Wall
+            -Wno-uninitialized
+            -Wno-switch
+            -Wno-unused
+            -Wno-non-virtual-dtor
+            -Wno-overloaded-virtual
+            -Wno-conversion-null
+            -Wno-write-strings
+            -Wno-invalid-offsetof
+            -Wno-reorder
+            -Wno-error=stringop-overflow
+
+            -mfpmath=sse
+            -msse
+            -fvisibility=default
     )
 
-    target_link_libraries(source2toolkit-sdk INTERFACE
+    target_link_options(source2toolkit-sdk PUBLIC
+            -static-libgcc
+            -static-libstdc++
+            -Wl,--exclude-libs=libprotobuf.a
+    )
+
+    target_link_libraries(source2toolkit-sdk PUBLIC
             ${SOURCESDK_LIB}/linux64/libtier0.so
             ${SOURCESDK_LIB}/linux64/tier1.a
             ${SOURCESDK_LIB}/linux64/interfaces.a
             ${SOURCESDK_LIB}/linux64/mathlib.a
+            ${SOURCESDK}/lib/linux64/release/libprotobuf.a
             Protobufs
     )
 endif()
 
-# windows flags
 if (WIN32)
-    target_compile_definitions(source2toolkit-sdk INTERFACE
-            _WIN32 _WINDOWS COMPILER_MSVC COMPILER_MSVC64
-            _CRT_SECURE_NO_WARNINGS
+    target_compile_definitions(source2toolkit-sdk PUBLIC
+            COMPILER_MSVC COMPILER_MSVC64
+            _WIN32 _WINDOWS
+            _ALLOW_KEYWORD_MACROS
+            __STDC_LIMIT_MACROS
+
+            _CRT_SECURE_NO_WARNINGS=1
+            _CRT_SECURE_NO_DEPRECATE=1
+            _CRT_NONSTDC_NO_DEPRECATE=1
     )
 
-    target_link_libraries(source2toolkit-sdk INTERFACE
+    target_compile_options(source2toolkit-sdk PUBLIC
+            /wd4819
+            /wd4828
+            /wd5033
+            /wd4005
+            /permissive-
+            /utf-8
+            /MP
+    )
+
+    target_link_options(source2toolkit-sdk PUBLIC
+            $<$<CONFIG:RELEASE>:/OPT:REF>
+            $<$<CONFIG:RELEASE>:/OPT:ICF>
+            $<$<CONFIG:DEBUG>:/NODEFAULTLIB:libcmt>
+    )
+
+    target_link_libraries(source2toolkit-sdk PUBLIC
             ${SOURCESDK_LIB}/public/win64/tier0.lib
             ${SOURCESDK_LIB}/public/win64/tier1.lib
             ${SOURCESDK_LIB}/public/win64/interfaces.lib
             ${SOURCESDK_LIB}/public/win64/mathlib.lib
+            ${SOURCESDK_LIB}/public/win64/2015/libprotobuf.lib
             Protobufs
     )
 endif()
