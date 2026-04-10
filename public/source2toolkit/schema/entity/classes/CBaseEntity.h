@@ -126,7 +126,7 @@ public:
     template<typename T>
     static T* FromIndex(int iIndex)
     {    
-        return reinterpret_cast<T*>(g_ToolkitAPI->GetEntitySystem()->GetEntityInstance(CEntityIndex(iIndex)));
+        return reinterpret_cast<T*>(GetEntitySystem()->GetEntityInstance(CEntityIndex(iIndex)));
     }
     /// <summary>Get entity by entity index.</summary>
     template<typename T>

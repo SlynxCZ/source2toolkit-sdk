@@ -34,6 +34,95 @@
 #define MODULE_EXT ".so"
 #endif
 
+IGameEventManager2* GetGameEventManager()
+{
+#ifdef SOURCE2TOOLKIT_CORE
+    return shared::g_pGameEventManager;
+#else
+    return g_ToolkitAPI->GetGameEventManager();
+#endif
+}
+
+CGlobalVars* GetGlobalVars()
+{
+#ifdef SOURCE2TOOLKIT_CORE
+    return shared::getGlobalVars();
+#else
+    return g_ToolkitAPI->GetGlobalVars();
+#endif
+}
+
+ICvar* GetCVar()
+{
+#ifdef SOURCE2TOOLKIT_CORE
+    return shared::g_pCVar;
+#else
+    return g_ToolkitAPI->GetCVar();
+#endif
+}
+
+ISource2Server* GetSource2Server()
+{
+#ifdef SOURCE2TOOLKIT_CORE
+    return shared::g_pServer;
+#else
+    return g_ToolkitAPI->GetSource2Server();
+#endif
+}
+
+IVEngineServer* GetEngineServer()
+{
+#ifdef SOURCE2TOOLKIT_CORE
+    return shared::g_pEngine;
+#else
+    return g_ToolkitAPI->GetEngineServer();
+#endif
+}
+
+IGameEventSystem* GetGameEventSystem()
+{
+#ifdef SOURCE2TOOLKIT_CORE
+    return shared::g_pGameEventSystem;
+#else
+    return g_ToolkitAPI->GetGameEventSystem();
+#endif
+}
+INetworkMessages* GetNetworkMessages()
+{
+#ifdef SOURCE2TOOLKIT_CORE
+    return shared::g_pNetworkMessages;
+#else
+    return g_ToolkitAPI->GetNetworkMessages();
+#endif
+}
+
+INetworkServerService* GetNetworkServerService()
+{
+#ifdef SOURCE2TOOLKIT_CORE
+    return shared::g_pNetworkServerService;
+#else
+    return g_ToolkitAPI->GetNetworkServerService();
+#endif
+}
+
+CGameEntitySystem* GetEntitySystem()
+{
+#ifdef SOURCE2TOOLKIT_CORE
+    return shared::g_pEntitySystem;
+#else
+    return g_ToolkitAPI->GetEntitySystem();
+#endif
+}
+
+CSchemaSystem* GetSchemaSystem()
+{
+#ifdef SOURCE2TOOLKIT_CORE
+    return shared::g_pSchemaSystem;
+#else
+    return g_ToolkitAPI->GetSchemaSystem();
+#endif
+}
+
 using SchemaKeyValueMap_t = std::map<uint32_t, SchemaKey>;
 using SchemaTableMap_t = std::map<uint32_t, SchemaKeyValueMap_t>;
 
@@ -103,7 +192,7 @@ static void InitSchemaKeyValueMap(SchemaClassInfoData_t* pClassInfo, SchemaKeyVa
 
 static bool InitSchemaFieldsForClass(SchemaTableMap_t& tableMap, const char* className, uint32_t classKey)
 {
-    CSchemaSystemTypeScope* pType = g_ToolkitAPI->GetSchemaSystem()->FindTypeScopeForModule(MODULE_PREFIX "server" MODULE_EXT);
+    CSchemaSystemTypeScope* pType = GetSchemaSystem()->FindTypeScopeForModule(MODULE_PREFIX "server" MODULE_EXT);
 
     if (!pType)
         return false;
@@ -135,7 +224,7 @@ int16_t schema::FindChainOffset(const char* className, uint32_t classNameHash)
 
 int16_t schema::FindChainOffset(const char* className)
 {
-    CSchemaSystemTypeScope* pType = g_ToolkitAPI->GetSchemaSystem()->FindTypeScopeForModule(MODULE_PREFIX "server" MODULE_EXT);
+    CSchemaSystemTypeScope* pType = GetSchemaSystem()->FindTypeScopeForModule(MODULE_PREFIX "server" MODULE_EXT);
 
     if (!pType)
         return false;
@@ -190,7 +279,7 @@ SchemaKey schema::GetOffset(const char* className, uint32_t classKey, const char
 
 int32_t schema::GetServerOffset(const char* pszClassName, const char* pszPropName)
 {
-    SchemaClassInfoData_t* pClassInfo = g_ToolkitAPI->GetSchemaSystem()->FindTypeScopeForModule(MODULE_PREFIX "server" MODULE_EXT)->FindDeclaredClass(pszClassName).Get();
+    SchemaClassInfoData_t* pClassInfo = GetSchemaSystem()->FindTypeScopeForModule(MODULE_PREFIX "server" MODULE_EXT)->FindDeclaredClass(pszClassName).Get();
     if (pClassInfo)
     {
         for (int i = 0; i < pClassInfo->m_nFieldCount; i++)
@@ -208,7 +297,7 @@ int32_t schema::GetServerOffset(const char* pszClassName, const char* pszPropNam
 }
 
 int32_t schema::GetClassSize(const char* className) {
-    CSchemaSystemTypeScope *pType = g_ToolkitAPI->GetSchemaSystem()->FindTypeScopeForModule(
+    CSchemaSystemTypeScope *pType = GetSchemaSystem()->FindTypeScopeForModule(
         MODULE_PREFIX "server" MODULE_EXT);
 
     SchemaClassInfoData_t *pClassInfo = pType->FindDeclaredClass(className).Get();

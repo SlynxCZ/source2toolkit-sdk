@@ -38,7 +38,7 @@ enum class HudDestination
 
 static void ClientPrint(int slot, int hudDestination, const char* message)
 {
-    INetworkMessageInternal* pNetMsg = g_ToolkitAPI->GetNetworkMessages()->FindNetworkMessagePartial("TextMsg");
+    INetworkMessageInternal* pNetMsg = GetNetworkMessages()->FindNetworkMessagePartial("TextMsg");
     auto data = pNetMsg->AllocateMessage()->ToPB<CUserMessageTextMsg>();
 
     data->set_dest(hudDestination);
@@ -47,7 +47,7 @@ static void ClientPrint(int slot, int hudDestination, const char* message)
     CPlayerBitVec recipients;
     recipients.Set(slot);
 
-    g_ToolkitAPI->GetGameEventSystem()->PostEventAbstract(CSplitScreenSlot(-1), false, ABSOLUTE_PLAYER_LIMIT,
+    GetGameEventSystem()->PostEventAbstract(CSplitScreenSlot(-1), false, ABSOLUTE_PLAYER_LIMIT,
                                                 reinterpret_cast<const uint64*>(recipients.Base()), pNetMsg, data, 0,
                                                 NetChannelBufType_t::BUF_RELIABLE);
 
@@ -61,7 +61,7 @@ CCSPlayerController *CCSPlayerController::FromPawn(CCSPlayerPawn* pPawn)
 
 CCSPlayerController *CCSPlayerController::FromSlot(int iSlot)
 {
-    return static_cast<CCSPlayerController*>(g_ToolkitAPI->GetEntitySystem()->GetEntityInstance(CEntityIndex(iSlot + 1)));
+    return static_cast<CCSPlayerController*>(GetEntitySystem()->GetEntityInstance(CEntityIndex(iSlot + 1)));
 }
 
 CCSPlayerController *CCSPlayerController::FromSlot(CPlayerSlot slot)
@@ -74,13 +74,13 @@ CCSPlayerController *CCSPlayerController::FromSlot(CPlayerSlot slot)
 
 CCSPlayerController *CCSPlayerController::FromUserId(int iUserId)
 {
-    for (int i = 0; i < g_ToolkitAPI->GetGlobalVars()->maxClients; ++i)
+    for (int i = 0; i < GetGlobalVars()->maxClients; ++i)
     {
         CCSPlayerController* controller = FromSlot(i);
         if (!controller)
             continue;
 
-        if (iUserId == g_ToolkitAPI->GetEngineServer()->GetPlayerUserId(i).Get()) return controller;
+        if (iUserId == GetEngineServer()->GetPlayerUserId(i).Get()) return controller;
     }
     return nullptr;
 }
@@ -92,7 +92,7 @@ CCSPlayerController *CCSPlayerController::FromUserId(CPlayerUserId userId)
 
 CCSPlayerController *CCSPlayerController::FromSteamId(uint64 uSteamId)
 {
-    for (int i = 0; i < g_ToolkitAPI->GetGlobalVars()->maxClients; ++i)
+    for (int i = 0; i < GetGlobalVars()->maxClients; ++i)
     {
         CCSPlayerController* controller = FromSlot(i);
         if (!controller)
@@ -134,7 +134,7 @@ void CCSPlayerController::PrintToCenterAlert(const char* pszMessage)
 
 void CCSPlayerController::PrintToCenterHtml(const char* pszMessage, int iDuration)
 {
-    IGameEvent *event = g_ToolkitAPI->GetGameEventManager()->CreateEvent("show_survival_respawn_status", true);
+    IGameEvent *event = GetGameEventManager()->CreateEvent("show_survival_respawn_status", true);
     event->SetString("loc_token", pszMessage);
     event->SetInt("duration", iDuration);
     event->SetPlayer("userid", GetPlayerSlot());
@@ -181,12 +181,12 @@ bool CCSPlayerController::IsBot()
 
 void CCSPlayerController::Disconnect(ENetworkDisconnectionReason eReason)
 {
-    g_ToolkitAPI->GetEngineServer()->DisconnectClient(GetSlot(), eReason);
+    GetEngineServer()->DisconnectClient(GetSlot(), eReason);
 }
 
 void CCSPlayerController::ExecuteClientCommand(const char* pszCommand)
 {
-    g_ToolkitAPI->GetEngineServer()->ClientCommand(GetPlayerSlot(), pszCommand);
+    GetEngineServer()->ClientCommand(GetPlayerSlot(), pszCommand);
 }
 
 void CCSPlayerController::ExecuteClientCommandFromServer(const char* pszCommand)
@@ -194,12 +194,12 @@ void CCSPlayerController::ExecuteClientCommandFromServer(const char* pszCommand)
     CCommand args;
     args.Tokenize(pszCommand);
 
-    auto handle = g_ToolkitAPI->GetCVar()->FindConCommand(args.Arg(0));
+    auto handle = GetCVar()->FindConCommand(args.Arg(0));
     if (!handle.IsValidRef()) return;
 
     CCommandContext context(CommandTarget_t::CT_NO_TARGET, GetPlayerSlot());
 
-    g_ToolkitAPI->GetCVar()->DispatchConCommand(handle, context, args);
+    GetCVar()->DispatchConCommand(handle, context, args);
 }
 
 CCSPlayerPawn* CCSPlayerController::GetPawn()
@@ -240,12 +240,12 @@ CPlayerSlot CCSPlayerController::GetPlayerSlot()
 
 int CCSPlayerController::GetUserID()
 {
-    return g_ToolkitAPI->GetEngineServer()->GetPlayerUserId(GetPlayerSlot()).Get();
+    return GetEngineServer()->GetPlayerUserId(GetPlayerSlot()).Get();
 }
 
 CPlayerUserId CCSPlayerController::GetPlayerUserID()
 {
-    return g_ToolkitAPI->GetEngineServer()->GetPlayerUserId(GetPlayerSlot());
+    return GetEngineServer()->GetPlayerUserId(GetPlayerSlot());
 }
 
 uint64 CCSPlayerController::GetSteamID()
@@ -267,7 +267,7 @@ const char* CCSPlayerController::GetIpAddress()
 {
     static char buffer[64];
 
-    if (const auto* netInfo = g_ToolkitAPI->GetEngineServer()->GetPlayerNetInfo(GetPlayerSlot()))
+    if (const auto* netInfo = GetEngineServer()->GetPlayerNetInfo(GetPlayerSlot()))
     {
         uint32_t ip = netInfo->GetRemoteAddress().GetIP();
 
@@ -294,7 +294,7 @@ const char* CCSPlayerController::GetIpAddress()
 
 void CCSPlayerController::ReplicateConVar(const char* pszConVar, const char* pszValue)
 {
-    INetworkMessageInternal* pNetMsg = g_ToolkitAPI->GetNetworkMessages()->FindNetworkMessagePartial("SetConVar");
+    INetworkMessageInternal* pNetMsg = GetNetworkMessages()->FindNetworkMessagePartial("SetConVar");
     auto msg = pNetMsg->AllocateMessage()->ToPB<CNETMsg_SetConVar>();
 
     CMsg_CVars_CVar* cvarMsg = msg->mutable_convars()->add_cvars();
@@ -304,7 +304,7 @@ void CCSPlayerController::ReplicateConVar(const char* pszConVar, const char* psz
     CPlayerBitVec recipients;
     recipients.Set(GetSlot());
 
-    g_ToolkitAPI->GetGameEventSystem()->PostEventAbstract(CSplitScreenSlot(-1), false, ABSOLUTE_PLAYER_LIMIT,
+    GetGameEventSystem()->PostEventAbstract(CSplitScreenSlot(-1), false, ABSOLUTE_PLAYER_LIMIT,
                                                 reinterpret_cast<const uint64*>(recipients.Base()), pNetMsg, msg, 0,
                                                 NetChannelBufType_t::BUF_RELIABLE);
 

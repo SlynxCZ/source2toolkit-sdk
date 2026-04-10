@@ -13,6 +13,7 @@
 	#pragma warning(pop)
 #endif
 
+#include "igameevents.h"
 #include "igameeventsystem.h"
 #include "schemasystem.h"
 #include "entity2/entitysystem.h"
@@ -23,7 +24,19 @@
 
 #include <type_traits>
 #include <cstdint>
+
 #undef schema
+
+IGameEventManager2* GetGameEventManager();
+CGlobalVars* GetGlobalVars();
+ICvar* GetCVar();
+ISource2Server* GetSource2Server();
+IVEngineServer* GetEngineServer();
+IGameEventSystem* GetGameEventSystem();
+INetworkMessages* GetNetworkMessages();
+INetworkServerService* GetNetworkServerService();
+CGameEntitySystem* GetEntitySystem();
+CSchemaSystem* GetSchemaSystem();
 
 struct SchemaKey
 {
