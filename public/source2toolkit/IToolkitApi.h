@@ -50,6 +50,12 @@ public:
     virtual void* QueryInterface(CreateInterfaceFn fn, const char *iface, int min) = 0;
     virtual void* InterfaceSearch(CreateInterfaceFn fn, const char *iface, int max, int *ret) = 0;
     virtual int FormatIface(char iface[], size_t maxlength) = 0;
+
+    virtual CreateInterfaceFn GetEngineFactory(bool syn=true) = 0;
+    virtual CreateInterfaceFn GetPhysicsFactory(bool syn=true) = 0;
+    virtual CreateInterfaceFn GetFileSystemFactory(bool syn=true) = 0;
+    virtual CreateInterfaceFn GetServerFactory(bool syn=true) = 0;
+
     virtual void* ToolkitFactory(const char *iface, int *ret, PluginId *id) = 0;
     virtual void* MetaFactory(const char *iface, int *ret, PluginId *id) = 0;
 
