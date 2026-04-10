@@ -108,7 +108,7 @@ CEntitySubclassVDataBase* CBaseEntity::GetVData()
 void CBaseEntity::DispatchSpawn(CEntityKeyValues* pEntityKeyValues)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    addresses::toolkitaddresses.CBaseEntity_DispatchSpawn(this, pEntityKeyValues);
+    addresses::toolkitAddresses.DispatchSpawn(this, pEntityKeyValues);
 #else
     g_ToolkitAPI->Addresses()->CBaseEntity_DispatchSpawn()(this, pEntityKeyValues);
 #endif

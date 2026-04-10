@@ -58,7 +58,7 @@ CBaseEntity* UTIL_FindPickerEntity(CBasePlayerController* pPlayer, CCSGameRules*
 CBaseEntity* UTIL_FindEntityByClassname(CEntityInstance* pStartEntity, const char* szName)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    return addresses::toolkitaddresses.CGameEntitySystem_FindEntityByClassName(shared::g_pEntitySystem, pStartEntity, szName);
+    return addresses::toolkitAddresses.FindEntityByClassName(shared::g_pEntitySystem, pStartEntity, szName);
 #else
     return g_ToolkitAPI->EntityIO()->FindEntityByClassname(pStartEntity, szName);
 #endif
@@ -69,7 +69,7 @@ CBaseEntity* UTIL_FindEntityByName(CEntityInstance* pStartEntity, const char* sz
                                    CEntityInstance* pCaller, IEntityFindFilter* pFilter)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    return addresses::toolkitaddresses.CGameEntitySystem_FindEntityByName(shared::g_pEntitySystem, pStartEntity, szName, pSearchingEntity, pActivator, pCaller, pFilter);
+    return addresses::toolkitAddresses.FindEntityByName(shared::g_pEntitySystem, pStartEntity, szName, pSearchingEntity, pActivator, pCaller, pFilter);
 #else
     return g_ToolkitAPI->EntityIO()->FindEntityByName(pStartEntity, szName, pSearchingEntity, pActivator, pCaller, pFilter);
 #endif
@@ -79,7 +79,7 @@ void UTIL_AcceptInput(CEntityInstance* pTarget, const char* pszInput, CEntityIns
                       CEntityInstance* pCaller, const char* pszValue)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    return addresses::toolkitaddresses.CEntityInstance_AcceptInput(pTarget, pszInput, pActivator, pCaller, variant_t(pszValue), 0, nullptr);
+    return addresses::toolkitAddresses.AcceptInput(pTarget, pszInput, pActivator, pCaller, variant_t(pszValue), 0, nullptr);
 #else
     return g_ToolkitAPI->EntityIO()->AcceptInput(pTarget, pszInput, pActivator, pCaller, pszValue);
 #endif
@@ -89,7 +89,7 @@ void UTIL_AddEntityIOEvent(CEntityInstance* pTarget, const char* pszInput, CEnti
                            CEntityInstance* pCaller, const char* pszValue, float flDelay)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    return addresses::toolkitaddresses.CEntitySystem_AddEntityIOEvent(shared::g_pEntitySystem, pTarget, pszInput, pActivator, pCaller, variant_t(pszValue), flDelay, 0, nullptr, nullptr);
+    return addresses::toolkitAddresses.AddEntityIOEvent(shared::g_pEntitySystem, pTarget, pszInput, pActivator, pCaller, variant_t(pszValue), flDelay, 0, nullptr, nullptr);
 #else
     return g_ToolkitAPI->EntityIO()->AddEntityIOEvent(pTarget, pszInput, pActivator, pCaller, pszValue, flDelay);
 #endif

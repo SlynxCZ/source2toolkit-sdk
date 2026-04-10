@@ -57,7 +57,7 @@ template <typename T = CBaseEntity>
 T* UTIL_CreateEntityByName(const char* pszClassName)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    return reinterpret_cast<T*>(addresses::toolkitaddresses.CBaseEntity_CreateEntityByName(pszClassName, -1));
+    return reinterpret_cast<T*>(addresses::toolkitAddresses.CreateEntityByName(pszClassName, -1));
 #else
     return reinterpret_cast<T*>(g_ToolkitAPI->EntityIO()->CreateEntityByName(pszClassName));
 #endif

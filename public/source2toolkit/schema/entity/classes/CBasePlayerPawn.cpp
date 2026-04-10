@@ -30,7 +30,7 @@ void CBasePlayerPawn::RemovePlayerItem(CBasePlayerWeapon* pWeapon) {
     if (!pWeapon) return;
 
 #ifdef SOURCE2TOOLKIT_CORE
-    addresses::toolkitaddresses.CBasePlayerPawn_RemovePlayerItem(this, pWeapon);
+    addresses::toolkitAddresses.RemovePlayerItem(this, pWeapon);
 #else
     g_ToolkitAPI->Addresses()->CBasePlayerPawn_RemovePlayerItem()(this, pWeapon);
 #endif

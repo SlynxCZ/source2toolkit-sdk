@@ -158,7 +158,7 @@ void CCSPlayerController::Respawn()
 void CCSPlayerController::SwitchTeam(int nTeam)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    addresses::toolkitaddresses.CCSPlayerController_SwitchTeam(this, static_cast<unsigned char>(nTeam));
+    addresses::toolkitAddresses.SwitchTeam(this, static_cast<unsigned char>(nTeam));
 #else
     g_ToolkitAPI->Addresses()->CCSPlayerController_SwitchTeam()(this, static_cast<unsigned char>(nTeam));
 #endif
@@ -316,7 +316,7 @@ void CCSPlayerController::FireEventToClient(IGameEvent* pEvent)
     if (!pEvent) return;
 
 #ifdef SOURCE2TOOLKIT_CORE
-    IGameEventListener2* pListener = addresses::toolkitaddresses.CCSPlayerController_LegacyGameEventListener(GetPlayerSlot());
+    IGameEventListener2* pListener = addresses::toolkitAddresses.LegacyGameEventListener(GetPlayerSlot());
 #else
     IGameEventListener2* pListener = g_ToolkitAPI->Addresses()->CCSPlayerController_LegacyGameEventListener()(GetPlayerSlot());
 #endif
