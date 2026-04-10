@@ -256,10 +256,10 @@ class IToolkitTrace
 public:
     virtual ~IToolkitTrace() = default;
 
-    virtual bool TraceShape(const Vector& vecStart, const QAngle& angAngles, CEntityInstance* pIgnoreEntity, TraceOptions* pTraceOptions, CGameTrace* pGameTrace) = 0;
-    virtual bool TraceEndShape(const Vector& vecStart, const Vector& vecEnd, CEntityInstance* pIgnoreEntity, TraceOptions* pTraceOptions, CGameTrace* pGameTrace) = 0;
-    virtual bool TraceHullShape(const Vector& vecStart, const Vector& vecEnd, const Vector& vecMins, const Vector& vecMaxs, CEntityInstance* pIgnoreEntity, TraceOptions* pTraceOptions, CGameTrace* pGameTrace) = 0;
-    virtual bool TraceShapeEx(const Vector& vecStart, const Vector& vecEnd, CTraceFilter* pTraceFilter, Ray_t* pRay, CGameTrace* pGameTrace) = 0;
+    virtual TraceResult TraceShape(const Vector& vecStart, const QAngle& angAngles, CEntityInstance* pIgnoreEntity, TraceOptions* pTraceOptions) = 0;
+    virtual TraceResult TraceEndShape(const Vector& vecStart, const Vector& vecEnd, CEntityInstance* pIgnoreEntity, TraceOptions* pTraceOptions) = 0;
+    virtual TraceResult TraceHullShape(const Vector& vecStart, const Vector& vecEnd, const Vector& vecMins, const Vector& vecMaxs, CEntityInstance* pIgnoreEntity, TraceOptions* pTraceOptions) = 0;
+    virtual TraceResult TraceShapeEx(const Vector& vecStart, const Vector& vecEnd, CTraceFilter* pTraceFilter, Ray_t* pRay) = 0;
 };
 
 #endif //_INCLUDE_ITOOLKIT_TRACE_H
