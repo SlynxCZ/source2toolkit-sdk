@@ -266,5 +266,19 @@ public static class CustomMethods
             "/// <summary>Give item.</summary>",
             "CBasePlayerWeapon* GiveNamedItem(const char* pszItem);"
         },
+
+
+        ["CPlayerControllerComponent"] = new()
+        {
+            "/// <summary>Get player controller.</summary>",
+            "CCSPlayerController* GetPlayerController();"
+        },
+
+
+        ["CPlayerPawnComponent"] = new()
+        {
+            "/// <summary>Get player pawn.</summary>",
+            "CCSPlayerPawn* GetPlayerPawn();"
+        },
     };
 }

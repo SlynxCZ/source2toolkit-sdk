@@ -13,10 +13,16 @@
 #include <cstdint>
 
 
+class CCSPlayerPawn;
+
 class CPlayerPawnComponent
 {
 public:
     DECLARE_SCHEMA_CLASS(CPlayerPawnComponent);
 
     SCHEMA_FIELD(CEntityInstance*, __m_pChainEntity);
+
+public:
+    /// <summary>Get player pawn.</summary>
+    CCSPlayerPawn* GetPlayerPawn();
 };

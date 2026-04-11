@@ -1,0 +1,11 @@
+﻿//
+// Created by Michal Přikryl on 11.04.2026.
+// Copyright (c) 2026 slynxcz. All rights reserved.
+//
+#include "CPlayerPawnComponent.h"
+
+#include "CCSPlayerPawn.h"
+
+CCSPlayerPawn* CPlayerPawnComponent::GetPlayerPawn() {
+    return static_cast<CCSPlayerPawn*>(__m_pChainEntity());
+}
