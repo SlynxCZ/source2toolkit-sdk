@@ -33,7 +33,7 @@ public:
     virtual ~IToolkitScheduler() = default;
 
     virtual void NextFrame(std::function<void()> &&task) = 0;
-    virtual Timer* AddTimer(float interval, TimerCallback callback, int flags = 0);
+    virtual Timer* AddTimer(float interval, TimerCallback callback, int flags = 0) = 0;
     virtual void KillTimer(Timer* timer) = 0;
 };
 
