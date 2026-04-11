@@ -119,7 +119,7 @@ public:
    Globals
    ========================= */
 
-#define PLUGIN_EXPOSE(name, var) \
+#define TOOLKIT_EXPOSE(name, var) \
     IToolkitAPI* g_ToolkitAPI = nullptr; \
     IToolkitPlugin* g_PluginAPI = nullptr; \
     PluginId g_PluginID = 0; \
@@ -130,7 +130,7 @@ public:
    Extern globals
    ========================= */
 
-#define PLUGIN_GLOBALVARS() \
+#define TOOLKIT_GLOBALVARS() \
     namespace KHook { extern IKHook* __exported__khook; } \
     extern IToolkitAPI* g_ToolkitAPI; \
     extern IToolkitPlugin* g_PluginAPI; \
@@ -140,8 +140,9 @@ public:
    Save vars (init)
    ========================= */
 
-#define PLUGIN_SAVEVARS() \
+#define TOOLKIT_SAVEVARS() \
     g_ToolkitAPI = api; \
+    KHook::__exported__khook = static_cast<KHook::IKhook*>(api->MetaFactory(MMIFACE_KHOOK, nullptr, nullptr)) \
     g_PluginAPI = static_cast<IToolkitPlugin*>(this); \
     g_PluginID = id;
 

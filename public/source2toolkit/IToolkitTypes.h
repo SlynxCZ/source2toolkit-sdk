@@ -14,7 +14,7 @@
 
 #ifndef SOURCE2TOOLKIT_CORE
 #include "IToolkitPlugin.h"
-PLUGIN_GLOBALVARS();
+TOOLKIT_GLOBALVARS();
 #endif
 
 /* =========================
