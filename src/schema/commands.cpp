@@ -34,26 +34,26 @@
 void UTIL_RegChatListener(const char* pchName, ChatHandler handler)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    return commandsManager.RegChatListener(pchName, handler);
+    commands::commandsManager.RegChatListener(pchName, handler);
 #else
-    return g_ToolkitAPI->Commands()->RegChatListener(pchName, handler);
+    g_ToolkitAPI->Commands()->RegChatListener(pchName, handler);
 #endif
 }
 
 void UTIL_RegConCommand(const char* pchName, ChatHandler handler)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    return commandsManager.RegConCommand(pchName, handler);
+    commands::commandsManager.RegConCommand(pchName, handler);
 #else
-    return g_ToolkitAPI->Commands()->RegConCommand(pchName, handler);
+    g_ToolkitAPI->Commands()->RegConCommand(pchName, handler);
 #endif
 }
 
 void UTIL_RegConListener(const char* pchName, CommandHandler handler, Mode mode)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    return commandsManager.RegConListener(pchName, handler, mode);
+    commands::commandsManager.RegConListener(pchName, handler, mode);
 #else
-    return g_ToolkitAPI->Commands()->RegConListener(pchName, handler, mode);
+    g_ToolkitAPI->Commands()->RegConListener(pchName, handler, mode);
 #endif
 }

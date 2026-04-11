@@ -34,8 +34,8 @@
 void UTIL_RegGameEvent(const char* pchName, GameEventHandler handler, Mode mode)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    return eventManager.RegGameEvent(pchName, handler, mode);
+    events::eventManager.RegGameEvent(pchName, handler, mode);
 #else
-    return g_ToolkitAPI->Events()->RegGameEvent(pchName, handler, mode);
+    g_ToolkitAPI->Events()->RegGameEvent(pchName, handler, mode);
 #endif
 }

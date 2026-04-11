@@ -34,7 +34,7 @@
 TraceResult UTIL_TraceShape(const Vector& vecStart, const QAngle& angAngles, CEntityInstance* pIgnoreEntity, TraceOptions* pTraceOptions)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    return rayTrace.TraceShape(vecStart, angAngles, pIgnoreEntity, pTraceOptions);
+    return raytrace::rayTrace.TraceShape(vecStart, angAngles, pIgnoreEntity, pTraceOptions);
 #else
     return g_ToolkitAPI->Trace()->TraceShape(vecStart, angAngles, pIgnoreEntity, pTraceOptions);
 #endif
@@ -43,7 +43,7 @@ TraceResult UTIL_TraceShape(const Vector& vecStart, const QAngle& angAngles, CEn
 TraceResult UTIL_TraceEndShape(const Vector& vecStart, const Vector& vecEnd, CEntityInstance* pIgnoreEntity, TraceOptions* pTraceOptions)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    return rayTrace.TraceEndShape(vecStart, vecEnd, pIgnoreEntity, pTraceOptions);
+    return raytrace::rayTrace.TraceEndShape(vecStart, vecEnd, pIgnoreEntity, pTraceOptions);
 #else
     return g_ToolkitAPI->Trace()->TraceEndShape(vecStart, vecEnd, pIgnoreEntity, pTraceOptions);
 #endif
@@ -52,7 +52,7 @@ TraceResult UTIL_TraceEndShape(const Vector& vecStart, const Vector& vecEnd, CEn
 TraceResult UTIL_TraceHullShape(const Vector& vecStart, const Vector& vecEnd, const Vector& vecMins, const Vector& vecMaxs, CEntityInstance* pIgnoreEntity, TraceOptions* pTraceOptions)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    return rayTrace.TraceHullShape(vecStart, vecEnd, vecMins, vecMaxs, pIgnoreEntity, pTraceOptions);
+    return raytrace::rayTrace.TraceHullShape(vecStart, vecEnd, vecMins, vecMaxs, pIgnoreEntity, pTraceOptions);
 #else
     return g_ToolkitAPI->Trace()->TraceHullShape(vecStart, vecEnd, vecMins, vecMaxs, pIgnoreEntity, pTraceOptions);
 #endif
@@ -61,7 +61,7 @@ TraceResult UTIL_TraceHullShape(const Vector& vecStart, const Vector& vecEnd, co
 TraceResult UTIL_TraceShapeEx(const Vector& vecStart, const Vector& vecEnd, CTraceFilter* pTraceFilter, Ray_t* pRay)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    return rayTrace.TraceShapeEx(vecStart, vecEnd, pTraceFilter, pRay);
+    return raytrace::rayTrace.TraceShapeEx(vecStart, vecEnd, pTraceFilter, pRay);
 #else
     return g_ToolkitAPI->Trace()->TraceShapeEx(vecStart, vecEnd, pTraceFilter, pRay);
 #endif

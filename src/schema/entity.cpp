@@ -79,9 +79,9 @@ void UTIL_AcceptInput(CEntityInstance* pTarget, const char* pszInput, CEntityIns
                       CEntityInstance* pCaller, const char* pszValue)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    return addresses::toolkitAddresses.AcceptInput(pTarget, pszInput, pActivator, pCaller, variant_t(pszValue), 0, nullptr);
+    addresses::toolkitAddresses.AcceptInput(pTarget, pszInput, pActivator, pCaller, variant_t(pszValue), 0, nullptr);
 #else
-    return g_ToolkitAPI->EntityIO()->AcceptInput(pTarget, pszInput, pActivator, pCaller, pszValue);
+    g_ToolkitAPI->EntityIO()->AcceptInput(pTarget, pszInput, pActivator, pCaller, pszValue);
 #endif
 }
 
@@ -89,9 +89,9 @@ void UTIL_AddEntityIOEvent(CEntityInstance* pTarget, const char* pszInput, CEnti
                            CEntityInstance* pCaller, const char* pszValue, float flDelay)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    return addresses::toolkitAddresses.AddEntityIOEvent(shared::g_pEntitySystem, pTarget, pszInput, pActivator, pCaller, variant_t(pszValue), flDelay, 0, nullptr, nullptr);
+    addresses::toolkitAddresses.AddEntityIOEvent(shared::g_pEntitySystem, pTarget, pszInput, pActivator, pCaller, variant_t(pszValue), flDelay, 0, nullptr, nullptr);
 #else
-    return g_ToolkitAPI->EntityIO()->AddEntityIOEvent(pTarget, pszInput, pActivator, pCaller, pszValue, flDelay);
+    g_ToolkitAPI->EntityIO()->AddEntityIOEvent(pTarget, pszInput, pActivator, pCaller, pszValue, flDelay);
 #endif
 }
 
