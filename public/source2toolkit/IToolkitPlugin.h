@@ -39,6 +39,7 @@ enum
    Export system (CreateInterface)
    ========================= */
 
+#define MMIFACE_KHOOK "IKHook"
 #define TOOLKIT_INTERFACE_NAME "S2ToolkitPlugin001"
 #define TOOLKIT_PLAPI_VERSION 1
 #define TOOLKIT_PLAPI_NAME "IToolkitPlugin"
