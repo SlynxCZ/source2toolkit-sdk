@@ -34,7 +34,7 @@
 void UTIL_NextFrame(std::function<void()> &&task)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    scheduler::toolkitScheduler.NextFrame(std::move(task));
+    toolkitScheduler.NextFrame(std::move(task));
 #else
     g_ToolkitAPI->Scheduler()->NextFrame(std::move(task));
 #endif
@@ -43,7 +43,7 @@ void UTIL_NextFrame(std::function<void()> &&task)
 Timer* UTIL_AddTimer(float interval, TimerCallback callback, int flags)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    return scheduler::toolkitScheduler.AddTimer(interval, callback, flags);
+    return toolkitScheduler.AddTimer(interval, callback, flags);
 #else
     return g_ToolkitAPI->Scheduler()->AddTimer(interval, callback, flags);
 #endif
@@ -52,7 +52,7 @@ Timer* UTIL_AddTimer(float interval, TimerCallback callback, int flags)
 void UTIL_KillTimer(Timer* timer)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    scheduler::toolkitScheduler.KillTimer(timer);
+    toolkitScheduler.KillTimer(timer);
 #else
     g_ToolkitAPI->Scheduler()->KillTimer(timer);
 #endif
