@@ -144,7 +144,7 @@ public:
 
 #define TOOLKIT_SAVEVARS() \
     g_ToolkitAPI = api; \
-    KHook::__exported__khook = static_cast<KHook::IKhook*>(api->MetaFactory(MMIFACE_KHOOK, nullptr, nullptr)) \
+    KHook::__exported__khook = static_cast<KHook::IKHook*>(api->MetaFactory(MMIFACE_KHOOK, nullptr, nullptr)) \
     g_PluginAPI = static_cast<IToolkitPlugin*>(this); \
     g_PluginID = id;
 
