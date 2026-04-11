@@ -60,6 +60,24 @@ class IToolkitAddresses
 public:
     virtual ~IToolkitAddresses() = default;
 
+    virtual void* GetModuleHandle(const char* moduleName) = 0;
+    virtual uintptr_t GetModuleBase(const char* moduleName) = 0;
+
+    virtual uintptr_t FindPattern(const char* moduleName, const char* pattern) = 0;
+    virtual uintptr_t FindPatternInSection(const char* moduleName, const char* section, const char* pattern) = 0;
+
+    virtual uintptr_t GetFunctionByName(const char* moduleName, const char* symbol) = 0;
+    virtual uintptr_t GetVirtualTableByName(const char* moduleName, const char* name) = 0;
+
+    virtual uintptr_t Offset(uintptr_t address, ptrdiff_t offset) = 0;
+    virtual uintptr_t OffsetSelf(uintptr_t& address, ptrdiff_t offset) = 0;
+
+    virtual uintptr_t Deref(uintptr_t address, int count = 1) = 0;
+    virtual uintptr_t DerefSelf(uintptr_t& address, int count = 1) = 0;
+
+    virtual uintptr_t ResolveRelativeAddress(uintptr_t address, ptrdiff_t offset = 0x0, ptrdiff_t size = 0x4) = 0;
+    virtual uintptr_t FollowNearCall(uintptr_t address, ptrdiff_t offset = 0x1, ptrdiff_t size = 0x5) = 0;
+
     virtual CBaseEntity_CreateEntityByName_t CBaseEntity_CreateEntityByName() = 0;
     virtual CBaseEntity_DispatchSpawn_t CBaseEntity_DispatchSpawn() = 0;
     virtual CBaseModelEntity_SetModel_t CBaseModelEntity_SetModel() = 0;
