@@ -119,6 +119,7 @@ public:
 /* =========================
    Globals
    ========================= */
+#include "khook.hpp"
 
 #define TOOLKIT_EXPOSE(name, var) \
     IToolkitAPI* g_ToolkitAPI = nullptr; \
