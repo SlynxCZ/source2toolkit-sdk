@@ -22,6 +22,7 @@ endif ()
 # HL2SDK
 # =========================
 
+set(KHOOK ${CMAKE_CURRENT_SOURCE_DIR}/vendor/khook)
 set(SOURCESDK ${CMAKE_CURRENT_SOURCE_DIR}/vendor/hl2sdk-cs2)
 set(SOURCESDK_LIB ${SOURCESDK}/lib)
 set(CSGO_PROTO_DIR ${CMAKE_CURRENT_SOURCE_DIR}/vendor/Protobufs/csgo)
@@ -164,7 +165,6 @@ target_link_libraries(source2toolkit-sdk PUBLIC
 
 target_include_directories(source2toolkit-sdk PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/public
-
         ${SOURCESDK}
         ${SOURCESDK}/thirdparty/protobuf-3.21.8/src
         ${SOURCESDK}/common
@@ -179,6 +179,12 @@ target_include_directories(source2toolkit-sdk PUBLIC
         ${SOURCESDK}/public/game/server
         ${SOURCESDK}/public/schemasystem
 )
+
+if (NOT SOURCE2TOOLKIT_CORE)
+    target_include_directories(source2toolkit-sdk PUBLIC
+            ${KHOOK}/include
+    )
+endif()
 
 # =========================
 # LINK SDK DEPENDENCIES
