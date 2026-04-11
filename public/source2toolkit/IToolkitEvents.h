@@ -32,7 +32,7 @@ class IToolkitEvents
 public:
     virtual ~IToolkitEvents() = default;
 
-    virtual void RegGameEvent(const char* pchName, GameEventHandler handler, Mode mode) = 0;
+    virtual void RegGameEvent(PluginId owner, const char* pchName, GameEventHandler handler, Mode mode) = 0;
 };
 
 #endif //_INCLUDE_ITOOLKIT_EVENTS_H

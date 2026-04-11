@@ -33,9 +33,9 @@ class IToolkitCommands
 public:
     virtual ~IToolkitCommands() = default;
 
-    virtual void RegChatListener(const char* pchName, ChatHandler handler) = 0;
-    virtual void RegConCommand(const char* pchName, ChatHandler handler) = 0;
-    virtual void RegConListener(const char* pchName, CommandHandler handler, Mode mode) = 0;
+    virtual void RegChatListener(PluginId owner, const char* pchName, ChatHandler handler) = 0;
+    virtual void RegConCommand(PluginId owner, const char* pchName, ChatHandler handler) = 0;
+    virtual void RegConListener(PluginId owner, const char* pchName, CommandHandler handler, Mode mode) = 0;
 };
 
 #endif //_INCLUDE_ITOOLKIT_COMMANDS_H

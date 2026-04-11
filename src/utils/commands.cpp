@@ -40,17 +40,26 @@ static IToolkitCommands* GetCommands()
 #endif
 }
 
+static PluginId GetPluginId()
+{
+#ifdef SOURCE2TOOLKIT_CORE
+    return 0;
+#else
+    return g_PluginID;
+#endif
+}
+
 void UTIL_RegChatListener(const char* pchName, ChatHandler handler)
 {
-    GetCommands()->RegChatListener(pchName, handler);
+    GetCommands()->RegChatListener(GetPluginId(), pchName, handler);
 }
 
 void UTIL_RegConCommand(const char* pchName, ChatHandler handler)
 {
-    GetCommands()->RegConCommand(pchName, handler);
+    GetCommands()->RegConCommand(GetPluginId(), pchName, handler);
 }
 
 void UTIL_RegConListener(const char* pchName, CommandHandler handler, Mode mode)
 {
-    GetCommands()->RegConListener(pchName, handler, mode);
+    GetCommands()->RegConListener(GetPluginId(), pchName, handler, mode);
 }

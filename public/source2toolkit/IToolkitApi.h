@@ -29,16 +29,17 @@ class INetworkServerService;
 class CGameEntitySystem;
 class CSchemaSystem;
 class IGameEventManager2;
+class IToolkitAddresses;
 class IToolkitAPI;
-class IToolkitScheduler;
-class IToolkitTrace;
+class IToolkitCommands;
+class IToolkitConVars;
 class IToolkitGameConfig;
 class IToolkitEntityIO;
 class IToolkitEvents;
-class IToolkitCommands;
-class IToolkitAddresses;
 class IToolkitListener;
 class IToolkitPlugin;
+class IToolkitScheduler;
+class IToolkitTrace;
 
 typedef void* (*CreateInterfaceFn)(const char *pName, int *pReturnCode);
 
@@ -71,6 +72,7 @@ public:
 
     virtual IToolkitAddresses* Addresses() = 0;
     virtual IToolkitCommands* Commands() = 0;
+    virtual IToolkitConVars* ConVars() = 0;
     virtual IToolkitEntityIO* EntityIO() = 0;
     virtual IToolkitEvents* Events() = 0;
     virtual IToolkitGameConfig* GameConfig() = 0;

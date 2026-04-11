@@ -1,9 +1,9 @@
 ﻿//
-// Created by Michal Přikryl on 11.03.2026.
+// Created by Michal Přikryl on 11.04.2026.
 // Copyright (c) 2026 slynxcz. All rights reserved.
 //
 /**
- * =============================================================================
+* =============================================================================
  * CS2Fixes
  * Copyright (C) 2023-2026 Source2ZE
  * =============================================================================
@@ -20,36 +20,33 @@
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "source2toolkit/utils/events.h"
+
+#pragma once
 
 #ifdef SOURCE2TOOLKIT_CORE
-#include "core/shared.h"
-#include "core/events.h"
+#include "core/convars.h"
 #else
-#include "source2toolkit/IToolkitApi.h"
-#include "source2toolkit/IToolkitEvents.h"
-#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/IToolkitConVars.h"
 #endif
 
-static IToolkitEvents* GetEvents()
-{
-#ifdef SOURCE2TOOLKIT_CORE
-    return &events::eventManager;
-#else
-    return g_ToolkitAPI->Events();
-#endif
-}
+uint16 UTIL_FindConVar(const char* name);
 
-static PluginId GetPluginId()
-{
-#ifdef SOURCE2TOOLKIT_CORE
-    return 0;
-#else
-    return g_PluginID;
-#endif
-}
+int UTIL_GetConVarInt(uint16 accessIndex);
 
-void UTIL_RegGameEvent(const char* pchName, GameEventHandler handler, Mode mode)
-{
-    GetEvents()->RegGameEvent(GetPluginId(), pchName, handler, mode);
-}
+float UTIL_GetConVarFloat(uint16 accessIndex);
+
+bool UTIL_GetConVarBool(uint16 accessIndex);
+
+void UTIL_SetConVarInt(uint16 accessIndex, int value);
+
+void UTIL_SetConVarFloat(uint16 accessIndex, float value);
+
+void UTIL_SetConVarBool(uint16 accessIndex, bool value);
+
+const char* UTIL_GetConVarString(uint16 accessIndex);
+
+void UTIL_SetConVarString(uint16 accessIndex, const char* value);
+
+void* UTIL_GetConVarValueAddress(uint16 accessIndex);
+
+void UTIL_SetConVarValue(uint16 accessIndex, const void* value);
