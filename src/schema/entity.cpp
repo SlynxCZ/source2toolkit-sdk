@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "entity.h"
+#include "source2toolkit/schema/entity.h"
 
 #ifdef SOURCE2TOOLKIT_CORE
 #include "core/shared.h"
@@ -35,10 +35,10 @@
 #include "source2toolkit/IToolkitPlugin.h"
 #endif
 
-#include "entity/classes/cgamerules.h"
+#include "source2toolkit/schema/entity/classes/cgamerules.h"
 #include "entitysystem.h"
 #include "platform.h"
-#include "entity/classes/CBasePlayerWeapon.h"
+#include "source2toolkit/schema/entity/classes/CBasePlayerWeapon.h"
 #include "source2toolkit/utils/virtual.h"
 
 #include "tier0/memdbgon.h"
