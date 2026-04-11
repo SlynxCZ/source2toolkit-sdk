@@ -31,29 +31,26 @@
 #include "source2toolkit/IToolkitTypes.h"
 #endif
 
-void UTIL_RegChatListener(const char* pchName, ChatHandler handler)
+static IToolkitCommands* GetCommands()
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    commands::commandsManager.RegChatListener(pchName, handler);
+    return &commands::commandsManager;
 #else
-    g_ToolkitAPI->Commands()->RegChatListener(pchName, handler);
+    return g_ToolkitAPI->Commands();
 #endif
+}
+
+void UTIL_RegChatListener(const char* pchName, ChatHandler handler)
+{
+    GetCommands()->RegChatListener(pchName, handler);
 }
 
 void UTIL_RegConCommand(const char* pchName, ChatHandler handler)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    commands::commandsManager.RegConCommand(pchName, handler);
-#else
-    g_ToolkitAPI->Commands()->RegConCommand(pchName, handler);
-#endif
+    GetCommands()->RegConCommand(pchName, handler);
 }
 
 void UTIL_RegConListener(const char* pchName, CommandHandler handler, Mode mode)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    commands::commandsManager.RegConListener(pchName, handler, mode);
-#else
-    g_ToolkitAPI->Commands()->RegConListener(pchName, handler, mode);
-#endif
+    GetCommands()->RegConListener(pchName, handler, mode);
 }

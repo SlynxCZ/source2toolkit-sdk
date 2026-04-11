@@ -31,38 +31,31 @@
 #include "source2toolkit/IToolkitTypes.h"
 #endif
 
-TraceResult UTIL_TraceShape(const Vector& vecStart, const QAngle& angAngles, CEntityInstance* pIgnoreEntity, TraceOptions* pTraceOptions)
+static IToolkitTrace* GetTrace()
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    return raytrace::rayTrace.TraceShape(vecStart, angAngles, pIgnoreEntity, pTraceOptions);
+    return &raytrace::rayTrace;
 #else
-    return g_ToolkitAPI->Trace()->TraceShape(vecStart, angAngles, pIgnoreEntity, pTraceOptions);
+    return g_ToolkitAPI->Trace();
 #endif
+}
+
+TraceResult UTIL_TraceShape(const Vector& vecStart, const QAngle& angAngles, CEntityInstance* pIgnoreEntity, TraceOptions* pTraceOptions)
+{
+    return GetTrace()->TraceShape(vecStart, angAngles, pIgnoreEntity, pTraceOptions);
 }
 
 TraceResult UTIL_TraceEndShape(const Vector& vecStart, const Vector& vecEnd, CEntityInstance* pIgnoreEntity, TraceOptions* pTraceOptions)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return raytrace::rayTrace.TraceEndShape(vecStart, vecEnd, pIgnoreEntity, pTraceOptions);
-#else
-    return g_ToolkitAPI->Trace()->TraceEndShape(vecStart, vecEnd, pIgnoreEntity, pTraceOptions);
-#endif
+    return GetTrace()->TraceEndShape(vecStart, vecEnd, pIgnoreEntity, pTraceOptions);
 }
 
 TraceResult UTIL_TraceHullShape(const Vector& vecStart, const Vector& vecEnd, const Vector& vecMins, const Vector& vecMaxs, CEntityInstance* pIgnoreEntity, TraceOptions* pTraceOptions)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return raytrace::rayTrace.TraceHullShape(vecStart, vecEnd, vecMins, vecMaxs, pIgnoreEntity, pTraceOptions);
-#else
-    return g_ToolkitAPI->Trace()->TraceHullShape(vecStart, vecEnd, vecMins, vecMaxs, pIgnoreEntity, pTraceOptions);
-#endif
+    return GetTrace()->TraceHullShape(vecStart, vecEnd, vecMins, vecMaxs, pIgnoreEntity, pTraceOptions);
 }
 
 TraceResult UTIL_TraceShapeEx(const Vector& vecStart, const Vector& vecEnd, CTraceFilter* pTraceFilter, Ray_t* pRay)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return raytrace::rayTrace.TraceShapeEx(vecStart, vecEnd, pTraceFilter, pRay);
-#else
-    return g_ToolkitAPI->Trace()->TraceShapeEx(vecStart, vecEnd, pTraceFilter, pRay);
-#endif
+    return GetTrace()->TraceShapeEx(vecStart, vecEnd, pTraceFilter, pRay);
 }

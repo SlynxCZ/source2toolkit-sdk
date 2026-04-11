@@ -31,29 +31,26 @@
 #include "source2toolkit/IToolkitTypes.h"
 #endif
 
-void UTIL_NextFrame(std::function<void()> &&task)
+static IToolkitScheduler* GetScheduler()
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    toolkitScheduler.NextFrame(std::move(task));
+    return &toolkitScheduler;
 #else
-    g_ToolkitAPI->Scheduler()->NextFrame(std::move(task));
+    return g_ToolkitAPI->Scheduler();
 #endif
+}
+
+void UTIL_NextFrame(std::function<void()> &&task)
+{
+    GetScheduler()->NextFrame(std::move(task));
 }
 
 Timer* UTIL_AddTimer(float interval, TimerCallback callback, int flags)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return toolkitScheduler.AddTimer(interval, callback, flags);
-#else
-    return g_ToolkitAPI->Scheduler()->AddTimer(interval, callback, flags);
-#endif
+    return GetScheduler()->AddTimer(interval, callback, flags);
 }
 
 void UTIL_KillTimer(Timer* timer)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    toolkitScheduler.KillTimer(timer);
-#else
-    g_ToolkitAPI->Scheduler()->KillTimer(timer);
-#endif
+    GetScheduler()->KillTimer(timer);
 }

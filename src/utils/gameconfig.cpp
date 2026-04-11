@@ -31,47 +31,36 @@
 #include "source2toolkit/IToolkitTypes.h"
 #endif
 
-const char* UTIL_GetLibrary(const char* pchName)
+static IToolkitGameConfig* GetGameConfig()
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    return shared::g_pGameConfig->GetLibrary(pchName);
+    return shared::g_pGameConfig;
 #else
-    return g_ToolkitAPI->GameConfig()->GetLibrary(pchName);
+    return g_ToolkitAPI->GameConfig();
 #endif
+}
+
+const char* UTIL_GetLibrary(const char* pchName)
+{
+    return GetGameConfig()->GetLibrary(pchName);
 }
 
 const char* UTIL_GetSignature(const char* pchName)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return shared::g_pGameConfig->GetSignature(pchName);
-#else
-    return g_ToolkitAPI->GameConfig()->GetSignature(pchName);
-#endif
+    return GetGameConfig()->GetSignature(pchName);
 }
 
 const char* UTIL_GetSymbol(const char* pchName)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return shared::g_pGameConfig->GetSymbol(pchName);
-#else
-    return g_ToolkitAPI->GameConfig()->GetSymbol(pchName);
-#endif
+    return GetGameConfig()->GetSymbol(pchName);
 }
 
 const char* UTIL_GetPatch(const char* pchName)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return shared::g_pGameConfig->GetPatch(pchName);
-#else
-    return g_ToolkitAPI->GameConfig()->GetPatch(pchName);
-#endif
+    return GetGameConfig()->GetPatch(pchName);
 }
 
 int UTIL_GetOffset(const char* pchName)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return shared::g_pGameConfig->GetOffset(pchName);
-#else
-    return g_ToolkitAPI->GameConfig()->GetOffset(pchName);
-#endif
+    return GetGameConfig()->GetOffset(pchName);
 }

@@ -31,11 +31,16 @@
 #include "source2toolkit/IToolkitTypes.h"
 #endif
 
-void UTIL_RegGameEvent(const char* pchName, GameEventHandler handler, Mode mode)
+static IToolkitEvents* GetEvents()
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    events::eventManager.RegGameEvent(pchName, handler, mode);
+    return &events::eventManager;
 #else
-    g_ToolkitAPI->Events()->RegGameEvent(pchName, handler, mode);
+    return g_ToolkitAPI->Events();
 #endif
+}
+
+void UTIL_RegGameEvent(const char* pchName, GameEventHandler handler, Mode mode)
+{
+    GetEvents()->RegGameEvent(pchName, handler, mode);
 }
