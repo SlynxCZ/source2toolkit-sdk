@@ -1,25 +1,17 @@
-﻿//
-// Created by Michal Přikryl on 11.04.2026.
-// Copyright (c) 2026 slynxcz. All rights reserved.
-//
-/**
-* =============================================================================
- * CS2Fixes
- * Copyright (C) 2023-2026 Source2ZE
- * =============================================================================
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, version 3.0, as published by the
- * Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+﻿/**
+
+* @file scheduler.h
+* @brief High-level helper functions for task scheduling and timers.
+*
+* These functions provide simplified access to the IToolkitScheduler interface.
+*
+* Used for:
+* * Delayed execution
+* * Repeating tasks
+* * Frame-based callbacks
+*
+* @note Internally wraps IToolkitScheduler.
+  */
 
 #pragma once
 
@@ -27,12 +19,55 @@
 #include "core/shared.h"
 #include "utils/scheduler.h"
 #else
-#include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitScheduler.h"
 #endif
 
-void UTIL_NextFrame(std::function<void()> &&task);
+/**
 
+* @brief Executes a task on the next frame.
+*
+* @param task Callback to execute
+*
+* @note Useful when you need to defer execution (e.g. after entity spawn)
+*
+* @code
+* UTIL_NextFrame([]() {
+* ```
+  printf("Executed next frame\n");
+  ```
+* });
+* @endcode
+  */
+void UTIL_NextFrame(std::function<void()>&& task);
+
+/**
+
+* @brief Adds a timer.
+*
+* @param interval Time in seconds between executions
+* @param callback Function to execute
+* @param flags Timer behavior flags
+*
+* @return Pointer to created timer
+*
+* @note Wrapper around IToolkitScheduler::AddTimer()
+*
+* @code
+* UTIL_AddTimer(1.0f, []() {
+* ```
+  printf("Runs every second\n");
+  ```
+* }, TIMER_FLAG_REPEAT);
+* @endcode
+  */
 Timer* UTIL_AddTimer(float interval, TimerCallback callback, int flags = 0);
 
+/**
+
+* @brief Removes (kills) a timer.
+*
+* @param timer Timer instance
+*
+* @note Wrapper around IToolkitScheduler::KillTimer()
+  */
 void UTIL_KillTimer(Timer* timer);

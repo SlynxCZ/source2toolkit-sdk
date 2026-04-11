@@ -1,17 +1,18 @@
-﻿//
-// Created by Michal Přikryl on 02.03.2026.
-// Copyright (c) 2026 slynxcz. All rights reserved.
-//
+﻿/**
+
+* @file schema.h
+* @brief Schema system utilities for accessing and modifying entity fields.
+*
+* Provides:
+* * Runtime field offset resolution (via SchemaSystem)
+* * Safe access to entity properties
+* * Automatic network state updates
+* * Compile-time hashing for fast lookup
+*
+* @note This system is similar to Source2 schema/netvar access.
+  */
+
 #pragma once
-
-#ifdef _WIN32
-	#pragma warning(push)
-	#pragma warning(disable : 4005)
-#endif
-
-#ifdef _WIN32
-	#pragma warning(pop)
-#endif
 
 #include "igameevents.h"
 #include "igameeventsystem.h"
@@ -25,8 +26,14 @@
 #include <type_traits>
 #include <cstdint>
 
-#undef schema
+/* =========================
+Engine interface getters
+========================= */
 
+/**
+
+* @brief Global accessors for engine interfaces.
+  */
 IGameEventManager2* GetGameEventManager();
 CGlobalVars* GetGlobalVars();
 ICvar* GetCVar();
@@ -38,12 +45,27 @@ INetworkServerService* GetNetworkServerService();
 CGameEntitySystem* GetEntitySystem();
 CSchemaSystem* GetSchemaSystem();
 
+/* =========================
+Schema core types
+========================= */
+
+/**
+
+* @brief Represents schema offset information.
+  */
 struct SchemaKey
 {
+    /// Offset of the field
     int32 offset;
+
+    /// True if field is networked
     bool networked;
 };
 
+/**
+
+* @brief Helper for networked variable propagation.
+  */
 class CNetworkVarChainer2
 {
 public:
@@ -59,75 +81,120 @@ private:
     uint8 pad_0024[4];
 };
 
-template<typename T>
+/* =========================
+Strong handle wrapper
+========================= */
+
+/**
+
+* @brief Lightweight wrapper for entity pointers.
+  */
+template <typename T>
 class CStrongHandle
 {
 private:
-	T* m_pValue;
+    T* m_pValue;
 
 public:
-	T* Get() const
-	{
-		return m_pValue;
-	}
+    T* Get() const { return m_pValue; }
+    void Set(void* pPtr) { m_pValue = pPtr; }
 
-	void Set(void* pPtr)
-	{
-		m_pValue = pPtr;
-	}
+    bool IsValid() const { return m_pValue != nullptr; }
 
-	bool IsValid() const
-	{
-		return m_pValue != nullptr;
-	}
-
-	T* operator->() const
-	{
-		return m_pValue;
-	}
-
-	operator T*() const
-	{
-		return m_pValue;
-	}
+    T* operator->() const { return m_pValue; }
+    operator T*() const { return m_pValue; }
 };
+
+/* =========================
+Network state helpers
+========================= */
 
 void EntityNetworkStateChanged(uintptr_t pEntity, uint nOffset);
 void ChainNetworkStateChanged(uintptr_t pNetworkVarChainer, uint nOffset);
 void NetworkVarStateChanged(uintptr_t pNetworkVar, uint32_t nOffset, uint32 nNetworkStateChangedOffset);
 
+/* =========================
+Schema API
+========================= */
+
 namespace schema
 {
+    /**
+    * @brief Finds chain offset for a class.
+    */
     int16_t FindChainOffset(const char* className, uint32_t classNameHash);
+
     int16_t FindChainOffset(const char* className);
-    SchemaKey GetOffset(const char* className, uint32_t classKey, const char* memberName, uint32_t memberKey);
+
+    /**
+     * @brief Gets schema offset for a field.
+     */
+    SchemaKey GetOffset(const char* className, uint32_t classKey,
+                        const char* memberName, uint32_t memberKey);
+
+    /**
+     * @brief Gets server offset (fallback).
+     */
     int32_t GetServerOffset(const char* pszClassName, const char* pszPropName);
+
+    /**
+     * @brief Gets class size.
+     */
     int32_t GetClassSize(const char* className);
-	void SetStateChanged(CEntityInstance* entity, const char* className, const char* propName);
-} // namespace schema
 
-constexpr uint32_t val_32_const = 0x811c9dc5;
-constexpr uint32_t prime_32_const = 0x1000193;
-constexpr uint64_t val_64_const = 0xcbf29ce484222325;
-constexpr uint64_t prime_64_const = 0x100000001b3;
-
-inline constexpr uint32_t hash_32_fnv1a_const(const char* const str, const uint32_t value = val_32_const) noexcept
-{
-    return (str[0] == '\0') ? value : hash_32_fnv1a_const(&str[1], (value ^ uint32_t(str[0])) * prime_32_const);
+    /**
+     * @brief Marks field as changed (network update).
+     */
+    void SetStateChanged(CEntityInstance* entity, const char* className, const char* propName);
 }
 
-inline constexpr uint64_t hash_64_fnv1a_const(const char* const str, const uint64_t value = val_64_const) noexcept
+/* =========================
+Compile-time hashing
+========================= */
+
+/**
+
+* @brief FNV-1a 32-bit hash (constexpr).
+  */
+inline constexpr uint32_t hash_32_fnv1a_const(const char* const str,
+                                              const uint32_t value = 0x811c9dc5) noexcept
 {
-    return (str[0] == '\0') ? value : hash_64_fnv1a_const(&str[1], (value ^ uint64_t(str[0])) * prime_64_const);
+    return (str[0] == '\0')
+               ? value
+               : hash_32_fnv1a_const(&str[1], (value ^ uint32_t(str[0])) * 0x1000193);
 }
 
+/**
+
+* @brief FNV-1a 64-bit hash (constexpr).
+  */
+inline constexpr uint64_t hash_64_fnv1a_const(const char* const str,
+                                              const uint64_t value = 0xcbf29ce484222325) noexcept
+{
+    return (str[0] == '\0')
+               ? value
+               : hash_64_fnv1a_const(&str[1], (value ^ uint64_t(str[0])) * 0x100000001b3);
+}
+
+/* =========================
+Writable trait
+========================= */
+
+/**
+
+* @brief Determines if schema field can be written directly.
+  */
 template <typename T>
 inline constexpr bool schema_writable_v =
-	std::is_pointer_v<T> ||
-	std::is_trivially_copyable_v<T> ||
-	std::is_same_v<T, Vector> ||
-	std::is_same_v<T, QAngle> ||
-	std::is_same_v<T, Color>;
+    std::is_pointer_v<T> ||
+    std::is_trivially_copyable_v<T> ||
+    std::is_same_v<T, Vector> ||
+    std::is_same_v<T, QAngle> ||
+    std::is_same_v<T, Color>;
+
+/* =========================
+Schema field macros
+========================= */
 
 #define SCHEMA_FIELD_OFFSET(type, varName, extra_offset)                                                                     \
 	class varName##_prop                                                                                                     \
@@ -284,22 +351,26 @@ inline constexpr bool schema_writable_v =
 		static constexpr auto m_varNameHash = hash_32_fnv1a_const(#varName);                                                 \
 	} varName;
 
-                                                    // Use this when you want the member's value itself
+/**
+
+* @brief Declares schema field (auto offset + network update).
+*
+* @note This macro generates a wrapper class that:
+* * Resolves offset via schema
+* * Provides Get/Set
+* * Automatically updates network state
+* * Use this when you want the member's value itself
+    */
 #define SCHEMA_FIELD(type, varName) \
 	SCHEMA_FIELD_OFFSET(type, varName, 0)
 
-                                                    // Use this when you want a pointer to a member
+/**
+
+* @brief Declares pointer schema field.
+* * Use this when you want a pointer to a member
+  */
 #define SCHEMA_FIELD_POINTER(type, varName) \
 	SCHEMA_FIELD_POINTER_OFFSET(type, varName, 0)
-
-                                                    // If the class needs a specific offset for its NetworkStateChanged (like CEconItemView), use this and provide the offset
-#define DECLARE_SCHEMA_CLASS_BASE(ClassName, offset)								\
-	private:																		\
-		typedef ClassName ThisClass;												\
-		static constexpr const char* m_className = #ClassName;						\
-		static constexpr uint32_t m_classNameHash = hash_32_fnv1a_const(#ClassName);\
-		static constexpr int m_networkStateChangedOffset = offset;					\
-	public:
 
 #define SCHEMA_FIELD_OLD(type, className, propName)                                                    \
     std::add_lvalue_reference_t<type> propName()                                                       \
@@ -310,10 +381,28 @@ inline constexpr bool schema_writable_v =
         return *reinterpret_cast<std::add_pointer_t<type>>(reinterpret_cast<intptr_t>(this) + offset); \
     }
 
+/* =========================
+Schema class macros
+========================= */
+
+/**
+
+* @brief Declares schema-enabled class.
+* * If the class needs a specific offset for its NetworkStateChanged (like CEconItemView), use this and provide the offset
+  */
+#define DECLARE_SCHEMA_CLASS_BASE(ClassName, offset)								\
+	private:																		\
+		typedef ClassName ThisClass;												\
+		static constexpr const char* m_className = #ClassName;						\
+		static constexpr uint32_t m_classNameHash = hash_32_fnv1a_const(#ClassName);\
+		static constexpr int m_networkStateChangedOffset = offset;					\
+	public:
 #define DECLARE_SCHEMA_CLASS(className) DECLARE_SCHEMA_CLASS_BASE(className, 0)
+/**
 
-                                                    // Use this for non-entity classes such as CCollisionProperty or CGlowProperty
-                                                    // The only difference is that their NetworkStateChanged function is index 1 on their vtable rather than being CEntityInstance::NetworkStateChanged
-                                                    // Though some classes like CGameRules will instead use their CNetworkVarChainer as a link back to the parent entity
+* @brief Declares inline schema class (non-entity).
+* * Use this for non-entity classes such as CCollisionProperty or CGlowProperty
+* * The only difference is that their NetworkStateChanged function is index 1 on their vtable rather than being CEntityInstance::NetworkStateChanged
+* * Though some classes like CGameRules will instead use their CNetworkVarChainer as a link back to the parent entity
+  */
 #define DECLARE_SCHEMA_CLASS_INLINE(className) DECLARE_SCHEMA_CLASS_BASE(className, 1)
-

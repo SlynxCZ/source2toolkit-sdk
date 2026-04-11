@@ -1,25 +1,13 @@
-﻿//
-// Created by Michal Přikryl on 11.04.2026.
-// Copyright (c) 2026 slynxcz. All rights reserved.
-//
-/**
-* =============================================================================
- * CS2Fixes
- * Copyright (C) 2023-2026 Source2ZE
- * =============================================================================
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, version 3.0, as published by the
- * Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+﻿/**
+
+* @file events.h
+* @brief High-level helper functions for game event handling.
+*
+* These functions provide simplified access to the IToolkitEvents interface,
+* allowing plugins to register callbacks for Source2 game events.
+*
+* @note Internally wraps IToolkitEvents.
+  */
 
 #pragma once
 
@@ -29,4 +17,35 @@
 #include "source2toolkit/IToolkitEvents.h"
 #endif
 
+/**
+
+* @brief Registers a game event listener.
+*
+* @param pchName Event name (e.g. "player_death", "round_start")
+* @param handler Callback executed when the event is fired
+* @param mode Execution mode (Pre = before engine processing, Post = after)
+*
+* @param handler parameters:
+* * event: Pointer to game event data
+* * mode: Execution mode (Pre/Post)
+* * dontBroadcast: Set to true to prevent event from being broadcast to clients
+*
+* @return Action:
+* * Ignore: no changes
+* * Override: modify event but still allow original processing (Pre only)
+* * Supersede: block original processing (Pre only)
+*
+* @note Wrapper around IToolkitEvents::RegGameEvent()
+*
+* @code
+* UTIL_RegGameEvent("player_death", [](IGameEvent* event, Mode mode, bool& dontBroadcast) {
+* ```
+  dontBroadcast = true; // hide event from clients
+  ```
+* ```
+  return Action::Ignore;
+  ```
+* }, Mode::Pre);
+* @endcode
+  */
 void UTIL_RegGameEvent(const char* pchName, GameEventHandler handler, Mode mode);

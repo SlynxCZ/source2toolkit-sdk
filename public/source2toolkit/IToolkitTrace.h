@@ -1,7 +1,16 @@
-﻿//
-// Created by Michal Přikryl on 10.04.2026.
-// Copyright (c) 2026 slynxcz.
-//
+﻿/**
+
+* @file IToolkitTrace.h
+* @brief Interface and utilities for ray tracing and collision queries.
+*
+* This module provides functionality for:
+* * Raycasting (line traces)
+* * Hull traces (box collision)
+* * Physics queries
+* * Visibility and hit detection
+*
+* @note Commonly used for shooting, line-of-sight checks and movement.
+  */
 
 #ifndef _INCLUDE_ITOOLKIT_TRACE_H
 #define _INCLUDE_ITOOLKIT_TRACE_H
@@ -16,11 +25,26 @@
 #include <cstdio>
 
 /* =========================
-   Forward declarations
-   ========================= */
+Forward declarations
+========================= */
 
 class CTraceFilterEx;
 
+/* =========================
+Interaction layers
+========================= */
+
+/**
+
+* @brief Bitmask describing collision layers.
+*
+* These flags define what objects a trace interacts with.
+* They can be combined using bitwise operators.
+*
+* @code
+* InteractionLayers mask = InteractionLayers::Solid | InteractionLayers::Player;
+* @endcode
+  */
 enum class InteractionLayers : uint64_t
 {
     Solid = 0x1,
@@ -64,6 +88,11 @@ enum class InteractionLayers : uint64_t
     csgo_thrown_grenade = 0x8000000000
 };
 
+/* =========================
+Bitmask operators
+========================= */
+
+/// Combines two interaction layers
 constexpr InteractionLayers operator|(InteractionLayers a, InteractionLayers b)
 {
     return static_cast<InteractionLayers>(
@@ -71,6 +100,7 @@ constexpr InteractionLayers operator|(InteractionLayers a, InteractionLayers b)
     );
 }
 
+/// Intersects two interaction layers
 constexpr InteractionLayers operator&(InteractionLayers a, InteractionLayers b)
 {
     return static_cast<InteractionLayers>(
@@ -78,6 +108,7 @@ constexpr InteractionLayers operator&(InteractionLayers a, InteractionLayers b)
     );
 }
 
+/// Inverts interaction layers
 constexpr InteractionLayers operator~(InteractionLayers a)
 {
     return static_cast<InteractionLayers>(
@@ -85,13 +116,18 @@ constexpr InteractionLayers operator~(InteractionLayers a)
     );
 }
 
+/// OR-assign operator
 constexpr InteractionLayers& operator|=(InteractionLayers& a, InteractionLayers b)
 {
     a = a | b;
     return a;
 }
 
-/// Custom base (0x2C3011, using this as default in my plugins)
+/* =========================
+Common masks
+========================= */
+
+/// Default physics trace (used for bullets)
 constexpr InteractionLayers MASK_SHOT_PHYSICS =
     InteractionLayers::Solid |
     InteractionLayers::PlayerClip |
@@ -101,49 +137,57 @@ constexpr InteractionLayers MASK_SHOT_PHYSICS =
     InteractionLayers::NPC |
     InteractionLayers::Physics_Prop;
 
-/// Only hitboxes (headshots etc.)
+/// Hitboxes only (useful for headshots)
 constexpr InteractionLayers MASK_SHOT_HITBOX =
     InteractionLayers::Hitboxes |
     InteractionLayers::Player |
     InteractionLayers::NPC;
 
-/// Physics + hitboxes (full bullet trace)
+/// Full bullet trace (physics + hitboxes)
 constexpr InteractionLayers MASK_SHOT_FULL =
     MASK_SHOT_PHYSICS |
     InteractionLayers::Hitboxes;
 
-/// World only (no entities)
+/// World-only collision
 constexpr InteractionLayers MASK_WORLD_ONLY =
     InteractionLayers::Solid |
     InteractionLayers::Window |
     InteractionLayers::PassBullets;
 
-/// Grenade trace
+/// Grenade trace mask
 constexpr InteractionLayers MASK_GRENADE =
     InteractionLayers::Solid |
     InteractionLayers::Window |
     InteractionLayers::Physics_Prop |
     InteractionLayers::PassBullets;
 
-/// Brush only
+/// Brush-only collision
 constexpr InteractionLayers MASK_BRUSH_ONLY =
     InteractionLayers::Solid |
     InteractionLayers::Window;
 
-/// Movement (player)
+/// Player movement collision
 constexpr InteractionLayers MASK_PLAYER_MOVE =
     InteractionLayers::Solid |
     InteractionLayers::Window |
     InteractionLayers::PlayerClip |
     InteractionLayers::PassBullets;
 
-/// Movement (NPC)
+/// NPC movement collision
 constexpr InteractionLayers MASK_NPC_MOVE =
     InteractionLayers::Solid |
     InteractionLayers::Window |
     InteractionLayers::NPCClip |
     InteractionLayers::PassBullets;
 
+/* =========================
+Trace options
+========================= */
+
+/**
+
+* @brief Options controlling trace behavior.
+  */
 struct TraceOptions
 {
     uint64_t InteractsAs = 0;
@@ -151,6 +195,17 @@ struct TraceOptions
     uint64_t InteractsExclude = 0;
 };
 
+/* =========================
+Trace result
+========================= */
+
+/**
+
+* @brief Result of a trace query.
+*
+* Contains information about collision, hit entity,
+* hit position, surface data, and more.
+  */
 struct TraceResult
 {
     TraceResult() = default;
@@ -248,18 +303,55 @@ private:
 };
 
 /* =========================
-   Core Toolkit Trace
-   ========================= */
+Core Toolkit Trace
+========================= */
 
+/**
+
+* @brief Interface for performing trace operations.
+  */
 class IToolkitTrace
 {
 public:
     virtual ~IToolkitTrace() = default;
 
-    virtual TraceResult TraceShape(const Vector& vecStart, const QAngle& angAngles, CEntityInstance* pIgnoreEntity, TraceOptions* pTraceOptions) = 0;
-    virtual TraceResult TraceEndShape(const Vector& vecStart, const Vector& vecEnd, CEntityInstance* pIgnoreEntity, TraceOptions* pTraceOptions) = 0;
-    virtual TraceResult TraceHullShape(const Vector& vecStart, const Vector& vecEnd, const Vector& vecMins, const Vector& vecMaxs, CEntityInstance* pIgnoreEntity, TraceOptions* pTraceOptions) = 0;
-    virtual TraceResult TraceShapeEx(const Vector& vecStart, const Vector& vecEnd, CTraceFilter* pTraceFilter, Ray_t* pRay) = 0;
+    /**
+
+    * @brief Performs directional trace using angles.
+      */
+    virtual TraceResult TraceShape(const Vector& vecStart,
+                                   const QAngle& angAngles,
+                                   CEntityInstance* pIgnoreEntity,
+                                   TraceOptions* pTraceOptions) = 0;
+
+    /**
+
+    * @brief Performs trace between two points.
+      */
+    virtual TraceResult TraceEndShape(const Vector& vecStart,
+                                      const Vector& vecEnd,
+                                      CEntityInstance* pIgnoreEntity,
+                                      TraceOptions* pTraceOptions) = 0;
+
+    /**
+
+    * @brief Performs hull (box) trace.
+      */
+    virtual TraceResult TraceHullShape(const Vector& vecStart,
+                                       const Vector& vecEnd,
+                                       const Vector& vecMins,
+                                       const Vector& vecMaxs,
+                                       CEntityInstance* pIgnoreEntity,
+                                       TraceOptions* pTraceOptions) = 0;
+
+    /**
+
+    * @brief Advanced trace with custom filter.
+      */
+    virtual TraceResult TraceShapeEx(const Vector& vecStart,
+                                     const Vector& vecEnd,
+                                     CTraceFilter* pTraceFilter,
+                                     Ray_t* pRay) = 0;
 };
 
 #endif //_INCLUDE_ITOOLKIT_TRACE_H

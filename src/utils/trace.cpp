@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "source2toolkit/utils/raytrace.h"
+#include "source2toolkit/utils/trace.h"
 
 #ifdef SOURCE2TOOLKIT_CORE
 #include "core/shared.h"

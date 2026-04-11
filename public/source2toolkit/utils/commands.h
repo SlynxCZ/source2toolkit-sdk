@@ -1,25 +1,13 @@
-﻿//
-// Created by Michal Přikryl on 11.04.2026.
-// Copyright (c) 2026 slynxcz. All rights reserved.
-//
-/**
-* =============================================================================
- * CS2Fixes
- * Copyright (C) 2023-2026 Source2ZE
- * =============================================================================
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, version 3.0, as published by the
- * Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+﻿/**
+
+* @file commands.h
+* @brief High-level helper functions for command and chat registration.
+*
+* These functions provide simplified access to the IToolkitCommands interface,
+* removing the need to manually pass PluginId or access the API instance.
+*
+* @note Internally uses IToolkitCommands from the global toolkit API.
+  */
 
 #pragma once
 
@@ -29,8 +17,67 @@
 #include "source2toolkit/IToolkitCommands.h"
 #endif
 
+/**
+
+* @brief Registers a chat command listener.
+*
+* @param pchName Command name (e.g. "!hello", "!kick")
+* @param handler Callback executed when the chat command is triggered
+*
+* @note This is a helper wrapper around IToolkitCommands::RegChatListener().
+* @note The current plugin is automatically used as the owner.
+*
+* @code
+* UTIL_RegChatListener("!hello", [](auto& ctx, auto& cmd, auto mode) {
+* ```
+  printf("Hello from chat\n");
+  ```
+* });
+* @endcode
+  */
 void UTIL_RegChatListener(const char* pchName, ChatHandler handler);
 
+/**
+
+* @brief Registers a console command.
+*
+* @param pchName Command name (e.g. "sv_test")
+* @param handler Callback executed when the command is used
+*
+* @note This creates a new console command accessible via the server or client console.
+* @note Wrapper around IToolkitCommands::RegConCommand().
+*
+* @code
+* UTIL_RegConCommand("sv_test", [](auto& ctx, auto& cmd, auto mode) {
+* ```
+  printf("Command executed\n");
+  ```
+* });
+* @endcode
+  */
 void UTIL_RegConCommand(const char* pchName, ChatHandler handler);
 
+/**
+
+* @brief Registers a listener for an existing console command.
+*
+* @param pchName Command name to listen for
+* @param handler Callback executed when the command runs
+* @param mode Execution mode (Pre = before original, Post = after original)
+*
+* @note Wrapper around IToolkitCommands::RegConListener().
+*
+* @return Action to control execution:
+* * Ignore: do nothing
+* * Override: override return value (Pre only)
+* * Supersede: block original execution (Pre only)
+*
+* @code
+* UTIL_RegConListener("sv_cheats", [](auto& ctx, auto& cmd, auto mode) {
+* ```
+  return Action::Supersede;
+  ```
+* }, Mode::Pre);
+* @endcode
+  */
 void UTIL_RegConListener(const char* pchName, CommandHandler handler, Mode mode);

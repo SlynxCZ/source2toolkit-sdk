@@ -1,25 +1,18 @@
-﻿//
-// Created by Michal Přikryl on 11.04.2026.
-// Copyright (c) 2026 slynxcz. All rights reserved.
-//
-/**
-* =============================================================================
- * CS2Fixes
- * Copyright (C) 2023-2026 Source2ZE
- * =============================================================================
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, version 3.0, as published by the
- * Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+﻿/**
+
+* @file gameconfig.h
+* @brief High-level helper functions for accessing game configuration data.
+*
+* These functions provide simplified access to the IToolkitGameConfig interface.
+*
+* GameConfig is typically used for:
+* * Resolving signatures (pattern scanning definitions)
+* * Accessing symbols (exported functions)
+* * Reading offsets
+* * Applying patches
+*
+* @note Internally wraps IToolkitGameConfig.
+  */
 
 #pragma once
 
@@ -29,12 +22,57 @@
 #include "source2toolkit/IToolkitGameConfig.h"
 #endif
 
+/**
+
+* @brief Gets library/module name from config.
+*
+* @param pchName Entry name
+* @return Library name (e.g. "server", "client")
+*
+* @note Used for resolving module handles.
+  */
 const char* UTIL_GetLibrary(const char* pchName);
 
+/**
+
+* @brief Gets signature (pattern) from config.
+*
+* @param pchName Entry name
+* @return Pattern string (e.g. "48 8B ?? ?? ??")
+*
+* @note Used for pattern scanning.
+  */
 const char* UTIL_GetSignature(const char* pchName);
 
+/**
+
+* @brief Gets symbol name from config.
+*
+* @param pchName Entry name
+* @return Symbol name
+*
+* @note Used with exported functions.
+  */
 const char* UTIL_GetSymbol(const char* pchName);
 
+/**
+
+* @brief Gets patch definition from config.
+*
+* @param pchName Entry name
+* @return Patch string or data
+*
+* @note Used for runtime memory patching.
+  */
 const char* UTIL_GetPatch(const char* pchName);
 
+/**
+
+* @brief Gets integer offset from config.
+*
+* @param pchName Entry name
+* @return Offset value
+*
+* @note Commonly used for structure offsets or vtable indices.
+  */
 int UTIL_GetOffset(const char* pchName);
