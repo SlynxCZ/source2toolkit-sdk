@@ -34,6 +34,12 @@
 #define MODULE_EXT ".so"
 #endif
 
+class GameSessionConfiguration_t
+{
+};
+
+CGameEntitySystem* GameEntitySystem() { return GetEntitySystem(); }
+
 IGameEventManager2* GetGameEventManager()
 {
 #ifdef SOURCE2TOOLKIT_CORE
