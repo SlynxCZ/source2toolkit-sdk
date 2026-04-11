@@ -33,6 +33,7 @@ class CBasePlayerController;
 class CGameRules;
 class CCSPlayerController;
 class IGameEventListener2;
+class IGameEventManager2;
 class IEntityFindFilter;
 
 using CBaseEntity_CreateEntityByName_t = CBaseEntity* (FASTCALL*)(const char*, int);
@@ -48,6 +49,7 @@ using CEntityIOOutput_FireOutputInternal_t = void (FASTCALL*)(CEntityIOOutput*, 
 using CEntitySystem_AddEntityIOEvent_t = void (FASTCALL*)(CEntitySystem*, CEntityInstance*, const char*, CEntityInstance*, CEntityInstance*, const variant_t&, float, int, void*, void*);
 using CGameEntitySystem_FindEntityByClassName_t = CBaseEntity* (FASTCALL*)(CEntitySystem*, CEntityInstance*, const char*);
 using CGameEntitySystem_FindEntityByName_t = CBaseEntity* (FASTCALL*)(CEntitySystem*, CEntityInstance*, const char*, CEntityInstance*, CEntityInstance*, CEntityInstance*, IEntityFindFilter*);
+using CGameEventManager_Init_t = void (FASTCALL*)(IGameEventManager2*);
 
 /* =========================
    Core Toolkit Addresses
@@ -71,6 +73,7 @@ public:
     virtual CEntitySystem_AddEntityIOEvent_t CEntitySystem_AddEntityIOEvent() = 0;
     virtual CGameEntitySystem_FindEntityByClassName_t CGameEntitySystem_FindEntityByClassName() = 0;
     virtual CGameEntitySystem_FindEntityByName_t CGameEntitySystem_FindEntityByName() = 0;
+    virtual CGameEventManager_Init_t CGameEventManager_Init() = 0;
 };
 
 #endif //_INCLUDE_ITOOLKIT_ADDRESSES_H
