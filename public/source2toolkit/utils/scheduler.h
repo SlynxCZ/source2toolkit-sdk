@@ -32,9 +32,7 @@
 *
 * @code
 * UTIL_NextFrame([]() {
-* ```
-  printf("Executed next frame\n");
-  ```
+      printf("Executed next frame\n");
 * });
 * @endcode
   */
@@ -54,9 +52,7 @@ void UTIL_NextFrame(std::function<void()>&& task);
 *
 * @code
 * UTIL_AddTimer(1.0f, []() {
-* ```
-  printf("Runs every second\n");
-  ```
+      printf("Runs every second\n");
 * }, TIMER_FLAG_REPEAT);
 * @endcode
   */

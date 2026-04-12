@@ -29,9 +29,7 @@
 *
 * @code
 * UTIL_RegChatListener("!hello", [](auto& ctx, auto& cmd, auto mode) {
-* ```
-  printf("Hello from chat\n");
-  ```
+      printf("Hello from chat\n");
 * });
 * @endcode
   */
@@ -49,9 +47,7 @@ void UTIL_RegChatListener(const char* pchName, ChatHandler handler);
 *
 * @code
 * UTIL_RegConCommand("sv_test", [](auto& ctx, auto& cmd, auto mode) {
-* ```
-  printf("Command executed\n");
-  ```
+      printf("Command executed\n");
 * });
 * @endcode
   */
@@ -74,9 +70,7 @@ void UTIL_RegConCommand(const char* pchName, ChatHandler handler);
 *
 * @code
 * UTIL_RegConListener("sv_cheats", [](auto& ctx, auto& cmd, auto mode) {
-* ```
-  return Action::Supersede;
-  ```
+      return Action::Supersede;
 * }, Mode::Pre);
 * @endcode
   */

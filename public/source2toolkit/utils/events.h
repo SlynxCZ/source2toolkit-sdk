@@ -39,12 +39,8 @@
 *
 * @code
 * UTIL_RegGameEvent("player_death", [](IGameEvent* event, Mode mode, bool& dontBroadcast) {
-* ```
-  dontBroadcast = true; // hide event from clients
-  ```
-* ```
-  return Action::Ignore;
-  ```
+      dontBroadcast = true; // hide event from clients
+      return Action::Ignore;
 * }, Mode::Pre);
 * @endcode
   */
