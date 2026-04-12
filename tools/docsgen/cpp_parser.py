@@ -136,7 +136,7 @@ def parse_free_functions(content):
 def parse_enums(content):
     enums = []
 
-    pattern = re.finditer(r'enum\s+(class\s+)?(\w+)(?:\s*:\s*\w+)?\s*\{(.*?)\};', content, re.DOTALL)
+    pattern = re.finditer(r'enum\s+(class\s+)?(\w+)(?:\s*:\s*[\w:]+)?\s*\{(.*?)\};', content, re.DOTALL)
 
     for match in pattern:
         is_class = match.group(1) is not None
@@ -145,26 +145,41 @@ def parse_enums(content):
 
         values = []
 
-        for line in body.split(","):
+        for line in re.split(r',\s*(?![^{}]*\})', body):
             line = line.strip()
 
             if not line:
                 continue
 
-            # remove comments
-            line = re.sub(r'//.*', '', line).strip()
+            line = re.sub(r'//.*', '', line)
 
-            if '=' in line:
-                key, val = line.split("=", 1)
-                values.append({
-                    "name": key.strip(),
-                    "value": val.strip()
-                })
-            else:
-                values.append({
-                    "name": line.strip(),
-                    "value": None
-                })
+            line = re.sub(r'/\*.*?\*/', '', line, flags=re.DOTALL)
+
+            line = line.strip()
+
+            # remove /* */ comments (multi-line safe)
+            line = re.sub(r'/\*.*?\*/', '', line, flags=re.DOTALL)
+
+            # remove // comments
+            line = re.sub(r'//.*', '', line)
+
+            line = line.strip()
+
+            if not line:
+                continue
+
+            # robust parsing
+            match = re.match(r'^(\w+)\s*(?:=\s*(.+))?$', line)
+            if not match:
+                continue
+
+            key = match.group(1)
+            val = match.group(2)
+
+            values.append({
+                "name": key,
+                "value": val.strip() if val else None
+            })
 
         enums.append({
             "name": name,

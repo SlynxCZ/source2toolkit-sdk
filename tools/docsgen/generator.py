@@ -368,9 +368,15 @@ if __name__ == "__main__":
 
             print(f"\nFILE: {file}")
             print(f"CLASSES FOUND: {len(classes)}")
+            print(f"ENUMS FOUND: {len(enums)}")
 
             dest_file = resolve_output_path(root, file)
-            os.makedirs(os.path.dirname(dest_file), exist_ok=True)
+
+            if file.endswith(".h") and enums and not classes and not functions:
+                dest_file = None
+
+            if dest_file:
+                os.makedirs(os.path.dirname(dest_file), exist_ok=True)
 
             has_content = False
             title_written = False
@@ -401,12 +407,19 @@ if __name__ == "__main__":
 
                     enum_yaml = schema_generator.schema_enums_to_yaml([enum], enum_name)
 
-                    enum_path = os.path.join(
-                        DEST_DIR,
-                        *parts,
-                        "enums",
-                        f"{enum_name}.mdx"
-                    )
+                    if parts and parts[-1] == "enums":
+                        enum_path = os.path.join(
+                            DEST_DIR,
+                            *parts,
+                            f"{enum_name}.mdx"
+                        )
+                    else:
+                        enum_path = os.path.join(
+                            DEST_DIR,
+                            *parts,
+                            "enums",
+                            f"{enum_name}.mdx"
+                        )
 
                     os.makedirs(os.path.dirname(enum_path), exist_ok=True)
 
@@ -428,7 +441,7 @@ if __name__ == "__main__":
                 else:
                     body.extend([b for b in yaml_data["body"] if "api1" not in b])
 
-            if has_content:
+            if has_content and dest_file:
                 name = file.replace(".h", "")
                 clean_name = format_title(name)
 

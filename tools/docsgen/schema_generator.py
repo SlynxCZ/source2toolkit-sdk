@@ -135,20 +135,19 @@ def schema_enums_to_yaml(enums, filename):
 
         values = enum.get("values", [])
 
+        if not values:
+            print(f"[WARN] Enum {enum_name} has NO values parsed")
+
         if values:
             body.append({
                 "h4": "Values"
             })
 
             body.append({
-                "parameters": [
-                    {
-                        "name": v["name"],
-                        "type": "",
-                        "description": f"= {v['value']}" if v["value"] else ""
-                    }
+                "markdown": "\n".join(
+                    f"- `{v['name']}` = {v['value']}" if v["value"] else f"- `{v['name']}`"
                     for v in values
-                ]
+                )
             })
 
     return {
