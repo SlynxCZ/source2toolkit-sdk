@@ -136,7 +136,7 @@ def parse_free_functions(content):
 def parse_enums(content):
     enums = []
 
-    pattern = re.finditer(r'enum\s+(class\s+)?(\w+)\s*\{(.*?)\};', content, re.DOTALL)
+    pattern = re.finditer(r'enum\s+(class\s+)?(\w+)(?:\s*:\s*\w+)?\s*\{(.*?)\};', content, re.DOTALL)
 
     for match in pattern:
         is_class = match.group(1) is not None

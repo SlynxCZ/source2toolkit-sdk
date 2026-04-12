@@ -8,6 +8,9 @@ def link_type(type_name):
 
     if base in TYPE_MAP:
         url = TYPE_MAP[base]
+
+        url = url.replace(".mdx", "")   # remove extension
+
         return f"[{base}]({url})" + type_name[len(base):]
 
     return type_name

@@ -272,6 +272,13 @@ def generate_markdown(yaml_data):
 def resolve_output_path(root, file):
     rel = os.path.relpath(root, SOURCE_DIR).replace("\\", "/")
 
+    if rel == ".":
+        parts = []
+    else:
+        parts = rel.split("/")
+        if parts[0] == "source2toolkit":
+            parts = parts[1:]
+
     name = file.replace(".h", "")
     slug = name
     slug = slug.replace("itoolkit-", "")
@@ -349,7 +356,15 @@ if __name__ == "__main__":
                 schema_generator.TYPE_MAP[cls["name"]] = web_path
 
             for enum in enums:
-                schema_generator.TYPE_MAP[enum["name"]] = web_path
+                rel = os.path.relpath(root, SOURCE_DIR).replace("\\", "/")
+
+                parts = rel.split("/")
+                if parts[0] == "source2toolkit":
+                    parts = parts[1:]
+
+                url = "/docs/" + "/".join(parts) + f"/enums/{enum['name']}"
+
+                schema_generator.TYPE_MAP[enum["name"]] = url
 
             print(f"\nFILE: {file}")
             print(f"CLASSES FOUND: {len(classes)}")
@@ -375,12 +390,33 @@ if __name__ == "__main__":
             # ===== ENUMS =====
             if enums:
                 has_content = True
-                yaml_data = schema_generator.schema_enums_to_yaml(enums, file)
-                if not title_written:
-                    body.extend(yaml_data["body"])
-                    title_written = True
-                else:
-                    body.extend([b for b in yaml_data["body"] if "api1" not in b])
+                rel = os.path.relpath(root, SOURCE_DIR).replace("\\", "/")
+
+                parts = rel.split("/")
+                if parts[0] == "source2toolkit":
+                    parts = parts[1:]
+
+                for enum in enums:
+                    enum_name = enum["name"]
+
+                    enum_yaml = schema_generator.schema_enums_to_yaml([enum], enum_name)
+
+                    enum_path = os.path.join(
+                        DEST_DIR,
+                        *parts,
+                        "enums",
+                        f"{enum_name}.mdx"
+                    )
+
+                    os.makedirs(os.path.dirname(enum_path), exist_ok=True)
+
+                    md_content = "---\n"
+                    md_content += yaml.safe_dump({"title": enum_name}, sort_keys=False)
+                    md_content += "---\n\n"
+                    md_content += generate_markdown(enum_yaml)
+
+                    with open(enum_path, "w", encoding="utf-8") as out:
+                        out.write(md_content)
 
             # ===== FUNCTIONS =====
             if functions:
