@@ -5,6 +5,3 @@
 	path = vendor/hl2sdk-cs2
 	url = https://github.com/alliedmodders/hl2sdk.git
 	branch = cs2
-[submodule "vendor/khook"]
-	path = vendor/khook
-	url = https://github.com/SlynxCZ/KHook
