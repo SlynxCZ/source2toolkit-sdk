@@ -1,4 +1,4 @@
-﻿/**
+/**
 
 * @file virtual.h
 * @brief Virtual method table (VMT) utilities for calling virtual functions.
@@ -31,7 +31,7 @@
 * @endcode
   */
 #define CALL_VIRTUAL(retType, idx, ...) \
-vmt::CallVirtual<retType>(idx, **VA_ARGS * *)
+vmt::CallVirtual<retType>(idx, __VA_ARGS__)
 
 namespace vmt
 {
