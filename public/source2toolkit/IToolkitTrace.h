@@ -208,7 +208,15 @@ Trace result
   */
 struct TraceResult
 {
-    TraceResult() = default;
+    TraceResult()
+    {
+        m_flFraction = 1.0f;
+        m_bStartInSolid = false;
+        m_bExactHitPoint = false;
+        m_pEnt = nullptr;
+        m_pHitbox = nullptr;
+        m_pSurfaceProperties = nullptr;
+    }
 
     explicit TraceResult(const CGameTrace* pTrace, bool bResult)
     {
