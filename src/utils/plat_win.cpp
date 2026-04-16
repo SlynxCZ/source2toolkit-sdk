@@ -21,6 +21,8 @@
  */
 
 #ifdef _WIN32
+	#include <windows.h>
+
 	#include "source2toolkit/utils/plat.h"
 
 	#include "tier0/memdbgon.h"
