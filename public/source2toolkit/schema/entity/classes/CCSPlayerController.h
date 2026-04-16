@@ -182,7 +182,7 @@ public:
     /// <summary>Get player name.</summary>
     const char* GetPlayerName();
     /// <summary>Get IP address.</summary>
-    const char* GetIpAddress();
+    CUtlString GetIpAddress();
     /// <summary>Replicate convar.</summary>
     void ReplicateConVar(const char* pszConVar, const char* pszValue);
     /// <summary>Fires gameEvent to client's legacy listener.</summary>

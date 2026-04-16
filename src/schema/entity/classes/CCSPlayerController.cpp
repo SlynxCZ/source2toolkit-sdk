@@ -261,10 +261,8 @@ const char* CCSPlayerController::GetPlayerName()
     return m_iszPlayerName();
 }
 
-const char* CCSPlayerController::GetIpAddress()
+CUtlString CCSPlayerController::GetIpAddress()
 {
-    static char buffer[64];
-
     if (const auto* netInfo = GetEngineServer()->GetPlayerNetInfo(GetPlayerSlot()))
     {
         uint32_t ip = netInfo->GetRemoteAddress().GetIP();
@@ -274,6 +272,8 @@ const char* CCSPlayerController::GetIpAddress()
              ((ip & 0x00FF0000) >> 8)  |
              ((ip & 0xFF000000) >> 24);
 
+        char buffer[64];
+
         std::snprintf(
             buffer,
             sizeof(buffer),
@@ -281,16 +281,13 @@ const char* CCSPlayerController::GetIpAddress()
             (ip >> 24) & 0xFF,
             (ip >> 16) & 0xFF,
             (ip >> 8) & 0xFF,
-            (ip) & 0xFF
+            ip & 0xFF
         );
 
-        if (char* colon = std::strchr(buffer, ':'))
-            *colon = '\0';
-
-        return buffer;
+        return CUtlString(buffer);
     }
 
-    return nullptr;
+    return CUtlString();
 }
 
 void CCSPlayerController::ReplicateConVar(const char* pszConVar, const char* pszValue)

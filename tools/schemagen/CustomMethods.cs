@@ -232,7 +232,7 @@ public static class CustomMethods
             "const char* GetPlayerName();",
 
             "/// <summary>Get IP address.</summary>",
-            "const char* GetIpAddress();",
+            "CUtlString GetIpAddress();",
 
             "/// <summary>Replicate convar.</summary>",
             "void ReplicateConVar(const char* pszConVar, const char* pszValue);",
