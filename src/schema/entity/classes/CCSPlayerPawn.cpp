@@ -2,8 +2,8 @@
 // Created by Michal Přikryl on 10.04.2026.
 // Copyright (c) 2026 slynxcz. All rights reserved.
 //
-#include "CCSPlayerPawn.h"
-#include "CCSPlayerController.h"
+#include "source2toolkit/schema/entity/classes/CCSPlayerPawn.h"
+#include "source2toolkit/schema/entity/classes/CCSPlayerController.h"
 
 CCSPlayerController* CCSPlayerPawn::GetController()
 {

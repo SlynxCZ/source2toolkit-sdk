@@ -2,10 +2,10 @@
 // Created by Michal Přikryl on 04.03.2026.
 // Copyright (c) 2026 slynxcz. All rights reserved.
 //
-#include "CBaseModelEntity.h"
+#include "source2toolkit/schema/entity/classes/CBaseModelEntity.h"
 
-#include "CBodyComponent.h"
-#include "CSkeletonInstance.h"
+#include "source2toolkit/schema/entity/classes/CBodyComponent.h"
+#include "source2toolkit/schema/entity/classes/CSkeletonInstance.h"
 
 #ifdef SOURCE2TOOLKIT_CORE
 #include "core/addresses.h"

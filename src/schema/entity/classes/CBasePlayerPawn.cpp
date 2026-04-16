@@ -2,7 +2,7 @@
 // Created by Michal Přikryl on 04.03.2026.
 // Copyright (c) 2026 slynxcz. All rights reserved.
 //
-#include "CBasePlayerPawn.h"
+#include "source2toolkit/schema/entity/classes/CBasePlayerPawn.h"
 
 #include "source2toolkit/utils/virtual.h"
 

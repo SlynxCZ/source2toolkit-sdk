@@ -2,7 +2,7 @@
 // Created by Michal Přikryl on 11.03.2026.
 // Copyright (c) 2026 slynxcz. All rights reserved.
 //
-#include "CCSPlayer_ItemServices.h"
+#include "source2toolkit/schema/entity/classes/CCSPlayer_ItemServices.h"
 
 #include "source2toolkit/utils/virtual.h"
 

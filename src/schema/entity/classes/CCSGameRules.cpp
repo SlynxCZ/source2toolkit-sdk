@@ -2,10 +2,10 @@
 // Created by Michal Přikryl on 11.03.2026.
 // Copyright (c) 2026 slynxcz. All rights reserved.
 //
-#include "CCSGameRules.h"
+#include "source2toolkit/schema/entity/classes/CCSGameRules.h"
 
-#include "CCSPlayerController.h"
-#include "CCSPlayerPawn.h"
+#include "source2toolkit/schema/entity/classes/CCSPlayerController.h"
+#include "source2toolkit/schema/entity/classes/CCSPlayerPawn.h"
 #include "source2toolkit/schema/entity.h"
 
 #ifdef SOURCE2TOOLKIT_CORE

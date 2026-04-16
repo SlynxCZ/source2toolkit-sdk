@@ -2,12 +2,12 @@
 // Created by Michal Přikryl on 04.03.2026.
 // Copyright (c) 2026 slynxcz. All rights reserved.
 //
-#include "CBaseEntity.h"
+#include "source2toolkit/schema/entity/classes/CBaseEntity.h"
 
-#include "CBodyComponent.h"
-#include "CCollisionProperty.h"
-#include "CEntitySubclassVDataBase.h"
-#include "CGameSceneNode.h"
+#include "source2toolkit/schema/entity/classes/CBodyComponent.h"
+#include "source2toolkit/schema/entity/classes/CCollisionProperty.h"
+#include "source2toolkit/schema/entity/classes/CEntitySubclassVDataBase.h"
+#include "source2toolkit/schema/entity/classes/CGameSceneNode.h"
 
 #include "source2toolkit/schema/entity.h"
 #include "source2toolkit/utils/virtual.h"

@@ -2,10 +2,10 @@
 // Created by Michal Přikryl on 12.03.2026.
 // Copyright (c) 2026 slynxcz. All rights reserved.
 //
-#include "CCSPlayerController.h"
+#include "source2toolkit/schema/entity/classes/CCSPlayerController.h"
 
-#include "CCSPlayerPawn.h"
-#include "CCSObserverPawn.h"
+#include "source2toolkit/schema/entity/classes/CCSPlayerPawn.h"
+#include "source2toolkit/schema/entity/classes/CCSObserverPawn.h"
 
 #ifdef SOURCE2TOOLKIT_CORE
 #include "core/shared.h"
@@ -22,8 +22,6 @@
 
 #include "networksystem/inetworkmessages.h"
 #include "usermessages.pb.h"
-
-#include <netinet/in.h>
 
 #include "source2toolkit/utils/virtual.h"
 
@@ -271,7 +269,10 @@ const char* CCSPlayerController::GetIpAddress()
     {
         uint32_t ip = netInfo->GetRemoteAddress().GetIP();
 
-        ip = ntohl(ip);
+        ip = ((ip & 0x000000FF) << 24) |
+             ((ip & 0x0000FF00) << 8)  |
+             ((ip & 0x00FF0000) >> 8)  |
+             ((ip & 0xFF000000) >> 24);
 
         std::snprintf(
             buffer,

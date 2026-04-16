@@ -2,7 +2,7 @@
 // Created by Michal Přikryl on 04.03.2026.
 // Copyright (c) 2026 slynxcz. All rights reserved.
 //
-#include "CBasePlayerController.h"
+#include "source2toolkit/schema/entity/classes/CBasePlayerController.h"
 
 #ifdef SOURCE2TOOLKIT_CORE
 #include "core/addresses.h"

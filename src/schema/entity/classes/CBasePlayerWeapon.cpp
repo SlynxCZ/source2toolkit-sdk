@@ -2,7 +2,7 @@
 // Created by Michal Přikryl on 11.03.2026.
 // Copyright (c) 2026 slynxcz. All rights reserved.
 //
-#include "CBasePlayerWeapon.h"
+#include "source2toolkit/schema/entity/classes/CBasePlayerWeapon.h"
 #include "strtools.h"
 
 CCSWeaponBaseVData* CBasePlayerWeapon::GetWeaponVData()
