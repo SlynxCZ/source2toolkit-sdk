@@ -13,7 +13,7 @@
 #include "source2toolkit/IToolkitPlugin.h"
 #endif
 
-#include "source2toolkit/schema/entity/classes/cgamerules.h"
+#include "source2toolkit/schema/entity/classes/CGameRules.h"
 #include "entitysystem.h"
 #include "platform.h"
 #include "source2toolkit/schema/entity/classes/CBasePlayerWeapon.h"
