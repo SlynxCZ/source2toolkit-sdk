@@ -284,7 +284,7 @@ public:
      *
      * @return Pointer to player
      */
-    CCSPlayerController *Player() const { return player_; }
+    int Player() const { return player_; }
 
 protected:
     /**
@@ -342,7 +342,7 @@ protected:
 
 protected:
     IMenu *menu_;
-    CCSPlayerController *player_;
+    int player_;
 
     int page_{0};
     int currentOffset_{0};
