@@ -152,16 +152,12 @@ public:
      *
      * @param title Menu title
      */
-    explicit IBaseMenu(std::string title);
+    explicit IBaseMenu(std::string title)
+        : title_(std::move(title))
+    {
+    }
 
     const std::string &Title() const override { return title_; }
-
-    /**
-     * @brief Sets menu title.
-     *
-     * @param t New title
-     */
-    void SetTitle(std::string t) override { title_ = std::move(t); }
 
     std::vector<ChatMenuOption> &Options() override { return options_; }
     const std::vector<ChatMenuOption> &Options() const override { return options_; }
@@ -196,7 +192,15 @@ public:
     ChatMenuOption &AddMenuOption(
         std::string display,
         std::function<void(CCSPlayerController *, ChatMenuOption &)> onSelect,
-        bool disabled = false);
+        bool disabled = false)
+    {
+        options_.push_back(ChatMenuOption{
+            .Text = std::move(display),
+            .Disabled = disabled,
+            .OnSelect = std::move(onSelect)
+        });
+        return options_.back();
+    }
 
     /**
      * @brief Adds a menu option with cooldown support.
@@ -209,7 +213,7 @@ public:
      *
      * @return Reference to created option
      */
-    ChatMenuOption &AddMenuOptionWithCooldown(
+    virtual ChatMenuOption &AddMenuOptionWithCooldown(
         std::string optionText,
         std::function<void(CCSPlayerController *, ChatMenuOption &)> action,
         bool disabled = false,
@@ -222,9 +226,13 @@ public:
      * @param canSelect Function that checks if player can select
      * @param onSelect Function called after selection
      */
-    static void SetCooldownHandlers(
+    void SetCooldownHandlers(
         std::function<bool(CCSPlayerController *)> canSelect,
-        std::function<void(CCSPlayerController *)> onSelect);
+        std::function<void(CCSPlayerController *)> onSelect)
+    {
+        if (canSelect) s_canSelect = std::move(canSelect);
+        if (onSelect) s_onSelect = std::move(onSelect);
+    }
 
 private:
     std::string title_;
@@ -265,7 +273,12 @@ public:
     /**
      * @brief Resets menu state.
      */
-    virtual void Reset();
+    void Reset()
+    {
+        while (!prevPageOffsets_.empty()) prevPageOffsets_.pop();
+        page_ = 0;
+        currentOffset_ = 0;
+    }
 
     /**
      * @brief Closes the menu.
@@ -284,7 +297,7 @@ public:
      *
      * @return Pointer to player
      */
-    int Player() const { return player_; }
+    CCSPlayerController *Player() { return player_; }
 
 protected:
     /**
@@ -293,7 +306,10 @@ protected:
      * @param player Owning player
      * @param menu Menu definition
      */
-    IMenuInstance(CCSPlayerController *player, IMenu *menu);
+    IMenuInstance(CCSPlayerController *player, IMenu *menu)
+        : player_(player), menu_(menu)
+    {
+    }
 
     /**
      * @brief Number of items per page.
@@ -321,7 +337,11 @@ protected:
      *
      * @return True if next page exists
      */
-    bool HasNextButton() const;
+    bool HasNextButton() const
+    {
+        const auto &opts = menu_->Options();
+        return (int) opts.size() > NumPerPage() && (currentOffset_ + NumPerPage()) < (int) opts.size();
+    }
 
     /**
      * @brief Checks if exit button is enabled.
@@ -333,16 +353,29 @@ protected:
     /**
      * @brief Advances to next page.
      */
-    void NextPage();
+    void NextPage()
+    {
+        prevPageOffsets_.push(currentOffset_);
+        currentOffset_ += MenuItemsPerPage();
+        ++page_;
+        Display();
+    }
 
     /**
      * @brief Goes back to previous page.
      */
-    void PrevPage();
+    void PrevPage()
+    {
+        if (page_ <= 0 || prevPageOffsets_.empty()) return;
+        --page_;
+        currentOffset_ = prevPageOffsets_.top();
+        prevPageOffsets_.pop();
+        Display();
+    }
 
 protected:
     IMenu *menu_;
-    int player_;
+    CCSPlayerController *player_;
 
     int page_{0};
     int currentOffset_{0};
@@ -357,7 +390,7 @@ Center HTML menu
 /**
  * @brief Styled center HTML menu.
  */
-class ICenterHtmlMenu : public IBaseMenu
+class CenterHtmlMenu : public IBaseMenu
 {
 public:
     /**
@@ -365,7 +398,11 @@ public:
      *
      * @param title Menu title
      */
-    explicit ICenterHtmlMenu(std::string title);
+    explicit CenterHtmlMenu(std::string title)
+        : IBaseMenu(title)
+    {
+        SetExitButton(true);
+    }
 
     std::string TitleColor = "yellow";
     std::string EnabledColor = "green";
@@ -373,52 +410,6 @@ public:
     std::string PrevPageColor = "yellow";
     std::string NextPageColor = "yellow";
     std::string CloseColor = "red";
-};
-
-/**
- * @brief Instance of CenterHtmlMenu.
- */
-class ICenterHtmlMenuInstance : public IMenuInstance
-{
-public:
-    /**
-     * @brief Constructs menu instance.
-     *
-     * @param player Owning player
-     * @param menu Menu definition
-     */
-    ICenterHtmlMenuInstance(CCSPlayerController *player, ICenterHtmlMenu *menu);
-
-    /**
-     * @brief Displays menu.
-     */
-    void Display() override;
-
-    /**
-     * @brief Handles key press.
-     *
-     * @param player Player
-     * @param key Pressed key
-     */
-    void OnKeyPress(CCSPlayerController *player, int key) override;
-
-    /**
-     * @brief Closes menu.
-     */
-    void Close() override;
-
-protected:
-    int NumPerPage() const override { return 5; }
-
-    /**
-     * @brief Items per page including navigation.
-     *
-     * @return Items per page
-     */
-    int MenuItemsPerPage() const override;
-
-private:
-    ICenterHtmlMenu *chMenu_;
 };
 
 /* =========================
@@ -439,7 +430,7 @@ public:
      * @param player Target player
      * @param menu Menu to open
      */
-    virtual void OpenCenterHtmlMenu(CCSPlayerController *player, ICenterHtmlMenu *menu) = 0;
+    virtual void OpenCenterHtmlMenu(CCSPlayerController *player, CenterHtmlMenu *menu) = 0;
 
     /**
      * @brief Gets active menu instance for player.

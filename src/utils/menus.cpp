@@ -21,7 +21,7 @@ static IToolkitMenus* GetMenus()
 #endif
 }
 
-void UTIL_OpenCenterHtmlMenu(CCSPlayerController *player, ICenterHtmlMenu *menu)
+void UTIL_OpenCenterHtmlMenu(CCSPlayerController *player, CenterHtmlMenu *menu)
 {
     GetMenus()->OpenCenterHtmlMenu(player, menu);
 }
