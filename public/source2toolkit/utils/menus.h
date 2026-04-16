@@ -29,7 +29,7 @@
  *
  * @note Wrapper around IToolkitMenus::OpenCenterHtmlMenu()
  */
-void UTIL_OpenCenterHtmlMenu(CCSPlayerController *player, CenterHtmlMenu *menu);
+void UTIL_OpenCenterHtmlMenu(CCSPlayerController *player, ICenterHtmlMenu *menu);
 
 /**
  * @brief Gets active menu instance for player.

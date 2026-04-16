@@ -144,7 +144,7 @@ BaseMenu
 /**
  * @brief Base implementation of IMenu.
  */
-class BaseMenu : public IMenu
+class IBaseMenu : public IMenu
 {
 public:
     /**
@@ -152,7 +152,7 @@ public:
      *
      * @param title Menu title
      */
-    explicit BaseMenu(std::string title);
+    explicit IBaseMenu(std::string title);
 
     const std::string &Title() const override { return title_; }
 
@@ -357,7 +357,7 @@ Center HTML menu
 /**
  * @brief Styled center HTML menu.
  */
-class CenterHtmlMenu : public BaseMenu
+class ICenterHtmlMenu : public IBaseMenu
 {
 public:
     /**
@@ -365,7 +365,7 @@ public:
      *
      * @param title Menu title
      */
-    explicit CenterHtmlMenu(std::string title);
+    explicit ICenterHtmlMenu(std::string title);
 
     std::string TitleColor = "yellow";
     std::string EnabledColor = "green";
@@ -378,7 +378,7 @@ public:
 /**
  * @brief Instance of CenterHtmlMenu.
  */
-class CenterHtmlMenuInstance : public IMenuInstance
+class ICenterHtmlMenuInstance : public IMenuInstance
 {
 public:
     /**
@@ -387,7 +387,7 @@ public:
      * @param player Owning player
      * @param menu Menu definition
      */
-    CenterHtmlMenuInstance(CCSPlayerController *player, CenterHtmlMenu *menu);
+    ICenterHtmlMenuInstance(CCSPlayerController *player, ICenterHtmlMenu *menu);
 
     /**
      * @brief Displays menu.
@@ -418,7 +418,7 @@ protected:
     int MenuItemsPerPage() const override;
 
 private:
-    CenterHtmlMenu *chMenu_;
+    ICenterHtmlMenu *chMenu_;
 };
 
 /* =========================
@@ -439,7 +439,7 @@ public:
      * @param player Target player
      * @param menu Menu to open
      */
-    virtual void OpenCenterHtmlMenu(CCSPlayerController *player, CenterHtmlMenu *menu) = 0;
+    virtual void OpenCenterHtmlMenu(CCSPlayerController *player, ICenterHtmlMenu *menu) = 0;
 
     /**
      * @brief Gets active menu instance for player.
