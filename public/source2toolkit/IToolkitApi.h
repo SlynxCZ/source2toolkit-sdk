@@ -46,6 +46,7 @@ class IToolkitGameConfig;
 class IToolkitEntityIO;
 class IToolkitEvents;
 class IToolkitListener;
+class IToolkitMenus;
 class IToolkitPlugin;
 class IToolkitScheduler;
 class IToolkitTrace;
@@ -196,6 +197,12 @@ public:
     * @brief Access game configuration system.
       */
     virtual IToolkitGameConfig* GameConfig() = 0;
+
+    /**
+
+    * @brief Access menu system.
+      */
+    virtual IToolkitMenus* Menus() = 0;
 
     /**
 
