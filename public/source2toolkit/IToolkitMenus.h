@@ -88,13 +88,6 @@ public:
     virtual const std::string &Title() const = 0;
 
     /**
-     * @brief Sets menu title.
-     *
-     * @param t New title
-     */
-    virtual void SetTitle(std::string t) = 0;
-
-    /**
      * @brief Gets menu options.
      *
      * @return Reference to options vector
@@ -234,15 +227,16 @@ public:
         if (onSelect) s_onSelect = std::move(onSelect);
     }
 
+public:
+    std::function<bool(CCSPlayerController *)> s_canSelect;
+    std::function<void(CCSPlayerController *)> s_onSelect;
+
 private:
     std::string title_;
     std::vector<ChatMenuOption> options_;
 
     PostSelectAction postSelect_{PostSelectAction::Reset};
     bool exitButton_{true};
-
-    static std::function<bool(CCSPlayerController *)> s_canSelect;
-    static std::function<void(CCSPlayerController *)> s_onSelect;
 };
 
 /* =========================
