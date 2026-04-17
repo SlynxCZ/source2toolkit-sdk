@@ -3,7 +3,6 @@ project(source2toolkit-sdk CXX)
 
 option(SOURCE2TOOLKIT_CORE "Build core toolkit" OFF)
 
-set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded")
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
@@ -53,6 +52,7 @@ add_library(source2toolkit-config INTERFACE)
 
 target_compile_definitions(source2toolkit-config INTERFACE
         META_IS_SOURCE2
+        _ITERATOR_DEBUG_LEVEL=0
 
         $<$<PLATFORM_ID:Linux>:
         _LINUX POSIX LINUX GNUC COMPILER_GCC PLATFORM_64BITS
@@ -78,8 +78,6 @@ target_compile_definitions(source2toolkit-config INTERFACE
         _CRT_SECURE_NO_WARNINGS=1
         _CRT_SECURE_NO_DEPRECATE=1
         _CRT_NONSTDC_NO_DEPRECATE=1
-
-        _ITERATOR_DEBUG_LEVEL=0
         >
 )
 
@@ -127,6 +125,8 @@ target_link_options(source2toolkit-config INTERFACE
         $<$<CONFIG:RELEASE>:/OPT:ICF>
         >
 )
+
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded")
 
 # =========================
 # SDK LIB
