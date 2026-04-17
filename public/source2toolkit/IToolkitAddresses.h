@@ -19,6 +19,10 @@
 #pragma once
 #include "IToolkitTypes.h"
 
+#ifdef _WIN32
+#undef GetModuleHandle
+#endif
+
 #include "igameevents.h"
 #include "eiface.h"
 
