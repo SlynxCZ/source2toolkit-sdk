@@ -19,10 +19,6 @@
 #pragma once
 #include "IToolkitTypes.h"
 
-#ifdef _WIN32
-#undef GetModuleHandle
-#endif
-
 #include "igameevents.h"
 #include "eiface.h"
 
@@ -30,6 +26,10 @@
 #include <cstdint>
 #include <cstring>
 #include <cstdio>
+
+#ifdef _WIN32
+#undef GetModuleHandle
+#endif
 
 /* =========================
 Forward declarations
