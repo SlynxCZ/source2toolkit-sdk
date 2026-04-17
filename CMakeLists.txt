@@ -123,10 +123,9 @@ target_link_options(source2toolkit-config INTERFACE
         $<$<PLATFORM_ID:Windows>:
         $<$<CONFIG:RELEASE>:/OPT:REF>
         $<$<CONFIG:RELEASE>:/OPT:ICF>
+        $<$<CONFIG:DEBUG>:/NODEFAULTLIB:libcmt>
         >
 )
-
-set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 # =========================
 # SDK LIB
