@@ -211,7 +211,7 @@ public:
         std::function<void(CCSPlayerController *, ChatMenuOption &)> action,
         bool disabled = false,
         bool close = true,
-        std::function<bool()> disabledEvaluator = nullptr);
+        std::function<bool()> disabledEvaluator = nullptr) = 0;
 
     /**
      * @brief Sets global cooldown handlers.
@@ -277,7 +277,7 @@ public:
     /**
      * @brief Closes the menu.
      */
-    virtual void Close();
+    virtual void Close() = 0;
 
     /**
      * @brief Gets underlying menu.
