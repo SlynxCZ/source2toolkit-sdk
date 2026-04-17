@@ -17,12 +17,17 @@
 #include "steam/steamclientpublic.h"
 #include "clientframe.h"
 #include "tier0/annotations.h"
+#include "tier1/netadr.h"
 #include "circularbuffer.h"
 #include "utlstring.h"
 #include "networksystem/inetworksystem.h"
+#include "threadtools.h"
 
 #include "netmessages.h"
-#include "utldict.h">
+#include "utldict.h"
+
+#include "network_connection.pb.h"
+#include "networkbasetypes.pb.h"
 
 class CHLTVServer;
 class INetMessage;
