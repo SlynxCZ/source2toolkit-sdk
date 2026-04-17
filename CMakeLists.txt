@@ -126,7 +126,7 @@ target_link_options(source2toolkit-config INTERFACE
         >
 )
 
-set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded")
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 # =========================
 # SDK LIB
