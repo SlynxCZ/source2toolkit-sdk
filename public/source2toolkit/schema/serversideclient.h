@@ -93,6 +93,58 @@ public:
 };
 COMPILE_TIME_ASSERT(sizeof(CNetworkStatTrace) == 40);
 
+class CUtlSignaller_Base
+{
+public:
+	using Delegate_t = CUtlDelegate<void(CUtlSlot*)>;
+
+	CUtlSignaller_Base(const Delegate_t& other) :
+		m_SlotDeletionDelegate(other)
+	{
+	}
+
+	CUtlSignaller_Base(Delegate_t&& other) :
+		m_SlotDeletionDelegate(Move(other))
+	{
+	}
+
+private:
+	Delegate_t m_SlotDeletionDelegate;
+};
+COMPILE_TIME_ASSERT(sizeof(CUtlSignaller_Base) == 24);
+
+enum CopiedLockState_t : int32
+{
+	CLS_NOCOPY = 0,
+	CLS_UNLOCKED = 1,
+	CLS_LOCKED_BY_COPYING_THREAD = 2,
+};
+
+template <class MUTEX, CopiedLockState_t L = CLS_UNLOCKED>
+class CCopyableLock : public MUTEX
+{
+	typedef MUTEX BaseClass;
+
+public:
+	// ...
+};
+
+class CUtlSlot
+{
+public:
+	using MTElement_t = CUtlSignaller_Base*;
+
+	CUtlSlot() :
+		m_ConnectedSignallers(0, 1)
+	{
+	}
+
+private:
+	CCopyableLock<CThreadFastMutex> m_Mutex;
+	CUtlVector<MTElement_t> m_ConnectedSignallers;
+};
+COMPILE_TIME_ASSERT(sizeof(CUtlSlot) == 40);
+
 class CServerSideClientBase : public CUtlSlot, public INetworkChannelNotify, public INetworkMessageProcessingPreFilter
 {
 public:
