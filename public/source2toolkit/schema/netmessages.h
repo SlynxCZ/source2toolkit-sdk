@@ -20,7 +20,7 @@
 #ifndef NETMESSAGES_H
 #define NETMESSAGES_H
 
-#include "netchannel.h"
+#include "inetchannel.h"
 #include "networksystem/netmessage.h"
 #include "netmessages.pb.h"
 #include "networkbasetypes.pb.h"
