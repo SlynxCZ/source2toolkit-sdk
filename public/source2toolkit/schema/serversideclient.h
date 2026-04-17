@@ -17,7 +17,7 @@
 #include "steam/steamclientpublic.h"
 #include "clientframe.h"
 #include "tier0/annotations.h"
-#include "circularbuffer.h"sz
+#include "circularbuffer.h"
 #include "utlstring.h"
 #include "networksystem/inetworksystem.h"
 
