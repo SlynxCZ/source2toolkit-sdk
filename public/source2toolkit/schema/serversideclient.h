@@ -386,7 +386,7 @@ public:
 	float m_fUnkTime = 0.0f;
 
 	// CSVCMsg_PacketEntities_t (CNetMessagePB<55,...>), sizeof 216 bytes
-	CSVCMsg_PacketEntities_t m_PacketEntities;
+	CSVCMsg_PacketEntities m_PacketEntities;
 
 	// CDelayedCallBase<CDelayedCallBase<CServerSideClientBase>>* pointers.
 	CTSQueue<void*> m_DelayedCallQueue;
