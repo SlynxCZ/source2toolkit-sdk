@@ -187,7 +187,7 @@ public:
 
     /**
 
-    * @brief Gets module path.
+    * @brief Gets module absolute path.
       */
     virtual const char* GetModulePath(void* modulePtr) = 0;
 
