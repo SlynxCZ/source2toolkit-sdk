@@ -28,6 +28,11 @@ uintptr_t UTIL_GetModuleBase(void* module)
     return GetAddrs()->GetModuleBase(module);
 }
 
+const char* UTIL_GetModulePath(void* module)
+{
+    return GetAddrs()->GetModulePath(module);
+}
+
 uintptr_t UTIL_FindPattern(void* module, const char* pattern)
 {
     return GetAddrs()->FindPattern(module, pattern);

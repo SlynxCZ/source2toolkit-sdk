@@ -48,6 +48,17 @@ void* UTIL_GetModuleHandle(void* module);
   */
 uintptr_t UTIL_GetModuleBase(void* module);
 
+/**
+
+* @brief Gets the absolute path of a module.
+*
+* @param module Module identifier
+* @return Absolute path of the module
+*
+* @note Wrapper around IToolkitAddresses::GetModulePath()
+  */
+const char* UTIL_GetModulePath(void* module);
+
 /* =========================
 Pattern scanning
 ========================= */

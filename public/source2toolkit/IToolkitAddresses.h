@@ -185,6 +185,12 @@ public:
       */
     virtual uintptr_t GetModuleBase(void* modulePtr) = 0;
 
+    /**
+
+    * @brief Gets module path.
+      */
+    virtual const char* GetModulePath(void* modulePtr) = 0;
+
     /* =========================
     Pattern scanning
     ========================= */
