@@ -140,12 +140,6 @@ using CGameEntitySystem_FindEntityByName_t = CBaseEntity* (FASTCALL*)(CEntitySys
                                                                       CEntityInstance*, CEntityInstance*,
                                                                       CEntityInstance*, IEntityFindFilter*);
 
-/**
-
-* @brief Initializes game event manager.
-  */
-using CGameEventManager_Init_t = void (FASTCALL*)(IGameEventManager2*);
-
 /* =========================
 Core Toolkit Addresses
 ========================= */
@@ -281,7 +275,6 @@ public:
     virtual CEntitySystem_AddEntityIOEvent_t CEntitySystem_AddEntityIOEvent() = 0;
     virtual CGameEntitySystem_FindEntityByClassName_t CGameEntitySystem_FindEntityByClassName() = 0;
     virtual CGameEntitySystem_FindEntityByName_t CGameEntitySystem_FindEntityByName() = 0;
-    virtual CGameEventManager_Init_t CGameEventManager_Init() = 0;
 };
 
 #endif //_INCLUDE_ITOOLKIT_ADDRESSES_H
