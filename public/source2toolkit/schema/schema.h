@@ -17,6 +17,7 @@
 #include "igameevents.h"
 #include "igameeventsystem.h"
 #include "schemasystem.h"
+#include "entity2/entityclass.h"
 #include "entity2/entitysystem.h"
 #include "entity2/entityidentity.h"
 #include "entity2/entityinstance.h"
