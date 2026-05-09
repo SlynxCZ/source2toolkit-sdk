@@ -12,8 +12,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
-#include "audioparams_t.h"
 #include "CPlayerPawnComponent.h"
+#include "audioparams_t.h"
 #include "fogplayerparams_t.h"
 
 class CBaseEntity;

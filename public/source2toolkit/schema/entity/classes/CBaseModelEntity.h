@@ -16,9 +16,9 @@
 #include "CBaseEntity.h"
 #include "CCollisionProperty.h"
 #include "CGlowProperty.h"
+#include "CHitboxComponent.h"
 #include "CNetworkViewOffsetVector.h"
 #include "EntityRenderAttribute_t.h"
-#include "CHitboxComponent.h"
 
 class CDestructiblePartsComponent;
 class CRenderComponent;

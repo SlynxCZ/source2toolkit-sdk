@@ -13,9 +13,9 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "CHostageExpresserShim.h"
 #include "CountdownTimer.h"
 #include "EntitySpottedState_t.h"
-#include "CHostageExpresserShim.h"
 
 class CBaseEntity;
 class CCSPlayerPawn;

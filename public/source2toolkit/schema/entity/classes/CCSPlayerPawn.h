@@ -17,18 +17,18 @@
 #include "CEconItemView.h"
 #include "../enums/CSPlayerBlockingUseAction_t.h"
 #include "EntitySpottedState_t.h"
-#include "../enums/loadout_slot_t.h"
 #include "PredictedDamageTag_t.h"
+#include "../enums/loadout_slot_t.h"
 
 class CBaseEntity;
 class CCSBot;
+class CCSPlayerController;
 class CCSPlayer_ActionTrackingServices;
 class CCSPlayer_BulletServices;
 class CCSPlayer_BuyServices;
 class CCSPlayer_DamageReactServices;
 class CCSPlayer_HostageServices;
 class CCSPlayer_RadioServices;
-class CCSPlayerController;
 
 class CCSPlayerPawn : public CCSPlayerPawnBase
 {

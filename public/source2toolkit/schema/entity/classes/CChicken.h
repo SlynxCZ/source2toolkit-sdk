@@ -15,8 +15,8 @@
 
 #include "CAttributeContainer.h"
 #include "CDynamicProp.h"
-#include "CountdownTimer.h"
 #include "../enums/ChickenActivity.h"
+#include "CountdownTimer.h"
 
 class CBaseEntity;
 class CCSPlayerPawn;

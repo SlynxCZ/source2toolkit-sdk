@@ -12,12 +12,12 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
-#include "../enums/AnimationAlgorithm_t.h"
 #include "../enums/AnimLoopMode_t.h"
+#include "../enums/AnimationAlgorithm_t.h"
 #include "CAnimGraphNetworkedVariables.h"
 #include "CSkeletonAnimationController.h"
-#include "ExternalAnimGraph_t.h"
 #include "ExternalAnimGraphHandle_t.h"
+#include "ExternalAnimGraph_t.h"
 #include "InfoForResourceTypeCNmGraphDefinition.h"
 #include "ResourceId_t.h"
 #include "../enums/SequenceFinishNotifyState_t.h"

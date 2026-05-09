@@ -14,9 +14,9 @@
 #include <cstdint>
 
 #include "CBasePropDoor.h"
-#include "../enums/doorCheck_e.h"
 #include "../enums/PropDoorRotatingOpenDirection_e.h"
 #include "../enums/PropDoorRotatingSpawnPos_t.h"
+#include "../enums/doorCheck_e.h"
 
 class CEntityBlocker;
 

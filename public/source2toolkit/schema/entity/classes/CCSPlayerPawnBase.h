@@ -17,8 +17,8 @@
 #include "../enums/CSPlayerState.h"
 #include "CTouchExpansionComponent.h"
 
-class CCSPlayer_PingServices;
 class CCSPlayerController;
+class CCSPlayer_PingServices;
 
 class CCSPlayerPawnBase : public CBasePlayerPawn
 {

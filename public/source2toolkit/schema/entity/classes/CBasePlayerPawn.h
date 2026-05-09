@@ -14,9 +14,9 @@
 #include <cstdint>
 
 #include "CBaseCombatCharacter.h"
+#include "ViewAngleServerChange_t.h"
 #include "sky3dparams_t.h"
 #include "sndopvarlatchdata_t.h"
-#include "ViewAngleServerChange_t.h"
 
 class CAI_Expresser;
 class CBasePlayerController;

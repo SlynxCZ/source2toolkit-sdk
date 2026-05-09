@@ -13,9 +13,9 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
-#include "constraint_hingeparams_t.h"
-#include "ConstraintSoundInfo.h"
 #include "CPhysConstraint.h"
+#include "ConstraintSoundInfo.h"
+#include "constraint_hingeparams_t.h"
 
 class CPhysHinge : public CPhysConstraint
 {

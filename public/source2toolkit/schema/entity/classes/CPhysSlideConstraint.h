@@ -13,8 +13,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
-#include "ConstraintSoundInfo.h"
 #include "CPhysConstraint.h"
+#include "ConstraintSoundInfo.h"
 
 class CPhysSlideConstraint : public CPhysConstraint
 {
