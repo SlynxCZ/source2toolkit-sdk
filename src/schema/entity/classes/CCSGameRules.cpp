@@ -38,5 +38,5 @@ CCSPlayerController* CCSGameRules::GetClientAimTarget(CCSPlayerController* pPlay
     auto* pPawn = static_cast<CCSPlayerPawn*>(UTIL_FindPickerEntity(pPlayer, this));
     if (!pPawn) return nullptr;
 
-    return pPawn->GetClassname() == "player" ? pPawn->m_hOriginalController().Get() : nullptr;
+    return V_strcmp(pPawn->GetClassname(), "player") == 0 ? pPawn->m_hOriginalController().Get() : nullptr;
 }

@@ -6,6 +6,18 @@ option(SOURCE2TOOLKIT_CORE "Build core toolkit" OFF)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+# =========================
+# PLATFORM
+# =========================
+
+if (UNIX AND NOT APPLE)
+    set(LINUX TRUE)
+endif()
+
+if (WIN32 AND NOT MSVC)
+    message(FATAL_ERROR "MSVC restricted.")
+endif()
+
 if (LINUX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
@@ -41,18 +53,6 @@ resolve_dep(PROTOBUFS PROTOBUFS "${CMAKE_CURRENT_SOURCE_DIR}/vendor/Protobufs")
 
 set(SOURCESDK_LIB ${SOURCESDK}/lib)
 set(CSGO_PROTO_DIR ${PROTOBUFS}/csgo)
-
-# =========================
-# PLATFORM
-# =========================
-
-if (UNIX AND NOT APPLE)
-    set(LINUX TRUE)
-endif()
-
-if (WIN32 AND NOT MSVC)
-    message(FATAL_ERROR "MSVC restricted.")
-endif()
 
 # =========================
 # PROTOBUF
