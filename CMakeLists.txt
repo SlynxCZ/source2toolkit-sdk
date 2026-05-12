@@ -214,6 +214,7 @@ if (LINUX)
             ${SOURCESDK_LIB}/linux64/interfaces.a
             ${SOURCESDK_LIB}/linux64/mathlib.a
             ${SOURCESDK_LIB}/linux64/release/libprotobuf.a
+            ${SOURCESDK_LIB}/linux64/libsteam_api.so
             Protobufs
     )
 endif()
@@ -225,6 +226,8 @@ if (WIN32)
             ${SOURCESDK_LIB}/public/win64/interfaces.lib
             ${SOURCESDK_LIB}/public/win64/mathlib.lib
             ${SOURCESDK_LIB}/public/win64/2015/libprotobuf.lib
+            ${SOURCESDK_LIB}/public/win64/steam_api64.lib
+						
             Protobufs
     )
 endif()
