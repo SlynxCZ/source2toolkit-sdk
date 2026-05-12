@@ -52,7 +52,6 @@ resolve_dep(SOURCESDK HL2SDKCS2)
 resolve_dep(PROTOBUFS CSGO_PROTO)
 
 set(SOURCESDK_LIB ${SOURCESDK}/lib)
-set(CSGO_PROTO_DIR ${PROTOBUFS}/csgo)
 
 # =========================
 # PROTOBUF
