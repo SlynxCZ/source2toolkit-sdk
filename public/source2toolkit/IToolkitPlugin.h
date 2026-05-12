@@ -200,7 +200,7 @@ Plugin exposure
 
 * @brief Exposes plugin interface to engine.
   */
-#define PL_EXPOSURE_FUNC(name, var)	EXPOSE_SINGLE_INTERFACE_GLOBALVAR(IToolkitPlugin, IToolkitPlugin, TOOLKIT_PLAPI_NAME, var);
+#define TOOLKIT_EXPOSURE_FUNC(name, var)	EXPOSE_SINGLE_INTERFACE_GLOBALVAR(IToolkitPlugin, IToolkitPlugin, TOOLKIT_PLAPI_NAME, var);
 
 /* =========================
 Globals
@@ -223,7 +223,7 @@ Globals
     IToolkitPlugin* g_PluginAPI = nullptr; \
     PluginId g_PluginID = 0; \
     namespace KHook { IKHook* __exported__khook = nullptr; } \
-    PL_EXPOSURE_FUNC(name, var)
+    TOOLKIT_EXPOSURE_FUNC(name, var)
 
 /**
 
