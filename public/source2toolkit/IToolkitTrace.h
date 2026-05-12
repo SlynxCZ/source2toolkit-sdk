@@ -218,9 +218,8 @@ struct TraceResult
         m_pSurfaceProperties = nullptr;
     }
 
-    explicit TraceResult(const CGameTrace* pTrace, bool bResult)
+    explicit TraceResult(const CGameTrace* pTrace)
     {
-        m_bTraceShapeResult = bResult;
         m_pSurfaceProperties = pTrace->m_pSurfaceProperties;
         m_pEnt = pTrace->m_pEnt;
         m_pHitbox = pTrace->m_pHitbox;
@@ -279,8 +278,6 @@ struct TraceResult
     CPhysSurfaceProperties* Surface() const { return const_cast<CPhysSurfaceProperties*>(m_pSurfaceProperties); }
 
 private:
-    bool m_bTraceShapeResult;           // return value from RayTrace::TraceShapeEx
-
     const CPhysSurfaceProperties *m_pSurfaceProperties;
     CEntityInstance *m_pEnt;
     const CHitBox *m_pHitbox;
