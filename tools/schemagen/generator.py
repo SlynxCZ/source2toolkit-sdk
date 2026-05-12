@@ -5,7 +5,7 @@ Original: tools/schemagen/Program.cs (and related files)
 Usage:
     python generator.py [output_path]
 
-Default output_path: ../../../../public/source2toolkit/schema/entity
+Default output_path: ../../public/source2toolkit/schema/entity
 Reads server.json from the same directory as this script.
 """
 
@@ -548,12 +548,18 @@ MANUAL_METHODS: dict[str, list[str]] = {
         "CCSPlayerController* GetOriginalController();",
     ],
     "CCSPlayer_ItemServices": [
-        "/// <summary>Drop active weapon.</summary>",
+        "/// <summary>Drop active weapon, recommended to use DropWeapon instead (parameter is ignored here)</summary>",
         "void DropActivePlayerWeapon(CBasePlayerWeapon* pActiveWeapon);",
         "/// <summary>Remove all weapons.</summary>",
         "void RemoveWeapons();",
         "/// <summary>Give item.</summary>",
         "CBasePlayerWeapon* GiveNamedItem(const char* pszItem);",
+    ],
+    "CCSPlayer_WeaponServices": [
+        "/// <summary>Drop weapon.</summary>",
+        "void DropWeapon(CBasePlayerWeapon *pWeapon, Vector *pVecTarget = nullptr, Vector *pVelocity = nullptr);",
+        "/// <summary>Select weapon.</summary>",
+        "void SelectWeapon(CBasePlayerWeapon *pWeapon, int unk1 = 0);"
     ],
     "CPlayerControllerComponent": [
         "/// <summary>Get player controller.</summary>",
@@ -988,7 +994,7 @@ def write_class(
 def main() -> None:
     script_dir = os.path.dirname(os.path.abspath(__file__))
     output_path = sys.argv[1] if len(sys.argv) > 1 else os.path.join(
-        script_dir, "../../../../public/source2toolkit/schema/entity"
+        script_dir, "../../public/source2toolkit/schema/entity"
     )
 
     schema_path = os.path.join(script_dir, "server.json")
