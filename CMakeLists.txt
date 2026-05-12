@@ -33,23 +33,20 @@ endif ()
 # DEPENDENCY PATHS
 # =========================
 
-# Environment override helper
-function(resolve_dep OUT_VAR ENV_NAME FALLBACK)
+function(resolve_dep OUT_VAR ENV_NAME)
     if (DEFINED ENV{${ENV_NAME}} AND NOT "$ENV{${ENV_NAME}}" STREQUAL "")
         file(TO_CMAKE_PATH "$ENV{${ENV_NAME}}" _resolved)
         set(${OUT_VAR} "${_resolved}" PARENT_SCOPE)
 
         message(STATUS "${ENV_NAME} -> ${_resolved}")
     else()
-        set(${OUT_VAR} "${FALLBACK}" PARENT_SCOPE)
-
-        message(STATUS "${ENV_NAME} not set, using fallback: ${FALLBACK}")
+        message(FATAL_ERROR "${ENV_NAME} is not set")
     endif()
 endfunction()
 
-resolve_dep(KHOOK KHOOK "${CMAKE_CURRENT_SOURCE_DIR}/vendor/khook")
-resolve_dep(SOURCESDK HL2SDKCS2 "${CMAKE_CURRENT_SOURCE_DIR}/vendor/hl2sdk-cs2")
-resolve_dep(PROTOBUFS PROTOBUFS "${CMAKE_CURRENT_SOURCE_DIR}/vendor/Protobufs")
+resolve_dep(KHOOK KHOOK)
+resolve_dep(SOURCESDK HL2SDKCS2)
+resolve_dep(PROTOBUFS PROTOBUFS)
 
 set(SOURCESDK_LIB ${SOURCESDK}/lib)
 set(CSGO_PROTO_DIR ${PROTOBUFS}/csgo)
