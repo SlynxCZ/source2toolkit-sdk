@@ -1,4 +1,41 @@
 ﻿/**
+* vim: set ts=4 sw=4 tw=99 noet:
+ * =============================================================================
+ * Source2Toolkit
+ * Copyright (C) 2025-2026 Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl,
+ * AlliedModders LLC. All rights reserved.
+ * =============================================================================
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, version 3.0, as published by the
+ * Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * As a special exception, Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl and
+ * AlliedModders LLC give you permission to link the code of this program
+ * (as well as its derivative works) to "Counter-Strike 2," "Source 2,"
+ * "Steam," and any Game MODs or server software running on software by
+ * Valve Corporation. You must obey the GNU General Public License in all
+ * respects for all other code used.
+ *
+ * Additionally, this exception applies to all derivative works unless
+ * otherwise stated in LICENSE.txt.
+ *
+ * Authors:
+ *   - Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl
+ *   - AlliedModders LLC
+ *
+ * Project: Source2Toolkit
+ */
+
+/**
 
 * @file trace.h
 * @brief High-level helper functions for ray tracing and collision queries.
@@ -53,7 +90,7 @@ TraceResult UTIL_TraceShape(const Vector& vecStart,
   */
 TraceResult UTIL_TraceEndShape(const Vector& vecStart,
                                const Vector& vecEnd,
-                               CEntityInstance* pIgnoreEntity,
+                               CBaseEntity* pIgnoreEntity,
                                TraceOptions* pTraceOptions);
 
 /**
@@ -75,7 +112,7 @@ TraceResult UTIL_TraceHullShape(const Vector& vecStart,
                                 const Vector& vecEnd,
                                 const Vector& vecMins,
                                 const Vector& vecMaxs,
-                                CEntityInstance* pIgnoreEntity,
+                                CBaseEntity* pIgnoreEntity,
                                 TraceOptions* pTraceOptions);
 
 /**
@@ -95,3 +132,41 @@ TraceResult UTIL_TraceShapeEx(const Vector& vecStart,
                               const Vector& vecEnd,
                               CTraceFilter* pTraceFilter,
                               Ray_t* pRay);
+
+/**
+
+* @brief Returns the contents bitmask at a world position.
+*
+* @param vTestPos Position to test
+* @param nContentsMask Mask of content types to query
+*
+* @return Contents bitmask
+  */
+uint64 UTIL_PointContents(const Vector* const vTestPos,
+                          uint64 nContentsMask);
+
+/**
+
+* @brief Checks whether a nav area overlaps with an entity.
+*
+* @param rArea Nav area pointer
+* @param rEntity Entity to test against
+* @param bExtrudeHullHeight Whether to extrude by hull height
+*
+* @return true if overlapping
+  */
+bool UTIL_CheckAreaOverlappingEntity(const void* const rArea,
+                                     const CBaseEntity* const rEntity,
+                                     bool bExtrudeHullHeight);
+
+/**
+
+* @brief Retrieves the world-space AABB of an entity.
+*
+* @param rEntity Entity to query
+* @param pMinsOut Output minimum bounds
+* @param pMaxsOut Output maximum bounds
+  */
+void UTIL_GetEntityWorldSpaceAABB(const CBaseEntity* const rEntity,
+                                  Vector* pMinsOut,
+                                  Vector* pMaxsOut);

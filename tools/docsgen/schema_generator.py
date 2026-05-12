@@ -114,7 +114,6 @@ def schema_class_to_yaml(cls):
         "body": body
     }
 
-
 def schema_enums_to_yaml(enums, filename):
     body = []
 
@@ -154,7 +153,6 @@ def schema_enums_to_yaml(enums, filename):
         "title": filename,
         "body": body
     }
-
 
 def schema_functions_to_yaml(functions, filename):
     body = []

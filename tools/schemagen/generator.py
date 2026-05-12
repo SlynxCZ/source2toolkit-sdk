@@ -1,4 +1,36 @@
 """
+Source2Toolkit
+Copyright (C) 2025-2026 Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl,
+AlliedModders LLC. All rights reserved.
+
+This program is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License, version 3.0, as published by the
+Free Software Foundation.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+details.
+
+You should have received a copy of the GNU General Public License along with
+this program. If not, see <http://www.gnu.org/licenses/>.
+
+As a special exception, Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl and
+AlliedModders LLC give you permission to link the code of this program
+(as well as its derivative works) to "Counter-Strike 2," "Source 2,"
+"Steam," and any Game MODs or server software running on software by
+Valve Corporation. You must obey the GNU General Public License in all
+respects for all other code used.
+
+Additionally, this exception applies to all derivative works unless
+otherwise stated in LICENSE.txt.
+
+Authors:
+    - Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl
+    - AlliedModders LLC
+
+Project: Source2Toolkit
+
 Schema generator – Python port of the C# schemagen tool.
 Original: tools/schemagen/Program.cs (and related files)
 
@@ -20,6 +52,45 @@ from dataclasses import dataclass, field
 from enum import Enum, auto
 from typing import Optional
 
+LICENSE_HEADER = """\
+/**
+* vim: set ts=4 sw=4 tw=99 noet:
+ * =============================================================================
+ * Source2Toolkit
+ * Copyright (C) 2025-2026 Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl,
+ * AlliedModders LLC. All rights reserved.
+ * =============================================================================
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, version 3.0, as published by the
+ * Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * As a special exception, Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl and
+ * AlliedModders LLC give you permission to link the code of this program
+ * (as well as its derivative works) to "Counter-Strike 2," "Source 2,"
+ * "Steam," and any Game MODs or server software running on software by
+ * Valve Corporation. You must obey the GNU General Public License in all
+ * respects for all other code used.
+ *
+ * Additionally, this exception applies to all derivative works unless
+ * otherwise stated in LICENSE.txt.
+ *
+ * Authors:
+ *   - Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl
+ *   - AlliedModders LLC
+ *
+ * Project: Source2Toolkit
+ */
+
+"""
 
 # ---------------------------------------------------------------------------
 # Enums
@@ -35,7 +106,6 @@ class SchemaTypeCategory(Enum):
     DeclaredEnum = 6
     NoneType = 7
 
-
 class SchemaAtomicCategory(Enum):
     Basic = 0
     T = 1
@@ -44,7 +114,6 @@ class SchemaAtomicCategory(Enum):
     I = 4
     Unknown = 5
     NoneAtomic = 6
-
 
 # ---------------------------------------------------------------------------
 # JSON input model
@@ -55,12 +124,10 @@ class SchemaMetaTag:
     name: str
     value: Optional[str]
 
-
 @dataclass
 class SchemaBaseClass:
     offset: int
     ref_idx: int
-
 
 @dataclass
 class SchemaSubtype:
@@ -90,12 +157,10 @@ class SchemaSubtype:
             subtype=subtype,
         )
 
-
 @dataclass
 class MemberTraits:
     metatags: Optional[list[SchemaMetaTag]]
     subtype: Optional[SchemaSubtype]
-
 
 @dataclass
 class SchemaMember:
@@ -103,19 +168,16 @@ class SchemaMember:
     offset: int
     traits: Optional[MemberTraits]
 
-
 @dataclass
 class SchemaEnumField:
     name: str
     value: int
-
 
 @dataclass
 class SchemaTraits:
     baseclasses: Optional[list[SchemaBaseClass]]
     members: Optional[list[SchemaMember]]
     fields: Optional[list[SchemaEnumField]]
-
 
 @dataclass
 class SchemaDef:
@@ -124,7 +186,6 @@ class SchemaDef:
     size: Optional[int]
     alignment: Optional[int]
     traits: Optional[SchemaTraits]
-
 
 def _parse_schema_defs(raw_defs: list[dict]) -> list[SchemaDef]:
     result = []
@@ -153,7 +214,6 @@ def _parse_schema_defs(raw_defs: list[dict]) -> list[SchemaDef]:
         result.append(SchemaDef(d["type"], d["name"], d.get("size"), d.get("alignment"), traits))
     return result
 
-
 # ---------------------------------------------------------------------------
 # Intermediate model
 # ---------------------------------------------------------------------------
@@ -163,12 +223,10 @@ class SchemaEnumItem:
     name: str
     value: int
 
-
 @dataclass
 class SchemaEnum:
     align: int
     items: list[SchemaEnumItem]
-
 
 @dataclass
 class SchemaFieldType:
@@ -264,13 +322,11 @@ class SchemaFieldType:
             return self.inner.cpp_type_name + "*"
         return "void"
 
-
 @dataclass
 class SchemaField:
     name: str
     type: SchemaFieldType
     metadata: dict[str, str]
-
 
 @dataclass
 class SchemaClass:
@@ -278,7 +334,6 @@ class SchemaClass:
     name: str
     parent: Optional[str]
     fields: list[SchemaField]
-
 
 # ---------------------------------------------------------------------------
 # Configuration – lists copied verbatim from C# source
@@ -586,14 +641,12 @@ EXTRA_WHITELIST: frozenset[str] = frozenset({
     "DestructibleHitGroupToDestroy_t",
 })
 
-
 # ---------------------------------------------------------------------------
 # Helper functions
 # ---------------------------------------------------------------------------
 
 def sanitise_type_name(name: str) -> str:
     return name.replace(":", "").replace("< ", "<").replace(" >", ">")
-
 
 def contains_ignored_type(t: SchemaFieldType) -> bool:
     if t.name in IGNORE_CLASSES:
@@ -602,10 +655,8 @@ def contains_ignored_type(t: SchemaFieldType) -> bool:
         return contains_ignored_type(t.inner)
     return False
 
-
 def _field_has_ignored_wildcard(t: SchemaFieldType) -> bool:
     return any(w in t.name for w in IGNORE_CLASS_WILDCARDS)
-
 
 # ---------------------------------------------------------------------------
 # Schema conversion
@@ -669,7 +720,6 @@ def convert_subtype_to_field_type(
 
     return SchemaFieldType(type_name, category, atomic, inner)
 
-
 def convert_new_schema_to_old(
     defs: list[SchemaDef],
 ) -> tuple[dict[str, SchemaEnum], dict[str, SchemaClass]]:
@@ -705,7 +755,6 @@ def convert_new_schema_to_old(
             classes[def_.name] = SchemaClass(i, def_.name, parent_name, fields)
 
     return enums, classes
-
 
 # ---------------------------------------------------------------------------
 # Graph / BFS
@@ -769,10 +818,13 @@ def build_graph_and_bfs(
 
     return visited
 
-
 # ---------------------------------------------------------------------------
 # Code generation helpers
 # ---------------------------------------------------------------------------
+
+def make_header_guard(name: str) -> str:
+    safe = sanitise_type_name(name).replace("<", "").replace(">", "").replace(" ", "_")
+    return f"_INCLUDE_{safe.upper()}_H"
 
 def _enum_type_cpp(align: int, items: list[SchemaEnumItem]) -> str:
     is_signed = any(it.value < 0 for it in items)
@@ -788,11 +840,15 @@ def _enum_type_cpp(align: int, items: list[SchemaEnumItem]) -> str:
     }
     return table.get((align, is_signed), "int32_t")
 
-
 def write_enum(enum_name: str, schema_enum: SchemaEnum) -> str:
     underlying = _enum_type_cpp(schema_enum.align, schema_enum.items)
+    guard = make_header_guard(enum_name)
     lines = [
+        f"#ifndef {guard}",
+        f"#define {guard}",
+        "",
         "#pragma once",
+        "",
         "#include <cstdint>",
         "",
         f"enum class {enum_name} : {underlying}",
@@ -802,8 +858,9 @@ def write_enum(enum_name: str, schema_enum: SchemaEnum) -> str:
         lines.append(f"    {item.name} = {item.value},")
     lines.append("};")
     lines.append("")
-    return "\r\n".join(lines)
-
+    lines.append(f"#endif // {guard}")
+    lines.append("")
+    return LICENSE_HEADER + "\r\n".join(lines)
 
 def collect_referenced_types(
     t: SchemaFieldType,
@@ -826,7 +883,6 @@ def collect_referenced_types(
         inner_is_pointer = t.category == SchemaTypeCategory.Ptr or is_handle_template
         collect_referenced_types(t.inner, includes, forwards, inner_is_pointer)
 
-
 def collect_types_from_methods(
     methods: list[str],
     all_enums: dict[str, SchemaEnum],
@@ -843,7 +899,6 @@ def collect_types_from_methods(
             if enum_name in method:
                 includes.add(enum_name)
 
-
 def inherits_from_base_entity(
     class_name: str,
     all_classes: dict[str, SchemaClass],
@@ -855,7 +910,6 @@ def inherits_from_base_entity(
         if cls.parent == "CBaseEntity":
             return True
         class_name = cls.parent
-
 
 def write_class(
     class_name: str,
@@ -894,7 +948,14 @@ def write_class(
 
     inherits = class_name == "CBaseEntity" or inherits_from_base_entity(class_name, all_classes)
 
-    lines = ["#pragma once"]
+    guard = make_header_guard(class_name)
+    lines = [
+        f"#ifndef {guard}",
+        f"#define {guard}",
+        "",
+        "#pragma once",
+        "",
+    ]
 
     if inherits and class_name != "CBaseEntity":
         lines.append('#include "CBaseEntity.h"')
@@ -984,8 +1045,9 @@ def write_class(
 
     lines.append("};")
     lines.append("")
-    return "\r\n".join(lines)
-
+    lines.append(f"#endif // {guard}")
+    lines.append("")
+    return LICENSE_HEADER + "\r\n".join(lines)
 
 # ---------------------------------------------------------------------------
 # Main
@@ -1044,8 +1106,7 @@ def main() -> None:
         with open(out_file, "w", encoding="utf-8", newline="") as fh:
             fh.write(content)
 
-    print(f"Done. Enums: {len(all_enums)}, Classes written to {output_path}")
-
+    print(f"Done. Classes: {len(all_classes)}, Enums: {len(all_enums)}, Classes written to {output_path}")
 
 if __name__ == "__main__":
     main()

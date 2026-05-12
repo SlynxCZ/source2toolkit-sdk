@@ -1,4 +1,41 @@
 ﻿/**
+* vim: set ts=4 sw=4 tw=99 noet:
+ * =============================================================================
+ * Source2Toolkit
+ * Copyright (C) 2025-2026 Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl,
+ * AlliedModders LLC. All rights reserved.
+ * =============================================================================
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, version 3.0, as published by the
+ * Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * As a special exception, Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl and
+ * AlliedModders LLC give you permission to link the code of this program
+ * (as well as its derivative works) to "Counter-Strike 2," "Source 2,"
+ * "Steam," and any Game MODs or server software running on software by
+ * Valve Corporation. You must obey the GNU General Public License in all
+ * respects for all other code used.
+ *
+ * Additionally, this exception applies to all derivative works unless
+ * otherwise stated in LICENSE.txt.
+ *
+ * Authors:
+ *   - Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl
+ *   - AlliedModders LLC
+ *
+ * Project: Source2Toolkit
+ */
+
+/**
 
 * @file IToolkitTrace.h
 * @brief Interface and utilities for ray tracing and collision queries.
@@ -29,156 +66,7 @@ Forward declarations
 ========================= */
 
 class CTraceFilterEx;
-
-/* =========================
-Interaction layers
-========================= */
-
-/**
-
-* @brief Bitmask describing collision layers.
-*
-* These flags define what objects a trace interacts with.
-* They can be combined using bitwise operators.
-*
-* @code
-* InteractionLayers mask = InteractionLayers::Solid | InteractionLayers::Player;
-* @endcode
-  */
-enum class InteractionLayers : uint64_t
-{
-    Solid = 0x1,
-    Hitboxes = 0x2,
-    Trigger = 0x4,
-    Sky = 0x8,
-    PlayerClip = 0x10,
-    NPCClip = 0x20,
-    BlockLOS = 0x40,
-    BlockLight = 0x80,
-    Ladder = 0x100,
-    Pickup = 0x200,
-    BlockSound = 0x400,
-    NoDraw = 0x800,
-    Window = 0x1000,
-    PassBullets = 0x2000,
-    WorldGeometry = 0x4000,
-    Water = 0x8000,
-    Slime = 0x10000,
-    TouchAll = 0x20000,
-    Player = 0x40000,
-    NPC = 0x80000,
-    Debris = 0x100000,
-    Physics_Prop = 0x200000,
-    NavIgnore = 0x400000,
-    NavLocalIgnore = 0x800000,
-    PostProcessingVolume = 0x1000000,
-    UnusedLayer3 = 0x2000000,
-    CarriedObject = 0x4000000,
-    PushAway = 0x8000000,
-    ServerEntityOnClient = 0x10000000,
-    CarriedWeapon = 0x20000000,
-    StaticLevel = 0x40000000,
-    csgo_team1 = 0x80000000,
-    csgo_team2 = 0x100000000,
-    csgo_grenadeclip = 0x200000000,
-    csgo_droneclip = 0x400000000,
-    csgo_moveable = 0x800000000,
-    csgo_opaque = 0x1000000000,
-    csgo_monster = 0x2000000000,
-    csgo_thrown_grenade = 0x8000000000
-};
-
-/* =========================
-Bitmask operators
-========================= */
-
-/// Combines two interaction layers
-constexpr InteractionLayers operator|(InteractionLayers a, InteractionLayers b)
-{
-    return static_cast<InteractionLayers>(
-        static_cast<uint64_t>(a) | static_cast<uint64_t>(b)
-    );
-}
-
-/// Intersects two interaction layers
-constexpr InteractionLayers operator&(InteractionLayers a, InteractionLayers b)
-{
-    return static_cast<InteractionLayers>(
-        static_cast<uint64_t>(a) & static_cast<uint64_t>(b)
-    );
-}
-
-/// Inverts interaction layers
-constexpr InteractionLayers operator~(InteractionLayers a)
-{
-    return static_cast<InteractionLayers>(
-        ~static_cast<uint64_t>(a)
-    );
-}
-
-/// OR-assign operator
-constexpr InteractionLayers& operator|=(InteractionLayers& a, InteractionLayers b)
-{
-    a = a | b;
-    return a;
-}
-
-/* =========================
-Common masks
-========================= */
-
-/// Default physics trace (used for bullets)
-constexpr InteractionLayers MASK_SHOT_PHYSICS =
-    InteractionLayers::Solid |
-    InteractionLayers::PlayerClip |
-    InteractionLayers::Window |
-    InteractionLayers::PassBullets |
-    InteractionLayers::Player |
-    InteractionLayers::NPC |
-    InteractionLayers::Physics_Prop;
-
-/// Hitboxes only (useful for headshots)
-constexpr InteractionLayers MASK_SHOT_HITBOX =
-    InteractionLayers::Hitboxes |
-    InteractionLayers::Player |
-    InteractionLayers::NPC;
-
-/// Full bullet trace (physics + hitboxes)
-constexpr InteractionLayers MASK_SHOT_FULL =
-    MASK_SHOT_PHYSICS |
-    InteractionLayers::Hitboxes;
-
-/// World-only collision
-constexpr InteractionLayers MASK_WORLD_ONLY =
-    InteractionLayers::Solid |
-    InteractionLayers::Window |
-    InteractionLayers::PassBullets;
-
-/// Grenade trace mask
-constexpr InteractionLayers MASK_GRENADE =
-    InteractionLayers::Solid |
-    InteractionLayers::Window |
-    InteractionLayers::Physics_Prop |
-    InteractionLayers::PassBullets;
-
-/// Brush-only collision
-constexpr InteractionLayers MASK_BRUSH_ONLY =
-    InteractionLayers::Solid |
-    InteractionLayers::Window;
-
-/// Player movement collision
-constexpr InteractionLayers MASK_PLAYER_MOVE =
-    InteractionLayers::Solid |
-    InteractionLayers::Window |
-    InteractionLayers::PlayerClip |
-    InteractionLayers::PassBullets;
-
-/// NPC movement collision
-constexpr InteractionLayers MASK_NPC_MOVE =
-    InteractionLayers::Solid |
-    InteractionLayers::Window |
-    InteractionLayers::NPCClip |
-    InteractionLayers::PassBullets;
+class CBaseEntity;
 
 /* =========================
 Trace options
@@ -190,9 +78,9 @@ Trace options
   */
 struct TraceOptions
 {
-    uint64_t InteractsAs = 0;
-    uint64_t InteractsWith = static_cast<uint64_t>(MASK_SHOT_PHYSICS);
-    uint64_t InteractsExclude = 0;
+    uint64_t InteractsAs = CONTENTS_EMPTY;
+    uint64_t InteractsWith = MASK_SHOT;
+    uint64_t InteractsExclude = CONTENTS_EMPTY;
 };
 
 /* =========================
@@ -326,7 +214,7 @@ public:
       */
     virtual TraceResult TraceShape(const Vector& vecStart,
                                    const QAngle& angAngles,
-                                   CEntityInstance* pIgnoreEntity,
+                                   CBaseEntity* pIgnoreEntity,
                                    TraceOptions* pTraceOptions) = 0;
 
     /**
@@ -335,7 +223,7 @@ public:
       */
     virtual TraceResult TraceEndShape(const Vector& vecStart,
                                       const Vector& vecEnd,
-                                      CEntityInstance* pIgnoreEntity,
+                                      CBaseEntity* pIgnoreEntity,
                                       TraceOptions* pTraceOptions) = 0;
 
     /**
@@ -346,7 +234,7 @@ public:
                                        const Vector& vecEnd,
                                        const Vector& vecMins,
                                        const Vector& vecMaxs,
-                                       CEntityInstance* pIgnoreEntity,
+                                       CBaseEntity* pIgnoreEntity,
                                        TraceOptions* pTraceOptions) = 0;
 
     /**
@@ -357,6 +245,29 @@ public:
                                      const Vector& vecEnd,
                                      CTraceFilter* pTraceFilter,
                                      Ray_t* pRay) = 0;
+
+    /**
+
+    * @brief Returns the contents bitmask at a world position.
+      */
+    virtual uint64 PointContents(const Vector* const vTestPos,
+                                 uint64 nContentsMask) = 0;
+
+    /**
+
+    * @brief Checks whether a nav area overlaps with an entity.
+      */
+    virtual bool CheckAreaOverlappingEntity(const void* const rArea,
+                                            const CBaseEntity* const rEntity,
+                                            bool bExtrudeHullHeight) = 0;
+
+    /**
+
+    * @brief Retrieves the world-space AABB of an entity.
+      */
+    virtual void GetEntityWorldSpaceAABB(const CBaseEntity* const rEntity,
+                                         Vector* pMinsOut,
+                                         Vector* pMaxsOut) = 0;
 };
 
 #endif //_INCLUDE_ITOOLKIT_TRACE_H

@@ -1,4 +1,38 @@
-﻿import os
+﻿"""
+Source2Toolkit
+Copyright (C) 2025-2026 Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl,
+AlliedModders LLC. All rights reserved.
+
+This program is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License, version 3.0, as published by the
+Free Software Foundation.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+details.
+
+You should have received a copy of the GNU General Public License along with
+this program. If not, see <http://www.gnu.org/licenses/>.
+
+As a special exception, Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl and
+AlliedModders LLC give you permission to link the code of this program
+(as well as its derivative works) to "Counter-Strike 2," "Source 2,"
+"Steam," and any Game MODs or server software running on software by
+Valve Corporation. You must obey the GNU General Public License in all
+respects for all other code used.
+
+Additionally, this exception applies to all derivative works unless
+otherwise stated in LICENSE.txt.
+
+Authors:
+    - Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl
+    - AlliedModders LLC
+
+Project: Source2Toolkit
+"""
+
+import os
 import re
 import yaml
 import shutil
@@ -8,9 +42,7 @@ import schema_generator
 SOURCE_DIR = "../../public"
 DEST_DIR = "../../docs"
 
-
 os.makedirs(DEST_DIR, exist_ok=True)
-
 
 def format_title(name):
     if any(c.isupper() for c in name[1:]):
@@ -18,13 +50,11 @@ def format_title(name):
 
     return name[:1].upper() + name[1:]
 
-
 def escape_generics(text):
     """Escape < and > in generic types for MDX compatibility."""
     if not text:
         return text
     return text.replace('<', '&lt;').replace('>', '&gt;')
-
 
 def fix_html_for_jsx(text):
     """Convert HTML to Markdown for MDX compatibility."""
@@ -99,13 +129,11 @@ def fix_html_for_jsx(text):
 
     return text.strip()
 
-
 def escape_generics_in_link_text(text):
     """Escape generics in markdown link text only."""
     if not text:
         return text
     return text.replace('<', '\\<').replace('>', '\\>')
-
 
 def get_namespace(yaml_data):
     """Extract namespace from the YAML data."""
@@ -117,7 +145,6 @@ def get_namespace(yaml_data):
                         return fact['value'].get('text', '')
                     return fact.get('value', '')
     return ''
-
 
 def extract_metadata(yaml_data, is_index=False):
     """Extract front-matter metadata from DocFX ApiPage YAML."""
@@ -137,7 +164,6 @@ def extract_metadata(yaml_data, is_index=False):
 
     return {'title': clean_title}
 
-
 def transform_filename(base_name):
     """
     If filename ends with -NUMBER, replace with NUMBER times 't'.
@@ -149,7 +175,6 @@ def transform_filename(base_name):
         num = int(num)
         return name + ("t" * num)
     return base_name
-
 
 def generate_markdown(yaml_data):
     """Generate MDX content from DocFX ApiPage YAML."""
@@ -268,7 +293,6 @@ def generate_markdown(yaml_data):
 
     return md
 
-
 def resolve_output_path(root, file):
     rel = os.path.relpath(root, SOURCE_DIR).replace("\\", "/")
 
@@ -332,7 +356,6 @@ def resolve_output_path(root, file):
         rel_clean,
         f"{slug}.mdx"
     )
-
 
 if __name__ == "__main__":
     for root, dirs, files in os.walk(SOURCE_DIR):
