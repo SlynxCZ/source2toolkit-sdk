@@ -25,7 +25,7 @@ public:
     SCHEMA_FIELD(bool, m_bHasHelmet);
 
 public:
-    /// <summary>Drop active weapon.</summary>
+    /// <summary>Drop active weapon, recommended to use DropWeapon instead (parameter is ignored here)</summary>
     void DropActivePlayerWeapon(CBasePlayerWeapon* pActiveWeapon);
     /// <summary>Remove all weapons.</summary>
     void RemoveWeapons();

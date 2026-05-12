@@ -36,4 +36,10 @@ public:
     SCHEMA_FIELD(bool, m_bIsPickingUpGroundWeapon);
     SCHEMA_FIELD(CUtlVector<uint8_t>, m_networkAnimTiming);
     SCHEMA_FIELD(bool, m_bBlockInspectUntilNextGraphUpdate);
+
+public:
+    /// <summary>Drop weapon.</summary>
+    void DropWeapon(CBasePlayerWeapon *pWeapon, Vector *pVecTarget = nullptr, Vector *pVelocity = nullptr);
+    /// <summary>Select weapon.</summary>
+    void SelectWeapon(CBasePlayerWeapon *pWeapon, int unk1 = 0);
 };

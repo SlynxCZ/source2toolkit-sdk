@@ -184,7 +184,7 @@ void CCSPlayerController::Disconnect(ENetworkDisconnectionReason eReason)
 
 void CCSPlayerController::ExecuteClientCommand(const char* pszCommand)
 {
-    GetEngineServer()->ClientCommand(GetPlayerSlot(), pszCommand);
+    GetEngineServer()->ClientCommand(GetPlayerSlot(), "%s", pszCommand);
 }
 
 void CCSPlayerController::ExecuteClientCommandFromServer(const char* pszCommand)

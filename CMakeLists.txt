@@ -6,6 +6,18 @@ option(SOURCE2TOOLKIT_CORE "Build core toolkit" OFF)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+# =========================
+# PLATFORM
+# =========================
+
+if (UNIX AND NOT APPLE)
+    set(LINUX TRUE)
+endif()
+
+if (WIN32 AND NOT MSVC)
+    message(FATAL_ERROR "MSVC restricted.")
+endif()
+
 if (LINUX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
@@ -18,25 +30,28 @@ if (LINUX)
 endif ()
 
 # =========================
-# HL2SDK
+# DEPENDENCY PATHS
 # =========================
 
-set(KHOOK ${CMAKE_CURRENT_SOURCE_DIR}/vendor/khook)
-set(SOURCESDK ${CMAKE_CURRENT_SOURCE_DIR}/vendor/hl2sdk-cs2)
+function(resolve_dep OUT_VAR ENV_NAME)
+    if (DEFINED ENV{${ENV_NAME}} AND NOT "$ENV{${ENV_NAME}}" STREQUAL "")
+        file(TO_CMAKE_PATH "$ENV{${ENV_NAME}}" _resolved)
+        set(${OUT_VAR} "${_resolved}" PARENT_SCOPE)
+        message(STATUS "${ENV_NAME} -> ${_resolved}")
+    elseif (ARGC GREATER 2)
+        set(_fallback "${ARGV2}")
+        set(${OUT_VAR} "${_fallback}" PARENT_SCOPE)
+        message(STATUS "${ENV_NAME} not set, using fallback: ${_fallback}")
+    else()
+        message(FATAL_ERROR "${ENV_NAME} is not set")
+    endif()
+endfunction()
+
+resolve_dep(KHOOK KHOOK ${CMAKE_CURRENT_SOURCE_DIR}/vendor/khook)
+resolve_dep(SOURCESDK HL2SDKCS2)
+resolve_dep(PROTOBUFS CSGO_PROTO)
+
 set(SOURCESDK_LIB ${SOURCESDK}/lib)
-set(CSGO_PROTO_DIR ${CMAKE_CURRENT_SOURCE_DIR}/vendor/Protobufs/csgo)
-
-# =========================
-# PLATFORM
-# =========================
-
-if (UNIX AND NOT APPLE)
-    set(LINUX TRUE)
-endif()
-
-if (WIN32 AND NOT MSVC)
-    message(FATAL_ERROR "MSVC restricted.")
-endif()
 
 # =========================
 # PROTOBUF
@@ -98,7 +113,6 @@ target_compile_options(source2toolkit-config INTERFACE
         -Wno-write-strings
         -Wno-invalid-offsetof
         -Wno-reorder
-        -Wno-error=stringop-overflow
 
         -mfpmath=sse
         -msse
@@ -199,6 +213,7 @@ if (LINUX)
             ${SOURCESDK_LIB}/linux64/interfaces.a
             ${SOURCESDK_LIB}/linux64/mathlib.a
             ${SOURCESDK_LIB}/linux64/release/libprotobuf.a
+            ${SOURCESDK_LIB}/linux64/libsteam_api.so
             Protobufs
     )
 endif()
@@ -210,6 +225,8 @@ if (WIN32)
             ${SOURCESDK_LIB}/public/win64/interfaces.lib
             ${SOURCESDK_LIB}/public/win64/mathlib.lib
             ${SOURCESDK_LIB}/public/win64/2015/libprotobuf.lib
+            ${SOURCESDK_LIB}/public/win64/steam_api64.lib
+						
             Protobufs
     )
 endif()
