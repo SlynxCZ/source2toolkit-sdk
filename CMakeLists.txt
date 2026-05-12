@@ -49,7 +49,7 @@ endfunction()
 
 resolve_dep(KHOOK KHOOK ${CMAKE_CURRENT_SOURCE_DIR}/vendor/khook)
 resolve_dep(SOURCESDK HL2SDKCS2)
-resolve_dep(PROTOBUFS PROTOBUFS)
+resolve_dep(PROTOBUFS CSGO_PROTO)
 
 set(SOURCESDK_LIB ${SOURCESDK}/lib)
 set(CSGO_PROTO_DIR ${PROTOBUFS}/csgo)
