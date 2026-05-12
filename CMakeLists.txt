@@ -112,7 +112,6 @@ target_compile_options(source2toolkit-config INTERFACE
         -Wno-write-strings
         -Wno-invalid-offsetof
         -Wno-reorder
-        -Wno-error=stringop-overflow
 
         -mfpmath=sse
         -msse

@@ -2,26 +2,26 @@
 # Based on their work at https://github.com/Poggicek/StickerInspect
 
 set(PROTO_TARGETS
-        ${CSGO_PROTO_DIR}/network_connection.proto
-        ${CSGO_PROTO_DIR}/networkbasetypes.proto
-        ${CSGO_PROTO_DIR}/cs_gameevents.proto
-        ${CSGO_PROTO_DIR}/cs_usercmd.proto
-        ${CSGO_PROTO_DIR}/base_gcmessages.proto
-        ${CSGO_PROTO_DIR}/econ_gcmessages.proto
-        ${CSGO_PROTO_DIR}/engine_gcmessages.proto
-        ${CSGO_PROTO_DIR}/gcsdk_gcmessages.proto
-        ${CSGO_PROTO_DIR}/gcsystemmsgs.proto
-        ${CSGO_PROTO_DIR}/cstrike15_gcmessages.proto
-        ${CSGO_PROTO_DIR}/cstrike15_usermessages.proto
-        ${CSGO_PROTO_DIR}/source2_steam_stats.proto
-        ${CSGO_PROTO_DIR}/netmessages.proto
-        ${CSGO_PROTO_DIR}/networksystem_protomessages
-        ${CSGO_PROTO_DIR}/steammessages.proto
-        ${CSGO_PROTO_DIR}/usercmd.proto
-        ${CSGO_PROTO_DIR}/usermessages.proto
-        ${CSGO_PROTO_DIR}/gameevents.proto
-        ${CSGO_PROTO_DIR}/clientmessages.proto
-        ${CSGO_PROTO_DIR}/te.proto
+        ${PROTOBUFS}/network_connection.proto
+        ${PROTOBUFS}/networkbasetypes.proto
+        ${PROTOBUFS}/cs_gameevents.proto
+        ${PROTOBUFS}/cs_usercmd.proto
+        ${PROTOBUFS}/base_gcmessages.proto
+        ${PROTOBUFS}/econ_gcmessages.proto
+        ${PROTOBUFS}/engine_gcmessages.proto
+        ${PROTOBUFS}/gcsdk_gcmessages.proto
+        ${PROTOBUFS}/gcsystemmsgs.proto
+        ${PROTOBUFS}/cstrike15_gcmessages.proto
+        ${PROTOBUFS}/cstrike15_usermessages.proto
+        ${PROTOBUFS}/source2_steam_stats.proto
+        ${PROTOBUFS}/netmessages.proto
+        ${PROTOBUFS}/networksystem_protomessages
+        ${PROTOBUFS}/steammessages.proto
+        ${PROTOBUFS}/usercmd.proto
+        ${PROTOBUFS}/usermessages.proto
+        ${PROTOBUFS}/gameevents.proto
+        ${PROTOBUFS}/clientmessages.proto
+        ${PROTOBUFS}/te.proto
 )
 
 if(UNIX)
@@ -44,7 +44,7 @@ file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/protobufcompiler)
 
 add_custom_command(
         OUTPUT ${PROTO_OUTPUT}
-        COMMAND "${PROTOC_EXECUTABLE}" -I ${SOURCESDK}/thirdparty/protobuf-3.21.8/src --proto_path=${CSGO_PROTO_DIR} ${PROTO_PATHS} --cpp_out=${CMAKE_CURRENT_BINARY_DIR}/protobufcompiler ${PROTO_INPUT}
+        COMMAND "${PROTOC_EXECUTABLE}" -I ${SOURCESDK}/thirdparty/protobuf-3.21.8/src --proto_path=${PROTOBUFS} ${PROTO_PATHS} --cpp_out=${CMAKE_CURRENT_BINARY_DIR}/protobufcompiler ${PROTO_INPUT}
         COMMENT "Generating protobuf file"
 )
 
