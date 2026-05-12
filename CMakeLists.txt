@@ -53,6 +53,7 @@ add_library(source2toolkit-config INTERFACE)
 target_compile_definitions(source2toolkit-config INTERFACE
         META_IS_SOURCE2
         _ITERATOR_DEBUG_LEVEL=0
+        X64BITS
 
         $<$<PLATFORM_ID:Linux>:
         _LINUX POSIX LINUX GNUC COMPILER_GCC PLATFORM_64BITS
