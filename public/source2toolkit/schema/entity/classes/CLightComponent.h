@@ -53,7 +53,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
-#include "InfoForResourceTypeCTextureBase.h"
+
+class InfoForResourceTypeCTextureBase;
 
 class CLightComponent : public CEntityComponent
 {
@@ -73,7 +74,7 @@ public:
     SCHEMA_FIELD(float, m_flAttenuation2);
     SCHEMA_FIELD(float, m_flTheta);
     SCHEMA_FIELD(float, m_flPhi);
-    SCHEMA_FIELD(CStrongHandle, m_hLightCookie);
+    SCHEMA_FIELD(CStrongHandle<InfoForResourceTypeCTextureBase>, m_hLightCookie);
     SCHEMA_FIELD(int32_t, m_nCascades);
     SCHEMA_FIELD(int32_t, m_nCastShadows);
     SCHEMA_FIELD(int32_t, m_nShadowWidth);

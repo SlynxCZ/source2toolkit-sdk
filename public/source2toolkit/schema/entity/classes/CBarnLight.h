@@ -55,7 +55,8 @@
 #include <cstdint>
 
 #include "CBaseModelEntity.h"
-#include "InfoForResourceTypeCTextureBase.h"
+
+class InfoForResourceTypeCTextureBase;
 
 class CBarnLight : public CBaseModelEntity
 {
@@ -81,7 +82,7 @@ public:
     SCHEMA_FIELD(CUtlVector<CUtlString>, m_LightStyleEvents);
     SCHEMA_FIELD(CUtlVector<CHandle<CBaseModelEntity>>, m_LightStyleTargets);
     SCHEMA_FIELD_POINTER(CEntityIOOutput, m_StyleEvent);
-    SCHEMA_FIELD(CStrongHandle, m_hLightCookie);
+    SCHEMA_FIELD(CStrongHandle<InfoForResourceTypeCTextureBase>, m_hLightCookie);
     SCHEMA_FIELD(float, m_flShape);
     SCHEMA_FIELD(float, m_flSoftX);
     SCHEMA_FIELD(float, m_flSoftY);

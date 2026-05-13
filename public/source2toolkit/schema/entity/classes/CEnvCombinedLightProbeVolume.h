@@ -55,7 +55,8 @@
 #include <cstdint>
 
 #include "CBaseEntity.h"
-#include "InfoForResourceTypeCTextureBase.h"
+
+class InfoForResourceTypeCTextureBase;
 
 class CEnvCombinedLightProbeVolume : public CBaseEntity
 {
@@ -64,17 +65,17 @@ public:
 
     SCHEMA_FIELD(Color, m_Entity_Color);
     SCHEMA_FIELD(float, m_Entity_flBrightness);
-    SCHEMA_FIELD(CStrongHandle, m_Entity_hCubemapTexture);
+    SCHEMA_FIELD(CStrongHandle<InfoForResourceTypeCTextureBase>, m_Entity_hCubemapTexture);
     SCHEMA_FIELD(bool, m_Entity_bCustomCubemapTexture);
-    SCHEMA_FIELD(CStrongHandle, m_Entity_hLightProbeTexture_AmbientCube);
-    SCHEMA_FIELD(CStrongHandle, m_Entity_hLightProbeTexture_SDF);
-    SCHEMA_FIELD(CStrongHandle, m_Entity_hLightProbeTexture_SH2_DC);
-    SCHEMA_FIELD(CStrongHandle, m_Entity_hLightProbeTexture_SH2_R);
-    SCHEMA_FIELD(CStrongHandle, m_Entity_hLightProbeTexture_SH2_G);
-    SCHEMA_FIELD(CStrongHandle, m_Entity_hLightProbeTexture_SH2_B);
-    SCHEMA_FIELD(CStrongHandle, m_Entity_hLightProbeDirectLightIndicesTexture);
-    SCHEMA_FIELD(CStrongHandle, m_Entity_hLightProbeDirectLightScalarsTexture);
-    SCHEMA_FIELD(CStrongHandle, m_Entity_hLightProbeDirectLightShadowsTexture);
+    SCHEMA_FIELD(CStrongHandle<InfoForResourceTypeCTextureBase>, m_Entity_hLightProbeTexture_AmbientCube);
+    SCHEMA_FIELD(CStrongHandle<InfoForResourceTypeCTextureBase>, m_Entity_hLightProbeTexture_SDF);
+    SCHEMA_FIELD(CStrongHandle<InfoForResourceTypeCTextureBase>, m_Entity_hLightProbeTexture_SH2_DC);
+    SCHEMA_FIELD(CStrongHandle<InfoForResourceTypeCTextureBase>, m_Entity_hLightProbeTexture_SH2_R);
+    SCHEMA_FIELD(CStrongHandle<InfoForResourceTypeCTextureBase>, m_Entity_hLightProbeTexture_SH2_G);
+    SCHEMA_FIELD(CStrongHandle<InfoForResourceTypeCTextureBase>, m_Entity_hLightProbeTexture_SH2_B);
+    SCHEMA_FIELD(CStrongHandle<InfoForResourceTypeCTextureBase>, m_Entity_hLightProbeDirectLightIndicesTexture);
+    SCHEMA_FIELD(CStrongHandle<InfoForResourceTypeCTextureBase>, m_Entity_hLightProbeDirectLightScalarsTexture);
+    SCHEMA_FIELD(CStrongHandle<InfoForResourceTypeCTextureBase>, m_Entity_hLightProbeDirectLightShadowsTexture);
     SCHEMA_FIELD(Vector, m_Entity_vBoxMins);
     SCHEMA_FIELD(Vector, m_Entity_vBoxMaxs);
     SCHEMA_FIELD(bool, m_Entity_bMoveable);

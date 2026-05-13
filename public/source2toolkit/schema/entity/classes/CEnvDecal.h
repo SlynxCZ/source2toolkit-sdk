@@ -55,14 +55,15 @@
 #include <cstdint>
 
 #include "CBaseModelEntity.h"
-#include "InfoForResourceTypeIMaterial2.h"
+
+class InfoForResourceTypeIMaterial2;
 
 class CEnvDecal : public CBaseModelEntity
 {
 public:
     DECLARE_SCHEMA_CLASS(CEnvDecal);
 
-    SCHEMA_FIELD(CStrongHandle, m_hDecalMaterial);
+    SCHEMA_FIELD(CStrongHandle<InfoForResourceTypeIMaterial2>, m_hDecalMaterial);
     SCHEMA_FIELD(float, m_flWidth);
     SCHEMA_FIELD(float, m_flHeight);
     SCHEMA_FIELD(float, m_flDepth);

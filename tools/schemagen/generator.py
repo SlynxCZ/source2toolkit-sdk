@@ -703,7 +703,7 @@ def convert_subtype_to_field_type(
         name = subtype.name
         if "CUtlVector" in name or "CNetworkUtlVectorBase" in name:
             atomic = SchemaAtomicCategory.Collection
-        elif "CHandle" in name or "CWeakHandle" in name:
+        elif "CHandle" in name or "CWeakHandle" in name or "CStrongHandle" in name:
             atomic = SchemaAtomicCategory.T
         else:
             atomic = SchemaAtomicCategory.Basic

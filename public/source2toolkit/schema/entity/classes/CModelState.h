@@ -53,16 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
-#include "InfoForResourceTypeCModel.h"
-
 class IPhysAggregateInstance;
+class InfoForResourceTypeCModel;
 
 class CModelState
 {
 public:
     DECLARE_SCHEMA_CLASS(CModelState);
 
-    SCHEMA_FIELD(CStrongHandle, m_hModel);
+    SCHEMA_FIELD(CStrongHandle<InfoForResourceTypeCModel>, m_hModel);
     SCHEMA_FIELD(CUtlSymbolLarge, m_ModelName);
     SCHEMA_FIELD(IPhysAggregateInstance*, m_pVPhysicsAggregate);
     SCHEMA_FIELD(float, m_flRootBoneOffset_x);

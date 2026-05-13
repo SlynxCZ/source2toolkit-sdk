@@ -55,7 +55,8 @@
 #include <cstdint>
 
 #include "CBaseEntity.h"
-#include "InfoForResourceTypeCTextureBase.h"
+
+class InfoForResourceTypeCTextureBase;
 
 class CEnvVolumetricFogController : public CBaseEntity
 {
@@ -90,7 +91,7 @@ public:
     SCHEMA_FIELD(bool, m_bStartDisabled);
     SCHEMA_FIELD(bool, m_bEnableIndirect);
     SCHEMA_FIELD(bool, m_bIsMaster);
-    SCHEMA_FIELD(CStrongHandle, m_hFogIndirectTexture);
+    SCHEMA_FIELD(CStrongHandle<InfoForResourceTypeCTextureBase>, m_hFogIndirectTexture);
     SCHEMA_FIELD(int32_t, m_nForceRefreshCount);
     SCHEMA_FIELD(float, m_fNoiseSpeed);
     SCHEMA_FIELD(float, m_fNoiseStrength);

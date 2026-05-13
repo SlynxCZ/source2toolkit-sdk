@@ -55,15 +55,16 @@
 #include <cstdint>
 
 #include "CBaseModelEntity.h"
-#include "InfoForResourceTypeIMaterial2.h"
+
+class InfoForResourceTypeIMaterial2;
 
 class CEnvSky : public CBaseModelEntity
 {
 public:
     DECLARE_SCHEMA_CLASS(CEnvSky);
 
-    SCHEMA_FIELD(CStrongHandle, m_hSkyMaterial);
-    SCHEMA_FIELD(CStrongHandle, m_hSkyMaterialLightingOnly);
+    SCHEMA_FIELD(CStrongHandle<InfoForResourceTypeIMaterial2>, m_hSkyMaterial);
+    SCHEMA_FIELD(CStrongHandle<InfoForResourceTypeIMaterial2>, m_hSkyMaterialLightingOnly);
     SCHEMA_FIELD(bool, m_bStartDisabled);
     SCHEMA_FIELD(Color, m_vTintColor);
     SCHEMA_FIELD(Color, m_vTintColorLightingOnly);

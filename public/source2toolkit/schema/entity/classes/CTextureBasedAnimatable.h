@@ -55,7 +55,8 @@
 #include <cstdint>
 
 #include "CBaseModelEntity.h"
-#include "InfoForResourceTypeCTextureBase.h"
+
+class InfoForResourceTypeCTextureBase;
 
 class CTextureBasedAnimatable : public CBaseModelEntity
 {
@@ -64,8 +65,8 @@ public:
 
     SCHEMA_FIELD(bool, m_bLoop);
     SCHEMA_FIELD(float, m_flFPS);
-    SCHEMA_FIELD(CStrongHandle, m_hPositionKeys);
-    SCHEMA_FIELD(CStrongHandle, m_hRotationKeys);
+    SCHEMA_FIELD(CStrongHandle<InfoForResourceTypeCTextureBase>, m_hPositionKeys);
+    SCHEMA_FIELD(CStrongHandle<InfoForResourceTypeCTextureBase>, m_hRotationKeys);
     SCHEMA_FIELD(Vector, m_vAnimationBoundsMin);
     SCHEMA_FIELD(Vector, m_vAnimationBoundsMax);
     SCHEMA_FIELD(float, m_flStartTime);

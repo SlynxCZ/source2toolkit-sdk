@@ -55,14 +55,15 @@
 #include <cstdint>
 
 #include "CBaseEntity.h"
-#include "InfoForResourceTypeCTextureBase.h"
+
+class InfoForResourceTypeCTextureBase;
 
 class CGradientFog : public CBaseEntity
 {
 public:
     DECLARE_SCHEMA_CLASS(CGradientFog);
 
-    SCHEMA_FIELD(CStrongHandle, m_hGradientFogTexture);
+    SCHEMA_FIELD(CStrongHandle<InfoForResourceTypeCTextureBase>, m_hGradientFogTexture);
     SCHEMA_FIELD(float, m_flFogStartDistance);
     SCHEMA_FIELD(float, m_flFogEndDistance);
     SCHEMA_FIELD(bool, m_bHeightFogEnabled);

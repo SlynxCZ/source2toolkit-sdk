@@ -59,12 +59,12 @@
 #include "CSkeletonAnimationController.h"
 #include "ExternalAnimGraphHandle_t.h"
 #include "ExternalAnimGraph_t.h"
-#include "InfoForResourceTypeCNmGraphDefinition.h"
 #include "ResourceId_t.h"
 #include "../enums/SequenceFinishNotifyState_t.h"
 
 class CBaseAnimGraph;
 class CNmGraphInstance;
+class InfoForResourceTypeCNmGraphDefinition;
 
 class CBaseAnimGraphController : public CSkeletonAnimationController
 {
@@ -89,7 +89,7 @@ public:
     SCHEMA_FIELD(bool, m_bLastUpdateSkipped);
     SCHEMA_FIELD(bool, m_bSequenceFinished);
     SCHEMA_FIELD(int32_t, m_nPrevAnimUpdateTick);
-    SCHEMA_FIELD(CStrongHandle, m_hGraphDefinitionAG2);
+    SCHEMA_FIELD(CStrongHandle<InfoForResourceTypeCNmGraphDefinition>, m_hGraphDefinitionAG2);
     SCHEMA_FIELD(CUtlVector<AnimGraph2SerializedPoseRecipeSlot_t>, m_SerializePoseRecipeAG2Slots);
     SCHEMA_FIELD(CUtlVector<uint8_t>, m_SerializePoseRecipeAG2Dynamic);
     SCHEMA_FIELD(uint32_t, m_nSerializePoseRecipeAG2ActiveSlot);

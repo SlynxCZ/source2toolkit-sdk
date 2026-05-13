@@ -55,9 +55,9 @@
 #include <cstdint>
 
 #include "CBaseModelEntity.h"
-#include "InfoForResourceTypeIParticleSystemDefinition.h"
 
 class CBaseEntity;
+class InfoForResourceTypeIParticleSystemDefinition;
 
 class CParticleSystem : public CBaseModelEntity
 {
@@ -70,7 +70,7 @@ public:
     SCHEMA_FIELD(float, m_flFreezeTransitionDuration);
     SCHEMA_FIELD(int32_t, m_nStopType);
     SCHEMA_FIELD(bool, m_bAnimateDuringGameplayPause);
-    SCHEMA_FIELD(CStrongHandle, m_iEffectIndex);
+    SCHEMA_FIELD(CStrongHandle<InfoForResourceTypeIParticleSystemDefinition>, m_iEffectIndex);
     SCHEMA_FIELD(float, m_flStartTime);
     SCHEMA_FIELD(float, m_flPreSimTime);
     SCHEMA_FIELD_POINTER(Vector, m_vServerControlPoints);
