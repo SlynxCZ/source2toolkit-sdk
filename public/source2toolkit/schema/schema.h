@@ -71,6 +71,10 @@
 Engine interface getters
 ========================= */
 
+class GameSessionConfiguration_t
+{
+};
+
 /**
 
 * @brief Global accessors for engine interfaces.
