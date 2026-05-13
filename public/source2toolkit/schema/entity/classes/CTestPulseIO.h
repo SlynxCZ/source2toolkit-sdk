@@ -55,6 +55,7 @@
 #include <cstdint>
 
 #include "CLogicalEntity.h"
+#include "CTestPulseIOComponent_Derived.h"
 
 class CTestPulseIO : public CLogicalEntity
 {
@@ -63,6 +64,8 @@ public:
 
     SCHEMA_FIELD(CEntityIOOutput, m_OnVariantVoid);
     SCHEMA_FIELD(bool, m_bAllowEmptyInputs);
+    SCHEMA_FIELD(CTestPulseIOComponent_Derived, m_TestComponent);
+    SCHEMA_FIELD(CEntityIOOutput, m_OnInternalTestVoid);
 
 public:
     static CTestPulseIO* New(const char* className)

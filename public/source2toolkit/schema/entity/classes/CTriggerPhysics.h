@@ -56,11 +56,14 @@
 
 #include "CBaseTrigger.h"
 
+class IPhysicsMotionController;
+
 class CTriggerPhysics : public CBaseTrigger
 {
 public:
     DECLARE_SCHEMA_CLASS(CTriggerPhysics);
 
+    SCHEMA_FIELD(IPhysicsMotionController*, m_pController);
     SCHEMA_FIELD(float, m_gravityScale);
     SCHEMA_FIELD(float, m_linearLimit);
     SCHEMA_FIELD(float, m_linearDamping);

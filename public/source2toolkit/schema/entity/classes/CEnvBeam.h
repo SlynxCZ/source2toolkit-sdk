@@ -66,7 +66,7 @@ public:
     DECLARE_SCHEMA_CLASS(CEnvBeam);
 
     SCHEMA_FIELD(int32_t, m_active);
-    SCHEMA_FIELD(CStrongHandle< InfoForResourceTypeIMaterial2 >, m_spriteTexture);
+    SCHEMA_FIELD(CStrongHandle, m_spriteTexture);
     SCHEMA_FIELD(CUtlSymbolLarge, m_iszStartEntity);
     SCHEMA_FIELD(CUtlSymbolLarge, m_iszEndEntity);
     SCHEMA_FIELD(float, m_life);

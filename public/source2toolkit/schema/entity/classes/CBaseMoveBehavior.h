@@ -66,10 +66,10 @@ public:
     SCHEMA_FIELD(float, m_flAnimStartTime);
     SCHEMA_FIELD(float, m_flAnimEndTime);
     SCHEMA_FIELD(float, m_flAverageSpeedAcrossFrame);
-    SCHEMA_FIELD(CPathKeyFrame*, m_pCurrentKeyFrame);
-    SCHEMA_FIELD(CPathKeyFrame*, m_pTargetKeyFrame);
-    SCHEMA_FIELD(CPathKeyFrame*, m_pPreKeyFrame);
-    SCHEMA_FIELD(CPathKeyFrame*, m_pPostKeyFrame);
+    SCHEMA_FIELD(CHandle<CPathKeyFrame>, m_pCurrentKeyFrame);
+    SCHEMA_FIELD(CHandle<CPathKeyFrame>, m_pTargetKeyFrame);
+    SCHEMA_FIELD(CHandle<CPathKeyFrame>, m_pPreKeyFrame);
+    SCHEMA_FIELD(CHandle<CPathKeyFrame>, m_pPostKeyFrame);
     SCHEMA_FIELD(float, m_flTimeIntoFrame);
     SCHEMA_FIELD(int32_t, m_iDirection);
 

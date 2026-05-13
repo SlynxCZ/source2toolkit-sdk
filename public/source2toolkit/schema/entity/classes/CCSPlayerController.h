@@ -56,6 +56,7 @@
 
 #include "CBasePlayerController.h"
 #include "IntervalTimer.h"
+#include "../enums/QuestProgress__Reason.h"
 
 class CCSObserverPawn;
 class CCSPlayerController_ActionTrackingServices;
@@ -103,6 +104,7 @@ public:
     SCHEMA_FIELD(int32_t, m_nEndMatchNextMapVote);
     SCHEMA_FIELD(uint16_t, m_unActiveQuestId);
     SCHEMA_FIELD(uint32_t, m_rtActiveMissionPeriod);
+    SCHEMA_FIELD(QuestProgress__Reason, m_nQuestProgressReason);
     SCHEMA_FIELD(uint32_t, m_unPlayerTvControlFlags);
     SCHEMA_FIELD(int32_t, m_iDraftIndex);
     SCHEMA_FIELD(uint32_t, m_msQueuedModeDisconnectionTimestamp);

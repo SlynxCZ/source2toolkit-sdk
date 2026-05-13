@@ -55,8 +55,9 @@
 #include <cstdint>
 
 #include "CBreakableProp.h"
-#include "../enums/CPhysicsPropCrateType_t.h"
+#include "../enums/CPhysicsProp__CrateType_t.h"
 #include "../enums/DynamicContinuousContactBehavior_t.h"
+#include "../enums/INavObstacle__NavObstacleType_t.h"
 
 class CPhysicsProp : public CBreakableProp
 {
@@ -93,12 +94,13 @@ public:
     SCHEMA_FIELD(Color, m_glowColor);
     SCHEMA_FIELD(bool, m_bShouldAutoConvertBackFromDebris);
     SCHEMA_FIELD(bool, m_bMuteImpactEffects);
+    SCHEMA_FIELD(INavObstacle__NavObstacleType_t, m_nNavObstacleType);
     SCHEMA_FIELD(bool, m_bUpdateNavWhenMoving);
     SCHEMA_FIELD(bool, m_bForceNavObstacleCut);
     SCHEMA_FIELD(bool, m_bAllowObstacleConvexHullMerging);
     SCHEMA_FIELD(bool, m_bAcceptDamageFromHeldObjects);
     SCHEMA_FIELD(bool, m_bEnableUseOutput);
-    SCHEMA_FIELD(CPhysicsProp::CrateType_t, m_CrateType);
+    SCHEMA_FIELD(CPhysicsProp__CrateType_t, m_CrateType);
     SCHEMA_FIELD_POINTER(CUtlSymbolLarge, m_strItemClass);
     SCHEMA_FIELD_POINTER(int32_t, m_nItemCount);
     SCHEMA_FIELD(bool, m_bRemovableForAmmoBalancing);

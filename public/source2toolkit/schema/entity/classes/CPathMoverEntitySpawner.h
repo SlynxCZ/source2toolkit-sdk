@@ -56,6 +56,7 @@
 
 #include "CLogicalEntity.h"
 
+class CFuncMover;
 class CPathMover;
 
 class CPathMoverEntitySpawner : public CLogicalEntity
@@ -69,8 +70,13 @@ public:
     SCHEMA_FIELD(float, m_flSpawnFrequencySeconds);
     SCHEMA_FIELD(float, m_flSpawnFrequencyDistToNearestMover);
     SCHEMA_FIELD(int32_t, m_nMaxActive);
+    SCHEMA_FIELD(int32_t, m_nSpawnNum);
     SCHEMA_FIELD(float, m_flLastSpawnTime);
     SCHEMA_FIELD(bool, m_bEnabled);
+    SCHEMA_FIELD(bool, m_bDestroyMoverOnArrivedAtEnd);
+    SCHEMA_FIELD(CUtlVector<CHandle<CFuncMover>>, m_vecQueuedRemovals);
+    SCHEMA_FIELD(CEntityIOOutput, m_OnTemplateSpawned);
+    SCHEMA_FIELD(CEntityIOOutput, m_OnTemplateGroupSpawned);
 
 public:
     static CPathMoverEntitySpawner* New(const char* className)

@@ -55,11 +55,11 @@
 #include <cstdint>
 
 #include "CAttributeContainer.h"
-#include "CBaseFlex.h"
+#include "CBaseAnimGraph.h"
 
 class CBaseEntity;
 
-class CEconEntity : public CBaseFlex
+class CEconEntity : public CBaseAnimGraph
 {
 public:
     DECLARE_SCHEMA_CLASS(CEconEntity);

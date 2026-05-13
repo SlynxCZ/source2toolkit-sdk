@@ -65,6 +65,7 @@ class CBaseFilter;
 class CBodyComponent;
 class CCollisionProperty;
 class CEntityInstance;
+class CEntityKeyValues;
 class CEntitySubclassVDataBase;
 class CPulseGraphInstance_ServerEntity;
 
@@ -79,10 +80,15 @@ public:
     SCHEMA_FIELD(int32_t, m_iCurrentThinkContext);
     SCHEMA_FIELD(int32_t, m_nLastThinkTick);
     SCHEMA_FIELD(bool, m_bDisabledContextThinks);
-    SCHEMA_FIELD_POINTER(uint8_t, m_isSteadyState);
+    SCHEMA_FIELD(CTypedBitVec, m_isSteadyState);
     SCHEMA_FIELD(float, m_lastNetworkChange);
+    SCHEMA_FIELD(BASEPTR, m_think);
     SCHEMA_FIELD(CUtlVector<ResponseContext_t>, m_ResponseContexts);
     SCHEMA_FIELD(CUtlSymbolLarge, m_iszResponseContext);
+    SCHEMA_FIELD(ENTITYFUNCPTR, m_pfnTouch);
+    SCHEMA_FIELD(USEPTR, m_pfnUse);
+    SCHEMA_FIELD(ENTITYFUNCPTR, m_pfnBlocked);
+    SCHEMA_FIELD(BASEPTR, m_pfnMoveDone);
     SCHEMA_FIELD(int32_t, m_iHealth);
     SCHEMA_FIELD(int32_t, m_iMaxHealth);
     SCHEMA_FIELD(uint8_t, m_lifeState);
@@ -92,6 +98,7 @@ public:
     SCHEMA_FIELD(EntityPlatformTypes_t, m_nPlatformType);
     SCHEMA_FIELD(MoveCollide_t, m_MoveCollide);
     SCHEMA_FIELD(MoveType_t, m_MoveType);
+    SCHEMA_FIELD(MoveType_t, m_nPreviouslySetMoveType);
     SCHEMA_FIELD(MoveType_t, m_nActualMoveType);
     SCHEMA_FIELD(uint8_t, m_nWaterTouch);
     SCHEMA_FIELD(uint8_t, m_nSlimeTouch);

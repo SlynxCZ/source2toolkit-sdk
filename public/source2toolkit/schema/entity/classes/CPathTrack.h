@@ -62,9 +62,9 @@ class CPathTrack : public CPointEntity
 public:
     DECLARE_SCHEMA_CLASS(CPathTrack);
 
-    SCHEMA_FIELD(CPathTrack*, m_pnext);
-    SCHEMA_FIELD(CPathTrack*, m_pprevious);
-    SCHEMA_FIELD(CPathTrack*, m_paltpath);
+    SCHEMA_FIELD(CHandle<CPathTrack>, m_pnext);
+    SCHEMA_FIELD(CHandle<CPathTrack>, m_pprevious);
+    SCHEMA_FIELD(CHandle<CPathTrack>, m_paltpath);
     SCHEMA_FIELD(float, m_flRadius);
     SCHEMA_FIELD(float, m_length);
     SCHEMA_FIELD(CUtlSymbolLarge, m_altName);

@@ -61,6 +61,7 @@
 #include "CNetworkViewOffsetVector.h"
 #include "EntityRenderAttribute_t.h"
 
+class CChoreoComponent;
 class CDestructiblePartsComponent;
 class CRenderComponent;
 
@@ -71,6 +72,7 @@ public:
 
     SCHEMA_FIELD(CRenderComponent*, m_CRenderComponent);
     SCHEMA_FIELD(CHitboxComponent, m_CHitboxComponent);
+    SCHEMA_FIELD(CChoreoComponent*, m_pChoreoComponent);
     SCHEMA_FIELD(HitGroup_t, m_nDestructiblePartInitialStateDestructed0);
     SCHEMA_FIELD(HitGroup_t, m_nDestructiblePartInitialStateDestructed1);
     SCHEMA_FIELD(HitGroup_t, m_nDestructiblePartInitialStateDestructed2);
@@ -81,6 +83,11 @@ public:
     SCHEMA_FIELD(int32_t, m_nDestructiblePartInitialStateDestructed2_PartIndex);
     SCHEMA_FIELD(int32_t, m_nDestructiblePartInitialStateDestructed3_PartIndex);
     SCHEMA_FIELD(int32_t, m_nDestructiblePartInitialStateDestructed4_PartIndex);
+    SCHEMA_FIELD(bool, m_bDestructiblePartInitialStateDestructed0_GenerateBreakpieces);
+    SCHEMA_FIELD(bool, m_bDestructiblePartInitialStateDestructed1_GenerateBreakpieces);
+    SCHEMA_FIELD(bool, m_bDestructiblePartInitialStateDestructed2_GenerateBreakpieces);
+    SCHEMA_FIELD(bool, m_bDestructiblePartInitialStateDestructed3_GenerateBreakpieces);
+    SCHEMA_FIELD(bool, m_bDestructiblePartInitialStateDestructed4_GenerateBreakpieces);
     SCHEMA_FIELD(CDestructiblePartsComponent*, m_pDestructiblePartsSystemComponent);
     SCHEMA_FIELD(float, m_flDissolveStartTime);
     SCHEMA_FIELD(CEntityIOOutput, m_OnIgnite);

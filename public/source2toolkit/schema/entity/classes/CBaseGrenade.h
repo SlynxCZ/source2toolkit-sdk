@@ -54,11 +54,11 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
-#include "CBaseFlex.h"
+#include "CBaseAnimGraph.h"
 
 class CCSPlayerPawn;
 
-class CBaseGrenade : public CBaseFlex
+class CBaseGrenade : public CBaseAnimGraph
 {
 public:
     DECLARE_SCHEMA_CLASS(CBaseGrenade);

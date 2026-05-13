@@ -57,12 +57,14 @@
 #include "CLogicalEntity.h"
 
 class CBaseEntity;
+class IPhysicsJoint;
 
 class CPhysConstraint : public CLogicalEntity
 {
 public:
     DECLARE_SCHEMA_CLASS(CPhysConstraint);
 
+    SCHEMA_FIELD(IPhysicsJoint*, m_hJoint);
     SCHEMA_FIELD(CUtlSymbolLarge, m_nameAttach1);
     SCHEMA_FIELD(CUtlSymbolLarge, m_nameAttach2);
     SCHEMA_FIELD(CHandle<CBaseEntity>, m_hAttach1);

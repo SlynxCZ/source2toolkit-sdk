@@ -62,6 +62,7 @@ class CGenericConstraint : public CPhysConstraint
 public:
     DECLARE_SCHEMA_CLASS(CGenericConstraint);
 
+    SCHEMA_FIELD(bool, m_bPlaceAnchorsAtConstraintTransform);
     SCHEMA_FIELD(JointMotion_t, m_nLinearMotionX);
     SCHEMA_FIELD(JointMotion_t, m_nLinearMotionY);
     SCHEMA_FIELD(JointMotion_t, m_nLinearMotionZ);

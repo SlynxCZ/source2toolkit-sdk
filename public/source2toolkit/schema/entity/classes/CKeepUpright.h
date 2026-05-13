@@ -57,6 +57,7 @@
 #include "CPointEntity.h"
 
 class CBaseEntity;
+class IPhysicsMotionController;
 
 class CKeepUpright : public CPointEntity
 {
@@ -65,6 +66,7 @@ public:
 
     SCHEMA_FIELD(Vector, m_worldGoalAxis);
     SCHEMA_FIELD(Vector, m_localTestAxis);
+    SCHEMA_FIELD(IPhysicsMotionController*, m_pController);
     SCHEMA_FIELD(CUtlSymbolLarge, m_nameAttach);
     SCHEMA_FIELD(CHandle<CBaseEntity>, m_attachedObject);
     SCHEMA_FIELD(float, m_angularLimit);

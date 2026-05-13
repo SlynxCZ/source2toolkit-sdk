@@ -58,6 +58,7 @@ class thinkfunc_t
 public:
     DECLARE_SCHEMA_CLASS(thinkfunc_t);
 
+    SCHEMA_FIELD(BASEPTR, m_think);
     SCHEMA_FIELD_POINTER(CUtlStringToken, m_nContext);
     SCHEMA_FIELD(int32_t, m_nNextThinkTick);
     SCHEMA_FIELD(int32_t, m_nLastThinkTick);

@@ -55,10 +55,12 @@
 #include <cstdint>
 
 #include "CBaseAnimGraph.h"
+#include "../enums/INavObstacle__NavObstacleType_t.h"
 #include "ragdoll_t.h"
 
 class CBaseEntity;
 class CBasePlayerPawn;
+class INavObstacle;
 
 class CRagdollProp : public CBaseAnimGraph
 {
@@ -73,6 +75,10 @@ public:
     SCHEMA_FIELD(uint32_t, m_lastUpdateTickCount);
     SCHEMA_FIELD(bool, m_allAsleep);
     SCHEMA_FIELD(bool, m_bFirstCollisionAfterLaunch);
+    SCHEMA_FIELD(INavObstacle__NavObstacleType_t, m_nNavObstacleType);
+    SCHEMA_FIELD(bool, m_bUpdateNavWhenMoving);
+    SCHEMA_FIELD(bool, m_bForceNavObstacleCut);
+    SCHEMA_FIELD(bool, m_bAttachedToReferenceFrame);
     SCHEMA_FIELD(CHandle<CBaseEntity>, m_hDamageEntity);
     SCHEMA_FIELD(CHandle<CBaseEntity>, m_hKiller);
     SCHEMA_FIELD(CHandle<CBasePlayerPawn>, m_hPhysicsAttacker);
@@ -91,6 +97,7 @@ public:
     SCHEMA_FIELD(CUtlVector<Vector>, m_ragdollMins);
     SCHEMA_FIELD(CUtlVector<Vector>, m_ragdollMaxs);
     SCHEMA_FIELD(bool, m_bShouldDeleteActivationRecord);
+    SCHEMA_FIELD(CUtlVector<INavObstacle*>, m_vecNavObstacles);
 
 public:
     static CRagdollProp* New(const char* className)

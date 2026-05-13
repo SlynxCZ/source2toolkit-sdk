@@ -53,11 +53,14 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+class IPhysicsMotionController;
+
 class CBuoyancyHelper
 {
 public:
     DECLARE_SCHEMA_CLASS(CBuoyancyHelper);
 
+    SCHEMA_FIELD(IPhysicsMotionController*, m_pController);
     SCHEMA_FIELD_POINTER(CUtlStringToken, m_nFluidType);
     SCHEMA_FIELD(float, m_flFluidDensity);
     SCHEMA_FIELD(float, m_flNeutrallyBuoyantGravity);

@@ -65,9 +65,9 @@ class CFuncTrackChange : public CFuncPlatRot
 public:
     DECLARE_SCHEMA_CLASS(CFuncTrackChange);
 
-    SCHEMA_FIELD(CPathTrack*, m_trackTop);
-    SCHEMA_FIELD(CPathTrack*, m_trackBottom);
-    SCHEMA_FIELD(CFuncTrackTrain*, m_train);
+    SCHEMA_FIELD(CHandle<CPathTrack>, m_trackTop);
+    SCHEMA_FIELD(CHandle<CPathTrack>, m_trackBottom);
+    SCHEMA_FIELD(CHandle<CFuncTrackTrain>, m_train);
     SCHEMA_FIELD(CUtlSymbolLarge, m_trackTopName);
     SCHEMA_FIELD(CUtlSymbolLarge, m_trackBottomName);
     SCHEMA_FIELD(CUtlSymbolLarge, m_trainName);

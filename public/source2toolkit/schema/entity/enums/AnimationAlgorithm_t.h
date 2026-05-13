@@ -49,8 +49,7 @@ enum class AnimationAlgorithm_t : int8_t
     eSequence = 1,
     eAnimGraph2 = 2,
     eAnimGraph2Secondary = 3,
-    eAnimGraph1 = 4,
-    eCount = 5,
+    eCount = 4,
 };
 
 #endif // _INCLUDE_ANIMATIONALGORITHM_T_H

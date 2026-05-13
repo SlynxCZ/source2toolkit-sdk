@@ -66,7 +66,7 @@ public:
     SCHEMA_FIELD(float, m_flRadiusScale);
     SCHEMA_FIELD(float, m_flSelfIllumScale);
     SCHEMA_FIELD(Color, m_ColorTint);
-    SCHEMA_FIELD(CStrongHandle< InfoForResourceTypeCTextureBase >, m_hTextureOverride);
+    SCHEMA_FIELD(CStrongHandle, m_hTextureOverride);
 
 public:
     static CEnvParticleGlow* New(const char* className)

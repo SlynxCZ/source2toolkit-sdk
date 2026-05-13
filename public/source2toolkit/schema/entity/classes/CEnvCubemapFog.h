@@ -76,9 +76,15 @@ public:
     SCHEMA_FIELD(bool, m_bStartDisabled);
     SCHEMA_FIELD(float, m_flFogMaxOpacity);
     SCHEMA_FIELD(int32_t, m_nCubemapSourceType);
-    SCHEMA_FIELD(CStrongHandle< InfoForResourceTypeIMaterial2 >, m_hSkyMaterial);
+    SCHEMA_FIELD(CStrongHandle, m_hSkyMaterial);
     SCHEMA_FIELD(CUtlSymbolLarge, m_iszSkyEntity);
-    SCHEMA_FIELD(CStrongHandle< InfoForResourceTypeCTextureBase >, m_hFogCubemapTexture);
+    SCHEMA_FIELD(int32_t, m_nHeightFogType);
+    SCHEMA_FIELD(int32_t, m_nFogHeightBlendMode);
+    SCHEMA_FIELD(int32_t, m_nFogHeightCoordinateSpace);
+    SCHEMA_FIELD(int32_t, m_nDistanceFogType);
+    SCHEMA_FIELD(CUtlSymbolLarge, m_DistanceFogCurveString);
+    SCHEMA_FIELD(CUtlSymbolLarge, m_HeightFogCurveString);
+    SCHEMA_FIELD(CStrongHandle, m_hFogCubemapTexture);
     SCHEMA_FIELD(bool, m_bHasHeightFogEnd);
     SCHEMA_FIELD(bool, m_bFirstTime);
 

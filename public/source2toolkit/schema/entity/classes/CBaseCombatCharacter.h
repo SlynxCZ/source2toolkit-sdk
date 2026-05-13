@@ -54,14 +54,14 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
-#include "CBaseFlex.h"
+#include "CBaseAnimGraph.h"
 #include "CMovementStatsProperty.h"
 #include "../enums/Hull_t.h"
 #include "RelationshipOverride_t.h"
 
 class CEconWearable;
 
-class CBaseCombatCharacter : public CBaseFlex
+class CBaseCombatCharacter : public CBaseAnimGraph
 {
 public:
     DECLARE_SCHEMA_CLASS(CBaseCombatCharacter);

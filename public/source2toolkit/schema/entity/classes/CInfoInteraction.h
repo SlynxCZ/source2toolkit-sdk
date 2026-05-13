@@ -55,15 +55,29 @@
 #include <cstdint>
 
 #include "CPointEntity.h"
+#include "SceneOpportunityHandle_t.h"
+#include "SceneRequestHandle_t.h"
 
 class CInfoInteraction : public CPointEntity
 {
 public:
     DECLARE_SCHEMA_CLASS(CInfoInteraction);
 
-    SCHEMA_FIELD_POINTER(CUtlSymbolLarge, m_strSlotEntityName);
-    SCHEMA_FIELD(CUtlSymbolLarge, m_strInteractVData);
-    SCHEMA_FIELD(float, m_flInteractRadius);
+    SCHEMA_FIELD(SceneRequestHandle_t, m_hSceneRequest);
+    SCHEMA_FIELD(SceneOpportunityHandle_t, m_hSceneOpportunity);
+    SCHEMA_FIELD(bool, m_bEnabled);
+    SCHEMA_FIELD(bool, m_bStartDisabled);
+    SCHEMA_FIELD(CUtlSymbolLarge, m_strSceneVDataName);
+    SCHEMA_FIELD(CUtlSymbolLarge, m_strPulseVDataName);
+    SCHEMA_FIELD(float, m_flRadius);
+    SCHEMA_FIELD(float, m_flOwnerFOV);
+    SCHEMA_FIELD(CUtlSymbolLarge, m_strLocalInterestReqTags);
+    SCHEMA_FIELD(CUtlSymbolLarge, m_strLocalInterestOptTags);
+    SCHEMA_FIELD(CUtlSymbolLarge, m_strLookTarget);
+    SCHEMA_FIELD(float, m_flDuration);
+    SCHEMA_FIELD(float, m_flCooldown);
+    SCHEMA_FIELD(int32_t, m_nRepeatCount);
+    SCHEMA_FIELD(bool, m_bDisableOnExit);
 
 public:
     static CInfoInteraction* New(const char* className)

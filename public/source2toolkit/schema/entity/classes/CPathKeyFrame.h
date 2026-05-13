@@ -66,8 +66,8 @@ public:
     SCHEMA_FIELD(Quaternion, m_qAngle);
     SCHEMA_FIELD(CUtlSymbolLarge, m_iNextKey);
     SCHEMA_FIELD(float, m_flNextTime);
-    SCHEMA_FIELD(CPathKeyFrame*, m_pNextKey);
-    SCHEMA_FIELD(CPathKeyFrame*, m_pPrevKey);
+    SCHEMA_FIELD(CHandle<CPathKeyFrame>, m_pNextKey);
+    SCHEMA_FIELD(CHandle<CPathKeyFrame>, m_pPrevKey);
     SCHEMA_FIELD(float, m_flMoveSpeed);
 
 public:

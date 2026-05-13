@@ -68,7 +68,7 @@ public:
     SCHEMA_FIELD(bool, m_bTriggerOnStartTouch);
     SCHEMA_FIELD(bool, m_bUsePathSimple);
     SCHEMA_FIELD(CUtlSymbolLarge, m_iszPathSimpleName);
-    SCHEMA_FIELD(CPathSimple*, m_PathSimple);
+    SCHEMA_FIELD(CHandle<CPathSimple>, m_PathSimple);
     SCHEMA_FIELD(uint32_t, m_splinePushType);
 
 public:

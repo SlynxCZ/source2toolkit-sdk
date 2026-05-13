@@ -71,8 +71,8 @@ public:
     SCHEMA_FIELD(float, m_flFireTime);
     SCHEMA_FIELD(float, m_flDamage);
     SCHEMA_FIELD(uint8_t, m_nNumBeamEnts);
-    SCHEMA_FIELD(CStrongHandle< InfoForResourceTypeIMaterial2 >, m_hBaseMaterial);
-    SCHEMA_FIELD(CStrongHandle< InfoForResourceTypeIMaterial2 >, m_nHaloIndex);
+    SCHEMA_FIELD(CStrongHandle, m_hBaseMaterial);
+    SCHEMA_FIELD(CStrongHandle, m_nHaloIndex);
     SCHEMA_FIELD(BeamType_t, m_nBeamType);
     SCHEMA_FIELD(uint32_t, m_nBeamFlags);
     SCHEMA_FIELD_POINTER(CHandle<CBaseEntity>, m_hAttachEntity);

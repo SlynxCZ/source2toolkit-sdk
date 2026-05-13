@@ -72,14 +72,14 @@ public:
     SCHEMA_FIELD(float, m_flLastPickupCheck);
     SCHEMA_FIELD(bool, m_bPlayerCounterListenerAdded);
     SCHEMA_FIELD(bool, m_bPlayerInTriggerRadius);
-    SCHEMA_FIELD(CStrongHandle< InfoForResourceTypeIParticleSystemDefinition >, m_hSpawnParticleEffect);
+    SCHEMA_FIELD(CStrongHandle, m_hSpawnParticleEffect);
     SCHEMA_FIELD(CUtlSymbolLarge, m_pAmbientSoundEffect);
     SCHEMA_FIELD(bool, m_bAutoStartAmbientSound);
     SCHEMA_FIELD(CUtlSymbolLarge, m_pSpawnScriptFunction);
-    SCHEMA_FIELD(CStrongHandle< InfoForResourceTypeIParticleSystemDefinition >, m_hPickupParticleEffect);
+    SCHEMA_FIELD(CStrongHandle, m_hPickupParticleEffect);
     SCHEMA_FIELD(CUtlSymbolLarge, m_pPickupSoundEffect);
     SCHEMA_FIELD(CUtlSymbolLarge, m_pPickupScriptFunction);
-    SCHEMA_FIELD(CStrongHandle< InfoForResourceTypeIParticleSystemDefinition >, m_hTimeoutParticleEffect);
+    SCHEMA_FIELD(CStrongHandle, m_hTimeoutParticleEffect);
     SCHEMA_FIELD(CUtlSymbolLarge, m_pTimeoutSoundEffect);
     SCHEMA_FIELD(CUtlSymbolLarge, m_pTimeoutScriptFunction);
     SCHEMA_FIELD(CUtlSymbolLarge, m_pPickupFilterName);

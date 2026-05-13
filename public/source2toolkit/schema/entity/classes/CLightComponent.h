@@ -73,7 +73,7 @@ public:
     SCHEMA_FIELD(float, m_flAttenuation2);
     SCHEMA_FIELD(float, m_flTheta);
     SCHEMA_FIELD(float, m_flPhi);
-    SCHEMA_FIELD(CStrongHandle< InfoForResourceTypeCTextureBase >, m_hLightCookie);
+    SCHEMA_FIELD(CStrongHandle, m_hLightCookie);
     SCHEMA_FIELD(int32_t, m_nCascades);
     SCHEMA_FIELD(int32_t, m_nCastShadows);
     SCHEMA_FIELD(int32_t, m_nShadowWidth);
@@ -104,8 +104,8 @@ public:
     SCHEMA_FIELD(bool, m_bRenderToCubemaps);
     SCHEMA_FIELD(bool, m_bAllowSSTGeneration);
     SCHEMA_FIELD(int32_t, m_nDirectLight);
-    SCHEMA_FIELD(int32_t, m_nIndirectLight);
-    SCHEMA_FIELD(bool, m_bDynamicBounce);
+    SCHEMA_FIELD(int32_t, m_nBounceLight);
+    SCHEMA_FIELD(float, m_flBounceScale);
     SCHEMA_FIELD(float, m_flFadeMinDist);
     SCHEMA_FIELD(float, m_flFadeMaxDist);
     SCHEMA_FIELD(float, m_flShadowFadeMinDist);

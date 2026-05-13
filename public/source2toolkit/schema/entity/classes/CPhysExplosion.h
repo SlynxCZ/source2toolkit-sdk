@@ -70,6 +70,7 @@ public:
     SCHEMA_FIELD(float, m_flPushScale);
     SCHEMA_FIELD(bool, m_bConvertToDebrisWhenPossible);
     SCHEMA_FIELD(bool, m_bAffectInvulnerableEnts);
+    SCHEMA_FIELD(bool, m_bDisablePushClamp);
     SCHEMA_FIELD(CEntityIOOutput, m_OnPushedPlayer);
 
 public:

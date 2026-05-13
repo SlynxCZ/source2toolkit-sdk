@@ -62,7 +62,7 @@ class CPostProcessingVolume : public CBaseTrigger
 public:
     DECLARE_SCHEMA_CLASS(CPostProcessingVolume);
 
-    SCHEMA_FIELD(CStrongHandle< InfoForResourceTypeCPostProcessingResource >, m_hPostSettings);
+    SCHEMA_FIELD(CStrongHandle, m_hPostSettings);
     SCHEMA_FIELD(float, m_flFadeDuration);
     SCHEMA_FIELD(float, m_flMinLogExposure);
     SCHEMA_FIELD(float, m_flMaxLogExposure);

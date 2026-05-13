@@ -57,6 +57,7 @@
 #include "CPhysConstraint.h"
 
 class CBaseEntity;
+class IPhysicsBody;
 
 class CSplineConstraint : public CPhysConstraint
 {
@@ -65,6 +66,7 @@ public:
 
     SCHEMA_FIELD(Vector, m_vAnchorOffsetRestore);
     SCHEMA_FIELD(CHandle<CBaseEntity>, m_hSplineEntity);
+    SCHEMA_FIELD(IPhysicsBody*, m_pSplineBody);
     SCHEMA_FIELD(bool, m_bEnableLateralConstraint);
     SCHEMA_FIELD(bool, m_bEnableVerticalConstraint);
     SCHEMA_FIELD(bool, m_bEnableAngularConstraint);

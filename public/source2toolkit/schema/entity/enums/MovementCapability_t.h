@@ -51,7 +51,9 @@ enum class MovementCapability_t : uint32_t
     eInstantStop = 4,
     eShuffle = 5,
     ePlantedTurn = 6,
-    eCount = 7,
+    eUseStartAsPlantedTurn = 7,
+    eLean = 8,
+    eCount = 9,
 };
 
 #endif // _INCLUDE_MOVEMENTCAPABILITY_T_H

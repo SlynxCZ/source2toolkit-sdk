@@ -80,7 +80,6 @@ public:
     SCHEMA_FIELD(uint8_t, m_nDoNotSetAnimTimeInInvalidatePhysicsCount);
     SCHEMA_FIELD_POINTER(CUtlStringToken, m_name);
     SCHEMA_FIELD_POINTER(CUtlStringToken, m_hierarchyAttachName);
-    SCHEMA_FIELD(float, m_flZOffset);
     SCHEMA_FIELD(float, m_flClientLocalScale);
     SCHEMA_FIELD(Vector, m_vRenderOrigin);
 };

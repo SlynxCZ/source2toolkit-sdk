@@ -58,6 +58,8 @@
 #include "CMotorController.h"
 
 class CBaseEntity;
+class IPhysicsBody;
+class IPhysicsJoint;
 
 class CPhysMotor : public CLogicalEntity
 {
@@ -76,6 +78,8 @@ public:
     SCHEMA_FIELD(float, m_flTorqueScale);
     SCHEMA_FIELD(float, m_flTargetSpeed);
     SCHEMA_FIELD(float, m_flSpeedWhenSpinUpOrSpinDownStarted);
+    SCHEMA_FIELD(IPhysicsBody*, m_pFixedWorldBody);
+    SCHEMA_FIELD(IPhysicsJoint*, m_pMotorJoint);
     SCHEMA_FIELD(CMotorController, m_motor);
 
 public:

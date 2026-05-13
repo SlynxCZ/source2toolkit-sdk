@@ -55,11 +55,12 @@
 #include <cstdint>
 
 #include "CBaseModelEntity.h"
-#include "../enums/CFuncMoverFollowConstraint_t.h"
-#include "../enums/CFuncMoverFollowEntityDirection_t.h"
-#include "../enums/CFuncMoverMove_t.h"
-#include "../enums/CFuncMoverOrientationUpdate_t.h"
-#include "../enums/CFuncMoverTransitionToPathNodeAction_t.h"
+#include "../enums/CFuncMover__FollowConstraint_t.h"
+#include "../enums/CFuncMover__FollowEntityDirection_t.h"
+#include "../enums/CFuncMover__Move_t.h"
+#include "../enums/CFuncMover__OrientationUpdate_t.h"
+#include "../enums/CFuncMover__TransitionToPathNodeAction_t.h"
+#include "FuncMoverMovementSummary_t.h"
 
 class CBaseEntity;
 class CMoverPathNode;
@@ -75,7 +76,8 @@ public:
     SCHEMA_FIELD(CHandle<CPathMover>, m_hPrevPathMover);
     SCHEMA_FIELD(CUtlSymbolLarge, m_iszPathNodeStart);
     SCHEMA_FIELD(CUtlSymbolLarge, m_iszPathNodeEnd);
-    SCHEMA_FIELD(CFuncMover::Move_t, m_eMoveType);
+    SCHEMA_FIELD(bool, m_bIgnoreEndNode);
+    SCHEMA_FIELD(CFuncMover__Move_t, m_eMoveType);
     SCHEMA_FIELD(bool, m_bIsReversing);
     SCHEMA_FIELD(float, m_flStartSpeed);
     SCHEMA_FIELD(float, m_flPathLocation);
@@ -109,11 +111,10 @@ public:
     SCHEMA_FIELD(bool, m_bStartAtClosestPoint);
     SCHEMA_FIELD(bool, m_bStartAtEnd);
     SCHEMA_FIELD(bool, m_bStartFollowingClosestMover);
-    SCHEMA_FIELD(CFuncMover::OrientationUpdate_t, m_eOrientationUpdate);
+    SCHEMA_FIELD(CFuncMover__OrientationUpdate_t, m_eOrientationUpdate);
     SCHEMA_FIELD(float, m_flTimeStartOrientationChange);
     SCHEMA_FIELD(float, m_flTimeToBlendToNewOrientation);
     SCHEMA_FIELD(float, m_flDurationBlendToNewOrientationRan);
-    SCHEMA_FIELD(int32_t, m_nOriginalOrientationIndex);
     SCHEMA_FIELD(bool, m_bCreateMovableNavMesh);
     SCHEMA_FIELD(bool, m_bAllowMovableNavMeshDockingOnEntireEntity);
     SCHEMA_FIELD(CUtlSymbolLarge, m_iszOrientationMatchEntityName);
@@ -125,9 +126,10 @@ public:
     SCHEMA_FIELD(float, m_flLerpToPositionDeltaT);
     SCHEMA_FIELD(CEntityIOOutput, m_OnLerpToPositionComplete);
     SCHEMA_FIELD(bool, m_bIsPaused);
-    SCHEMA_FIELD(CFuncMover::TransitionToPathNodeAction_t, m_eTransitionedToPathNodeAction);
+    SCHEMA_FIELD(CFuncMover__TransitionToPathNodeAction_t, m_eTransitionedToPathNodeAction);
+    SCHEMA_FIELD(Quaternion, m_qTransitionSourceOrientation);
     SCHEMA_FIELD(int32_t, m_nDelayedTeleportToNode);
-    SCHEMA_FIELD(bool, m_bIsVerboseLogging);
+    SCHEMA_FIELD(bool, m_bIsImGuiLogging);
     SCHEMA_FIELD(CHandle<CBaseEntity>, m_hFollowEntity);
     SCHEMA_FIELD(float, m_flFollowDistance);
     SCHEMA_FIELD(float, m_flFollowMinimumSpeed);
@@ -142,17 +144,23 @@ public:
     SCHEMA_FIELD(CEntityIOOutput, m_OnStopped);
     SCHEMA_FIELD(bool, m_bNextNodeReturnsCurrent);
     SCHEMA_FIELD(bool, m_bStartedMoving);
-    SCHEMA_FIELD(CFuncMover::FollowEntityDirection_t, m_eFollowEntityDirection);
+    SCHEMA_FIELD(CFuncMover__FollowEntityDirection_t, m_eFollowEntityDirection);
     SCHEMA_FIELD(CHandle<CFuncMover>, m_hFollowMover);
     SCHEMA_FIELD(CUtlSymbolLarge, m_iszFollowMoverEntityName);
     SCHEMA_FIELD(float, m_flFollowMoverDistance);
+    SCHEMA_FIELD(float, m_flFollowMoverRatio);
     SCHEMA_FIELD(float, m_flFollowMoverCalculatedDistance);
     SCHEMA_FIELD(float, m_flFollowMoverSpringStrength);
+    SCHEMA_FIELD(int32_t, m_nFollowMoverConstraintPriority);
     SCHEMA_FIELD(bool, m_bFollowConstraintsInitialized);
-    SCHEMA_FIELD(CFuncMover::FollowConstraint_t, m_eFollowConstraint);
+    SCHEMA_FIELD(CFuncMover__FollowConstraint_t, m_eFollowConstraint);
     SCHEMA_FIELD(float, m_flFollowMoverSpeed);
     SCHEMA_FIELD(float, m_flFollowMoverVelocity);
     SCHEMA_FIELD(int32_t, m_nTickMovementRan);
+    SCHEMA_FIELD(FuncMoverMovementSummary_t, m_movementSummary);
+    SCHEMA_FIELD(bool, m_bStopFromBeginStopTarget);
+    SCHEMA_FIELD(bool, m_bQueueStop);
+    SCHEMA_FIELD(bool, m_bQueueStopMoving);
 
 public:
     static CFuncMover* New(const char* className)

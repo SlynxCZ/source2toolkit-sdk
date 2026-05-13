@@ -53,7 +53,7 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
-class CBaseFlex;
+class CBaseModelEntity;
 
 class CAI_Expresser
 {
@@ -70,7 +70,7 @@ public:
     SCHEMA_FIELD(bool, m_bConsiderSceneInvolvementAsSpeech);
     SCHEMA_FIELD(bool, m_bSceneEntityDisabled);
     SCHEMA_FIELD(int32_t, m_nLastSpokenPriority);
-    SCHEMA_FIELD(CBaseFlex*, m_pOuter);
+    SCHEMA_FIELD(CBaseModelEntity*, m_pOuter);
 };
 
 #endif // _INCLUDE_CAI_EXPRESSER_H

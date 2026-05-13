@@ -58,12 +58,14 @@
 #include "CPointEntity.h"
 
 class CBaseEntity;
+class IPhysicsMotionController;
 
 class CPhysForce : public CPointEntity
 {
 public:
     DECLARE_SCHEMA_CLASS(CPhysForce);
 
+    SCHEMA_FIELD(IPhysicsMotionController*, m_pController);
     SCHEMA_FIELD(CUtlSymbolLarge, m_nameAttach);
     SCHEMA_FIELD(float, m_force);
     SCHEMA_FIELD(float, m_forceTime);

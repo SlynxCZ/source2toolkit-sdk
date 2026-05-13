@@ -64,7 +64,7 @@ public:
     DECLARE_SCHEMA_CLASS(CEnvLaser);
 
     SCHEMA_FIELD(CUtlSymbolLarge, m_iszLaserTarget);
-    SCHEMA_FIELD(CSprite*, m_pSprite);
+    SCHEMA_FIELD(CHandle<CSprite>, m_pSprite);
     SCHEMA_FIELD(CUtlSymbolLarge, m_iszSpriteName);
     SCHEMA_FIELD(Vector, m_firePosition);
     SCHEMA_FIELD(float, m_flStartFrame);

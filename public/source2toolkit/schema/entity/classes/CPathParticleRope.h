@@ -71,7 +71,7 @@ public:
     SCHEMA_FIELD(float, m_flRadius);
     SCHEMA_FIELD(Color, m_ColorTint);
     SCHEMA_FIELD(int32_t, m_nEffectState);
-    SCHEMA_FIELD(CStrongHandle< InfoForResourceTypeIParticleSystemDefinition >, m_iEffectIndex);
+    SCHEMA_FIELD(CStrongHandle, m_iEffectIndex);
     SCHEMA_FIELD(CUtlVector<Vector>, m_PathNodes_Position);
     SCHEMA_FIELD(CUtlVector<Vector>, m_PathNodes_TangentIn);
     SCHEMA_FIELD(CUtlVector<Vector>, m_PathNodes_TangentOut);

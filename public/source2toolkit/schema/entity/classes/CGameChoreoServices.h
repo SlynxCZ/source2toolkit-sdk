@@ -54,8 +54,10 @@
 #include <cstdint>
 
 #include "IChoreoServices.h"
+#include "../enums/IChoreoServices__ChoreoState_t.h"
+#include "../enums/IChoreoServices__ScriptState_t.h"
 
-class CBaseAnimGraph;
+class CBaseModelEntity;
 class CScriptedSequence;
 
 class CGameChoreoServices : public IChoreoServices
@@ -63,8 +65,10 @@ class CGameChoreoServices : public IChoreoServices
 public:
     DECLARE_SCHEMA_CLASS(CGameChoreoServices);
 
-    SCHEMA_FIELD(CHandle<CBaseAnimGraph>, m_hOwner);
+    SCHEMA_FIELD(CHandle<CBaseModelEntity>, m_hOwner);
     SCHEMA_FIELD(CHandle<CScriptedSequence>, m_hScriptedSequence);
+    SCHEMA_FIELD(IChoreoServices__ScriptState_t, m_scriptState);
+    SCHEMA_FIELD(IChoreoServices__ChoreoState_t, m_choreoState);
     SCHEMA_FIELD(float, m_flTimeStartedState);
 };
 

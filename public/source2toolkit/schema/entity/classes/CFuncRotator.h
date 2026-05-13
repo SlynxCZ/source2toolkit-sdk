@@ -55,7 +55,7 @@
 #include <cstdint>
 
 #include "CBaseModelEntity.h"
-#include "../enums/CFuncRotatorRotate_t.h"
+#include "../enums/CFuncRotator__Rotate_t.h"
 #include "RotatorHistoryEntry_t.h"
 #include "RotatorQueueEntry_t.h"
 #include "../enums/RotatorTargetSpace_t.h"
@@ -90,8 +90,8 @@ public:
     SCHEMA_FIELD(CEntityIOOutput, m_OnOscillateEndDepart);
     SCHEMA_FIELD(bool, m_bOscillateDepart);
     SCHEMA_FIELD(int32_t, m_nOscillateCount);
-    SCHEMA_FIELD(CFuncRotator::Rotate_t, m_eRotateType);
-    SCHEMA_FIELD(CFuncRotator::Rotate_t, m_ePrevRotateType);
+    SCHEMA_FIELD(CFuncRotator__Rotate_t, m_eRotateType);
+    SCHEMA_FIELD(CFuncRotator__Rotate_t, m_ePrevRotateType);
     SCHEMA_FIELD(bool, m_bHasTargetOverride);
     SCHEMA_FIELD(Quaternion, m_qOrientationOverride);
     SCHEMA_FIELD(RotatorTargetSpace_t, m_eSpaceOverride);

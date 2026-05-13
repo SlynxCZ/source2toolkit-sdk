@@ -54,7 +54,6 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
-#include "../enums/BaseExplosionTypes_t.h"
 #include "../enums/BreakableContentsType_t.h"
 #include "CBaseProp.h"
 #include "CPropDataComponent.h"
@@ -87,7 +86,7 @@ public:
     SCHEMA_FIELD(bool, m_bHasBreakPiecesOrCommands);
     SCHEMA_FIELD(float, m_explodeDamage);
     SCHEMA_FIELD(float, m_explodeRadius);
-    SCHEMA_FIELD(BaseExplosionTypes_t, m_nExplosionType);
+    SCHEMA_FIELD(CGlobalSymbol, m_sExplosionType);
     SCHEMA_FIELD(float, m_explosionDelay);
     SCHEMA_FIELD(CUtlSymbolLarge, m_explosionBuildupSound);
     SCHEMA_FIELD(CUtlSymbolLarge, m_explosionCustomEffect);

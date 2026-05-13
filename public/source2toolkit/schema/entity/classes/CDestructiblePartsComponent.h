@@ -54,6 +54,7 @@
 #include <cstdint>
 
 
+class CBaseAnimGraphDestructibleParts_GraphController;
 class CBaseModelEntity;
 
 class CDestructiblePartsComponent
@@ -64,6 +65,7 @@ public:
     SCHEMA_FIELD(CEntityInstance*, __m_pChainEntity);
     SCHEMA_FIELD(CUtlVector<uint16_t>, m_vecDamageTakenByHitGroup);
     SCHEMA_FIELD(CHandle<CBaseModelEntity>, m_hOwner);
+    SCHEMA_FIELD(CBaseAnimGraphDestructibleParts_GraphController*, m_pAnimGraphDestructibleGraphController);
 };
 
 #endif // _INCLUDE_CDESTRUCTIBLEPARTSCOMPONENT_H

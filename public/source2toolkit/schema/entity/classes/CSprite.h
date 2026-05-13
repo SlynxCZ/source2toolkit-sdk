@@ -64,7 +64,7 @@ class CSprite : public CBaseModelEntity
 public:
     DECLARE_SCHEMA_CLASS(CSprite);
 
-    SCHEMA_FIELD(CStrongHandle< InfoForResourceTypeIMaterial2 >, m_hSpriteMaterial);
+    SCHEMA_FIELD(CStrongHandle, m_hSpriteMaterial);
     SCHEMA_FIELD(CHandle<CBaseEntity>, m_hAttachedToEntity);
     SCHEMA_FIELD(float, m_flSpriteFramerate);
     SCHEMA_FIELD(float, m_flFrame);

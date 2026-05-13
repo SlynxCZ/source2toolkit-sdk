@@ -125,6 +125,7 @@ public:
     SCHEMA_FIELD(bool, m_bendNoisePositionValid);
     SCHEMA_FIELD(float, m_lookAroundStateTimestamp);
     SCHEMA_FIELD(float, m_lookAheadAngle);
+    SCHEMA_FIELD(float, m_lookUpAngle);
     SCHEMA_FIELD(float, m_forwardAngle);
     SCHEMA_FIELD(float, m_inhibitLookAroundTimestamp);
     SCHEMA_FIELD(Vector, m_lookAtSpot);

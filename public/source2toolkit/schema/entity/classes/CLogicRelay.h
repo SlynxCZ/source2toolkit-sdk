@@ -61,6 +61,8 @@ class CLogicRelay : public CLogicalEntity
 public:
     DECLARE_SCHEMA_CLASS(CLogicRelay);
 
+    SCHEMA_FIELD(CEntityIOOutput, m_OnSpawn);
+    SCHEMA_FIELD(CEntityIOOutput, m_OnTrigger);
     SCHEMA_FIELD(bool, m_bDisabled);
     SCHEMA_FIELD(bool, m_bWaitForRefire);
     SCHEMA_FIELD(bool, m_bTriggerOnce);

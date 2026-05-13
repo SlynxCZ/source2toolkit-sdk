@@ -60,6 +60,7 @@
 
 class CAnimGraphControllerBase;
 class IChoreoServices;
+class IPhysicsRagdollControl;
 
 class CBaseAnimGraph : public CBaseModelEntity
 {
@@ -71,12 +72,10 @@ public:
     SCHEMA_FIELD(bool, m_bInitiallyPopulateInterpHistory);
     SCHEMA_FIELD(IChoreoServices*, m_pChoreoServices);
     SCHEMA_FIELD(bool, m_bAnimGraphUpdateEnabled);
-    SCHEMA_FIELD(float, m_flMaxSlopeDistance);
-    SCHEMA_FIELD(Vector, m_vLastSlopeCheckPos);
-    SCHEMA_FIELD(uint32_t, m_nAnimGraphUpdateId);
     SCHEMA_FIELD(bool, m_bAnimationUpdateScheduled);
     SCHEMA_FIELD(Vector, m_vecForce);
     SCHEMA_FIELD(int32_t, m_nForceBone);
+    SCHEMA_FIELD(IPhysicsRagdollControl*, m_pRagdollControl);
     SCHEMA_FIELD(PhysicsRagdollPose_t, m_RagdollPose);
     SCHEMA_FIELD(bool, m_bRagdollEnabled);
     SCHEMA_FIELD(bool, m_bRagdollClientSide);

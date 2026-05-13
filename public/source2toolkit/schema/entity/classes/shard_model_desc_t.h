@@ -62,8 +62,8 @@ public:
     DECLARE_SCHEMA_CLASS(shard_model_desc_t);
 
     SCHEMA_FIELD(int32_t, m_nModelID);
-    SCHEMA_FIELD(CStrongHandle< InfoForResourceTypeIMaterial2 >, m_hMaterialBase);
-    SCHEMA_FIELD(CStrongHandle< InfoForResourceTypeIMaterial2 >, m_hMaterialDamageOverlay);
+    SCHEMA_FIELD(CStrongHandle, m_hMaterialBase);
+    SCHEMA_FIELD(CStrongHandle, m_hMaterialDamageOverlay);
     SCHEMA_FIELD(ShardSolid_t, m_solid);
     SCHEMA_FIELD(Vector2D, m_vecPanelSize);
     SCHEMA_FIELD(Vector2D, m_vecStressPositionA);

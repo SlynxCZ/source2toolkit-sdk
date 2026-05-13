@@ -56,11 +56,14 @@
 
 #include "CBaseEntity.h"
 
+class IPhysicsJoint;
+
 class CPhysicsSpring : public CBaseEntity
 {
 public:
     DECLARE_SCHEMA_CLASS(CPhysicsSpring);
 
+    SCHEMA_FIELD(IPhysicsJoint*, m_pSpringJoint);
     SCHEMA_FIELD(float, m_flFrequency);
     SCHEMA_FIELD(float, m_flDampingRatio);
     SCHEMA_FIELD(float, m_flRestLength);

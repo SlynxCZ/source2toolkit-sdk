@@ -58,13 +58,13 @@
 #include "CEconItemView.h"
 #include "../enums/CSPlayerBlockingUseAction_t.h"
 #include "EntitySpottedState_t.h"
-#include "PredictedDamageTag_t.h"
 #include "../enums/loadout_slot_t.h"
 
 class CBaseEntity;
 class CCSBot;
 class CCSPlayerController;
 class CCSPlayer_ActionTrackingServices;
+class CCSPlayer_AimPunchServices;
 class CCSPlayer_BulletServices;
 class CCSPlayer_BuyServices;
 class CCSPlayer_DamageReactServices;
@@ -80,6 +80,7 @@ public:
     SCHEMA_FIELD(CCSPlayer_HostageServices*, m_pHostageServices);
     SCHEMA_FIELD(CCSPlayer_BuyServices*, m_pBuyServices);
     SCHEMA_FIELD(CCSPlayer_ActionTrackingServices*, m_pActionTrackingServices);
+    SCHEMA_FIELD(CCSPlayer_AimPunchServices*, m_pAimPunchServices);
     SCHEMA_FIELD(CCSPlayer_RadioServices*, m_pRadioServices);
     SCHEMA_FIELD(CCSPlayer_DamageReactServices*, m_pDamageReactServices);
     SCHEMA_FIELD(uint16_t, m_nCharacterDefIndex);
@@ -101,11 +102,6 @@ public:
     SCHEMA_FIELD(loadout_slot_t, m_RetakesMVPBoostExtraUtility);
     SCHEMA_FIELD(float, m_flHealthShotBoostExpirationTime);
     SCHEMA_FIELD(float, m_flLandingTimeSeconds);
-    SCHEMA_FIELD(QAngle, m_aimPunchAngle);
-    SCHEMA_FIELD(QAngle, m_aimPunchAngleVel);
-    SCHEMA_FIELD(int32_t, m_aimPunchTickBase);
-    SCHEMA_FIELD(float, m_aimPunchTickFraction);
-    SCHEMA_FIELD(CUtlVector<QAngle>, m_aimPunchCache);
     SCHEMA_FIELD(bool, m_bIsBuyMenuOpen);
     SCHEMA_FIELD(float, m_lastLandTime);
     SCHEMA_FIELD(bool, m_bOnGroundLastTick);
@@ -122,7 +118,6 @@ public:
     SCHEMA_FIELD(CEconItemView, m_EconGloves);
     SCHEMA_FIELD(uint8_t, m_nEconGlovesChanged);
     SCHEMA_FIELD(QAngle, m_qDeathEyeAngles);
-    SCHEMA_FIELD(bool, m_bSkipOneHeadConstraintUpdate);
     SCHEMA_FIELD(bool, m_bLeftHanded);
     SCHEMA_FIELD(float, m_fSwitchedHandednessTime);
     SCHEMA_FIELD(float, m_flViewmodelOffsetX);
@@ -154,8 +149,6 @@ public:
     SCHEMA_FIELD(int32_t, m_iShotsFired);
     SCHEMA_FIELD(float, m_flFlinchStack);
     SCHEMA_FIELD(float, m_flVelocityModifier);
-    SCHEMA_FIELD(float, m_flHitHeading);
-    SCHEMA_FIELD(int32_t, m_nHitBodyPart);
     SCHEMA_FIELD(Vector, m_vecTotalBulletForce);
     SCHEMA_FIELD(bool, m_bWaitForNoAttack);
     SCHEMA_FIELD(float, m_ignoreLadderJumpTime);
@@ -163,10 +156,6 @@ public:
     SCHEMA_FIELD(int32_t, m_LastHitBox);
     SCHEMA_FIELD(CCSBot*, m_pBot);
     SCHEMA_FIELD(bool, m_bBotAllowActive);
-    SCHEMA_FIELD(QAngle, m_thirdPersonHeading);
-    SCHEMA_FIELD(float, m_flSlopeDropOffset);
-    SCHEMA_FIELD(float, m_flSlopeDropHeight);
-    SCHEMA_FIELD(Vector, m_vHeadConstraintOffset);
     SCHEMA_FIELD(int32_t, m_nLastPickupPriority);
     SCHEMA_FIELD(float, m_flLastPickupPriorityTime);
     SCHEMA_FIELD(int32_t, m_ArmorValue);
@@ -189,8 +178,6 @@ public:
     SCHEMA_FIELD_POINTER(QAngle, m_angShootAngleHistory);
     SCHEMA_FIELD_POINTER(Vector, m_vecThrowPositionHistory);
     SCHEMA_FIELD_POINTER(Vector, m_vecVelocityHistory);
-    SCHEMA_FIELD(CUtlVector<PredictedDamageTag_t>, m_PredictedDamageTags);
-    SCHEMA_FIELD(int32_t, m_nHighestAppliedDamageTagTick);
     SCHEMA_FIELD(bool, m_bCommittingSuicideOnTeamChange);
     SCHEMA_FIELD(bool, m_wasNotKilledNaturally);
     SCHEMA_FIELD(float, m_fImmuneToGunGameDamageTime);

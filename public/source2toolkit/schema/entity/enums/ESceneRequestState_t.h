@@ -46,6 +46,8 @@ enum class ESceneRequestState_t : uint32_t
 {
     INACTIVE = 0,
     ACTIVE = 1,
+    FINISHED = 2,
+    FAILED = 3,
 };
 
 #endif // _INCLUDE_ESCENEREQUESTSTATE_T_H

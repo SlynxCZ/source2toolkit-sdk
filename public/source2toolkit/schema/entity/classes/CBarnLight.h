@@ -81,7 +81,7 @@ public:
     SCHEMA_FIELD(CUtlVector<CUtlString>, m_LightStyleEvents);
     SCHEMA_FIELD(CUtlVector<CHandle<CBaseModelEntity>>, m_LightStyleTargets);
     SCHEMA_FIELD_POINTER(CEntityIOOutput, m_StyleEvent);
-    SCHEMA_FIELD(CStrongHandle< InfoForResourceTypeCTextureBase >, m_hLightCookie);
+    SCHEMA_FIELD(CStrongHandle, m_hLightCookie);
     SCHEMA_FIELD(float, m_flShape);
     SCHEMA_FIELD(float, m_flSoftX);
     SCHEMA_FIELD(float, m_flSoftY);
@@ -92,6 +92,7 @@ public:
     SCHEMA_FIELD(Vector, m_vShear);
     SCHEMA_FIELD(int32_t, m_nBakeSpecularToCubemaps);
     SCHEMA_FIELD(Vector, m_vBakeSpecularToCubemapsSize);
+    SCHEMA_FIELD(float, m_flBakeSpecularToCubemapsScale);
     SCHEMA_FIELD(int32_t, m_nCastShadows);
     SCHEMA_FIELD(int32_t, m_nShadowMapSize);
     SCHEMA_FIELD(int32_t, m_nShadowPriority);
@@ -99,7 +100,6 @@ public:
     SCHEMA_FIELD(bool, m_bForceShadowsEnabled);
     SCHEMA_FIELD(int32_t, m_nBounceLight);
     SCHEMA_FIELD(float, m_flBounceScale);
-    SCHEMA_FIELD(bool, m_bDynamicBounce);
     SCHEMA_FIELD(float, m_flMinRoughness);
     SCHEMA_FIELD(Vector, m_vAlternateColor);
     SCHEMA_FIELD(float, m_fAlternateColorBrightness);
@@ -107,7 +107,6 @@ public:
     SCHEMA_FIELD(float, m_flFogStrength);
     SCHEMA_FIELD(int32_t, m_nFogShadows);
     SCHEMA_FIELD(float, m_flFogScale);
-    SCHEMA_FIELD(bool, m_bFogMixedShadows);
     SCHEMA_FIELD(float, m_flFadeSizeStart);
     SCHEMA_FIELD(float, m_flFadeSizeEnd);
     SCHEMA_FIELD(float, m_flShadowFadeSizeStart);
@@ -138,6 +137,7 @@ public:
     SCHEMA_FIELD(QAngle, m_vPrecomputedOBBAngles5);
     SCHEMA_FIELD(Vector, m_vPrecomputedOBBExtent5);
     SCHEMA_FIELD(bool, m_bPvsModifyEntity);
+    SCHEMA_FIELD(bool, m_bTransmitAlways);
     SCHEMA_FIELD(CUtlVector<uint16_t>, m_VisClusters);
 
 public:

@@ -55,14 +55,22 @@
 
 #include "InfoForResourceTypeCModel.h"
 
+class IPhysAggregateInstance;
+
 class CModelState
 {
 public:
     DECLARE_SCHEMA_CLASS(CModelState);
 
-    SCHEMA_FIELD(CStrongHandle< InfoForResourceTypeCModel >, m_hModel);
+    SCHEMA_FIELD(CStrongHandle, m_hModel);
     SCHEMA_FIELD(CUtlSymbolLarge, m_ModelName);
+    SCHEMA_FIELD(IPhysAggregateInstance*, m_pVPhysicsAggregate);
+    SCHEMA_FIELD(float, m_flRootBoneOffset_x);
+    SCHEMA_FIELD(float, m_flRootBoneOffset_y);
+    SCHEMA_FIELD(float, m_flRootBoneOffset_z);
+    SCHEMA_FIELD(uint8_t, m_nRootBoneOffsetResetSerialNumber);
     SCHEMA_FIELD(bool, m_bClientClothCreationSuppressed);
+    SCHEMA_FIELD(uint8_t, m_nAnimStateNoInterpSerialNumber);
     SCHEMA_FIELD(uint64_t, m_MeshGroupMask);
     SCHEMA_FIELD(CUtlVector<int32_t>, m_nBodyGroupChoices);
     SCHEMA_FIELD(int8_t, m_nIdealMotionType);

@@ -55,6 +55,7 @@
 
 #include "CEntitySubclassVDataBase.h"
 #include "../enums/ParticleAttachment_t.h"
+#include "PrecipitationFilter_t.h"
 
 class CPrecipitationVData : public CEntitySubclassVDataBase
 {
@@ -67,6 +68,8 @@ public:
     SCHEMA_FIELD(int32_t, m_nRTEnvCP);
     SCHEMA_FIELD(int32_t, m_nRTEnvCPComponent);
     SCHEMA_FIELD(CUtlString, m_szModifier);
+    SCHEMA_FIELD(int32_t, m_nUseSnapshotFromSurfaceGraph);
+    SCHEMA_FIELD(PrecipitationFilter_t, m_snapshotFilter);
 };
 
 #endif // _INCLUDE_CPRECIPITATIONVDATA_H

@@ -62,7 +62,7 @@ class CEnvCubemap : public CBaseEntity
 public:
     DECLARE_SCHEMA_CLASS(CEnvCubemap);
 
-    SCHEMA_FIELD(CStrongHandle< InfoForResourceTypeCTextureBase >, m_Entity_hCubemapTexture);
+    SCHEMA_FIELD(CStrongHandle, m_Entity_hCubemapTexture);
     SCHEMA_FIELD(bool, m_Entity_bCustomCubemapTexture);
     SCHEMA_FIELD(float, m_Entity_flInfluenceRadius);
     SCHEMA_FIELD(Vector, m_Entity_vBoxProjectMins);

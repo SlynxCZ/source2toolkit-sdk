@@ -53,11 +53,16 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "../enums/ENPCBehaviorOverride_t.h"
+#include "../enums/InteractionPriority_t.h"
+
 class CScenePayloadVData
 {
 public:
     DECLARE_SCHEMA_CLASS(CScenePayloadVData);
 
+    SCHEMA_FIELD(ENPCBehaviorOverride_t, m_eNPCBehavior);
+    SCHEMA_FIELD(InteractionPriority_t, m_ePriority);
 };
 
 #endif // _INCLUDE_CSCENEPAYLOADVDATA_H

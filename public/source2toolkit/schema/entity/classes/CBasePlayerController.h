@@ -74,6 +74,7 @@ public:
     SCHEMA_FIELD(CUtlVector<CHandle<CBasePlayerController>>, m_hSplitScreenPlayers);
     SCHEMA_FIELD(bool, m_bIsHLTV);
     SCHEMA_FIELD(PlayerConnectedState, m_iConnected);
+    SCHEMA_FIELD(PlayerConnectedState, m_iMostConnected);
     SCHEMA_FIELD_POINTER(char, m_iszPlayerName);
     SCHEMA_FIELD(CUtlString, m_szNetworkIDString);
     SCHEMA_FIELD(float, m_fLerpTime);

@@ -54,6 +54,7 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "../enums/CLogicBranchList__LogicBranchListenerLastState_t.h"
 #include "CLogicalEntity.h"
 
 class CBaseEntity;
@@ -65,6 +66,7 @@ public:
 
     SCHEMA_FIELD_POINTER(CUtlSymbolLarge, m_nLogicBranchNames);
     SCHEMA_FIELD(CUtlVector<CHandle<CBaseEntity>>, m_LogicBranchList);
+    SCHEMA_FIELD(CLogicBranchList__LogicBranchListenerLastState_t, m_eLastState);
     SCHEMA_FIELD(CEntityIOOutput, m_OnAllTrue);
     SCHEMA_FIELD(CEntityIOOutput, m_OnAllFalse);
     SCHEMA_FIELD(CEntityIOOutput, m_OnMixed);

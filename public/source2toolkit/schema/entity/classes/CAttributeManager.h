@@ -53,6 +53,7 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "CAttributeManager__cached_attribute_float_t.h"
 #include "../enums/attributeprovidertypes_t.h"
 
 class CBaseEntity;
@@ -67,6 +68,7 @@ public:
     SCHEMA_FIELD(CHandle<CBaseEntity>, m_hOuter);
     SCHEMA_FIELD(bool, m_bPreventLoopback);
     SCHEMA_FIELD(attributeprovidertypes_t, m_ProviderType);
+    SCHEMA_FIELD(CUtlVector<CAttributeManager__cached_attribute_float_t>, m_CachedResults);
 };
 
 #endif // _INCLUDE_CATTRIBUTEMANAGER_H

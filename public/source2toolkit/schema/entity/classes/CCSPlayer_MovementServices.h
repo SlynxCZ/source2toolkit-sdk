@@ -53,6 +53,7 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "CCSPlayerAnimationState.h"
 #include "CCSPlayerLegacyJump.h"
 #include "CCSPlayerModernJump.h"
 #include "CPlayer_MovementServices_Humanoid.h"
@@ -62,6 +63,9 @@ class CCSPlayer_MovementServices : public CPlayer_MovementServices_Humanoid
 public:
     DECLARE_SCHEMA_CLASS(CCSPlayer_MovementServices);
 
+    SCHEMA_FIELD(CCSPlayerAnimationState, m_AnimationState);
+    SCHEMA_FIELD(bool, m_bUsingGroundTopologyOffset);
+    SCHEMA_FIELD(float, m_flUsingGroundTopologyOffsetTransitionSmoothing);
     SCHEMA_FIELD(Vector, m_vecLadderNormal);
     SCHEMA_FIELD(int32_t, m_nLadderSurfacePropIndex);
     SCHEMA_FIELD(bool, m_bDucked);
@@ -70,11 +74,10 @@ public:
     SCHEMA_FIELD(bool, m_bDuckOverride);
     SCHEMA_FIELD(bool, m_bDesiresDuck);
     SCHEMA_FIELD(bool, m_bDucking);
-    SCHEMA_FIELD(float, m_flDuckOffset);
-    SCHEMA_FIELD(uint32_t, m_nDuckTimeMsecs);
-    SCHEMA_FIELD(uint32_t, m_nDuckJumpTimeMsecs);
-    SCHEMA_FIELD(uint32_t, m_nJumpTimeMsecs);
+    SCHEMA_FIELD(float, m_flDuckRootOffset);
+    SCHEMA_FIELD(float, m_flDuckViewOffset);
     SCHEMA_FIELD(float, m_flLastDuckTime);
+    SCHEMA_FIELD(float, m_flBombPlantViewOffset);
     SCHEMA_FIELD(Vector2D, m_vecLastPositionAtFullCrouchSpeed);
     SCHEMA_FIELD(bool, m_duckUntilOnGround);
     SCHEMA_FIELD(bool, m_bHasWalkMovedSinceLastJump);
@@ -92,8 +95,9 @@ public:
     SCHEMA_FIELD(int32_t, m_iFootsteps);
     SCHEMA_FIELD(float, m_fStashGrenadeParameterWhen);
     SCHEMA_FIELD(uint64_t, m_nButtonDownMaskPrev);
-    SCHEMA_FIELD(float, m_flOffsetTickCompleteTime);
-    SCHEMA_FIELD(float, m_flOffsetTickStashedSpeed);
+    SCHEMA_FIELD(bool, m_bUseFrictionStashedSpeed);
+    SCHEMA_FIELD(float, m_flUseFrictionStashedSpeedUntilFrac);
+    SCHEMA_FIELD(float, m_flFrictionStashedSpeed);
     SCHEMA_FIELD(float, m_flStamina);
     SCHEMA_FIELD(float, m_flHeightAtJumpStart);
     SCHEMA_FIELD(float, m_flMaxJumpHeightThisJump);
@@ -109,7 +113,8 @@ public:
     SCHEMA_FIELD(bool, m_bJumpApexPending);
     SCHEMA_FIELD(float, m_flTicksSinceLastSurfingDetected);
     SCHEMA_FIELD(bool, m_bWasSurfing);
-    SCHEMA_FIELD(Vector, m_vecInputRotated);
+    SCHEMA_FIELD(Vector2D, m_vecWalkWishVel);
+    SCHEMA_FIELD(bool, m_bHasEverProcessedCommand);
 };
 
 #endif // _INCLUDE_CCSPLAYER_MOVEMENTSERVICES_H

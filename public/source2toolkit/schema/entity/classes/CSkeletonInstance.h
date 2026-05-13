@@ -62,7 +62,6 @@ public:
     DECLARE_SCHEMA_CLASS(CSkeletonInstance);
 
     SCHEMA_FIELD(CModelState, m_modelState);
-    SCHEMA_FIELD(bool, m_bIsAnimationEnabled);
     SCHEMA_FIELD(bool, m_bUseParentRenderBounds);
     SCHEMA_FIELD(bool, m_bDisableSolidCollisionsForHierarchy);
     SCHEMA_FIELD_POINTER(CUtlStringToken, m_materialGroup);

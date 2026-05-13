@@ -72,7 +72,7 @@ public:
     SCHEMA_FIELD(uint8_t, m_nSegments);
     SCHEMA_FIELD(bool, m_bConstrainBetweenEndpoints);
     SCHEMA_FIELD(CUtlSymbolLarge, m_strRopeMaterialModel);
-    SCHEMA_FIELD(CStrongHandle< InfoForResourceTypeIMaterial2 >, m_iRopeMaterialModelIndex);
+    SCHEMA_FIELD(CStrongHandle, m_iRopeMaterialModelIndex);
     SCHEMA_FIELD(uint8_t, m_Subdiv);
     SCHEMA_FIELD(uint8_t, m_nChangeCount);
     SCHEMA_FIELD(int16_t, m_RopeLength);

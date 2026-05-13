@@ -90,6 +90,8 @@ public:
     SCHEMA_FIELD(int32_t, m_nNumBullets);
     SCHEMA_FIELD(bool, m_bReloadsSingleShells);
     SCHEMA_FIELD(CFiringModeFloat, m_flCycleTime);
+    SCHEMA_FIELD(float, m_flCycleTimeWhenInBurstMode);
+    SCHEMA_FIELD(float, m_flTimeBetweenBurstShots);
     SCHEMA_FIELD(CFiringModeFloat, m_flMaxSpeed);
     SCHEMA_FIELD(CFiringModeFloat, m_flSpread);
     SCHEMA_FIELD(CFiringModeFloat, m_flInaccuracyCrouch);

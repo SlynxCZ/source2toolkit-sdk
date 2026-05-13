@@ -70,6 +70,7 @@ public:
     SCHEMA_FIELD(int32_t, m_iHostageCount);
     SCHEMA_FIELD(bool, m_bFadePlayerVisibilityFarZ);
     SCHEMA_FIELD(bool, m_bRainTraceToSkyEnabled);
+    SCHEMA_FIELD(bool, m_bGPUCullSkybox);
     SCHEMA_FIELD(float, m_flEnvRainStrength);
     SCHEMA_FIELD(float, m_flEnvPuddleRippleStrength);
     SCHEMA_FIELD(float, m_flEnvPuddleRippleDirection);

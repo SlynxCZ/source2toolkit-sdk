@@ -54,7 +54,7 @@
 #include <cstdint>
 
 #include "../enums/DamageTypes_t.h"
-#include "DestructibleHitGroupToDestroy_t.h"
+#include "DestructiblePartDamageRequest_t.h"
 #include "../enums/TakeDamageFlags_t.h"
 
 class CBaseEntity;
@@ -84,7 +84,7 @@ public:
     SCHEMA_FIELD(int32_t, m_nNumObjectsPenetrated);
     SCHEMA_FIELD(float, m_flFriendlyFireDamageReductionRatio);
     SCHEMA_FIELD(bool, m_bStoppedBullet);
-    SCHEMA_FIELD(CUtlVector<DestructibleHitGroupToDestroy_t>, m_nDestructibleHitGroupsToForceDestroy);
+    SCHEMA_FIELD(CUtlLeanVector, m_DestructibleHitGroupRequests);
     SCHEMA_FIELD(bool, m_bInTakeDamageFlow);
 };
 
