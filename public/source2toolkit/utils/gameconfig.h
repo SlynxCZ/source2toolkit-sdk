@@ -49,7 +49,10 @@
 * * Applying patches
 *
 * @note Internally wraps IToolkitGameConfig.
-  */
+*/
+
+#ifndef _INCLUDE_ITOOLKIT_UTILS_GAMECONFIG_H
+#define _INCLUDE_ITOOLKIT_UTILS_GAMECONFIG_H
 
 #pragma once
 
@@ -113,3 +116,6 @@ const char* UTIL_GetPatch(const char* pchName);
 * @note Commonly used for structure offsets or vtable indices.
   */
 int UTIL_GetOffset(const char* pchName);
+
+#endif //_INCLUDE_ITOOLKIT_UTILS_GAMECONFIG_H
+

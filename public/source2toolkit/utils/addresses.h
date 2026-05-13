@@ -51,6 +51,9 @@
 * @note Internally wraps IToolkitAddresses.
   */
 
+#ifndef _INCLUDE_ITOOLKIT_UTILS_ADDRESSES_H
+#define _INCLUDE_ITOOLKIT_UTILS_ADDRESSES_H
+
 #pragma once
 
 #ifdef SOURCE2TOOLKIT_CORE
@@ -231,3 +234,5 @@ uintptr_t UTIL_ResolveRelativeAddress(uintptr_t address, ptrdiff_t offset = 0x0,
 * @note Wrapper around IToolkitAddresses::FollowNearCall()
   */
 uintptr_t UTIL_FollowNearCall(uintptr_t address, ptrdiff_t offset = 0x1, ptrdiff_t size = 0x5);
+
+#endif //_INCLUDE_ITOOLKIT_UTILS_ADDRESSES_H

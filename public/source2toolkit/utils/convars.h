@@ -44,7 +44,10 @@
 * They allow reading, writing, and querying ConVars without directly using access indices.
 *
 * @note Internally wraps IToolkitConVars.
-  */
+*/
+
+#ifndef _INCLUDE_ITOOLKIT_UTILS_CONVARS_H
+#define _INCLUDE_ITOOLKIT_UTILS_CONVARS_H
 
 #pragma once
 
@@ -134,3 +137,6 @@ void* UTIL_GetConVarValueAddress(uint16 accessIndex);
 * @warning Unsafe if type does not match ConVar type
   */
 void UTIL_SetConVarValue(uint16 accessIndex, const void* value);
+
+#endif //_INCLUDE_ITOOLKIT_UTILS_CONVARS_H
+

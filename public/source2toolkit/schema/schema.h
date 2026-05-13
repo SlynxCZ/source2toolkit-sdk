@@ -51,6 +51,9 @@
 
 #pragma once
 
+#ifndef SCHEMA_H
+#define SCHEMA_H
+
 #include "igameevents.h"
 #include "igameeventsystem.h"
 #include "schemasystem.h"
@@ -444,3 +447,5 @@ Schema class macros
 * * Though some classes like CGameRules will instead use their CNetworkVarChainer as a link back to the parent entity
   */
 #define DECLARE_SCHEMA_CLASS_INLINE(className) DECLARE_SCHEMA_CLASS_BASE(className, 1)
+
+#endif // SCHEMA_H

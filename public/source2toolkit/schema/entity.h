@@ -50,7 +50,10 @@
 * * Listening to entity outputs
 *
 * @note Internally wraps IToolkitEntityIO.
-  */
+*/
+
+#ifndef ENTITY_H
+#define ENTITY_H
 
 #pragma once
 
@@ -205,3 +208,5 @@ void UTIL_RemoveEntityIOListener(IEntityIOListener* pListener,
                                  const char* pchClassName,
                                  const char* pchOutputName,
                                  Mode nMode = Mode::Pre);
+
+#endif // ENTITY_H

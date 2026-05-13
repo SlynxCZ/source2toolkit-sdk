@@ -47,7 +47,10 @@
  *  * Handling player input
  *
  * @note Internally wraps IToolkitMenus.
- */
+*/
+
+#ifndef _INCLUDE_ITOOLKIT_UTILS_MENUS_H
+#define _INCLUDE_ITOOLKIT_UTILS_MENUS_H
 
 #pragma once
 
@@ -97,3 +100,5 @@ void UTIL_CloseActiveMenu(CCSPlayerController *player);
  * @note Wrapper around IToolkitMenus::OnKeyPress()
  */
 void UTIL_OnMenuKeyPress(CCSPlayerController *player, int key);
+
+#endif //_INCLUDE_ITOOLKIT_UTILS_MENUS_H

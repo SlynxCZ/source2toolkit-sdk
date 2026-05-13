@@ -49,7 +49,10 @@
 * * Visibility checks
 *
 * @note Internally wraps IToolkitTrace.
-  */
+*/
+
+#ifndef _INCLUDE_ITOOLKIT_UTILS_TRACE_H
+#define _INCLUDE_ITOOLKIT_UTILS_TRACE_H
 
 #pragma once
 
@@ -170,3 +173,6 @@ bool UTIL_CheckAreaOverlappingEntity(const void* const rArea,
 void UTIL_GetEntityWorldSpaceAABB(const CBaseEntity* const rEntity,
                                   Vector* pMinsOut,
                                   Vector* pMaxsOut);
+
+#endif //_INCLUDE_ITOOLKIT_UTILS_TRACE_H
+

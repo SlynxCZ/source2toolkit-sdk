@@ -46,7 +46,10 @@
 *
 * @warning This is unsafe low-level functionality.
 * Incorrect usage may lead to crashes or undefined behavior.
-  */
+*/
+
+#ifndef _INCLUDE_ITOOLKIT_UTILS_VIRTUAL_H
+#define _INCLUDE_ITOOLKIT_UTILS_VIRTUAL_H
 
 #pragma once
 
@@ -146,3 +149,6 @@ FP_WARN("Tried calling a null virtual function.");
         return pFunc(pClass, args...);
     }
 } // namespace vmt
+
+#endif //_INCLUDE_ITOOLKIT_UTILS_VIRTUAL_H
+

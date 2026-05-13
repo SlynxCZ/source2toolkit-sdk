@@ -48,7 +48,10 @@
 * * Frame-based callbacks
 *
 * @note Internally wraps IToolkitScheduler.
-  */
+*/
+
+#ifndef _INCLUDE_ITOOLKIT_UTILS_SCHEDULER_H
+#define _INCLUDE_ITOOLKIT_UTILS_SCHEDULER_H
 
 #pragma once
 
@@ -104,3 +107,6 @@ Timer* UTIL_AddTimer(float interval, TimerCallback callback, int flags = 0);
 * @note Wrapper around IToolkitScheduler::KillTimer()
   */
 void UTIL_KillTimer(Timer* timer);
+
+#endif //_INCLUDE_ITOOLKIT_UTILS_SCHEDULER_H
+

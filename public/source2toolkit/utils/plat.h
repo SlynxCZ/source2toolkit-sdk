@@ -46,7 +46,10 @@
 * * Memory patching utilities
 *
 * @note Used internally by address/pattern systems.
-  */
+*/
+
+#ifndef _INCLUDE_ITOOLKIT_UTILS_PLAT_H
+#define _INCLUDE_ITOOLKIT_UTILS_PLAT_H
 
 #pragma once
 #include <cstdint>
@@ -174,3 +177,6 @@ Memory utilities
 * * Hooking functions
     */
 void Plat_WriteMemory(void* pPatchAddress, uint8_t* pPatch, int iPatchSize);
+
+#endif //_INCLUDE_ITOOLKIT_UTILS_PLAT_H
+

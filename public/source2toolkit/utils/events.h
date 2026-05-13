@@ -44,7 +44,10 @@
 * allowing plugins to register callbacks for Source2 game events.
 *
 * @note Internally wraps IToolkitEvents.
-  */
+*/
+
+#ifndef _INCLUDE_ITOOLKIT_UTILS_EVENTS_H
+#define _INCLUDE_ITOOLKIT_UTILS_EVENTS_H
 
 #pragma once
 
@@ -82,3 +85,6 @@
 * @endcode
   */
 void UTIL_RegGameEvent(const char* pchName, GameEventHandler handler, Mode mode);
+
+#endif //_INCLUDE_ITOOLKIT_UTILS_EVENTS_H
+

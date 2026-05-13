@@ -7,7 +7,10 @@
 * removing the need to manually pass PluginId or access the API instance.
 *
 * @note Internally uses IToolkitCommands from the global toolkit API.
-  */
+*/
+
+#ifndef _INCLUDE_ITOOLKIT_UTILS_COMMANDS_H
+#define _INCLUDE_ITOOLKIT_UTILS_COMMANDS_H
 
 #pragma once
 
@@ -75,3 +78,6 @@ void UTIL_RegConCommand(const char* pchName, ChatHandler handler);
 * @endcode
   */
 void UTIL_RegConListener(const char* pchName, CommandHandler handler, Mode mode);
+
+#endif //_INCLUDE_ITOOLKIT_UTILS_COMMANDS_H
+

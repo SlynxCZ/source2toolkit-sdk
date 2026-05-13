@@ -46,7 +46,10 @@
 * * Filtering by entity + classname + output name
 *
 * @note Equivalent to Hammer I/O system (FireOutput / AcceptInput).
-  */
+*/
+
+#ifndef ENTITYIO_H
+#define ENTITYIO_H
 
 #pragma once
 
@@ -292,3 +295,5 @@ struct OutputKeyHash
             (std::hash<std::string>()(k.m_szOutputName) << 1);
     }
 };
+
+#endif // ENTITYIO_H
