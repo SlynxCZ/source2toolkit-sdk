@@ -53,12 +53,9 @@
 #define _INCLUDE_ITOOLKIT_API_H
 
 #pragma once
-#include "eiface.h"
+#include "IToolkitTypes.h"
 
-#include <cstddef>
-#include <cstdint>
-#include <cstring>
-#include <cstdio>
+#include "eiface.h"
 
 /* =========================
 Forward declarations
@@ -84,6 +81,7 @@ class IToolkitEntityIO;
 class IToolkitEvents;
 class IToolkitListener;
 class IToolkitMenus;
+class IToolkitMySQL;
 class IToolkitPlugin;
 class IToolkitScheduler;
 class IToolkitTrace;
@@ -240,6 +238,12 @@ public:
     * @brief Access menu system.
       */
     virtual IToolkitMenus* Menus() = 0;
+
+    /**
+
+    * @brief Access mysql system.
+      */
+    virtual IToolkitMySQL* MySQL() = 0;
 
     /**
 

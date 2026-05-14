@@ -53,12 +53,9 @@
 #define _INCLUDE_ITOOLKIT_GAMECONFIG_H
 
 #pragma once
-#include "eiface.h"
+#include "IToolkitTypes.h"
 
-#include <cstddef>
-#include <cstdint>
-#include <cstring>
-#include <cstdio>
+#include "eiface.h"
 
 /**
 

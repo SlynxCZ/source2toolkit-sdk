@@ -49,6 +49,8 @@
 #define _INCLUDE_ITOOLKIT_MENUS_H
 
 #pragma once
+#include "IToolkitTypes.h"
+
 #include "eiface.h"
 
 #include <string>

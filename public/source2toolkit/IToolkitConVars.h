@@ -58,11 +58,6 @@
 #include "convar.h"
 #include "eiface.h"
 
-#include <cstddef>
-#include <cstdint>
-#include <cstring>
-#include <cstdio>
-
 /* =========================
 Forward declarations
 ========================= */

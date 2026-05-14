@@ -254,10 +254,10 @@ class SchemaFieldType:
         elif self.name == "AmmoIndex_t":
             self.category = SchemaTypeCategory.Builtin
             self.name = "uint8"
-        elif self.name in ("CBitVec< 64 >", "CTypedBitVec< 64 >"):
-            self.category = SchemaTypeCategory.FixedArray
-            self.inner = SchemaFieldType("uint8", SchemaTypeCategory.Builtin, None, None)
-            self.name = "uint8[8]"
+        elif self.name == "CBitVec":
+            self.name = "CBitVec<64>"
+        elif self.name == "CTypedBitVec":
+            self.name = "CTypedBitVec<64>"
 
     @property
     def is_string(self) -> bool:

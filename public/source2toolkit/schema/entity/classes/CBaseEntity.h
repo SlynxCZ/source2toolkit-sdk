@@ -80,7 +80,7 @@ public:
     SCHEMA_FIELD(int32_t, m_iCurrentThinkContext);
     SCHEMA_FIELD(int32_t, m_nLastThinkTick);
     SCHEMA_FIELD(bool, m_bDisabledContextThinks);
-    SCHEMA_FIELD(CTypedBitVec, m_isSteadyState);
+    SCHEMA_FIELD(CTypedBitVec<64>, m_isSteadyState);
     SCHEMA_FIELD(float, m_lastNetworkChange);
     SCHEMA_FIELD(BASEPTR, m_think);
     SCHEMA_FIELD(CUtlVector<ResponseContext_t>, m_ResponseContexts);

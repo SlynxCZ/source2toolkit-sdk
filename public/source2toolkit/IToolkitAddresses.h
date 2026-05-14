@@ -59,11 +59,6 @@
 #include "igameevents.h"
 #include "eiface.h"
 
-#include <cstddef>
-#include <cstdint>
-#include <cstring>
-#include <cstdio>
-
 #ifdef _WIN32
 #undef GetModuleHandle
 #endif
