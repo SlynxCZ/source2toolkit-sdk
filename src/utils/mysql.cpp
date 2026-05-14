@@ -55,7 +55,7 @@ static IToolkitMySQL* GetMySQL()
 #endif
 }
 
-IToolkitMySQLConnection* UTIL_CreateMySQLConnection(ToolkitMySQLConnectionInfo info)
+IToolkitMySQLConnection* UTIL_CreateConnection(ToolkitMySQLConnectionInfo info)
 {
     return GetMySQL()->CreateConnection(info);
 }

@@ -67,7 +67,7 @@
  * @param info Connection configuration data.
  * @return Newly created MySQL connection.
  */
-IToolkitMySQLConnection* UTIL_CreateMySQLConnection(ToolkitMySQLConnectionInfo info);
+IToolkitMySQLConnection* UTIL_CreateConnection(ToolkitMySQLConnectionInfo info);
 
 /**
  * @brief Establishes a connection to the MySQL server.
