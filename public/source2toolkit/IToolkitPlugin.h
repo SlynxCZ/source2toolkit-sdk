@@ -309,7 +309,7 @@ Interface helpers
  * @param v_type		Interface type (do not include the pointer/asterisk).
  * @param v_name		Interface name.
  */
-#define GET_IFACE_CURRENT(v_factory, v_var, v_type, v_name) \
+#define GET_VALVE_IFACE_CURRENT(v_factory, v_var, v_type, v_name) \
 	v_var = (v_type *)g_ToolkitAPI->QueryInterface(g_ToolkitAPI->v_factory(), v_name); \
 	if (!v_var) \
 	{ \
@@ -328,7 +328,7 @@ Interface helpers
  * @param v_type		Interface type (do not include the pointer/asterisk).
  * @param v_name		Interface name.
  */
-#define GET_IFACE_ANY(v_factory, v_var, v_type, v_name) \
+#define GET_VALVE_IFACE_ANY(v_factory, v_var, v_type, v_name) \
 	v_var = (v_type *)g_ToolkitAPI->QueryInterface(g_ToolkitAPI->v_factory(), v_name, 0); \
 	if (!v_var) \
 	{ \
@@ -346,7 +346,7 @@ Interface helpers
  * @param v_type		Interface type (do not include the pointer/asterisk).
  * @param v_name		Interface name.
  */
-#define GET_IFACE_TOOLKIT(v_var, v_type, v_name) \
+#define GET_TOOLKIT_IFACE(v_var, v_type, v_name) \
     v_var = (v_type*)g_ToolkitAPI->ToolkitFactory(v_name, nullptr, nullptr); \
     if (!v_var) \
     { \
