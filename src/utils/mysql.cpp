@@ -38,8 +38,9 @@
 #include "source2toolkit/utils/mysql.h"
 
 #ifdef SOURCE2TOOLKIT_CORE
-#include "core/shared.h"
 #include "core/mysql.h"
+#include "core/pluginapi.h"
+#include "core/shared.h"
 #else
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitMySQL.h"
@@ -48,7 +49,7 @@
 static IToolkitMySQL* GetMySQL()
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    return &mysql::mysql;
+    return &mysql::mysqlManager;
 #else
     return g_ToolkitAPI->MySQL();
 #endif
@@ -77,7 +78,7 @@ void UTIL_MySQLQueryFormat(IToolkitMySQLConnection* pConnection, ToolkitMySQLQue
     va_start(args, query);
 
 #ifdef SOURCE2TOOLKIT_CORE
-    g_SMAPI->Format(szQuery, sizeof(szQuery), query, args);
+    pluginApi.Format(szQuery, sizeof(szQuery), query, args);
 #else
     g_ToolkitAPI->Format(szQuery, sizeof(szQuery), query, args);
 #endif
