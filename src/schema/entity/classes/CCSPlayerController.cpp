@@ -325,21 +325,20 @@ CUtlString CCSPlayerController::GetIpAddress()
 
 void CCSPlayerController::ReplicateConVar(const char* pszConVar, const char* pszValue)
 {
-    INetworkMessageInternal* pNetMsg = GetNetworkMessages()->FindNetworkMessagePartial("SetConVar");
-    auto msg = pNetMsg->AllocateMessage()->ToPB<CNETMsg_SetConVar>();
+    INetChannel* pNetChannel = reinterpret_cast<INetChannel*>(GetEngineServer()->GetPlayerNetInfo(GetPlayerSlot()));
+    if (pNetChannel)
+    {
+        static INetworkMessageInternal* pMsg = GetNetworkMessages()->FindNetworkMessagePartial("CNETMsg_SetConVar");
 
-    CMsg_CVars_CVar* cvarMsg = msg->mutable_convars()->add_cvars();
-    cvarMsg->set_name(pszConVar);
-    cvarMsg->set_value(pszValue);
+        CNetMessagePB<CNETMsg_SetConVar>* msg = pMsg->AllocateMessage()->ToPB<CNETMsg_SetConVar>();
+        auto cvar = msg->mutable_convars()->add_cvars();
+        cvar->set_name(pszConVar);
+        cvar->set_value(pszValue);
 
-    CPlayerBitVec recipients;
-    recipients.Set(GetSlot());
+        pNetChannel->SendNetMessage(msg, BUF_DEFAULT);
 
-    GetGameEventSystem()->PostEventAbstract(CSplitScreenSlot(-1), false, ABSOLUTE_PLAYER_LIMIT,
-                                                reinterpret_cast<const uint64*>(recipients.Base()), pNetMsg, msg, 0,
-                                                NetChannelBufType_t::BUF_RELIABLE);
-
-    delete msg;
+        delete msg;
+    }
 }
 
 void CCSPlayerController::FireEventToClient(IGameEvent* pEvent)
