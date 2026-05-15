@@ -42,7 +42,7 @@
 #include "source2toolkit/schema/entity/classes/CEntitySubclassVDataBase.h"
 #include "source2toolkit/schema/entity/classes/CGameSceneNode.h"
 
-#include "source2toolkit/schema/entity.h"
+#include "source2toolkit/schema/entities.h"
 #include "source2toolkit/utils/virtual.h"
 
 #ifdef SOURCE2TOOLKIT_CORE

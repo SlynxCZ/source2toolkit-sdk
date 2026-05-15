@@ -35,7 +35,7 @@
  * Project: Source2Toolkit
  */
 
-#include "source2toolkit/schema/entity.h"
+#include "source2toolkit/schema/entityio.h"
 
 #ifdef SOURCE2TOOLKIT_CORE
 #include "core/shared.h"
@@ -46,7 +46,7 @@
 #include "source2toolkit/IToolkitAddresses.h"
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitGameConfig.h"
-#include "source2toolkit/IToolkitEntityIO.h"
+#include "source2toolkit/IToolkitEntities.h"
 #include "source2toolkit/IToolkitPlugin.h"
 #endif
 
@@ -125,6 +125,24 @@ void UTIL_AddEntityIOListener(IEntityIOListener* pListener, const char* pchClass
         inlinehooks::entityIOListenerStack[key].m_vecPre.push_back(pListener);
 #else
     g_ToolkitAPI->EntityIO()->AddEntityIOListener(pListener, pchClassName, pchOutputName, nMode);
+#endif
+}
+
+void UTIL_AddEntityListener(IEntityListener* pListener)
+{
+#ifdef SOURCE2TOOLKIT_CORE
+    shared::g_pEntitySystem->AddListenerEntity(pListener);
+#else
+    g_ToolkitAPI->EntityIO()->AddEntityListener(pListener);
+#endif
+}
+
+void UTIL_RemoveEntityListener(IEntityListener* pListener)
+{
+#ifdef SOURCE2TOOLKIT_CORE
+    shared::g_pEntitySystem->RemoveListenerEntity(pListener);
+#else
+    g_ToolkitAPI->EntityIO()->RemoveEntityListener(pListener;
 #endif
 }
 

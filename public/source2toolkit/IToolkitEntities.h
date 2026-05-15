@@ -37,7 +37,7 @@
 
 /**
 
-* @file IToolkitEntityIO.h
+* @file IToolkitEntities.h
 * @brief Interface for entity lookup and Source2 Entity I/O system.
 *
 * Provides:
@@ -49,8 +49,8 @@
 * @note Entity I/O is the system used by maps to connect entities together.
   */
 
-#ifndef _INCLUDE_ITOOLKIT_ENTITYIO_H
-#define _INCLUDE_ITOOLKIT_ENTITYIO_H
+#ifndef _INCLUDE_ITOOLKIT_ENTITIES_H
+#define _INCLUDE_ITOOLKIT_ENTITIES_H
 
 #pragma once
 #include "IToolkitTypes.h"
@@ -73,10 +73,10 @@ class IEntityIOListener;
 
 * @brief Interface for interacting with entities and Entity I/O system.
   */
-class IToolkitEntityIO
+class IToolkitEntities
 {
 public:
-    virtual ~IToolkitEntityIO() = default;
+    virtual ~IToolkitEntities() = default;
 
     /**
 
@@ -108,6 +108,19 @@ public:
     * @brief Creates entity by classname.
       */
     virtual CBaseEntity* CreateEntityByName(const char* pszClassName) = 0;
+
+
+    /**
+
+    * @brief Adds listener for entity spawn, creation, deletion and parent change.
+      */
+    virtual void AddEntityListener(IEntityListener* pListener) = 0;
+
+    /**
+
+    * @brief Removes listener for entity spawn, creation, deletion and parent change.
+      */
+    virtual void RemoveEntityListener(IEntityListener* pListener) = 0;
 
     /**
 
@@ -151,4 +164,4 @@ public:
                                         Mode nMode = Mode::Pre) = 0;
 };
 
-#endif //_INCLUDE_ITOOLKIT_ENTITYIO_H
+#endif //_INCLUDE_ITOOLKIT_ENTITIES_H

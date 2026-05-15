@@ -51,7 +51,7 @@
 #include "source2toolkit/IToolkitPlugin.h"
 #endif
 
-#include "source2toolkit/schema/entity.h"
+#include "source2toolkit/schema/entities.h"
 
 #include "networksystem/inetworkmessages.h"
 #include "usermessages.pb.h"

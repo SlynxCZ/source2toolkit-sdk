@@ -39,7 +39,7 @@
 
 #include "source2toolkit/schema/entity/classes/CCSPlayerController.h"
 #include "source2toolkit/schema/entity/classes/CCSPlayerPawn.h"
-#include "source2toolkit/schema/entity.h"
+#include "source2toolkit/schema/entities.h"
 
 #ifdef SOURCE2TOOLKIT_CORE
 #include "core/shared.h"

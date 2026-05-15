@@ -57,7 +57,7 @@
 #define NULL 0
 #endif
 
-#include "entity.h"
+#include "entities.h"
 #include "entityhandle.h"
 #include "entityinstance.h"
 #include "entitysystem.h"

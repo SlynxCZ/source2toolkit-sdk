@@ -77,7 +77,7 @@ class IToolkitAddresses;
 class IToolkitCommands;
 class IToolkitConVars;
 class IToolkitGameConfig;
-class IToolkitEntityIO;
+class IToolkitEntities;
 class IToolkitEvents;
 class IToolkitListener;
 class IToolkitMenus;
@@ -217,9 +217,9 @@ public:
 
     /**
 
-    * @brief Access entity I/O system.
+    * @brief Access entities and Entity I/O system.
       */
-    virtual IToolkitEntityIO* EntityIO() = 0;
+    virtual IToolkitEntities* Entities() = 0;
 
     /**
 

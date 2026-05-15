@@ -40,7 +40,7 @@
 * @file entityio.h
 * @brief High-level helper functions for entity lookup and Entity I/O system.
 *
-* These functions provide simplified access to the IToolkitEntityIO interface.
+* These functions provide simplified access to the IToolkitEntities interface.
 *
 * Supports:
 * * Finding entities (by classname, name, picker)
@@ -49,7 +49,7 @@
 * * Scheduling entity I/O events
 * * Listening to entity outputs
 *
-* @note Internally wraps IToolkitEntityIO.
+* @note Internally wraps IToolkitEntities.
 */
 
 #ifndef ENTITY_H
@@ -65,7 +65,7 @@
 #include "source2toolkit/IToolkitAddresses.h"
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitGameConfig.h"
-#include "source2toolkit/IToolkitEntityIO.h"
+#include "source2toolkit/IToolkitEntities.h"
 #include "source2toolkit/IToolkitPlugin.h"
 #endif
 
@@ -89,7 +89,7 @@ class IEntityIOListener;
 * @param pGameRules Optional game rules
 * @return Pointer to entity, or nullptr if none found
 *
-* @note Wrapper around IToolkitEntityIO::FindPickerEntity()
+* @note Wrapper around IToolkitEntities::FindPickerEntity()
   */
 CBaseEntity* UTIL_FindPickerEntity(CBasePlayerController* pPlayer, CCSGameRules* pGameRules = nullptr);
 
@@ -132,7 +132,7 @@ CBaseEntity* UTIL_FindEntityByName(CEntityInstance* pStartEntity, const char* sz
 * @param pszClassName Classname
 * @return Pointer to created entity
 *
-* @note Wrapper around IToolkitEntityIO::CreateEntityByName()
+* @note Wrapper around IToolkitEntities::CreateEntityByName()
 *
 * @code
 * auto weapon = UTIL_CreateEntityByName<CBaseEntity>("weapon_ak47");
@@ -147,6 +147,20 @@ T* UTIL_CreateEntityByName(const char* pszClassName)
     return reinterpret_cast<T*>(g_ToolkitAPI->EntityIO()->CreateEntityByName(pszClassName));
 #endif
 }
+
+/**
+
+* @brief Registers a listener for entity spawn, creation, deletion and parent change.
+*
+* @param pListener Listener instance
+  */
+void UTIL_AddEntityListener(IEntityListener* pListener);
+
+/**
+
+* @brief Removes listener for entity spawn, creation, deletion and parent change.
+  */
+void UTIL_RemoveEntityListener(IEntityListener* pListener);
 
 /**
 
