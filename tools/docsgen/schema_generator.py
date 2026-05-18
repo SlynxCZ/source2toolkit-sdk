@@ -11,7 +11,8 @@ def link_type(type_name):
 
         url = url.replace(".mdx", "")   # remove extension
 
-        return f"[{base}]({url})" + type_name[len(base):]
+        suffix = type_name[len(base):]
+        return f"[{base}{suffix}]({url})"
 
     return type_name
 
