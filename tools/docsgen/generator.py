@@ -385,7 +385,8 @@ if __name__ == "__main__":
                 if parts[0] == "source2toolkit":
                     parts = parts[1:]
 
-                url = "/docs/" + "/".join(parts) + f"/enums/{enum['name']}"
+                clean_parts = [p for p in parts if p]
+                url = "/docs/" + ("/".join(clean_parts) + "/" if clean_parts else "") + f"enums/{enum['name']}"
 
                 schema_generator.TYPE_MAP[enum["name"]] = url
 
