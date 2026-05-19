@@ -68,6 +68,7 @@ class CBasePlayerController;
 class CCSGameRules;
 class IEntityFindFilter;
 class IEntityIOListener;
+class IEntityListener;
 
 /**
 
