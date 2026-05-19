@@ -66,7 +66,7 @@ CBaseEntity* UTIL_FindPickerEntity(CBasePlayerController* pPlayer, CCSGameRules*
     static int offset = shared::g_pGameConfig->GetOffset("CGameRules_FindPickerEntity");
     return CALL_VIRTUAL(CBaseEntity*, offset, pGameRules ? pGameRules : shared::g_pGameRules, pPlayer, nullptr);
 #else
-    return g_ToolkitAPI->EntityIO()->FindPickerEntity(pPlayer, pGameRules);
+    return g_ToolkitAPI->Entities()->FindPickerEntity(pPlayer, pGameRules);
 #endif
 }
 
@@ -75,7 +75,7 @@ CBaseEntity* UTIL_FindEntityByClassname(CEntityInstance* pStartEntity, const cha
 #ifdef SOURCE2TOOLKIT_CORE
     return addresses::toolkitAddresses.FindEntityByClassName(shared::g_pEntitySystem, pStartEntity, szName);
 #else
-    return g_ToolkitAPI->EntityIO()->FindEntityByClassname(pStartEntity, szName);
+    return g_ToolkitAPI->Entities()->FindEntityByClassname(pStartEntity, szName);
 #endif
 }
 
@@ -86,7 +86,7 @@ CBaseEntity* UTIL_FindEntityByName(CEntityInstance* pStartEntity, const char* sz
 #ifdef SOURCE2TOOLKIT_CORE
     return addresses::toolkitAddresses.FindEntityByName(shared::g_pEntitySystem, pStartEntity, szName, pSearchingEntity, pActivator, pCaller, pFilter);
 #else
-    return g_ToolkitAPI->EntityIO()->FindEntityByName(pStartEntity, szName, pSearchingEntity, pActivator, pCaller, pFilter);
+    return g_ToolkitAPI->Entities()->FindEntityByName(pStartEntity, szName, pSearchingEntity, pActivator, pCaller, pFilter);
 #endif
 }
 
@@ -96,7 +96,7 @@ void UTIL_AcceptInput(CEntityInstance* pTarget, const char* pszInput, CEntityIns
 #ifdef SOURCE2TOOLKIT_CORE
     addresses::toolkitAddresses.AcceptInput(pTarget, pszInput, pActivator, pCaller, variant_t(pszValue), 0, nullptr);
 #else
-    g_ToolkitAPI->EntityIO()->AcceptInput(pTarget, pszInput, pActivator, pCaller, pszValue);
+    g_ToolkitAPI->Entities()->AcceptInput(pTarget, pszInput, pActivator, pCaller, pszValue);
 #endif
 }
 
@@ -106,7 +106,7 @@ void UTIL_AddEntityIOEvent(CEntityInstance* pTarget, const char* pszInput, CEnti
 #ifdef SOURCE2TOOLKIT_CORE
     addresses::toolkitAddresses.AddEntityIOEvent(shared::g_pEntitySystem, pTarget, pszInput, pActivator, pCaller, variant_t(pszValue), flDelay, 0, nullptr, nullptr);
 #else
-    g_ToolkitAPI->EntityIO()->AddEntityIOEvent(pTarget, pszInput, pActivator, pCaller, pszValue, flDelay);
+    g_ToolkitAPI->Entities()->AddEntityIOEvent(pTarget, pszInput, pActivator, pCaller, pszValue, flDelay);
 #endif
 }
 
@@ -124,7 +124,7 @@ void UTIL_AddEntityIOListener(IEntityIOListener* pListener, const char* pchClass
     else
         inlinehooks::entityIOListenerStack[key].m_vecPre.push_back(pListener);
 #else
-    g_ToolkitAPI->EntityIO()->AddEntityIOListener(pListener, pchClassName, pchOutputName, nMode);
+    g_ToolkitAPI->Entities()->AddEntityIOListener(pListener, pchClassName, pchOutputName, nMode);
 #endif
 }
 
@@ -133,7 +133,7 @@ void UTIL_AddEntityListener(IEntityListener* pListener)
 #ifdef SOURCE2TOOLKIT_CORE
     shared::g_pEntitySystem->AddListenerEntity(pListener);
 #else
-    g_ToolkitAPI->EntityIO()->AddEntityListener(pListener);
+    g_ToolkitAPI->Entities()->AddEntityListener(pListener);
 #endif
 }
 
@@ -142,7 +142,7 @@ void UTIL_RemoveEntityListener(IEntityListener* pListener)
 #ifdef SOURCE2TOOLKIT_CORE
     shared::g_pEntitySystem->RemoveListenerEntity(pListener);
 #else
-    g_ToolkitAPI->EntityIO()->RemoveEntityListener(pListener;
+    g_ToolkitAPI->Entities()->RemoveEntityListener(pListener;
 #endif
 }
 
@@ -182,6 +182,6 @@ void UTIL_RemoveEntityIOListener(IEntityIOListener* pListener, const char* pchCl
     if (it->second.m_vecPre.empty() && it->second.m_vecPost.empty())
         inlinehooks::entityIOListenerStack.erase(it);
 #else
-    g_ToolkitAPI->EntityIO()->RemoveEntityIOListener(pListener, pchClassName, pchOutputName, nMode);
+    g_ToolkitAPI->Entities()->RemoveEntityIOListener(pListener, pchClassName, pchOutputName, nMode);
 #endif
 }
