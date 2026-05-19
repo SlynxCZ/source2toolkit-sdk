@@ -90,6 +90,24 @@ CBaseEntity* UTIL_FindEntityByName(CEntityInstance* pStartEntity, const char* sz
 #endif
 }
 
+void UTIL_AddEntityListener(IEntityListener* pListener)
+{
+#ifdef SOURCE2TOOLKIT_CORE
+    shared::g_pEntitySystem->AddListenerEntity(pListener);
+#else
+    g_ToolkitAPI->Entities()->AddEntityListener(pListener);
+#endif
+}
+
+void UTIL_RemoveEntityListener(IEntityListener* pListener)
+{
+#ifdef SOURCE2TOOLKIT_CORE
+    shared::g_pEntitySystem->RemoveListenerEntity(pListener);
+#else
+    g_ToolkitAPI->Entities()->RemoveEntityListener(pListener);
+#endif
+}
+
 void UTIL_AcceptInput(CEntityInstance* pTarget, const char* pszInput, CEntityInstance* pActivator,
                       CEntityInstance* pCaller, const char* pszValue)
 {
@@ -125,24 +143,6 @@ void UTIL_AddEntityIOListener(IEntityIOListener* pListener, const char* pchClass
         inlinehooks::entityIOListenerStack[key].m_vecPre.push_back(pListener);
 #else
     g_ToolkitAPI->Entities()->AddEntityIOListener(pListener, pchClassName, pchOutputName, nMode);
-#endif
-}
-
-void UTIL_AddEntityListener(IEntityListener* pListener)
-{
-#ifdef SOURCE2TOOLKIT_CORE
-    shared::g_pEntitySystem->AddListenerEntity(pListener);
-#else
-    g_ToolkitAPI->Entities()->AddEntityListener(pListener);
-#endif
-}
-
-void UTIL_RemoveEntityListener(IEntityListener* pListener)
-{
-#ifdef SOURCE2TOOLKIT_CORE
-    shared::g_pEntitySystem->RemoveListenerEntity(pListener);
-#else
-    g_ToolkitAPI->Entities()->RemoveEntityListener(pListener;
 #endif
 }
 
