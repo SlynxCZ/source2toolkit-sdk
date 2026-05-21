@@ -190,7 +190,7 @@ public:
     /// <summary>Print to center in HTML.</summary>
     void PrintToCenterHtml(const char* pszMessage, int iDuration = 5);
     /// <summary>Take damage from player</summary>
-    void TakeDamage(CCSPlayerController* pAttacker, int iDamage, DamageTypes_t bitsDamageType = DMG_GENERIC);
+    void TakeDamage(CCSPlayerController* pAttacker, int iDamage, DamageTypes_t bitsDamageType);
     /// <summary>Respawn player.</summary>
     void Respawn();
     /// <summary>Switch team without killing.</summary>
