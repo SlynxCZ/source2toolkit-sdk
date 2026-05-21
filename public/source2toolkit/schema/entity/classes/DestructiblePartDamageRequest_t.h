@@ -35,8 +35,8 @@
  * Project: Source2Toolkit
  */
 
-#ifndef _INCLUDE_CTAKEDAMAGEINFO_H
-#define _INCLUDE_CTAKEDAMAGEINFO_H
+#ifndef _INCLUDE_DESTRUCTIBLEPARTDAMAGEREQUEST_T_H
+#define _INCLUDE_DESTRUCTIBLEPARTDAMAGEREQUEST_T_H
 
 #pragma once
 
@@ -54,46 +54,22 @@
 #include <cstdint>
 
 #include "../enums/DamageTypes_t.h"
-#include "DestructiblePartDamageRequest_t.h"
-#include "../enums/TakeDamageFlags_t.h"
+#include "../enums/EDestructibleParts_DestroyParameterFlags.h"
 
-class CBaseEntity;
-
-class CTakeDamageInfo
+class DestructiblePartDamageRequest_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(CTakeDamageInfo);
+    DECLARE_SCHEMA_CLASS(DestructiblePartDamageRequest_t);
 
-    SCHEMA_FIELD(Vector, m_vecDamageForce);
-    SCHEMA_FIELD(Vector, m_vecDamagePosition);
-    SCHEMA_FIELD(Vector, m_vecReportedPosition);
-    SCHEMA_FIELD(Vector, m_vecDamageDirection);
-    SCHEMA_FIELD(CHandle<CBaseEntity>, m_hInflictor);
-    SCHEMA_FIELD(CHandle<CBaseEntity>, m_hAttacker);
-    SCHEMA_FIELD(CHandle<CBaseEntity>, m_hAbility);
-    SCHEMA_FIELD(float, m_flDamage);
-    SCHEMA_FIELD(float, m_flTotalledDamage);
-    SCHEMA_FIELD(DamageTypes_t, m_bitsDamageType);
-    SCHEMA_FIELD(int32_t, m_iDamageCustom);
-    SCHEMA_FIELD(uint8_t, m_iAmmoType);
-    SCHEMA_FIELD(float, m_flOriginalDamage);
-    SCHEMA_FIELD(bool, m_bShouldBleed);
-    SCHEMA_FIELD(bool, m_bShouldSpark);
-    SCHEMA_FIELD(TakeDamageFlags_t, m_nDamageFlags);
-    SCHEMA_FIELD(HitGroup_t, m_iHitGroupId);
-    SCHEMA_FIELD(int32_t, m_nNumObjectsPenetrated);
-    SCHEMA_FIELD(float, m_flFriendlyFireDamageReductionRatio);
-    SCHEMA_FIELD(bool, m_bStoppedBullet);
-    SCHEMA_FIELD(CUtlLeanVector, m_DestructibleHitGroupRequests);
-    SCHEMA_FIELD(bool, m_bInTakeDamageFlow);
-
-public:
-    /// <summary>Construct info with default members.</summary>
-    CTakeDamageInfo();
-    /// <summary>Construct info with correctly set members.</summary>
-    CTakeDamageInfo(CBaseEntity* pInflictor, CBaseEntity* pAttacker, CBaseEntity* pAbility, float flDamage, DamageTypes_t bitsDamageType);
-    /// <summary>Get actual hitgroup.</summary>
-    HitGroup_t GetHitGroup() const;
+    SCHEMA_FIELD(HitGroup_t, m_nHitGroup);
+    SCHEMA_FIELD(int32_t, m_nDamageLevel);
+    SCHEMA_FIELD(uint16_t, m_nDesiredHealth);
+    SCHEMA_FIELD(EDestructibleParts_DestroyParameterFlags, m_nDestroyFlags);
+    SCHEMA_FIELD(DamageTypes_t, m_nDamageType);
+    SCHEMA_FIELD(float, m_flBreakDamage);
+    SCHEMA_FIELD(float, m_flBreakDamageRadius);
+    SCHEMA_FIELD(Vector, m_vWsBreakDamageOrigin);
+    SCHEMA_FIELD(Vector, m_vWsBreakDamageForce);
 };
 
-#endif // _INCLUDE_CTAKEDAMAGEINFO_H
+#endif // _INCLUDE_DESTRUCTIBLEPARTDAMAGEREQUEST_T_H

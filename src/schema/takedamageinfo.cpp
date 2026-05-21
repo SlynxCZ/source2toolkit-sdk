@@ -1,8 +1,4 @@
-﻿//
-// Created by Michal Přikryl on 21.05.2026.
-// Copyright (c) 2026 slynxcz. All rights reserved.
-//
-/**
+﻿/**
 * vim: set ts=4 sw=4 tw=99 noet:
  * =============================================================================
  * Source2Toolkit
@@ -39,8 +35,13 @@
  * Project: Source2Toolkit
  */
 
-#include "source2toolkit/schema/entity/classes/CTakeDamageInfo.h"
-#include "source2toolkit/schema/attackerinfo.h"
+#include "source2toolkit/IToolkitAddresses.h"
+#include "source2toolkit/IToolkitApi.h"
+#include "source2toolkit/IToolkitGameConfig.h"
+#include "source2toolkit/IToolkitTypes.h"
+
+#include "source2toolkit/schema/takedamageinfo.h"
+
 
 CTakeDamageInfo::CTakeDamageInfo()
 {
@@ -56,7 +57,7 @@ CTakeDamageInfo::CTakeDamageInfo(CBaseEntity* pInflictor, CBaseEntity* pAttacker
 #ifdef SOURCE2TOOLKIT_CORE
     addresses::toolkitAddresses.CTakeDamageInfo(this, pInflictor, pAttacker, pAbility, &vec3_origin, &vec3_origin, flDamage, bitsDamageType, 0, nullptr);
 #else
-    g_ToolkitAPI->Addresses()->CTakeDamageInfo_CTakeDamageInfo()(this, pInflictor, pAttacker, pAbility, &vec3_origin, &vec3_origin, flDamage, bitsDamageType, 0, nullptr);
+    g_ToolkitAPI->Addresses()->CTakeDamageInfo_CTakeDamageInfo()(this, pInflictor, pAttacker, pAbility, &vec3_origin, &vec3_origin, flDamage, (int)bitsDamageType, 0, nullptr);
 #endif
 }
 

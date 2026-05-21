@@ -370,6 +370,7 @@ IGNORE_CLASS_WILDCARDS: tuple[str, ...] = (
     "CAnimGraph2ParamOptionalRef",
     "CUtlHashtable",
     "CSmartPtr",
+    "CUtlLeanVector"
 )
 
 HARD_SKIP_CLASSES: frozenset[str] = frozenset({
@@ -626,20 +627,10 @@ MANUAL_METHODS: dict[str, list[str]] = {
         "/// <summary>Get player pawn.</summary>",
         "CCSPlayerPawn* GetPlayerPawn();",
     ],
-    "CTakeDamageInfo": [
-        "/// <summary>Construct info with default members.</summary>",
-        "CTakeDamageInfo();",
-        "/// <summary>Construct info with correctly set members.</summary>",
-        "CTakeDamageInfo(CBaseEntity* pInflictor, CBaseEntity* pAttacker, CBaseEntity* pAbility, float flDamage, DamageTypes_t bitsDamageType);",
-        "/// <summary>Get actual hitgroup.</summary>",
-        "HitGroup_t GetHitGroup() const;",
-    ],
 }
 
 # Classes manually whitelisted after BFS
 EXTRA_WHITELIST: frozenset[str] = frozenset({
-    "CTakeDamageInfo",
-    "CTakeDamageResult",
     "CEntitySubclassVDataBase",
     "CFiringModeFloat",
     "CFiringModeInt",
@@ -649,6 +640,7 @@ EXTRA_WHITELIST: frozenset[str] = frozenset({
     "CNavLinkAnimgraphVar",
     "DecalGroupOption_t",
     "DestructibleHitGroupToDestroy_t",
+    "DestructiblePartDamageRequest_t",
 })
 
 # ---------------------------------------------------------------------------

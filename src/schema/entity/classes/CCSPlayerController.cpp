@@ -52,10 +52,10 @@
 #endif
 
 #include "source2toolkit/schema/entities.h"
+#include "source2toolkit/schema/takedamageinfo.h"
 
 #include "networksystem/inetworkmessages.h"
 #include "usermessages.pb.h"
-#include "source2toolkit/schema/entity/classes/CTakeDamageInfo.h"
 
 #include "source2toolkit/utils/virtual.h"
 
@@ -187,7 +187,7 @@ void CCSPlayerController::TakeDamage(CCSPlayerController* pAttacker, int iDamage
     auto flDamage = static_cast<float>(iDamage);
 
     CTakeDamageInfo info(pVictimPawn, pAttackerPawn, nullptr, flDamage, bitsDamageType);
-    info.m_nDamageFlags() = static_cast<TakeDamageFlags_t>(static_cast<int>(info.m_nDamageFlags()) | static_cast<int>(TakeDamageFlags_t::DFLAG_SUPPRESS_DAMAGE_MODIFICATION));
+    info.m_nDamageFlags = static_cast<TakeDamageFlags_t>(static_cast<int>(info.m_nDamageFlags) | static_cast<int>(TakeDamageFlags_t::DFLAG_SUPPRESS_DAMAGE_MODIFICATION));
 
 #ifdef SOURCE2TOOLKIT_CORE
     addresses::toolkitAddresses.TakeDamageOld(this, &info, nullptr);
