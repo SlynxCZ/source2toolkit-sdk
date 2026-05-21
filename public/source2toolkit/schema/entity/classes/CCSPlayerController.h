@@ -55,6 +55,7 @@
 #include <cstdint>
 
 #include "CBasePlayerController.h"
+#include "../enums/DamageTypes_t.h"
 #include "IntervalTimer.h"
 #include "../enums/QuestProgress__Reason.h"
 
@@ -188,6 +189,8 @@ public:
     void PrintToCenterAlert(const char* pszMessage);
     /// <summary>Print to center in HTML.</summary>
     void PrintToCenterHtml(const char* pszMessage, int iDuration = 5);
+    /// <summary>Take damage from player</summary>
+    void TakeDamage(CCSPlayerController* pAttacker, int iDamage, DamageTypes_t bitsDamageType = DMG_GENERIC);
     /// <summary>Respawn player.</summary>
     void Respawn();
     /// <summary>Switch team without killing.</summary>

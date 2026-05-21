@@ -71,10 +71,6 @@
 Engine interface getters
 ========================= */
 
-class GameSessionConfiguration_t
-{
-};
-
 /**
 
 * @brief Global accessors for engine interfaces.
@@ -94,6 +90,10 @@ CSchemaSystem* GetSchemaSystem();
 Schema core types
 ========================= */
 
+class GameSessionConfiguration_t
+{
+};
+
 template<size_t Size, size_t Align>
 struct SchemaOpaqueType
 {
@@ -109,6 +109,103 @@ using BASEPTR = SchemaOpaqueType<16, 8>;
 using ENTITYFUNCPTR = SchemaOpaqueType<16, 8>;
 using USEPTR = SchemaOpaqueType<16, 8>;
 #endif
+
+struct CUtlBinaryBlock
+{
+	CUtlMemory<unsigned char> m_Memory;
+	int m_nActualLength;
+};
+
+struct CGlobalSymbol
+{
+private:
+    const char* m_pszString;
+
+    static constexpr std::size_t BLOCK_SIZE = 8192;
+
+    static std::unordered_map<std::string, const char*>& Cache()
+    {
+        static std::unordered_map<std::string, const char*> s_cache;
+        return s_cache;
+    }
+    static std::shared_mutex& PoolMutex()
+    {
+        static std::shared_mutex s_mtx;
+        return s_mtx;
+    }
+    static char*& CurrentBlock()
+    {
+        static char* s_block = nullptr;
+        return s_block;
+    }
+    static std::size_t& RemainingBytes()
+    {
+        static std::size_t s_remaining = 0;
+        return s_remaining;
+    }
+
+    static const char* Allocate(const char* str)
+    {
+        if (str == nullptr) return nullptr;
+
+        const std::size_t byteCount  = std::strlen(str);
+        const std::size_t neededSize = byteCount + 1; // + '\0'
+
+        {
+            std::shared_lock<std::shared_mutex> rlock(PoolMutex());
+            auto& cache = Cache();
+            auto it = cache.find(std::string(str, byteCount));
+            if (it != cache.end())
+                return it->second;
+        }
+
+        std::unique_lock<std::shared_mutex> wlock(PoolMutex());
+
+        std::string key(str, byteCount);
+        auto& cache = Cache();
+
+        if (auto it = cache.find(key); it != cache.end())
+            return it->second;
+
+        char* addr;
+
+        if (neededSize > BLOCK_SIZE / 2)
+        {
+            addr = static_cast<char*>(std::malloc(neededSize));
+        }
+        else
+        {
+            if (RemainingBytes() < neededSize)
+            {
+                CurrentBlock()   = static_cast<char*>(std::malloc(BLOCK_SIZE));
+                RemainingBytes() = BLOCK_SIZE;
+            }
+            addr = CurrentBlock();
+            CurrentBlock()   += neededSize;
+            RemainingBytes() -= neededSize;
+        }
+
+        std::memcpy(addr, str, byteCount);
+        addr[byteCount] = '\0';
+
+        cache.emplace(std::move(key), addr);
+        return addr;
+    }
+
+public:
+    const char* Get() const
+    {
+        return (m_pszString == nullptr) ? "" : m_pszString;
+    }
+
+    void Set(const char* value)
+    {
+        m_pszString = Allocate(value);
+    }
+};
+static_assert(sizeof(CGlobalSymbol) == 8);
+
+using RotationVector = void*;
 
 /**
 

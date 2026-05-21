@@ -551,6 +551,8 @@ MANUAL_METHODS: dict[str, list[str]] = {
         "void PrintToCenterAlert(const char* pszMessage);",
         "/// <summary>Print to center in HTML.</summary>",
         "void PrintToCenterHtml(const char* pszMessage, int iDuration = 5);",
+        "/// <summary>Take damage from player</summary>",
+        "void TakeDamage(CCSPlayerController* pAttacker, int iDamage, DamageTypes_t bitsDamageType = DMG_GENERIC);",
         "/// <summary>Respawn player.</summary>",
         "void Respawn();",
         "/// <summary>Switch team without killing.</summary>",
@@ -623,6 +625,14 @@ MANUAL_METHODS: dict[str, list[str]] = {
     "CPlayerPawnComponent": [
         "/// <summary>Get player pawn.</summary>",
         "CCSPlayerPawn* GetPlayerPawn();",
+    ],
+    "CTakeDamageInfo": [
+        "/// <summary>Construct info with default members.</summary>",
+        "CTakeDamageInfo();",
+        "/// <summary>Construct info with correctly set members.</summary>",
+        "CTakeDamageInfo(CBaseEntity* pInflictor, CBaseEntity* pAttacker, CBaseEntity* pAbility, float flDamage, DamageTypes_t bitsDamageType);",
+        "/// <summary>Get actual hitgroup.</summary>",
+        "HitGroup_t GetHitGroup() const;",
     ],
 }
 

@@ -67,20 +67,21 @@
 Forward declarations
 ========================= */
 
-class CEntityInstance;
-class CEntityIOOutput;
-class CEntitySystem;
-class CEntityKeyValues;
 class CBaseEntity;
 class CBasePlayerWeapon;
 class CBaseModelEntity;
 class CBasePlayerPawn;
 class CBasePlayerController;
-class CGameRules;
 class CCSPlayerController;
+class CEntityInstance;
+class CEntityIOOutput;
+class CEntitySystem;
+class CEntityKeyValues;
+class CGameRules;
+class CTakeDamageInfo;
+class IEntityFindFilter;
 class IGameEventListener2;
 class IGameEventManager2;
-class IEntityFindFilter;
 
 /* =========================
 Function typedefs
@@ -171,6 +172,16 @@ using CGameEntitySystem_FindEntityByClassName_t = CBaseEntity* (FASTCALL*)(
 using CGameEntitySystem_FindEntityByName_t = CBaseEntity* (FASTCALL*)(CEntitySystem*, CEntityInstance*, const char*,
                                                                       CEntityInstance*, CEntityInstance*,
                                                                       CEntityInstance*, IEntityFindFilter*);
+
+/**
+
+* @brief Constructs CTakeDamageInfo with valid members.
+  */
+using CTakeDamageInfo_CTakeDamageInfo_t = void (FASTCALL*)(CTakeDamageInfo* pThis, CBaseEntity* pInflictor,
+                                                           CBaseEntity* pAttacker, CBaseEntity* pAbility,
+                                                           const Vector* vecDamageForce,
+                                                           const Vector* vecDamagePosition, float flDamage,
+                                                           int bitsDamageType, int iCustomDamage, void* a10);
 
 /* =========================
 Core Toolkit Addresses
@@ -307,6 +318,7 @@ public:
     virtual CEntitySystem_AddEntityIOEvent_t CEntitySystem_AddEntityIOEvent() = 0;
     virtual CGameEntitySystem_FindEntityByClassName_t CGameEntitySystem_FindEntityByClassName() = 0;
     virtual CGameEntitySystem_FindEntityByName_t CGameEntitySystem_FindEntityByName() = 0;
+    virtual CTakeDamageInfo_CTakeDamageInfo_t CTakeDamageInfo_CTakeDamageInfo() = 0;
 };
 
 #endif //_INCLUDE_ITOOLKIT_ADDRESSES_H

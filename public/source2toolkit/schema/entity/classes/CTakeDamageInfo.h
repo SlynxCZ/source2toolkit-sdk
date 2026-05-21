@@ -86,6 +86,14 @@ public:
     SCHEMA_FIELD(bool, m_bStoppedBullet);
     SCHEMA_FIELD(CUtlLeanVector, m_DestructibleHitGroupRequests);
     SCHEMA_FIELD(bool, m_bInTakeDamageFlow);
+
+public:
+    /// <summary>Construct info with default members.</summary>
+    CTakeDamageInfo();
+    /// <summary>Construct info with correctly set members.</summary>
+    CTakeDamageInfo(CBaseEntity* pInflictor, CBaseEntity* pAttacker, CBaseEntity* pAbility, float flDamage, DamageTypes_t bitsDamageType);
+    /// <summary>Get actual hitgroup.</summary>
+    HitGroup_t GetHitGroup() const;
 };
 
 #endif // _INCLUDE_CTAKEDAMAGEINFO_H
