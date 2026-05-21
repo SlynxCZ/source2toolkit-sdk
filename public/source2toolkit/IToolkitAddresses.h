@@ -79,6 +79,7 @@ class CEntitySystem;
 class CEntityKeyValues;
 class CGameRules;
 class CTakeDamageInfo;
+class CTakeDamageResult;
 class IEntityFindFilter;
 class IGameEventListener2;
 class IGameEventManager2;
@@ -98,6 +99,13 @@ using CBaseEntity_CreateEntityByName_t = CBaseEntity* (FASTCALL*)(const char*, i
 * @brief Dispatches spawn on an entity.
   */
 using CBaseEntity_DispatchSpawn_t = void (FASTCALL*)(CBaseEntity*, CEntityKeyValues*);
+
+/**
+
+* @brief Takes damage from entity..
+  */
+using CBaseEntity_TakeDamageOld_t = int64_t (FASTCALL*)(CBaseEntity* pThis, CTakeDamageInfo* pInfo,
+                                                        CTakeDamageResult* pResult);
 
 /**
 
@@ -307,6 +315,7 @@ public:
 
     virtual CBaseEntity_CreateEntityByName_t CBaseEntity_CreateEntityByName() = 0;
     virtual CBaseEntity_DispatchSpawn_t CBaseEntity_DispatchSpawn() = 0;
+    virtual CBaseEntity_TakeDamageOld_t CBaseEntity_TakeDamageOld() = 0;
     virtual CBaseModelEntity_SetModel_t CBaseModelEntity_SetModel() = 0;
     virtual CBasePlayerController_SetPawn_t CBasePlayerController_SetPawn() = 0;
     virtual CBasePlayerPawn_RemovePlayerItem_t CBasePlayerPawn_RemovePlayerItem() = 0;

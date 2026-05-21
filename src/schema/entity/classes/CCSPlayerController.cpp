@@ -55,6 +55,7 @@
 
 #include "networksystem/inetworkmessages.h"
 #include "usermessages.pb.h"
+#include "source2toolkit/schema/entity/classes/CTakeDamageInfo.h"
 
 #include "source2toolkit/utils/virtual.h"
 
@@ -170,6 +171,29 @@ void CCSPlayerController::PrintToCenterHtml(const char* pszMessage, int iDuratio
     event->SetInt("duration", iDuration);
     event->SetPlayer("userid", GetPlayerSlot());
     FireEventToClient(event);
+}
+
+void CCSPlayerController::TakeDamage(CCSPlayerController* pAttacker, int iDamage, DamageTypes_t bitsDamageType)
+{
+    if (!m_bPawnIsAlive || m_iConnected() != PlayerConnectedState::Connected || !pAttacker || pAttacker->m_iConnected() != PlayerConnectedState::Connected)
+        return;
+
+    CCSPlayerPawn* pVictimPawn = GetPlayerPawn();
+    if (!pVictimPawn) return;
+
+    CCSPlayerPawn* pAttackerPawn = pAttacker->GetPlayerPawn();
+    if (!pAttackerPawn) return;
+
+    auto flDamage = static_cast<float>(iDamage);
+
+    CTakeDamageInfo info(pVictimPawn, pAttackerPawn, nullptr, flDamage, bitsDamageType);
+    info.m_nDamageFlags() = static_cast<TakeDamageFlags_t>(static_cast<int>(info.m_nDamageFlags()) | static_cast<int>(TakeDamageFlags_t::DFLAG_SUPPRESS_DAMAGE_MODIFICATION));
+
+#ifdef SOURCE2TOOLKIT_CORE
+    addresses::toolkitAddresses.TakeDamageOld(this, &info, nullptr);
+#else
+    g_ToolkitAPI->Addresses()->CBaseEntity_TakeDamageOld()(this, &info, nullptr);
+#endif
 }
 
 void CCSPlayerController::Respawn()
