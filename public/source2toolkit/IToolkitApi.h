@@ -275,7 +275,18 @@ public:
 
     /**
 
-    * @brief Releases a module previously obtained from LoadModule().
+    * @brief Creates and initialises a module wrapper from an address inside it.
+    *
+    * The returned object must be released with FreeModule().
+    *
+    * @param ptr Any address that belongs to the target module.
+    * @return Heap-allocated IToolkitModule, or nullptr on failure.
+      */
+    virtual IToolkitModule* LoadModuleFromMemory(uintptr_t ptr) = 0;
+
+    /**
+
+    * @brief Releases a module previously obtained from LoadModule() / LoadModuleFromMemory().
       */
     virtual void FreeModule(IToolkitModule* module) = 0;
 

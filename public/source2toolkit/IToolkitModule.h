@@ -164,6 +164,37 @@ public:
      * The pointer is valid for the lifetime of this IToolkitModule.
      */
     [[nodiscard]] virtual const char* GetModuleName() const = 0;
+
+    /* =========================
+    Virtual constructor (New)
+    ========================= */
+
+    /**
+     * @brief Creates a module wrapper by name (without extension).
+     *
+     * Equivalent to `g_ToolkitAPI->LoadModule(name)`. Release with `delete`
+     * or `g_ToolkitAPI->FreeModule()`.
+     *
+     * @param name Module name, e.g. "server" or "tier0".
+     */
+    static IToolkitModule* New(const char* name);
+
+    /**
+     * @brief Creates a module wrapper from an address that belongs to the module.
+     *
+     * @param ptr Any address inside the target module.
+     */
+    static IToolkitModule* New(uintptr_t ptr);
+
+    /**
+     * @brief Creates a module wrapper from a void pointer inside the module.
+     */
+    static IToolkitModule* New(void* ptr);
+
+    /**
+     * @brief Creates a module wrapper from an IToolkitMemory address inside the module.
+     */
+    static IToolkitModule* New(IToolkitMemory mem);
 };
 
 #endif // _INCLUDE_ITOOLKIT_MODULE_H
