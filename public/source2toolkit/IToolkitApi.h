@@ -81,6 +81,7 @@ class IToolkitEntities;
 class IToolkitEvents;
 class IToolkitListener;
 class IToolkitMenus;
+class IToolkitModule;
 class IToolkitMySQL;
 class IToolkitPlugin;
 class IToolkitScheduler;
@@ -256,6 +257,27 @@ public:
     * @brief Access tracing system.
       */
     virtual IToolkitTrace* Trace() = 0;
+
+    /* =========================
+    Module factory
+    ========================= */
+
+    /**
+
+    * @brief Creates and initialises a module wrapper by name.
+    *
+    * The returned object must be released with FreeModule().
+    *
+    * @param name Module name without extension (e.g. "server").
+    * @return Heap-allocated IToolkitModule, or nullptr on failure.
+      */
+    virtual IToolkitModule* LoadModule(const char* name) = 0;
+
+    /**
+
+    * @brief Releases a module previously obtained from LoadModule().
+      */
+    virtual void FreeModule(IToolkitModule* module) = 0;
 
     /* =========================
     Engine interfaces

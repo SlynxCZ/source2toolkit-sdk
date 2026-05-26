@@ -38,16 +38,11 @@
 /**
 
 * @file IToolkitAddresses.h
-* @brief Low-level address and symbol resolution interface for Source2Toolkit.
+* @brief Resolved engine-function accessors for Source2Toolkit.
 *
-* This interface provides utilities for:
-* * Module inspection (base, handle)
-* * Pattern scanning
-* * Symbol resolution
-* * Pointer manipulation (offsets, dereferencing)
-* * Access to resolved engine functions
-*
-* @note This is a low-level API. Most users should prefer higher-level helpers (UTIL_*).
+* Exposes pre-resolved function pointers for common engine operations.
+* Module inspection, pattern scanning, symbol lookup, and pointer
+* arithmetic are available via IToolkitModule and IToolkitMemory.
   */
 
 #ifndef _INCLUDE_ITOOLKIT_ADDRESSES_H
@@ -58,10 +53,6 @@
 
 #include "igameevents.h"
 #include "eiface.h"
-
-#ifdef _WIN32
-#undef GetModuleHandle
-#endif
 
 /* =========================
 Forward declarations
@@ -197,118 +188,16 @@ Core Toolkit Addresses
 
 /**
 
-* @brief Interface for resolving engine addresses, symbols and functions.
+* @brief Provides access to pre-resolved engine function pointers.
 *
-* This interface abstracts:
-* * Pattern scanning
-* * Symbol lookup
-* * Virtual table access
-* * Pointer manipulation
-*
-* It also exposes resolved engine functions as callable function pointers.
+* For module inspection, pattern scanning, and pointer arithmetic use
+* IToolkitModule and IToolkitMemory instead.
   */
 class IToolkitAddresses
 {
 public:
     virtual ~IToolkitAddresses() = default;
 
-    /* =========================
-    Module utilities
-    ========================= */
-
-    /**
-
-    * @brief Gets OS-specific module handle.
-    * @param modulePtr Module identifier or pointer.
-    * @return Native module handle.
-      */
-    virtual void* GetModuleHandle(void* modulePtr) = 0;
-
-    /**
-
-    * @brief Gets module base address.
-      */
-    virtual uintptr_t GetModuleBase(void* modulePtr) = 0;
-
-    /**
-
-    * @brief Gets module absolute path.
-      */
-    virtual const char* GetModulePath(void* modulePtr) = 0;
-
-    /* =========================
-    Pattern scanning
-    ========================= */
-
-    /**
-
-    * @brief Finds pattern in module memory.
-      */
-    virtual uintptr_t FindPattern(void* modulePtr, const char* pattern) = 0;
-
-    /**
-
-    * @brief Finds pattern in a specific section.
-      */
-    virtual uintptr_t FindPatternInSection(void* modulePtr, const char* section, const char* pattern) = 0;
-
-    /* =========================
-    Symbol / VTable
-    ========================= */
-
-    /**
-
-    * @brief Gets function address by exported symbol name.
-      */
-    virtual uintptr_t GetFunctionByName(void* modulePtr, const char* symbol) = 0;
-
-    /**
-
-    * @brief Gets virtual table address by class name.
-      */
-    virtual uintptr_t GetVirtualTableByName(void* modulePtr, const char* name) = 0;
-
-    /* =========================
-    Pointer utilities
-    ========================= */
-
-    /**
-
-    * @brief Applies offset to address.
-      */
-    virtual uintptr_t Offset(uintptr_t address, ptrdiff_t offset) = 0;
-
-    /**
-
-    * @brief Applies offset directly to variable.
-      */
-    virtual uintptr_t OffsetSelf(uintptr_t& address, ptrdiff_t offset) = 0;
-
-    /**
-
-    * @brief Dereferences pointer N times.
-      */
-    virtual uintptr_t Deref(uintptr_t address, int count = 1) = 0;
-
-    /**
-
-    * @brief Dereferences pointer in-place.
-      */
-    virtual uintptr_t DerefSelf(uintptr_t& address, int count = 1) = 0;
-
-    /**
-
-    * @brief Resolves relative address (RIP-relative).
-      */
-    virtual uintptr_t ResolveRelativeAddress(uintptr_t address, ptrdiff_t offset = 0x0, ptrdiff_t size = 0x4) = 0;
-
-    /**
-
-    * @brief Follows near CALL instruction.
-      */
-    virtual uintptr_t FollowNearCall(uintptr_t address, ptrdiff_t offset = 0x1, ptrdiff_t size = 0x5) = 0;
-
-public:
     /* =========================
     Resolved engine functions
     ========================= */
