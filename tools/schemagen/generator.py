@@ -385,13 +385,18 @@ HARD_SKIP_CLASSES: frozenset[str] = frozenset({
 
 HARD_SKIP_ENUMS: frozenset[str] = frozenset({
     "EntityDormancyType_t",
+    "fieldtype_t",
+    "Flags_t",
     "HitGroup_t",
+    "LifeState_t",
     "MoveCollide_t",
     "MoveType_t",
     "RenderFx_t",
     "RenderMode_t",
+    "RenderMultisampleType_t",
     "SolidType_t",
     "soundlevel_t",
+    "ThreeState_t"
 })
 
 NETWORK_CLASSES: list[str] = [
