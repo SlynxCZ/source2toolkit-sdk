@@ -37,13 +37,13 @@ CXxxImpl implementation headers (core).
 Reads server.json from ../schemagen_core/server.json (sibling tool directory).
 
 Usage:
-    python generator.py [sdk_iclasses_output] [core_iclasses_output]
+    python generator.py [sdk_classes_output] [core_classes_output]
 
-    sdk_iclasses_output  Path where IXxx interface headers are written.
-                         Default: ../../public/source2toolkit/schema/entity/iclasses
+    sdk_classes_output  Path where IXxx interface headers are written.
+                         Default: ../../public/source2toolkit/schema/entity/classes
 
-    core_iclasses_output Path where CXxxImpl headers are written.
-                         Default: ../../../source2toolkit/src/schema/entity/iclasses
+    core_classes_output Path where CXxxImpl headers are written.
+                         Default: ../../../source2toolkit/src/schema/entity/classes
                          (assumes source2toolkit and source2toolkit-sdk are siblings)
 """
 
@@ -60,7 +60,7 @@ from typing import Optional
 # ---------------------------------------------------------------------------
 
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(_SCRIPT_DIR, "..", "schemagen_core"))
+sys.path.insert(0, os.path.join(_SCRIPT_DIR, "../../..", "source2toolkit/tools/", "schemagen_core"))
 
 from generator import (  # noqa: E402
     SchemaTypeCategory,
@@ -85,6 +85,7 @@ from generator import (  # noqa: E402
     inherits_from_base_entity,
     LICENSE_HEADER,
     make_header_guard,
+    write_enum,
 )
 
 # ---------------------------------------------------------------------------
@@ -320,7 +321,7 @@ def write_impl_header(
         "",
         "#pragma once",
         "",
-        f'#include "source2toolkit/schema/entity/iclasses/{i_class_name}.h"',
+        f'#include "source2toolkit/schema/entity/classes/{i_class_name}.h"',
         f'#include "schema/entity/classes/{sanitise_type_name(class_name)}.h"',
     ]
 
@@ -400,14 +401,16 @@ def write_impl_header(
 def main() -> None:
     script_dir = _SCRIPT_DIR
 
+    # sdk_output:  base path for SDK public outputs (enums/ and classes/ created under it)
+    # core_output: base path for core-private outputs (classes/ created under it)
     sdk_output = sys.argv[1] if len(sys.argv) > 1 else os.path.join(
-        script_dir, "../../public/source2toolkit/schema/entity/iclasses"
+        script_dir, "../../public/source2toolkit/schema/entity"
     )
     core_output = sys.argv[2] if len(sys.argv) > 2 else os.path.join(
-        script_dir, "../../../source2toolkit/src/schema/entity/iclasses"
+        script_dir, "../../../source2toolkit/src/schema/entity"
     )
 
-    schema_path = os.path.join(script_dir, "../schemagen_core/server.json")
+    schema_path = os.path.join(script_dir, "../../../source2toolkit/tools/schemagen_core/server.json")
     with open(schema_path, encoding="utf-8") as fh:
         raw = json.load(fh)
 
@@ -436,13 +439,29 @@ def main() -> None:
         n for n in all_classes if should_generate(n) and _is_entity_class(n)
     }
 
-    # Clear existing .h files in both output dirs
-    for out_dir in (sdk_output, core_output):
+    sdk_ifaces_dir = os.path.join(sdk_output, "classes")
+    sdk_enums_dir  = os.path.join(sdk_output, "enums")
+    core_impl_dir  = os.path.join(core_output, "classes")
+
+    # Clear SDK outputs fully (we own every file there).
+    # Do NOT clear core_impl_dir — schemagen_core's CXxx files live there too;
+    # we only overwrite/add our own CXxxImpl.h files.
+    for out_dir in (sdk_ifaces_dir, sdk_enums_dir):
         if os.path.isdir(out_dir):
             for fname in os.listdir(out_dir):
                 if fname.endswith(".h"):
                     os.remove(os.path.join(out_dir, fname))
         os.makedirs(out_dir, exist_ok=True)
+    os.makedirs(core_impl_dir, exist_ok=True)
+
+    # Generate enum headers
+    for enum_name, schema_enum in all_enums.items():
+        if enum_name in HARD_SKIP_ENUMS:
+            continue
+        content = write_enum(enum_name, schema_enum)
+        out_file = os.path.join(sdk_enums_dir, f"{sanitise_type_name(enum_name)}.h")
+        with open(out_file, "w", encoding="utf-8", newline="") as fh:
+            fh.write(content)
 
     sdk_written = 0
     core_written = 0
@@ -458,7 +477,7 @@ def main() -> None:
         content = write_interface_header(
             class_name, schema_class, all_enums, all_classes, generated
         )
-        out_file = os.path.join(sdk_output, f"{sanitise_type_name(i_name)}.h")
+        out_file = os.path.join(sdk_ifaces_dir, f"{sanitise_type_name(i_name)}.h")
         with open(out_file, "w", encoding="utf-8", newline="") as fh:
             fh.write(content)
         sdk_written += 1
@@ -467,15 +486,16 @@ def main() -> None:
         content = write_impl_header(
             class_name, schema_class, all_enums, all_classes, generated
         )
-        out_file = os.path.join(core_output, f"{sanitise_type_name(impl_name)}.h")
+        out_file = os.path.join(core_impl_dir, f"{sanitise_type_name(impl_name)}.h")
         with open(out_file, "w", encoding="utf-8", newline="") as fh:
             fh.write(content)
         core_written += 1
 
     print(
         f"Done.\n"
-        f"  Interfaces ({sdk_written}): {sdk_output}\n"
-        f"  Impls     ({core_written}): {core_output}"
+        f"  Enums      ({len(all_enums)}): {sdk_enums_dir}\n"
+        f"  Interfaces ({sdk_written}): {sdk_ifaces_dir}\n"
+        f"  Impls      ({core_written}): {core_impl_dir}"
     )
 
 
