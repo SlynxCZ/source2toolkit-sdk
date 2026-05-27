@@ -87,6 +87,9 @@ public:
     virtual void NetworkAnimTimingUpdated() = 0;
     virtual bool& BlockInspectUntilNextGraphUpdate() = 0;
     virtual void BlockInspectUntilNextGraphUpdateUpdated() = 0;
+
+    virtual void DropWeapon(CBasePlayerWeapon *pWeapon, Vector *pVecTarget = nullptr, Vector *pVelocity = nullptr) = 0;
+    virtual void SelectWeapon(CBasePlayerWeapon *pWeapon, int unk1 = 0) = 0;
 };
 
 #endif // _INCLUDE_ICSPLAYER_WEAPONSERVICES_H

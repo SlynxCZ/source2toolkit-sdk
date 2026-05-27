@@ -31,20 +31,19 @@ Authors:
 
 Project: Source2Toolkit
 
-Public schemagen – generates pure virtual IXxx interface headers (SDK) and
+Public schemagen - generates pure virtual IXxx interface headers (SDK) and
 CXxxImpl implementation headers (core).
 
-Reads server.json from ../schemagen_core/server.json (sibling tool directory).
+Reads server.json from schemagen_core (sibling directory in core repo).
 
 Usage:
-    python generator.py [sdk_classes_output] [core_classes_output]
+    python generator.py [sdk_output] [core_output]
 
-    sdk_classes_output  Path where IXxx interface headers are written.
-                         Default: ../../public/source2toolkit/schema/entity/classes
+    sdk_output   Base path for SDK public outputs (enums/ and classes/ written here).
+                 Default: ../../public/source2toolkit/schema/entity
 
-    core_classes_output Path where CXxxImpl headers are written.
-                         Default: ../../../source2toolkit/src/schema/entity/classes
-                         (assumes source2toolkit and source2toolkit-sdk are siblings)
+    core_output  Base path for core-private outputs (classes/ written here).
+                 Default: ../../../source2toolkit/src/schema/entity
 """
 
 from __future__ import annotations
@@ -86,6 +85,7 @@ from generator import (  # noqa: E402
     LICENSE_HEADER,
     make_header_guard,
     write_enum,
+    MANUAL_METHODS,
 )
 
 # ---------------------------------------------------------------------------
@@ -98,23 +98,12 @@ _HUNGARIAN_RE = re.compile(
 
 
 def to_pascal_case(field_name: str) -> str:
-    """Convert a schema field name to PascalCase method name.
-
-    Examples:
-        m_iHealth      -> Health
-        m_bIsAlive     -> IsAlive
-        m_szPlayerName -> PlayerName
-        m_hOwnerEntity -> OwnerEntity
-        m_vecOrigin    -> Origin
-        m_flSpeed      -> Speed
-    """
     name = field_name
     if name.startswith("m_"):
         name = name[2:]
     m = _HUNGARIAN_RE.match(name)
     if m:
         name = name[len(m.group(1)):]
-    # Capitalize first letter if still lowercase (no Hungarian prefix matched)
     if name and name[0].islower():
         name = name[0].upper() + name[1:]
     return name
@@ -125,7 +114,6 @@ def to_pascal_case(field_name: str) -> str:
 # ---------------------------------------------------------------------------
 
 def _is_pointer_field(field: SchemaField) -> bool:
-    """True for SCHEMA_FIELD_POINTER fields (fixed arrays, CUtlStringToken)."""
     return (
         field.type.category == SchemaTypeCategory.FixedArray
         or field.type.name == "CUtlStringToken"
@@ -143,12 +131,10 @@ def _virtual_return_type(field: SchemaField) -> str:
 # ---------------------------------------------------------------------------
 
 def _is_entity_class(class_name: str) -> bool:
-    """True for C-prefixed entity classes: C followed by uppercase (CBaseEntity, CCSPlayerController)."""
     return len(class_name) >= 2 and class_name[0] == "C" and class_name[1].isupper()
 
 
 def _interface_name(class_name: str) -> str:
-    """CBaseEntity -> IBaseEntity (replace leading C with I for entity classes)."""
     if _is_entity_class(class_name):
         return "I" + class_name[1:]
     return "I" + class_name
@@ -158,7 +144,6 @@ def _effective_parent(
     schema_class: SchemaClass,
     generated: set[str],
 ) -> Optional[str]:
-    """Return the first C-prefixed ancestor present in the generated set, or None."""
     p = schema_class.parent
     if p is None or p in HARD_SKIP_CLASSES or p not in generated:
         return None
@@ -167,7 +152,7 @@ def _effective_parent(
     return p
 
 
-# Game SDK headers always included in interface files (provide Vector, CHandle, CUtlVector, etc.)
+# Game SDK headers always included in interface files
 _IFACE_SDK_INCLUDES = [
     '#include "igameevents.h"',
     '#include "ehandle.h"',
@@ -182,6 +167,162 @@ _IFACE_SDK_INCLUDES = [
     "#include <cstdint>",
 ]
 
+# Extra forward declarations needed in IXxx headers for non-schema types
+# referenced by manual methods (types not found in all_classes via substring scan).
+_EXTRA_IFACE_FWD_DECLS: dict[str, list[str]] = {
+    "CBaseEntity": [
+        "CEntityInstance",
+        "CEntityIOListenerHandle",
+        "CEntitySubclassVDataBase",
+        "CEntityKeyValues",
+    ],
+    "CBasePlayerController": ["CBasePlayerPawn"],
+    "CBasePlayerPawn": ["CBasePlayerWeapon"],
+    "CBasePlayerWeapon": ["CCSWeaponBaseVData"],
+    "CCSGameRules": ["CBasePlayerController", "CCSPlayerController"],
+    "CCSPlayerController": ["CCSPlayerPawn", "CCSObserverPawn"],
+    "CCSPlayerPawn": ["CCSPlayerController"],
+    "CCSPlayer_ItemServices": ["CBasePlayerWeapon"],
+    "CCSPlayer_WeaponServices": ["CBasePlayerWeapon"],
+    "CPlayerControllerComponent": ["CCSPlayerController"],
+    "CPlayerPawnComponent": ["CCSPlayerPawn"],
+}
+
+# Extra raw #include lines to inject into IXxx headers for non-schema types.
+_EXTRA_IFACE_INCLUDES: dict[str, list[str]] = {
+    "CBaseEntity": ["#include <functional>"],
+}
+
+
+# ---------------------------------------------------------------------------
+# Manual method string parsing
+# ---------------------------------------------------------------------------
+
+def _split_param_list(params_str: str) -> list[str]:
+    """Split comma-separated params respecting <> and () nesting."""
+    params: list[str] = []
+    angle_depth = 0
+    paren_depth = 0
+    current = ""
+    for ch in params_str:
+        if ch == "<":
+            angle_depth += 1
+            current += ch
+        elif ch == ">":
+            angle_depth -= 1
+            current += ch
+        elif ch == "(":
+            paren_depth += 1
+            current += ch
+        elif ch == ")":
+            paren_depth -= 1
+            current += ch
+        elif ch == "," and angle_depth == 0 and paren_depth == 0:
+            params.append(current.strip())
+            current = ""
+        else:
+            current += ch
+    if current.strip():
+        params.append(current.strip())
+    return params
+
+
+def _param_arg_name(param: str) -> str:
+    eq_idx = param.find(" = ")
+    if eq_idx != -1:
+        param = param[:eq_idx]
+    return param.split()[-1].lstrip("*&")
+
+
+def _param_no_default(param: str) -> str:
+    eq_idx = param.find(" = ")
+    if eq_idx != -1:
+        return param[:eq_idx].strip()
+    return param.strip()
+
+
+def _parse_manual_method(method_str: str) -> Optional[dict]:
+    """Parse a raw method declaration string from MANUAL_METHODS.
+
+    Returns None for comments, static methods, and templates
+    (none of which can be pure virtual interface methods).
+    """
+    s = method_str.strip()
+
+    if s.startswith("//"):
+        return None
+    if s.startswith("static ") or re.match(r"static\s", s):
+        return None
+    if s.startswith("template"):
+        return None
+
+    s = s.rstrip(";").strip()
+
+    is_const = False
+    if s.endswith(" const"):
+        is_const = True
+        s = s[:-6].rstrip()
+
+    paren_pos = s.find("(")
+    if paren_pos == -1:
+        return None
+
+    # Find matching closing paren
+    depth = 0
+    close_pos = -1
+    for i in range(paren_pos, len(s)):
+        if s[i] == "(":
+            depth += 1
+        elif s[i] == ")":
+            depth -= 1
+            if depth == 0:
+                close_pos = i
+                break
+    if close_pos == -1:
+        return None
+
+    params_str = s[paren_pos + 1 : close_pos].strip()
+    sig_prefix = s[:paren_pos].strip()
+
+    tokens = sig_prefix.split()
+    if len(tokens) < 2:
+        return None
+
+    name = tokens[-1].lstrip("*&")
+    return_type = " ".join(tokens[:-1])
+
+    raw_params = _split_param_list(params_str) if params_str else []
+
+    return {
+        "return_type": return_type,
+        "name": name,
+        "params_with_defaults": [p.strip() for p in raw_params],
+        "params_no_defaults": [_param_no_default(p) for p in raw_params],
+        "args": [_param_arg_name(p) for p in raw_params],
+        "is_const": is_const,
+    }
+
+
+def _manual_method_virtual_decl(m: dict) -> str:
+    const = " const" if m["is_const"] else ""
+    params = ", ".join(m["params_with_defaults"])
+    return f"    virtual {m['return_type']} {m['name']}({params}){const} = 0;"
+
+
+def _manual_method_override_impl(m: dict) -> str:
+    const = " const" if m["is_const"] else ""
+    params = ", ".join(m["params_no_defaults"])
+    args = ", ".join(m["args"])
+    if m["return_type"] == "void":
+        body = "{ Real()->" + m["name"] + "(" + args + "); }"
+    else:
+        body = "{ return Real()->" + m["name"] + "(" + args + "); }"
+    return f"    {m['return_type']} {m['name']}({params}){const} override {body}"
+
+
+# ---------------------------------------------------------------------------
+# Interface header generation
+# ---------------------------------------------------------------------------
 
 def _collect_interface_refs(
     t: SchemaFieldType,
@@ -189,10 +330,6 @@ def _collect_interface_refs(
     enum_includes: set[str],
     forwards: set[str],
 ) -> None:
-    """Collect enum includes and class forward declarations for interface headers.
-
-    Class types are never included; they are only forward-declared.
-    """
     if t.category == SchemaTypeCategory.DeclaredEnum:
         if t.name not in HARD_SKIP_ENUMS:
             enum_includes.add(t.name)
@@ -203,10 +340,6 @@ def _collect_interface_refs(
         _collect_interface_refs(t.inner, all_enums, enum_includes, forwards)
 
 
-# ---------------------------------------------------------------------------
-# Interface header generation
-# ---------------------------------------------------------------------------
-
 def write_interface_header(
     class_name: str,
     schema_class: SchemaClass,
@@ -214,20 +347,16 @@ def write_interface_header(
     all_classes: dict[str, SchemaClass],
     generated: set[str],
 ) -> str:
-    """Generate IFoo.h – a pure virtual interface for class_name.
-
-    Class types used in method signatures are forward-declared only;
-    no generated classes/*.h headers are included.
-    """
+    """Generate IFoo.h - a pure virtual interface for class_name."""
 
     i_class_name = _interface_name(class_name)
-
     parent = _effective_parent(schema_class, generated)
     i_parent_name = _interface_name(parent) if parent else None
 
     enum_includes: set[str] = set()
     forwards: set[str] = set()
 
+    # Collect from schema fields
     for f in schema_class.fields:
         if f.type.category == SchemaTypeCategory.Bitfield:
             continue
@@ -236,6 +365,19 @@ def write_interface_header(
         if contains_ignored_type(f.type):
             continue
         _collect_interface_refs(f.type, all_enums, enum_includes, forwards)
+
+    # Collect from manual methods: scan strings for known schema class/enum names
+    for method_str in MANUAL_METHODS.get(class_name, []):
+        for enum_name in all_enums:
+            if enum_name not in HARD_SKIP_ENUMS and enum_name in method_str:
+                enum_includes.add(enum_name)
+        for cls_name in all_classes:
+            if cls_name not in HARD_SKIP_CLASSES and cls_name in method_str:
+                forwards.add(cls_name)
+
+    # Extra forward declarations for non-schema types
+    for fwd in _EXTRA_IFACE_FWD_DECLS.get(class_name, []):
+        forwards.add(fwd)
 
     forwards.discard(class_name)
 
@@ -249,6 +391,12 @@ def write_interface_header(
     ]
 
     lines += _IFACE_SDK_INCLUDES
+
+    # Extra includes (e.g. <functional> for std::function)
+    extra_incs = _EXTRA_IFACE_INCLUDES.get(class_name, [])
+    if extra_incs:
+        for inc in extra_incs:
+            lines.append(inc)
     lines.append("")
 
     if i_parent_name:
@@ -272,6 +420,7 @@ def write_interface_header(
 
     lines += ["{", "public:", f"    virtual ~{i_class_name}() = default;", ""]
 
+    # Schema field pure virtuals
     for f in schema_class.fields:
         if f.type.category == SchemaTypeCategory.Bitfield:
             continue
@@ -285,6 +434,14 @@ def write_interface_header(
         lines.append(f"    virtual {ret} {method_name}() = 0;")
         if not _is_pointer_field(f):
             lines.append(f"    virtual void {method_name}Updated() = 0;")
+
+    # Manual method pure virtuals
+    parsed_manual = [_parse_manual_method(m) for m in MANUAL_METHODS.get(class_name, [])]
+    parsed_manual = [m for m in parsed_manual if m is not None]
+    if parsed_manual:
+        lines.append("")
+        for m in parsed_manual:
+            lines.append(_manual_method_virtual_decl(m))
 
     lines.append("};")
     lines.append("")
@@ -304,7 +461,7 @@ def write_impl_header(
     all_classes: dict[str, SchemaClass],
     generated: set[str],
 ) -> str:
-    """Generate CXxxImpl.h – concrete implementation of IXxx for the core."""
+    """Generate CXxxImpl.h - concrete implementation of IXxx for the core."""
 
     i_class_name = _interface_name(class_name)
     impl_class_name = f"{class_name}Impl"
@@ -361,6 +518,7 @@ def write_impl_header(
         "public:",
     ]
 
+    # Schema field overrides
     for f in schema_class.fields:
         if f.type.category == SchemaTypeCategory.Bitfield:
             continue
@@ -387,6 +545,14 @@ def write_impl_header(
                 f" {{ Real()->{f.name}.NetworkStateChanged(); }}"
             )
 
+    # Manual method overrides
+    parsed_manual = [_parse_manual_method(m) for m in MANUAL_METHODS.get(class_name, [])]
+    parsed_manual = [m for m in parsed_manual if m is not None]
+    if parsed_manual:
+        lines.append("")
+        for m in parsed_manual:
+            lines.append(_manual_method_override_impl(m))
+
     lines.append("};")
     lines.append("")
     lines.append(f"#endif // {guard}")
@@ -401,8 +567,6 @@ def write_impl_header(
 def main() -> None:
     script_dir = _SCRIPT_DIR
 
-    # sdk_output:  base path for SDK public outputs (enums/ and classes/ created under it)
-    # core_output: base path for core-private outputs (classes/ created under it)
     sdk_output = sys.argv[1] if len(sys.argv) > 1 else os.path.join(
         script_dir, "../../public/source2toolkit/schema/entity"
     )
@@ -434,7 +598,6 @@ def main() -> None:
             return False
         return True
 
-    # Only C-prefixed entity classes get IXxx interfaces + impls
     generated: set[str] = {
         n for n in all_classes if should_generate(n) and _is_entity_class(n)
     }
@@ -443,9 +606,7 @@ def main() -> None:
     sdk_enums_dir  = os.path.join(sdk_output, "enums")
     core_impl_dir  = os.path.join(core_output, "classes")
 
-    # Clear SDK outputs fully (we own every file there).
-    # Do NOT clear core_impl_dir — schemagen_core's CXxx files live there too;
-    # we only overwrite/add our own CXxxImpl.h files.
+    # Clear SDK outputs fully; do NOT clear core_impl_dir (shared with schemagen_core).
     for out_dir in (sdk_ifaces_dir, sdk_enums_dir):
         if os.path.isdir(out_dir):
             for fname in os.listdir(out_dir):
@@ -454,7 +615,7 @@ def main() -> None:
         os.makedirs(out_dir, exist_ok=True)
     os.makedirs(core_impl_dir, exist_ok=True)
 
-    # Generate enum headers
+    # Enum headers
     for enum_name, schema_enum in all_enums.items():
         if enum_name in HARD_SKIP_ENUMS:
             continue

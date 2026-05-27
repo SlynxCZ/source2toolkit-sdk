@@ -113,6 +113,8 @@ public:
     virtual void NoClipEnabledUpdated() = 0;
     virtual uint32_t& DesiredFOV() = 0;
     virtual void DesiredFOVUpdated() = 0;
+
+    virtual void SetPawn(CBasePlayerPawn* pPawn) = 0;
 };
 
 #endif // _INCLUDE_IBASEPLAYERCONTROLLER_H

@@ -51,6 +51,7 @@
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
 #include <cstdint>
+#include <functional>
 
 #include "../enums/BloodType.h"
 #include "../enums/EntityPlatformTypes_t.h"
@@ -59,6 +60,10 @@
 class CBaseFilter;
 class CBodyComponent;
 class CCollisionProperty;
+class CEntityIOListenerHandle;
+class CEntityInstance;
+class CEntityKeyValues;
+class CEntitySubclassVDataBase;
 class CNetworkTransmitComponent;
 class CNetworkVelocityVector;
 class CPulseGraphInstance_ServerEntity;
@@ -241,6 +246,29 @@ public:
     virtual void BloodTypeUpdated() = 0;
     virtual CPulseGraphInstance_ServerEntity*& PulseGraphInstance() = 0;
     virtual void PulseGraphInstanceUpdated() = 0;
+
+    virtual void AcceptInput(const char* pszInput, CEntityInstance* pActivator = nullptr, CEntityInstance* pCaller = nullptr, const char* pszValue = "") = 0;
+    virtual void AddEntityIOEvent(const char* pszInput, CEntityInstance* pActivator = nullptr, CEntityInstance* pCaller = nullptr, const char* pszValue = "", float flDelay = 0.0f) = 0;
+    virtual CEntityIOListenerHandle* AddSingleEntityIOListener(const char* pszOutput, std::function<Action(const char*,CEntityInstance*, CEntityInstance*, float, Mode)> callback, Mode mode) = 0;
+    virtual Vector GetAbsOrigin() = 0;
+    virtual QAngle GetAngRotation() = 0;
+    virtual QAngle GetAbsRotation() = 0;
+    virtual Vector GetAbsVelocity() = 0;
+    virtual void SetAbsOrigin(Vector vecOrigin) = 0;
+    virtual void SetAbsRotation(QAngle angAbsRotation) = 0;
+    virtual void SetAngRotation(QAngle angRotation) = 0;
+    virtual void SetAbsVelocity(Vector vecVelocity) = 0;
+    virtual void SetBaseVelocity(Vector vecVelocity) = 0;
+    virtual CEntitySubclassVDataBase* GetVData() = 0;
+    virtual void DispatchSpawn(CEntityKeyValues* pEntityKeyValues = nullptr) = 0;
+    virtual void Teleport(const Vector* pPosition, const QAngle* pAngles, const Vector* pVelocity) = 0;
+    virtual void SetMoveType(MoveType_t nMoveType) = 0;
+    virtual uint8 GetCollisionGroup() = 0;
+    virtual void SetCollisionGroup(uint8 nCollisionGroup) = 0;
+    virtual void CollisionRulesChanged() = 0;
+    virtual int GetIndex() = 0;
+    virtual CHandle<CBaseEntity> GetHandle() = 0;
+    virtual const char* GetName() const = 0;
 };
 
 #endif // _INCLUDE_IBASEENTITY_H

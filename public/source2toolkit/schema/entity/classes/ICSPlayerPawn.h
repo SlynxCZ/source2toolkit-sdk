@@ -59,6 +59,7 @@
 
 class CBaseEntity;
 class CCSBot;
+class CCSPlayerController;
 class CCSPlayer_ActionTrackingServices;
 class CCSPlayer_AimPunchServices;
 class CCSPlayer_BulletServices;
@@ -284,6 +285,10 @@ public:
     virtual void MolotovDamageTimeUpdated() = 0;
     virtual QAngle& EyeAngles() = 0;
     virtual void EyeAnglesUpdated() = 0;
+
+    virtual CCSPlayerController* GetController() = 0;
+    virtual CCSPlayerController* GetDefaultController() = 0;
+    virtual CCSPlayerController* GetOriginalController() = 0;
 };
 
 #endif // _INCLUDE_ICSPLAYERPAWN_H

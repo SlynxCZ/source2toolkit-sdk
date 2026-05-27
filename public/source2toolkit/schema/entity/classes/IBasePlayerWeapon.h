@@ -54,6 +54,9 @@
 
 #include "IEconEntity.h"
 
+class CCSWeaponBase;
+class CCSWeaponBaseVData;
+
 class IBasePlayerWeapon : public virtual IEconEntity
 {
 public:
@@ -74,6 +77,9 @@ public:
     virtual int32_t* ReserveAmmo() = 0;
     virtual CEntityIOOutput& OnPlayerUse() = 0;
     virtual void OnPlayerUseUpdated() = 0;
+
+    virtual CCSWeaponBaseVData* GetWeaponVData() = 0;
+    virtual const char* GetWeaponClassname() = 0;
 };
 
 #endif // _INCLUDE_IBASEPLAYERWEAPON_H

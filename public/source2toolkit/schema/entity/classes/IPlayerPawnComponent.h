@@ -52,6 +52,7 @@
 #include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
+class CCSPlayerPawn;
 class CEntityInstance*;
 
 class IPlayerPawnComponent
@@ -61,6 +62,8 @@ public:
 
     virtual CEntityInstance*& __m_pChainEntity() = 0;
     virtual void __m_pChainEntityUpdated() = 0;
+
+    virtual CCSPlayerPawn* GetPlayerPawn() = 0;
 };
 
 #endif // _INCLUDE_IPLAYERPAWNCOMPONENT_H

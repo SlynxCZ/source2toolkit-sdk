@@ -143,6 +143,10 @@ public:
     virtual CNetworkViewOffsetVector& ViewOffset() = 0;
     virtual void ViewOffsetUpdated() = 0;
     virtual uint32_t* DisabledHitGroups() = 0;
+
+    virtual CUtlSymbolLarge GetModelName() = 0;
+    virtual Vector GetEyePosition() = 0;
+    virtual void SetModel(const char* pszModel) = 0;
 };
 
 #endif // _INCLUDE_IBASEMODELENTITY_H

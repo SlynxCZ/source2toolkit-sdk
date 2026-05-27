@@ -54,6 +54,8 @@
 
 #include "IPlayer_ItemServices.h"
 
+class CBasePlayerWeapon;
+
 class ICSPlayer_ItemServices : public virtual IPlayer_ItemServices
 {
 public:
@@ -63,6 +65,10 @@ public:
     virtual void HasDefuserUpdated() = 0;
     virtual bool& HasHelmet() = 0;
     virtual void HasHelmetUpdated() = 0;
+
+    virtual void DropActivePlayerWeapon(CBasePlayerWeapon* pActiveWeapon) = 0;
+    virtual void RemoveWeapons() = 0;
+    virtual CBasePlayerWeapon* GiveNamedItem(const char* pszItem) = 0;
 };
 
 #endif // _INCLUDE_ICSPLAYER_ITEMSERVICES_H

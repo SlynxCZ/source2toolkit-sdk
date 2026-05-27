@@ -54,6 +54,7 @@
 
 #include "IBasePlayerController.h"
 
+#include "../enums/DamageTypes_t.h"
 #include "../enums/QuestProgress__Reason.h"
 
 class CCSObserverPawn;
@@ -252,6 +253,34 @@ public:
     virtual void NonSuspiciousHitStreakUpdated() = 0;
     virtual bool& FireBulletsSeedSynchronized() = 0;
     virtual void FireBulletsSeedSynchronizedUpdated() = 0;
+
+    virtual void PrintToConsole(const char* pszMessage) = 0;
+    virtual void PrintToChat(const char* pszMessage) = 0;
+    virtual void PrintToCenter(const char* pszMessage) = 0;
+    virtual void PrintToCenterAlert(const char* pszMessage) = 0;
+    virtual void PrintToCenterHtml(const char* pszMessage, int iDuration = 5) = 0;
+    virtual void TakeDamage(CCSPlayerController* pAttacker, int iDamage, DamageTypes_t bitsDamageType) = 0;
+    virtual void Respawn() = 0;
+    virtual void SwitchTeam(int nTeam) = 0;
+    virtual void ChangeTeam(int nTeam) = 0;
+    virtual bool IsBot() = 0;
+    virtual void Disconnect(ENetworkDisconnectionReason eReason) = 0;
+    virtual void ExecuteClientCommand(const char* pszCommand) = 0;
+    virtual void ExecuteClientCommandFromServer(const char* pszCommand) = 0;
+    virtual CCSPlayerPawn* GetPawn() = 0;
+    virtual CCSPlayerPawn* GetPlayerPawn() = 0;
+    virtual CCSObserverPawn* GetObserverPawn() = 0;
+    virtual CEntityIndex GetPlayerIndex() = 0;
+    virtual int GetSlot() = 0;
+    virtual CPlayerSlot GetPlayerSlot() = 0;
+    virtual int GetUserID() = 0;
+    virtual CPlayerUserId GetPlayerUserID() = 0;
+    virtual uint64 GetSteamID() = 0;
+    virtual CSteamID GetPlayerSteamID() = 0;
+    virtual const char* GetPlayerName() = 0;
+    virtual CUtlString GetIpAddress() = 0;
+    virtual void ReplicateConVar(const char* pszConVar, const char* pszValue) = 0;
+    virtual void FireEventToClient(IGameEvent* pEvent) = 0;
 };
 
 #endif // _INCLUDE_ICSPLAYERCONTROLLER_H

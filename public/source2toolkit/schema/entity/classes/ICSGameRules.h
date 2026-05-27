@@ -55,7 +55,9 @@
 #include "ITeamplayRules.h"
 
 class CBaseEntity;
+class CBasePlayerController;
 class CCSGameModeRules;
+class CCSPlayerController;
 class CRetakeGameRules;
 class SpawnPoint;
 
@@ -424,6 +426,10 @@ public:
     virtual void RoundStartCountUpdated() = 0;
     virtual double& LastPerfSampleTime() = 0;
     virtual void LastPerfSampleTimeUpdated() = 0;
+
+    virtual void TerminateRound(float flDelay, int32_t eRoundEndReason) = 0;
+    virtual CBaseEntity* FindPickerEntity(CBasePlayerController* pPlayer) = 0;
+    virtual CCSPlayerController* GetClientAimTarget(CCSPlayerController* pPlayer) = 0;
 };
 
 #endif // _INCLUDE_ICSGAMERULES_H

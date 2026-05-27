@@ -56,6 +56,7 @@
 
 class CAI_Expresser;
 class CBasePlayerController;
+class CBasePlayerWeapon;
 class CPlayer_AutoaimServices;
 class CPlayer_CameraServices;
 class CPlayer_FlashlightServices;
@@ -124,6 +125,9 @@ public:
     virtual void HltvReplayEntityUpdated() = 0;
     virtual CUtlVector<sndopvarlatchdata_t>& SndOpvarLatchData() = 0;
     virtual void SndOpvarLatchDataUpdated() = 0;
+
+    virtual void CommitSuicide(bool bExplode, bool bForce) = 0;
+    virtual void RemovePlayerItem(CBasePlayerWeapon* pWeapon) = 0;
 };
 
 #endif // _INCLUDE_IBASEPLAYERPAWN_H

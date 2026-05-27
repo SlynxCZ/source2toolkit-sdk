@@ -52,6 +52,7 @@
 #include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
+class CCSPlayerController;
 class CEntityInstance*;
 
 class IPlayerControllerComponent
@@ -61,6 +62,8 @@ public:
 
     virtual CEntityInstance*& __m_pChainEntity() = 0;
     virtual void __m_pChainEntityUpdated() = 0;
+
+    virtual CCSPlayerController* GetPlayerController() = 0;
 };
 
 #endif // _INCLUDE_IPLAYERCONTROLLERCOMPONENT_H
