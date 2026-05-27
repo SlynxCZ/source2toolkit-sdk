@@ -56,7 +56,6 @@
 
 #include "CPointEntity.h"
 #include "dynpitchvol_t.h"
-#include "../enums/soundlevel_t.h"
 
 class CBaseEntity;
 

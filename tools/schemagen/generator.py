@@ -375,18 +375,23 @@ IGNORE_CLASS_WILDCARDS: tuple[str, ...] = (
 
 HARD_SKIP_CLASSES: frozenset[str] = frozenset({
     "CEntityComponent",
-    "CEntityIOOutput",
     "CEntityIdentity",
     "CEntityInstance",
+    "CEntityIOOutput",
+    "ChangeAccessorFieldPathIndex_t",
+    "CScriptComponent",
+    "CVariantDefaultAllocator",
 })
 
 HARD_SKIP_ENUMS: frozenset[str] = frozenset({
+    "EntityDormancyType_t",
     "HitGroup_t",
     "MoveCollide_t",
     "MoveType_t",
     "RenderFx_t",
     "RenderMode_t",
     "SolidType_t",
+    "soundlevel_t",
 })
 
 NETWORK_CLASSES: list[str] = [
@@ -641,6 +646,7 @@ EXTRA_WHITELIST: frozenset[str] = frozenset({
     "DecalGroupOption_t",
     "DestructibleHitGroupToDestroy_t",
     "DestructiblePartDamageRequest_t",
+    "PrecipitationFilter_t"
 })
 
 # ---------------------------------------------------------------------------

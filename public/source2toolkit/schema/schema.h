@@ -94,26 +94,28 @@ class GameSessionConfiguration_t
 {
 };
 
-template<size_t Size, size_t Align>
+template <size_t Size, size_t Align>
 struct SchemaOpaqueType
 {
-	alignas(Align) unsigned char data[Size];
+    alignas(Align) unsigned char data[Size];
 };
 
 #ifdef _WIN32
 using BASEPTR = SchemaOpaqueType<8, 8>;
 using ENTITYFUNCPTR = SchemaOpaqueType<8, 8>;
 using USEPTR = SchemaOpaqueType<8, 8>;
+using CEntityNameString = SchemaOpaqueType<8, 8>;
 #else
 using BASEPTR = SchemaOpaqueType<16, 8>;
 using ENTITYFUNCPTR = SchemaOpaqueType<16, 8>;
 using USEPTR = SchemaOpaqueType<16, 8>;
+using CEntityNameString = SchemaOpaqueType<16, 8>;
 #endif
 
 struct CUtlBinaryBlock
 {
-	CUtlMemory<unsigned char> m_Memory;
-	int m_nActualLength;
+    CUtlMemory<unsigned char> m_Memory;
+    int m_nActualLength;
 };
 
 struct CGlobalSymbol
@@ -128,16 +130,19 @@ private:
         static std::unordered_map<std::string, const char*> s_cache;
         return s_cache;
     }
+
     static std::shared_mutex& PoolMutex()
     {
         static std::shared_mutex s_mtx;
         return s_mtx;
     }
+
     static char*& CurrentBlock()
     {
         static char* s_block = nullptr;
         return s_block;
     }
+
     static std::size_t& RemainingBytes()
     {
         static std::size_t s_remaining = 0;
@@ -148,7 +153,7 @@ private:
     {
         if (str == nullptr) return nullptr;
 
-        const std::size_t byteCount  = std::strlen(str);
+        const std::size_t byteCount = std::strlen(str);
         const std::size_t neededSize = byteCount + 1; // + '\0'
 
         {
@@ -177,11 +182,11 @@ private:
         {
             if (RemainingBytes() < neededSize)
             {
-                CurrentBlock()   = static_cast<char*>(std::malloc(BLOCK_SIZE));
+                CurrentBlock() = static_cast<char*>(std::malloc(BLOCK_SIZE));
                 RemainingBytes() = BLOCK_SIZE;
             }
             addr = CurrentBlock();
-            CurrentBlock()   += neededSize;
+            CurrentBlock() += neededSize;
             RemainingBytes() -= neededSize;
         }
 
@@ -203,6 +208,7 @@ public:
         m_pszString = Allocate(value);
     }
 };
+
 static_assert(sizeof(CGlobalSymbol) == 8);
 
 using RotationVector = void*;
@@ -249,6 +255,38 @@ Strong handle wrapper
   */
 template <typename T>
 class CStrongHandle
+{
+private:
+    T* m_pValue;
+
+public:
+    T* Get() const { return m_pValue; }
+    void Set(void* pPtr) { m_pValue = pPtr; }
+
+    bool IsValid() const { return m_pValue != nullptr; }
+
+    T* operator->() const { return m_pValue; }
+    operator T*() const { return m_pValue; }
+};
+
+template <typename T>
+class CStrongHandleCopyable
+{
+private:
+    T* m_pValue;
+
+public:
+    T* Get() const { return m_pValue; }
+    void Set(void* pPtr) { m_pValue = pPtr; }
+
+    bool IsValid() const { return m_pValue != nullptr; }
+
+    T* operator->() const { return m_pValue; }
+    operator T*() const { return m_pValue; }
+};
+
+template <typename T>
+class CWeakHandle
 {
 private:
     T* m_pValue;

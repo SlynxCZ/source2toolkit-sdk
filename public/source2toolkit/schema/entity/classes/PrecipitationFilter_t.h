@@ -35,8 +35,8 @@
  * Project: Source2Toolkit
  */
 
-#ifndef _INCLUDE_CHANGEACCESSORFIELDPATHINDEX_T_H
-#define _INCLUDE_CHANGEACCESSORFIELDPATHINDEX_T_H
+#ifndef _INCLUDE_PRECIPITATIONFILTER_T_H
+#define _INCLUDE_PRECIPITATIONFILTER_T_H
 
 #pragma once
 
@@ -53,12 +53,12 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
-class ChangeAccessorFieldPathIndex_t
+class PrecipitationFilter_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(ChangeAccessorFieldPathIndex_t);
+    DECLARE_SCHEMA_CLASS(PrecipitationFilter_t);
 
-    SCHEMA_FIELD(int32_t, m_Value);
+    SCHEMA_FIELD(float, m_flMaxRadius);
 };
 
-#endif // _INCLUDE_CHANGEACCESSORFIELDPATHINDEX_T_H
+#endif // _INCLUDE_PRECIPITATIONFILTER_T_H
