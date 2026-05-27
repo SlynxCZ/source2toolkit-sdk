@@ -1,0 +1,82 @@
+/**
+* vim: set ts=4 sw=4 tw=99 noet:
+ * =============================================================================
+ * Source2Toolkit
+ * Copyright (C) 2025-2026 Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl,
+ * AlliedModders LLC. All rights reserved.
+ * =============================================================================
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, version 3.0, as published by the
+ * Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * As a special exception, Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl and
+ * AlliedModders LLC give you permission to link the code of this program
+ * (as well as its derivative works) to "Counter-Strike 2," "Source 2,"
+ * "Steam," and any Game MODs or server software running on software by
+ * Valve Corporation. You must obey the GNU General Public License in all
+ * respects for all other code used.
+ *
+ * Additionally, this exception applies to all derivative works unless
+ * otherwise stated in LICENSE.txt.
+ *
+ * Authors:
+ *   - Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl
+ *   - AlliedModders LLC
+ *
+ * Project: Source2Toolkit
+ */
+
+#ifndef _INCLUDE_ICSPLAYER_WEAPONSERVICES_H
+#define _INCLUDE_ICSPLAYER_WEAPONSERVICES_H
+
+#pragma once
+
+#include <cstdint>
+
+#include "IPlayer_WeaponServices.h"
+
+class CBasePlayerWeapon;
+
+class ICSPlayer_WeaponServices : public virtual IPlayer_WeaponServices
+{
+public:
+    virtual ~ICSPlayer_WeaponServices() = default;
+
+    virtual float& NextAttack() = 0;
+    virtual void NextAttackUpdated() = 0;
+    virtual CHandle<CBasePlayerWeapon>& SavedWeapon() = 0;
+    virtual void SavedWeaponUpdated() = 0;
+    virtual int32_t& TimeToMelee() = 0;
+    virtual void TimeToMeleeUpdated() = 0;
+    virtual int32_t& TimeToSecondary() = 0;
+    virtual void TimeToSecondaryUpdated() = 0;
+    virtual int32_t& TimeToPrimary() = 0;
+    virtual void TimeToPrimaryUpdated() = 0;
+    virtual int32_t& TimeToSniperRifle() = 0;
+    virtual void TimeToSniperRifleUpdated() = 0;
+    virtual bool& IsBeingGivenItem() = 0;
+    virtual void IsBeingGivenItemUpdated() = 0;
+    virtual bool& IsPickingUpItemWithUse() = 0;
+    virtual void IsPickingUpItemWithUseUpdated() = 0;
+    virtual bool& PickedUpWeapon() = 0;
+    virtual void PickedUpWeaponUpdated() = 0;
+    virtual bool& DisableAutoDeploy() = 0;
+    virtual void DisableAutoDeployUpdated() = 0;
+    virtual bool& IsPickingUpGroundWeapon() = 0;
+    virtual void IsPickingUpGroundWeaponUpdated() = 0;
+    virtual CUtlVector<uint8_t>& NetworkAnimTiming() = 0;
+    virtual void NetworkAnimTimingUpdated() = 0;
+    virtual bool& BlockInspectUntilNextGraphUpdate() = 0;
+    virtual void BlockInspectUntilNextGraphUpdateUpdated() = 0;
+};
+
+#endif // _INCLUDE_ICSPLAYER_WEAPONSERVICES_H
