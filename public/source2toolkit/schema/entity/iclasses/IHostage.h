@@ -40,16 +40,25 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "IHostageExpresserShim.h"
 
-#include "CountdownTimer.h"
-#include "EntitySpottedState_t.h"
-
 class CBaseEntity;
 class CCSPlayerPawn;
 class CCSPlayerPawnBase;
+class CountdownTimer;
+class EntitySpottedState_t;
 
 class IHostage : public virtual IHostageExpresserShim
 {

@@ -40,13 +40,19 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "IBaseCombatCharacter.h"
-
-#include "ViewAngleServerChange_t.h"
-#include "sky3dparams_t.h"
-#include "sndopvarlatchdata_t.h"
 
 class CAI_Expresser;
 class CBasePlayerController;
@@ -59,6 +65,9 @@ class CPlayer_ObserverServices;
 class CPlayer_UseServices;
 class CPlayer_WaterServices;
 class CPlayer_WeaponServices;
+class ViewAngleServerChange_t;
+class sky3dparams_t;
+class sndopvarlatchdata_t;
 
 class IBasePlayerPawn : public virtual IBaseCombatCharacter
 {

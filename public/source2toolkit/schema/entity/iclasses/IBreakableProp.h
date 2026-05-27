@@ -40,16 +40,26 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "IBaseProp.h"
 
 #include "../enums/BreakableContentsType_t.h"
-#include "CPropDataComponent.h"
 #include "../enums/PerformanceMode_t.h"
 
 class CBaseEntity;
 class CBasePlayerPawn;
+class CPropDataComponent;
 
 class IBreakableProp : public virtual IBaseProp
 {

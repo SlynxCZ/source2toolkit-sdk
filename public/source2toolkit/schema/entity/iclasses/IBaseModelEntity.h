@@ -40,19 +40,28 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
 
-#include "CCollisionProperty.h"
-#include "CGlowProperty.h"
-#include "CHitboxComponent.h"
-#include "CNetworkViewOffsetVector.h"
-#include "EntityRenderAttribute_t.h"
-
 class CChoreoComponent;
+class CCollisionProperty;
 class CDestructiblePartsComponent;
+class CGlowProperty;
+class CHitboxComponent;
+class CNetworkViewOffsetVector;
 class CRenderComponent;
+class EntityRenderAttribute_t;
 
 class IBaseModelEntity : public virtual IBaseEntity
 {

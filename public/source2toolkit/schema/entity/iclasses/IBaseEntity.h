@@ -40,20 +40,30 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "../enums/BloodType.h"
-#include "CNetworkTransmitComponent.h"
-#include "CNetworkVelocityVector.h"
 #include "../enums/EntityPlatformTypes_t.h"
-#include "ResponseContext_t.h"
 #include "../enums/TakeDamageFlags_t.h"
-#include "thinkfunc_t.h"
 
 class CBaseFilter;
 class CBodyComponent;
 class CCollisionProperty;
+class CNetworkTransmitComponent;
+class CNetworkVelocityVector;
 class CPulseGraphInstance_ServerEntity;
+class ResponseContext_t;
+class thinkfunc_t;
 
 class IBaseEntity
 {

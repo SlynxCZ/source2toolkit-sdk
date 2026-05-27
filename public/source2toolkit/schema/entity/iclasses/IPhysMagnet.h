@@ -40,11 +40,21 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "IBaseAnimGraph.h"
 
-#include "magnetted_objects_t.h"
+class magnetted_objects_t;
 
 class IPhysMagnet : public virtual IBaseAnimGraph
 {

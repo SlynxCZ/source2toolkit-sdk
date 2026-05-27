@@ -40,13 +40,23 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "IPlayer_MovementServices_Humanoid.h"
 
-#include "CCSPlayerAnimationState.h"
-#include "CCSPlayerLegacyJump.h"
-#include "CCSPlayerModernJump.h"
+class CCSPlayerAnimationState;
+class CCSPlayerLegacyJump;
+class CCSPlayerModernJump;
 
 class ICSPlayer_MovementServices : public virtual IPlayer_MovementServices_Humanoid
 {

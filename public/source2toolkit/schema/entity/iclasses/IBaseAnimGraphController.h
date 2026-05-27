@@ -40,21 +40,31 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "ISkeletonAnimationController.h"
 
-#include "AnimGraph2SerializedPoseRecipeSlot_t.h"
 #include "../enums/AnimLoopMode_t.h"
 #include "../enums/AnimationAlgorithm_t.h"
-#include "ExternalAnimGraphHandle_t.h"
-#include "ExternalAnimGraph_t.h"
-#include "ResourceId_t.h"
 #include "../enums/SequenceFinishNotifyState_t.h"
 
+class AnimGraph2SerializedPoseRecipeSlot_t;
 class CBaseAnimGraph;
 class CNmGraphInstance;
+class ExternalAnimGraphHandle_t;
+class ExternalAnimGraph_t;
 class InfoForResourceTypeCNmGraphDefinition;
+class ResourceId_t;
 
 class IBaseAnimGraphController : public virtual ISkeletonAnimationController
 {

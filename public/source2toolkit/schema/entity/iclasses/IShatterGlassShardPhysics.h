@@ -40,11 +40,21 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "IPhysicsProp.h"
 
-#include "shard_model_desc_t.h"
+class shard_model_desc_t;
 
 class IShatterGlassShardPhysics : public virtual IPhysicsProp
 {

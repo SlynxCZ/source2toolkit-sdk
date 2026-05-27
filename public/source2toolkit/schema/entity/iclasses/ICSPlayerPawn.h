@@ -40,13 +40,21 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "ICSPlayerPawnBase.h"
 
-#include "CEconItemView.h"
 #include "../enums/CSPlayerBlockingUseAction_t.h"
-#include "EntitySpottedState_t.h"
 #include "../enums/loadout_slot_t.h"
 
 class CBaseEntity;
@@ -58,6 +66,8 @@ class CCSPlayer_BuyServices;
 class CCSPlayer_DamageReactServices;
 class CCSPlayer_HostageServices;
 class CCSPlayer_RadioServices;
+class CEconItemView;
+class EntitySpottedState_t;
 
 class ICSPlayerPawn : public virtual ICSPlayerPawnBase
 {

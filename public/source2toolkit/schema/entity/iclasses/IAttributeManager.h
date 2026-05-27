@@ -40,11 +40,21 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
-#include "CAttributeManager__cached_attribute_float_t.h"
 #include "../enums/attributeprovidertypes_t.h"
 
+class CAttributeManager__cached_attribute_float_t;
 class CBaseEntity;
 
 class IAttributeManager

@@ -40,12 +40,22 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
 
-#include "SceneOpportunityHandle_t.h"
-#include "SceneRequestHandle_t.h"
+class SceneOpportunityHandle_t;
+class SceneRequestHandle_t;
 
 class IInfoInteraction : public virtual IPointEntity
 {

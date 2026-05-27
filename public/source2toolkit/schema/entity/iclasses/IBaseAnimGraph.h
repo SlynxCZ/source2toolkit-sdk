@@ -40,16 +40,25 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
 
-#include "CAnimGraphControllerManager.h"
-#include "PhysicsRagdollPose_t.h"
-
 class CAnimGraphControllerBase;
+class CAnimGraphControllerManager;
 class IChoreoServices;
 class IPhysicsRagdollControl;
+class PhysicsRagdollPose_t;
 
 class IBaseAnimGraph : public virtual IBaseModelEntity
 {

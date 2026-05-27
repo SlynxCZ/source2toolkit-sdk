@@ -40,10 +40,21 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "../enums/SurroundingBoundsType_t.h"
-#include "VPhysicsCollisionAttribute_t.h"
+
+class VPhysicsCollisionAttribute_t;
 
 class ICollisionProperty
 {

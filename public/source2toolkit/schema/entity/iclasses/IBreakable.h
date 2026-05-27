@@ -40,11 +40,20 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
 
-#include "CPropDataComponent.h"
 #include "../enums/EOverrideBlockLOS_t.h"
 #include "../enums/Explosions.h"
 #include "../enums/Materials.h"
@@ -52,6 +61,7 @@
 
 class CBaseEntity;
 class CBasePlayerPawn;
+class CPropDataComponent;
 
 class IBreakable : public virtual IBaseModelEntity
 {

@@ -40,14 +40,24 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "IDynamicProp.h"
 
 #include "../enums/DoorState_t.h"
-#include "locksound_t.h"
 
 class CBaseEntity;
+class locksound_t;
 
 class IBasePropDoor : public virtual IDynamicProp
 {

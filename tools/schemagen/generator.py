@@ -166,6 +166,42 @@ def _effective_parent(
     return p
 
 
+# Game SDK headers always included in interface files (provide Vector, CHandle, CUtlVector, etc.)
+_IFACE_SDK_INCLUDES = [
+    '#include "igameevents.h"',
+    '#include "ehandle.h"',
+    '#include "entityhandle.h"',
+    '#include "vector.h"',
+    '#include "utlsymbol.h"',
+    '#include "utlsymbollarge.h"',
+    '#include "utlstring.h"',
+    '#include "utlstringtoken.h"',
+    '#include "source2toolkit/IToolkitTypes.h"',
+    '#include "source2toolkit/schema/entityio.h"',
+    "#include <cstdint>",
+]
+
+
+def _collect_interface_refs(
+    t: SchemaFieldType,
+    all_enums: dict[str, SchemaEnum],
+    enum_includes: set[str],
+    forwards: set[str],
+) -> None:
+    """Collect enum includes and class forward declarations for interface headers.
+
+    Class types are never included; they are only forward-declared.
+    """
+    if t.category == SchemaTypeCategory.DeclaredEnum:
+        if t.name not in HARD_SKIP_ENUMS:
+            enum_includes.add(t.name)
+    elif t.category == SchemaTypeCategory.DeclaredClass:
+        if t.name not in HARD_SKIP_CLASSES:
+            forwards.add(t.name)
+    if t.inner is not None:
+        _collect_interface_refs(t.inner, all_enums, enum_includes, forwards)
+
+
 # ---------------------------------------------------------------------------
 # Interface header generation
 # ---------------------------------------------------------------------------
@@ -177,18 +213,19 @@ def write_interface_header(
     all_classes: dict[str, SchemaClass],
     generated: set[str],
 ) -> str:
-    """Generate IFoo.h – a pure virtual interface for class_name."""
+    """Generate IFoo.h – a pure virtual interface for class_name.
+
+    Class types used in method signatures are forward-declared only;
+    no generated classes/*.h headers are included.
+    """
 
     i_class_name = _interface_name(class_name)
 
     parent = _effective_parent(schema_class, generated)
     i_parent_name = _interface_name(parent) if parent else None
 
-    includes: set[str] = set()
+    enum_includes: set[str] = set()
     forwards: set[str] = set()
-
-    if i_parent_name:
-        includes.add(f"_iface_{parent}")  # sentinel for interface include
 
     for f in schema_class.fields:
         if f.type.category == SchemaTypeCategory.Bitfield:
@@ -197,16 +234,9 @@ def write_interface_header(
             continue
         if contains_ignored_type(f.type):
             continue
-        collect_referenced_types(
-            f.type,
-            includes,
-            forwards,
-            _is_pointer_field(f) or f.type.category == SchemaTypeCategory.Ptr,
-        )
+        _collect_interface_refs(f.type, all_enums, enum_includes, forwards)
 
-    includes.discard(class_name)
     forwards.discard(class_name)
-    forwards -= includes
 
     guard = make_header_guard(i_class_name)
     lines = [
@@ -215,26 +245,18 @@ def write_interface_header(
         "",
         "#pragma once",
         "",
-        "#include <cstdint>",
-        "",
     ]
+
+    lines += _IFACE_SDK_INCLUDES
+    lines.append("")
 
     if i_parent_name:
         lines.append(f'#include "{i_parent_name}.h"')
         lines.append("")
 
-    for inc in sorted(includes):
-        if inc.startswith("_iface_"):
-            continue
-        if inc in all_enums and inc not in HARD_SKIP_ENUMS:
-            lines.append(f'#include "../enums/{sanitise_type_name(inc)}.h"')
-        elif inc in all_classes:
-            lines.append(f'#include "{sanitise_type_name(inc)}.h"')
-
-    has_regular_includes = any(
-        not inc.startswith("_iface_") for inc in includes
-    )
-    if has_regular_includes:
+    for e in sorted(enum_includes):
+        lines.append(f'#include "../enums/{sanitise_type_name(e)}.h"')
+    if enum_includes:
         lines.append("")
 
     for fwd in sorted(forwards):

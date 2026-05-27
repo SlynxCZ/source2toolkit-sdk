@@ -40,6 +40,16 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
@@ -49,11 +59,11 @@
 #include "../enums/CFuncMover__Move_t.h"
 #include "../enums/CFuncMover__OrientationUpdate_t.h"
 #include "../enums/CFuncMover__TransitionToPathNodeAction_t.h"
-#include "FuncMoverMovementSummary_t.h"
 
 class CBaseEntity;
 class CMoverPathNode;
 class CPathMover;
+class FuncMoverMovementSummary_t;
 
 class IFuncMover : public virtual IBaseModelEntity
 {

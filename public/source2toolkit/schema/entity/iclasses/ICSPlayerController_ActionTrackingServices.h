@@ -40,12 +40,22 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "IPlayerControllerComponent.h"
 
-#include "CSMatchStats_t.h"
-#include "CSPerRoundStats_t.h"
+class CSMatchStats_t;
+class CSPerRoundStats_t;
 
 class ICSPlayerController_ActionTrackingServices : public virtual IPlayerControllerComponent
 {

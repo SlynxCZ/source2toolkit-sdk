@@ -1068,7 +1068,13 @@ def write_class(
 
 def main() -> None:
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    output_path = sys.argv[1] if len(sys.argv) > 1 else os.path.join(
+
+    # classes_output: CXxx internal classes go into the core (private, not SDK public)
+    # enums_output:   enum definitions stay in SDK public (stable, plugins need them)
+    classes_output = sys.argv[1] if len(sys.argv) > 1 else os.path.join(
+        script_dir, "../../../source2toolkit/src/schema/entity"
+    )
+    enums_output = sys.argv[2] if len(sys.argv) > 2 else os.path.join(
         script_dir, "../../public/source2toolkit/schema/entity"
     )
 
@@ -1089,17 +1095,16 @@ def main() -> None:
     visited = build_graph_and_bfs(all_classes)
     visited |= EXTRA_WHITELIST
 
-    # Clear existing .h files
-    if os.path.isdir(output_path):
-        for root, _, files in os.walk(output_path):
-            for fname in files:
-                if fname.endswith(".h"):
-                    os.remove(os.path.join(root, fname))
+    enums_dir = os.path.join(enums_output, "enums")
+    classes_dir = os.path.join(classes_output, "classes")
 
-    enums_dir = os.path.join(output_path, "enums")
-    classes_dir = os.path.join(output_path, "classes")
-    os.makedirs(enums_dir, exist_ok=True)
-    os.makedirs(classes_dir, exist_ok=True)
+    # Clear existing .h files in each output dir separately
+    for out_dir in (enums_dir, classes_dir):
+        if os.path.isdir(out_dir):
+            for fname in os.listdir(out_dir):
+                if fname.endswith(".h"):
+                    os.remove(os.path.join(out_dir, fname))
+        os.makedirs(out_dir, exist_ok=True)
 
     for enum_name, schema_enum in all_enums.items():
         if enum_name in HARD_SKIP_ENUMS:
@@ -1109,6 +1114,7 @@ def main() -> None:
         with open(out_file, "w", encoding="utf-8", newline="") as fh:
             fh.write(content)
 
+    classes_written = 0
     for class_name, schema_class in all_classes.items():
         if class_name in HARD_SKIP_CLASSES:
             continue
@@ -1118,8 +1124,13 @@ def main() -> None:
         out_file = os.path.join(classes_dir, f"{sanitise_type_name(class_name)}.h")
         with open(out_file, "w", encoding="utf-8", newline="") as fh:
             fh.write(content)
+        classes_written += 1
 
-    print(f"Done. Classes: {len(all_classes)}, Enums: {len(all_enums)}, Classes written to {output_path}")
+    print(
+        f"Done.\n"
+        f"  Classes ({classes_written}): {classes_dir}\n"
+        f"  Enums   ({len(all_enums)}):  {enums_dir}"
+    )
 
 if __name__ == "__main__":
     main()

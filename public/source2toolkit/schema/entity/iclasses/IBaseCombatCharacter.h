@@ -40,15 +40,25 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "IBaseAnimGraph.h"
 
-#include "CMovementStatsProperty.h"
 #include "../enums/Hull_t.h"
-#include "RelationshipOverride_t.h"
 
 class CEconWearable;
+class CMovementStatsProperty;
+class RelationshipOverride_t;
 
 class IBaseCombatCharacter : public virtual IBaseAnimGraph
 {

@@ -40,12 +40,22 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "ISoundOpvarSetPointEntity.h"
 
-#include "AutoRoomDoorwayPairs_t.h"
-#include "SoundOpvarTraceResult_t.h"
+class AutoRoomDoorwayPairs_t;
+class SoundOpvarTraceResult_t;
 
 class ISoundOpvarSetAutoRoomEntity : public virtual ISoundOpvarSetPointEntity
 {

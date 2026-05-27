@@ -40,11 +40,21 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
-#include "SceneEventId_t.h"
-
 class CBaseModelEntity;
+class CEntityInstance*;
+class SceneEventId_t;
 
 class IChoreoComponent
 {

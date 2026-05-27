@@ -40,13 +40,22 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "IPlayerPawnComponent.h"
 
-#include "WeaponPurchaseTracker_t.h"
-
 class CBasePlayerWeapon;
+class WeaponPurchaseTracker_t;
 
 class ICSPlayer_ActionTrackingServices : public virtual IPlayerPawnComponent
 {

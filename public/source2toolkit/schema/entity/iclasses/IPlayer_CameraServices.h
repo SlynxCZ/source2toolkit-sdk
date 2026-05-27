@@ -40,18 +40,27 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "IPlayerPawnComponent.h"
-
-#include "audioparams_t.h"
-#include "fogplayerparams_t.h"
 
 class CBaseEntity;
 class CColorCorrection;
 class CEnvSoundscapeTriggerable;
 class CPostProcessingVolume;
 class CTonemapController2;
+class audioparams_t;
+class fogplayerparams_t;
 
 class IPlayer_CameraServices : public virtual IPlayerPawnComponent
 {

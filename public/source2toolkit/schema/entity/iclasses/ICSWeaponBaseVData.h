@@ -40,17 +40,28 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "IBasePlayerWeaponVData.h"
 
-#include "CFiringModeFloat.h"
-#include "CFiringModeInt.h"
 #include "../enums/CSWeaponCategory.h"
 #include "../enums/CSWeaponSilencerType.h"
 #include "../enums/CSWeaponType.h"
 #include "../enums/gear_slot_t.h"
 #include "../enums/loadout_slot_t.h"
+
+class CFiringModeFloat;
+class CFiringModeInt;
 
 class ICSWeaponBaseVData : public virtual IBasePlayerWeaponVData
 {

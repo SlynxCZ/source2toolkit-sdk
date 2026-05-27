@@ -40,15 +40,25 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "IBasePlayerPawn.h"
 
 #include "../enums/CSPlayerState.h"
-#include "CTouchExpansionComponent.h"
 
 class CCSPlayerController;
 class CCSPlayer_PingServices;
+class CTouchExpansionComponent;
 
 class ICSPlayerPawnBase : public virtual IBasePlayerPawn
 {

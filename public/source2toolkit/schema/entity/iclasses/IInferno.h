@@ -40,13 +40,23 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
 
-#include "CountdownTimer.h"
-#include "Extent.h"
-#include "IntervalTimer.h"
+class CountdownTimer;
+class Extent;
+class IntervalTimer;
 
 class IInferno : public virtual IBaseModelEntity
 {

@@ -40,17 +40,27 @@
 
 #pragma once
 
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
 
 #include "../enums/CFuncRotator__Rotate_t.h"
-#include "RotatorHistoryEntry_t.h"
-#include "RotatorQueueEntry_t.h"
 #include "../enums/RotatorTargetSpace_t.h"
 
 class CBaseEntity;
 class CFuncMover;
+class RotatorHistoryEntry_t;
+class RotatorQueueEntry_t;
 
 class IFuncRotator : public virtual IBaseModelEntity
 {
