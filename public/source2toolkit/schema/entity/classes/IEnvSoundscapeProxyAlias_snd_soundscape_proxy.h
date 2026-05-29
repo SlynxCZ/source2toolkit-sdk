@@ -63,6 +63,7 @@ public:
     virtual ~IEnvSoundscapeProxyAlias_snd_soundscape_proxy() = default;
 
     static IEnvSoundscapeProxyAlias_snd_soundscape_proxy* FromOriginal(CEnvSoundscapeProxyAlias_snd_soundscape_proxy* p);
+    static IEnvSoundscapeProxyAlias_snd_soundscape_proxy* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVSOUNDSCAPEPROXYALIAS_SND_SOUNDSCAPE_PROXY_H

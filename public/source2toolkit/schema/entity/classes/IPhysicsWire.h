@@ -65,6 +65,7 @@ public:
     virtual int32_t& Density() = 0;
     virtual void DensityUpdated() = 0;
     static IPhysicsWire* FromOriginal(CPhysicsWire* p);
+    static IPhysicsWire* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSICSWIRE_H

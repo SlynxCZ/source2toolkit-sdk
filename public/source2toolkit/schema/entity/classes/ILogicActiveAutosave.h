@@ -71,6 +71,7 @@ public:
     virtual float& DangerousTime() = 0;
     virtual void DangerousTimeUpdated() = 0;
     static ILogicActiveAutosave* FromOriginal(CLogicActiveAutosave* p);
+    static ILogicActiveAutosave* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICACTIVEAUTOSAVE_H

@@ -65,13 +65,12 @@ public:
 
     virtual CHandle<CBaseEntity>& MeasureTarget() = 0;
     virtual void MeasureTargetUpdated() = 0;
-    virtual CUtlSymbolLarge& MeasureTarget() = 0;
-    virtual void MeasureTargetUpdated() = 0;
     virtual float& Radius() = 0;
     virtual void RadiusUpdated() = 0;
     virtual int32_t& Touchers() = 0;
     virtual void TouchersUpdated() = 0;
     static ITriggerProximity* FromOriginal(CTriggerProximity* p);
+    static ITriggerProximity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERPROXIMITY_H

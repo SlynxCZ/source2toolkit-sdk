@@ -73,6 +73,7 @@ public:
     virtual int32_t& DontMessageParent() = 0;
     virtual void DontMessageParentUpdated() = 0;
     static ITriggerBrush* FromOriginal(CTriggerBrush* p);
+    static ITriggerBrush* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERBRUSH_H

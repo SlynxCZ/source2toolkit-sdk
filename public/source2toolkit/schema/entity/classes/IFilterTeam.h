@@ -65,6 +65,7 @@ public:
     virtual int32_t& FilterTeam() = 0;
     virtual void FilterTeamUpdated() = 0;
     static IFilterTeam* FromOriginal(CFilterTeam* p);
+    static IFilterTeam* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFILTERTEAM_H

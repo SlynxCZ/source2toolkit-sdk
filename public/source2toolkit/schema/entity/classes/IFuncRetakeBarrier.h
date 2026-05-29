@@ -63,6 +63,7 @@ public:
     virtual ~IFuncRetakeBarrier() = default;
 
     static IFuncRetakeBarrier* FromOriginal(CFuncRetakeBarrier* p);
+    static IFuncRetakeBarrier* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCRETAKEBARRIER_H

@@ -71,6 +71,7 @@ public:
     virtual CSkyCamera*& Next() = 0;
     virtual void NextUpdated() = 0;
     static ISkyCamera* FromOriginal(CSkyCamera* p);
+    static ISkyCamera* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISKYCAMERA_H

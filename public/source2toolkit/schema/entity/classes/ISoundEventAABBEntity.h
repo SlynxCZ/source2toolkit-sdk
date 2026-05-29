@@ -67,6 +67,7 @@ public:
     virtual Vector& Maxs() = 0;
     virtual void MaxsUpdated() = 0;
     static ISoundEventAABBEntity* FromOriginal(CSoundEventAABBEntity* p);
+    static ISoundEventAABBEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISOUNDEVENTAABBENTITY_H

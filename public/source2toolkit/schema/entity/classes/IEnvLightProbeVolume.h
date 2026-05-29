@@ -108,6 +108,7 @@ public:
     virtual bool& Entity_bEnabled() = 0;
     virtual void Entity_bEnabledUpdated() = 0;
     static IEnvLightProbeVolume* FromOriginal(CEnvLightProbeVolume* p);
+    static IEnvLightProbeVolume* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVLIGHTPROBEVOLUME_H

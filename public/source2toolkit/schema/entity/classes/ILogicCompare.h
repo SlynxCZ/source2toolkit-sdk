@@ -67,6 +67,7 @@ public:
     virtual float& CompareValue() = 0;
     virtual void CompareValueUpdated() = 0;
     static ILogicCompare* FromOriginal(CLogicCompare* p);
+    static ILogicCompare* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICCOMPARE_H

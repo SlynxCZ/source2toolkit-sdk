@@ -63,6 +63,7 @@ public:
     virtual ~IMultiplayRules() = default;
 
     static IMultiplayRules* FromOriginal(CMultiplayRules* p);
+    static IMultiplayRules* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMULTIPLAYRULES_H

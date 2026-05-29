@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponMAC10() = default;
 
     static IWeaponMAC10* FromOriginal(CWeaponMAC10* p);
+    static IWeaponMAC10* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONMAC10_H

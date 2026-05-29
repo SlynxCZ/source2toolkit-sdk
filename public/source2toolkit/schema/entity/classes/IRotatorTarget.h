@@ -69,6 +69,7 @@ public:
     virtual ::RotatorTargetSpace_t& Space() = 0;
     virtual void SpaceUpdated() = 0;
     static IRotatorTarget* FromOriginal(CRotatorTarget* p);
+    static IRotatorTarget* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IROTATORTARGET_H

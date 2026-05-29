@@ -65,6 +65,7 @@ public:
     virtual float& FilterMass() = 0;
     virtual void FilterMassUpdated() = 0;
     static IFilterMassGreater* FromOriginal(CFilterMassGreater* p);
+    static IFilterMassGreater* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFILTERMASSGREATER_H

@@ -81,6 +81,7 @@ public:
     virtual float& WindDirectionVariationMultiplier() = 0;
     virtual void WindDirectionVariationMultiplierUpdated() = 0;
     static IEnvWindVolume* FromOriginal(CEnvWindVolume* p);
+    static IEnvWindVolume* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVWINDVOLUME_H

@@ -65,6 +65,7 @@ public:
     virtual int32_t& TotalHitsOnServer() = 0;
     virtual void TotalHitsOnServerUpdated() = 0;
     static ICSPlayer_BulletServices* FromOriginal(CCSPlayer_BulletServices* p);
+    static ICSPlayer_BulletServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_BULLETSERVICES_H

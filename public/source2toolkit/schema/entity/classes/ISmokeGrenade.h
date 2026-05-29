@@ -63,6 +63,7 @@ public:
     virtual ~ISmokeGrenade() = default;
 
     static ISmokeGrenade* FromOriginal(CSmokeGrenade* p);
+    static ISmokeGrenade* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISMOKEGRENADE_H

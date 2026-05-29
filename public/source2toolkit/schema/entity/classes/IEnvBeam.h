@@ -105,6 +105,7 @@ public:
     virtual ::CEntityIOOutput& OnTouchedByEntity() = 0;
     virtual void OnTouchedByEntityUpdated() = 0;
     static IEnvBeam* FromOriginal(CEnvBeam* p);
+    static IEnvBeam* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVBEAM_H

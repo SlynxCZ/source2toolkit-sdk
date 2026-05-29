@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponAug() = default;
 
     static IWeaponAug* FromOriginal(CWeaponAug* p);
+    static IWeaponAug* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONAUG_H

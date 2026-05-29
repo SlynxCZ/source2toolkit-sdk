@@ -71,6 +71,7 @@ public:
     virtual uint16_t& DecoyWeaponDefIndex() = 0;
     virtual void DecoyWeaponDefIndexUpdated() = 0;
     static IDecoyProjectile* FromOriginal(CDecoyProjectile* p);
+    static IDecoyProjectile* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IDECOYPROJECTILE_H

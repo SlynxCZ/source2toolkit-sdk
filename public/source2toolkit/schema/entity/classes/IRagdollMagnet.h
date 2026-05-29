@@ -71,6 +71,7 @@ public:
     virtual Vector& Axis() = 0;
     virtual void AxisUpdated() = 0;
     static IRagdollMagnet* FromOriginal(CRagdollMagnet* p);
+    static IRagdollMagnet* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IRAGDOLLMAGNET_H

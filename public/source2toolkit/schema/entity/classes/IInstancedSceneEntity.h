@@ -78,6 +78,7 @@ public:
     virtual CHandle<CBaseEntity>& Target() = 0;
     virtual void TargetUpdated() = 0;
     static IInstancedSceneEntity* FromOriginal(CInstancedSceneEntity* p);
+    static IInstancedSceneEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINSTANCEDSCENEENTITY_H

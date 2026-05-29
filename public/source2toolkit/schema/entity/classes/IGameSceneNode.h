@@ -107,6 +107,7 @@ public:
     virtual Vector& RenderOrigin() = 0;
     virtual void RenderOriginUpdated() = 0;
     static IGameSceneNode* FromOriginal(CGameSceneNode* p);
+    static IGameSceneNode* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IGAMESCENENODE_H

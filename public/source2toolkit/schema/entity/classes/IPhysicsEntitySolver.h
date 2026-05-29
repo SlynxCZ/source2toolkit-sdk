@@ -72,6 +72,7 @@ public:
     virtual float& CancelTime() = 0;
     virtual void CancelTimeUpdated() = 0;
     static IPhysicsEntitySolver* FromOriginal(CPhysicsEntitySolver* p);
+    static IPhysicsEntitySolver* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSICSENTITYSOLVER_H

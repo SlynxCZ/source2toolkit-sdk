@@ -63,6 +63,7 @@ public:
     virtual ~ICSWeaponBaseShotgun() = default;
 
     static ICSWeaponBaseShotgun* FromOriginal(CCSWeaponBaseShotgun* p);
+    static ICSWeaponBaseShotgun* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSWEAPONBASESHOTGUN_H

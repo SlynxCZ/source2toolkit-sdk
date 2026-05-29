@@ -63,6 +63,7 @@ public:
     virtual ~ILogicScript() = default;
 
     static ILogicScript* FromOriginal(CLogicScript* p);
+    static ILogicScript* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICSCRIPT_H

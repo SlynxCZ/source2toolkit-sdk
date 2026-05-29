@@ -67,6 +67,7 @@ public:
     virtual CHandle<CPlayerPing>& PlayerPing() = 0;
     virtual void PlayerPingUpdated() = 0;
     static ICSPlayer_PingServices* FromOriginal(CCSPlayer_PingServices* p);
+    static ICSPlayer_PingServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_PINGSERVICES_H

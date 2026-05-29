@@ -74,6 +74,7 @@ public:
     virtual bool& SetBonus() = 0;
     virtual void SetBonusUpdated() = 0;
     static IEconItemAttribute* FromOriginal(CEconItemAttribute* p);
+    static IEconItemAttribute* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IECONITEMATTRIBUTE_H

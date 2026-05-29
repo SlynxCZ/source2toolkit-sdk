@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponFamas() = default;
 
     static IWeaponFamas* FromOriginal(CWeaponFamas* p);
+    static IWeaponFamas* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONFAMAS_H

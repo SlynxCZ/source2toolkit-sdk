@@ -63,6 +63,7 @@ public:
     virtual ~IPrecipitation() = default;
 
     static IPrecipitation* FromOriginal(CPrecipitation* p);
+    static IPrecipitation* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPRECIPITATION_H

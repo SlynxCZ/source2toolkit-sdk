@@ -63,6 +63,7 @@ public:
     virtual ~IPhysicsPropOverride() = default;
 
     static IPhysicsPropOverride* FromOriginal(CPhysicsPropOverride* p);
+    static IPhysicsPropOverride* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSICSPROPOVERRIDE_H

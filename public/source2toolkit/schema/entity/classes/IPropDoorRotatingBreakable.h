@@ -71,6 +71,7 @@ public:
     virtual CUtlVector<CUtlSymbolLarge>& DamageStates() = 0;
     virtual void DamageStatesUpdated() = 0;
     static IPropDoorRotatingBreakable* FromOriginal(CPropDoorRotatingBreakable* p);
+    static IPropDoorRotatingBreakable* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPROPDOORROTATINGBREAKABLE_H

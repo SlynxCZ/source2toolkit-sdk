@@ -63,6 +63,7 @@ public:
     virtual ~IMoverPathNode() = default;
 
     static IMoverPathNode* FromOriginal(CMoverPathNode* p);
+    static IMoverPathNode* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMOVERPATHNODE_H

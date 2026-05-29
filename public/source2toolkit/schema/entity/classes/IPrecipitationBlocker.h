@@ -63,6 +63,7 @@ public:
     virtual ~IPrecipitationBlocker() = default;
 
     static IPrecipitationBlocker* FromOriginal(CPrecipitationBlocker* p);
+    static IPrecipitationBlocker* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPRECIPITATIONBLOCKER_H

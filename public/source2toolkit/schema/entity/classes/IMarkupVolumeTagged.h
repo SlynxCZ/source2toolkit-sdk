@@ -77,6 +77,7 @@ public:
     virtual bool& IsInGroup() = 0;
     virtual void IsInGroupUpdated() = 0;
     static IMarkupVolumeTagged* FromOriginal(CMarkupVolumeTagged* p);
+    static IMarkupVolumeTagged* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMARKUPVOLUMETAGGED_H

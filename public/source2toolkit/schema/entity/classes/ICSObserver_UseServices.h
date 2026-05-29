@@ -63,6 +63,7 @@ public:
     virtual ~ICSObserver_UseServices() = default;
 
     static ICSObserver_UseServices* FromOriginal(CCSObserver_UseServices* p);
+    static ICSObserver_UseServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSOBSERVER_USESERVICES_H

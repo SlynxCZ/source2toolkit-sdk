@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponSCAR20() = default;
 
     static IWeaponSCAR20* FromOriginal(CWeaponSCAR20* p);
+    static IWeaponSCAR20* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONSCAR20_H

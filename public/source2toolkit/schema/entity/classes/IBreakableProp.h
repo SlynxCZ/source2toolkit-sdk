@@ -133,6 +133,7 @@ public:
     virtual bool& OriginalBlockLOS() = 0;
     virtual void OriginalBlockLOSUpdated() = 0;
     static IBreakableProp* FromOriginal(CBreakableProp* p);
+    static IBreakableProp* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBREAKABLEPROP_H

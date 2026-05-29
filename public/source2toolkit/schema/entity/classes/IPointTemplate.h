@@ -84,6 +84,7 @@ public:
     virtual CUtlVector<CEntityHandle>& SpawnedEntityHandles() = 0;
     virtual void SpawnedEntityHandlesUpdated() = 0;
     static IPointTemplate* FromOriginal(CPointTemplate* p);
+    static IPointTemplate* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTTEMPLATE_H

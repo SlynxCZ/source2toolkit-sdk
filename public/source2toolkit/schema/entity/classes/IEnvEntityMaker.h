@@ -88,6 +88,7 @@ public:
     virtual ::CEntityIOOutput& OutputOnFailedSpawn() = 0;
     virtual void OutputOnFailedSpawnUpdated() = 0;
     static IEnvEntityMaker* FromOriginal(CEnvEntityMaker* p);
+    static IEnvEntityMaker* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVENTITYMAKER_H

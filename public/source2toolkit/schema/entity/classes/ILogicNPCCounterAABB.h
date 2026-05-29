@@ -71,6 +71,7 @@ public:
     virtual Vector& OuterMaxs() = 0;
     virtual void OuterMaxsUpdated() = 0;
     static ILogicNPCCounterAABB* FromOriginal(CLogicNPCCounterAABB* p);
+    static ILogicNPCCounterAABB* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICNPCCOUNTERAABB_H

@@ -75,6 +75,7 @@ public:
     virtual bool& Succeeded() = 0;
     virtual void SucceededUpdated() = 0;
     static ILogicCollisionPair* FromOriginal(CLogicCollisionPair* p);
+    static ILogicCollisionPair* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICCOLLISIONPAIR_H

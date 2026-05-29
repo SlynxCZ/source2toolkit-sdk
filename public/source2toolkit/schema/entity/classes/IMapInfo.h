@@ -93,6 +93,7 @@ public:
     virtual float& EnvWetnessDryingAmount() = 0;
     virtual void EnvWetnessDryingAmountUpdated() = 0;
     static IMapInfo* FromOriginal(CMapInfo* p);
+    static IMapInfo* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMAPINFO_H

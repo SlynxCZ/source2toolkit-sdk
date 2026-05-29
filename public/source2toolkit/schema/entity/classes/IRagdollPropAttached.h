@@ -75,6 +75,7 @@ public:
     virtual bool& ShouldDeleteAttachedActivationRecord() = 0;
     virtual void ShouldDeleteAttachedActivationRecordUpdated() = 0;
     static IRagdollPropAttached* FromOriginal(CRagdollPropAttached* p);
+    static IRagdollPropAttached* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IRAGDOLLPROPATTACHED_H

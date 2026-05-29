@@ -63,6 +63,7 @@ public:
     virtual ~IPlayer_UseServices() = default;
 
     static IPlayer_UseServices* FromOriginal(CPlayer_UseServices* p);
+    static IPlayer_UseServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPLAYER_USESERVICES_H

@@ -207,6 +207,7 @@ public:
     virtual bool& PvsModifyEntity() = 0;
     virtual void PvsModifyEntityUpdated() = 0;
     static ILightComponent* FromOriginal(CLightComponent* p);
+    static ILightComponent* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILIGHTCOMPONENT_H

@@ -63,6 +63,7 @@ public:
     virtual ~ICSMinimapBoundary() = default;
 
     static ICSMinimapBoundary* FromOriginal(CCSMinimapBoundary* p);
+    static ICSMinimapBoundary* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSMINIMAPBOUNDARY_H

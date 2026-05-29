@@ -64,6 +64,7 @@ public:
     virtual CInfoDeathmatchSpawn* GetOriginal() const = 0;
 
     static IInfoDeathmatchSpawn* FromOriginal(CInfoDeathmatchSpawn* p);
+    static IInfoDeathmatchSpawn* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINFODEATHMATCHSPAWN_H

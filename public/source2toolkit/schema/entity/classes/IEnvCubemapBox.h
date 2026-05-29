@@ -63,6 +63,7 @@ public:
     virtual ~IEnvCubemapBox() = default;
 
     static IEnvCubemapBox* FromOriginal(CEnvCubemapBox* p);
+    static IEnvCubemapBox* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVCUBEMAPBOX_H

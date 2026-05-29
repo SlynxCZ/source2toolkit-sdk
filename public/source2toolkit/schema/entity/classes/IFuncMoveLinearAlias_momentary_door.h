@@ -63,6 +63,7 @@ public:
     virtual ~IFuncMoveLinearAlias_momentary_door() = default;
 
     static IFuncMoveLinearAlias_momentary_door* FromOriginal(CFuncMoveLinearAlias_momentary_door* p);
+    static IFuncMoveLinearAlias_momentary_door* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCMOVELINEARALIAS_MOMENTARY_DOOR_H

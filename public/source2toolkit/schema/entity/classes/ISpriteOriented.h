@@ -63,6 +63,7 @@ public:
     virtual ~ISpriteOriented() = default;
 
     static ISpriteOriented* FromOriginal(CSpriteOriented* p);
+    static ISpriteOriented* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISPRITEORIENTED_H

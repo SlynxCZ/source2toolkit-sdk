@@ -63,6 +63,7 @@ public:
     virtual ~IPointServerCommand() = default;
 
     static IPointServerCommand* FromOriginal(CPointServerCommand* p);
+    static IPointServerCommand* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTSERVERCOMMAND_H

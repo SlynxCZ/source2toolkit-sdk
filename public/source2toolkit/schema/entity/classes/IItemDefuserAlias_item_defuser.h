@@ -63,6 +63,7 @@ public:
     virtual ~IItemDefuserAlias_item_defuser() = default;
 
     static IItemDefuserAlias_item_defuser* FromOriginal(CItemDefuserAlias_item_defuser* p);
+    static IItemDefuserAlias_item_defuser* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IITEMDEFUSERALIAS_ITEM_DEFUSER_H

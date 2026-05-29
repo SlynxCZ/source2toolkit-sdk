@@ -65,6 +65,7 @@ public:
     virtual Vector& LocalOrigin() = 0;
     virtual void LocalOriginUpdated() = 0;
     static IPhysThruster* FromOriginal(CPhysThruster* p);
+    static IPhysThruster* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSTHRUSTER_H

@@ -84,6 +84,7 @@ public:
     virtual int32_t& MotionDisabledSpawnFlag() = 0;
     virtual void MotionDisabledSpawnFlagUpdated() = 0;
     static IPropDataComponent* FromOriginal(CPropDataComponent* p);
+    static IPropDataComponent* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPROPDATACOMPONENT_H

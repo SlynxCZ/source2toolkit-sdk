@@ -77,6 +77,7 @@ public:
     virtual CHandle<CCSPlayerPawn>& BombPlanter() = 0;
     virtual void BombPlanterUpdated() = 0;
     static IRetakeGameRules* FromOriginal(CRetakeGameRules* p);
+    static IRetakeGameRules* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IRETAKEGAMERULES_H

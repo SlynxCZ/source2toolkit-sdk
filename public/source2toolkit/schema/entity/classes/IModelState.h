@@ -94,6 +94,7 @@ public:
     virtual int8_t& ClothUpdateFlags() = 0;
     virtual void ClothUpdateFlagsUpdated() = 0;
     static IModelState* FromOriginal(CModelState* p);
+    static IModelState* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMODELSTATE_H

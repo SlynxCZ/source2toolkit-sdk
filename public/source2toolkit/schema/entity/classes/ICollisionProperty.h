@@ -101,6 +101,7 @@ public:
     virtual float& CapsuleRadius() = 0;
     virtual void CapsuleRadiusUpdated() = 0;
     static ICollisionProperty* FromOriginal(CCollisionProperty* p);
+    static ICollisionProperty* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICOLLISIONPROPERTY_H

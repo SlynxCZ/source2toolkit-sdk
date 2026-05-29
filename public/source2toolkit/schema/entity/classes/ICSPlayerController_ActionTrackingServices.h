@@ -75,6 +75,7 @@ public:
     virtual float& TotalRoundDamageDealt() = 0;
     virtual void TotalRoundDamageDealtUpdated() = 0;
     static ICSPlayerController_ActionTrackingServices* FromOriginal(CCSPlayerController_ActionTrackingServices* p);
+    static ICSPlayerController_ActionTrackingServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYERCONTROLLER_ACTIONTRACKINGSERVICES_H

@@ -85,6 +85,7 @@ public:
     virtual bool& FastRefresh() = 0;
     virtual void FastRefreshUpdated() = 0;
     static ISoundOpvarSetPointBase* FromOriginal(CSoundOpvarSetPointBase* p);
+    static ISoundOpvarSetPointBase* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISOUNDOPVARSETPOINTBASE_H

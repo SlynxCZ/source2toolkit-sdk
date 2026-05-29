@@ -136,6 +136,7 @@ public:
     virtual bool& FirstTime() = 0;
     virtual void FirstTimeUpdated() = 0;
     static IEnvVolumetricFogController* FromOriginal(CEnvVolumetricFogController* p);
+    static IEnvVolumetricFogController* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVVOLUMETRICFOGCONTROLLER_H

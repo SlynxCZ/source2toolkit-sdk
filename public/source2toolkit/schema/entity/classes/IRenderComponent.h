@@ -74,6 +74,7 @@ public:
     virtual bool& InterpolationReadyToDraw() = 0;
     virtual void InterpolationReadyToDrawUpdated() = 0;
     static IRenderComponent* FromOriginal(CRenderComponent* p);
+    static IRenderComponent* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IRENDERCOMPONENT_H

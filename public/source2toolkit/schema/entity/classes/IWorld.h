@@ -63,6 +63,7 @@ public:
     virtual ~IWorld() = default;
 
     static IWorld* FromOriginal(CWorld* p);
+    static IWorld* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWORLD_H

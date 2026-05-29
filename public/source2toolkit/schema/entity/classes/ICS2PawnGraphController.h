@@ -63,6 +63,7 @@ public:
     virtual ~ICS2PawnGraphController() = default;
 
     static ICS2PawnGraphController* FromOriginal(CCS2PawnGraphController* p);
+    static ICS2PawnGraphController* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICS2PAWNGRAPHCONTROLLER_H

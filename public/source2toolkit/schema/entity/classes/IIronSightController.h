@@ -72,6 +72,7 @@ public:
     virtual float& IronSightAmountBiased() = 0;
     virtual void IronSightAmountBiasedUpdated() = 0;
     static IIronSightController* FromOriginal(CIronSightController* p);
+    static IIronSightController* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IIRONSIGHTCONTROLLER_H

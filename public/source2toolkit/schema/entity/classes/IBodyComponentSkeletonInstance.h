@@ -66,6 +66,7 @@ public:
     virtual ::CSkeletonInstance& SkeletonInstance() = 0;
     virtual void SkeletonInstanceUpdated() = 0;
     static IBodyComponentSkeletonInstance* FromOriginal(CBodyComponentSkeletonInstance* p);
+    static IBodyComponentSkeletonInstance* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBODYCOMPONENTSKELETONINSTANCE_H

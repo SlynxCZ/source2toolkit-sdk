@@ -78,6 +78,7 @@ public:
     virtual CHandle<CBaseEntity>& LastFogTrigger() = 0;
     virtual void LastFogTriggerUpdated() = 0;
     static ICSPlayerBase_CameraServices* FromOriginal(CCSPlayerBase_CameraServices* p);
+    static ICSPlayerBase_CameraServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYERBASE_CAMERASERVICES_H

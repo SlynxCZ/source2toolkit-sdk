@@ -89,6 +89,7 @@ public:
     virtual bool& Paused() = 0;
     virtual void PausedUpdated() = 0;
     static ITimerEntity* FromOriginal(CTimerEntity* p);
+    static ITimerEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITIMERENTITY_H

@@ -296,6 +296,7 @@ public:
     /// <summary>Get original controller.</summary>
     virtual ICSPlayerController* GetOriginalController() = 0;
     static ICSPlayerPawn* FromOriginal(CCSPlayerPawn* p);
+    static ICSPlayerPawn* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYERPAWN_H

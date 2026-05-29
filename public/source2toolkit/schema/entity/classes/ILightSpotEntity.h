@@ -63,6 +63,7 @@ public:
     virtual ~ILightSpotEntity() = default;
 
     static ILightSpotEntity* FromOriginal(CLightSpotEntity* p);
+    static ILightSpotEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILIGHTSPOTENTITY_H

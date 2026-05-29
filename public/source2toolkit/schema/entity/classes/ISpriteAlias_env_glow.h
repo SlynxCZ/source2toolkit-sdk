@@ -63,6 +63,7 @@ public:
     virtual ~ISpriteAlias_env_glow() = default;
 
     static ISpriteAlias_env_glow* FromOriginal(CSpriteAlias_env_glow* p);
+    static ISpriteAlias_env_glow* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISPRITEALIAS_ENV_GLOW_H

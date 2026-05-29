@@ -63,6 +63,7 @@ public:
     virtual ~IDecoyGrenade() = default;
 
     static IDecoyGrenade* FromOriginal(CDecoyGrenade* p);
+    static IDecoyGrenade* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IDECOYGRENADE_H

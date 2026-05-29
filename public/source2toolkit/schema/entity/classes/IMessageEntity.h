@@ -73,6 +73,7 @@ public:
     virtual bool& Enabled() = 0;
     virtual void EnabledUpdated() = 0;
     static IMessageEntity* FromOriginal(CMessageEntity* p);
+    static IMessageEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMESSAGEENTITY_H

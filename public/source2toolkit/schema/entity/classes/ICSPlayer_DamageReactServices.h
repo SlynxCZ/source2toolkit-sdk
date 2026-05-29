@@ -63,6 +63,7 @@ public:
     virtual ~ICSPlayer_DamageReactServices() = default;
 
     static ICSPlayer_DamageReactServices* FromOriginal(CCSPlayer_DamageReactServices* p);
+    static ICSPlayer_DamageReactServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_DAMAGEREACTSERVICES_H

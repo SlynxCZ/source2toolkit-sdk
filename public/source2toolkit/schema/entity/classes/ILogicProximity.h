@@ -63,6 +63,7 @@ public:
     virtual ~ILogicProximity() = default;
 
     static ILogicProximity* FromOriginal(CLogicProximity* p);
+    static ILogicProximity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICPROXIMITY_H

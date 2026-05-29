@@ -125,6 +125,7 @@ public:
     virtual ::CountdownTimer& BlockDirectionTimer() = 0;
     virtual void BlockDirectionTimerUpdated() = 0;
     static IChicken* FromOriginal(CChicken* p);
+    static IChicken* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICHICKEN_H

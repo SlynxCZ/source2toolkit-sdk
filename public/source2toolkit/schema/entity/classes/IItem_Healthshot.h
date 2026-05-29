@@ -63,6 +63,7 @@ public:
     virtual ~IItem_Healthshot() = default;
 
     static IItem_Healthshot* FromOriginal(CItem_Healthshot* p);
+    static IItem_Healthshot* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IITEM_HEALTHSHOT_H

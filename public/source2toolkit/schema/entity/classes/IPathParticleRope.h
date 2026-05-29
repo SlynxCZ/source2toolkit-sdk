@@ -96,6 +96,7 @@ public:
     virtual CUtlVector<float>& PathNodes_RadiusScale() = 0;
     virtual void PathNodes_RadiusScaleUpdated() = 0;
     static IPathParticleRope* FromOriginal(CPathParticleRope* p);
+    static IPathParticleRope* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPATHPARTICLEROPE_H

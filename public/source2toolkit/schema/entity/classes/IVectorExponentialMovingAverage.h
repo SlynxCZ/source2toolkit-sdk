@@ -64,6 +64,7 @@ public:
     virtual CVectorExponentialMovingAverage* GetOriginal() const = 0;
 
     static IVectorExponentialMovingAverage* FromOriginal(CVectorExponentialMovingAverage* p);
+    static IVectorExponentialMovingAverage* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IVECTOREXPONENTIALMOVINGAVERAGE_H

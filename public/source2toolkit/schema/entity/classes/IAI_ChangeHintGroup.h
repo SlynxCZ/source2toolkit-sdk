@@ -71,6 +71,7 @@ public:
     virtual float& Radius() = 0;
     virtual void RadiusUpdated() = 0;
     static IAI_ChangeHintGroup* FromOriginal(CAI_ChangeHintGroup* p);
+    static IAI_ChangeHintGroup* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IAI_CHANGEHINTGROUP_H

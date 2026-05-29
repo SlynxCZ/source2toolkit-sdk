@@ -73,6 +73,7 @@ public:
     virtual float& TLength() = 0;
     virtual void TLengthUpdated() = 0;
     static IBasePlatTrain* FromOriginal(CBasePlatTrain* p);
+    static IBasePlatTrain* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASEPLATTRAIN_H

@@ -218,6 +218,7 @@ public:
     virtual CUtlVector<uint16_t>& VisClusters() = 0;
     virtual void VisClustersUpdated() = 0;
     static IBarnLight* FromOriginal(CBarnLight* p);
+    static IBarnLight* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBARNLIGHT_H

@@ -79,6 +79,7 @@ public:
     virtual float& WindMapMax() = 0;
     virtual void WindMapMaxUpdated() = 0;
     static ISoundOpvarSetOBBWindEntity* FromOriginal(CSoundOpvarSetOBBWindEntity* p);
+    static ISoundOpvarSetOBBWindEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISOUNDOPVARSETOBBWINDENTITY_H

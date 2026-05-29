@@ -75,6 +75,7 @@ public:
     virtual bool& ForceServerConstraintsEnabled() = 0;
     virtual void ForceServerConstraintsEnabledUpdated() = 0;
     static ISkeletonInstance* FromOriginal(CSkeletonInstance* p);
+    static ISkeletonInstance* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISKELETONINSTANCE_H

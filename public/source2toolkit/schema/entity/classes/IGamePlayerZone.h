@@ -67,6 +67,7 @@ public:
     virtual ::CEntityIOOutput& OnPlayerOutZone() = 0;
     virtual void OnPlayerOutZoneUpdated() = 0;
     static IGamePlayerZone* FromOriginal(CGamePlayerZone* p);
+    static IGamePlayerZone* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IGAMEPLAYERZONE_H

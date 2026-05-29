@@ -84,6 +84,7 @@ public:
     virtual int32_t& CustomDamageType() = 0;
     virtual void CustomDamageTypeUpdated() = 0;
     static IEntityFlame* FromOriginal(CEntityFlame* p);
+    static IEntityFlame* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENTITYFLAME_H

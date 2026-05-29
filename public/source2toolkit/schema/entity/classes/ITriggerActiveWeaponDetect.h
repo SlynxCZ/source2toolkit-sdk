@@ -67,6 +67,7 @@ public:
     virtual CUtlSymbolLarge& WeaponClassName() = 0;
     virtual void WeaponClassNameUpdated() = 0;
     static ITriggerActiveWeaponDetect* FromOriginal(CTriggerActiveWeaponDetect* p);
+    static ITriggerActiveWeaponDetect* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERACTIVEWEAPONDETECT_H

@@ -69,6 +69,7 @@ public:
     virtual CGlobalSymbol& PawnSubclass() = 0;
     virtual void PawnSubclassUpdated() = 0;
     static IInfoPlayerStart* FromOriginal(CInfoPlayerStart* p);
+    static IInfoPlayerStart* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINFOPLAYERSTART_H

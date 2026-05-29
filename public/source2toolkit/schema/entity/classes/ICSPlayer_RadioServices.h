@@ -72,6 +72,7 @@ public:
     virtual bool& IgnoreRadio() = 0;
     virtual void IgnoreRadioUpdated() = 0;
     static ICSPlayer_RadioServices* FromOriginal(CCSPlayer_RadioServices* p);
+    static ICSPlayer_RadioServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_RADIOSERVICES_H

@@ -71,6 +71,7 @@ public:
     virtual float& StopTime() = 0;
     virtual void StopTimeUpdated() = 0;
     static IEnvTilt* FromOriginal(CEnvTilt* p);
+    static IEnvTilt* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVTILT_H

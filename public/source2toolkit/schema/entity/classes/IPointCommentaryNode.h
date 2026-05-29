@@ -71,13 +71,9 @@ public:
     virtual void CommentaryFileUpdated() = 0;
     virtual CUtlSymbolLarge& ViewTarget() = 0;
     virtual void ViewTargetUpdated() = 0;
-    virtual CHandle<CBaseEntity>& ViewTarget() = 0;
-    virtual void ViewTargetUpdated() = 0;
     virtual CHandle<CBaseEntity>& ViewTargetAngles() = 0;
     virtual void ViewTargetAnglesUpdated() = 0;
     virtual CUtlSymbolLarge& ViewPosition() = 0;
-    virtual void ViewPositionUpdated() = 0;
-    virtual CHandle<CBaseEntity>& ViewPosition() = 0;
     virtual void ViewPositionUpdated() = 0;
     virtual CHandle<CBaseEntity>& ViewPositionMover() = 0;
     virtual void ViewPositionMoverUpdated() = 0;
@@ -124,6 +120,7 @@ public:
     virtual bool& ListenedTo() = 0;
     virtual void ListenedToUpdated() = 0;
     static IPointCommentaryNode* FromOriginal(CPointCommentaryNode* p);
+    static IPointCommentaryNode* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTCOMMENTARYNODE_H

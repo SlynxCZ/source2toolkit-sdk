@@ -66,6 +66,7 @@ public:
     virtual CAI_Expresser*& Expresser() = 0;
     virtual void ExpresserUpdated() = 0;
     static IHostageExpresserShim* FromOriginal(CHostageExpresserShim* p);
+    static IHostageExpresserShim* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IHOSTAGEEXPRESSERSHIM_H

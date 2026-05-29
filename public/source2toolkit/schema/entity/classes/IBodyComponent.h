@@ -69,6 +69,7 @@ public:
     virtual ::CEntityInstance*& __m_pChainEntity() = 0;
     virtual void __m_pChainEntityUpdated() = 0;
     static IBodyComponent* FromOriginal(CBodyComponent* p);
+    static IBodyComponent* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBODYCOMPONENT_H

@@ -64,6 +64,7 @@ public:
     virtual CBasePulseGraphInstance* GetOriginal() const = 0;
 
     static IBasePulseGraphInstance* FromOriginal(CBasePulseGraphInstance* p);
+    static IBasePulseGraphInstance* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASEPULSEGRAPHINSTANCE_H

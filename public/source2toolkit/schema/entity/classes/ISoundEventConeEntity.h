@@ -73,6 +73,7 @@ public:
     virtual CUtlSymbolLarge& ParameterName() = 0;
     virtual void ParameterNameUpdated() = 0;
     static ISoundEventConeEntity* FromOriginal(CSoundEventConeEntity* p);
+    static ISoundEventConeEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISOUNDEVENTCONEENTITY_H

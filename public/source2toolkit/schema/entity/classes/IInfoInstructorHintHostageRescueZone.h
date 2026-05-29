@@ -63,6 +63,7 @@ public:
     virtual ~IInfoInstructorHintHostageRescueZone() = default;
 
     static IInfoInstructorHintHostageRescueZone* FromOriginal(CInfoInstructorHintHostageRescueZone* p);
+    static IInfoInstructorHintHostageRescueZone* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINFOINSTRUCTORHINTHOSTAGERESCUEZONE_H

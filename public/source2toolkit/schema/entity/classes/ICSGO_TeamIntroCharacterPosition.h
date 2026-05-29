@@ -63,6 +63,7 @@ public:
     virtual ~ICSGO_TeamIntroCharacterPosition() = default;
 
     static ICSGO_TeamIntroCharacterPosition* FromOriginal(CCSGO_TeamIntroCharacterPosition* p);
+    static ICSGO_TeamIntroCharacterPosition* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSGO_TEAMINTROCHARACTERPOSITION_H

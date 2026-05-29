@@ -71,6 +71,7 @@ public:
     virtual CUtlSymbolLarge& PathCornerEntityName() = 0;
     virtual void PathCornerEntityNameUpdated() = 0;
     static ISoundOpvarSetPathCornerEntity* FromOriginal(CSoundOpvarSetPathCornerEntity* p);
+    static ISoundOpvarSetPathCornerEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISOUNDOPVARSETPATHCORNERENTITY_H

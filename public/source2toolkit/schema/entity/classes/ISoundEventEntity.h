@@ -89,6 +89,7 @@ public:
     virtual int32_t& EntityIndexSelection() = 0;
     virtual void EntityIndexSelectionUpdated() = 0;
     static ISoundEventEntity* FromOriginal(CSoundEventEntity* p);
+    static ISoundEventEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISOUNDEVENTENTITY_H

@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponM4A1Silencer() = default;
 
     static IWeaponM4A1Silencer* FromOriginal(CWeaponM4A1Silencer* p);
+    static IWeaponM4A1Silencer* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONM4A1SILENCER_H

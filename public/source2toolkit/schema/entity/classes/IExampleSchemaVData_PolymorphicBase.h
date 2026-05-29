@@ -66,6 +66,7 @@ public:
     virtual int32_t& Base() = 0;
     virtual void BaseUpdated() = 0;
     static IExampleSchemaVData_PolymorphicBase* FromOriginal(CExampleSchemaVData_PolymorphicBase* p);
+    static IExampleSchemaVData_PolymorphicBase* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IEXAMPLESCHEMAVDATA_POLYMORPHICBASE_H

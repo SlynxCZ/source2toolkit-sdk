@@ -68,6 +68,7 @@ public:
     virtual int32_t& ValueB() = 0;
     virtual void ValueBUpdated() = 0;
     static ITestPulseIO__EntityHandleIntArgs_t* FromOriginal(CTestPulseIO__EntityHandleIntArgs_t* p);
+    static ITestPulseIO__EntityHandleIntArgs_t* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITESTPULSEIO__ENTITYHANDLEINTARGS_T_H

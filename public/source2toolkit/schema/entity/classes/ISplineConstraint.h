@@ -95,6 +95,7 @@ public:
     virtual Vector& TangentSpaceAnchorAtTransitionStart() = 0;
     virtual void TangentSpaceAnchorAtTransitionStartUpdated() = 0;
     static ISplineConstraint* FromOriginal(CSplineConstraint* p);
+    static ISplineConstraint* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISPLINECONSTRAINT_H

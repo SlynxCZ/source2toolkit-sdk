@@ -94,6 +94,7 @@ public:
     virtual CUtlVector<CHandle<CEnvSoundscapeTriggerable>>& TriggerSoundscapeList() = 0;
     virtual void TriggerSoundscapeListUpdated() = 0;
     static IPlayer_CameraServices* FromOriginal(CPlayer_CameraServices* p);
+    static IPlayer_CameraServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPLAYER_CAMERASERVICES_H

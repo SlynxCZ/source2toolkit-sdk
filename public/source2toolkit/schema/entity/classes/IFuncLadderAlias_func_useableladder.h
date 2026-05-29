@@ -63,6 +63,7 @@ public:
     virtual ~IFuncLadderAlias_func_useableladder() = default;
 
     static IFuncLadderAlias_func_useableladder* FromOriginal(CFuncLadderAlias_func_useableladder* p);
+    static IFuncLadderAlias_func_useableladder* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCLADDERALIAS_FUNC_USEABLELADDER_H

@@ -63,6 +63,7 @@ public:
     virtual ~IInfoTargetServerOnly() = default;
 
     static IInfoTargetServerOnly* FromOriginal(CInfoTargetServerOnly* p);
+    static IInfoTargetServerOnly* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINFOTARGETSERVERONLY_H

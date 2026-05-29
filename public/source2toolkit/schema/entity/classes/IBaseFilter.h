@@ -69,6 +69,7 @@ public:
     virtual ::CEntityIOOutput& OnFail() = 0;
     virtual void OnFailUpdated() = 0;
     static IBaseFilter* FromOriginal(CBaseFilter* p);
+    static IBaseFilter* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASEFILTER_H

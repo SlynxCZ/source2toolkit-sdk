@@ -63,6 +63,7 @@ public:
     virtual ~ICSPetPlacement() = default;
 
     static ICSPetPlacement* FromOriginal(CCSPetPlacement* p);
+    static ICSPetPlacement* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPETPLACEMENT_H

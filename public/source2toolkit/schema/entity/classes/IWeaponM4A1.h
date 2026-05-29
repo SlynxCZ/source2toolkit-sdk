@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponM4A1() = default;
 
     static IWeaponM4A1* FromOriginal(CWeaponM4A1* p);
+    static IWeaponM4A1* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONM4A1_H

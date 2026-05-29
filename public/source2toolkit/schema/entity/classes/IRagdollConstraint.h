@@ -81,6 +81,7 @@ public:
     virtual float& Zfriction() = 0;
     virtual void ZfrictionUpdated() = 0;
     static IRagdollConstraint* FromOriginal(CRagdollConstraint* p);
+    static IRagdollConstraint* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IRAGDOLLCONSTRAINT_H

@@ -68,6 +68,7 @@ public:
     virtual CHandle<CSkyCamera>& SkyCamera() = 0;
     virtual void SkyCameraUpdated() = 0;
     static ISkyboxReference* FromOriginal(CSkyboxReference* p);
+    static ISkyboxReference* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISKYBOXREFERENCE_H

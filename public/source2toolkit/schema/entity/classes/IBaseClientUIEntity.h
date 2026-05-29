@@ -71,6 +71,7 @@ public:
     virtual CUtlSymbolLarge& PanelID() = 0;
     virtual void PanelIDUpdated() = 0;
     static IBaseClientUIEntity* FromOriginal(CBaseClientUIEntity* p);
+    static IBaseClientUIEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASECLIENTUIENTITY_H

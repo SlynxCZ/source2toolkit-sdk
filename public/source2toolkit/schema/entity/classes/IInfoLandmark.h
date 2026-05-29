@@ -63,6 +63,7 @@ public:
     virtual ~IInfoLandmark() = default;
 
     static IInfoLandmark* FromOriginal(CInfoLandmark* p);
+    static IInfoLandmark* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINFOLANDMARK_H

@@ -69,6 +69,7 @@ public:
     virtual ::CVectorExponentialMovingAverage& EmaMovementDirection() = 0;
     virtual void EmaMovementDirectionUpdated() = 0;
     static IMovementStatsProperty* FromOriginal(CMovementStatsProperty* p);
+    static IMovementStatsProperty* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMOVEMENTSTATSPROPERTY_H

@@ -65,6 +65,7 @@ public:
     virtual ::CEntityIOOutput& OnTrigger() = 0;
     virtual void OnTriggerUpdated() = 0;
     static ITriggerMultiple* FromOriginal(CTriggerMultiple* p);
+    static ITriggerMultiple* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERMULTIPLE_H

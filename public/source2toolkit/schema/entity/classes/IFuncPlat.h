@@ -65,6 +65,7 @@ public:
     virtual CUtlSymbolLarge& Noise() = 0;
     virtual void NoiseUpdated() = 0;
     static IFuncPlat* FromOriginal(CFuncPlat* p);
+    static IFuncPlat* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCPLAT_H

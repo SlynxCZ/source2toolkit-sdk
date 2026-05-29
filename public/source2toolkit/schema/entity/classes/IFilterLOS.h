@@ -63,6 +63,7 @@ public:
     virtual ~IFilterLOS() = default;
 
     static IFilterLOS* FromOriginal(CFilterLOS* p);
+    static IFilterLOS* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFILTERLOS_H

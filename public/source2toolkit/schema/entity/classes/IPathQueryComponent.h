@@ -64,6 +64,7 @@ public:
     virtual CPathQueryComponent* GetOriginal() const = 0;
 
     static IPathQueryComponent* FromOriginal(CPathQueryComponent* p);
+    static IPathQueryComponent* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPATHQUERYCOMPONENT_H

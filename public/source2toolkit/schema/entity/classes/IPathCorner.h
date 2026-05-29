@@ -69,6 +69,7 @@ public:
     virtual ::CEntityIOOutput& OnPass() = 0;
     virtual void OnPassUpdated() = 0;
     static IPathCorner* FromOriginal(CPathCorner* p);
+    static IPathCorner* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPATHCORNER_H

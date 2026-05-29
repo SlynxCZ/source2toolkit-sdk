@@ -76,6 +76,7 @@ public:
     /// <summary>Give item.</summary>
     virtual IBasePlayerWeapon* GiveNamedItem(const char* pszItem) = 0;
     static ICSPlayer_ItemServices* FromOriginal(CCSPlayer_ItemServices* p);
+    static ICSPlayer_ItemServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_ITEMSERVICES_H

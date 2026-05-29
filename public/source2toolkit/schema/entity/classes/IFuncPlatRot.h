@@ -67,6 +67,7 @@ public:
     virtual QAngle& Start() = 0;
     virtual void StartUpdated() = 0;
     static IFuncPlatRot* FromOriginal(CFuncPlatRot* p);
+    static IFuncPlatRot* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCPLATROT_H

@@ -98,6 +98,7 @@ public:
     virtual ::EKillTypes_t& KillType() = 0;
     virtual void KillTypeUpdated() = 0;
     static IDamageRecord* FromOriginal(CDamageRecord* p);
+    static IDamageRecord* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IDAMAGERECORD_H

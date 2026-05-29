@@ -75,6 +75,7 @@ public:
     virtual float& MaxTwistAngle() = 0;
     virtual void MaxTwistAngleUpdated() = 0;
     static IPhysBallSocket* FromOriginal(CPhysBallSocket* p);
+    static IPhysBallSocket* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSBALLSOCKET_H

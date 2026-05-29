@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponFiveSeven() = default;
 
     static IWeaponFiveSeven* FromOriginal(CWeaponFiveSeven* p);
+    static IWeaponFiveSeven* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONFIVESEVEN_H

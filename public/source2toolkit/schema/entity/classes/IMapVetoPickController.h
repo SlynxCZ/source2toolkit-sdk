@@ -91,6 +91,7 @@ public:
     virtual int32_t& PhaseDurationTicks() = 0;
     virtual void PhaseDurationTicksUpdated() = 0;
     static IMapVetoPickController* FromOriginal(CMapVetoPickController* p);
+    static IMapVetoPickController* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMAPVETOPICKCONTROLLER_H

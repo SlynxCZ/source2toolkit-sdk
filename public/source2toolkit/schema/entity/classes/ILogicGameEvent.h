@@ -65,6 +65,7 @@ public:
     virtual CUtlSymbolLarge& EventName() = 0;
     virtual void EventNameUpdated() = 0;
     static ILogicGameEvent* FromOriginal(CLogicGameEvent* p);
+    static ILogicGameEvent* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICGAMEEVENT_H

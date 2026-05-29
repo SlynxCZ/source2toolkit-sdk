@@ -63,6 +63,7 @@ public:
     virtual ~IHostageAlias_info_hostage_spawn() = default;
 
     static IHostageAlias_info_hostage_spawn* FromOriginal(CHostageAlias_info_hostage_spawn* p);
+    static IHostageAlias_info_hostage_spawn* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IHOSTAGEALIAS_INFO_HOSTAGE_SPAWN_H

@@ -70,6 +70,7 @@ public:
     virtual CUtlString& StrArg3() = 0;
     virtual void StrArg3Updated() = 0;
     static ITestPulseIO__ThreeStringArgs_t* FromOriginal(CTestPulseIO__ThreeStringArgs_t* p);
+    static ITestPulseIO__ThreeStringArgs_t* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITESTPULSEIO__THREESTRINGARGS_T_H

@@ -78,6 +78,7 @@ public:
     virtual CUtlVector<CHandle<CBaseEntity>>& ProceduralRelaySources() = 0;
     virtual void ProceduralRelaySourcesUpdated() = 0;
     static IPointPrefab* FromOriginal(CPointPrefab* p);
+    static IPointPrefab* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTPREFAB_H

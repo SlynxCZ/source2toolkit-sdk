@@ -63,6 +63,7 @@ public:
     virtual ~ITeamplayRules() = default;
 
     static ITeamplayRules* FromOriginal(CTeamplayRules* p);
+    static ITeamplayRules* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITEAMPLAYRULES_H

@@ -63,6 +63,7 @@ public:
     virtual ~IWaterBullet() = default;
 
     static IWaterBullet* FromOriginal(CWaterBullet* p);
+    static IWaterBullet* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWATERBULLET_H

@@ -87,6 +87,7 @@ public:
     virtual int32_t& LastUpdateSentAt() = 0;
     virtual void LastUpdateSentAtUpdated() = 0;
     static ICSTeam* FromOriginal(CCSTeam* p);
+    static ICSTeam* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSTEAM_H

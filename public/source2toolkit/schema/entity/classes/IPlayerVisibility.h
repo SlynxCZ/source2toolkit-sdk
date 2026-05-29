@@ -75,6 +75,7 @@ public:
     virtual bool& IsEnabled() = 0;
     virtual void IsEnabledUpdated() = 0;
     static IPlayerVisibility* FromOriginal(CPlayerVisibility* p);
+    static IPlayerVisibility* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPLAYERVISIBILITY_H

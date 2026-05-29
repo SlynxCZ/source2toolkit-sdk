@@ -63,6 +63,7 @@ public:
     virtual ~INavWalkable() = default;
 
     static INavWalkable* FromOriginal(CNavWalkable* p);
+    static INavWalkable* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_INAVWALKABLE_H

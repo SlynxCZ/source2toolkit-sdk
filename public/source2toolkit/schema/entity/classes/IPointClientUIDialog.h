@@ -68,6 +68,7 @@ public:
     virtual bool& StartEnabled() = 0;
     virtual void StartEnabledUpdated() = 0;
     static IPointClientUIDialog* FromOriginal(CPointClientUIDialog* p);
+    static IPointClientUIDialog* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTCLIENTUIDIALOG_H

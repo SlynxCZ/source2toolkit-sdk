@@ -74,6 +74,7 @@ public:
     virtual CBaseAnimGraphDestructibleParts_GraphController*& AnimGraphDestructibleGraphController() = 0;
     virtual void AnimGraphDestructibleGraphControllerUpdated() = 0;
     static IDestructiblePartsComponent* FromOriginal(CDestructiblePartsComponent* p);
+    static IDestructiblePartsComponent* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IDESTRUCTIBLEPARTSCOMPONENT_H

@@ -70,6 +70,7 @@ public:
     virtual CHandle<CBasePlayerPawn>& TargetPlayer() = 0;
     virtual void TargetPlayerUpdated() = 0;
     static IInstructorEventEntity* FromOriginal(CInstructorEventEntity* p);
+    static IInstructorEventEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINSTRUCTOREVENTENTITY_H

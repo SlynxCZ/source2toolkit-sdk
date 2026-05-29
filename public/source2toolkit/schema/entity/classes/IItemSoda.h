@@ -63,6 +63,7 @@ public:
     virtual ~IItemSoda() = default;
 
     static IItemSoda* FromOriginal(CItemSoda* p);
+    static IItemSoda* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IITEMSODA_H

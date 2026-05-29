@@ -83,6 +83,7 @@ public:
     virtual ::CEntityIOOutput& OnPass() = 0;
     virtual void OnPassUpdated() = 0;
     static IPathTrack* FromOriginal(CPathTrack* p);
+    static IPathTrack* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPATHTRACK_H

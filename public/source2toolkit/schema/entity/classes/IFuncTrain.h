@@ -76,6 +76,7 @@ public:
     virtual CUtlSymbolLarge& LastTarget() = 0;
     virtual void LastTargetUpdated() = 0;
     static IFuncTrain* FromOriginal(CFuncTrain* p);
+    static IFuncTrain* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCTRAIN_H

@@ -66,6 +66,7 @@ public:
     virtual CUtlString& ComponentData() = 0;
     virtual void ComponentDataUpdated() = 0;
     static ITestPulseIOComponent* FromOriginal(CTestPulseIOComponent* p);
+    static ITestPulseIOComponent* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITESTPULSEIOCOMPONENT_H

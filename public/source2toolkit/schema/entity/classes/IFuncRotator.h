@@ -143,8 +143,6 @@ public:
     virtual void SolidTypeUpdated() = 0;
     virtual CHandle<CFuncMover>& SpeedFromMover() = 0;
     virtual void SpeedFromMoverUpdated() = 0;
-    virtual CUtlSymbolLarge& SpeedFromMover() = 0;
-    virtual void SpeedFromMoverUpdated() = 0;
     virtual float& SpeedScale() = 0;
     virtual void SpeedScaleUpdated() = 0;
     virtual float& MinYawRotation() = 0;
@@ -152,6 +150,7 @@ public:
     virtual float& MaxYawRotation() = 0;
     virtual void MaxYawRotationUpdated() = 0;
     static IFuncRotator* FromOriginal(CFuncRotator* p);
+    static IFuncRotator* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCROTATOR_H

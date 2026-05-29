@@ -65,6 +65,7 @@ public:
     virtual int32_t& Score() = 0;
     virtual void ScoreUpdated() = 0;
     static IRulePointEntity* FromOriginal(CRulePointEntity* p);
+    static IRulePointEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IRULEPOINTENTITY_H

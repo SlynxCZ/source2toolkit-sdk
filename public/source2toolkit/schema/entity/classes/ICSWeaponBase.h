@@ -105,8 +105,6 @@ public:
     virtual void AccuracySmoothedForZoomUpdated() = 0;
     virtual int32_t& RecoilIndex() = 0;
     virtual void RecoilIndexUpdated() = 0;
-    virtual float& RecoilIndex() = 0;
-    virtual void RecoilIndexUpdated() = 0;
     virtual bool& BurstMode() = 0;
     virtual void BurstModeUpdated() = 0;
     virtual int32_t& PostponeFireReadyTicks() = 0;
@@ -172,6 +170,7 @@ public:
     virtual float& LastShakeTime() = 0;
     virtual void LastShakeTimeUpdated() = 0;
     static ICSWeaponBase* FromOriginal(CCSWeaponBase* p);
+    static ICSWeaponBase* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSWEAPONBASE_H

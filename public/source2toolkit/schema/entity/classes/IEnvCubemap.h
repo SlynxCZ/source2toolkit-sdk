@@ -100,6 +100,7 @@ public:
     virtual bool& Entity_bEnabled() = 0;
     virtual void Entity_bEnabledUpdated() = 0;
     static IEnvCubemap* FromOriginal(CEnvCubemap* p);
+    static IEnvCubemap* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVCUBEMAP_H

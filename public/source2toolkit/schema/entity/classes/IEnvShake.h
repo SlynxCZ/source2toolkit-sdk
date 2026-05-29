@@ -87,6 +87,7 @@ public:
     virtual ::CPhysicsShake& ShakeCallback() = 0;
     virtual void ShakeCallbackUpdated() = 0;
     static IEnvShake* FromOriginal(CEnvShake* p);
+    static IEnvShake* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVSHAKE_H

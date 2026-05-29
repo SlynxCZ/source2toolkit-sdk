@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponBizon() = default;
 
     static IWeaponBizon* FromOriginal(CWeaponBizon* p);
+    static IWeaponBizon* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONBIZON_H

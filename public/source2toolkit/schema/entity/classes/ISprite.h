@@ -109,6 +109,7 @@ public:
     virtual int32_t& SpriteHeight() = 0;
     virtual void SpriteHeightUpdated() = 0;
     static ISprite* FromOriginal(CSprite* p);
+    static ISprite* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISPRITE_H

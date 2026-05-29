@@ -72,6 +72,7 @@ public:
     virtual float& InertiaFactor() = 0;
     virtual void InertiaFactorUpdated() = 0;
     static IMotorController* FromOriginal(CMotorController* p);
+    static IMotorController* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMOTORCONTROLLER_H

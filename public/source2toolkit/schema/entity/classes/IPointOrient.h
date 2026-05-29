@@ -81,6 +81,7 @@ public:
     virtual float& LastGameTime() = 0;
     virtual void LastGameTimeUpdated() = 0;
     static IPointOrient* FromOriginal(CPointOrient* p);
+    static IPointOrient* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTORIENT_H

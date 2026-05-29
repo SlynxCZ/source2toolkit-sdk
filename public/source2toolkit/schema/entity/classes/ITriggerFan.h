@@ -90,8 +90,6 @@ public:
     virtual void FanEndLSUpdated() = 0;
     virtual Vector& NoiseDirectionTarget() = 0;
     virtual void NoiseDirectionTargetUpdated() = 0;
-    virtual CUtlSymbolLarge& InfoFan() = 0;
-    virtual void InfoFanUpdated() = 0;
     virtual float& RopeForceScale() = 0;
     virtual void RopeForceScaleUpdated() = 0;
     virtual float& ParticleForceScale() = 0;
@@ -115,6 +113,7 @@ public:
     virtual int32_t& ManagerFanIdx() = 0;
     virtual void ManagerFanIdxUpdated() = 0;
     static ITriggerFan* FromOriginal(CTriggerFan* p);
+    static ITriggerFan* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERFAN_H

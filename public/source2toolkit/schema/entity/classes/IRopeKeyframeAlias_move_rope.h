@@ -63,6 +63,7 @@ public:
     virtual ~IRopeKeyframeAlias_move_rope() = default;
 
     static IRopeKeyframeAlias_move_rope* FromOriginal(CRopeKeyframeAlias_move_rope* p);
+    static IRopeKeyframeAlias_move_rope* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IROPEKEYFRAMEALIAS_MOVE_ROPE_H

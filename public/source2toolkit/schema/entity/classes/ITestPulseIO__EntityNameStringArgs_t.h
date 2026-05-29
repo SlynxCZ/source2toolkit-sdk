@@ -68,6 +68,7 @@ public:
     virtual CUtlSymbolLarge& StrValueB() = 0;
     virtual void StrValueBUpdated() = 0;
     static ITestPulseIO__EntityNameStringArgs_t* FromOriginal(CTestPulseIO__EntityNameStringArgs_t* p);
+    static ITestPulseIO__EntityNameStringArgs_t* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITESTPULSEIO__ENTITYNAMESTRINGARGS_T_H

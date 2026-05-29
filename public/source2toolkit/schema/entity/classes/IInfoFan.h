@@ -71,6 +71,7 @@ public:
     virtual CUtlSymbolLarge& FanForceCurveString() = 0;
     virtual void FanForceCurveStringUpdated() = 0;
     static IInfoFan* FromOriginal(CInfoFan* p);
+    static IInfoFan* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINFOFAN_H

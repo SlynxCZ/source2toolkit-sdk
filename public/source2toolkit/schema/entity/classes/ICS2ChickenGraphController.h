@@ -67,6 +67,7 @@ public:
     virtual bool& WaitingForCompletedEvent() = 0;
     virtual void WaitingForCompletedEventUpdated() = 0;
     static ICS2ChickenGraphController* FromOriginal(CCS2ChickenGraphController* p);
+    static ICS2ChickenGraphController* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICS2CHICKENGRAPHCONTROLLER_H

@@ -63,6 +63,7 @@ public:
     virtual ~ICSGO_WingmanIntroTerroristPosition() = default;
 
     static ICSGO_WingmanIntroTerroristPosition* FromOriginal(CCSGO_WingmanIntroTerroristPosition* p);
+    static ICSGO_WingmanIntroTerroristPosition* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSGO_WINGMANINTROTERRORISTPOSITION_H

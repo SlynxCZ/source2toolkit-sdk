@@ -65,6 +65,7 @@ public:
     virtual ::MoveType_t& MoveTypeOverride() = 0;
     virtual void MoveTypeOverrideUpdated() = 0;
     static IScriptItem* FromOriginal(CScriptItem* p);
+    static IScriptItem* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISCRIPTITEM_H

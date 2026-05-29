@@ -65,6 +65,7 @@ public:
     virtual float& Radius() = 0;
     virtual void RadiusUpdated() = 0;
     static ISoundEventSphereEntity* FromOriginal(CSoundEventSphereEntity* p);
+    static ISoundEventSphereEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISOUNDEVENTSPHEREENTITY_H

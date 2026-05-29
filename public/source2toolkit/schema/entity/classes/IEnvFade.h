@@ -71,6 +71,7 @@ public:
     virtual ::CEntityIOOutput& OnBeginFade() = 0;
     virtual void OnBeginFadeUpdated() = 0;
     static IEnvFade* FromOriginal(CEnvFade* p);
+    static IEnvFade* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVFADE_H

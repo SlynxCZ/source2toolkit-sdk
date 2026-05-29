@@ -67,6 +67,7 @@ public:
     virtual CUtlString& StrStateBlob() = 0;
     virtual void StrStateBlobUpdated() = 0;
     static IPulseGameBlackboard* FromOriginal(CPulseGameBlackboard* p);
+    static IPulseGameBlackboard* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPULSEGAMEBLACKBOARD_H

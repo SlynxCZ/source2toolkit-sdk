@@ -65,6 +65,7 @@ public:
     virtual bool& ShowLight() = 0;
     virtual void ShowLightUpdated() = 0;
     static IRectLight* FromOriginal(CRectLight* p);
+    static IRectLight* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IRECTLIGHT_H

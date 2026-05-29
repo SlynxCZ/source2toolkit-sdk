@@ -94,6 +94,7 @@ public:
     virtual ::CEntityIOOutput& OnEndLook() = 0;
     virtual void OnEndLookUpdated() = 0;
     static ITriggerLook* FromOriginal(CTriggerLook* p);
+    static ITriggerLook* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERLOOK_H

@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponGalilAR() = default;
 
     static IWeaponGalilAR* FromOriginal(CWeaponGalilAR* p);
+    static IWeaponGalilAR* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONGALILAR_H

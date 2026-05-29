@@ -69,6 +69,7 @@ public:
     virtual int32_t& MinHitPointsToCommit() = 0;
     virtual void MinHitPointsToCommitUpdated() = 0;
     static ILogicAutosave* FromOriginal(CLogicAutosave* p);
+    static ILogicAutosave* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICAUTOSAVE_H

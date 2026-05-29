@@ -101,6 +101,7 @@ public:
     virtual float& WeaponDropSmoothDampVelocity() = 0;
     virtual void WeaponDropSmoothDampVelocityUpdated() = 0;
     static ICSPlayerAnimationState* FromOriginal(CCSPlayerAnimationState* p);
+    static ICSPlayerAnimationState* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYERANIMATIONSTATE_H

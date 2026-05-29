@@ -65,6 +65,7 @@ public:
     virtual int32_t& LegacyTeamNum() = 0;
     virtual void LegacyTeamNumUpdated() = 0;
     static IBuyZone* FromOriginal(CBuyZone* p);
+    static IBuyZone* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBUYZONE_H

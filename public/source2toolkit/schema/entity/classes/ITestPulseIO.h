@@ -72,6 +72,7 @@ public:
     virtual ::CEntityIOOutput& OnInternalTestVoid() = 0;
     virtual void OnInternalTestVoidUpdated() = 0;
     static ITestPulseIO* FromOriginal(CTestPulseIO* p);
+    static ITestPulseIO* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITESTPULSEIO_H

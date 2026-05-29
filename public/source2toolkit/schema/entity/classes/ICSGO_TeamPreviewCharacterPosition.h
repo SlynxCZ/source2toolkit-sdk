@@ -80,6 +80,7 @@ public:
     virtual ::CEconItemView& WeaponItem() = 0;
     virtual void WeaponItemUpdated() = 0;
     static ICSGO_TeamPreviewCharacterPosition* FromOriginal(CCSGO_TeamPreviewCharacterPosition* p);
+    static ICSGO_TeamPreviewCharacterPosition* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSGO_TEAMPREVIEWCHARACTERPOSITION_H

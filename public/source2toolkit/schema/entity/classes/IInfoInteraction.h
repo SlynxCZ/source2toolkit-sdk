@@ -95,6 +95,7 @@ public:
     virtual bool& DisableOnExit() = 0;
     virtual void DisableOnExitUpdated() = 0;
     static IInfoInteraction* FromOriginal(CInfoInteraction* p);
+    static IInfoInteraction* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINFOINTERACTION_H

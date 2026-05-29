@@ -70,6 +70,7 @@ public:
     virtual float& Z() = 0;
     virtual void ZUpdated() = 0;
     static INetworkVelocityVector* FromOriginal(CNetworkVelocityVector* p);
+    static INetworkVelocityVector* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_INETWORKVELOCITYVECTOR_H

@@ -70,6 +70,7 @@ public:
     virtual CUtlSymbolLarge* FilterName() = 0;
     virtual CHandle<CBaseEntity>* Filter() = 0;
     static IFilterMultiple* FromOriginal(CFilterMultiple* p);
+    static IFilterMultiple* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFILTERMULTIPLE_H

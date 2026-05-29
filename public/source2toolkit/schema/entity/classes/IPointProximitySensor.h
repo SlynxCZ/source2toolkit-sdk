@@ -68,6 +68,7 @@ public:
     virtual CHandle<CBaseEntity>& TargetEntity() = 0;
     virtual void TargetEntityUpdated() = 0;
     static IPointProximitySensor* FromOriginal(CPointProximitySensor* p);
+    static IPointProximitySensor* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTPROXIMITYSENSOR_H

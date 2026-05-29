@@ -98,6 +98,7 @@ public:
     virtual QAngle& OldViewAngles() = 0;
     virtual void OldViewAnglesUpdated() = 0;
     static IPlayer_MovementServices* FromOriginal(CPlayer_MovementServices* p);
+    static IPlayer_MovementServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPLAYER_MOVEMENTSERVICES_H

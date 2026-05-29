@@ -63,6 +63,7 @@ public:
     virtual ~ILightOrthoEntity() = default;
 
     static ILightOrthoEntity* FromOriginal(CLightOrthoEntity* p);
+    static ILightOrthoEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILIGHTORTHOENTITY_H

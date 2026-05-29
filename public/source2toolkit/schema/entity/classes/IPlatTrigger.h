@@ -66,6 +66,7 @@ public:
     virtual CHandle<CFuncPlat>& Platform() = 0;
     virtual void PlatformUpdated() = 0;
     static IPlatTrigger* FromOriginal(CPlatTrigger* p);
+    static IPlatTrigger* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPLATTRIGGER_H

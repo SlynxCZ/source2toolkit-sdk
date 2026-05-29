@@ -66,6 +66,7 @@ public:
     virtual ::fogparams_t& Fog() = 0;
     virtual void FogUpdated() = 0;
     static IFogTrigger* FromOriginal(CFogTrigger* p);
+    static IFogTrigger* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFOGTRIGGER_H

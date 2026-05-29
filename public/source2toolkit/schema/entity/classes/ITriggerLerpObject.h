@@ -66,8 +66,6 @@ public:
 
     virtual CUtlSymbolLarge& LerpTarget() = 0;
     virtual void LerpTargetUpdated() = 0;
-    virtual CHandle<CBaseEntity>& LerpTarget() = 0;
-    virtual void LerpTargetUpdated() = 0;
     virtual CUtlSymbolLarge& LerpTargetAttachment() = 0;
     virtual void LerpTargetAttachmentUpdated() = 0;
     virtual float& LerpDuration() = 0;
@@ -95,6 +93,7 @@ public:
     virtual ::CEntityIOOutput& OnDetached() = 0;
     virtual void OnDetachedUpdated() = 0;
     static ITriggerLerpObject* FromOriginal(CTriggerLerpObject* p);
+    static ITriggerLerpObject* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERLERPOBJECT_H

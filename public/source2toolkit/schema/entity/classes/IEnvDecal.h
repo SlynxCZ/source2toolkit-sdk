@@ -82,6 +82,7 @@ public:
     virtual float& DepthSortBias() = 0;
     virtual void DepthSortBiasUpdated() = 0;
     static IEnvDecal* FromOriginal(CEnvDecal* p);
+    static IEnvDecal* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVDECAL_H

@@ -65,6 +65,7 @@ public:
     virtual Vector& Extent() = 0;
     virtual void ExtentUpdated() = 0;
     static IScriptNavBlocker* FromOriginal(CScriptNavBlocker* p);
+    static IScriptNavBlocker* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISCRIPTNAVBLOCKER_H

@@ -90,6 +90,7 @@ public:
     virtual ::CEntityIOOutput& OnTemplateGroupSpawned() = 0;
     virtual void OnTemplateGroupSpawnedUpdated() = 0;
     static IPathMoverEntitySpawner* FromOriginal(CPathMoverEntitySpawner* p);
+    static IPathMoverEntitySpawner* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPATHMOVERENTITYSPAWNER_H

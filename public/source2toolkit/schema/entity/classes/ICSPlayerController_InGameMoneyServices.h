@@ -75,6 +75,7 @@ public:
     virtual int32_t& CashSpentThisRound() = 0;
     virtual void CashSpentThisRoundUpdated() = 0;
     static ICSPlayerController_InGameMoneyServices* FromOriginal(CCSPlayerController_InGameMoneyServices* p);
+    static ICSPlayerController_InGameMoneyServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYERCONTROLLER_INGAMEMONEYSERVICES_H

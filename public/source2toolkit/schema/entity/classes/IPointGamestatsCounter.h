@@ -67,6 +67,7 @@ public:
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;
     static IPointGamestatsCounter* FromOriginal(CPointGamestatsCounter* p);
+    static IPointGamestatsCounter* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTGAMESTATSCOUNTER_H

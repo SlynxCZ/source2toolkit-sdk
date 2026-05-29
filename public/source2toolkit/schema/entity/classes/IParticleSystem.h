@@ -104,6 +104,7 @@ public:
     virtual Color& Tint() = 0;
     virtual void TintUpdated() = 0;
     static IParticleSystem* FromOriginal(CParticleSystem* p);
+    static IParticleSystem* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPARTICLESYSTEM_H

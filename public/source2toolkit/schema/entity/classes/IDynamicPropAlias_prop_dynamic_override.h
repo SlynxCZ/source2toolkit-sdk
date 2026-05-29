@@ -63,6 +63,7 @@ public:
     virtual ~IDynamicPropAlias_prop_dynamic_override() = default;
 
     static IDynamicPropAlias_prop_dynamic_override* FromOriginal(CDynamicPropAlias_prop_dynamic_override* p);
+    static IDynamicPropAlias_prop_dynamic_override* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IDYNAMICPROPALIAS_PROP_DYNAMIC_OVERRIDE_H

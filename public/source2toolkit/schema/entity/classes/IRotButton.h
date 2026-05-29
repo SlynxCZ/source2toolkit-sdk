@@ -63,6 +63,7 @@ public:
     virtual ~IRotButton() = default;
 
     static IRotButton* FromOriginal(CRotButton* p);
+    static IRotButton* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IROTBUTTON_H

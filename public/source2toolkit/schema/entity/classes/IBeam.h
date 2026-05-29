@@ -113,6 +113,7 @@ public:
     virtual int32_t& DissolveType() = 0;
     virtual void DissolveTypeUpdated() = 0;
     static IBeam* FromOriginal(CBeam* p);
+    static IBeam* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBEAM_H

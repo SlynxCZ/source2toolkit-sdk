@@ -66,6 +66,7 @@ public:
     virtual ::CEntityInstance*& __m_pChainEntity() = 0;
     virtual void __m_pChainEntityUpdated() = 0;
     static ICSGameModeRules* FromOriginal(CCSGameModeRules* p);
+    static ICSGameModeRules* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSGAMEMODERULES_H

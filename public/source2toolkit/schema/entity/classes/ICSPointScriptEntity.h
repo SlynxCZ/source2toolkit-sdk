@@ -63,6 +63,7 @@ public:
     virtual ~ICSPointScriptEntity() = default;
 
     static ICSPointScriptEntity* FromOriginal(CCSPointScriptEntity* p);
+    static ICSPointScriptEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPOINTSCRIPTENTITY_H

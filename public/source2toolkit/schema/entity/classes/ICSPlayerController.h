@@ -331,6 +331,7 @@ public:
     /// <summary>Get controller from steam id.</summary>
     static ICSPlayerController* FromSteamId(CSteamID steamId);
     static ICSPlayerController* FromOriginal(CCSPlayerController* p);
+    static ICSPlayerController* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYERCONTROLLER_H

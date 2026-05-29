@@ -108,13 +108,12 @@ public:
     virtual void ForceNpcExcludeUpdated() = 0;
     virtual CUtlSymbolLarge& GlowEntity() = 0;
     virtual void GlowEntityUpdated() = 0;
-    virtual CHandle<CBaseModelEntity>& GlowEntity() = 0;
-    virtual void GlowEntityUpdated() = 0;
     virtual bool& Usable() = 0;
     virtual void UsableUpdated() = 0;
     virtual CUtlSymbolLarge& DisplayText() = 0;
     virtual void DisplayTextUpdated() = 0;
     static IBaseButton* FromOriginal(CBaseButton* p);
+    static IBaseButton* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASEBUTTON_H

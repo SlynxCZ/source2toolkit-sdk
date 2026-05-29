@@ -85,6 +85,7 @@ public:
     virtual uint32_t& Magnitude() = 0;
     virtual void MagnitudeUpdated() = 0;
     static IEntityDissolve* FromOriginal(CEntityDissolve* p);
+    static IEntityDissolve* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENTITYDISSOLVE_H

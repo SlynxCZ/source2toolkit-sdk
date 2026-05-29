@@ -72,6 +72,7 @@ public:
     virtual void ScoreUpdated() = 0;
     virtual char* Teamname() = 0;
     static ITeam* FromOriginal(CTeam* p);
+    static ITeam* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITEAM_H

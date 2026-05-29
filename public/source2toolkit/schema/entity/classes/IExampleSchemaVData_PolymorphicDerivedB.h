@@ -65,6 +65,7 @@ public:
     virtual int32_t& DerivedB() = 0;
     virtual void DerivedBUpdated() = 0;
     static IExampleSchemaVData_PolymorphicDerivedB* FromOriginal(CExampleSchemaVData_PolymorphicDerivedB* p);
+    static IExampleSchemaVData_PolymorphicDerivedB* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IEXAMPLESCHEMAVDATA_POLYMORPHICDERIVEDB_H

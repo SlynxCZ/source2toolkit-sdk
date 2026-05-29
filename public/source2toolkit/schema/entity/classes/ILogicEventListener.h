@@ -69,6 +69,7 @@ public:
     virtual int32_t& Team() = 0;
     virtual void TeamUpdated() = 0;
     static ILogicEventListener* FromOriginal(CLogicEventListener* p);
+    static ILogicEventListener* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICEVENTLISTENER_H

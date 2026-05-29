@@ -66,6 +66,7 @@ public:
     virtual CHandle<CBaseEntity>& Activator() = 0;
     virtual void ActivatorUpdated() = 0;
     static IPointGiveAmmo* FromOriginal(CPointGiveAmmo* p);
+    static IPointGiveAmmo* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTGIVEAMMO_H

@@ -96,6 +96,7 @@ public:
     virtual CUtlSymbolLarge& LookupFilename() = 0;
     virtual void LookupFilenameUpdated() = 0;
     static IColorCorrection* FromOriginal(CColorCorrection* p);
+    static IColorCorrection* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICOLORCORRECTION_H

@@ -88,6 +88,7 @@ public:
     virtual bool& Enabled() = 0;
     virtual void EnabledUpdated() = 0;
     static IEnvSky* FromOriginal(CEnvSky* p);
+    static IEnvSky* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVSKY_H

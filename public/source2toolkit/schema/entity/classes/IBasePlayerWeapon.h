@@ -85,6 +85,7 @@ public:
     /// <summary>Get weapon classname.</summary>
     virtual const char* GetWeaponClassname() = 0;
     static IBasePlayerWeapon* FromOriginal(CBasePlayerWeapon* p);
+    static IBasePlayerWeapon* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASEPLAYERWEAPON_H

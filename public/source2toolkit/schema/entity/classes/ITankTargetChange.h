@@ -65,6 +65,7 @@ public:
     virtual CUtlSymbolLarge& NewTargetName() = 0;
     virtual void NewTargetNameUpdated() = 0;
     static ITankTargetChange* FromOriginal(CTankTargetChange* p);
+    static ITankTargetChange* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITANKTARGETCHANGE_H

@@ -63,6 +63,7 @@ public:
     virtual ~ITriggerOnce() = default;
 
     static ITriggerOnce* FromOriginal(CTriggerOnce* p);
+    static ITriggerOnce* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERONCE_H

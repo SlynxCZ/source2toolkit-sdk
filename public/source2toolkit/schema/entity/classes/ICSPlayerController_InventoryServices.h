@@ -84,6 +84,7 @@ public:
     virtual CUtlVector<ServerAuthoritativeWeaponSlot_t>& ServerAuthoritativeWeaponSlots() = 0;
     virtual void ServerAuthoritativeWeaponSlotsUpdated() = 0;
     static ICSPlayerController_InventoryServices* FromOriginal(CCSPlayerController_InventoryServices* p);
+    static ICSPlayerController_InventoryServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYERCONTROLLER_INVENTORYSERVICES_H

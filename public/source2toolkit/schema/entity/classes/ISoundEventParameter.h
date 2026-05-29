@@ -67,6 +67,7 @@ public:
     virtual float& FloatValue() = 0;
     virtual void FloatValueUpdated() = 0;
     static ISoundEventParameter* FromOriginal(CSoundEventParameter* p);
+    static ISoundEventParameter* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISOUNDEVENTPARAMETER_H

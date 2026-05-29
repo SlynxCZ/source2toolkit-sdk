@@ -63,6 +63,7 @@ public:
     virtual ~IFuncPropRespawnZone() = default;
 
     static IFuncPropRespawnZone* FromOriginal(CFuncPropRespawnZone* p);
+    static IFuncPropRespawnZone* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCPROPRESPAWNZONE_H

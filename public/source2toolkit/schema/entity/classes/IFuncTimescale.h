@@ -73,6 +73,7 @@ public:
     virtual bool& IsStarted() = 0;
     virtual void IsStartedUpdated() = 0;
     static IFuncTimescale* FromOriginal(CFuncTimescale* p);
+    static IFuncTimescale* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCTIMESCALE_H

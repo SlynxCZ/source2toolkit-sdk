@@ -69,6 +69,7 @@ public:
     virtual float& LogoLength() = 0;
     virtual void LogoLengthUpdated() = 0;
     static ICredits* FromOriginal(CCredits* p);
+    static ICredits* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICREDITS_H

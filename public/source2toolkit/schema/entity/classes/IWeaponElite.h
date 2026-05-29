@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponElite() = default;
 
     static IWeaponElite* FromOriginal(CWeaponElite* p);
+    static IWeaponElite* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONELITE_H

@@ -99,6 +99,7 @@ public:
     virtual QAngle& ClientAngles() = 0;
     virtual void ClientAnglesUpdated() = 0;
     static IFuncRotating* FromOriginal(CFuncRotating* p);
+    static IFuncRotating* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCROTATING_H

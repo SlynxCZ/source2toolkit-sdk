@@ -71,6 +71,7 @@ public:
     /// <summary>Get player controller.</summary>
     virtual ICSPlayerController* GetPlayerController() = 0;
     static IPlayerControllerComponent* FromOriginal(CPlayerControllerComponent* p);
+    static IPlayerControllerComponent* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPLAYERCONTROLLERCOMPONENT_H

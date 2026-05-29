@@ -67,6 +67,7 @@ public:
     virtual bool& AlwaysAllow() = 0;
     virtual void AlwaysAllowUpdated() = 0;
     static IEconWearable* FromOriginal(CEconWearable* p);
+    static IEconWearable* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IECONWEARABLE_H

@@ -68,6 +68,7 @@ public:
     virtual CTransform& XInitialPathWorldToLocal() = 0;
     virtual void XInitialPathWorldToLocalUpdated() = 0;
     static IPathWithDynamicNodes* FromOriginal(CPathWithDynamicNodes* p);
+    static IPathWithDynamicNodes* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPATHWITHDYNAMICNODES_H

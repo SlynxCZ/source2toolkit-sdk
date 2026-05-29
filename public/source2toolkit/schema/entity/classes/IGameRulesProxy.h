@@ -63,6 +63,7 @@ public:
     virtual ~IGameRulesProxy() = default;
 
     static IGameRulesProxy* FromOriginal(CGameRulesProxy* p);
+    static IGameRulesProxy* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IGAMERULESPROXY_H

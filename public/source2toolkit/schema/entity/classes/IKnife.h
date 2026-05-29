@@ -65,6 +65,7 @@ public:
     virtual bool& FirstAttack() = 0;
     virtual void FirstAttackUpdated() = 0;
     static IKnife* FromOriginal(CKnife* p);
+    static IKnife* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IKNIFE_H

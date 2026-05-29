@@ -63,6 +63,7 @@ public:
     virtual ~IEnableMotionFixup() = default;
 
     static IEnableMotionFixup* FromOriginal(CEnableMotionFixup* p);
+    static IEnableMotionFixup* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENABLEMOTIONFIXUP_H

@@ -63,6 +63,7 @@ public:
     virtual ~IAK47() = default;
 
     static IAK47* FromOriginal(CAK47* p);
+    static IAK47* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IAK47_H

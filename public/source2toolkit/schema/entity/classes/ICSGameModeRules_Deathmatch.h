@@ -69,6 +69,7 @@ public:
     virtual CUtlString& DMBonusWeapon() = 0;
     virtual void DMBonusWeaponUpdated() = 0;
     static ICSGameModeRules_Deathmatch* FromOriginal(CCSGameModeRules_Deathmatch* p);
+    static ICSGameModeRules_Deathmatch* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSGAMEMODERULES_DEATHMATCH_H

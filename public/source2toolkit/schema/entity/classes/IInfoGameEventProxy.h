@@ -67,6 +67,7 @@ public:
     virtual float& Range() = 0;
     virtual void RangeUpdated() = 0;
     static IInfoGameEventProxy* FromOriginal(CInfoGameEventProxy* p);
+    static IInfoGameEventProxy* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINFOGAMEEVENTPROXY_H

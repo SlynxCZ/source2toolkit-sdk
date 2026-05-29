@@ -65,6 +65,7 @@ public:
 
     virtual int32_t* Values() = 0;
     static IFiringModeInt* FromOriginal(CFiringModeInt* p);
+    static IFiringModeInt* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFIRINGMODEINT_H

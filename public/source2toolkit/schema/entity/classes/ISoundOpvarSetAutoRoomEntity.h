@@ -75,6 +75,7 @@ public:
     virtual float& SizeSqr() = 0;
     virtual void SizeSqrUpdated() = 0;
     static ISoundOpvarSetAutoRoomEntity* FromOriginal(CSoundOpvarSetAutoRoomEntity* p);
+    static ISoundOpvarSetAutoRoomEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISOUNDOPVARSETAUTOROOMENTITY_H

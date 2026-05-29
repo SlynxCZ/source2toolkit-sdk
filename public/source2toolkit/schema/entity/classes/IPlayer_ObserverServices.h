@@ -74,6 +74,7 @@ public:
     virtual bool& ForcedObserverMode() = 0;
     virtual void ForcedObserverModeUpdated() = 0;
     static IPlayer_ObserverServices* FromOriginal(CPlayer_ObserverServices* p);
+    static IPlayer_ObserverServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPLAYER_OBSERVERSERVICES_H

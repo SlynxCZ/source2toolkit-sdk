@@ -67,6 +67,7 @@ public:
     virtual ::ExternalAnimGraphHandle_t& ExternalGraph() = 0;
     virtual void ExternalGraphUpdated() = 0;
     static IAnimGraphControllerBase* FromOriginal(CAnimGraphControllerBase* p);
+    static IAnimGraphControllerBase* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IANIMGRAPHCONTROLLERBASE_H

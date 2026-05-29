@@ -63,6 +63,7 @@ public:
     virtual ~IIncendiaryGrenade() = default;
 
     static IIncendiaryGrenade* FromOriginal(CIncendiaryGrenade* p);
+    static IIncendiaryGrenade* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINCENDIARYGRENADE_H

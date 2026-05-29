@@ -78,6 +78,7 @@ public:
     virtual CHandle<CBaseFilter>& Filter() = 0;
     virtual void FilterUpdated() = 0;
     static IPointPush* FromOriginal(CPointPush* p);
+    static IPointPush* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTPUSH_H

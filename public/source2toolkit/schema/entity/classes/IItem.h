@@ -79,6 +79,7 @@ public:
     virtual bool& PhysStartAsleep() = 0;
     virtual void PhysStartAsleepUpdated() = 0;
     static IItem* FromOriginal(CItem* p);
+    static IItem* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IITEM_H

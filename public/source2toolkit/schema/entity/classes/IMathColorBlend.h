@@ -71,6 +71,7 @@ public:
     virtual Color& OutColor2() = 0;
     virtual void OutColor2Updated() = 0;
     static IMathColorBlend* FromOriginal(CMathColorBlend* p);
+    static IMathColorBlend* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMATHCOLORBLEND_H

@@ -116,6 +116,7 @@ public:
     virtual CStrongHandle<InfoForResourceTypeIMaterial2>& MaterialDamageBase() = 0;
     virtual void MaterialDamageBaseUpdated() = 0;
     static IFuncShatterglass* FromOriginal(CFuncShatterglass* p);
+    static IFuncShatterglass* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCSHATTERGLASS_H

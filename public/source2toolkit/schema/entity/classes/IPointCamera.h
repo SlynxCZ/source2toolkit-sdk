@@ -115,6 +115,7 @@ public:
     virtual CPointCamera*& Next() = 0;
     virtual void NextUpdated() = 0;
     static IPointCamera* FromOriginal(CPointCamera* p);
+    static IPointCamera* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTCAMERA_H

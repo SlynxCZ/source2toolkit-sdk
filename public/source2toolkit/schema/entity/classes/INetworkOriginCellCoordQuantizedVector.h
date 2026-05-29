@@ -78,6 +78,7 @@ public:
     virtual float& Z() = 0;
     virtual void ZUpdated() = 0;
     static INetworkOriginCellCoordQuantizedVector* FromOriginal(CNetworkOriginCellCoordQuantizedVector* p);
+    static INetworkOriginCellCoordQuantizedVector* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_INETWORKORIGINCELLCOORDQUANTIZEDVECTOR_H

@@ -94,6 +94,7 @@ public:
     virtual float& FlowMapNodeMaxRadius() = 0;
     virtual void FlowMapNodeMaxRadiusUpdated() = 0;
     static INavHullVData* FromOriginal(CNavHullVData* p);
+    static INavHullVData* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_INAVHULLVDATA_H

@@ -69,6 +69,7 @@ public:
     virtual bool& GraphBindingsCreated() = 0;
     virtual void GraphBindingsCreatedUpdated() = 0;
     static IAnimGraphControllerManager* FromOriginal(CAnimGraphControllerManager* p);
+    static IAnimGraphControllerManager* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IANIMGRAPHCONTROLLERMANAGER_H

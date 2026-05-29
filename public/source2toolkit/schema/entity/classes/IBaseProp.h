@@ -71,6 +71,7 @@ public:
     virtual CTransform& MPreferredCatchTransform() = 0;
     virtual void MPreferredCatchTransformUpdated() = 0;
     static IBaseProp* FromOriginal(CBaseProp* p);
+    static IBaseProp* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASEPROP_H

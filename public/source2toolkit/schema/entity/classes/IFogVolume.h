@@ -73,6 +73,7 @@ public:
     virtual bool& InFogVolumesList() = 0;
     virtual void InFogVolumesListUpdated() = 0;
     static IFogVolume* FromOriginal(CFogVolume* p);
+    static IFogVolume* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFOGVOLUME_H

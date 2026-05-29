@@ -75,6 +75,7 @@ public:
     virtual QAngle& UnpredictableBaseAngle() = 0;
     virtual void UnpredictableBaseAngleUpdated() = 0;
     static ICSPlayer_AimPunchServices* FromOriginal(CCSPlayer_AimPunchServices* p);
+    static ICSPlayer_AimPunchServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_AIMPUNCHSERVICES_H

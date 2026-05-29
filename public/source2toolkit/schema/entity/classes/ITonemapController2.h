@@ -73,6 +73,7 @@ public:
     virtual float& TonemapEVSmoothingRange() = 0;
     virtual void TonemapEVSmoothingRangeUpdated() = 0;
     static ITonemapController2* FromOriginal(CTonemapController2* p);
+    static ITonemapController2* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITONEMAPCONTROLLER2_H

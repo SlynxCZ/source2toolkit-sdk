@@ -79,6 +79,7 @@ public:
     virtual CUtlSymbolLarge& TargetEntityName() = 0;
     virtual void TargetEntityNameUpdated() = 0;
     static ITankTrainAI* FromOriginal(CTankTrainAI* p);
+    static ITankTrainAI* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITANKTRAINAI_H

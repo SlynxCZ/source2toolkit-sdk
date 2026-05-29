@@ -63,6 +63,7 @@ public:
     virtual ~IPulseGraphInstance_GameBlackboard() = default;
 
     static IPulseGraphInstance_GameBlackboard* FromOriginal(CPulseGraphInstance_GameBlackboard* p);
+    static IPulseGraphInstance_GameBlackboard* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPULSEGRAPHINSTANCE_GAMEBLACKBOARD_H

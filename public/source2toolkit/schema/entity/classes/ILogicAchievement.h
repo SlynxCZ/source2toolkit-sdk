@@ -69,6 +69,7 @@ public:
     virtual ::CEntityIOOutput& OnFired() = 0;
     virtual void OnFiredUpdated() = 0;
     static ILogicAchievement* FromOriginal(CLogicAchievement* p);
+    static ILogicAchievement* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICACHIEVEMENT_H

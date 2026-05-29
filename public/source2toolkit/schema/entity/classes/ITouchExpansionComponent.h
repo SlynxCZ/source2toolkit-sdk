@@ -64,6 +64,7 @@ public:
     virtual CTouchExpansionComponent* GetOriginal() const = 0;
 
     static ITouchExpansionComponent* FromOriginal(CTouchExpansionComponent* p);
+    static ITouchExpansionComponent* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITOUCHEXPANSIONCOMPONENT_H

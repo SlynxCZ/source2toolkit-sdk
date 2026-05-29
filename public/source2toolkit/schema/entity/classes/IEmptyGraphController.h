@@ -63,6 +63,7 @@ public:
     virtual ~IEmptyGraphController() = default;
 
     static IEmptyGraphController* FromOriginal(CEmptyGraphController* p);
+    static IEmptyGraphController* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IEMPTYGRAPHCONTROLLER_H

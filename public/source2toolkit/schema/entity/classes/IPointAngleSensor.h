@@ -84,6 +84,7 @@ public:
     virtual ::CEntityIOOutput& OnNotFacingLookat() = 0;
     virtual void OnNotFacingLookatUpdated() = 0;
     static IPointAngleSensor* FromOriginal(CPointAngleSensor* p);
+    static IPointAngleSensor* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTANGLESENSOR_H

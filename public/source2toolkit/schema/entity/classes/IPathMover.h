@@ -71,6 +71,7 @@ public:
     virtual CUtlSymbolLarge& MoverSpawnerName() = 0;
     virtual void MoverSpawnerNameUpdated() = 0;
     static IPathMover* FromOriginal(CPathMover* p);
+    static IPathMover* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPATHMOVER_H

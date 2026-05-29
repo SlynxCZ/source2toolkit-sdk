@@ -71,6 +71,7 @@ public:
     virtual Vector& SpotlightOrg() = 0;
     virtual void SpotlightOrgUpdated() = 0;
     static ISpotlightEnd* FromOriginal(CSpotlightEnd* p);
+    static ISpotlightEnd* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISPOTLIGHTEND_H

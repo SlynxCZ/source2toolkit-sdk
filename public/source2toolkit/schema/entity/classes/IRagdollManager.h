@@ -71,6 +71,7 @@ public:
     virtual bool& CanTakeDamage() = 0;
     virtual void CanTakeDamageUpdated() = 0;
     static IRagdollManager* FromOriginal(CRagdollManager* p);
+    static IRagdollManager* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IRAGDOLLMANAGER_H

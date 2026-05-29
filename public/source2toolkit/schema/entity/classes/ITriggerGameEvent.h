@@ -69,6 +69,7 @@ public:
     virtual CUtlString& StrTriggerID() = 0;
     virtual void StrTriggerIDUpdated() = 0;
     static ITriggerGameEvent* FromOriginal(CTriggerGameEvent* p);
+    static ITriggerGameEvent* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERGAMEEVENT_H

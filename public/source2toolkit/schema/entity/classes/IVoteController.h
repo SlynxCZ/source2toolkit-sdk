@@ -91,6 +91,7 @@ public:
     virtual CUtlVector<char*>& VoteOptions() = 0;
     virtual void VoteOptionsUpdated() = 0;
     static IVoteController* FromOriginal(CVoteController* p);
+    static IVoteController* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IVOTECONTROLLER_H

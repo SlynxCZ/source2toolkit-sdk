@@ -103,6 +103,7 @@ public:
     virtual ::CEntityIOOutput& OnStopMoving() = 0;
     virtual void OnStopMovingUpdated() = 0;
     static IPhysHinge* FromOriginal(CPhysHinge* p);
+    static IPhysHinge* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSHINGE_H

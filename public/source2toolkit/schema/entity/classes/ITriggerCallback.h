@@ -63,6 +63,7 @@ public:
     virtual ~ITriggerCallback() = default;
 
     static ITriggerCallback* FromOriginal(CTriggerCallback* p);
+    static ITriggerCallback* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERCALLBACK_H

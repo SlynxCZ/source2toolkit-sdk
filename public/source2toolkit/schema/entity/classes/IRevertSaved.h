@@ -69,6 +69,7 @@ public:
     virtual float& HoldTime() = 0;
     virtual void HoldTimeUpdated() = 0;
     static IRevertSaved* FromOriginal(CRevertSaved* p);
+    static IRevertSaved* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IREVERTSAVED_H

@@ -68,6 +68,7 @@ public:
     virtual CUtlVector<CInfoChoreoAnchorPosition>& TargetWarps() = 0;
     virtual void TargetWarpsUpdated() = 0;
     static IInfoChoreoAnchor* FromOriginal(CInfoChoreoAnchor* p);
+    static IInfoChoreoAnchor* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINFOCHOREOANCHOR_H

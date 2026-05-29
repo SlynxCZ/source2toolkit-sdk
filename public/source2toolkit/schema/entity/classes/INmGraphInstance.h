@@ -64,6 +64,7 @@ public:
     virtual CNmGraphInstance* GetOriginal() const = 0;
 
     static INmGraphInstance* FromOriginal(CNmGraphInstance* p);
+    static INmGraphInstance* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_INMGRAPHINSTANCE_H

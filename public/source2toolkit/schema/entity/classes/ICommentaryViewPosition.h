@@ -63,6 +63,7 @@ public:
     virtual ~ICommentaryViewPosition() = default;
 
     static ICommentaryViewPosition* FromOriginal(CCommentaryViewPosition* p);
+    static ICommentaryViewPosition* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICOMMENTARYVIEWPOSITION_H

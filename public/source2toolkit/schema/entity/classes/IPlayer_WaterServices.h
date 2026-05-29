@@ -63,6 +63,7 @@ public:
     virtual ~IPlayer_WaterServices() = default;
 
     static IPlayer_WaterServices* FromOriginal(CPlayer_WaterServices* p);
+    static IPlayer_WaterServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPLAYER_WATERSERVICES_H

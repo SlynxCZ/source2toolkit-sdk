@@ -85,6 +85,7 @@ public:
     virtual int32_t& Use() = 0;
     virtual void UseUpdated() = 0;
     static IFuncTrackChange* FromOriginal(CFuncTrackChange* p);
+    static IFuncTrackChange* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCTRACKCHANGE_H

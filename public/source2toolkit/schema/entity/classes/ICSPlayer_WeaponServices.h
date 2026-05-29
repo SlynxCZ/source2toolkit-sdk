@@ -96,6 +96,7 @@ public:
     /// <summary>Select weapon.</summary>
     virtual void SelectWeapon(IBasePlayerWeapon *pWeapon, int unk1 = 0) = 0;
     static ICSPlayer_WeaponServices* FromOriginal(CCSPlayer_WeaponServices* p);
+    static ICSPlayer_WeaponServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_WEAPONSERVICES_H

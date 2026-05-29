@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponNOVA() = default;
 
     static IWeaponNOVA* FromOriginal(CWeaponNOVA* p);
+    static IWeaponNOVA* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONNOVA_H

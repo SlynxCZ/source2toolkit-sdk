@@ -96,6 +96,7 @@ public:
     virtual bool& HasEverHitEnemy() = 0;
     virtual void HasEverHitEnemyUpdated() = 0;
     static IBaseCSGrenadeProjectile* FromOriginal(CBaseCSGrenadeProjectile* p);
+    static IBaseCSGrenadeProjectile* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASECSGRENADEPROJECTILE_H

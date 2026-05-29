@@ -92,6 +92,7 @@ public:
     virtual bool& ConvertToDebrisWhenPossible() = 0;
     virtual void ConvertToDebrisWhenPossibleUpdated() = 0;
     static ITriggerPhysics* FromOriginal(CTriggerPhysics* p);
+    static ITriggerPhysics* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERPHYSICS_H

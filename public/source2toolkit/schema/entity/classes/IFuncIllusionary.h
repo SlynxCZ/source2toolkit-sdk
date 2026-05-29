@@ -63,6 +63,7 @@ public:
     virtual ~IFuncIllusionary() = default;
 
     static IFuncIllusionary* FromOriginal(CFuncIllusionary* p);
+    static IFuncIllusionary* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCILLUSIONARY_H

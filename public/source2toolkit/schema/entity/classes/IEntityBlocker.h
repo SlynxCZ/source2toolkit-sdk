@@ -63,6 +63,7 @@ public:
     virtual ~IEntityBlocker() = default;
 
     static IEntityBlocker* FromOriginal(CEntityBlocker* p);
+    static IEntityBlocker* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENTITYBLOCKER_H

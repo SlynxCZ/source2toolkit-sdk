@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponNegev() = default;
 
     static IWeaponNegev* FromOriginal(CWeaponNegev* p);
+    static IWeaponNegev* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONNEGEV_H

@@ -70,6 +70,7 @@ public:
     virtual bool& ClosedLoop() = 0;
     virtual void ClosedLoopUpdated() = 0;
     static IPathSimple* FromOriginal(CPathSimple* p);
+    static IPathSimple* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPATHSIMPLE_H

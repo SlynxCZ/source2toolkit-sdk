@@ -63,6 +63,7 @@ public:
     virtual ~IHandleDummy() = default;
 
     static IHandleDummy* FromOriginal(CHandleDummy* p);
+    static IHandleDummy* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IHANDLEDUMMY_H

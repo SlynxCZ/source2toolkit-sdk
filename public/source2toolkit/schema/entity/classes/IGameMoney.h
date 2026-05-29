@@ -71,6 +71,7 @@ public:
     virtual CUtlString& StrAwardText() = 0;
     virtual void StrAwardTextUpdated() = 0;
     static IGameMoney* FromOriginal(CGameMoney* p);
+    static IGameMoney* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IGAMEMONEY_H

@@ -68,6 +68,7 @@ public:
     virtual CUtlVector<CDamageRecord>& DamageList() = 0;
     virtual void DamageListUpdated() = 0;
     static ICSPlayerController_DamageServices* FromOriginal(CCSPlayerController_DamageServices* p);
+    static ICSPlayerController_DamageServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYERCONTROLLER_DAMAGESERVICES_H

@@ -74,6 +74,7 @@ public:
     virtual CStrongHandle<InfoForResourceTypeCTextureBase>& TextureOverride() = 0;
     virtual void TextureOverrideUpdated() = 0;
     static IEnvParticleGlow* FromOriginal(CEnvParticleGlow* p);
+    static IEnvParticleGlow* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVPARTICLEGLOW_H

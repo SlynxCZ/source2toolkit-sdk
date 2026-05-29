@@ -65,6 +65,7 @@ public:
     virtual CUtlSymbolLarge& MainSoundscapeName() = 0;
     virtual void MainSoundscapeNameUpdated() = 0;
     static IEnvSoundscapeProxy* FromOriginal(CEnvSoundscapeProxy* p);
+    static IEnvSoundscapeProxy* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVSOUNDSCAPEPROXY_H

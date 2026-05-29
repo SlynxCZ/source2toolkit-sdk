@@ -76,6 +76,7 @@ public:
     virtual float& AllowResponsesEndTime() = 0;
     virtual void AllowResponsesEndTimeUpdated() = 0;
     static IChoreoComponent* FromOriginal(CChoreoComponent* p);
+    static IChoreoComponent* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICHOREOCOMPONENT_H

@@ -89,6 +89,7 @@ public:
     virtual bool& QueueFinishLoading() = 0;
     virtual void QueueFinishLoadingUpdated() = 0;
     static IInfoSpawnGroupLoadUnload* FromOriginal(CInfoSpawnGroupLoadUnload* p);
+    static IInfoSpawnGroupLoadUnload* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINFOSPAWNGROUPLOADUNLOAD_H

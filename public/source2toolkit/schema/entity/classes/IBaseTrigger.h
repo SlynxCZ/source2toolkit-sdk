@@ -89,6 +89,7 @@ public:
     virtual bool& UseAsyncQueries() = 0;
     virtual void UseAsyncQueriesUpdated() = 0;
     static IBaseTrigger* FromOriginal(CBaseTrigger* p);
+    static IBaseTrigger* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASETRIGGER_H

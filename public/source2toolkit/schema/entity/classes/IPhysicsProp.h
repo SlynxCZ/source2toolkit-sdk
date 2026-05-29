@@ -149,6 +149,7 @@ public:
     virtual bool& AttachedToReferenceFrame() = 0;
     virtual void AttachedToReferenceFrameUpdated() = 0;
     static IPhysicsProp* FromOriginal(CPhysicsProp* p);
+    static IPhysicsProp* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSICSPROP_H

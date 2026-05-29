@@ -75,6 +75,7 @@ public:
     virtual ::CEntityIOOutput& OnShowMessage() = 0;
     virtual void OnShowMessageUpdated() = 0;
     static IMessage* FromOriginal(CMessage* p);
+    static IMessage* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMESSAGE_H

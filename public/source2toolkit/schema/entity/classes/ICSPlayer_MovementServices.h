@@ -170,6 +170,7 @@ public:
     virtual bool& HasEverProcessedCommand() = 0;
     virtual void HasEverProcessedCommandUpdated() = 0;
     static ICSPlayer_MovementServices* FromOriginal(CCSPlayer_MovementServices* p);
+    static ICSPlayer_MovementServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_MOVEMENTSERVICES_H

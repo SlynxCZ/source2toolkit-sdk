@@ -67,6 +67,7 @@ public:
     virtual int32_t& BeverageType() = 0;
     virtual void BeverageTypeUpdated() = 0;
     static IEnvBeverage* FromOriginal(CEnvBeverage* p);
+    static IEnvBeverage* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVBEVERAGE_H

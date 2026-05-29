@@ -88,6 +88,7 @@ public:
     virtual ::CMovementStatsProperty& MovementStats() = 0;
     virtual void MovementStatsUpdated() = 0;
     static IBaseCombatCharacter* FromOriginal(CBaseCombatCharacter* p);
+    static IBaseCombatCharacter* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASECOMBATCHARACTER_H

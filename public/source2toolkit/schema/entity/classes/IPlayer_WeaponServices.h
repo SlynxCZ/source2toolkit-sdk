@@ -73,6 +73,7 @@ public:
     virtual bool& PreventWeaponPickup() = 0;
     virtual void PreventWeaponPickupUpdated() = 0;
     static IPlayer_WeaponServices* FromOriginal(CPlayer_WeaponServices* p);
+    static IPlayer_WeaponServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPLAYER_WEAPONSERVICES_H

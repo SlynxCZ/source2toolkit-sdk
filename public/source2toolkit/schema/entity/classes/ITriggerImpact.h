@@ -69,6 +69,7 @@ public:
     virtual float& Viewkick() = 0;
     virtual void ViewkickUpdated() = 0;
     static ITriggerImpact* FromOriginal(CTriggerImpact* p);
+    static ITriggerImpact* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERIMPACT_H

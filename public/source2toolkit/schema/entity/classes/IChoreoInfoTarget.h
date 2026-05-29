@@ -63,6 +63,7 @@ public:
     virtual ~IChoreoInfoTarget() = default;
 
     static IChoreoInfoTarget* FromOriginal(CChoreoInfoTarget* p);
+    static IChoreoInfoTarget* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICHOREOINFOTARGET_H

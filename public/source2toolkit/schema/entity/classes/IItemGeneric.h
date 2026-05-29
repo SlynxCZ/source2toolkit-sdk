@@ -130,6 +130,7 @@ public:
     virtual CHandle<CItemGenericTriggerHelper>& TriggerHelper() = 0;
     virtual void TriggerHelperUpdated() = 0;
     static IItemGeneric* FromOriginal(CItemGeneric* p);
+    static IItemGeneric* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IITEMGENERIC_H

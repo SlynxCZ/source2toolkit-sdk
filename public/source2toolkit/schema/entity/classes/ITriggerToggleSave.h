@@ -63,6 +63,7 @@ public:
     virtual ~ITriggerToggleSave() = default;
 
     static ITriggerToggleSave* FromOriginal(CTriggerToggleSave* p);
+    static ITriggerToggleSave* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERTOGGLESAVE_H

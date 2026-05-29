@@ -111,6 +111,7 @@ public:
     virtual int32_t& PathingSourceIndex() = 0;
     virtual void PathingSourceIndexUpdated() = 0;
     static ISoundOpvarSetPointEntity* FromOriginal(CSoundOpvarSetPointEntity* p);
+    static ISoundOpvarSetPointEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISOUNDOPVARSETPOINTENTITY_H

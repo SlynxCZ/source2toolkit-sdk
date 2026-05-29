@@ -66,6 +66,7 @@ public:
     virtual CUtlVector<CUtlString>& NavHulls() = 0;
     virtual void NavHullsUpdated() = 0;
     static INavHullPresetVData* FromOriginal(CNavHullPresetVData* p);
+    static INavHullPresetVData* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_INAVHULLPRESETVDATA_H

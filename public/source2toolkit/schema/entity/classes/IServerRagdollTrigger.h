@@ -63,6 +63,7 @@ public:
     virtual ~IServerRagdollTrigger() = default;
 
     static IServerRagdollTrigger* FromOriginal(CServerRagdollTrigger* p);
+    static IServerRagdollTrigger* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISERVERRAGDOLLTRIGGER_H

@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponMag7() = default;
 
     static IWeaponMag7* FromOriginal(CWeaponMag7* p);
+    static IWeaponMag7* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONMAG7_H

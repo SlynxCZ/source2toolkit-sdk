@@ -67,6 +67,7 @@ public:
     virtual CSkeletonInstance*& SkeletonInstance() = 0;
     virtual void SkeletonInstanceUpdated() = 0;
     static ISkeletonAnimationController* FromOriginal(CSkeletonAnimationController* p);
+    static ISkeletonAnimationController* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISKELETONANIMATIONCONTROLLER_H

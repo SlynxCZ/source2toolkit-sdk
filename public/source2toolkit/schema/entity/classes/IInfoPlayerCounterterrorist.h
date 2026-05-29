@@ -64,6 +64,7 @@ public:
     virtual CInfoPlayerCounterterrorist* GetOriginal() const = 0;
 
     static IInfoPlayerCounterterrorist* FromOriginal(CInfoPlayerCounterterrorist* p);
+    static IInfoPlayerCounterterrorist* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINFOPLAYERCOUNTERTERRORIST_H

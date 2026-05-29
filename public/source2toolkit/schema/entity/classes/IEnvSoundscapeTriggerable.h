@@ -63,6 +63,7 @@ public:
     virtual ~IEnvSoundscapeTriggerable() = default;
 
     static IEnvSoundscapeTriggerable* FromOriginal(CEnvSoundscapeTriggerable* p);
+    static IEnvSoundscapeTriggerable* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVSOUNDSCAPETRIGGERABLE_H

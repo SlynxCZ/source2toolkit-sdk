@@ -71,6 +71,7 @@ public:
     /// <summary>Get player pawn.</summary>
     virtual ICSPlayerPawn* GetPlayerPawn() = 0;
     static IPlayerPawnComponent* FromOriginal(CPlayerPawnComponent* p);
+    static IPlayerPawnComponent* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPLAYERPAWNCOMPONENT_H

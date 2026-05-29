@@ -90,6 +90,7 @@ public:
     virtual float& CrouchTime() = 0;
     virtual void CrouchTimeUpdated() = 0;
     static IBasePlayerVData* FromOriginal(CBasePlayerVData* p);
+    static IBasePlayerVData* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASEPLAYERVDATA_H

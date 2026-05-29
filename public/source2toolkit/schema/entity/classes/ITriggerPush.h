@@ -78,6 +78,7 @@ public:
     virtual uint32_t& SplinePushType() = 0;
     virtual void SplinePushTypeUpdated() = 0;
     static ITriggerPush* FromOriginal(CTriggerPush* p);
+    static ITriggerPush* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERPUSH_H

@@ -63,6 +63,7 @@ public:
     virtual ~IInfoLadderDismount() = default;
 
     static IInfoLadderDismount* FromOriginal(CInfoLadderDismount* p);
+    static IInfoLadderDismount* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINFOLADDERDISMOUNT_H

@@ -78,6 +78,7 @@ public:
     virtual float& MaxConnectionDistance() = 0;
     virtual void MaxConnectionDistanceUpdated() = 0;
     static IDynamicNavConnectionsVolume* FromOriginal(CDynamicNavConnectionsVolume* p);
+    static IDynamicNavConnectionsVolume* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IDYNAMICNAVCONNECTIONSVOLUME_H

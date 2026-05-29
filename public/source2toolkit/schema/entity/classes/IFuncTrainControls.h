@@ -63,6 +63,7 @@ public:
     virtual ~IFuncTrainControls() = default;
 
     static IFuncTrainControls* FromOriginal(CFuncTrainControls* p);
+    static IFuncTrainControls* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCTRAINCONTROLS_H

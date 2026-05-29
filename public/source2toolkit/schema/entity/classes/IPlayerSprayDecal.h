@@ -92,6 +92,7 @@ public:
     virtual void VersionUpdated() = 0;
     virtual uint8_t* Signature() = 0;
     static IPlayerSprayDecal* FromOriginal(CPlayerSprayDecal* p);
+    static IPlayerSprayDecal* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPLAYERSPRAYDECAL_H

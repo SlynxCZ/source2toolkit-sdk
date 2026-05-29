@@ -63,6 +63,7 @@ public:
     virtual ~IPointBroadcastClientCommand() = default;
 
     static IPointBroadcastClientCommand* FromOriginal(CPointBroadcastClientCommand* p);
+    static IPointBroadcastClientCommand* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTBROADCASTCLIENTCOMMAND_H

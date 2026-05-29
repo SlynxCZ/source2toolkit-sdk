@@ -136,6 +136,7 @@ public:
     virtual CUtlVector<ExternalAnimGraph_t>& ExternalGraphs() = 0;
     virtual void ExternalGraphsUpdated() = 0;
     static IBaseAnimGraphController* FromOriginal(CBaseAnimGraphController* p);
+    static IBaseAnimGraphController* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASEANIMGRAPHCONTROLLER_H

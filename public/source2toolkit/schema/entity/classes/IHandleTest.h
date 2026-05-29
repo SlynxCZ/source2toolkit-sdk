@@ -68,6 +68,7 @@ public:
     virtual bool& SendHandle() = 0;
     virtual void SendHandleUpdated() = 0;
     static IHandleTest* FromOriginal(CHandleTest* p);
+    static IHandleTest* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IHANDLETEST_H

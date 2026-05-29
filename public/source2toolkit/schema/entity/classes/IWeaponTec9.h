@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponTec9() = default;
 
     static IWeaponTec9* FromOriginal(CWeaponTec9* p);
+    static IWeaponTec9* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONTEC9_H

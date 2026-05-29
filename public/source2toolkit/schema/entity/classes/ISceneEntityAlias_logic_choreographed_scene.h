@@ -63,6 +63,7 @@ public:
     virtual ~ISceneEntityAlias_logic_choreographed_scene() = default;
 
     static ISceneEntityAlias_logic_choreographed_scene* FromOriginal(CSceneEntityAlias_logic_choreographed_scene* p);
+    static ISceneEntityAlias_logic_choreographed_scene* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISCENEENTITYALIAS_LOGIC_CHOREOGRAPHED_SCENE_H

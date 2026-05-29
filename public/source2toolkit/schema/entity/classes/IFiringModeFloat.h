@@ -65,6 +65,7 @@ public:
 
     virtual float* Values() = 0;
     static IFiringModeFloat* FromOriginal(CFiringModeFloat* p);
+    static IFiringModeFloat* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFIRINGMODEFLOAT_H

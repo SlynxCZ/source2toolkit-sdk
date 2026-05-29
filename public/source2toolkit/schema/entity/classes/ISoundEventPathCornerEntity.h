@@ -75,6 +75,7 @@ public:
     virtual bool& Playing() = 0;
     virtual void PlayingUpdated() = 0;
     static ISoundEventPathCornerEntity* FromOriginal(CSoundEventPathCornerEntity* p);
+    static ISoundEventPathCornerEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISOUNDEVENTPATHCORNERENTITY_H

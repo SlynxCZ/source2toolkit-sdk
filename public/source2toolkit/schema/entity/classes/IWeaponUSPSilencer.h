@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponUSPSilencer() = default;
 
     static IWeaponUSPSilencer* FromOriginal(CWeaponUSPSilencer* p);
+    static IWeaponUSPSilencer* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONUSPSILENCER_H

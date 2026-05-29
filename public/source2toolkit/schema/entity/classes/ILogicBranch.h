@@ -72,6 +72,7 @@ public:
     virtual ::CEntityIOOutput& OnFalse() = 0;
     virtual void OnFalseUpdated() = 0;
     static ILogicBranch* FromOriginal(CLogicBranch* p);
+    static ILogicBranch* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICBRANCH_H

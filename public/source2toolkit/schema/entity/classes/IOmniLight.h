@@ -69,6 +69,7 @@ public:
     virtual bool& ShowLight() = 0;
     virtual void ShowLightUpdated() = 0;
     static IOmniLight* FromOriginal(COmniLight* p);
+    static IOmniLight* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IOMNILIGHT_H

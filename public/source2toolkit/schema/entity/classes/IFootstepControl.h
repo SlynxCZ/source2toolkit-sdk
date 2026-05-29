@@ -67,6 +67,7 @@ public:
     virtual CUtlSymbolLarge& Destination() = 0;
     virtual void DestinationUpdated() = 0;
     static IFootstepControl* FromOriginal(CFootstepControl* p);
+    static IFootstepControl* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFOOTSTEPCONTROL_H

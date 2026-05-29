@@ -63,6 +63,7 @@ public:
     virtual ~ICSObserverPawn() = default;
 
     static ICSObserverPawn* FromOriginal(CCSObserverPawn* p);
+    static ICSObserverPawn* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSOBSERVERPAWN_H

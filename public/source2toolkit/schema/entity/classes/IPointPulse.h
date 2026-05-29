@@ -63,6 +63,7 @@ public:
     virtual ~IPointPulse() = default;
 
     static IPointPulse* FromOriginal(CPointPulse* p);
+    static IPointPulse* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTPULSE_H

@@ -98,6 +98,7 @@ public:
     virtual CHandle<CCSPlayerController>& OriginalController() = 0;
     virtual void OriginalControllerUpdated() = 0;
     static ICSPlayerPawnBase* FromOriginal(CCSPlayerPawnBase* p);
+    static ICSPlayerPawnBase* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYERPAWNBASE_H

@@ -87,6 +87,7 @@ public:
     virtual CBaseModelEntity*& Outer() = 0;
     virtual void OuterUpdated() = 0;
     static IAI_Expresser* FromOriginal(CAI_Expresser* p);
+    static IAI_Expresser* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IAI_EXPRESSER_H

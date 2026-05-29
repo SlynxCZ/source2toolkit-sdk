@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponSawedoff() = default;
 
     static IWeaponSawedoff* FromOriginal(CWeaponSawedoff* p);
+    static IWeaponSawedoff* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONSAWEDOFF_H

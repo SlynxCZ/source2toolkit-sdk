@@ -63,6 +63,7 @@ public:
     virtual ~IPointEntity() = default;
 
     static IPointEntity* FromOriginal(CPointEntity* p);
+    static IPointEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTENTITY_H

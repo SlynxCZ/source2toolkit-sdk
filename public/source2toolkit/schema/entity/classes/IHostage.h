@@ -146,6 +146,7 @@ public:
     virtual Vector& HostageResetPosition() = 0;
     virtual void HostageResetPositionUpdated() = 0;
     static IHostage* FromOriginal(CHostage* p);
+    static IHostage* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IHOSTAGE_H

@@ -82,6 +82,7 @@ public:
     virtual uint32_t& TeleportTick() = 0;
     virtual void TeleportTickUpdated() = 0;
     static IPhysicsSpring* FromOriginal(CPhysicsSpring* p);
+    static IPhysicsSpring* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSICSSPRING_H

@@ -68,6 +68,7 @@ public:
     virtual CHandle<CCSPlayerPawn>& KillingPlayer() = 0;
     virtual void KillingPlayerUpdated() = 0;
     static IItemDogtags* FromOriginal(CItemDogtags* p);
+    static IItemDogtags* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IITEMDOGTAGS_H

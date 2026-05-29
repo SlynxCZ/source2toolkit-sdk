@@ -63,6 +63,7 @@ public:
     virtual ~IInfoParticleTarget() = default;
 
     static IInfoParticleTarget* FromOriginal(CInfoParticleTarget* p);
+    static IInfoParticleTarget* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINFOPARTICLETARGET_H

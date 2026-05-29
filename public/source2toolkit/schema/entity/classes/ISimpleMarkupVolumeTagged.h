@@ -63,6 +63,7 @@ public:
     virtual ~ISimpleMarkupVolumeTagged() = default;
 
     static ISimpleMarkupVolumeTagged* FromOriginal(CSimpleMarkupVolumeTagged* p);
+    static ISimpleMarkupVolumeTagged* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISIMPLEMARKUPVOLUMETAGGED_H

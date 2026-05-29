@@ -65,6 +65,7 @@ public:
     virtual int32_t& State() = 0;
     virtual void StateUpdated() = 0;
     static IFuncWall* FromOriginal(CFuncWall* p);
+    static IFuncWall* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCWALL_H

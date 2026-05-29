@@ -63,6 +63,7 @@ public:
     virtual ~IFuncVehicleClip() = default;
 
     static IFuncVehicleClip* FromOriginal(CFuncVehicleClip* p);
+    static IFuncVehicleClip* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCVEHICLECLIP_H

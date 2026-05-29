@@ -89,6 +89,7 @@ public:
     virtual char* CustomName() = 0;
     virtual char* CustomNameOverride() = 0;
     static IEconItemView* FromOriginal(CEconItemView* p);
+    static IEconItemView* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IECONITEMVIEW_H

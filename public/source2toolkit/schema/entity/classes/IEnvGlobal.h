@@ -71,6 +71,7 @@ public:
     virtual int32_t& Counter() = 0;
     virtual void CounterUpdated() = 0;
     static IEnvGlobal* FromOriginal(CEnvGlobal* p);
+    static IEnvGlobal* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVGLOBAL_H

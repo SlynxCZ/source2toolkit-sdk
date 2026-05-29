@@ -65,6 +65,7 @@ public:
     virtual CUtlSymbolLarge& Message() = 0;
     virtual void MessageUpdated() = 0;
     static IEnvHudHint* FromOriginal(CEnvHudHint* p);
+    static IEnvHudHint* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVHUDHINT_H

@@ -90,6 +90,7 @@ public:
     virtual CHandle<CCSWeaponBase>& SwitchToWeaponAfterThrow() = 0;
     virtual void SwitchToWeaponAfterThrowUpdated() = 0;
     static IBaseCSGrenade* FromOriginal(CBaseCSGrenade* p);
+    static IBaseCSGrenade* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASECSGRENADE_H

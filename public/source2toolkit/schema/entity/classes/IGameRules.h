@@ -79,6 +79,7 @@ public:
     virtual bool& GamePaused() = 0;
     virtual void GamePausedUpdated() = 0;
     static IGameRules* FromOriginal(CGameRules* p);
+    static IGameRules* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IGAMERULES_H

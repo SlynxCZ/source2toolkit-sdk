@@ -80,6 +80,7 @@ public:
     virtual ::CConstantForceController& Integrator() = 0;
     virtual void IntegratorUpdated() = 0;
     static IPhysForce* FromOriginal(CPhysForce* p);
+    static IPhysForce* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSFORCE_H

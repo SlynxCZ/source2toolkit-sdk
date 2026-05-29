@@ -89,6 +89,7 @@ public:
     virtual float& NormCenterSize() = 0;
     virtual void NormCenterSizeUpdated() = 0;
     static ITriggerSndSosOpvar* FromOriginal(CTriggerSndSosOpvar* p);
+    static ITriggerSndSosOpvar* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERSNDSOSOPVAR_H

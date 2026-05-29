@@ -63,6 +63,7 @@ public:
     virtual ~ICSPlayer_CameraServices() = default;
 
     static ICSPlayer_CameraServices* FromOriginal(CCSPlayer_CameraServices* p);
+    static ICSPlayer_CameraServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_CAMERASERVICES_H

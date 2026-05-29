@@ -66,6 +66,7 @@ public:
     virtual CUtlVector<SellbackPurchaseEntry_t>& SellbackPurchaseEntries() = 0;
     virtual void SellbackPurchaseEntriesUpdated() = 0;
     static ICSPlayer_BuyServices* FromOriginal(CCSPlayer_BuyServices* p);
+    static ICSPlayer_BuyServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_BUYSERVICES_H

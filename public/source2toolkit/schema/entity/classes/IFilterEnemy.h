@@ -73,6 +73,7 @@ public:
     virtual CUtlSymbolLarge& PlayerName() = 0;
     virtual void PlayerNameUpdated() = 0;
     static IFilterEnemy* FromOriginal(CFilterEnemy* p);
+    static IFilterEnemy* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFILTERENEMY_H

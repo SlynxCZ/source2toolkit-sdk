@@ -69,6 +69,7 @@ public:
     virtual CUtlSymbolLarge& DirectionEntityName() = 0;
     virtual void DirectionEntityNameUpdated() = 0;
     static IPhysImpact* FromOriginal(CPhysImpact* p);
+    static IPhysImpact* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSIMPACT_H

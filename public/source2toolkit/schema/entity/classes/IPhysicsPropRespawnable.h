@@ -73,6 +73,7 @@ public:
     virtual float& RespawnDuration() = 0;
     virtual void RespawnDurationUpdated() = 0;
     static IPhysicsPropRespawnable* FromOriginal(CPhysicsPropRespawnable* p);
+    static IPhysicsPropRespawnable* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSICSPROPRESPAWNABLE_H

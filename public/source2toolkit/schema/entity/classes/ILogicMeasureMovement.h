@@ -82,6 +82,7 @@ public:
     virtual int32_t& MeasureType() = 0;
     virtual void MeasureTypeUpdated() = 0;
     static ILogicMeasureMovement* FromOriginal(CLogicMeasureMovement* p);
+    static ILogicMeasureMovement* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICMEASUREMOVEMENT_H

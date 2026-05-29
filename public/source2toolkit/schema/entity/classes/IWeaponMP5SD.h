@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponMP5SD() = default;
 
     static IWeaponMP5SD* FromOriginal(CWeaponMP5SD* p);
+    static IWeaponMP5SD* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONMP5SD_H

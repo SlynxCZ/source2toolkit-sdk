@@ -97,6 +97,7 @@ public:
     virtual ::CMotorController& Motor() = 0;
     virtual void MotorUpdated() = 0;
     static IPhysMotor* FromOriginal(CPhysMotor* p);
+    static IPhysMotor* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSMOTOR_H

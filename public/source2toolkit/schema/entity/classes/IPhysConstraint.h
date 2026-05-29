@@ -93,6 +93,7 @@ public:
     virtual ::CEntityIOOutput& OnBreak() = 0;
     virtual void OnBreakUpdated() = 0;
     static IPhysConstraint* FromOriginal(CPhysConstraint* p);
+    static IPhysConstraint* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSCONSTRAINT_H

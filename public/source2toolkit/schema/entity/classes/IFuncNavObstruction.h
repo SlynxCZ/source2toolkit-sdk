@@ -67,6 +67,7 @@ public:
     virtual bool& UseAsyncObstacleUpdate() = 0;
     virtual void UseAsyncObstacleUpdateUpdated() = 0;
     static IFuncNavObstruction* FromOriginal(CFuncNavObstruction* p);
+    static IFuncNavObstruction* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCNAVOBSTRUCTION_H

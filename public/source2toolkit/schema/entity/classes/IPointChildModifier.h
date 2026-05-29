@@ -65,6 +65,7 @@ public:
     virtual bool& OrphanInsteadOfDeletingChildrenOnRemove() = 0;
     virtual void OrphanInsteadOfDeletingChildrenOnRemoveUpdated() = 0;
     static IPointChildModifier* FromOriginal(CPointChildModifier* p);
+    static IPointChildModifier* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTCHILDMODIFIER_H

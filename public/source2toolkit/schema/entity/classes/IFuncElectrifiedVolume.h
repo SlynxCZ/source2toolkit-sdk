@@ -71,6 +71,7 @@ public:
     virtual CUtlSymbolLarge& EffectSource() = 0;
     virtual void EffectSourceUpdated() = 0;
     static IFuncElectrifiedVolume* FromOriginal(CFuncElectrifiedVolume* p);
+    static IFuncElectrifiedVolume* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCELECTRIFIEDVOLUME_H

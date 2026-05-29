@@ -73,8 +73,6 @@ public:
     virtual void UseUniqueColorTargetUpdated() = 0;
     virtual CUtlString& BrushModelName() = 0;
     virtual void BrushModelNameUpdated() = 0;
-    virtual CHandle<CBaseEntity>& TargetCamera() = 0;
-    virtual void TargetCameraUpdated() = 0;
     virtual bool& Enabled() = 0;
     virtual void EnabledUpdated() = 0;
     virtual bool& Draw3DSkybox() = 0;
@@ -82,6 +80,7 @@ public:
     virtual bool& StartEnabled() = 0;
     virtual void StartEnabledUpdated() = 0;
     static IFuncMonitor* FromOriginal(CFuncMonitor* p);
+    static IFuncMonitor* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCMONITOR_H

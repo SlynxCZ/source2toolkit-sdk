@@ -80,6 +80,7 @@ public:
     virtual float& StartFrame() = 0;
     virtual void StartFrameUpdated() = 0;
     static ITextureBasedAnimatable* FromOriginal(CTextureBasedAnimatable* p);
+    static ITextureBasedAnimatable* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITEXTUREBASEDANIMATABLE_H

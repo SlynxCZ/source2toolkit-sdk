@@ -63,6 +63,7 @@ public:
     virtual ~IHostageRescueZone() = default;
 
     static IHostageRescueZone* FromOriginal(CHostageRescueZone* p);
+    static IHostageRescueZone* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IHOSTAGERESCUEZONE_H

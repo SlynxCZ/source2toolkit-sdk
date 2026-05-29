@@ -99,6 +99,7 @@ public:
     virtual CHandle<CBaseEntity>& EntOwner() = 0;
     virtual void EntOwnerUpdated() = 0;
     static IEnvWindShared* FromOriginal(CEnvWindShared* p);
+    static IEnvWindShared* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVWINDSHARED_H

@@ -85,6 +85,7 @@ public:
     virtual bool& BombPlanted() = 0;
     virtual void BombPlantedUpdated() = 0;
     static IC4* FromOriginal(CC4* p);
+    static IC4* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IC4_H

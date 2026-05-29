@@ -63,6 +63,7 @@ public:
     virtual ~IInfoSpawnGroupLandmark() = default;
 
     static IInfoSpawnGroupLandmark* FromOriginal(CInfoSpawnGroupLandmark* p);
+    static IInfoSpawnGroupLandmark* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINFOSPAWNGROUPLANDMARK_H

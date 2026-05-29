@@ -81,6 +81,7 @@ public:
     virtual float& SpotRadius() = 0;
     virtual void SpotRadiusUpdated() = 0;
     static IDynamicLight* FromOriginal(CDynamicLight* p);
+    static IDynamicLight* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IDYNAMICLIGHT_H

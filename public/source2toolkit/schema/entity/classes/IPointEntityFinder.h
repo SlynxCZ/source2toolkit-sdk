@@ -81,6 +81,7 @@ public:
     virtual ::CEntityIOOutput& OnFoundEntity() = 0;
     virtual void OnFoundEntityUpdated() = 0;
     static IPointEntityFinder* FromOriginal(CPointEntityFinder* p);
+    static IPointEntityFinder* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTENTITYFINDER_H

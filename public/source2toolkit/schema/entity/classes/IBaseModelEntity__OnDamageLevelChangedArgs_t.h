@@ -72,6 +72,7 @@ public:
     virtual int32_t& PrevDamageLevel() = 0;
     virtual void PrevDamageLevelUpdated() = 0;
     static IBaseModelEntity__OnDamageLevelChangedArgs_t* FromOriginal(CBaseModelEntity__OnDamageLevelChangedArgs_t* p);
+    static IBaseModelEntity__OnDamageLevelChangedArgs_t* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASEMODELENTITY__ONDAMAGELEVELCHANGEDARGS_T_H

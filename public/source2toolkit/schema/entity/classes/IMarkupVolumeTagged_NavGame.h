@@ -71,6 +71,7 @@ public:
     virtual bool& SplitNavSpace() = 0;
     virtual void SplitNavSpaceUpdated() = 0;
     static IMarkupVolumeTagged_NavGame* FromOriginal(CMarkupVolumeTagged_NavGame* p);
+    static IMarkupVolumeTagged_NavGame* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMARKUPVOLUMETAGGED_NAVGAME_H

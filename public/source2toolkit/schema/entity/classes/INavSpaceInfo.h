@@ -63,6 +63,7 @@ public:
     virtual ~INavSpaceInfo() = default;
 
     static INavSpaceInfo* FromOriginal(CNavSpaceInfo* p);
+    static INavSpaceInfo* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_INAVSPACEINFO_H

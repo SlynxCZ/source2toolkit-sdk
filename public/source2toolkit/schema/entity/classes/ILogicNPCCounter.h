@@ -143,6 +143,7 @@ public:
     virtual float& DefaultDist_3() = 0;
     virtual void DefaultDist_3Updated() = 0;
     static ILogicNPCCounter* FromOriginal(CLogicNPCCounter* p);
+    static ILogicNPCCounter* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICNPCCOUNTER_H

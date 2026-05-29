@@ -63,6 +63,7 @@ public:
     virtual ~ICSSprite() = default;
 
     static ICSSprite* FromOriginal(CCSSprite* p);
+    static ICSSprite* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSSPRITE_H

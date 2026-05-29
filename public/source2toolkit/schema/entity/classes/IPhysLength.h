@@ -72,6 +72,7 @@ public:
     virtual float& TotalLength() = 0;
     virtual void TotalLengthUpdated() = 0;
     static IPhysLength* FromOriginal(CPhysLength* p);
+    static IPhysLength* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSLENGTH_H

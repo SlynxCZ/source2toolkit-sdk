@@ -65,6 +65,7 @@ public:
     virtual ::CEntityIOOutput& OnDetectedExplosion() = 0;
     virtual void OnDetectedExplosionUpdated() = 0;
     static ITriggerDetectExplosion* FromOriginal(CTriggerDetectExplosion* p);
+    static ITriggerDetectExplosion* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERDETECTEXPLOSION_H

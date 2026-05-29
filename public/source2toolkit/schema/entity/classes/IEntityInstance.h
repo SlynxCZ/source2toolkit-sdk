@@ -111,6 +111,23 @@ public:
     virtual SchemaMetaInfoHandle_t<CSchemaClassInfo> Schema_DynamicBinding() = 0;
 
 public:
+    // CEntityInstance inline methods — accessible on any interface.
+    virtual CEntityHandle GetRefEHandle() const = 0;
+    virtual const char* GetClassname() const = 0;
+    virtual CEntityIndex GetEntityIndex() const = 0;
+
+    // CEntityInstance fields.
+    virtual CUtlSymbolLarge& PrivateVScripts() = 0;
+    virtual CEntityIdentity*& Entity() = 0;
+    virtual CEntityKeyValues*& KeyValues() = 0;
+    virtual CScriptComponent*& ScriptComponent() = 0;
+
+public:
+    /// <summary>Cast to a different interface type via the raw entity pointer.</summary>
+    /// <summary>Use instead of static_cast/dynamic_cast between IXxx interfaces.</summary>
+    template<typename T>
+    T* As() { return T::FromRaw(GetOriginal()); }
+
     /// <summary>Create entity by classname.</summary>
     template<typename T>
     static T* New(const char* pszClassName)

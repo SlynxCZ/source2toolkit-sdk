@@ -63,6 +63,7 @@ public:
     virtual ~IEnvCombinedLightProbeVolumeAlias_func_combined_light_probe_volume() = default;
 
     static IEnvCombinedLightProbeVolumeAlias_func_combined_light_probe_volume* FromOriginal(CEnvCombinedLightProbeVolumeAlias_func_combined_light_probe_volume* p);
+    static IEnvCombinedLightProbeVolumeAlias_func_combined_light_probe_volume* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVCOMBINEDLIGHTPROBEVOLUMEALIAS_FUNC_COMBINED_LIGHT_PROBE_VOLUME_H

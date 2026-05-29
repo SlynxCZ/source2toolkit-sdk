@@ -65,6 +65,7 @@ public:
     virtual float& Scale() = 0;
     virtual void ScaleUpdated() = 0;
     static IEnvSplash* FromOriginal(CEnvSplash* p);
+    static IEnvSplash* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVSPLASH_H

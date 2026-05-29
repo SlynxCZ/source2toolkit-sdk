@@ -63,6 +63,7 @@ public:
     virtual ~ICSGO_WingmanIntroCharacterPosition() = default;
 
     static ICSGO_WingmanIntroCharacterPosition* FromOriginal(CCSGO_WingmanIntroCharacterPosition* p);
+    static ICSGO_WingmanIntroCharacterPosition* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSGO_WINGMANINTROCHARACTERPOSITION_H

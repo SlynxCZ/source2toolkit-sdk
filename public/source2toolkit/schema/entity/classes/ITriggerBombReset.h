@@ -63,6 +63,7 @@ public:
     virtual ~ITriggerBombReset() = default;
 
     static ITriggerBombReset* FromOriginal(CTriggerBombReset* p);
+    static ITriggerBombReset* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERBOMBRESET_H

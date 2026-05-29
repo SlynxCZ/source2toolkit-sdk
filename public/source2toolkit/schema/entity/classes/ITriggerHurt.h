@@ -94,6 +94,7 @@ public:
     virtual CUtlVector<CHandle<CBaseEntity>>& HurtEntities() = 0;
     virtual void HurtEntitiesUpdated() = 0;
     static ITriggerHurt* FromOriginal(CTriggerHurt* p);
+    static ITriggerHurt* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERHURT_H

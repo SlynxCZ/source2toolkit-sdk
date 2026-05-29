@@ -83,6 +83,7 @@ public:
     virtual int32_t& OldOwnerClass() = 0;
     virtual void OldOwnerClassUpdated() = 0;
     static IEconEntity* FromOriginal(CEconEntity* p);
+    static IEconEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IECONENTITY_H

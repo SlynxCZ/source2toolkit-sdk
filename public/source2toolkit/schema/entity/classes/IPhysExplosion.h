@@ -85,6 +85,7 @@ public:
     virtual ::CEntityIOOutput& OnPushedPlayer() = 0;
     virtual void OnPushedPlayerUpdated() = 0;
     static IPhysExplosion* FromOriginal(CPhysExplosion* p);
+    static IPhysExplosion* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSEXPLOSION_H

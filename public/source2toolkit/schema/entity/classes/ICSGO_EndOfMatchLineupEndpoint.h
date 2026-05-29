@@ -63,6 +63,7 @@ public:
     virtual ~ICSGO_EndOfMatchLineupEndpoint() = default;
 
     static ICSGO_EndOfMatchLineupEndpoint* FromOriginal(CCSGO_EndOfMatchLineupEndpoint* p);
+    static ICSGO_EndOfMatchLineupEndpoint* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSGO_ENDOFMATCHLINEUPENDPOINT_H

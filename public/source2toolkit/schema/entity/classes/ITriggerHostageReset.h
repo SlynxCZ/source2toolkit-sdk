@@ -63,6 +63,7 @@ public:
     virtual ~ITriggerHostageReset() = default;
 
     static ITriggerHostageReset* FromOriginal(CTriggerHostageReset* p);
+    static ITriggerHostageReset* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERHOSTAGERESET_H

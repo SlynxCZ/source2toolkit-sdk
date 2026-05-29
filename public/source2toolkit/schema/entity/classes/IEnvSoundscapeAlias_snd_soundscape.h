@@ -63,6 +63,7 @@ public:
     virtual ~IEnvSoundscapeAlias_snd_soundscape() = default;
 
     static IEnvSoundscapeAlias_snd_soundscape* FromOriginal(CEnvSoundscapeAlias_snd_soundscape* p);
+    static IEnvSoundscapeAlias_snd_soundscape* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVSOUNDSCAPEALIAS_SND_SOUNDSCAPE_H

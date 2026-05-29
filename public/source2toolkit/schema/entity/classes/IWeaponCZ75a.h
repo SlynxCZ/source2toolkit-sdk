@@ -65,6 +65,7 @@ public:
     virtual bool& MagazineRemoved() = 0;
     virtual void MagazineRemovedUpdated() = 0;
     static IWeaponCZ75a* FromOriginal(CWeaponCZ75a* p);
+    static IWeaponCZ75a* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONCZ75A_H

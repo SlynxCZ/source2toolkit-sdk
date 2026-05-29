@@ -75,6 +75,7 @@ public:
     virtual CVoteController*& VoteController() = 0;
     virtual void VoteControllerUpdated() = 0;
     static IBaseIssue* FromOriginal(CBaseIssue* p);
+    static IBaseIssue* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASEISSUE_H

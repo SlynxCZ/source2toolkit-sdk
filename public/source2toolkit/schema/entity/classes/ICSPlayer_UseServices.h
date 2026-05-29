@@ -70,6 +70,7 @@ public:
     virtual float& TimeLastUsedWindow() = 0;
     virtual void TimeLastUsedWindowUpdated() = 0;
     static ICSPlayer_UseServices* FromOriginal(CCSPlayer_UseServices* p);
+    static ICSPlayer_UseServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_USESERVICES_H

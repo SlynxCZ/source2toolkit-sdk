@@ -63,6 +63,7 @@ public:
     virtual ~ILightEnvironmentEntity() = default;
 
     static ILightEnvironmentEntity* FromOriginal(CLightEnvironmentEntity* p);
+    static ILightEnvironmentEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILIGHTENVIRONMENTENTITY_H

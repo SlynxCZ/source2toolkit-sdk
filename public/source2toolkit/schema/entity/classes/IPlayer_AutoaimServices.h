@@ -63,6 +63,7 @@ public:
     virtual ~IPlayer_AutoaimServices() = default;
 
     static IPlayer_AutoaimServices* FromOriginal(CPlayer_AutoaimServices* p);
+    static IPlayer_AutoaimServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPLAYER_AUTOAIMSERVICES_H

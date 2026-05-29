@@ -65,6 +65,7 @@ public:
     virtual Vector& Axis() = 0;
     virtual void AxisUpdated() = 0;
     static IPhysTorque* FromOriginal(CPhysTorque* p);
+    static IPhysTorque* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSTORQUE_H

@@ -65,6 +65,7 @@ public:
     virtual float& Radius() = 0;
     virtual void RadiusUpdated() = 0;
     static IFilterProximity* FromOriginal(CFilterProximity* p);
+    static IFilterProximity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFILTERPROXIMITY_H

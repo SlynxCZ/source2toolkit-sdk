@@ -225,6 +225,7 @@ public:
     virtual bool& SkipFadeIn() = 0;
     virtual void SkipFadeInUpdated() = 0;
     static IScriptedSequence* FromOriginal(CScriptedSequence* p);
+    static IScriptedSequence* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISCRIPTEDSEQUENCE_H

@@ -70,6 +70,7 @@ public:
     virtual float& Out() = 0;
     virtual void OutUpdated() = 0;
     static IAttributeManager__cached_attribute_float_t* FromOriginal(CAttributeManager__cached_attribute_float_t* p);
+    static IAttributeManager__cached_attribute_float_t* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IATTRIBUTEMANAGER__CACHED_ATTRIBUTE_FLOAT_T_H

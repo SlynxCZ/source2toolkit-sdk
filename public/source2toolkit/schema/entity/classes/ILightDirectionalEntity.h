@@ -63,6 +63,7 @@ public:
     virtual ~ILightDirectionalEntity() = default;
 
     static ILightDirectionalEntity* FromOriginal(CLightDirectionalEntity* p);
+    static ILightDirectionalEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILIGHTDIRECTIONALENTITY_H

@@ -85,22 +85,6 @@ public:
     virtual void Target7Updated() = 0;
     virtual CUtlSymbolLarge& Target8() = 0;
     virtual void Target8Updated() = 0;
-    virtual CHandle<CBaseEntity>& Target1() = 0;
-    virtual void Target1Updated() = 0;
-    virtual CHandle<CBaseEntity>& Target2() = 0;
-    virtual void Target2Updated() = 0;
-    virtual CHandle<CBaseEntity>& Target3() = 0;
-    virtual void Target3Updated() = 0;
-    virtual CHandle<CBaseEntity>& Target4() = 0;
-    virtual void Target4Updated() = 0;
-    virtual CHandle<CBaseEntity>& Target5() = 0;
-    virtual void Target5Updated() = 0;
-    virtual CHandle<CBaseEntity>& Target6() = 0;
-    virtual void Target6Updated() = 0;
-    virtual CHandle<CBaseEntity>& Target7() = 0;
-    virtual void Target7Updated() = 0;
-    virtual CHandle<CBaseEntity>& Target8() = 0;
-    virtual void Target8Updated() = 0;
     virtual CHandle<CBaseEntity>& LocatorOrigin() = 0;
     virtual void LocatorOriginUpdated() = 0;
     virtual CUtlSymbolLarge& TargetAttachment() = 0;
@@ -200,6 +184,7 @@ public:
     virtual ::SceneOnPlayerDeath_t& PlayerDeathBehavior() = 0;
     virtual void PlayerDeathBehaviorUpdated() = 0;
     static ISceneEntity* FromOriginal(CSceneEntity* p);
+    static ISceneEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISCENEENTITY_H

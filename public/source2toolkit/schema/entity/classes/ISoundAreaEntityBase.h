@@ -69,6 +69,7 @@ public:
     virtual Vector& Pos() = 0;
     virtual void PosUpdated() = 0;
     static ISoundAreaEntityBase* FromOriginal(CSoundAreaEntityBase* p);
+    static ISoundAreaEntityBase* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISOUNDAREAENTITYBASE_H

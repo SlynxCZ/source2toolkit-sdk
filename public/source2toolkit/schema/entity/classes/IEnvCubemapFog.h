@@ -113,6 +113,7 @@ public:
     virtual bool& FirstTime() = 0;
     virtual void FirstTimeUpdated() = 0;
     static IEnvCubemapFog* FromOriginal(CEnvCubemapFog* p);
+    static IEnvCubemapFog* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVCUBEMAPFOG_H

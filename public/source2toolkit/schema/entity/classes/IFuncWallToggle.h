@@ -63,6 +63,7 @@ public:
     virtual ~IFuncWallToggle() = default;
 
     static IFuncWallToggle* FromOriginal(CFuncWallToggle* p);
+    static IFuncWallToggle* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCWALLTOGGLE_H

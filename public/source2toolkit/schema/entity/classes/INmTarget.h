@@ -76,6 +76,7 @@ public:
     virtual bool& IsSet() = 0;
     virtual void IsSetUpdated() = 0;
     static INmTarget* FromOriginal(CNmTarget* p);
+    static INmTarget* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_INMTARGET_H

@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponHKP2000() = default;
 
     static IWeaponHKP2000* FromOriginal(CWeaponHKP2000* p);
+    static IWeaponHKP2000* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONHKP2000_H

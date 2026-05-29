@@ -63,6 +63,7 @@ public:
     virtual ~IPathParticleRopeAlias_path_particle_rope_clientside() = default;
 
     static IPathParticleRopeAlias_path_particle_rope_clientside* FromOriginal(CPathParticleRopeAlias_path_particle_rope_clientside* p);
+    static IPathParticleRopeAlias_path_particle_rope_clientside* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPATHPARTICLEROPEALIAS_PATH_PARTICLE_ROPE_CLIENTSIDE_H

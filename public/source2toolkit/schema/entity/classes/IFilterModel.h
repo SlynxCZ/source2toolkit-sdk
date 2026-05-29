@@ -65,6 +65,7 @@ public:
     virtual CUtlSymbolLarge& FilterModel() = 0;
     virtual void FilterModelUpdated() = 0;
     static IFilterModel* FromOriginal(CFilterModel* p);
+    static IFilterModel* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFILTERMODEL_H

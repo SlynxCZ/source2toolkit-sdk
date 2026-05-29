@@ -104,6 +104,7 @@ public:
     virtual CHandle<CEntityBlocker>& EntityBlocker() = 0;
     virtual void EntityBlockerUpdated() = 0;
     static IPropDoorRotating* FromOriginal(CPropDoorRotating* p);
+    static IPropDoorRotating* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPROPDOORROTATING_H

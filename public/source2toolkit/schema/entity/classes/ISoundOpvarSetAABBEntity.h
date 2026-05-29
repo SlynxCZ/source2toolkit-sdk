@@ -81,6 +81,7 @@ public:
     virtual Vector& OuterMaxs() = 0;
     virtual void OuterMaxsUpdated() = 0;
     static ISoundOpvarSetAABBEntity* FromOriginal(CSoundOpvarSetAABBEntity* p);
+    static ISoundOpvarSetAABBEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISOUNDOPVARSETAABBENTITY_H

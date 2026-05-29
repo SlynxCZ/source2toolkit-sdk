@@ -65,6 +65,7 @@ public:
     virtual float& MassScale() = 0;
     virtual void MassScaleUpdated() = 0;
     static IConstraintAnchor* FromOriginal(CConstraintAnchor* p);
+    static IConstraintAnchor* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICONSTRAINTANCHOR_H

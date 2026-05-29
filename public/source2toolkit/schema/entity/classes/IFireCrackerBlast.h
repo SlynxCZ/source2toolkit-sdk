@@ -63,6 +63,7 @@ public:
     virtual ~IFireCrackerBlast() = default;
 
     static IFireCrackerBlast* FromOriginal(CFireCrackerBlast* p);
+    static IFireCrackerBlast* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFIRECRACKERBLAST_H

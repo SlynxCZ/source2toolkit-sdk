@@ -79,6 +79,7 @@ public:
     virtual bool& SetOnSpawn() = 0;
     virtual void SetOnSpawnUpdated() = 0;
     static ISoundOpvarSetEntity* FromOriginal(CSoundOpvarSetEntity* p);
+    static ISoundOpvarSetEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISOUNDOPVARSETENTITY_H

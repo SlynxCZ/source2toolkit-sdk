@@ -68,6 +68,7 @@ public:
     virtual CHandle<CBaseFilter>& Filter() = 0;
     virtual void FilterUpdated() = 0;
     static ITriggerVolume* FromOriginal(CTriggerVolume* p);
+    static ITriggerVolume* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERVOLUME_H

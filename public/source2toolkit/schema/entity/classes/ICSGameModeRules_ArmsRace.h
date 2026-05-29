@@ -65,6 +65,7 @@ public:
     virtual CUtlVector<CUtlString>& WeaponSequence() = 0;
     virtual void WeaponSequenceUpdated() = 0;
     static ICSGameModeRules_ArmsRace* FromOriginal(CCSGameModeRules_ArmsRace* p);
+    static ICSGameModeRules_ArmsRace* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSGAMEMODERULES_ARMSRACE_H

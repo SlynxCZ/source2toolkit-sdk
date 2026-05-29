@@ -63,6 +63,7 @@ public:
     virtual ~ICSObserver_MovementServices() = default;
 
     static ICSObserver_MovementServices* FromOriginal(CCSObserver_MovementServices* p);
+    static ICSObserver_MovementServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSOBSERVER_MOVEMENTSERVICES_H

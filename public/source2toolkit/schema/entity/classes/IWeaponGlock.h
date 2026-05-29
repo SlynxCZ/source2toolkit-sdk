@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponGlock() = default;
 
     static IWeaponGlock* FromOriginal(CWeaponGlock* p);
+    static IWeaponGlock* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONGLOCK_H

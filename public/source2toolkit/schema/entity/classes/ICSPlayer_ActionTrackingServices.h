@@ -73,6 +73,7 @@ public:
     virtual ::WeaponPurchaseTracker_t& WeaponPurchasesThisRound() = 0;
     virtual void WeaponPurchasesThisRoundUpdated() = 0;
     static ICSPlayer_ActionTrackingServices* FromOriginal(CCSPlayer_ActionTrackingServices* p);
+    static ICSPlayer_ActionTrackingServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_ACTIONTRACKINGSERVICES_H

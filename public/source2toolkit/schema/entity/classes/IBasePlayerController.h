@@ -120,6 +120,7 @@ public:
     /// <summary>Set pawn for controller.</summary>
     virtual void SetPawn(IBasePlayerPawn* pPawn) = 0;
     static IBasePlayerController* FromOriginal(CBasePlayerController* p);
+    static IBasePlayerController* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASEPLAYERCONTROLLER_H

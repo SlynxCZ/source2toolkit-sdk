@@ -65,6 +65,7 @@ public:
     virtual Vector& Extent() = 0;
     virtual void ExtentUpdated() = 0;
     static IScriptTriggerMultiple* FromOriginal(CScriptTriggerMultiple* p);
+    static IScriptTriggerMultiple* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISCRIPTTRIGGERMULTIPLE_H

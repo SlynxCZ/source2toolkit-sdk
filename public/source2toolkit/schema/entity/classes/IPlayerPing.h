@@ -74,6 +74,7 @@ public:
     virtual void UrgentUpdated() = 0;
     virtual char* PlaceName() = 0;
     static IPlayerPing* FromOriginal(CPlayerPing* p);
+    static IPlayerPing* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPLAYERPING_H

@@ -63,6 +63,7 @@ public:
     virtual ~ITonemapController2Alias_env_tonemap_controller2() = default;
 
     static ITonemapController2Alias_env_tonemap_controller2* FromOriginal(CTonemapController2Alias_env_tonemap_controller2* p);
+    static ITonemapController2Alias_env_tonemap_controller2* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITONEMAPCONTROLLER2ALIAS_ENV_TONEMAP_CONTROLLER2_H

@@ -88,6 +88,7 @@ public:
     virtual bool& ExposureControl() = 0;
     virtual void ExposureControlUpdated() = 0;
     static IPostProcessingVolume* FromOriginal(CPostProcessingVolume* p);
+    static IPostProcessingVolume* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOSTPROCESSINGVOLUME_H

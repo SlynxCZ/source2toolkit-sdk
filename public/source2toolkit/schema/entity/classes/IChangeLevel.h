@@ -77,6 +77,7 @@ public:
     virtual bool& OnChangeLevelFired() = 0;
     virtual void OnChangeLevelFiredUpdated() = 0;
     static IChangeLevel* FromOriginal(CChangeLevel* p);
+    static IChangeLevel* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICHANGELEVEL_H

@@ -81,6 +81,7 @@ public:
     virtual float& HeightOffset() = 0;
     virtual void HeightOffsetUpdated() = 0;
     static IEnvInstructorVRHint* FromOriginal(CEnvInstructorVRHint* p);
+    static IEnvInstructorVRHint* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVINSTRUCTORVRHINT_H

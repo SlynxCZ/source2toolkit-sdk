@@ -68,6 +68,7 @@ public:
     virtual ::MoodType_t& MoodType() = 0;
     virtual void MoodTypeUpdated() = 0;
     static IMoodVData* FromOriginal(CMoodVData* p);
+    static IMoodVData* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMOODVDATA_H

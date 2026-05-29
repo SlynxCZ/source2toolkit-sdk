@@ -68,6 +68,7 @@ public:
     virtual int32_t& Example2() = 0;
     virtual void Example2Updated() = 0;
     static IExampleSchemaVData_Monomorphic* FromOriginal(CExampleSchemaVData_Monomorphic* p);
+    static IExampleSchemaVData_Monomorphic* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IEXAMPLESCHEMAVDATA_MONOMORPHIC_H

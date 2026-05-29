@@ -67,6 +67,7 @@ public:
     virtual CEntityHandle& TonemapController() = 0;
     virtual void TonemapControllerUpdated() = 0;
     static ITonemapTrigger* FromOriginal(CTonemapTrigger* p);
+    static ITonemapTrigger* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITONEMAPTRIGGER_H

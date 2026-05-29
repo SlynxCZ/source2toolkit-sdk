@@ -302,6 +302,7 @@ public:
     /// <summary>Creates entity by classname.</summary>
     static IBaseEntity* CreateEntityByName(const char* pszClassName);
     static IBaseEntity* FromOriginal(CBaseEntity* p);
+    static IBaseEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASEENTITY_H

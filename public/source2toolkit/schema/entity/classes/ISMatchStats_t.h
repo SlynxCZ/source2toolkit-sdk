@@ -105,6 +105,7 @@ public:
     virtual int32_t& EntryWins() = 0;
     virtual void EntryWinsUpdated() = 0;
     static ISMatchStats_t* FromOriginal(CSMatchStats_t* p);
+    static ISMatchStats_t* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISMATCHSTATS_T_H

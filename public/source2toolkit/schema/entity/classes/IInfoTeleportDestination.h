@@ -63,6 +63,7 @@ public:
     virtual ~IInfoTeleportDestination() = default;
 
     static IInfoTeleportDestination* FromOriginal(CInfoTeleportDestination* p);
+    static IInfoTeleportDestination* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINFOTELEPORTDESTINATION_H

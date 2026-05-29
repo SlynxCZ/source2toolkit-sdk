@@ -63,6 +63,7 @@ public:
     virtual ~ITriggerGravity() = default;
 
     static ITriggerGravity* FromOriginal(CTriggerGravity* p);
+    static ITriggerGravity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERGRAVITY_H

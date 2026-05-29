@@ -65,6 +65,7 @@ public:
     virtual CUtlSymbolLarge& Name() = 0;
     virtual void NameUpdated() = 0;
     static ICSPlace* FromOriginal(CCSPlace* p);
+    static ICSPlace* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLACE_H

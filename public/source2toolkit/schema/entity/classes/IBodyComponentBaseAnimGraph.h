@@ -66,6 +66,7 @@ public:
     virtual ::CBaseAnimGraphController& AnimationController() = 0;
     virtual void AnimationControllerUpdated() = 0;
     static IBodyComponentBaseAnimGraph* FromOriginal(CBodyComponentBaseAnimGraph* p);
+    static IBodyComponentBaseAnimGraph* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBODYCOMPONENTBASEANIMGRAPH_H

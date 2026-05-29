@@ -66,8 +66,8 @@ public:
     virtual CUtlVector<CHandle<CSceneListManager>>& ListManagers() = 0;
     virtual void ListManagersUpdated() = 0;
     virtual CUtlSymbolLarge* Scenes() = 0;
-    virtual CHandle<CBaseEntity>* Scenes() = 0;
     static ISceneListManager* FromOriginal(CSceneListManager* p);
+    static ISceneListManager* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISCENELISTMANAGER_H

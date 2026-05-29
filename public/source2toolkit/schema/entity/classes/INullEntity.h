@@ -63,6 +63,7 @@ public:
     virtual ~INullEntity() = default;
 
     static INullEntity* FromOriginal(CNullEntity* p);
+    static INullEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_INULLENTITY_H

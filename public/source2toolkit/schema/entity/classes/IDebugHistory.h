@@ -65,6 +65,7 @@ public:
     virtual int32_t& NpcEvents() = 0;
     virtual void NpcEventsUpdated() = 0;
     static IDebugHistory* FromOriginal(CDebugHistory* p);
+    static IDebugHistory* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IDEBUGHISTORY_H

@@ -64,6 +64,7 @@ public:
 
     virtual char* MessageText() = 0;
     static IPointClientUIWorldTextPanel* FromOriginal(CPointClientUIWorldTextPanel* p);
+    static IPointClientUIWorldTextPanel* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTCLIENTUIWORLDTEXTPANEL_H

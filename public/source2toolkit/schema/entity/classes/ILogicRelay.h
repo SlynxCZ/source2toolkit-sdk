@@ -77,6 +77,7 @@ public:
     virtual bool& PassthoughCaller() = 0;
     virtual void PassthoughCallerUpdated() = 0;
     static ILogicRelay* FromOriginal(CLogicRelay* p);
+    static ILogicRelay* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICRELAY_H

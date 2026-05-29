@@ -80,6 +80,7 @@ public:
     virtual CUtlVector<CHandle<CLightEntity>>& Lights() = 0;
     virtual void LightsUpdated() = 0;
     static IMultiLightProxy* FromOriginal(CMultiLightProxy* p);
+    static IMultiLightProxy* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMULTILIGHTPROXY_H

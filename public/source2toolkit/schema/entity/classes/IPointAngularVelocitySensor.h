@@ -94,6 +94,7 @@ public:
     virtual ::CEntityIOOutput& OnEqualTo() = 0;
     virtual void OnEqualToUpdated() = 0;
     static IPointAngularVelocitySensor* FromOriginal(CPointAngularVelocitySensor* p);
+    static IPointAngularVelocitySensor* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTANGULARVELOCITYSENSOR_H

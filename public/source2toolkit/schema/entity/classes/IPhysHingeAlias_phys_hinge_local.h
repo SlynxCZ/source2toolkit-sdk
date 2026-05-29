@@ -63,6 +63,7 @@ public:
     virtual ~IPhysHingeAlias_phys_hinge_local() = default;
 
     static IPhysHingeAlias_phys_hinge_local* FromOriginal(CPhysHingeAlias_phys_hinge_local* p);
+    static IPhysHingeAlias_phys_hinge_local* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSHINGEALIAS_PHYS_HINGE_LOCAL_H

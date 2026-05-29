@@ -65,6 +65,7 @@ public:
     virtual CUtlSymbolLarge& StackName() = 0;
     virtual void StackNameUpdated() = 0;
     static ISoundStackSave* FromOriginal(CSoundStackSave* p);
+    static ISoundStackSave* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISOUNDSTACKSAVE_H

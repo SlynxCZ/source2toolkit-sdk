@@ -69,6 +69,7 @@ public:
     virtual uint8_t& NumTeammatesHit() = 0;
     virtual void NumTeammatesHitUpdated() = 0;
     static IFlashbangProjectile* FromOriginal(CFlashbangProjectile* p);
+    static IFlashbangProjectile* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFLASHBANGPROJECTILE_H

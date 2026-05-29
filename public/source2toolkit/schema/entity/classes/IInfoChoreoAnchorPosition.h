@@ -78,6 +78,7 @@ public:
     virtual ::CInfoChoreoLocatorShapeType_t& ShapeType() = 0;
     virtual void ShapeTypeUpdated() = 0;
     static IInfoChoreoAnchorPosition* FromOriginal(CInfoChoreoAnchorPosition* p);
+    static IInfoChoreoAnchorPosition* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINFOCHOREOANCHORPOSITION_H

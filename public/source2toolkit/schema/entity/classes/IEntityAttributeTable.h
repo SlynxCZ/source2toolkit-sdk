@@ -64,6 +64,7 @@ public:
     virtual CEntityAttributeTable* GetOriginal() const = 0;
 
     static IEntityAttributeTable* FromOriginal(CEntityAttributeTable* p);
+    static IEntityAttributeTable* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENTITYATTRIBUTETABLE_H

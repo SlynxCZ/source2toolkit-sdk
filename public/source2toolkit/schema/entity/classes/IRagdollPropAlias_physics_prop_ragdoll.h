@@ -63,6 +63,7 @@ public:
     virtual ~IRagdollPropAlias_physics_prop_ragdoll() = default;
 
     static IRagdollPropAlias_physics_prop_ragdoll* FromOriginal(CRagdollPropAlias_physics_prop_ragdoll* p);
+    static IRagdollPropAlias_physics_prop_ragdoll* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IRAGDOLLPROPALIAS_PHYSICS_PROP_RAGDOLL_H

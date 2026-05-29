@@ -88,8 +88,8 @@ public:
     virtual void OrientationUpdated() = 0;
     virtual bool& AllowInteractionFromAllSceneWorlds() = 0;
     virtual void AllowInteractionFromAllSceneWorldsUpdated() = 0;
-    virtual CUtlVector<CUtlSymbolLarge>& SSClasses() = 0;
-    virtual void SSClassesUpdated() = 0;
+    virtual CUtlVector<CUtlSymbolLarge>& CSSClasses() = 0;
+    virtual void CSSClassesUpdated() = 0;
     virtual bool& Opaque() = 0;
     virtual void OpaqueUpdated() = 0;
     virtual bool& NoDepth() = 0;
@@ -111,6 +111,7 @@ public:
     virtual int32_t& ExplicitImageLayout() = 0;
     virtual void ExplicitImageLayoutUpdated() = 0;
     static IPointClientUIWorldPanel* FromOriginal(CPointClientUIWorldPanel* p);
+    static IPointClientUIWorldPanel* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTCLIENTUIWORLDPANEL_H

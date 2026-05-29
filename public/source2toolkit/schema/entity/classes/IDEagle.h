@@ -63,6 +63,7 @@ public:
     virtual ~IDEagle() = default;
 
     static IDEagle* FromOriginal(CDEagle* p);
+    static IDEagle* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IDEAGLE_H

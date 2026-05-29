@@ -72,6 +72,7 @@ public:
     virtual CUtlSymbolLarge& Globalstate() = 0;
     virtual void GlobalstateUpdated() = 0;
     static IMultiSource* FromOriginal(CMultiSource* p);
+    static IMultiSource* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMULTISOURCE_H

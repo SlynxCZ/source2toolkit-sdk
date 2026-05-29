@@ -69,6 +69,7 @@ public:
     virtual ::navproperties_t& NavProperty() = 0;
     virtual void NavPropertyUpdated() = 0;
     static ILogicNavigation* FromOriginal(CLogicNavigation* p);
+    static ILogicNavigation* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICNAVIGATION_H

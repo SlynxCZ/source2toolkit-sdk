@@ -68,6 +68,7 @@ public:
     virtual int32_t& SpotRules() = 0;
     virtual void SpotRulesUpdated() = 0;
     static IItemDefuser* FromOriginal(CItemDefuser* p);
+    static IItemDefuser* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IITEMDEFUSER_H

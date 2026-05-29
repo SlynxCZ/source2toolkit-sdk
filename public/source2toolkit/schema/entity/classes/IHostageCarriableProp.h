@@ -63,6 +63,7 @@ public:
     virtual ~IHostageCarriableProp() = default;
 
     static IHostageCarriableProp* FromOriginal(CHostageCarriableProp* p);
+    static IHostageCarriableProp* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IHOSTAGECARRIABLEPROP_H

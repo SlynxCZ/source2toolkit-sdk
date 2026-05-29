@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponXM1014() = default;
 
     static IWeaponXM1014* FromOriginal(CWeaponXM1014* p);
+    static IWeaponXM1014* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONXM1014_H

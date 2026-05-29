@@ -67,6 +67,7 @@ public:
     virtual Vector& Max() = 0;
     virtual void MaxUpdated() = 0;
     static ISoundAreaEntityOrientedBox* FromOriginal(CSoundAreaEntityOrientedBox* p);
+    static ISoundAreaEntityOrientedBox* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISOUNDAREAENTITYORIENTEDBOX_H

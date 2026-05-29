@@ -63,6 +63,7 @@ public:
     virtual ~IInfoTarget() = default;
 
     static IInfoTarget* FromOriginal(CInfoTarget* p);
+    static IInfoTarget* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINFOTARGET_H

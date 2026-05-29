@@ -98,6 +98,7 @@ public:
     virtual CUtlSymbolLarge& Master() = 0;
     virtual void MasterUpdated() = 0;
     static IBaseToggle* FromOriginal(CBaseToggle* p);
+    static IBaseToggle* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASETOGGLE_H

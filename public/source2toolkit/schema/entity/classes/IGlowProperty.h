@@ -86,6 +86,7 @@ public:
     virtual bool& Glowing() = 0;
     virtual void GlowingUpdated() = 0;
     static IGlowProperty* FromOriginal(CGlowProperty* p);
+    static IGlowProperty* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IGLOWPROPERTY_H

@@ -67,6 +67,7 @@ public:
     virtual int32_t& BlockedTeamNumber() = 0;
     virtual void BlockedTeamNumberUpdated() = 0;
     static IFuncNavBlocker* FromOriginal(CFuncNavBlocker* p);
+    static IFuncNavBlocker* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCNAVBLOCKER_H

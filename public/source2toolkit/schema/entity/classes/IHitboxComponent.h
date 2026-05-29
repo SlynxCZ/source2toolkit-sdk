@@ -66,6 +66,7 @@ public:
     virtual float& BoundsExpandRadius() = 0;
     virtual void BoundsExpandRadiusUpdated() = 0;
     static IHitboxComponent* FromOriginal(CHitboxComponent* p);
+    static IHitboxComponent* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IHITBOXCOMPONENT_H

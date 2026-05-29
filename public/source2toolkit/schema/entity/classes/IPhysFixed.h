@@ -79,6 +79,7 @@ public:
     virtual CUtlSymbolLarge& BoneName2() = 0;
     virtual void BoneName2Updated() = 0;
     static IPhysFixed* FromOriginal(CPhysFixed* p);
+    static IPhysFixed* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSFIXED_H

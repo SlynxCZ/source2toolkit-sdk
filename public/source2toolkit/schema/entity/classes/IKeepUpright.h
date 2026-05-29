@@ -81,6 +81,7 @@ public:
     virtual bool& DampAllRotation() = 0;
     virtual void DampAllRotationUpdated() = 0;
     static IKeepUpright* FromOriginal(CKeepUpright* p);
+    static IKeepUpright* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IKEEPUPRIGHT_H

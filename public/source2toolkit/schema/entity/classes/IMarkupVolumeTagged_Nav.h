@@ -67,6 +67,7 @@ public:
     virtual ::NavScopeFlags_t& Scopes() = 0;
     virtual void ScopesUpdated() = 0;
     static IMarkupVolumeTagged_Nav* FromOriginal(CMarkupVolumeTagged_Nav* p);
+    static IMarkupVolumeTagged_Nav* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMARKUPVOLUMETAGGED_NAV_H

@@ -96,6 +96,7 @@ public:
     virtual ::PointWorldTextReorientMode_t& ReorientMode() = 0;
     virtual void ReorientModeUpdated() = 0;
     static IPointWorldText* FromOriginal(CPointWorldText* p);
+    static IPointWorldText* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTWORLDTEXT_H

@@ -65,6 +65,7 @@ public:
     virtual Vector& Extent() = 0;
     virtual void ExtentUpdated() = 0;
     static IScriptTriggerHurt* FromOriginal(CScriptTriggerHurt* p);
+    static IScriptTriggerHurt* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISCRIPTTRIGGERHURT_H

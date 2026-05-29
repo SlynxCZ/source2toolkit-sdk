@@ -81,6 +81,7 @@ public:
     virtual ::CEntityIOOutput& OnChangedFromMax() = 0;
     virtual void OnChangedFromMaxUpdated() = 0;
     static IMathCounter* FromOriginal(CMathCounter* p);
+    static IMathCounter* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMATHCOUNTER_H

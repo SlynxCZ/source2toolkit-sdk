@@ -91,6 +91,7 @@ public:
     virtual bool& CreateNavObstacle() = 0;
     virtual void CreateNavObstacleUpdated() = 0;
     static IFuncMoveLinear* FromOriginal(CFuncMoveLinear* p);
+    static IFuncMoveLinear* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCMOVELINEAR_H

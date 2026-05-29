@@ -84,6 +84,7 @@ public:
     virtual uint32_t& SoundEventHash() = 0;
     virtual void SoundEventHashUpdated() = 0;
     static IEnvSoundscape* FromOriginal(CEnvSoundscape* p);
+    static IEnvSoundscape* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVSOUNDSCAPE_H

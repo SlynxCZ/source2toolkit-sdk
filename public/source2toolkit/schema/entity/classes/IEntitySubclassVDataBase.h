@@ -64,6 +64,7 @@ public:
     virtual CEntitySubclassVDataBase* GetOriginal() const = 0;
 
     static IEntitySubclassVDataBase* FromOriginal(CEntitySubclassVDataBase* p);
+    static IEntitySubclassVDataBase* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENTITYSUBCLASSVDATABASE_H

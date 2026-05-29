@@ -63,6 +63,7 @@ public:
     virtual ~ILogicNPCCounterOBB() = default;
 
     static ILogicNPCCounterOBB* FromOriginal(CLogicNPCCounterOBB* p);
+    static ILogicNPCCounterOBB* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICNPCCOUNTEROBB_H

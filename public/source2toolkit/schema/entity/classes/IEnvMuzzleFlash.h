@@ -67,6 +67,7 @@ public:
     virtual CUtlSymbolLarge& ParentAttachment() = 0;
     virtual void ParentAttachmentUpdated() = 0;
     static IEnvMuzzleFlash* FromOriginal(CEnvMuzzleFlash* p);
+    static IEnvMuzzleFlash* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVMUZZLEFLASH_H

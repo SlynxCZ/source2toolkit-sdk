@@ -63,6 +63,7 @@ public:
     virtual ~IFuncTrackAuto() = default;
 
     static IFuncTrackAuto* FromOriginal(CFuncTrackAuto* p);
+    static IFuncTrackAuto* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCTRACKAUTO_H

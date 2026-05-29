@@ -63,6 +63,7 @@ public:
     virtual ~IHostageRescueZoneShim() = default;
 
     static IHostageRescueZoneShim* FromOriginal(CHostageRescueZoneShim* p);
+    static IHostageRescueZoneShim* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IHOSTAGERESCUEZONESHIM_H

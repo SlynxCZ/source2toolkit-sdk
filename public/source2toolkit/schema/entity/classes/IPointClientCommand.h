@@ -63,6 +63,7 @@ public:
     virtual ~IPointClientCommand() = default;
 
     static IPointClientCommand* FromOriginal(CPointClientCommand* p);
+    static IPointClientCommand* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTCLIENTCOMMAND_H

@@ -89,6 +89,7 @@ public:
     virtual float& StartPosition() = 0;
     virtual void StartPositionUpdated() = 0;
     static IMomentaryRotButton* FromOriginal(CMomentaryRotButton* p);
+    static IMomentaryRotButton* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMOMENTARYROTBUTTON_H

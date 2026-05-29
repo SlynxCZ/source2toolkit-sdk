@@ -141,6 +141,7 @@ public:
     virtual float& NextMPSoundTime() = 0;
     virtual void NextMPSoundTimeUpdated() = 0;
     static IFuncTrackTrain* FromOriginal(CFuncTrackTrain* p);
+    static IFuncTrackTrain* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCTRACKTRAIN_H

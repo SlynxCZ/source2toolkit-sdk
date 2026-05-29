@@ -65,6 +65,7 @@ public:
     virtual CUtlSymbolLarge& InitialOwner() = 0;
     virtual void InitialOwnerUpdated() = 0;
     static IOrnamentProp* FromOriginal(COrnamentProp* p);
+    static IOrnamentProp* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IORNAMENTPROP_H

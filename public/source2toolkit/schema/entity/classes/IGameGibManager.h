@@ -71,6 +71,7 @@ public:
     virtual int32_t& LastFrame() = 0;
     virtual void LastFrameUpdated() = 0;
     static IGameGibManager* FromOriginal(CGameGibManager* p);
+    static IGameGibManager* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IGAMEGIBMANAGER_H

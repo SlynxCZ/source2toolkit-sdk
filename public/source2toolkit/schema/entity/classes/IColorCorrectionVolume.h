@@ -78,6 +78,7 @@ public:
     virtual float& LastExitTime() = 0;
     virtual void LastExitTimeUpdated() = 0;
     static IColorCorrectionVolume* FromOriginal(CColorCorrectionVolume* p);
+    static IColorCorrectionVolume* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICOLORCORRECTIONVOLUME_H

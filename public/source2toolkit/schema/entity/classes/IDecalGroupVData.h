@@ -69,6 +69,7 @@ public:
     virtual float& TotalProbability() = 0;
     virtual void TotalProbabilityUpdated() = 0;
     static IDecalGroupVData* FromOriginal(CDecalGroupVData* p);
+    static IDecalGroupVData* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IDECALGROUPVDATA_H

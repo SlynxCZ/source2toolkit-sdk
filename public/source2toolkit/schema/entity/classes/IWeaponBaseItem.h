@@ -67,6 +67,7 @@ public:
     virtual bool& Redraw() = 0;
     virtual void RedrawUpdated() = 0;
     static IWeaponBaseItem* FromOriginal(CWeaponBaseItem* p);
+    static IWeaponBaseItem* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONBASEITEM_H

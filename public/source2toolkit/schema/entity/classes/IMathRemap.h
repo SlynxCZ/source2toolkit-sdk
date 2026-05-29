@@ -83,6 +83,7 @@ public:
     virtual ::CEntityIOOutput& OnFellBelowMax() = 0;
     virtual void OnFellBelowMaxUpdated() = 0;
     static IMathRemap* FromOriginal(CMathRemap* p);
+    static IMathRemap* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMATHREMAP_H

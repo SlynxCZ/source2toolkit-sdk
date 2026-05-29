@@ -96,6 +96,7 @@ public:
     virtual bool& GradientFogNeedsTextures() = 0;
     virtual void GradientFogNeedsTexturesUpdated() = 0;
     static IGradientFog* FromOriginal(CGradientFog* p);
+    static IGradientFog* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IGRADIENTFOG_H

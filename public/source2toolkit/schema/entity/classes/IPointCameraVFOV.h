@@ -65,6 +65,7 @@ public:
     virtual float& VerticalFOV() = 0;
     virtual void VerticalFOVUpdated() = 0;
     static IPointCameraVFOV* FromOriginal(CPointCameraVFOV* p);
+    static IPointCameraVFOV* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTCAMERAVFOV_H

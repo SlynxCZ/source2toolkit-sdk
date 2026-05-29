@@ -344,6 +344,7 @@ public:
     virtual int32_t& LastValidReactionQueueFrame() = 0;
     virtual void LastValidReactionQueueFrameUpdated() = 0;
     static ICSBot* FromOriginal(CCSBot* p);
+    static ICSBot* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSBOT_H

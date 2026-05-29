@@ -83,6 +83,7 @@ public:
     virtual bool& SkillBoltLiftedFireKey() = 0;
     virtual void SkillBoltLiftedFireKeyUpdated() = 0;
     static ICSWeaponBaseGun* FromOriginal(CCSWeaponBaseGun* p);
+    static ICSWeaponBaseGun* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSWEAPONBASEGUN_H

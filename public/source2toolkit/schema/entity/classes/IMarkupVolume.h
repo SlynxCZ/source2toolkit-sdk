@@ -65,6 +65,7 @@ public:
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;
     static IMarkupVolume* FromOriginal(CMarkupVolume* p);
+    static IMarkupVolume* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMARKUPVOLUME_H

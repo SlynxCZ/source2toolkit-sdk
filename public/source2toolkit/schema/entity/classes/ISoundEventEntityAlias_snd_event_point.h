@@ -63,6 +63,7 @@ public:
     virtual ~ISoundEventEntityAlias_snd_event_point() = default;
 
     static ISoundEventEntityAlias_snd_event_point* FromOriginal(CSoundEventEntityAlias_snd_event_point* p);
+    static ISoundEventEntityAlias_snd_event_point* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISOUNDEVENTENTITYALIAS_SND_EVENT_POINT_H

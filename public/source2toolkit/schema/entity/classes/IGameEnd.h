@@ -63,6 +63,7 @@ public:
     virtual ~IGameEnd() = default;
 
     static IGameEnd* FromOriginal(CGameEnd* p);
+    static IGameEnd* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IGAMEEND_H

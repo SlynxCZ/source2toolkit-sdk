@@ -94,6 +94,7 @@ public:
     virtual CTransform& XParentedRagdollRootInEntitySpace() = 0;
     virtual void XParentedRagdollRootInEntitySpaceUpdated() = 0;
     static IBaseAnimGraph* FromOriginal(CBaseAnimGraph* p);
+    static IBaseAnimGraph* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASEANIMGRAPH_H

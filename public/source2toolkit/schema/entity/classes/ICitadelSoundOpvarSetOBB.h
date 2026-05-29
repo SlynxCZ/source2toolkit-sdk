@@ -79,6 +79,7 @@ public:
     virtual int32_t& AABBDirection() = 0;
     virtual void AABBDirectionUpdated() = 0;
     static ICitadelSoundOpvarSetOBB* FromOriginal(CCitadelSoundOpvarSetOBB* p);
+    static ICitadelSoundOpvarSetOBB* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICITADELSOUNDOPVARSETOBB_H

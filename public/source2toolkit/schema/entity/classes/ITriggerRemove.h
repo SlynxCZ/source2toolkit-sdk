@@ -65,6 +65,7 @@ public:
     virtual ::CEntityIOOutput& OnRemove() = 0;
     virtual void OnRemoveUpdated() = 0;
     static ITriggerRemove* FromOriginal(CTriggerRemove* p);
+    static ITriggerRemove* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERREMOVE_H

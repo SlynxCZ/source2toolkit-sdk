@@ -111,6 +111,7 @@ public:
     virtual bool& LocalPlayerOnly() = 0;
     virtual void LocalPlayerOnlyUpdated() = 0;
     static IEnvInstructorHint* FromOriginal(CEnvInstructorHint* p);
+    static IEnvInstructorHint* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVINSTRUCTORHINT_H

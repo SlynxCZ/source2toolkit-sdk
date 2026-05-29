@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponUMP45() = default;
 
     static IWeaponUMP45* FromOriginal(CWeaponUMP45* p);
+    static IWeaponUMP45* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONUMP45_H

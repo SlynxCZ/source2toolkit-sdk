@@ -63,6 +63,7 @@ public:
     virtual ~IPathCornerCrash() = default;
 
     static IPathCornerCrash* FromOriginal(CPathCornerCrash* p);
+    static IPathCornerCrash* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPATHCORNERCRASH_H

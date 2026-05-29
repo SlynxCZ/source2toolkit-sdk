@@ -63,6 +63,7 @@ public:
     virtual ~ICS2WeaponGraphController() = default;
 
     static ICS2WeaponGraphController* FromOriginal(CCS2WeaponGraphController* p);
+    static ICS2WeaponGraphController* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICS2WEAPONGRAPHCONTROLLER_H

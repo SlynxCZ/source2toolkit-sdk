@@ -70,6 +70,7 @@ public:
     virtual uint8_t* UchShuffleCaseMap() = 0;
     virtual CEntityIOOutput* OnCase() = 0;
     static ILogicCase* FromOriginal(CLogicCase* p);
+    static ILogicCase* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICCASE_H

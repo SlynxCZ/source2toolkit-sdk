@@ -68,6 +68,7 @@ public:
     virtual ::hudtextparms_t& TextParms() = 0;
     virtual void TextParmsUpdated() = 0;
     static IGameText* FromOriginal(CGameText* p);
+    static IGameText* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IGAMETEXT_H

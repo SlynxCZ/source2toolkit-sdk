@@ -63,6 +63,7 @@ public:
     virtual ~IPlayer_ItemServices() = default;
 
     static IPlayer_ItemServices* FromOriginal(CPlayer_ItemServices* p);
+    static IPlayer_ItemServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPLAYER_ITEMSERVICES_H

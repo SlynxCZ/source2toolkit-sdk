@@ -65,6 +65,7 @@ public:
 
     virtual int32_t* Value() = 0;
     static ISkillInt* FromOriginal(CSkillInt* p);
+    static ISkillInt* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISKILLINT_H

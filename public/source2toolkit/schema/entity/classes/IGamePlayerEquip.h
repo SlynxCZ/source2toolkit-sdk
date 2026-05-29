@@ -63,6 +63,7 @@ public:
     virtual ~IGamePlayerEquip() = default;
 
     static IGamePlayerEquip* FromOriginal(CGamePlayerEquip* p);
+    static IGamePlayerEquip* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IGAMEPLAYEREQUIP_H

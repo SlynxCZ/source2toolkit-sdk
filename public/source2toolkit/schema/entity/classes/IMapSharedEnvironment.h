@@ -65,6 +65,7 @@ public:
     virtual CUtlSymbolLarge& TargetMapName() = 0;
     virtual void TargetMapNameUpdated() = 0;
     static IMapSharedEnvironment* FromOriginal(CMapSharedEnvironment* p);
+    static IMapSharedEnvironment* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMAPSHAREDENVIRONMENT_H

@@ -63,6 +63,7 @@ public:
     virtual ~ICSObserver_CameraServices() = default;
 
     static ICSObserver_CameraServices* FromOriginal(CCSObserver_CameraServices* p);
+    static ICSObserver_CameraServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSOBSERVER_CAMERASERVICES_H

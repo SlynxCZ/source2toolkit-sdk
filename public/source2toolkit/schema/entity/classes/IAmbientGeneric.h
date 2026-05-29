@@ -85,6 +85,7 @@ public:
     virtual CEntityIndex& SoundSourceEntIndex() = 0;
     virtual void SoundSourceEntIndexUpdated() = 0;
     static IAmbientGeneric* FromOriginal(CAmbientGeneric* p);
+    static IAmbientGeneric* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IAMBIENTGENERIC_H

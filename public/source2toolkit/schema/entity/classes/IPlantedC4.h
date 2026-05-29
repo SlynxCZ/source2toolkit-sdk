@@ -119,6 +119,7 @@ public:
     virtual float& LastSpinDetectionTime() = 0;
     virtual void LastSpinDetectionTimeUpdated() = 0;
     static IPlantedC4* FromOriginal(CPlantedC4* p);
+    static IPlantedC4* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPLANTEDC4_H

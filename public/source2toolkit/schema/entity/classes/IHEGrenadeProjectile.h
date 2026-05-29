@@ -63,6 +63,7 @@ public:
     virtual ~IHEGrenadeProjectile() = default;
 
     static IHEGrenadeProjectile* FromOriginal(CHEGrenadeProjectile* p);
+    static IHEGrenadeProjectile* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IHEGRENADEPROJECTILE_H

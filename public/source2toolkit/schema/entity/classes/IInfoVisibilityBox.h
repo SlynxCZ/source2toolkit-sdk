@@ -69,6 +69,7 @@ public:
     virtual bool& Enabled() = 0;
     virtual void EnabledUpdated() = 0;
     static IInfoVisibilityBox* FromOriginal(CInfoVisibilityBox* p);
+    static IInfoVisibilityBox* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINFOVISIBILITYBOX_H

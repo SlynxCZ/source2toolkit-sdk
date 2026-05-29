@@ -71,6 +71,7 @@ public:
     virtual CUtlVector<CHandle<CBasePlayerPawn>>& Spectators() = 0;
     virtual void SpectatorsUpdated() = 0;
     static ITriggerSoundscape* FromOriginal(CTriggerSoundscape* p);
+    static ITriggerSoundscape* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERSOUNDSCAPE_H

@@ -86,6 +86,7 @@ public:
     virtual CUtlVector<float>& WheelDrag() = 0;
     virtual void WheelDragUpdated() = 0;
     static IBuoyancyHelper* FromOriginal(CBuoyancyHelper* p);
+    static IBuoyancyHelper* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBUOYANCYHELPER_H

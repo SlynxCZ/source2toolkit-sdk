@@ -66,6 +66,7 @@ public:
     virtual ::CBuoyancyHelper& BuoyancyHelper() = 0;
     virtual void BuoyancyHelperUpdated() = 0;
     static IFuncWater* FromOriginal(CFuncWater* p);
+    static IFuncWater* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCWATER_H

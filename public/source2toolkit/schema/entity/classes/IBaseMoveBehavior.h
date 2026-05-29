@@ -86,6 +86,7 @@ public:
     virtual int32_t& Direction() = 0;
     virtual void DirectionUpdated() = 0;
     static IBaseMoveBehavior* FromOriginal(CBaseMoveBehavior* p);
+    static IBaseMoveBehavior* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASEMOVEBEHAVIOR_H

@@ -109,6 +109,7 @@ public:
     virtual int32_t& GlowTeam() = 0;
     virtual void GlowTeamUpdated() = 0;
     static IDynamicProp* FromOriginal(CDynamicProp* p);
+    static IDynamicProp* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IDYNAMICPROP_H

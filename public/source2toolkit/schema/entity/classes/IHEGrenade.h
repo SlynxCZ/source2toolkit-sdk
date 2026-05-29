@@ -63,6 +63,7 @@ public:
     virtual ~IHEGrenade() = default;
 
     static IHEGrenade* FromOriginal(CHEGrenade* p);
+    static IHEGrenade* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IHEGRENADE_H

@@ -63,6 +63,7 @@ public:
     virtual ~IServerOnlyEntity() = default;
 
     static IServerOnlyEntity* FromOriginal(CServerOnlyEntity* p);
+    static IServerOnlyEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISERVERONLYENTITY_H

@@ -76,6 +76,7 @@ public:
     virtual CHandle<CPathWithDynamicNodes>& Path() = 0;
     virtual void PathUpdated() = 0;
     static IPathNode* FromOriginal(CPathNode* p);
+    static IPathNode* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPATHNODE_H

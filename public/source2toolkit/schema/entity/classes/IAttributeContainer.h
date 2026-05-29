@@ -66,6 +66,7 @@ public:
     virtual ::CEconItemView& Item() = 0;
     virtual void ItemUpdated() = 0;
     static IAttributeContainer* FromOriginal(CAttributeContainer* p);
+    static IAttributeContainer* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IATTRIBUTECONTAINER_H

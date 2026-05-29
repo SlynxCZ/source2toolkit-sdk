@@ -72,13 +72,12 @@ public:
     virtual void NextKeyUpdated() = 0;
     virtual float& NextTime() = 0;
     virtual void NextTimeUpdated() = 0;
-    virtual CHandle<CPathKeyFrame>& NextKey() = 0;
-    virtual void NextKeyUpdated() = 0;
     virtual CHandle<CPathKeyFrame>& PrevKey() = 0;
     virtual void PrevKeyUpdated() = 0;
     virtual float& MoveSpeed() = 0;
     virtual void MoveSpeedUpdated() = 0;
     static IPathKeyFrame* FromOriginal(CPathKeyFrame* p);
+    static IPathKeyFrame* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPATHKEYFRAME_H

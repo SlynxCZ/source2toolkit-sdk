@@ -69,6 +69,7 @@ public:
     virtual ::CEntityIOOutput& OnCommentaryMultiplayerSpawn() = 0;
     virtual void OnCommentaryMultiplayerSpawnUpdated() = 0;
     static ICommentaryAuto* FromOriginal(CCommentaryAuto* p);
+    static ICommentaryAuto* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICOMMENTARYAUTO_H

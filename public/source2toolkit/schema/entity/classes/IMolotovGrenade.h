@@ -63,6 +63,7 @@ public:
     virtual ~IMolotovGrenade() = default;
 
     static IMolotovGrenade* FromOriginal(CMolotovGrenade* p);
+    static IMolotovGrenade* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMOLOTOVGRENADE_H

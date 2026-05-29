@@ -70,6 +70,7 @@ public:
     virtual CAttributeManager*& Manager() = 0;
     virtual void ManagerUpdated() = 0;
     static IAttributeList* FromOriginal(CAttributeList* p);
+    static IAttributeList* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IATTRIBUTELIST_H

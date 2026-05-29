@@ -81,16 +81,16 @@ public:
     virtual void WarmupPeriodStartUpdated() = 0;
     virtual bool& TerroristTimeOutActive() = 0;
     virtual void TerroristTimeOutActiveUpdated() = 0;
-    virtual bool& TTimeOutActive() = 0;
-    virtual void TTimeOutActiveUpdated() = 0;
+    virtual bool& CTTimeOutActive() = 0;
+    virtual void CTTimeOutActiveUpdated() = 0;
     virtual float& TerroristTimeOutRemaining() = 0;
     virtual void TerroristTimeOutRemainingUpdated() = 0;
-    virtual float& TTimeOutRemaining() = 0;
-    virtual void TTimeOutRemainingUpdated() = 0;
+    virtual float& CTTimeOutRemaining() = 0;
+    virtual void CTTimeOutRemainingUpdated() = 0;
     virtual int32_t& TerroristTimeOuts() = 0;
     virtual void TerroristTimeOutsUpdated() = 0;
-    virtual int32_t& TTimeOuts() = 0;
-    virtual void TTimeOutsUpdated() = 0;
+    virtual int32_t& CTTimeOuts() = 0;
+    virtual void CTTimeOutsUpdated() = 0;
     virtual bool& TechnicalTimeOut() = 0;
     virtual void TechnicalTimeOutUpdated() = 0;
     virtual bool& MatchWaitingForResume() = 0;
@@ -153,10 +153,10 @@ public:
     virtual char* TournamentPredictionsTxt() = 0;
     virtual int32_t& TournamentPredictionsPct() = 0;
     virtual void TournamentPredictionsPctUpdated() = 0;
-    virtual float& MMItemDropRevealStartTime() = 0;
-    virtual void MMItemDropRevealStartTimeUpdated() = 0;
-    virtual float& MMItemDropRevealEndTime() = 0;
-    virtual void MMItemDropRevealEndTimeUpdated() = 0;
+    virtual float& CMMItemDropRevealStartTime() = 0;
+    virtual void CMMItemDropRevealStartTimeUpdated() = 0;
+    virtual float& CMMItemDropRevealEndTime() = 0;
+    virtual void CMMItemDropRevealEndTimeUpdated() = 0;
     virtual bool& IsDroppingItems() = 0;
     virtual void IsDroppingItemsUpdated() = 0;
     virtual bool& IsQuestEligible() = 0;
@@ -179,8 +179,8 @@ public:
     virtual void RoundWinReasonUpdated() = 0;
     virtual bool& TCantBuy() = 0;
     virtual void TCantBuyUpdated() = 0;
-    virtual bool& TCantBuy() = 0;
-    virtual void TCantBuyUpdated() = 0;
+    virtual bool& CTCantBuy() = 0;
+    virtual void CTCantBuyUpdated() = 0;
     virtual int32_t* MatchStats_RoundResults() = 0;
     virtual int32_t* MatchStats_PlayersAlive_CT() = 0;
     virtual int32_t* MatchStats_PlayersAlive_T() = 0;
@@ -209,8 +209,6 @@ public:
     virtual void IntermissionEndTimeUpdated() = 0;
     virtual bool& LevelInitialized() = 0;
     virtual void LevelInitializedUpdated() = 0;
-    virtual int32_t& TotalRoundsPlayed() = 0;
-    virtual void TotalRoundsPlayedUpdated() = 0;
     virtual int32_t& UnBalancedRounds() = 0;
     virtual void UnBalancedRoundsUpdated() = 0;
     virtual bool& EndMatchOnRoundReset() = 0;
@@ -257,8 +255,8 @@ public:
     virtual void NumSpectatorsCountMaxTVUpdated() = 0;
     virtual uint32_t& NumSpectatorsCountMaxLnk() = 0;
     virtual void NumSpectatorsCountMaxLnkUpdated() = 0;
-    virtual int32_t& TsAliveAtFreezetimeEnd() = 0;
-    virtual void TsAliveAtFreezetimeEndUpdated() = 0;
+    virtual int32_t& CTsAliveAtFreezetimeEnd() = 0;
+    virtual void CTsAliveAtFreezetimeEndUpdated() = 0;
     virtual int32_t& TerroristsAliveAtFreezetimeEnd() = 0;
     virtual void TerroristsAliveAtFreezetimeEndUpdated() = 0;
     virtual bool& ForceTeamChangeSilent() = 0;
@@ -343,8 +341,8 @@ public:
     virtual void RespawningAllRespawnablePlayersUpdated() = 0;
     virtual int32_t& NextCTSpawnPoint() = 0;
     virtual void NextCTSpawnPointUpdated() = 0;
-    virtual float& TSpawnPointUsedTime() = 0;
-    virtual void TSpawnPointUsedTimeUpdated() = 0;
+    virtual float& CTSpawnPointUsedTime() = 0;
+    virtual void CTSpawnPointUsedTimeUpdated() = 0;
     virtual int32_t& NextTerroristSpawnPoint() = 0;
     virtual void NextTerroristSpawnPointUpdated() = 0;
     virtual float& TerroristSpawnPointUsedTime() = 0;
@@ -389,8 +387,8 @@ public:
     virtual void MatchEndCountUpdated() = 0;
     virtual int32_t& TTeamIntroVariant() = 0;
     virtual void TTeamIntroVariantUpdated() = 0;
-    virtual int32_t& TTeamIntroVariant() = 0;
-    virtual void TTeamIntroVariantUpdated() = 0;
+    virtual int32_t& CTTeamIntroVariant() = 0;
+    virtual void CTTeamIntroVariantUpdated() = 0;
     virtual bool& TeamIntroPeriod() = 0;
     virtual void TeamIntroPeriodUpdated() = 0;
     virtual float& TeamIntroPeriodEnd() = 0;
@@ -439,6 +437,7 @@ public:
     /// <summary>Get aim target.</summary>
     virtual ICSPlayerController* GetClientAimTarget(ICSPlayerController* pPlayer) = 0;
     static ICSGameRules* FromOriginal(CCSGameRules* p);
+    static ICSGameRules* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSGAMERULES_H

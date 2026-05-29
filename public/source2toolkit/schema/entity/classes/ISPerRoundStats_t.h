@@ -90,6 +90,7 @@ public:
     virtual int32_t& EnemiesFlashed() = 0;
     virtual void EnemiesFlashedUpdated() = 0;
     static ISPerRoundStats_t* FromOriginal(CSPerRoundStats_t* p);
+    static ISPerRoundStats_t* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISPERROUNDSTATS_T_H

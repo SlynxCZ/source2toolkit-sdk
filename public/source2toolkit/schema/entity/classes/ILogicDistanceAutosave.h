@@ -75,6 +75,7 @@ public:
     virtual float& DangerousTime() = 0;
     virtual void DangerousTimeUpdated() = 0;
     static ILogicDistanceAutosave* FromOriginal(CLogicDistanceAutosave* p);
+    static ILogicDistanceAutosave* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICDISTANCEAUTOSAVE_H

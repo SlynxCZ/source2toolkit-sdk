@@ -74,6 +74,7 @@ public:
     virtual float& StartFrame() = 0;
     virtual void StartFrameUpdated() = 0;
     static IEnvLaser* FromOriginal(CEnvLaser* p);
+    static IEnvLaser* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVLASER_H

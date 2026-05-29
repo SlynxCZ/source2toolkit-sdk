@@ -73,6 +73,7 @@ public:
     virtual ::CEntityIOOutput& OnSpark() = 0;
     virtual void OnSparkUpdated() = 0;
     static IEnvSpark* FromOriginal(CEnvSpark* p);
+    static IEnvSpark* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVSPARK_H

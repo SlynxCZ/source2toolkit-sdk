@@ -76,6 +76,7 @@ public:
     virtual Vector& SmoothedVelocity() = 0;
     virtual void SmoothedVelocityUpdated() = 0;
     static IPlayer_MovementServices_Humanoid* FromOriginal(CPlayer_MovementServices_Humanoid* p);
+    static IPlayer_MovementServices_Humanoid* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPLAYER_MOVEMENTSERVICES_HUMANOID_H

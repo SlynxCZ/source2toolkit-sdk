@@ -71,6 +71,7 @@ public:
     virtual bool& TeleportUseCurrentAngle() = 0;
     virtual void TeleportUseCurrentAngleUpdated() = 0;
     static IPointTeleport* FromOriginal(CPointTeleport* p);
+    static IPointTeleport* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTTELEPORT_H

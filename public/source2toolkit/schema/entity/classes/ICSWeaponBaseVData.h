@@ -235,6 +235,7 @@ public:
     virtual CGlobalSymbol& AnimClass() = 0;
     virtual void AnimClassUpdated() = 0;
     static ICSWeaponBaseVData* FromOriginal(CCSWeaponBaseVData* p);
+    static ICSWeaponBaseVData* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSWEAPONBASEVDATA_H

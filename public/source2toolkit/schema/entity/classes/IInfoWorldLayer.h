@@ -77,6 +77,7 @@ public:
     virtual uint32_t& LayerSpawnGroup() = 0;
     virtual void LayerSpawnGroupUpdated() = 0;
     static IInfoWorldLayer* FromOriginal(CInfoWorldLayer* p);
+    static IInfoWorldLayer* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINFOWORLDLAYER_H

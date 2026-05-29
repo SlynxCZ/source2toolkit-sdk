@@ -65,6 +65,7 @@ public:
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;
     static IFuncVPhysicsClip* FromOriginal(CFuncVPhysicsClip* p);
+    static IFuncVPhysicsClip* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCVPHYSICSCLIP_H

@@ -110,6 +110,7 @@ public:
     virtual uint16_t& SourceItemDefIndex() = 0;
     virtual void SourceItemDefIndexUpdated() = 0;
     static IInferno* FromOriginal(CInferno* p);
+    static IInferno* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINFERNO_H

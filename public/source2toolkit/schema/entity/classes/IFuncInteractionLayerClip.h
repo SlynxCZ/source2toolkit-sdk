@@ -69,6 +69,7 @@ public:
     virtual CUtlSymbolLarge& InteractsWith() = 0;
     virtual void InteractsWithUpdated() = 0;
     static IFuncInteractionLayerClip* FromOriginal(CFuncInteractionLayerClip* p);
+    static IFuncInteractionLayerClip* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCINTERACTIONLAYERCLIP_H

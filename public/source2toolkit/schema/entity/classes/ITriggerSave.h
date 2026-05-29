@@ -69,6 +69,7 @@ public:
     virtual int32_t& MinHitPoints() = 0;
     virtual void MinHitPointsUpdated() = 0;
     static ITriggerSave* FromOriginal(CTriggerSave* p);
+    static ITriggerSave* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERSAVE_H

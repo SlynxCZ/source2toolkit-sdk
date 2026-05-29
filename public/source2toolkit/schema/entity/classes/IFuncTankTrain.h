@@ -65,6 +65,7 @@ public:
     virtual ::CEntityIOOutput& OnDeath() = 0;
     virtual void OnDeathUpdated() = 0;
     static IFuncTankTrain* FromOriginal(CFuncTankTrain* p);
+    static IFuncTankTrain* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCTANKTRAIN_H

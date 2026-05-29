@@ -65,6 +65,7 @@ public:
 
     virtual float* Value() = 0;
     static IRangeFloat* FromOriginal(CRangeFloat* p);
+    static IRangeFloat* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IRANGEFLOAT_H

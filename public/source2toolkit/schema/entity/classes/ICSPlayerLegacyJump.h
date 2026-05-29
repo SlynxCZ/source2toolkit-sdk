@@ -68,6 +68,7 @@ public:
     virtual float& JumpPressedTime() = 0;
     virtual void JumpPressedTimeUpdated() = 0;
     static ICSPlayerLegacyJump* FromOriginal(CCSPlayerLegacyJump* p);
+    static ICSPlayerLegacyJump* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYERLEGACYJUMP_H

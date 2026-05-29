@@ -63,6 +63,7 @@ public:
     virtual ~IRuleBrushEntity() = default;
 
     static IRuleBrushEntity* FromOriginal(CRuleBrushEntity* p);
+    static IRuleBrushEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IRULEBRUSHENTITY_H

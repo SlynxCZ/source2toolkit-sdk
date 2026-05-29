@@ -67,6 +67,7 @@ public:
     virtual int32_t& LastAttackTick() = 0;
     virtual void LastAttackTickUpdated() = 0;
     static IWeaponTaser* FromOriginal(CWeaponTaser* p);
+    static IWeaponTaser* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONTASER_H

@@ -155,6 +155,7 @@ public:
     virtual ::CEntityIOOutput& OnDisengage() = 0;
     virtual void OnDisengageUpdated() = 0;
     static IPointValueRemapper* FromOriginal(CPointValueRemapper* p);
+    static IPointValueRemapper* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTVALUEREMAPPER_H

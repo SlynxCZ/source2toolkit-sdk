@@ -101,6 +101,7 @@ public:
     virtual float& LastPhysicsInfluenceTime() = 0;
     virtual void LastPhysicsInfluenceTimeUpdated() = 0;
     static IBreakable* FromOriginal(CBreakable* p);
+    static IBreakable* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBREAKABLE_H

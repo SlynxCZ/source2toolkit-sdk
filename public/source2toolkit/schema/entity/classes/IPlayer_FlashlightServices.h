@@ -63,6 +63,7 @@ public:
     virtual ~IPlayer_FlashlightServices() = default;
 
     static IPlayer_FlashlightServices* FromOriginal(CPlayer_FlashlightServices* p);
+    static IPlayer_FlashlightServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPLAYER_FLASHLIGHTSERVICES_H

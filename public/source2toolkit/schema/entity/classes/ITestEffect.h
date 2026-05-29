@@ -67,11 +67,11 @@ public:
     virtual void LoopUpdated() = 0;
     virtual int32_t& Beam() = 0;
     virtual void BeamUpdated() = 0;
-    virtual CHandle<CBeam>* Beam() = 0;
     virtual float* BeamTime() = 0;
     virtual float& StartTime() = 0;
     virtual void StartTimeUpdated() = 0;
     static ITestEffect* FromOriginal(CTestEffect* p);
+    static ITestEffect* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITESTEFFECT_H

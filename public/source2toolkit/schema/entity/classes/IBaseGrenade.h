@@ -92,6 +92,7 @@ public:
     virtual CHandle<CCSPlayerPawn>& OriginalThrower() = 0;
     virtual void OriginalThrowerUpdated() = 0;
     static IBaseGrenade* FromOriginal(CBaseGrenade* p);
+    static IBaseGrenade* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASEGRENADE_H

@@ -99,6 +99,7 @@ public:
     virtual bool& OverrideNoiseStrength() = 0;
     virtual void OverrideNoiseStrengthUpdated() = 0;
     static IEnvVolumetricFogVolume* FromOriginal(CEnvVolumetricFogVolume* p);
+    static IEnvVolumetricFogVolume* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVVOLUMETRICFOGVOLUME_H

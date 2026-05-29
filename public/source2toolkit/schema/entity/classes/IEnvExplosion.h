@@ -97,6 +97,7 @@ public:
     virtual CHandle<CBaseEntity>& EntityIgnore() = 0;
     virtual void EntityIgnoreUpdated() = 0;
     static IEnvExplosion* FromOriginal(CEnvExplosion* p);
+    static IEnvExplosion* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVEXPLOSION_H

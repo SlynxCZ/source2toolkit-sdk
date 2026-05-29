@@ -92,6 +92,7 @@ public:
     virtual int32_t& PostureStackIndex() = 0;
     virtual void PostureStackIndexUpdated() = 0;
     static IBot* FromOriginal(CBot* p);
+    static IBot* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBOT_H

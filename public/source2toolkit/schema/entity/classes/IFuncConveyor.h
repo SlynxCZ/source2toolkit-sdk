@@ -79,9 +79,8 @@ public:
     virtual void TransitionDurationTicksUpdated() = 0;
     virtual float& TransitionStartSpeed() = 0;
     virtual void TransitionStartSpeedUpdated() = 0;
-    virtual CUtlVector<CHandle<CBaseEntity>>& ConveyorModels() = 0;
-    virtual void ConveyorModelsUpdated() = 0;
     static IFuncConveyor* FromOriginal(CFuncConveyor* p);
+    static IFuncConveyor* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCCONVEYOR_H

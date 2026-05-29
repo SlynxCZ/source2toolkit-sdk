@@ -63,6 +63,7 @@ public:
     virtual ~IInfoData() = default;
 
     static IInfoData* FromOriginal(CInfoData* p);
+    static IInfoData* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINFODATA_H

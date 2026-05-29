@@ -65,6 +65,7 @@ public:
     virtual float& Lifetime() = 0;
     virtual void LifetimeUpdated() = 0;
     static IEnvEntityIgniter* FromOriginal(CEnvEntityIgniter* p);
+    static IEnvEntityIgniter* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVENTITYIGNITER_H

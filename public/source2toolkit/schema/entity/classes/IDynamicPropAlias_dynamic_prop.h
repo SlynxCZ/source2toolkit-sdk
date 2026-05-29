@@ -63,6 +63,7 @@ public:
     virtual ~IDynamicPropAlias_dynamic_prop() = default;
 
     static IDynamicPropAlias_dynamic_prop* FromOriginal(CDynamicPropAlias_dynamic_prop* p);
+    static IDynamicPropAlias_dynamic_prop* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IDYNAMICPROPALIAS_DYNAMIC_PROP_H

@@ -80,6 +80,7 @@ public:
     virtual CUtlVector<CAttributeManager__cached_attribute_float_t>& CachedResults() = 0;
     virtual void CachedResultsUpdated() = 0;
     static IAttributeManager* FromOriginal(CAttributeManager* p);
+    static IAttributeManager* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IATTRIBUTEMANAGER_H

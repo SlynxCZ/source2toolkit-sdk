@@ -65,6 +65,7 @@ public:
     virtual CUtlSymbolLarge& AttributeName() = 0;
     virtual void AttributeNameUpdated() = 0;
     static IFilterAttributeInt* FromOriginal(CFilterAttributeInt* p);
+    static IFilterAttributeInt* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFILTERATTRIBUTEINT_H

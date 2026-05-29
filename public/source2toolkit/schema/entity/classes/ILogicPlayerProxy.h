@@ -72,6 +72,7 @@ public:
     virtual CHandle<CBaseEntity>& Player() = 0;
     virtual void PlayerUpdated() = 0;
     static ILogicPlayerProxy* FromOriginal(CLogicPlayerProxy* p);
+    static ILogicPlayerProxy* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICPLAYERPROXY_H

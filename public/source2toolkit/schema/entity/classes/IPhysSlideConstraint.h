@@ -84,6 +84,7 @@ public:
     virtual ::ConstraintSoundInfo& SoundInfo() = 0;
     virtual void SoundInfoUpdated() = 0;
     static IPhysSlideConstraint* FromOriginal(CPhysSlideConstraint* p);
+    static IPhysSlideConstraint* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSSLIDECONSTRAINT_H

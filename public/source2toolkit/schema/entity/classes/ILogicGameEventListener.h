@@ -73,6 +73,7 @@ public:
     virtual bool& StartDisabled() = 0;
     virtual void StartDisabledUpdated() = 0;
     static ILogicGameEventListener* FromOriginal(CLogicGameEventListener* p);
+    static ILogicGameEventListener* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICGAMEEVENTLISTENER_H

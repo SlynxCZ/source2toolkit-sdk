@@ -68,6 +68,7 @@ public:
     virtual float& FluidDensity() = 0;
     virtual void FluidDensityUpdated() = 0;
     static ITriggerBuoyancy* FromOriginal(CTriggerBuoyancy* p);
+    static ITriggerBuoyancy* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERBUOYANCY_H

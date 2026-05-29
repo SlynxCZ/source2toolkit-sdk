@@ -253,6 +253,7 @@ public:
     virtual bool& QueueStopMoving() = 0;
     virtual void QueueStopMovingUpdated() = 0;
     static IFuncMover* FromOriginal(CFuncMover* p);
+    static IFuncMover* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCMOVER_H

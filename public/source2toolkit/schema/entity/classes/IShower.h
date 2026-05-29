@@ -63,6 +63,7 @@ public:
     virtual ~IShower() = default;
 
     static IShower* FromOriginal(CShower* p);
+    static IShower* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISHOWER_H

@@ -63,6 +63,7 @@ public:
     virtual ~IItemAssaultSuit() = default;
 
     static IItemAssaultSuit* FromOriginal(CItemAssaultSuit* p);
+    static IItemAssaultSuit* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IITEMASSAULTSUIT_H

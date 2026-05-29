@@ -88,6 +88,7 @@ public:
     virtual int32_t& MaxObjectsAttached() = 0;
     virtual void MaxObjectsAttachedUpdated() = 0;
     static IPhysMagnet* FromOriginal(CPhysMagnet* p);
+    static IPhysMagnet* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSMAGNET_H

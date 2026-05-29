@@ -72,6 +72,7 @@ public:
     virtual RotationVector& AngularSave() = 0;
     virtual void AngularSaveUpdated() = 0;
     static IConstantForceController* FromOriginal(CConstantForceController* p);
+    static IConstantForceController* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICONSTANTFORCECONTROLLER_H

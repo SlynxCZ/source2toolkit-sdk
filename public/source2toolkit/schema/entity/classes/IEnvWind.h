@@ -66,6 +66,7 @@ public:
     virtual ::CEnvWindShared& EnvWindShared() = 0;
     virtual void EnvWindSharedUpdated() = 0;
     static IEnvWind* FromOriginal(CEnvWind* p);
+    static IEnvWind* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVWIND_H

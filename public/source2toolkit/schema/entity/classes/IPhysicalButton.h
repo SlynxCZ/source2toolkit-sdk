@@ -63,6 +63,7 @@ public:
     virtual ~IPhysicalButton() = default;
 
     static IPhysicalButton* FromOriginal(CPhysicalButton* p);
+    static IPhysicalButton* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSICALBUTTON_H

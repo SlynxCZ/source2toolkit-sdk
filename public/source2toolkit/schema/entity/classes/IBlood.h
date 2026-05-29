@@ -73,6 +73,7 @@ public:
     virtual ::BloodType& Color() = 0;
     virtual void ColorUpdated() = 0;
     static IBlood* FromOriginal(CBlood* p);
+    static IBlood* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBLOOD_H

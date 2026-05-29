@@ -65,6 +65,7 @@ public:
     virtual bool& AllowMultipleScenes() = 0;
     virtual void AllowMultipleScenesUpdated() = 0;
     static IMultiplayer_Expresser* FromOriginal(CMultiplayer_Expresser* p);
+    static IMultiplayer_Expresser* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMULTIPLAYER_EXPRESSER_H

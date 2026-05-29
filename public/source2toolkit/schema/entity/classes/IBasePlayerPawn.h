@@ -134,6 +134,7 @@ public:
     /// <summary>Remove weapon from player.</summary>
     virtual void RemovePlayerItem(IBasePlayerWeapon* pWeapon) = 0;
     static IBasePlayerPawn* FromOriginal(CBasePlayerPawn* p);
+    static IBasePlayerPawn* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASEPLAYERPAWN_H

@@ -66,6 +66,7 @@ public:
     virtual Vector& Force() = 0;
     virtual void ForceUpdated() = 0;
     static IPhysicsShake* FromOriginal(CPhysicsShake* p);
+    static IPhysicsShake* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSICSSHAKE_H

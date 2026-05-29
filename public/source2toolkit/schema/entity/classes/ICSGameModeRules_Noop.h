@@ -63,6 +63,7 @@ public:
     virtual ~ICSGameModeRules_Noop() = default;
 
     static ICSGameModeRules_Noop* FromOriginal(CCSGameModeRules_Noop* p);
+    static ICSGameModeRules_Noop* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSGAMEMODERULES_NOOP_H

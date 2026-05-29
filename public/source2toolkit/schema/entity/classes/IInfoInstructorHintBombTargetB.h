@@ -63,6 +63,7 @@ public:
     virtual ~IInfoInstructorHintBombTargetB() = default;
 
     static IInfoInstructorHintBombTargetB* FromOriginal(CInfoInstructorHintBombTargetB* p);
+    static IInfoInstructorHintBombTargetB* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINFOINSTRUCTORHINTBOMBTARGETB_H

@@ -87,6 +87,7 @@ public:
     virtual bool& DidGroundScorch() = 0;
     virtual void DidGroundScorchUpdated() = 0;
     static ISmokeGrenadeProjectile* FromOriginal(CSmokeGrenadeProjectile* p);
+    static ISmokeGrenadeProjectile* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISMOKEGRENADEPROJECTILE_H

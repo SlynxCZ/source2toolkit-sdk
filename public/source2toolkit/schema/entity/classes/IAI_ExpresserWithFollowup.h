@@ -63,6 +63,7 @@ public:
     virtual ~IAI_ExpresserWithFollowup() = default;
 
     static IAI_ExpresserWithFollowup* FromOriginal(CAI_ExpresserWithFollowup* p);
+    static IAI_ExpresserWithFollowup* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IAI_EXPRESSERWITHFOLLOWUP_H

@@ -325,6 +325,7 @@ def write_interface_header(
 
     # Schema field pure virtuals
     _skips = FIELD_SKIPS.get(class_name, set())
+    _seen_methods: set[str] = set()
     for f in schema_class.fields:
         if f.name in _skips:
             continue
@@ -336,6 +337,10 @@ def write_interface_header(
             continue
 
         method_name = to_pascal_case(f.name)
+        if method_name in _seen_methods:
+            continue  # two fields produce the same accessor name — keep first
+        _seen_methods.add(method_name)
+
         ret = _virtual_return_type(f)
         lines.append(f"    virtual {ret} {method_name}() = 0;")
         if not _is_pointer_field(f):
@@ -386,8 +391,11 @@ def write_interface_header(
         lines.append("")
         lines += static_block
 
-    # FromOriginal – static factory; declaration only (defined in CXxx.cpp).
+    # FromOriginal – static factory; declaration only (defined in CXxx.cpp or CXxxImpl.h).
     lines.append(f"    static {i_class_name}* FromOriginal({class_name}* p);")
+    # FromRaw – casts a raw CEntityInstance* to this interface type via ToInterface().
+    # Used by IEntityInstance::As<T>() for cross-interface casting without static_cast.
+    lines.append(f"    static {i_class_name}* FromRaw(CEntityInstance* p);")
 
     lines.append("};")
     lines.append("")
@@ -481,6 +489,23 @@ def write_ientityinstance_header() -> str:
     lines += [
         "",
         "public:",
+        "    // CEntityInstance inline methods — accessible on any interface.",
+        "    virtual CEntityHandle GetRefEHandle() const = 0;",
+        "    virtual const char* GetClassname() const = 0;",
+        "    virtual CEntityIndex GetEntityIndex() const = 0;",
+        "",
+        "    // CEntityInstance fields.",
+        "    virtual CUtlSymbolLarge& PrivateVScripts() = 0;",
+        "    virtual CEntityIdentity*& Entity() = 0;",
+        "    virtual CEntityKeyValues*& KeyValues() = 0;",
+        "    virtual CScriptComponent*& ScriptComponent() = 0;",
+        "",
+        "public:",
+        "    /// <summary>Cast to a different interface type via the raw entity pointer.</summary>",
+        "    /// <summary>Use instead of static_cast/dynamic_cast between IXxx interfaces.</summary>",
+        "    template<typename T>",
+        "    T* As() { return T::FromRaw(GetOriginal()); }",
+        "",
         "    /// <summary>Create entity by classname.</summary>",
         "    template<typename T>",
         "    static T* New(const char* pszClassName)",

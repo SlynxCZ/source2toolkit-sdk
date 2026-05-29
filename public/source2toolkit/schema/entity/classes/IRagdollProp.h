@@ -131,6 +131,7 @@ public:
     virtual CUtlVector<INavObstacle*>& NavObstacles() = 0;
     virtual void NavObstaclesUpdated() = 0;
     static IRagdollProp* FromOriginal(CRagdollProp* p);
+    static IRagdollProp* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IRAGDOLLPROP_H

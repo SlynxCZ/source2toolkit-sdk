@@ -63,6 +63,7 @@ public:
     virtual ~IItemKevlar() = default;
 
     static IItemKevlar* FromOriginal(CItemKevlar* p);
+    static IItemKevlar* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IITEMKEVLAR_H

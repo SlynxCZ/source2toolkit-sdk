@@ -71,6 +71,7 @@ public:
     virtual ::InteractionPriority_t& Priority() = 0;
     virtual void PriorityUpdated() = 0;
     static IScenePayloadVData* FromOriginal(CScenePayloadVData* p);
+    static IScenePayloadVData* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISCENEPAYLOADVDATA_H

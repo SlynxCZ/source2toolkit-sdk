@@ -65,6 +65,7 @@ public:
     virtual CUtlSymbolLarge& Master() = 0;
     virtual void MasterUpdated() = 0;
     static IRuleEntity* FromOriginal(CRuleEntity* p);
+    static IRuleEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IRULEENTITY_H

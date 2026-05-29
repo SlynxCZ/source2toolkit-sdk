@@ -85,6 +85,7 @@ public:
     virtual CUtlSymbolLarge& Globalstate() = 0;
     virtual void GlobalstateUpdated() = 0;
     static ILogicAuto* FromOriginal(CLogicAuto* p);
+    static ILogicAuto* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICAUTO_H

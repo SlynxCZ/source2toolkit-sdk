@@ -113,6 +113,7 @@ public:
     virtual CUtlVector<CFish*>& Visible() = 0;
     virtual void VisibleUpdated() = 0;
     static IFish* FromOriginal(CFish* p);
+    static IFish* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFISH_H

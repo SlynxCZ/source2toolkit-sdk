@@ -63,6 +63,7 @@ public:
     virtual ~ICSGO_TeamIntroCounterTerroristPosition() = default;
 
     static ICSGO_TeamIntroCounterTerroristPosition* FromOriginal(CCSGO_TeamIntroCounterTerroristPosition* p);
+    static ICSGO_TeamIntroCounterTerroristPosition* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSGO_TEAMINTROCOUNTERTERRORISTPOSITION_H

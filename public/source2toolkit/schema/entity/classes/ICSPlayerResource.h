@@ -77,6 +77,7 @@ public:
     virtual bool& FoundGoalPositions() = 0;
     virtual void FoundGoalPositionsUpdated() = 0;
     static ICSPlayerResource* FromOriginal(CCSPlayerResource* p);
+    static ICSPlayerResource* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYERRESOURCE_H

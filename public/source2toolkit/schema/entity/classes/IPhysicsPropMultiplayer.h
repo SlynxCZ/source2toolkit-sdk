@@ -63,6 +63,7 @@ public:
     virtual ~IPhysicsPropMultiplayer() = default;
 
     static IPhysicsPropMultiplayer* FromOriginal(CPhysicsPropMultiplayer* p);
+    static IPhysicsPropMultiplayer* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSICSPROPMULTIPLAYER_H

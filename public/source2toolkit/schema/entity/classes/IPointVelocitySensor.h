@@ -74,6 +74,7 @@ public:
     virtual float& AvgInterval() = 0;
     virtual void AvgIntervalUpdated() = 0;
     static IPointVelocitySensor* FromOriginal(CPointVelocitySensor* p);
+    static IPointVelocitySensor* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTVELOCITYSENSOR_H

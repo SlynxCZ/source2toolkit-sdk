@@ -66,6 +66,7 @@ public:
     virtual CCSGameRules*& GameRules() = 0;
     virtual void GameRulesUpdated() = 0;
     static ICSGameRulesProxy* FromOriginal(CCSGameRulesProxy* p);
+    static ICSGameRulesProxy* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSGAMERULESPROXY_H

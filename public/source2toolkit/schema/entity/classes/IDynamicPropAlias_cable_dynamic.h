@@ -63,6 +63,7 @@ public:
     virtual ~IDynamicPropAlias_cable_dynamic() = default;
 
     static IDynamicPropAlias_cable_dynamic* FromOriginal(CDynamicPropAlias_cable_dynamic* p);
+    static IDynamicPropAlias_cable_dynamic* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IDYNAMICPROPALIAS_CABLE_DYNAMIC_H

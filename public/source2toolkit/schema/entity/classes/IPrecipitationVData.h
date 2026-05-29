@@ -82,6 +82,7 @@ public:
     virtual ::PrecipitationFilter_t& SnapshotFilter() = 0;
     virtual void SnapshotFilterUpdated() = 0;
     static IPrecipitationVData* FromOriginal(CPrecipitationVData* p);
+    static IPrecipitationVData* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPRECIPITATIONVDATA_H

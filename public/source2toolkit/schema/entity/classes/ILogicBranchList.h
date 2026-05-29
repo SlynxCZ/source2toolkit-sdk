@@ -77,6 +77,7 @@ public:
     virtual ::CEntityIOOutput& OnMixed() = 0;
     virtual void OnMixedUpdated() = 0;
     static ILogicBranchList* FromOriginal(CLogicBranchList* p);
+    static ILogicBranchList* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICBRANCHLIST_H

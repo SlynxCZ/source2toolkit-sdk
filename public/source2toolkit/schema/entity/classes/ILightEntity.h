@@ -66,6 +66,7 @@ public:
     virtual CLightComponent*& LightComponent() = 0;
     virtual void LightComponentUpdated() = 0;
     static ILightEntity* FromOriginal(CLightEntity* p);
+    static ILightEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILIGHTENTITY_H

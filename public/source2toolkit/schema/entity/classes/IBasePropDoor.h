@@ -142,6 +142,7 @@ public:
     virtual ::CEntityIOOutput& OnAjarOpen() = 0;
     virtual void OnAjarOpenUpdated() = 0;
     static IBasePropDoor* FromOriginal(CBasePropDoor* p);
+    static IBasePropDoor* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASEPROPDOOR_H

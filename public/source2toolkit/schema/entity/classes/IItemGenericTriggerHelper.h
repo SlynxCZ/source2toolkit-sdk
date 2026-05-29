@@ -66,6 +66,7 @@ public:
     virtual CHandle<CItemGeneric>& ParentItem() = 0;
     virtual void ParentItemUpdated() = 0;
     static IItemGenericTriggerHelper* FromOriginal(CItemGenericTriggerHelper* p);
+    static IItemGenericTriggerHelper* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IITEMGENERICTRIGGERHELPER_H

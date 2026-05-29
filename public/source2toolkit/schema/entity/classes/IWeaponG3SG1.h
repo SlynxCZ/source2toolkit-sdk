@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponG3SG1() = default;
 
     static IWeaponG3SG1* FromOriginal(CWeaponG3SG1* p);
+    static IWeaponG3SG1* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONG3SG1_H

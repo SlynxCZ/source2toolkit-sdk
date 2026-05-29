@@ -65,6 +65,7 @@ public:
 
     virtual uint64_t* ButtonStates() = 0;
     static IInButtonState* FromOriginal(CInButtonState* p);
+    static IInButtonState* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINBUTTONSTATE_H

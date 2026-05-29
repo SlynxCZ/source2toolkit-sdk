@@ -103,6 +103,7 @@ public:
     virtual CHandle<CBaseEntity>& EndPoint() = 0;
     virtual void EndPointUpdated() = 0;
     static IRopeKeyframe* FromOriginal(CRopeKeyframe* p);
+    static IRopeKeyframe* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IROPEKEYFRAME_H

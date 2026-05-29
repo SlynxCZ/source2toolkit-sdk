@@ -67,6 +67,7 @@ public:
     virtual Vector& BoxMaxs() = 0;
     virtual void BoxMaxsUpdated() = 0;
     static IInfoDynamicShadowHintBox* FromOriginal(CInfoDynamicShadowHintBox* p);
+    static IInfoDynamicShadowHintBox* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINFODYNAMICSHADOWHINTBOX_H

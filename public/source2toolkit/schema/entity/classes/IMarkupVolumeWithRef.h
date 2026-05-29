@@ -71,6 +71,7 @@ public:
     virtual float& RefDot() = 0;
     virtual void RefDotUpdated() = 0;
     static IMarkupVolumeWithRef* FromOriginal(CMarkupVolumeWithRef* p);
+    static IMarkupVolumeWithRef* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMARKUPVOLUMEWITHREF_H

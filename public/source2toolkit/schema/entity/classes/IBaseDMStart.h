@@ -65,6 +65,7 @@ public:
     virtual CUtlSymbolLarge& Master() = 0;
     virtual void MasterUpdated() = 0;
     static IBaseDMStart* FromOriginal(CBaseDMStart* p);
+    static IBaseDMStart* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASEDMSTART_H

@@ -88,6 +88,7 @@ public:
     virtual CHandle<CBaseEntity>& SteeringMimicsEntity() = 0;
     virtual void SteeringMimicsEntityUpdated() = 0;
     static IPhysWheelConstraint* FromOriginal(CPhysWheelConstraint* p);
+    static IPhysWheelConstraint* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSWHEELCONSTRAINT_H

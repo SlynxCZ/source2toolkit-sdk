@@ -79,6 +79,7 @@ public:
     virtual float& TimeStartedState() = 0;
     virtual void TimeStartedStateUpdated() = 0;
     static IGameChoreoServices* FromOriginal(CGameChoreoServices* p);
+    static IGameChoreoServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IGAMECHOREOSERVICES_H

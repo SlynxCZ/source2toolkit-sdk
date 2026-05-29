@@ -86,6 +86,7 @@ public:
     virtual bool& FirstTime() = 0;
     virtual void FirstTimeUpdated() = 0;
     static IEnvWindController* FromOriginal(CEnvWindController* p);
+    static IEnvWindController* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVWINDCONTROLLER_H

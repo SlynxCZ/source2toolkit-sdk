@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponRevolver() = default;
 
     static IWeaponRevolver* FromOriginal(CWeaponRevolver* p);
+    static IWeaponRevolver* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONREVOLVER_H

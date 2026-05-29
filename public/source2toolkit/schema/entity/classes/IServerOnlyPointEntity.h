@@ -63,6 +63,7 @@ public:
     virtual ~IServerOnlyPointEntity() = default;
 
     static IServerOnlyPointEntity* FromOriginal(CServerOnlyPointEntity* p);
+    static IServerOnlyPointEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISERVERONLYPOINTENTITY_H

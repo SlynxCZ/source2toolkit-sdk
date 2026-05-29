@@ -88,6 +88,7 @@ public:
     virtual ::CEntityIOOutput& OnPlayerGotOffLadder() = 0;
     virtual void OnPlayerGotOffLadderUpdated() = 0;
     static IFuncLadder* FromOriginal(CFuncLadder* p);
+    static IFuncLadder* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCLADDER_H

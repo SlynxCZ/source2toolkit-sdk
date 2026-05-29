@@ -77,6 +77,7 @@ public:
     virtual bool& ScriptedMovement() = 0;
     virtual void ScriptedMovementUpdated() = 0;
     static IFuncBrush* FromOriginal(CFuncBrush* p);
+    static IFuncBrush* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFUNCBRUSH_H

@@ -76,6 +76,7 @@ public:
     virtual CUtlSymbolLarge& ProceduralWorldNameForRelays() = 0;
     virtual void ProceduralWorldNameForRelaysUpdated() = 0;
     static IPulseGraphInstance_ServerEntity* FromOriginal(CPulseGraphInstance_ServerEntity* p);
+    static IPulseGraphInstance_ServerEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPULSEGRAPHINSTANCE_SERVERENTITY_H

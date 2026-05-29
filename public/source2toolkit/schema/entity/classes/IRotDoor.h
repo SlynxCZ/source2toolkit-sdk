@@ -65,6 +65,7 @@ public:
     virtual bool& SolidBsp() = 0;
     virtual void SolidBspUpdated() = 0;
     static IRotDoor* FromOriginal(CRotDoor* p);
+    static IRotDoor* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IROTDOOR_H

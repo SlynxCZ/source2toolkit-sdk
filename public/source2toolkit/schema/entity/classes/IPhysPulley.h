@@ -70,6 +70,7 @@ public:
     virtual float& GearRatio() = 0;
     virtual void GearRatioUpdated() = 0;
     static IPhysPulley* FromOriginal(CPhysPulley* p);
+    static IPhysPulley* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSPULLEY_H

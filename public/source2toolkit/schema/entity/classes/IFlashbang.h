@@ -63,6 +63,7 @@ public:
     virtual ~IFlashbang() = default;
 
     static IFlashbang* FromOriginal(CFlashbang* p);
+    static IFlashbang* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFLASHBANG_H

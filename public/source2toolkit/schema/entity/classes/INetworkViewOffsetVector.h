@@ -70,6 +70,7 @@ public:
     virtual float& Z() = 0;
     virtual void ZUpdated() = 0;
     static INetworkViewOffsetVector* FromOriginal(CNetworkViewOffsetVector* p);
+    static INetworkViewOffsetVector* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_INETWORKVIEWOFFSETVECTOR_H

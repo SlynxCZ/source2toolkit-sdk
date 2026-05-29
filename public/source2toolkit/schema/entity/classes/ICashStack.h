@@ -65,6 +65,7 @@ public:
     virtual int32_t& CashStackValue() = 0;
     virtual void CashStackValueUpdated() = 0;
     static ICashStack* FromOriginal(CCashStack* p);
+    static ICashStack* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICASHSTACK_H

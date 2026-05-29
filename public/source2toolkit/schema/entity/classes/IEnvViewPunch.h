@@ -67,6 +67,7 @@ public:
     virtual QAngle& ViewPunch() = 0;
     virtual void ViewPunchUpdated() = 0;
     static IEnvViewPunch* FromOriginal(CEnvViewPunch* p);
+    static IEnvViewPunch* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVVIEWPUNCH_H

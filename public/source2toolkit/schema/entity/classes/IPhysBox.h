@@ -96,6 +96,7 @@ public:
     virtual CHandle<CBasePlayerPawn>& CarryingPlayer() = 0;
     virtual void CarryingPlayerUpdated() = 0;
     static IPhysBox* FromOriginal(CPhysBox* p);
+    static IPhysBox* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPHYSBOX_H

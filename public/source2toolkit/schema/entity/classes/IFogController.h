@@ -70,6 +70,7 @@ public:
     virtual int32_t& ChangedVariables() = 0;
     virtual void ChangedVariablesUpdated() = 0;
     static IFogController* FromOriginal(CFogController* p);
+    static IFogController* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFOGCONTROLLER_H

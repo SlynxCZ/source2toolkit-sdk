@@ -63,6 +63,7 @@ public:
     virtual ~ITestPulseIOComponent_Derived() = default;
 
     static ITestPulseIOComponent_Derived* FromOriginal(CTestPulseIOComponent_Derived* p);
+    static ITestPulseIOComponent_Derived* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITESTPULSEIOCOMPONENT_DERIVED_H

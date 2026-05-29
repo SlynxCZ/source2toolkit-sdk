@@ -63,6 +63,7 @@ public:
     virtual ~IBaseAnimGraphDestructibleParts_GraphController() = default;
 
     static IBaseAnimGraphDestructibleParts_GraphController* FromOriginal(CBaseAnimGraphDestructibleParts_GraphController* p);
+    static IBaseAnimGraphDestructibleParts_GraphController* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASEANIMGRAPHDESTRUCTIBLEPARTS_GRAPHCONTROLLER_H

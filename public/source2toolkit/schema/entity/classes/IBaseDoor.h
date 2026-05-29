@@ -122,6 +122,7 @@ public:
     virtual bool& IsUsable() = 0;
     virtual void IsUsableUpdated() = 0;
     static IBaseDoor* FromOriginal(CBaseDoor* p);
+    static IBaseDoor* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASEDOOR_H

@@ -65,6 +65,7 @@ public:
 
     virtual float* Value() = 0;
     static ISkillFloat* FromOriginal(CSkillFloat* p);
+    static ISkillFloat* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISKILLFLOAT_H

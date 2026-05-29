@@ -79,6 +79,7 @@ public:
     virtual ::CountdownTimer& VisTimer() = 0;
     virtual void VisTimerUpdated() = 0;
     static IFishPool* FromOriginal(CFishPool* p);
+    static IFishPool* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFISHPOOL_H

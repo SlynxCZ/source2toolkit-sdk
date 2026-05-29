@@ -78,6 +78,7 @@ public:
     virtual CHandle<CBaseEntity>& Activator() = 0;
     virtual void ActivatorUpdated() = 0;
     static IPointHurt* FromOriginal(CPointHurt* p);
+    static IPointHurt* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPOINTHURT_H

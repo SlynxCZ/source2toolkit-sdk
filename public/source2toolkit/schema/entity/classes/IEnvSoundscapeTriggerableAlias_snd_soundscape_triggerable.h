@@ -63,6 +63,7 @@ public:
     virtual ~IEnvSoundscapeTriggerableAlias_snd_soundscape_triggerable() = default;
 
     static IEnvSoundscapeTriggerableAlias_snd_soundscape_triggerable* FromOriginal(CEnvSoundscapeTriggerableAlias_snd_soundscape_triggerable* p);
+    static IEnvSoundscapeTriggerableAlias_snd_soundscape_triggerable* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVSOUNDSCAPETRIGGERABLEALIAS_SND_SOUNDSCAPE_TRIGGERABLE_H

@@ -63,6 +63,7 @@ public:
     virtual ~IPushable() = default;
 
     static IPushable* FromOriginal(CPushable* p);
+    static IPushable* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IPUSHABLE_H

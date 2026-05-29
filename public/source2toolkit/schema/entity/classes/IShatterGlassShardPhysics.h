@@ -70,6 +70,7 @@ public:
     virtual ::shard_model_desc_t& ShardDesc() = 0;
     virtual void ShardDescUpdated() = 0;
     static IShatterGlassShardPhysics* FromOriginal(CShatterGlassShardPhysics* p);
+    static IShatterGlassShardPhysics* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISHATTERGLASSSHARDPHYSICS_H

@@ -75,6 +75,7 @@ public:
     virtual float& SwimSoundTime() = 0;
     virtual void SwimSoundTimeUpdated() = 0;
     static ICSPlayer_WaterServices* FromOriginal(CCSPlayer_WaterServices* p);
+    static ICSPlayer_WaterServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_WATERSERVICES_H

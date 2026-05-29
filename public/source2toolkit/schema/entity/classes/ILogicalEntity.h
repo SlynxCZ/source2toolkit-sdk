@@ -63,6 +63,7 @@ public:
     virtual ~ILogicalEntity() = default;
 
     static ILogicalEntity* FromOriginal(CLogicalEntity* p);
+    static ILogicalEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICALENTITY_H

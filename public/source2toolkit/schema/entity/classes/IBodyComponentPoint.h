@@ -66,6 +66,7 @@ public:
     virtual ::CGameSceneNode& SceneNode() = 0;
     virtual void SceneNodeUpdated() = 0;
     static IBodyComponentPoint* FromOriginal(CBodyComponentPoint* p);
+    static IBodyComponentPoint* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBODYCOMPONENTPOINT_H

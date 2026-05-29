@@ -163,6 +163,7 @@ public:
     virtual ::CEntityIOOutput& NotifyForceReachedZ() = 0;
     virtual void NotifyForceReachedZUpdated() = 0;
     static IGenericConstraint* FromOriginal(CGenericConstraint* p);
+    static IGenericConstraint* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IGENERICCONSTRAINT_H

@@ -70,6 +70,7 @@ public:
     virtual CHandle<CBaseEntity>& EndEntity() = 0;
     virtual void EndEntityUpdated() = 0;
     static ILogicLineToEntity* FromOriginal(CLogicLineToEntity* p);
+    static ILogicLineToEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICLINETOENTITY_H

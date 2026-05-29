@@ -71,6 +71,7 @@ public:
     virtual bool& CheckDestIfClearForPlayer() = 0;
     virtual void CheckDestIfClearForPlayerUpdated() = 0;
     static ITriggerTeleport* FromOriginal(CTriggerTeleport* p);
+    static ITriggerTeleport* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERTELEPORT_H

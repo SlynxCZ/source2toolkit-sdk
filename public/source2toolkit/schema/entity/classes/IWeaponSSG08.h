@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponSSG08() = default;
 
     static IWeaponSSG08* FromOriginal(CWeaponSSG08* p);
+    static IWeaponSSG08* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONSSG08_H

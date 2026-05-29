@@ -63,6 +63,7 @@ public:
     virtual ~IBodyComponentBaseModelEntity() = default;
 
     static IBodyComponentBaseModelEntity* FromOriginal(CBodyComponentBaseModelEntity* p);
+    static IBodyComponentBaseModelEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBODYCOMPONENTBASEMODELENTITY_H

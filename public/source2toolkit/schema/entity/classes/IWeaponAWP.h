@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponAWP() = default;
 
     static IWeaponAWP* FromOriginal(CWeaponAWP* p);
+    static IWeaponAWP* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONAWP_H

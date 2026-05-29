@@ -70,6 +70,7 @@ public:
     virtual ::IntervalTimer& StillTimer() = 0;
     virtual void StillTimerUpdated() = 0;
     static IMolotovProjectile* FromOriginal(CMolotovProjectile* p);
+    static IMolotovProjectile* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IMOLOTOVPROJECTILE_H

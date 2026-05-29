@@ -67,6 +67,7 @@ public:
     virtual ::CEntityIOOutput& OnDetectedBulletFire() = 0;
     virtual void OnDetectedBulletFireUpdated() = 0;
     static ITriggerDetectBulletFire* FromOriginal(CTriggerDetectBulletFire* p);
+    static ITriggerDetectBulletFire* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ITRIGGERDETECTBULLETFIRE_H

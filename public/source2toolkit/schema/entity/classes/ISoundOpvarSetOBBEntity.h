@@ -63,6 +63,7 @@ public:
     virtual ~ISoundOpvarSetOBBEntity() = default;
 
     static ISoundOpvarSetOBBEntity* FromOriginal(CSoundOpvarSetOBBEntity* p);
+    static ISoundOpvarSetOBBEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISOUNDOPVARSETOBBENTITY_H

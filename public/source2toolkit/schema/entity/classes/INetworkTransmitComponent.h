@@ -66,6 +66,7 @@ public:
     virtual uint8_t& TransmitStateOwnedCounter() = 0;
     virtual void TransmitStateOwnedCounterUpdated() = 0;
     static INetworkTransmitComponent* FromOriginal(CNetworkTransmitComponent* p);
+    static INetworkTransmitComponent* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_INETWORKTRANSMITCOMPONENT_H

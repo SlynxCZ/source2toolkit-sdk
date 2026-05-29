@@ -116,6 +116,7 @@ public:
     virtual int32_t& Position() = 0;
     virtual void PositionUpdated() = 0;
     static IBasePlayerWeaponVData* FromOriginal(CBasePlayerWeaponVData* p);
+    static IBasePlayerWeaponVData* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASEPLAYERWEAPONVDATA_H

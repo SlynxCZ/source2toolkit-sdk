@@ -151,6 +151,7 @@ public:
     /// <summary>Set entity model.</summary>
     virtual void SetModel(const char* pszModel) = 0;
     static IBaseModelEntity* FromOriginal(CBaseModelEntity* p);
+    static IBaseModelEntity* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBASEMODELENTITY_H

@@ -67,6 +67,7 @@ public:
     virtual float& FadeEndDist() = 0;
     virtual void FadeEndDistUpdated() = 0;
     static IEnvDetailController* FromOriginal(CEnvDetailController* p);
+    static IEnvDetailController* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVDETAILCONTROLLER_H

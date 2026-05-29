@@ -77,6 +77,7 @@ public:
     virtual ::CEntityIOOutput& InZone3() = 0;
     virtual void InZone3Updated() = 0;
     static ILogicDistanceCheck* FromOriginal(CLogicDistanceCheck* p);
+    static ILogicDistanceCheck* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ILOGICDISTANCECHECK_H

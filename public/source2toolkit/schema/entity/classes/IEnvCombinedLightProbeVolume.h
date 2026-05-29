@@ -122,6 +122,7 @@ public:
     virtual bool& Entity_bEnabled() = 0;
     virtual void Entity_bEnabledUpdated() = 0;
     static IEnvCombinedLightProbeVolume* FromOriginal(CEnvCombinedLightProbeVolume* p);
+    static IEnvCombinedLightProbeVolume* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IENVCOMBINEDLIGHTPROBEVOLUME_H

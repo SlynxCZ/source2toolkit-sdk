@@ -63,6 +63,7 @@ public:
     virtual ~IWeaponMP7() = default;
 
     static IWeaponMP7* FromOriginal(CWeaponMP7* p);
+    static IWeaponMP7* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IWEAPONMP7_H

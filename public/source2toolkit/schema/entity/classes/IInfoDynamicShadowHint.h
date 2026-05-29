@@ -74,6 +74,7 @@ public:
     virtual CHandle<CBaseEntity>& Light() = 0;
     virtual void LightUpdated() = 0;
     static IInfoDynamicShadowHint* FromOriginal(CInfoDynamicShadowHint* p);
+    static IInfoDynamicShadowHint* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IINFODYNAMICSHADOWHINT_H

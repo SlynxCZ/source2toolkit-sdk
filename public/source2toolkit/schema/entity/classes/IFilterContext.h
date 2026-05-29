@@ -65,6 +65,7 @@ public:
     virtual CUtlSymbolLarge& FilterContext() = 0;
     virtual void FilterContextUpdated() = 0;
     static IFilterContext* FromOriginal(CFilterContext* p);
+    static IFilterContext* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IFILTERCONTEXT_H

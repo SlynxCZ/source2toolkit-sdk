@@ -70,6 +70,7 @@ public:
     virtual ::CEntityIOOutput& OnDeath() = 0;
     virtual void OnDeathUpdated() = 0;
     static IGunTarget* FromOriginal(CGunTarget* p);
+    static IGunTarget* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IGUNTARGET_H

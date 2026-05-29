@@ -82,6 +82,7 @@ public:
     virtual float& LastLandedVelocityZ() = 0;
     virtual void LastLandedVelocityZUpdated() = 0;
     static ICSPlayerModernJump* FromOriginal(CCSPlayerModernJump* p);
+    static ICSPlayerModernJump* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYERMODERNJUMP_H

@@ -82,6 +82,7 @@ public:
     virtual int32_t& BombSiteDesignation() = 0;
     virtual void BombSiteDesignationUpdated() = 0;
     static IBombTarget* FromOriginal(CBombTarget* p);
+    static IBombTarget* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_IBOMBTARGET_H

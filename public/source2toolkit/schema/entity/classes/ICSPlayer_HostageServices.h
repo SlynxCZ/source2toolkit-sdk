@@ -68,6 +68,7 @@ public:
     virtual CHandle<CBaseEntity>& CarriedHostageProp() = 0;
     virtual void CarriedHostagePropUpdated() = 0;
     static ICSPlayer_HostageServices* FromOriginal(CCSPlayer_HostageServices* p);
+    static ICSPlayer_HostageServices* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_HOSTAGESERVICES_H
