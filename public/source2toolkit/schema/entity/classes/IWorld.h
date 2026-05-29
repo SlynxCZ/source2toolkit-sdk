@@ -61,7 +61,6 @@ class IWorld : public virtual IBaseModelEntity
 {
 public:
     virtual ~IWorld() = default;
-    CWorld* GetOriginal() { return reinterpret_cast<CWorld*>(IEntityInstance::GetOriginal()); }
 
     static IWorld* FromOriginal(CWorld* p);
 };

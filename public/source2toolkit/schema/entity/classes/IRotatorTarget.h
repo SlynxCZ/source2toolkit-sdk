@@ -63,7 +63,6 @@ class IRotatorTarget : public virtual IPointEntity
 {
 public:
     virtual ~IRotatorTarget() = default;
-    CRotatorTarget* GetOriginal() { return reinterpret_cast<CRotatorTarget*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnArrivedAt() = 0;
     virtual void OnArrivedAtUpdated() = 0;

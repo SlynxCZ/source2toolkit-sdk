@@ -61,7 +61,6 @@ class IPointClientUIWorldTextPanel : public virtual IPointClientUIWorldPanel
 {
 public:
     virtual ~IPointClientUIWorldTextPanel() = default;
-    CPointClientUIWorldTextPanel* GetOriginal() { return reinterpret_cast<CPointClientUIWorldTextPanel*>(IEntityInstance::GetOriginal()); }
 
     virtual char* MessageText() = 0;
     static IPointClientUIWorldTextPanel* FromOriginal(CPointClientUIWorldTextPanel* p);

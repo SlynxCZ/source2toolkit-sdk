@@ -61,7 +61,6 @@ class IRagdollConstraint : public virtual IPhysConstraint
 {
 public:
     virtual ~IRagdollConstraint() = default;
-    CRagdollConstraint* GetOriginal() { return reinterpret_cast<CRagdollConstraint*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Xmin() = 0;
     virtual void XminUpdated() = 0;

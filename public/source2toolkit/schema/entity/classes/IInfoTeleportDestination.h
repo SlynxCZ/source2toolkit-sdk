@@ -61,7 +61,6 @@ class IInfoTeleportDestination : public virtual IPointEntity
 {
 public:
     virtual ~IInfoTeleportDestination() = default;
-    CInfoTeleportDestination* GetOriginal() { return reinterpret_cast<CInfoTeleportDestination*>(IEntityInstance::GetOriginal()); }
 
     static IInfoTeleportDestination* FromOriginal(CInfoTeleportDestination* p);
 };

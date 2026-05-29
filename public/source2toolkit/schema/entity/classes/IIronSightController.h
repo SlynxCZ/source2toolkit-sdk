@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CIronSightController;
 
 class IIronSightController
 {
 public:
     virtual ~IIronSightController() = default;
-    CIronSightController* GetOriginal() { return reinterpret_cast<CIronSightController*>(IEntityInstance::GetOriginal()); }
+    virtual CIronSightController* GetOriginal() const = 0;
 
     virtual bool& IronSightAvailable() = 0;
     virtual void IronSightAvailableUpdated() = 0;

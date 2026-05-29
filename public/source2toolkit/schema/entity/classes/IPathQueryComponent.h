@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CPathQueryComponent;
 
 class IPathQueryComponent
 {
 public:
     virtual ~IPathQueryComponent() = default;
-    CPathQueryComponent* GetOriginal() { return reinterpret_cast<CPathQueryComponent*>(IEntityInstance::GetOriginal()); }
+    virtual CPathQueryComponent* GetOriginal() const = 0;
 
     static IPathQueryComponent* FromOriginal(CPathQueryComponent* p);
 };

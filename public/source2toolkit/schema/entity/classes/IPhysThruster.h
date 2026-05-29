@@ -61,7 +61,6 @@ class IPhysThruster : public virtual IPhysForce
 {
 public:
     virtual ~IPhysThruster() = default;
-    CPhysThruster* GetOriginal() { return reinterpret_cast<CPhysThruster*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& LocalOrigin() = 0;
     virtual void LocalOriginUpdated() = 0;

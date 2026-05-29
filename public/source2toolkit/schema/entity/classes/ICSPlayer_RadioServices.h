@@ -61,7 +61,6 @@ class ICSPlayer_RadioServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~ICSPlayer_RadioServices() = default;
-    CCSPlayer_RadioServices* GetOriginal() { return reinterpret_cast<CCSPlayer_RadioServices*>(IEntityInstance::GetOriginal()); }
 
     virtual float& GotHostageTalkTimer() = 0;
     virtual void GotHostageTalkTimerUpdated() = 0;

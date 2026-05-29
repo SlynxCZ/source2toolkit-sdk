@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CNetworkViewOffsetVector;
 
 class INetworkViewOffsetVector
 {
 public:
     virtual ~INetworkViewOffsetVector() = default;
-    CNetworkViewOffsetVector* GetOriginal() { return reinterpret_cast<CNetworkViewOffsetVector*>(IEntityInstance::GetOriginal()); }
+    virtual CNetworkViewOffsetVector* GetOriginal() const = 0;
 
     virtual float& X() = 0;
     virtual void XUpdated() = 0;

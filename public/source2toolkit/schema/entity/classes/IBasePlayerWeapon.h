@@ -63,7 +63,6 @@ class IBasePlayerWeapon : public virtual IEconEntity
 {
 public:
     virtual ~IBasePlayerWeapon() = default;
-    CBasePlayerWeapon* GetOriginal() { return reinterpret_cast<CBasePlayerWeapon*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& NextPrimaryAttackTick() = 0;
     virtual void NextPrimaryAttackTickUpdated() = 0;

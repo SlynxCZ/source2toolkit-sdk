@@ -61,7 +61,6 @@ class IConstraintAnchor : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IConstraintAnchor() = default;
-    CConstraintAnchor* GetOriginal() { return reinterpret_cast<CConstraintAnchor*>(IEntityInstance::GetOriginal()); }
 
     virtual float& MassScale() = 0;
     virtual void MassScaleUpdated() = 0;

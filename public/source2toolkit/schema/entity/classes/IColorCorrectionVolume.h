@@ -61,7 +61,6 @@ class IColorCorrectionVolume : public virtual IBaseTrigger
 {
 public:
     virtual ~IColorCorrectionVolume() = default;
-    CColorCorrectionVolume* GetOriginal() { return reinterpret_cast<CColorCorrectionVolume*>(IEntityInstance::GetOriginal()); }
 
     virtual float& MaxWeight() = 0;
     virtual void MaxWeightUpdated() = 0;

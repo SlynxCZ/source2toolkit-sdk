@@ -53,6 +53,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CAttributeList;
 class CAttributeManager;
 class CEconItemAttribute;
@@ -61,7 +63,7 @@ class IAttributeList
 {
 public:
     virtual ~IAttributeList() = default;
-    CAttributeList* GetOriginal() { return reinterpret_cast<CAttributeList*>(IEntityInstance::GetOriginal()); }
+    virtual CAttributeList* GetOriginal() const = 0;
 
     virtual CUtlVector<CEconItemAttribute>& Attributes() = 0;
     virtual void AttributesUpdated() = 0;

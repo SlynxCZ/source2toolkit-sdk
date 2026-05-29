@@ -61,7 +61,6 @@ class ISpriteAlias_env_glow : public virtual ISprite
 {
 public:
     virtual ~ISpriteAlias_env_glow() = default;
-    CSpriteAlias_env_glow* GetOriginal() { return reinterpret_cast<CSpriteAlias_env_glow*>(IEntityInstance::GetOriginal()); }
 
     static ISpriteAlias_env_glow* FromOriginal(CSpriteAlias_env_glow* p);
 };

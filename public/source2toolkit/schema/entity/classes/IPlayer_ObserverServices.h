@@ -64,7 +64,6 @@ class IPlayer_ObserverServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~IPlayer_ObserverServices() = default;
-    CPlayer_ObserverServices* GetOriginal() { return reinterpret_cast<CPlayer_ObserverServices*>(IEntityInstance::GetOriginal()); }
 
     virtual uint8_t& ObserverMode() = 0;
     virtual void ObserverModeUpdated() = 0;

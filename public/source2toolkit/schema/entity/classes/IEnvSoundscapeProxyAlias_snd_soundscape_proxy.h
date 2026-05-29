@@ -61,7 +61,6 @@ class IEnvSoundscapeProxyAlias_snd_soundscape_proxy : public virtual IEnvSoundsc
 {
 public:
     virtual ~IEnvSoundscapeProxyAlias_snd_soundscape_proxy() = default;
-    CEnvSoundscapeProxyAlias_snd_soundscape_proxy* GetOriginal() { return reinterpret_cast<CEnvSoundscapeProxyAlias_snd_soundscape_proxy*>(IEntityInstance::GetOriginal()); }
 
     static IEnvSoundscapeProxyAlias_snd_soundscape_proxy* FromOriginal(CEnvSoundscapeProxyAlias_snd_soundscape_proxy* p);
 };

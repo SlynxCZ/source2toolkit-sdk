@@ -61,7 +61,6 @@ class ISoundAreaEntityOrientedBox : public virtual ISoundAreaEntityBase
 {
 public:
     virtual ~ISoundAreaEntityOrientedBox() = default;
-    CSoundAreaEntityOrientedBox* GetOriginal() { return reinterpret_cast<CSoundAreaEntityOrientedBox*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& Min() = 0;
     virtual void MinUpdated() = 0;

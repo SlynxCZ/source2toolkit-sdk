@@ -61,7 +61,6 @@ class ICSGO_TeamSelectCounterTerroristPosition : public virtual ICSGO_TeamSelect
 {
 public:
     virtual ~ICSGO_TeamSelectCounterTerroristPosition() = default;
-    CCSGO_TeamSelectCounterTerroristPosition* GetOriginal() { return reinterpret_cast<CCSGO_TeamSelectCounterTerroristPosition*>(IEntityInstance::GetOriginal()); }
 
     static ICSGO_TeamSelectCounterTerroristPosition* FromOriginal(CCSGO_TeamSelectCounterTerroristPosition* p);
 };

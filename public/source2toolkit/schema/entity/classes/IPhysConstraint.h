@@ -63,7 +63,6 @@ class IPhysConstraint : public virtual ILogicalEntity
 {
 public:
     virtual ~IPhysConstraint() = default;
-    CPhysConstraint* GetOriginal() { return reinterpret_cast<CPhysConstraint*>(IEntityInstance::GetOriginal()); }
 
     virtual IPhysicsJoint*& Joint() = 0;
     virtual void JointUpdated() = 0;

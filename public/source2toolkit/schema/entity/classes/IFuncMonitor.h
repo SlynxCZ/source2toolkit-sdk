@@ -62,7 +62,6 @@ class IFuncMonitor : public virtual IFuncBrush
 {
 public:
     virtual ~IFuncMonitor() = default;
-    CFuncMonitor* GetOriginal() { return reinterpret_cast<CFuncMonitor*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlString& TargetCamera() = 0;
     virtual void TargetCameraUpdated() = 0;

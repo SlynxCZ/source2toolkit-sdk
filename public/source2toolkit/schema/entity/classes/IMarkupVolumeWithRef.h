@@ -61,7 +61,6 @@ class IMarkupVolumeWithRef : public virtual IMarkupVolumeTagged
 {
 public:
     virtual ~IMarkupVolumeWithRef() = default;
-    CMarkupVolumeWithRef* GetOriginal() { return reinterpret_cast<CMarkupVolumeWithRef*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& UseRef() = 0;
     virtual void UseRefUpdated() = 0;

@@ -62,7 +62,6 @@ class IPostProcessingVolume : public virtual IBaseTrigger
 {
 public:
     virtual ~IPostProcessingVolume() = default;
-    CPostProcessingVolume* GetOriginal() { return reinterpret_cast<CPostProcessingVolume*>(IEntityInstance::GetOriginal()); }
 
     virtual CStrongHandle<InfoForResourceTypeCPostProcessingResource>& PostSettings() = 0;
     virtual void PostSettingsUpdated() = 0;

@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CPropDataComponent;
 
 class IPropDataComponent
 {
 public:
     virtual ~IPropDataComponent() = default;
-    CPropDataComponent* GetOriginal() { return reinterpret_cast<CPropDataComponent*>(IEntityInstance::GetOriginal()); }
+    virtual CPropDataComponent* GetOriginal() const = 0;
 
     virtual float& DmgModBullet() = 0;
     virtual void DmgModBulletUpdated() = 0;

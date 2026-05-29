@@ -77,7 +77,6 @@ class ICSPlayerPawn : public virtual ICSPlayerPawnBase
 {
 public:
     virtual ~ICSPlayerPawn() = default;
-    CCSPlayerPawn* GetOriginal() { return reinterpret_cast<CCSPlayerPawn*>(IEntityInstance::GetOriginal()); }
 
     virtual CCSPlayer_BulletServices*& BulletServices() = 0;
     virtual void BulletServicesUpdated() = 0;

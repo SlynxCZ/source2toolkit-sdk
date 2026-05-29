@@ -61,7 +61,6 @@ class IFireCrackerBlast : public virtual IInferno
 {
 public:
     virtual ~IFireCrackerBlast() = default;
-    CFireCrackerBlast* GetOriginal() { return reinterpret_cast<CFireCrackerBlast*>(IEntityInstance::GetOriginal()); }
 
     static IFireCrackerBlast* FromOriginal(CFireCrackerBlast* p);
 };

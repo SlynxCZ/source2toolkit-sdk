@@ -69,7 +69,6 @@ class IPointValueRemapper : public virtual IBaseEntity
 {
 public:
     virtual ~IPointValueRemapper() = default;
-    CPointValueRemapper* GetOriginal() { return reinterpret_cast<CPointValueRemapper*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;

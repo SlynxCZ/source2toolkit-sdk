@@ -63,7 +63,6 @@ class IFish : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IFish() = default;
-    CFish* GetOriginal() { return reinterpret_cast<CFish*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CFishPool>& Pool() = 0;
     virtual void PoolUpdated() = 0;

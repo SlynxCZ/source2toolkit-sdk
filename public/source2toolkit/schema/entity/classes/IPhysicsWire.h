@@ -61,7 +61,6 @@ class IPhysicsWire : public virtual IBaseEntity
 {
 public:
     virtual ~IPhysicsWire() = default;
-    CPhysicsWire* GetOriginal() { return reinterpret_cast<CPhysicsWire*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Density() = 0;
     virtual void DensityUpdated() = 0;

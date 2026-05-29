@@ -61,7 +61,6 @@ class IPlayer_WaterServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~IPlayer_WaterServices() = default;
-    CPlayer_WaterServices* GetOriginal() { return reinterpret_cast<CPlayer_WaterServices*>(IEntityInstance::GetOriginal()); }
 
     static IPlayer_WaterServices* FromOriginal(CPlayer_WaterServices* p);
 };

@@ -61,7 +61,6 @@ class IEmptyGraphController : public virtual IAnimGraphControllerBase
 {
 public:
     virtual ~IEmptyGraphController() = default;
-    CEmptyGraphController* GetOriginal() { return reinterpret_cast<CEmptyGraphController*>(IEntityInstance::GetOriginal()); }
 
     static IEmptyGraphController* FromOriginal(CEmptyGraphController* p);
 };

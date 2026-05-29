@@ -61,7 +61,6 @@ class ITriggerCallback : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerCallback() = default;
-    CTriggerCallback* GetOriginal() { return reinterpret_cast<CTriggerCallback*>(IEntityInstance::GetOriginal()); }
 
     static ITriggerCallback* FromOriginal(CTriggerCallback* p);
 };

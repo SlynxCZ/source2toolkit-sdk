@@ -61,7 +61,6 @@ class ICSGO_TeamSelectCharacterPosition : public virtual ICSGO_TeamPreviewCharac
 {
 public:
     virtual ~ICSGO_TeamSelectCharacterPosition() = default;
-    CCSGO_TeamSelectCharacterPosition* GetOriginal() { return reinterpret_cast<CCSGO_TeamSelectCharacterPosition*>(IEntityInstance::GetOriginal()); }
 
     static ICSGO_TeamSelectCharacterPosition* FromOriginal(CCSGO_TeamSelectCharacterPosition* p);
 };

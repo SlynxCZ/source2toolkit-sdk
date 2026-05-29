@@ -61,7 +61,6 @@ class IRuleEntity : public virtual IBaseModelEntity
 {
 public:
     virtual ~IRuleEntity() = default;
-    CRuleEntity* GetOriginal() { return reinterpret_cast<CRuleEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Master() = 0;
     virtual void MasterUpdated() = 0;

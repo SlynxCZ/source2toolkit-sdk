@@ -61,7 +61,6 @@ class ICSTeam : public virtual ITeam
 {
 public:
     virtual ~ICSTeam() = default;
-    CCSTeam* GetOriginal() { return reinterpret_cast<CCSTeam*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& LastRecievedShorthandedRoundBonus() = 0;
     virtual void LastRecievedShorthandedRoundBonusUpdated() = 0;

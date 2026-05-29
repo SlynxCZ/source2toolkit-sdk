@@ -62,7 +62,6 @@ class IInstructorEventEntity : public virtual IPointEntity
 {
 public:
     virtual ~IInstructorEventEntity() = default;
-    CInstructorEventEntity* GetOriginal() { return reinterpret_cast<CInstructorEventEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Name() = 0;
     virtual void NameUpdated() = 0;

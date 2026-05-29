@@ -61,7 +61,6 @@ class IOrnamentProp : public virtual IDynamicProp
 {
 public:
     virtual ~IOrnamentProp() = default;
-    COrnamentProp* GetOriginal() { return reinterpret_cast<COrnamentProp*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& InitialOwner() = 0;
     virtual void InitialOwnerUpdated() = 0;

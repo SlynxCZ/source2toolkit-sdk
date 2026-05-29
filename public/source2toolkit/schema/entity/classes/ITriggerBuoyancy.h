@@ -62,7 +62,6 @@ class ITriggerBuoyancy : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerBuoyancy() = default;
-    CTriggerBuoyancy* GetOriginal() { return reinterpret_cast<CTriggerBuoyancy*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CBuoyancyHelper& BuoyancyHelper() = 0;
     virtual void BuoyancyHelperUpdated() = 0;

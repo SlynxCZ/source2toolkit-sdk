@@ -62,7 +62,6 @@ class IMultiSource : public virtual ILogicalEntity
 {
 public:
     virtual ~IMultiSource() = default;
-    CMultiSource* GetOriginal() { return reinterpret_cast<CMultiSource*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>* RgEntities() = 0;
     virtual int32_t* RgTriggered() = 0;

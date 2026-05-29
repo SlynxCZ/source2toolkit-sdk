@@ -61,7 +61,6 @@ class ICitadelSoundOpvarSetOBB : public virtual IBaseEntity
 {
 public:
     virtual ~ICitadelSoundOpvarSetOBB() = default;
-    CCitadelSoundOpvarSetOBB* GetOriginal() { return reinterpret_cast<CCitadelSoundOpvarSetOBB*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& StackName() = 0;
     virtual void StackNameUpdated() = 0;

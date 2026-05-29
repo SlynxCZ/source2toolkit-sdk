@@ -53,6 +53,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CBot;
 class CCSPlayerController;
 class CCSPlayerPawn;
@@ -61,7 +63,7 @@ class IBot
 {
 public:
     virtual ~IBot() = default;
-    CBot* GetOriginal() { return reinterpret_cast<CBot*>(IEntityInstance::GetOriginal()); }
+    virtual CBot* GetOriginal() const = 0;
 
     virtual CCSPlayerController*& Controller() = 0;
     virtual void ControllerUpdated() = 0;

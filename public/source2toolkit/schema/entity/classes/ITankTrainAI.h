@@ -63,7 +63,6 @@ class ITankTrainAI : public virtual IPointEntity
 {
 public:
     virtual ~ITankTrainAI() = default;
-    CTankTrainAI* GetOriginal() { return reinterpret_cast<CTankTrainAI*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CFuncTrackTrain>& Train() = 0;
     virtual void TrainUpdated() = 0;

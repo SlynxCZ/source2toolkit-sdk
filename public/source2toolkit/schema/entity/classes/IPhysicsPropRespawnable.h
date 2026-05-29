@@ -61,7 +61,6 @@ class IPhysicsPropRespawnable : public virtual IPhysicsProp
 {
 public:
     virtual ~IPhysicsPropRespawnable() = default;
-    CPhysicsPropRespawnable* GetOriginal() { return reinterpret_cast<CPhysicsPropRespawnable*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& OriginalSpawnOrigin() = 0;
     virtual void OriginalSpawnOriginUpdated() = 0;

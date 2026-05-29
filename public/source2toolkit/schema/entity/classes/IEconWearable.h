@@ -61,7 +61,6 @@ class IEconWearable : public virtual IEconEntity
 {
 public:
     virtual ~IEconWearable() = default;
-    CEconWearable* GetOriginal() { return reinterpret_cast<CEconWearable*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& ForceSkin() = 0;
     virtual void ForceSkinUpdated() = 0;

@@ -61,7 +61,6 @@ class ILightEnvironmentEntity : public virtual ILightDirectionalEntity
 {
 public:
     virtual ~ILightEnvironmentEntity() = default;
-    CLightEnvironmentEntity* GetOriginal() { return reinterpret_cast<CLightEnvironmentEntity*>(IEntityInstance::GetOriginal()); }
 
     static ILightEnvironmentEntity* FromOriginal(CLightEnvironmentEntity* p);
 };

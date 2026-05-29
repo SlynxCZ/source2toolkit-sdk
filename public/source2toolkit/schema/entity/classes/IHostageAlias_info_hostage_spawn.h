@@ -61,7 +61,6 @@ class IHostageAlias_info_hostage_spawn : public virtual IHostage
 {
 public:
     virtual ~IHostageAlias_info_hostage_spawn() = default;
-    CHostageAlias_info_hostage_spawn* GetOriginal() { return reinterpret_cast<CHostageAlias_info_hostage_spawn*>(IEntityInstance::GetOriginal()); }
 
     static IHostageAlias_info_hostage_spawn* FromOriginal(CHostageAlias_info_hostage_spawn* p);
 };

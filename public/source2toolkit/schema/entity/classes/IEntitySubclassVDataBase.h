@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CEntitySubclassVDataBase;
 
 class IEntitySubclassVDataBase
 {
 public:
     virtual ~IEntitySubclassVDataBase() = default;
-    CEntitySubclassVDataBase* GetOriginal() { return reinterpret_cast<CEntitySubclassVDataBase*>(IEntityInstance::GetOriginal()); }
+    virtual CEntitySubclassVDataBase* GetOriginal() const = 0;
 
     static IEntitySubclassVDataBase* FromOriginal(CEntitySubclassVDataBase* p);
 };

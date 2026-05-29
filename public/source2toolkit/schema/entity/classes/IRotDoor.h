@@ -61,7 +61,6 @@ class IRotDoor : public virtual IBaseDoor
 {
 public:
     virtual ~IRotDoor() = default;
-    CRotDoor* GetOriginal() { return reinterpret_cast<CRotDoor*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& SolidBsp() = 0;
     virtual void SolidBspUpdated() = 0;

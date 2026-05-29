@@ -61,7 +61,6 @@ class IInfoInstructorHintBombTargetA : public virtual IPointEntity
 {
 public:
     virtual ~IInfoInstructorHintBombTargetA() = default;
-    CInfoInstructorHintBombTargetA* GetOriginal() { return reinterpret_cast<CInfoInstructorHintBombTargetA*>(IEntityInstance::GetOriginal()); }
 
     static IInfoInstructorHintBombTargetA* FromOriginal(CInfoInstructorHintBombTargetA* p);
 };

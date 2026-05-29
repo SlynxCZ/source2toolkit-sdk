@@ -61,7 +61,6 @@ class ICSObserverPawn : public virtual ICSPlayerPawnBase
 {
 public:
     virtual ~ICSObserverPawn() = default;
-    CCSObserverPawn* GetOriginal() { return reinterpret_cast<CCSObserverPawn*>(IEntityInstance::GetOriginal()); }
 
     static ICSObserverPawn* FromOriginal(CCSObserverPawn* p);
 };

@@ -61,7 +61,6 @@ class IGameRulesProxy : public virtual IBaseEntity
 {
 public:
     virtual ~IGameRulesProxy() = default;
-    CGameRulesProxy* GetOriginal() { return reinterpret_cast<CGameRulesProxy*>(IEntityInstance::GetOriginal()); }
 
     static IGameRulesProxy* FromOriginal(CGameRulesProxy* p);
 };

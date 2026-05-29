@@ -62,7 +62,6 @@ class ITriggerPhysics : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerPhysics() = default;
-    CTriggerPhysics* GetOriginal() { return reinterpret_cast<CTriggerPhysics*>(IEntityInstance::GetOriginal()); }
 
     virtual IPhysicsMotionController*& Controller() = 0;
     virtual void ControllerUpdated() = 0;

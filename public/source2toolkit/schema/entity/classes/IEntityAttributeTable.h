@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CEntityAttributeTable;
 
 class IEntityAttributeTable
 {
 public:
     virtual ~IEntityAttributeTable() = default;
-    CEntityAttributeTable* GetOriginal() { return reinterpret_cast<CEntityAttributeTable*>(IEntityInstance::GetOriginal()); }
+    virtual CEntityAttributeTable* GetOriginal() const = 0;
 
     static IEntityAttributeTable* FromOriginal(CEntityAttributeTable* p);
 };

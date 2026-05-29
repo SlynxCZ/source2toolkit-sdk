@@ -61,7 +61,6 @@ class IDecoyProjectile : public virtual IBaseCSGrenadeProjectile
 {
 public:
     virtual ~IDecoyProjectile() = default;
-    CDecoyProjectile* GetOriginal() { return reinterpret_cast<CDecoyProjectile*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& DecoyShotTick() = 0;
     virtual void DecoyShotTickUpdated() = 0;

@@ -61,7 +61,6 @@ class IEnableMotionFixup : public virtual IBaseEntity
 {
 public:
     virtual ~IEnableMotionFixup() = default;
-    CEnableMotionFixup* GetOriginal() { return reinterpret_cast<CEnableMotionFixup*>(IEntityInstance::GetOriginal()); }
 
     static IEnableMotionFixup* FromOriginal(CEnableMotionFixup* p);
 };

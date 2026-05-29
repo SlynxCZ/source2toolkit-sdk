@@ -61,7 +61,6 @@ class IRagdollMagnet : public virtual IPointEntity
 {
 public:
     virtual ~IRagdollMagnet() = default;
-    CRagdollMagnet* GetOriginal() { return reinterpret_cast<CRagdollMagnet*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;

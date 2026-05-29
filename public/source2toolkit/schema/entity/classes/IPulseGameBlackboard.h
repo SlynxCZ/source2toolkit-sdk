@@ -61,7 +61,6 @@ class IPulseGameBlackboard : public virtual IBaseEntity
 {
 public:
     virtual ~IPulseGameBlackboard() = default;
-    CPulseGameBlackboard* GetOriginal() { return reinterpret_cast<CPulseGameBlackboard*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlString& StrGraphName() = 0;
     virtual void StrGraphNameUpdated() = 0;

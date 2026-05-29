@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CCSPlayerModernJump;
 
 class ICSPlayerModernJump
 {
 public:
     virtual ~ICSPlayerModernJump() = default;
-    CCSPlayerModernJump* GetOriginal() { return reinterpret_cast<CCSPlayerModernJump*>(IEntityInstance::GetOriginal()); }
+    virtual CCSPlayerModernJump* GetOriginal() const = 0;
 
     virtual int32_t& LastActualJumpPressTick() = 0;
     virtual void LastActualJumpPressTickUpdated() = 0;

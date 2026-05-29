@@ -64,7 +64,6 @@ class IPrecipitationVData : public virtual IEntitySubclassVDataBase
 {
 public:
     virtual ~IPrecipitationVData() = default;
-    CPrecipitationVData* GetOriginal() { return reinterpret_cast<CPrecipitationVData*>(IEntityInstance::GetOriginal()); }
 
     virtual float& InnerDistance() = 0;
     virtual void InnerDistanceUpdated() = 0;

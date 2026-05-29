@@ -62,7 +62,6 @@ class IPathWithDynamicNodes : public virtual IPathSimple
 {
 public:
     virtual ~IPathWithDynamicNodes() = default;
-    CPathWithDynamicNodes* GetOriginal() { return reinterpret_cast<CPathWithDynamicNodes*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<CHandle<CPathNode>>& PathNodes() = 0;
     virtual void PathNodesUpdated() = 0;

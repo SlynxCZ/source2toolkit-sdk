@@ -62,7 +62,6 @@ class IEnvDecal : public virtual IBaseModelEntity
 {
 public:
     virtual ~IEnvDecal() = default;
-    CEnvDecal* GetOriginal() { return reinterpret_cast<CEnvDecal*>(IEntityInstance::GetOriginal()); }
 
     virtual CStrongHandle<InfoForResourceTypeIMaterial2>& DecalMaterial() = 0;
     virtual void DecalMaterialUpdated() = 0;

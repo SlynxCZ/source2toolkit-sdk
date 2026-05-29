@@ -62,7 +62,6 @@ class IBodyComponentBaseAnimGraph : public virtual IBodyComponentSkeletonInstanc
 {
 public:
     virtual ~IBodyComponentBaseAnimGraph() = default;
-    CBodyComponentBaseAnimGraph* GetOriginal() { return reinterpret_cast<CBodyComponentBaseAnimGraph*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CBaseAnimGraphController& AnimationController() = 0;
     virtual void AnimationControllerUpdated() = 0;

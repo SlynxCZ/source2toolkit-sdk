@@ -61,7 +61,6 @@ class ISoundOpvarSetPathCornerEntity : public virtual ISoundOpvarSetPointEntity
 {
 public:
     virtual ~ISoundOpvarSetPathCornerEntity() = default;
-    CSoundOpvarSetPathCornerEntity* GetOriginal() { return reinterpret_cast<CSoundOpvarSetPathCornerEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& UseParentedPath() = 0;
     virtual void UseParentedPathUpdated() = 0;

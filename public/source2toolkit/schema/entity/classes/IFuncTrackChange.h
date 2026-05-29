@@ -65,7 +65,6 @@ class IFuncTrackChange : public virtual IFuncPlatRot
 {
 public:
     virtual ~IFuncTrackChange() = default;
-    CFuncTrackChange* GetOriginal() { return reinterpret_cast<CFuncTrackChange*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CPathTrack>& TrackTop() = 0;
     virtual void TrackTopUpdated() = 0;

@@ -61,7 +61,6 @@ class IPhysExplosion : public virtual IPointEntity
 {
 public:
     virtual ~IPhysExplosion() = default;
-    CPhysExplosion* GetOriginal() { return reinterpret_cast<CPhysExplosion*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& ExplodeOnSpawn() = 0;
     virtual void ExplodeOnSpawnUpdated() = 0;

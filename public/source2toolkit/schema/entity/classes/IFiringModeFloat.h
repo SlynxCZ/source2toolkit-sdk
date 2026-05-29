@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CFiringModeFloat;
 
 class IFiringModeFloat
 {
 public:
     virtual ~IFiringModeFloat() = default;
-    CFiringModeFloat* GetOriginal() { return reinterpret_cast<CFiringModeFloat*>(IEntityInstance::GetOriginal()); }
+    virtual CFiringModeFloat* GetOriginal() const = 0;
 
     virtual float* Values() = 0;
     static IFiringModeFloat* FromOriginal(CFiringModeFloat* p);

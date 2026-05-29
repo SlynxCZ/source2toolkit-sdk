@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CNetworkVelocityVector;
 
 class INetworkVelocityVector
 {
 public:
     virtual ~INetworkVelocityVector() = default;
-    CNetworkVelocityVector* GetOriginal() { return reinterpret_cast<CNetworkVelocityVector*>(IEntityInstance::GetOriginal()); }
+    virtual CNetworkVelocityVector* GetOriginal() const = 0;
 
     virtual float& X() = 0;
     virtual void XUpdated() = 0;

@@ -62,7 +62,6 @@ class IMolotovProjectile : public virtual IBaseCSGrenadeProjectile
 {
 public:
     virtual ~IMolotovProjectile() = default;
-    CMolotovProjectile* GetOriginal() { return reinterpret_cast<CMolotovProjectile*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& IsIncGrenade() = 0;
     virtual void IsIncGrenadeUpdated() = 0;

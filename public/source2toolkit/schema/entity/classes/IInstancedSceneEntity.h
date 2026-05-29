@@ -62,7 +62,6 @@ class IInstancedSceneEntity : public virtual ISceneEntity
 {
 public:
     virtual ~IInstancedSceneEntity() = default;
-    CInstancedSceneEntity* GetOriginal() { return reinterpret_cast<CInstancedSceneEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& Owner() = 0;
     virtual void OwnerUpdated() = 0;

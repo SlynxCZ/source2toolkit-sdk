@@ -61,7 +61,6 @@ class ILightSpotEntity : public virtual ILightEntity
 {
 public:
     virtual ~ILightSpotEntity() = default;
-    CLightSpotEntity* GetOriginal() { return reinterpret_cast<CLightSpotEntity*>(IEntityInstance::GetOriginal()); }
 
     static ILightSpotEntity* FromOriginal(CLightSpotEntity* p);
 };

@@ -62,7 +62,6 @@ class IPlatTrigger : public virtual IBaseModelEntity
 {
 public:
     virtual ~IPlatTrigger() = default;
-    CPlatTrigger* GetOriginal() { return reinterpret_cast<CPlatTrigger*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CFuncPlat>& Platform() = 0;
     virtual void PlatformUpdated() = 0;

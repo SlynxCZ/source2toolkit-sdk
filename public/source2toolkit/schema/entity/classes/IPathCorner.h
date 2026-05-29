@@ -61,7 +61,6 @@ class IPathCorner : public virtual IPointEntity
 {
 public:
     virtual ~IPathCorner() = default;
-    CPathCorner* GetOriginal() { return reinterpret_cast<CPathCorner*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Wait() = 0;
     virtual void WaitUpdated() = 0;

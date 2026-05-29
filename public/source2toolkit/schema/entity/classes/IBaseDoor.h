@@ -64,7 +64,6 @@ class IBaseDoor : public virtual IBaseToggle
 {
 public:
     virtual ~IBaseDoor() = default;
-    CBaseDoor* GetOriginal() { return reinterpret_cast<CBaseDoor*>(IEntityInstance::GetOriginal()); }
 
     virtual QAngle& MoveEntitySpace() = 0;
     virtual void MoveEntitySpaceUpdated() = 0;

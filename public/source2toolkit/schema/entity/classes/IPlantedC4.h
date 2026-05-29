@@ -64,7 +64,6 @@ class IPlantedC4 : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IPlantedC4() = default;
-    CPlantedC4* GetOriginal() { return reinterpret_cast<CPlantedC4*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& BombTicking() = 0;
     virtual void BombTickingUpdated() = 0;

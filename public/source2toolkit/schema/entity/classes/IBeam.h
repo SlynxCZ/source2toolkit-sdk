@@ -66,7 +66,6 @@ class IBeam : public virtual IBaseModelEntity
 {
 public:
     virtual ~IBeam() = default;
-    CBeam* GetOriginal() { return reinterpret_cast<CBeam*>(IEntityInstance::GetOriginal()); }
 
     virtual float& FrameRate() = 0;
     virtual void FrameRateUpdated() = 0;

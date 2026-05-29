@@ -61,7 +61,6 @@ class IRagdollPropAlias_physics_prop_ragdoll : public virtual IRagdollProp
 {
 public:
     virtual ~IRagdollPropAlias_physics_prop_ragdoll() = default;
-    CRagdollPropAlias_physics_prop_ragdoll* GetOriginal() { return reinterpret_cast<CRagdollPropAlias_physics_prop_ragdoll*>(IEntityInstance::GetOriginal()); }
 
     static IRagdollPropAlias_physics_prop_ragdoll* FromOriginal(CRagdollPropAlias_physics_prop_ragdoll* p);
 };

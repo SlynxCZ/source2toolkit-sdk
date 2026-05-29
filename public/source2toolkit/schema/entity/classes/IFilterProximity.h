@@ -61,7 +61,6 @@ class IFilterProximity : public virtual IBaseFilter
 {
 public:
     virtual ~IFilterProximity() = default;
-    CFilterProximity* GetOriginal() { return reinterpret_cast<CFilterProximity*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Radius() = 0;
     virtual void RadiusUpdated() = 0;

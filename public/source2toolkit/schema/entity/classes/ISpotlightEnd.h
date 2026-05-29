@@ -61,7 +61,6 @@ class ISpotlightEnd : public virtual IBaseModelEntity
 {
 public:
     virtual ~ISpotlightEnd() = default;
-    CSpotlightEnd* GetOriginal() { return reinterpret_cast<CSpotlightEnd*>(IEntityInstance::GetOriginal()); }
 
     virtual float& LightScale() = 0;
     virtual void LightScaleUpdated() = 0;

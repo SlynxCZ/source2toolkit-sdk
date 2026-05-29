@@ -61,7 +61,6 @@ class IGamePlayerZone : public virtual IRuleBrushEntity
 {
 public:
     virtual ~IGamePlayerZone() = default;
-    CGamePlayerZone* GetOriginal() { return reinterpret_cast<CGamePlayerZone*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnPlayerInZone() = 0;
     virtual void OnPlayerInZoneUpdated() = 0;

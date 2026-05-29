@@ -61,7 +61,6 @@ class IPathCornerCrash : public virtual IPathCorner
 {
 public:
     virtual ~IPathCornerCrash() = default;
-    CPathCornerCrash* GetOriginal() { return reinterpret_cast<CPathCornerCrash*>(IEntityInstance::GetOriginal()); }
 
     static IPathCornerCrash* FromOriginal(CPathCornerCrash* p);
 };

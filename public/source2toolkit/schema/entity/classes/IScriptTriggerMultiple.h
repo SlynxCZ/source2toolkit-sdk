@@ -61,7 +61,6 @@ class IScriptTriggerMultiple : public virtual ITriggerMultiple
 {
 public:
     virtual ~IScriptTriggerMultiple() = default;
-    CScriptTriggerMultiple* GetOriginal() { return reinterpret_cast<CScriptTriggerMultiple*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& Extent() = 0;
     virtual void ExtentUpdated() = 0;

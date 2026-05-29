@@ -63,7 +63,6 @@ class IBarnLight : public virtual IBaseModelEntity
 {
 public:
     virtual ~IBarnLight() = default;
-    CBarnLight* GetOriginal() { return reinterpret_cast<CBarnLight*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Enabled() = 0;
     virtual void EnabledUpdated() = 0;

@@ -61,7 +61,6 @@ class ITriggerImpact : public virtual ITriggerMultiple
 {
 public:
     virtual ~ITriggerImpact() = default;
-    CTriggerImpact* GetOriginal() { return reinterpret_cast<CTriggerImpact*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Magnitude() = 0;
     virtual void MagnitudeUpdated() = 0;

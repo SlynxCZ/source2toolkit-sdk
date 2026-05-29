@@ -64,7 +64,6 @@ class IPointTemplate : public virtual ILogicalEntity
 {
 public:
     virtual ~IPointTemplate() = default;
-    CPointTemplate* GetOriginal() { return reinterpret_cast<CPointTemplate*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& WorldName() = 0;
     virtual void WorldNameUpdated() = 0;

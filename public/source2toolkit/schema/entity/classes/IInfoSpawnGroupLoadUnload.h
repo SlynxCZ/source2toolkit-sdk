@@ -61,7 +61,6 @@ class IInfoSpawnGroupLoadUnload : public virtual ILogicalEntity
 {
 public:
     virtual ~IInfoSpawnGroupLoadUnload() = default;
-    CInfoSpawnGroupLoadUnload* GetOriginal() { return reinterpret_cast<CInfoSpawnGroupLoadUnload*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnSpawnGroupLoadStarted() = 0;
     virtual void OnSpawnGroupLoadStartedUpdated() = 0;

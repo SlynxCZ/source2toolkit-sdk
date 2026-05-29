@@ -61,7 +61,6 @@ class IKnife : public virtual ICSWeaponBase
 {
 public:
     virtual ~IKnife() = default;
-    CKnife* GetOriginal() { return reinterpret_cast<CKnife*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& FirstAttack() = 0;
     virtual void FirstAttackUpdated() = 0;

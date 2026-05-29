@@ -61,7 +61,6 @@ class ILogicAuto : public virtual IBaseEntity
 {
 public:
     virtual ~ILogicAuto() = default;
-    CLogicAuto* GetOriginal() { return reinterpret_cast<CLogicAuto*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnMapSpawn() = 0;
     virtual void OnMapSpawnUpdated() = 0;

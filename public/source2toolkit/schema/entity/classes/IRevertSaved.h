@@ -61,7 +61,6 @@ class IRevertSaved : public virtual IModelPointEntity
 {
 public:
     virtual ~IRevertSaved() = default;
-    CRevertSaved* GetOriginal() { return reinterpret_cast<CRevertSaved*>(IEntityInstance::GetOriginal()); }
 
     virtual float& LoadTime() = 0;
     virtual void LoadTimeUpdated() = 0;

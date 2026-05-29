@@ -63,7 +63,6 @@ class IPhysHinge : public virtual IPhysConstraint
 {
 public:
     virtual ~IPhysHinge() = default;
-    CPhysHinge* GetOriginal() { return reinterpret_cast<CPhysHinge*>(IEntityInstance::GetOriginal()); }
 
     virtual ::ConstraintSoundInfo& SoundInfo() = 0;
     virtual void SoundInfoUpdated() = 0;

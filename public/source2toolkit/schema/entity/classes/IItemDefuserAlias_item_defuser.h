@@ -61,7 +61,6 @@ class IItemDefuserAlias_item_defuser : public virtual IItemDefuser
 {
 public:
     virtual ~IItemDefuserAlias_item_defuser() = default;
-    CItemDefuserAlias_item_defuser* GetOriginal() { return reinterpret_cast<CItemDefuserAlias_item_defuser*>(IEntityInstance::GetOriginal()); }
 
     static IItemDefuserAlias_item_defuser* FromOriginal(CItemDefuserAlias_item_defuser* p);
 };

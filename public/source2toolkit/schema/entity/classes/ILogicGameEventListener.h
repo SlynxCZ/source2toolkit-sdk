@@ -61,7 +61,6 @@ class ILogicGameEventListener : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicGameEventListener() = default;
-    CLogicGameEventListener* GetOriginal() { return reinterpret_cast<CLogicGameEventListener*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnEventFired() = 0;
     virtual void OnEventFiredUpdated() = 0;

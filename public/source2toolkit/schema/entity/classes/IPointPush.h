@@ -62,7 +62,6 @@ class IPointPush : public virtual IPointEntity
 {
 public:
     virtual ~IPointPush() = default;
-    CPointPush* GetOriginal() { return reinterpret_cast<CPointPush*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Enabled() = 0;
     virtual void EnabledUpdated() = 0;

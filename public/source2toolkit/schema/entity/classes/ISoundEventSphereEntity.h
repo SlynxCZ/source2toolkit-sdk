@@ -61,7 +61,6 @@ class ISoundEventSphereEntity : public virtual ISoundEventEntity
 {
 public:
     virtual ~ISoundEventSphereEntity() = default;
-    CSoundEventSphereEntity* GetOriginal() { return reinterpret_cast<CSoundEventSphereEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Radius() = 0;
     virtual void RadiusUpdated() = 0;

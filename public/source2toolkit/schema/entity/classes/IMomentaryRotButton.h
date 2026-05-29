@@ -61,7 +61,6 @@ class IMomentaryRotButton : public virtual IRotButton
 {
 public:
     virtual ~IMomentaryRotButton() = default;
-    CMomentaryRotButton* GetOriginal() { return reinterpret_cast<CMomentaryRotButton*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnUnpressed() = 0;
     virtual void OnUnpressedUpdated() = 0;

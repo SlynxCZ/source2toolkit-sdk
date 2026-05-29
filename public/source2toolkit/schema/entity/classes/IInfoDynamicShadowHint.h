@@ -62,7 +62,6 @@ class IInfoDynamicShadowHint : public virtual IPointEntity
 {
 public:
     virtual ~IInfoDynamicShadowHint() = default;
-    CInfoDynamicShadowHint* GetOriginal() { return reinterpret_cast<CInfoDynamicShadowHint*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;

@@ -62,7 +62,6 @@ class IPointClientUIDialog : public virtual IBaseClientUIEntity
 {
 public:
     virtual ~IPointClientUIDialog() = default;
-    CPointClientUIDialog* GetOriginal() { return reinterpret_cast<CPointClientUIDialog*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& Activator() = 0;
     virtual void ActivatorUpdated() = 0;

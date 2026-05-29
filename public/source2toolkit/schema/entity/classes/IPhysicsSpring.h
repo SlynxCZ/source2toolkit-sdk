@@ -62,7 +62,6 @@ class IPhysicsSpring : public virtual IBaseEntity
 {
 public:
     virtual ~IPhysicsSpring() = default;
-    CPhysicsSpring* GetOriginal() { return reinterpret_cast<CPhysicsSpring*>(IEntityInstance::GetOriginal()); }
 
     virtual IPhysicsJoint*& SpringJoint() = 0;
     virtual void SpringJointUpdated() = 0;

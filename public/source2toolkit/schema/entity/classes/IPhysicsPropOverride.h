@@ -61,7 +61,6 @@ class IPhysicsPropOverride : public virtual IPhysicsProp
 {
 public:
     virtual ~IPhysicsPropOverride() = default;
-    CPhysicsPropOverride* GetOriginal() { return reinterpret_cast<CPhysicsPropOverride*>(IEntityInstance::GetOriginal()); }
 
     static IPhysicsPropOverride* FromOriginal(CPhysicsPropOverride* p);
 };

@@ -61,7 +61,6 @@ class ITriggerTeleport : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerTeleport() = default;
-    CTriggerTeleport* GetOriginal() { return reinterpret_cast<CTriggerTeleport*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Landmark() = 0;
     virtual void LandmarkUpdated() = 0;

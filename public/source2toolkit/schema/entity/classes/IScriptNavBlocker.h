@@ -61,7 +61,6 @@ class IScriptNavBlocker : public virtual IFuncNavBlocker
 {
 public:
     virtual ~IScriptNavBlocker() = default;
-    CScriptNavBlocker* GetOriginal() { return reinterpret_cast<CScriptNavBlocker*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& Extent() = 0;
     virtual void ExtentUpdated() = 0;

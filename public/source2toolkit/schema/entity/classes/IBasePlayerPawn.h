@@ -77,7 +77,6 @@ class IBasePlayerPawn : public virtual IBaseCombatCharacter
 {
 public:
     virtual ~IBasePlayerPawn() = default;
-    CBasePlayerPawn* GetOriginal() { return reinterpret_cast<CBasePlayerPawn*>(IEntityInstance::GetOriginal()); }
 
     virtual CPlayer_WeaponServices*& WeaponServices() = 0;
     virtual void WeaponServicesUpdated() = 0;

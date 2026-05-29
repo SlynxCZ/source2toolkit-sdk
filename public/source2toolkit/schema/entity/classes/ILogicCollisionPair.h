@@ -61,7 +61,6 @@ class ILogicCollisionPair : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicCollisionPair() = default;
-    CLogicCollisionPair* GetOriginal() { return reinterpret_cast<CLogicCollisionPair*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& NameAttach1() = 0;
     virtual void NameAttach1Updated() = 0;

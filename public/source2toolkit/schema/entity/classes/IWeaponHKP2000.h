@@ -61,7 +61,6 @@ class IWeaponHKP2000 : public virtual ICSWeaponBaseGun
 {
 public:
     virtual ~IWeaponHKP2000() = default;
-    CWeaponHKP2000* GetOriginal() { return reinterpret_cast<CWeaponHKP2000*>(IEntityInstance::GetOriginal()); }
 
     static IWeaponHKP2000* FromOriginal(CWeaponHKP2000* p);
 };

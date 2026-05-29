@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CNavHullPresetVData;
 
 class INavHullPresetVData
 {
 public:
     virtual ~INavHullPresetVData() = default;
-    CNavHullPresetVData* GetOriginal() { return reinterpret_cast<CNavHullPresetVData*>(IEntityInstance::GetOriginal()); }
+    virtual CNavHullPresetVData* GetOriginal() const = 0;
 
     virtual CUtlVector<CUtlString>& NavHulls() = 0;
     virtual void NavHullsUpdated() = 0;

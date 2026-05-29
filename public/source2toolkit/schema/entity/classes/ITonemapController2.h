@@ -61,7 +61,6 @@ class ITonemapController2 : public virtual IBaseEntity
 {
 public:
     virtual ~ITonemapController2() = default;
-    CTonemapController2* GetOriginal() { return reinterpret_cast<CTonemapController2*>(IEntityInstance::GetOriginal()); }
 
     virtual float& AutoExposureMin() = 0;
     virtual void AutoExposureMinUpdated() = 0;

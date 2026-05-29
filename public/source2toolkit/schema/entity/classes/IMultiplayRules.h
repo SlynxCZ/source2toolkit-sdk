@@ -61,7 +61,6 @@ class IMultiplayRules : public virtual IGameRules
 {
 public:
     virtual ~IMultiplayRules() = default;
-    CMultiplayRules* GetOriginal() { return reinterpret_cast<CMultiplayRules*>(IEntityInstance::GetOriginal()); }
 
     static IMultiplayRules* FromOriginal(CMultiplayRules* p);
 };

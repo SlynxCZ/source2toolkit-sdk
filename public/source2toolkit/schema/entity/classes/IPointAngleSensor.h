@@ -62,7 +62,6 @@ class IPointAngleSensor : public virtual IPointEntity
 {
 public:
     virtual ~IPointAngleSensor() = default;
-    CPointAngleSensor* GetOriginal() { return reinterpret_cast<CPointAngleSensor*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;

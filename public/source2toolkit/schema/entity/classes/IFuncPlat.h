@@ -61,7 +61,6 @@ class IFuncPlat : public virtual IBasePlatTrain
 {
 public:
     virtual ~IFuncPlat() = default;
-    CFuncPlat* GetOriginal() { return reinterpret_cast<CFuncPlat*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Noise() = 0;
     virtual void NoiseUpdated() = 0;

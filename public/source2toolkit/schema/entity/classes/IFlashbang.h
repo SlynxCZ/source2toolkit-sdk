@@ -61,7 +61,6 @@ class IFlashbang : public virtual IBaseCSGrenade
 {
 public:
     virtual ~IFlashbang() = default;
-    CFlashbang* GetOriginal() { return reinterpret_cast<CFlashbang*>(IEntityInstance::GetOriginal()); }
 
     static IFlashbang* FromOriginal(CFlashbang* p);
 };

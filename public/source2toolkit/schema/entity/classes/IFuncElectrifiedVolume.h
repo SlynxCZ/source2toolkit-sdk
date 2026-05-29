@@ -61,7 +61,6 @@ class IFuncElectrifiedVolume : public virtual IFuncBrush
 {
 public:
     virtual ~IFuncElectrifiedVolume() = default;
-    CFuncElectrifiedVolume* GetOriginal() { return reinterpret_cast<CFuncElectrifiedVolume*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& EffectName() = 0;
     virtual void EffectNameUpdated() = 0;

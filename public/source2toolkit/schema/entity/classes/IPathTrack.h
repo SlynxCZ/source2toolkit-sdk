@@ -63,7 +63,6 @@ class IPathTrack : public virtual IPointEntity
 {
 public:
     virtual ~IPathTrack() = default;
-    CPathTrack* GetOriginal() { return reinterpret_cast<CPathTrack*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CPathTrack>& Pnext() = 0;
     virtual void PnextUpdated() = 0;

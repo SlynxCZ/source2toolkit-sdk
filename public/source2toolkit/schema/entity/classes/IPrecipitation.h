@@ -61,7 +61,6 @@ class IPrecipitation : public virtual IBaseTrigger
 {
 public:
     virtual ~IPrecipitation() = default;
-    CPrecipitation* GetOriginal() { return reinterpret_cast<CPrecipitation*>(IEntityInstance::GetOriginal()); }
 
     static IPrecipitation* FromOriginal(CPrecipitation* p);
 };

@@ -61,7 +61,6 @@ class IEnvSoundscapeAlias_snd_soundscape : public virtual IEnvSoundscape
 {
 public:
     virtual ~IEnvSoundscapeAlias_snd_soundscape() = default;
-    CEnvSoundscapeAlias_snd_soundscape* GetOriginal() { return reinterpret_cast<CEnvSoundscapeAlias_snd_soundscape*>(IEntityInstance::GetOriginal()); }
 
     static IEnvSoundscapeAlias_snd_soundscape* FromOriginal(CEnvSoundscapeAlias_snd_soundscape* p);
 };

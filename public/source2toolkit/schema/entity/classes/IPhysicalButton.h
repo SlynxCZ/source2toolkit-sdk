@@ -61,7 +61,6 @@ class IPhysicalButton : public virtual IBaseButton
 {
 public:
     virtual ~IPhysicalButton() = default;
-    CPhysicalButton* GetOriginal() { return reinterpret_cast<CPhysicalButton*>(IEntityInstance::GetOriginal()); }
 
     static IPhysicalButton* FromOriginal(CPhysicalButton* p);
 };

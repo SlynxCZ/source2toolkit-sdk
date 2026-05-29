@@ -65,7 +65,6 @@ class IPhysicsProp : public virtual IBreakableProp
 {
 public:
     virtual ~IPhysicsProp() = default;
-    CPhysicsProp* GetOriginal() { return reinterpret_cast<CPhysicsProp*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& MotionEnabled() = 0;
     virtual void MotionEnabledUpdated() = 0;

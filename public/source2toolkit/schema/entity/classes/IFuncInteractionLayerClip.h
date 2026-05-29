@@ -61,7 +61,6 @@ class IFuncInteractionLayerClip : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncInteractionLayerClip() = default;
-    CFuncInteractionLayerClip* GetOriginal() { return reinterpret_cast<CFuncInteractionLayerClip*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;

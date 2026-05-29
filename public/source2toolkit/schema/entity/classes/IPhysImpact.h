@@ -61,7 +61,6 @@ class IPhysImpact : public virtual IPointEntity
 {
 public:
     virtual ~IPhysImpact() = default;
-    CPhysImpact* GetOriginal() { return reinterpret_cast<CPhysImpact*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Damage() = 0;
     virtual void DamageUpdated() = 0;

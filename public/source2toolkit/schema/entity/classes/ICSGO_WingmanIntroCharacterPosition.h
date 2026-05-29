@@ -61,7 +61,6 @@ class ICSGO_WingmanIntroCharacterPosition : public virtual ICSGO_TeamIntroCharac
 {
 public:
     virtual ~ICSGO_WingmanIntroCharacterPosition() = default;
-    CCSGO_WingmanIntroCharacterPosition* GetOriginal() { return reinterpret_cast<CCSGO_WingmanIntroCharacterPosition*>(IEntityInstance::GetOriginal()); }
 
     static ICSGO_WingmanIntroCharacterPosition* FromOriginal(CCSGO_WingmanIntroCharacterPosition* p);
 };

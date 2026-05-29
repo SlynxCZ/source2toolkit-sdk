@@ -61,7 +61,6 @@ class IGameGibManager : public virtual IBaseEntity
 {
 public:
     virtual ~IGameGibManager() = default;
-    CGameGibManager* GetOriginal() { return reinterpret_cast<CGameGibManager*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& AllowNewGibs() = 0;
     virtual void AllowNewGibsUpdated() = 0;

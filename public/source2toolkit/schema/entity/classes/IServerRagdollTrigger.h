@@ -61,7 +61,6 @@ class IServerRagdollTrigger : public virtual IBaseTrigger
 {
 public:
     virtual ~IServerRagdollTrigger() = default;
-    CServerRagdollTrigger* GetOriginal() { return reinterpret_cast<CServerRagdollTrigger*>(IEntityInstance::GetOriginal()); }
 
     static IServerRagdollTrigger* FromOriginal(CServerRagdollTrigger* p);
 };

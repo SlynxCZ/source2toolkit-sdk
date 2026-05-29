@@ -63,7 +63,6 @@ class ICSPlayer_ActionTrackingServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~ICSPlayer_ActionTrackingServices() = default;
-    CCSPlayer_ActionTrackingServices* GetOriginal() { return reinterpret_cast<CCSPlayer_ActionTrackingServices*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBasePlayerWeapon>& LastWeaponBeforeC4AutoSwitch() = 0;
     virtual void LastWeaponBeforeC4AutoSwitchUpdated() = 0;

@@ -61,7 +61,6 @@ class IPushable : public virtual IBreakable
 {
 public:
     virtual ~IPushable() = default;
-    CPushable* GetOriginal() { return reinterpret_cast<CPushable*>(IEntityInstance::GetOriginal()); }
 
     static IPushable* FromOriginal(CPushable* p);
 };

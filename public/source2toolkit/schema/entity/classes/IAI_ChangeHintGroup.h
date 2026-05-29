@@ -61,7 +61,6 @@ class IAI_ChangeHintGroup : public virtual IBaseEntity
 {
 public:
     virtual ~IAI_ChangeHintGroup() = default;
-    CAI_ChangeHintGroup* GetOriginal() { return reinterpret_cast<CAI_ChangeHintGroup*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& SearchType() = 0;
     virtual void SearchTypeUpdated() = 0;

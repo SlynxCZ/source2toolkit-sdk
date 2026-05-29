@@ -53,6 +53,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CAnimGraphControllerBase;
 class ExternalAnimGraphHandle_t;
 
@@ -60,7 +62,7 @@ class IAnimGraphControllerBase
 {
 public:
     virtual ~IAnimGraphControllerBase() = default;
-    CAnimGraphControllerBase* GetOriginal() { return reinterpret_cast<CAnimGraphControllerBase*>(IEntityInstance::GetOriginal()); }
+    virtual CAnimGraphControllerBase* GetOriginal() const = 0;
 
     virtual ::ExternalAnimGraphHandle_t& ExternalGraph() = 0;
     virtual void ExternalGraphUpdated() = 0;

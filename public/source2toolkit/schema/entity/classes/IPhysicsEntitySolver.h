@@ -62,7 +62,6 @@ class IPhysicsEntitySolver : public virtual ILogicalEntity
 {
 public:
     virtual ~IPhysicsEntitySolver() = default;
-    CPhysicsEntitySolver* GetOriginal() { return reinterpret_cast<CPhysicsEntitySolver*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& MovingEntity() = 0;
     virtual void MovingEntityUpdated() = 0;

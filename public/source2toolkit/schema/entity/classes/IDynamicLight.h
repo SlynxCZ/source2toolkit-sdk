@@ -61,7 +61,6 @@ class IDynamicLight : public virtual IBaseModelEntity
 {
 public:
     virtual ~IDynamicLight() = default;
-    CDynamicLight* GetOriginal() { return reinterpret_cast<CDynamicLight*>(IEntityInstance::GetOriginal()); }
 
     virtual uint8_t& ActualFlags() = 0;
     virtual void ActualFlagsUpdated() = 0;

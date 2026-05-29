@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CInfoDeathmatchSpawn;
 
 class IInfoDeathmatchSpawn
 {
 public:
     virtual ~IInfoDeathmatchSpawn() = default;
-    CInfoDeathmatchSpawn* GetOriginal() { return reinterpret_cast<CInfoDeathmatchSpawn*>(IEntityInstance::GetOriginal()); }
+    virtual CInfoDeathmatchSpawn* GetOriginal() const = 0;
 
     static IInfoDeathmatchSpawn* FromOriginal(CInfoDeathmatchSpawn* p);
 };

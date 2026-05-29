@@ -61,7 +61,6 @@ class IWeaponMP5SD : public virtual ICSWeaponBaseGun
 {
 public:
     virtual ~IWeaponMP5SD() = default;
-    CWeaponMP5SD* GetOriginal() { return reinterpret_cast<CWeaponMP5SD*>(IEntityInstance::GetOriginal()); }
 
     static IWeaponMP5SD* FromOriginal(CWeaponMP5SD* p);
 };

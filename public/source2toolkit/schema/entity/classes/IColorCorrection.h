@@ -61,7 +61,6 @@ class IColorCorrection : public virtual IBaseEntity
 {
 public:
     virtual ~IColorCorrection() = default;
-    CColorCorrection* GetOriginal() { return reinterpret_cast<CColorCorrection*>(IEntityInstance::GetOriginal()); }
 
     virtual float& FadeInDuration() = 0;
     virtual void FadeInDurationUpdated() = 0;

@@ -61,7 +61,6 @@ class IFilterName : public virtual IBaseFilter
 {
 public:
     virtual ~IFilterName() = default;
-    CFilterName* GetOriginal() { return reinterpret_cast<CFilterName*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& FilterName() = 0;
     virtual void FilterNameUpdated() = 0;

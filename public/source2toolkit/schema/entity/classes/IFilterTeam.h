@@ -61,7 +61,6 @@ class IFilterTeam : public virtual IBaseFilter
 {
 public:
     virtual ~IFilterTeam() = default;
-    CFilterTeam* GetOriginal() { return reinterpret_cast<CFilterTeam*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& FilterTeam() = 0;
     virtual void FilterTeamUpdated() = 0;

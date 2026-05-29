@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CTestPulseIOComponent;
 
 class ITestPulseIOComponent
 {
 public:
     virtual ~ITestPulseIOComponent() = default;
-    CTestPulseIOComponent* GetOriginal() { return reinterpret_cast<CTestPulseIOComponent*>(IEntityInstance::GetOriginal()); }
+    virtual CTestPulseIOComponent* GetOriginal() const = 0;
 
     virtual CUtlString& ComponentData() = 0;
     virtual void ComponentDataUpdated() = 0;

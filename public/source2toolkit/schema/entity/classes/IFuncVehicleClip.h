@@ -61,7 +61,6 @@ class IFuncVehicleClip : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncVehicleClip() = default;
-    CFuncVehicleClip* GetOriginal() { return reinterpret_cast<CFuncVehicleClip*>(IEntityInstance::GetOriginal()); }
 
     static IFuncVehicleClip* FromOriginal(CFuncVehicleClip* p);
 };

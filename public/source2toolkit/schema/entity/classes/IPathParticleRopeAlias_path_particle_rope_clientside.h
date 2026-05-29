@@ -61,7 +61,6 @@ class IPathParticleRopeAlias_path_particle_rope_clientside : public virtual IPat
 {
 public:
     virtual ~IPathParticleRopeAlias_path_particle_rope_clientside() = default;
-    CPathParticleRopeAlias_path_particle_rope_clientside* GetOriginal() { return reinterpret_cast<CPathParticleRopeAlias_path_particle_rope_clientside*>(IEntityInstance::GetOriginal()); }
 
     static IPathParticleRopeAlias_path_particle_rope_clientside* FromOriginal(CPathParticleRopeAlias_path_particle_rope_clientside* p);
 };

@@ -61,7 +61,6 @@ class ILogicDistanceAutosave : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicDistanceAutosave() = default;
-    CLogicDistanceAutosave* GetOriginal() { return reinterpret_cast<CLogicDistanceAutosave*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& TargetEntity() = 0;
     virtual void TargetEntityUpdated() = 0;

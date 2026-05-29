@@ -61,7 +61,6 @@ class IDynamicPropAlias_cable_dynamic : public virtual IDynamicProp
 {
 public:
     virtual ~IDynamicPropAlias_cable_dynamic() = default;
-    CDynamicPropAlias_cable_dynamic* GetOriginal() { return reinterpret_cast<CDynamicPropAlias_cable_dynamic*>(IEntityInstance::GetOriginal()); }
 
     static IDynamicPropAlias_cable_dynamic* FromOriginal(CDynamicPropAlias_cable_dynamic* p);
 };

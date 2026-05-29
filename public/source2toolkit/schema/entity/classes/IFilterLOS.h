@@ -61,7 +61,6 @@ class IFilterLOS : public virtual IBaseFilter
 {
 public:
     virtual ~IFilterLOS() = default;
-    CFilterLOS* GetOriginal() { return reinterpret_cast<CFilterLOS*>(IEntityInstance::GetOriginal()); }
 
     static IFilterLOS* FromOriginal(CFilterLOS* p);
 };

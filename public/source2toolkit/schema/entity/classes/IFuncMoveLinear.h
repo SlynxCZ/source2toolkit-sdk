@@ -63,7 +63,6 @@ class IFuncMoveLinear : public virtual IBaseToggle
 {
 public:
     virtual ~IFuncMoveLinear() = default;
-    CFuncMoveLinear* GetOriginal() { return reinterpret_cast<CFuncMoveLinear*>(IEntityInstance::GetOriginal()); }
 
     virtual ::MoveLinearAuthoredPos_t& AuthoredPosition() = 0;
     virtual void AuthoredPositionUpdated() = 0;

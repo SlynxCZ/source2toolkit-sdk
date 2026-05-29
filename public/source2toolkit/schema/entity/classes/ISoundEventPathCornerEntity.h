@@ -61,7 +61,6 @@ class ISoundEventPathCornerEntity : public virtual ISoundEventEntity
 {
 public:
     virtual ~ISoundEventPathCornerEntity() = default;
-    CSoundEventPathCornerEntity* GetOriginal() { return reinterpret_cast<CSoundEventPathCornerEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& PathCorner() = 0;
     virtual void PathCornerUpdated() = 0;

@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CAttributeManager__cached_attribute_float_t;
 
 class IAttributeManager__cached_attribute_float_t
 {
 public:
     virtual ~IAttributeManager__cached_attribute_float_t() = default;
-    CAttributeManager__cached_attribute_float_t* GetOriginal() { return reinterpret_cast<CAttributeManager__cached_attribute_float_t*>(IEntityInstance::GetOriginal()); }
+    virtual CAttributeManager__cached_attribute_float_t* GetOriginal() const = 0;
 
     virtual float& In() = 0;
     virtual void InUpdated() = 0;

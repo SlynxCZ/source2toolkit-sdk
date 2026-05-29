@@ -69,7 +69,6 @@ class IBreakable : public virtual IBaseModelEntity
 {
 public:
     virtual ~IBreakable() = default;
-    CBreakable* GetOriginal() { return reinterpret_cast<CBreakable*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CPropDataComponent& PropDataComponent() = 0;
     virtual void PropDataComponentUpdated() = 0;

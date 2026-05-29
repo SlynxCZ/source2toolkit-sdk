@@ -53,16 +53,17 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CBaseModelEntity;
 class CChoreoComponent;
-class CEntityInstance*;
 class SceneEventId_t;
 
 class IChoreoComponent
 {
 public:
     virtual ~IChoreoComponent() = default;
-    CChoreoComponent* GetOriginal() { return reinterpret_cast<CChoreoComponent*>(IEntityInstance::GetOriginal()); }
+    virtual CChoreoComponent* GetOriginal() const = 0;
 
     virtual ::CEntityInstance*& __m_pChainEntity() = 0;
     virtual void __m_pChainEntityUpdated() = 0;

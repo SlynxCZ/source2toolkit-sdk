@@ -64,7 +64,6 @@ class IFilterMultiple : public virtual IBaseFilter
 {
 public:
     virtual ~IFilterMultiple() = default;
-    CFilterMultiple* GetOriginal() { return reinterpret_cast<CFilterMultiple*>(IEntityInstance::GetOriginal()); }
 
     virtual ::filter_t& FilterType() = 0;
     virtual void FilterTypeUpdated() = 0;

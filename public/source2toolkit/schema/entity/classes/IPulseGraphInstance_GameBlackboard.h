@@ -61,7 +61,6 @@ class IPulseGraphInstance_GameBlackboard : public virtual IPulseGraphInstance_Se
 {
 public:
     virtual ~IPulseGraphInstance_GameBlackboard() = default;
-    CPulseGraphInstance_GameBlackboard* GetOriginal() { return reinterpret_cast<CPulseGraphInstance_GameBlackboard*>(IEntityInstance::GetOriginal()); }
 
     static IPulseGraphInstance_GameBlackboard* FromOriginal(CPulseGraphInstance_GameBlackboard* p);
 };

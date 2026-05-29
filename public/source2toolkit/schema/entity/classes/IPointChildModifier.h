@@ -61,7 +61,6 @@ class IPointChildModifier : public virtual IPointEntity
 {
 public:
     virtual ~IPointChildModifier() = default;
-    CPointChildModifier* GetOriginal() { return reinterpret_cast<CPointChildModifier*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& OrphanInsteadOfDeletingChildrenOnRemove() = 0;
     virtual void OrphanInsteadOfDeletingChildrenOnRemoveUpdated() = 0;

@@ -61,7 +61,6 @@ class IItem_Healthshot : public virtual IWeaponBaseItem
 {
 public:
     virtual ~IItem_Healthshot() = default;
-    CItem_Healthshot* GetOriginal() { return reinterpret_cast<CItem_Healthshot*>(IEntityInstance::GetOriginal()); }
 
     static IItem_Healthshot* FromOriginal(CItem_Healthshot* p);
 };

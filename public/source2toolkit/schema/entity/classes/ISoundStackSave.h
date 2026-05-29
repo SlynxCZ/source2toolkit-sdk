@@ -61,7 +61,6 @@ class ISoundStackSave : public virtual ILogicalEntity
 {
 public:
     virtual ~ISoundStackSave() = default;
-    CSoundStackSave* GetOriginal() { return reinterpret_cast<CSoundStackSave*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& StackName() = 0;
     virtual void StackNameUpdated() = 0;

@@ -61,7 +61,6 @@ class ITeamplayRules : public virtual IMultiplayRules
 {
 public:
     virtual ~ITeamplayRules() = default;
-    CTeamplayRules* GetOriginal() { return reinterpret_cast<CTeamplayRules*>(IEntityInstance::GetOriginal()); }
 
     static ITeamplayRules* FromOriginal(CTeamplayRules* p);
 };

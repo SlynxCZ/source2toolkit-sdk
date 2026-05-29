@@ -62,7 +62,6 @@ class IBodyComponentSkeletonInstance : public virtual IBodyComponent
 {
 public:
     virtual ~IBodyComponentSkeletonInstance() = default;
-    CBodyComponentSkeletonInstance* GetOriginal() { return reinterpret_cast<CBodyComponentSkeletonInstance*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CSkeletonInstance& SkeletonInstance() = 0;
     virtual void SkeletonInstanceUpdated() = 0;

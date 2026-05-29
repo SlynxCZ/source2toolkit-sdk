@@ -61,7 +61,6 @@ class IFuncTrackAuto : public virtual IFuncTrackChange
 {
 public:
     virtual ~IFuncTrackAuto() = default;
-    CFuncTrackAuto* GetOriginal() { return reinterpret_cast<CFuncTrackAuto*>(IEntityInstance::GetOriginal()); }
 
     static IFuncTrackAuto* FromOriginal(CFuncTrackAuto* p);
 };

@@ -61,7 +61,6 @@ class IInfoWorldLayer : public virtual IBaseEntity
 {
 public:
     virtual ~IInfoWorldLayer() = default;
-    CInfoWorldLayer* GetOriginal() { return reinterpret_cast<CInfoWorldLayer*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OutputOnEntitiesSpawned() = 0;
     virtual void OutputOnEntitiesSpawnedUpdated() = 0;

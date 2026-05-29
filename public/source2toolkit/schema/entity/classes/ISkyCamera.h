@@ -62,7 +62,6 @@ class ISkyCamera : public virtual IBaseEntity
 {
 public:
     virtual ~ISkyCamera() = default;
-    CSkyCamera* GetOriginal() { return reinterpret_cast<CSkyCamera*>(IEntityInstance::GetOriginal()); }
 
     virtual ::sky3dparams_t& SkyboxData() = 0;
     virtual void SkyboxDataUpdated() = 0;

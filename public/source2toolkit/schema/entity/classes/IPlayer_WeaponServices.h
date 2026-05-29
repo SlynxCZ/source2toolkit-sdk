@@ -62,7 +62,6 @@ class IPlayer_WeaponServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~IPlayer_WeaponServices() = default;
-    CPlayer_WeaponServices* GetOriginal() { return reinterpret_cast<CPlayer_WeaponServices*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<CHandle<CBasePlayerWeapon>>& MyWeapons() = 0;
     virtual void MyWeaponsUpdated() = 0;

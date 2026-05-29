@@ -61,7 +61,6 @@ class IRuleBrushEntity : public virtual IRuleEntity
 {
 public:
     virtual ~IRuleBrushEntity() = default;
-    CRuleBrushEntity* GetOriginal() { return reinterpret_cast<CRuleBrushEntity*>(IEntityInstance::GetOriginal()); }
 
     static IRuleBrushEntity* FromOriginal(CRuleBrushEntity* p);
 };

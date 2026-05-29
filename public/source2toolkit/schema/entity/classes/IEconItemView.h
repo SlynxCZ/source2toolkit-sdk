@@ -53,6 +53,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CAttributeList;
 class CEconItemView;
 
@@ -60,7 +62,7 @@ class IEconItemView
 {
 public:
     virtual ~IEconItemView() = default;
-    CEconItemView* GetOriginal() { return reinterpret_cast<CEconItemView*>(IEntityInstance::GetOriginal()); }
+    virtual CEconItemView* GetOriginal() const = 0;
 
     virtual uint16_t& ItemDefinitionIndex() = 0;
     virtual void ItemDefinitionIndexUpdated() = 0;

@@ -61,7 +61,6 @@ class IEnvSoundscape : public virtual IBaseEntity
 {
 public:
     virtual ~IEnvSoundscape() = default;
-    CEnvSoundscape* GetOriginal() { return reinterpret_cast<CEnvSoundscape*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnPlay() = 0;
     virtual void OnPlayUpdated() = 0;

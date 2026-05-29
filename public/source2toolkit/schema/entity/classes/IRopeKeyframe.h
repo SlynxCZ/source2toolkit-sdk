@@ -63,7 +63,6 @@ class IRopeKeyframe : public virtual IBaseModelEntity
 {
 public:
     virtual ~IRopeKeyframe() = default;
-    CRopeKeyframe* GetOriginal() { return reinterpret_cast<CRopeKeyframe*>(IEntityInstance::GetOriginal()); }
 
     virtual uint16_t& RopeFlags() = 0;
     virtual void RopeFlagsUpdated() = 0;

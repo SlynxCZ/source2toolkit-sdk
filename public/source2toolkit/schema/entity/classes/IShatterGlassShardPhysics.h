@@ -62,7 +62,6 @@ class IShatterGlassShardPhysics : public virtual IPhysicsProp
 {
 public:
     virtual ~IShatterGlassShardPhysics() = default;
-    CShatterGlassShardPhysics* GetOriginal() { return reinterpret_cast<CShatterGlassShardPhysics*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Debris() = 0;
     virtual void DebrisUpdated() = 0;

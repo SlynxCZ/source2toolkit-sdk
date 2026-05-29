@@ -62,7 +62,6 @@ class IFuncShatterglass : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncShatterglass() = default;
-    CFuncShatterglass* GetOriginal() { return reinterpret_cast<CFuncShatterglass*>(IEntityInstance::GetOriginal()); }
 
     virtual matrix3x4_t& MatPanelTransform() = 0;
     virtual void MatPanelTransformUpdated() = 0;

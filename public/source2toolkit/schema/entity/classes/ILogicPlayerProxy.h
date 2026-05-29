@@ -62,7 +62,6 @@ class ILogicPlayerProxy : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicPlayerProxy() = default;
-    CLogicPlayerProxy* GetOriginal() { return reinterpret_cast<CLogicPlayerProxy*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& PlayerHasAmmo() = 0;
     virtual void PlayerHasAmmoUpdated() = 0;

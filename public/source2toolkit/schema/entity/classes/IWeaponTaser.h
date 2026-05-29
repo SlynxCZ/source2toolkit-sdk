@@ -61,7 +61,6 @@ class IWeaponTaser : public virtual ICSWeaponBaseGun
 {
 public:
     virtual ~IWeaponTaser() = default;
-    CWeaponTaser* GetOriginal() { return reinterpret_cast<CWeaponTaser*>(IEntityInstance::GetOriginal()); }
 
     virtual float& FireTime() = 0;
     virtual void FireTimeUpdated() = 0;

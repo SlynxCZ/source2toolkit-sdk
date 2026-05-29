@@ -61,7 +61,6 @@ class IPropDoorRotatingBreakable : public virtual IPropDoorRotating
 {
 public:
     virtual ~IPropDoorRotatingBreakable() = default;
-    CPropDoorRotatingBreakable* GetOriginal() { return reinterpret_cast<CPropDoorRotatingBreakable*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Breakable() = 0;
     virtual void BreakableUpdated() = 0;

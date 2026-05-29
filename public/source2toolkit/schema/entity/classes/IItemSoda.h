@@ -61,7 +61,6 @@ class IItemSoda : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IItemSoda() = default;
-    CItemSoda* GetOriginal() { return reinterpret_cast<CItemSoda*>(IEntityInstance::GetOriginal()); }
 
     static IItemSoda* FromOriginal(CItemSoda* p);
 };

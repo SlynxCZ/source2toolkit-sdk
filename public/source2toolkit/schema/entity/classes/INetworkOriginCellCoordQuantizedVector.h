@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CNetworkOriginCellCoordQuantizedVector;
 
 class INetworkOriginCellCoordQuantizedVector
 {
 public:
     virtual ~INetworkOriginCellCoordQuantizedVector() = default;
-    CNetworkOriginCellCoordQuantizedVector* GetOriginal() { return reinterpret_cast<CNetworkOriginCellCoordQuantizedVector*>(IEntityInstance::GetOriginal()); }
+    virtual CNetworkOriginCellCoordQuantizedVector* GetOriginal() const = 0;
 
     virtual uint16_t& CellX() = 0;
     virtual void CellXUpdated() = 0;

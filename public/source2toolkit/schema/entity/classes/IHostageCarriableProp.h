@@ -61,7 +61,6 @@ class IHostageCarriableProp : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IHostageCarriableProp() = default;
-    CHostageCarriableProp* GetOriginal() { return reinterpret_cast<CHostageCarriableProp*>(IEntityInstance::GetOriginal()); }
 
     static IHostageCarriableProp* FromOriginal(CHostageCarriableProp* p);
 };

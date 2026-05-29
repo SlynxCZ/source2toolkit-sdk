@@ -65,7 +65,6 @@ class IFuncTrackTrain : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncTrackTrain() = default;
-    CFuncTrackTrain* GetOriginal() { return reinterpret_cast<CFuncTrackTrain*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CPathTrack>& Ppath() = 0;
     virtual void PpathUpdated() = 0;

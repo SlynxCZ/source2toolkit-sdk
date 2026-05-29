@@ -63,7 +63,6 @@ class ITriggerFan : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerFan() = default;
-    CTriggerFan* GetOriginal() { return reinterpret_cast<CTriggerFan*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& FanOriginOffset() = 0;
     virtual void FanOriginOffsetUpdated() = 0;

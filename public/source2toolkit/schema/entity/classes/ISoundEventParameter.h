@@ -61,7 +61,6 @@ class ISoundEventParameter : public virtual IBaseEntity
 {
 public:
     virtual ~ISoundEventParameter() = default;
-    CSoundEventParameter* GetOriginal() { return reinterpret_cast<CSoundEventParameter*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& ParamName() = 0;
     virtual void ParamNameUpdated() = 0;

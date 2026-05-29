@@ -61,7 +61,6 @@ class IFilterAttributeInt : public virtual IBaseFilter
 {
 public:
     virtual ~IFilterAttributeInt() = default;
-    CFilterAttributeInt* GetOriginal() { return reinterpret_cast<CFilterAttributeInt*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& AttributeName() = 0;
     virtual void AttributeNameUpdated() = 0;

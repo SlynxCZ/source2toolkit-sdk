@@ -61,7 +61,6 @@ class IInfoTargetServerOnly : public virtual IServerOnlyPointEntity
 {
 public:
     virtual ~IInfoTargetServerOnly() = default;
-    CInfoTargetServerOnly* GetOriginal() { return reinterpret_cast<CInfoTargetServerOnly*>(IEntityInstance::GetOriginal()); }
 
     static IInfoTargetServerOnly* FromOriginal(CInfoTargetServerOnly* p);
 };

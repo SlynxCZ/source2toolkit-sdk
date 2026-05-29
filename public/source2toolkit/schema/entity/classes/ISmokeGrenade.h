@@ -61,7 +61,6 @@ class ISmokeGrenade : public virtual IBaseCSGrenade
 {
 public:
     virtual ~ISmokeGrenade() = default;
-    CSmokeGrenade* GetOriginal() { return reinterpret_cast<CSmokeGrenade*>(IEntityInstance::GetOriginal()); }
 
     static ISmokeGrenade* FromOriginal(CSmokeGrenade* p);
 };

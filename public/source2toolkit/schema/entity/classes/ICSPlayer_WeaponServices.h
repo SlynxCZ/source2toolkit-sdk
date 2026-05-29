@@ -63,7 +63,6 @@ class ICSPlayer_WeaponServices : public virtual IPlayer_WeaponServices
 {
 public:
     virtual ~ICSPlayer_WeaponServices() = default;
-    CCSPlayer_WeaponServices* GetOriginal() { return reinterpret_cast<CCSPlayer_WeaponServices*>(IEntityInstance::GetOriginal()); }
 
     virtual float& NextAttack() = 0;
     virtual void NextAttackUpdated() = 0;

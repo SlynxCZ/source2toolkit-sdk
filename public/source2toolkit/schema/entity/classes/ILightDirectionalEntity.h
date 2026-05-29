@@ -61,7 +61,6 @@ class ILightDirectionalEntity : public virtual ILightEntity
 {
 public:
     virtual ~ILightDirectionalEntity() = default;
-    CLightDirectionalEntity* GetOriginal() { return reinterpret_cast<CLightDirectionalEntity*>(IEntityInstance::GetOriginal()); }
 
     static ILightDirectionalEntity* FromOriginal(CLightDirectionalEntity* p);
 };

@@ -62,7 +62,6 @@ class ILightEntity : public virtual IBaseModelEntity
 {
 public:
     virtual ~ILightEntity() = default;
-    CLightEntity* GetOriginal() { return reinterpret_cast<CLightEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual CLightComponent*& LightComponent() = 0;
     virtual void LightComponentUpdated() = 0;

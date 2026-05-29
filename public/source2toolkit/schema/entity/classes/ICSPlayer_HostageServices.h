@@ -62,7 +62,6 @@ class ICSPlayer_HostageServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~ICSPlayer_HostageServices() = default;
-    CCSPlayer_HostageServices* GetOriginal() { return reinterpret_cast<CCSPlayer_HostageServices*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& CarriedHostage() = 0;
     virtual void CarriedHostageUpdated() = 0;

@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CVectorExponentialMovingAverage;
 
 class IVectorExponentialMovingAverage
 {
 public:
     virtual ~IVectorExponentialMovingAverage() = default;
-    CVectorExponentialMovingAverage* GetOriginal() { return reinterpret_cast<CVectorExponentialMovingAverage*>(IEntityInstance::GetOriginal()); }
+    virtual CVectorExponentialMovingAverage* GetOriginal() const = 0;
 
     static IVectorExponentialMovingAverage* FromOriginal(CVectorExponentialMovingAverage* p);
 };

@@ -61,7 +61,6 @@ class ICSGO_WingmanIntroCounterTerroristPosition : public virtual ICSGO_WingmanI
 {
 public:
     virtual ~ICSGO_WingmanIntroCounterTerroristPosition() = default;
-    CCSGO_WingmanIntroCounterTerroristPosition* GetOriginal() { return reinterpret_cast<CCSGO_WingmanIntroCounterTerroristPosition*>(IEntityInstance::GetOriginal()); }
 
     static ICSGO_WingmanIntroCounterTerroristPosition* FromOriginal(CCSGO_WingmanIntroCounterTerroristPosition* p);
 };

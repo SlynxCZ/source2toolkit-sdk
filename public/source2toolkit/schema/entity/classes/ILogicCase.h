@@ -61,7 +61,6 @@ class ILogicCase : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicCase() = default;
-    CLogicCase* GetOriginal() { return reinterpret_cast<CLogicCase*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge* Case() = 0;
     virtual int32_t& ShuffleCases() = 0;

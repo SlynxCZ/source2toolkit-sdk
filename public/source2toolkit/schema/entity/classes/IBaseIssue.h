@@ -53,6 +53,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CBaseIssue;
 class CVoteController;
 
@@ -60,7 +62,7 @@ class IBaseIssue
 {
 public:
     virtual ~IBaseIssue() = default;
-    CBaseIssue* GetOriginal() { return reinterpret_cast<CBaseIssue*>(IEntityInstance::GetOriginal()); }
+    virtual CBaseIssue* GetOriginal() const = 0;
 
     virtual char* TypeString() = 0;
     virtual char* DetailsString() = 0;

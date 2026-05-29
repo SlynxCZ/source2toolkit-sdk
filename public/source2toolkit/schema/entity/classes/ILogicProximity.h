@@ -61,7 +61,6 @@ class ILogicProximity : public virtual IPointEntity
 {
 public:
     virtual ~ILogicProximity() = default;
-    CLogicProximity* GetOriginal() { return reinterpret_cast<CLogicProximity*>(IEntityInstance::GetOriginal()); }
 
     static ILogicProximity* FromOriginal(CLogicProximity* p);
 };

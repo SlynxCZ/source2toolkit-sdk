@@ -61,7 +61,6 @@ class IEnvEntityIgniter : public virtual IBaseEntity
 {
 public:
     virtual ~IEnvEntityIgniter() = default;
-    CEnvEntityIgniter* GetOriginal() { return reinterpret_cast<CEnvEntityIgniter*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Lifetime() = 0;
     virtual void LifetimeUpdated() = 0;

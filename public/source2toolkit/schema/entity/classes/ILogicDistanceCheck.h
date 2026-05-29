@@ -61,7 +61,6 @@ class ILogicDistanceCheck : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicDistanceCheck() = default;
-    CLogicDistanceCheck* GetOriginal() { return reinterpret_cast<CLogicDistanceCheck*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& EntityA() = 0;
     virtual void EntityAUpdated() = 0;

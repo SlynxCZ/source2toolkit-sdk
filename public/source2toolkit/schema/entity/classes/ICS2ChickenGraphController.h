@@ -61,7 +61,6 @@ class ICS2ChickenGraphController : public virtual IAnimGraphControllerBase
 {
 public:
     virtual ~ICS2ChickenGraphController() = default;
-    CCS2ChickenGraphController* GetOriginal() { return reinterpret_cast<CCS2ChickenGraphController*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& HasActionCompletedEvent() = 0;
     virtual void HasActionCompletedEventUpdated() = 0;

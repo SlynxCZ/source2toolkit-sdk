@@ -61,7 +61,6 @@ class ICSObserver_UseServices : public virtual IPlayer_UseServices
 {
 public:
     virtual ~ICSObserver_UseServices() = default;
-    CCSObserver_UseServices* GetOriginal() { return reinterpret_cast<CCSObserver_UseServices*>(IEntityInstance::GetOriginal()); }
 
     static ICSObserver_UseServices* FromOriginal(CCSObserver_UseServices* p);
 };

@@ -61,7 +61,6 @@ class IWeaponElite : public virtual ICSWeaponBaseGun
 {
 public:
     virtual ~IWeaponElite() = default;
-    CWeaponElite* GetOriginal() { return reinterpret_cast<CWeaponElite*>(IEntityInstance::GetOriginal()); }
 
     static IWeaponElite* FromOriginal(CWeaponElite* p);
 };

@@ -61,7 +61,6 @@ class ITestPulseIOComponent_Derived : public virtual ITestPulseIOComponent
 {
 public:
     virtual ~ITestPulseIOComponent_Derived() = default;
-    CTestPulseIOComponent_Derived* GetOriginal() { return reinterpret_cast<CTestPulseIOComponent_Derived*>(IEntityInstance::GetOriginal()); }
 
     static ITestPulseIOComponent_Derived* FromOriginal(CTestPulseIOComponent_Derived* p);
 };

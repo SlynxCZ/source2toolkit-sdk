@@ -62,7 +62,6 @@ class IBaseGrenade : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IBaseGrenade() = default;
-    CBaseGrenade* GetOriginal() { return reinterpret_cast<CBaseGrenade*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnPlayerPickup() = 0;
     virtual void OnPlayerPickupUpdated() = 0;

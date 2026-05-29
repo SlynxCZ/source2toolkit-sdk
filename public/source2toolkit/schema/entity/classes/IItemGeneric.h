@@ -64,7 +64,6 @@ class IItemGeneric : public virtual IItem
 {
 public:
     virtual ~IItemGeneric() = default;
-    CItemGeneric* GetOriginal() { return reinterpret_cast<CItemGeneric*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& HasTriggerRadius() = 0;
     virtual void HasTriggerRadiusUpdated() = 0;

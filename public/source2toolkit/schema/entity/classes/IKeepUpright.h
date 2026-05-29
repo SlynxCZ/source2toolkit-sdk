@@ -63,7 +63,6 @@ class IKeepUpright : public virtual IPointEntity
 {
 public:
     virtual ~IKeepUpright() = default;
-    CKeepUpright* GetOriginal() { return reinterpret_cast<CKeepUpright*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& WorldGoalAxis() = 0;
     virtual void WorldGoalAxisUpdated() = 0;

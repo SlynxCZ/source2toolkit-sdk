@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CSkillFloat;
 
 class ISkillFloat
 {
 public:
     virtual ~ISkillFloat() = default;
-    CSkillFloat* GetOriginal() { return reinterpret_cast<CSkillFloat*>(IEntityInstance::GetOriginal()); }
+    virtual CSkillFloat* GetOriginal() const = 0;
 
     virtual float* Value() = 0;
     static ISkillFloat* FromOriginal(CSkillFloat* p);

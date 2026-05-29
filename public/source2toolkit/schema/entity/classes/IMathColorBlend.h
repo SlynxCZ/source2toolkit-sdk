@@ -61,7 +61,6 @@ class IMathColorBlend : public virtual ILogicalEntity
 {
 public:
     virtual ~IMathColorBlend() = default;
-    CMathColorBlend* GetOriginal() { return reinterpret_cast<CMathColorBlend*>(IEntityInstance::GetOriginal()); }
 
     virtual float& InMin() = 0;
     virtual void InMinUpdated() = 0;

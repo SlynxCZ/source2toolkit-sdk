@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CPhysicsShake;
 
 class IPhysicsShake
 {
 public:
     virtual ~IPhysicsShake() = default;
-    CPhysicsShake* GetOriginal() { return reinterpret_cast<CPhysicsShake*>(IEntityInstance::GetOriginal()); }
+    virtual CPhysicsShake* GetOriginal() const = 0;
 
     virtual Vector& Force() = 0;
     virtual void ForceUpdated() = 0;

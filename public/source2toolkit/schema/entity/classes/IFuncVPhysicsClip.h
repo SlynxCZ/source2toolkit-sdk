@@ -61,7 +61,6 @@ class IFuncVPhysicsClip : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncVPhysicsClip() = default;
-    CFuncVPhysicsClip* GetOriginal() { return reinterpret_cast<CFuncVPhysicsClip*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;

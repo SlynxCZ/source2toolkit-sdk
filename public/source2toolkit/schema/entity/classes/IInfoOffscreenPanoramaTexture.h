@@ -62,7 +62,6 @@ class IInfoOffscreenPanoramaTexture : public virtual IPointEntity
 {
 public:
     virtual ~IInfoOffscreenPanoramaTexture() = default;
-    CInfoOffscreenPanoramaTexture* GetOriginal() { return reinterpret_cast<CInfoOffscreenPanoramaTexture*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;

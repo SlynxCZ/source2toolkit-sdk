@@ -62,7 +62,6 @@ class ISceneListManager : public virtual ILogicalEntity
 {
 public:
     virtual ~ISceneListManager() = default;
-    CSceneListManager* GetOriginal() { return reinterpret_cast<CSceneListManager*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<CHandle<CSceneListManager>>& ListManagers() = 0;
     virtual void ListManagersUpdated() = 0;

@@ -61,7 +61,6 @@ class IEnvMuzzleFlash : public virtual IPointEntity
 {
 public:
     virtual ~IEnvMuzzleFlash() = default;
-    CEnvMuzzleFlash* GetOriginal() { return reinterpret_cast<CEnvMuzzleFlash*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Scale() = 0;
     virtual void ScaleUpdated() = 0;

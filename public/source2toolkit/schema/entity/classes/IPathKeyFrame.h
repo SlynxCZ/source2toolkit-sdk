@@ -61,7 +61,6 @@ class IPathKeyFrame : public virtual ILogicalEntity
 {
 public:
     virtual ~IPathKeyFrame() = default;
-    CPathKeyFrame* GetOriginal() { return reinterpret_cast<CPathKeyFrame*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& Origin() = 0;
     virtual void OriginUpdated() = 0;

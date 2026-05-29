@@ -61,7 +61,6 @@ class IBaseClientUIEntity : public virtual IBaseModelEntity
 {
 public:
     virtual ~IBaseClientUIEntity() = default;
-    CBaseClientUIEntity* GetOriginal() { return reinterpret_cast<CBaseClientUIEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Enabled() = 0;
     virtual void EnabledUpdated() = 0;

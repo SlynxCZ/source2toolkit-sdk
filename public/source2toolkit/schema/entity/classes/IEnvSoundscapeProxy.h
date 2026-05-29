@@ -61,7 +61,6 @@ class IEnvSoundscapeProxy : public virtual IEnvSoundscape
 {
 public:
     virtual ~IEnvSoundscapeProxy() = default;
-    CEnvSoundscapeProxy* GetOriginal() { return reinterpret_cast<CEnvSoundscapeProxy*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& MainSoundscapeName() = 0;
     virtual void MainSoundscapeNameUpdated() = 0;

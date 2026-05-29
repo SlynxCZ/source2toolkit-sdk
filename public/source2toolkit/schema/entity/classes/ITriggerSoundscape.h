@@ -63,7 +63,6 @@ class ITriggerSoundscape : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerSoundscape() = default;
-    CTriggerSoundscape* GetOriginal() { return reinterpret_cast<CTriggerSoundscape*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CEnvSoundscapeTriggerable>& Soundscape() = 0;
     virtual void SoundscapeUpdated() = 0;

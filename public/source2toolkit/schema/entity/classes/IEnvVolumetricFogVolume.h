@@ -61,7 +61,6 @@ class IEnvVolumetricFogVolume : public virtual IBaseEntity
 {
 public:
     virtual ~IEnvVolumetricFogVolume() = default;
-    CEnvVolumetricFogVolume* GetOriginal() { return reinterpret_cast<CEnvVolumetricFogVolume*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Active() = 0;
     virtual void ActiveUpdated() = 0;

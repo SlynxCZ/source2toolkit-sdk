@@ -61,7 +61,6 @@ class IGamePlayerEquip : public virtual IRulePointEntity
 {
 public:
     virtual ~IGamePlayerEquip() = default;
-    CGamePlayerEquip* GetOriginal() { return reinterpret_cast<CGamePlayerEquip*>(IEntityInstance::GetOriginal()); }
 
     static IGamePlayerEquip* FromOriginal(CGamePlayerEquip* p);
 };

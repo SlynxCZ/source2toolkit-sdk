@@ -61,7 +61,6 @@ class ISoundEventEntity : public virtual IBaseEntity
 {
 public:
     virtual ~ISoundEventEntity() = default;
-    CSoundEventEntity* GetOriginal() { return reinterpret_cast<CSoundEventEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& StartOnSpawn() = 0;
     virtual void StartOnSpawnUpdated() = 0;

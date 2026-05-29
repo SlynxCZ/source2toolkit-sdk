@@ -61,7 +61,6 @@ class IWeaponMag7 : public virtual ICSWeaponBaseGun
 {
 public:
     virtual ~IWeaponMag7() = default;
-    CWeaponMag7* GetOriginal() { return reinterpret_cast<CWeaponMag7*>(IEntityInstance::GetOriginal()); }
 
     static IWeaponMag7* FromOriginal(CWeaponMag7* p);
 };

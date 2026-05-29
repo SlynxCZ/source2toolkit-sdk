@@ -61,7 +61,6 @@ class IExampleSchemaVData_PolymorphicDerivedB : public virtual IExampleSchemaVDa
 {
 public:
     virtual ~IExampleSchemaVData_PolymorphicDerivedB() = default;
-    CExampleSchemaVData_PolymorphicDerivedB* GetOriginal() { return reinterpret_cast<CExampleSchemaVData_PolymorphicDerivedB*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& DerivedB() = 0;
     virtual void DerivedBUpdated() = 0;

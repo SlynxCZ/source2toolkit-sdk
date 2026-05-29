@@ -61,7 +61,6 @@ class IGameMoney : public virtual IRulePointEntity
 {
 public:
     virtual ~IGameMoney() = default;
-    CGameMoney* GetOriginal() { return reinterpret_cast<CGameMoney*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnMoneySpent() = 0;
     virtual void OnMoneySpentUpdated() = 0;

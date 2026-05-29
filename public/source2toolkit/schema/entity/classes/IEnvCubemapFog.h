@@ -63,7 +63,6 @@ class IEnvCubemapFog : public virtual IBaseEntity
 {
 public:
     virtual ~IEnvCubemapFog() = default;
-    CEnvCubemapFog* GetOriginal() { return reinterpret_cast<CEnvCubemapFog*>(IEntityInstance::GetOriginal()); }
 
     virtual float& EndDistance() = 0;
     virtual void EndDistanceUpdated() = 0;

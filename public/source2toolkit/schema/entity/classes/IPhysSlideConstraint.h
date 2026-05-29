@@ -62,7 +62,6 @@ class IPhysSlideConstraint : public virtual IPhysConstraint
 {
 public:
     virtual ~IPhysSlideConstraint() = default;
-    CPhysSlideConstraint* GetOriginal() { return reinterpret_cast<CPhysSlideConstraint*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& AxisEnd() = 0;
     virtual void AxisEndUpdated() = 0;

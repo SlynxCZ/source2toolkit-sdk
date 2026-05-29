@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CGlowProperty;
 
 class IGlowProperty
 {
 public:
     virtual ~IGlowProperty() = default;
-    CGlowProperty* GetOriginal() { return reinterpret_cast<CGlowProperty*>(IEntityInstance::GetOriginal()); }
+    virtual CGlowProperty* GetOriginal() const = 0;
 
     virtual Vector& GlowColor() = 0;
     virtual void GlowColorUpdated() = 0;

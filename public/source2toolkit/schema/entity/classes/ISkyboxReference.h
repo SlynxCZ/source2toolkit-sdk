@@ -62,7 +62,6 @@ class ISkyboxReference : public virtual IBaseEntity
 {
 public:
     virtual ~ISkyboxReference() = default;
-    CSkyboxReference* GetOriginal() { return reinterpret_cast<CSkyboxReference*>(IEntityInstance::GetOriginal()); }
 
     virtual WorldGroupId_t& WorldGroupId() = 0;
     virtual void WorldGroupIdUpdated() = 0;

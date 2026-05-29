@@ -61,7 +61,6 @@ class IWeaponNOVA : public virtual ICSWeaponBaseShotgun
 {
 public:
     virtual ~IWeaponNOVA() = default;
-    CWeaponNOVA* GetOriginal() { return reinterpret_cast<CWeaponNOVA*>(IEntityInstance::GetOriginal()); }
 
     static IWeaponNOVA* FromOriginal(CWeaponNOVA* p);
 };

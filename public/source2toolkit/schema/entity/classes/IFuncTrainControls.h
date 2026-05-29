@@ -61,7 +61,6 @@ class IFuncTrainControls : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncTrainControls() = default;
-    CFuncTrainControls* GetOriginal() { return reinterpret_cast<CFuncTrainControls*>(IEntityInstance::GetOriginal()); }
 
     static IFuncTrainControls* FromOriginal(CFuncTrainControls* p);
 };

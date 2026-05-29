@@ -61,7 +61,6 @@ class IInfoGameEventProxy : public virtual IPointEntity
 {
 public:
     virtual ~IInfoGameEventProxy() = default;
-    CInfoGameEventProxy* GetOriginal() { return reinterpret_cast<CInfoGameEventProxy*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& EventName() = 0;
     virtual void EventNameUpdated() = 0;

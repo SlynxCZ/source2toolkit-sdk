@@ -62,7 +62,6 @@ class IPlayer_MovementServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~IPlayer_MovementServices() = default;
-    CPlayer_MovementServices* GetOriginal() { return reinterpret_cast<CPlayer_MovementServices*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Impulse() = 0;
     virtual void ImpulseUpdated() = 0;

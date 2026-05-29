@@ -61,7 +61,6 @@ class IFilterEnemy : public virtual IBaseFilter
 {
 public:
     virtual ~IFilterEnemy() = default;
-    CFilterEnemy* GetOriginal() { return reinterpret_cast<CFilterEnemy*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& EnemyName() = 0;
     virtual void EnemyNameUpdated() = 0;

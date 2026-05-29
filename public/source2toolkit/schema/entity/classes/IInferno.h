@@ -64,7 +64,6 @@ class IInferno : public virtual IBaseModelEntity
 {
 public:
     virtual ~IInferno() = default;
-    CInferno* GetOriginal() { return reinterpret_cast<CInferno*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector* FirePositions() = 0;
     virtual Vector* FireParentPositions() = 0;

@@ -61,7 +61,6 @@ class ISoundEventOBBEntity : public virtual ISoundEventEntity
 {
 public:
     virtual ~ISoundEventOBBEntity() = default;
-    CSoundEventOBBEntity* GetOriginal() { return reinterpret_cast<CSoundEventOBBEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& Mins() = 0;
     virtual void MinsUpdated() = 0;

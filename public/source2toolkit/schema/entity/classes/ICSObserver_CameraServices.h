@@ -61,7 +61,6 @@ class ICSObserver_CameraServices : public virtual ICSPlayerBase_CameraServices
 {
 public:
     virtual ~ICSObserver_CameraServices() = default;
-    CCSObserver_CameraServices* GetOriginal() { return reinterpret_cast<CCSObserver_CameraServices*>(IEntityInstance::GetOriginal()); }
 
     static ICSObserver_CameraServices* FromOriginal(CCSObserver_CameraServices* p);
 };

@@ -61,7 +61,6 @@ class IPointCameraVFOV : public virtual IPointCamera
 {
 public:
     virtual ~IPointCameraVFOV() = default;
-    CPointCameraVFOV* GetOriginal() { return reinterpret_cast<CPointCameraVFOV*>(IEntityInstance::GetOriginal()); }
 
     virtual float& VerticalFOV() = 0;
     virtual void VerticalFOVUpdated() = 0;

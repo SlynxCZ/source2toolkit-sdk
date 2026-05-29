@@ -61,7 +61,6 @@ class ILogicScript : public virtual IPointEntity
 {
 public:
     virtual ~ILogicScript() = default;
-    CLogicScript* GetOriginal() { return reinterpret_cast<CLogicScript*>(IEntityInstance::GetOriginal()); }
 
     static ILogicScript* FromOriginal(CLogicScript* p);
 };

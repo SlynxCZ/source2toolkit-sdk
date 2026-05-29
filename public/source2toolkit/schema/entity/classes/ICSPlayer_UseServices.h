@@ -62,7 +62,6 @@ class ICSPlayer_UseServices : public virtual IPlayer_UseServices
 {
 public:
     virtual ~ICSPlayer_UseServices() = default;
-    CCSPlayer_UseServices* GetOriginal() { return reinterpret_cast<CCSPlayer_UseServices*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& LastKnownUseEntity() = 0;
     virtual void LastKnownUseEntityUpdated() = 0;

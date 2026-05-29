@@ -61,7 +61,6 @@ class IPointClientCommand : public virtual IPointEntity
 {
 public:
     virtual ~IPointClientCommand() = default;
-    CPointClientCommand* GetOriginal() { return reinterpret_cast<CPointClientCommand*>(IEntityInstance::GetOriginal()); }
 
     static IPointClientCommand* FromOriginal(CPointClientCommand* p);
 };

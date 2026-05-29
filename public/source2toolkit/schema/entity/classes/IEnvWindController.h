@@ -62,7 +62,6 @@ class IEnvWindController : public virtual IBaseEntity
 {
 public:
     virtual ~IEnvWindController() = default;
-    CEnvWindController* GetOriginal() { return reinterpret_cast<CEnvWindController*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEnvWindShared& EnvWindShared() = 0;
     virtual void EnvWindSharedUpdated() = 0;

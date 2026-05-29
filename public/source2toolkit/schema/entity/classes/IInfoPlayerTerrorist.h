@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CInfoPlayerTerrorist;
 
 class IInfoPlayerTerrorist
 {
 public:
     virtual ~IInfoPlayerTerrorist() = default;
-    CInfoPlayerTerrorist* GetOriginal() { return reinterpret_cast<CInfoPlayerTerrorist*>(IEntityInstance::GetOriginal()); }
+    virtual CInfoPlayerTerrorist* GetOriginal() const = 0;
 
     static IInfoPlayerTerrorist* FromOriginal(CInfoPlayerTerrorist* p);
 };

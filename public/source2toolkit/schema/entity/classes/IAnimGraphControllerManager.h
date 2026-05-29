@@ -53,6 +53,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CAnimGraphControllerBase;
 class CAnimGraphControllerManager;
 
@@ -60,7 +62,7 @@ class IAnimGraphControllerManager
 {
 public:
     virtual ~IAnimGraphControllerManager() = default;
-    CAnimGraphControllerManager* GetOriginal() { return reinterpret_cast<CAnimGraphControllerManager*>(IEntityInstance::GetOriginal()); }
+    virtual CAnimGraphControllerManager* GetOriginal() const = 0;
 
     virtual CUtlVector<CAnimGraphControllerBase*>& Controllers() = 0;
     virtual void ControllersUpdated() = 0;

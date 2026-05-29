@@ -66,7 +66,6 @@ class IHostage : public virtual IHostageExpresserShim
 {
 public:
     virtual ~IHostage() = default;
-    CHostage* GetOriginal() { return reinterpret_cast<CHostage*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnHostageBeginGrab() = 0;
     virtual void OnHostageBeginGrabUpdated() = 0;

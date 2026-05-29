@@ -44,9 +44,9 @@
 * network messages used by the engine.
 *
 * Messages are grouped into categories:
-* * net_* → core networking
-* * clc_* → client → server
-* * svc_* → server → client
+* * net_* -> core networking
+* * clc_* -> client -> server
+* * svc_* -> server -> client
 *
 * @note All classes inherit from CNetMessagePB.
 * @note Template parameters define message ID, protobuf type, group and flags.
@@ -104,7 +104,7 @@ class CNETMsg_SpawnGroup_Unload_t :          public CNetMessagePB< CNETMsg_Spawn
 class CNETMsg_SpawnGroup_LoadCompleted_t :   public CNetMessagePB< CNETMsg_SpawnGroup_LoadCompleted > {};
 
 /* =========================
-Client → Server (clc_*)
+Client -> Server (clc_*)
 ========================= */
 
 /**
@@ -119,7 +119,7 @@ class CCLCMsg_LoadingProgress_t :            public CNetMessagePB< CCLCMsg_Loadi
 class CCLCMsg_CmdKeyValues_t :               public CNetMessagePB< CCLCMsg_CmdKeyValues > {};
 
 /* =========================
-Server → Client (svc_*)
+Server -> Client (svc_*)
 ========================= */
 
 /**

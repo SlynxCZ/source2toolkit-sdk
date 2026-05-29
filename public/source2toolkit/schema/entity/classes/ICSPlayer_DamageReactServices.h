@@ -61,7 +61,6 @@ class ICSPlayer_DamageReactServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~ICSPlayer_DamageReactServices() = default;
-    CCSPlayer_DamageReactServices* GetOriginal() { return reinterpret_cast<CCSPlayer_DamageReactServices*>(IEntityInstance::GetOriginal()); }
 
     static ICSPlayer_DamageReactServices* FromOriginal(CCSPlayer_DamageReactServices* p);
 };

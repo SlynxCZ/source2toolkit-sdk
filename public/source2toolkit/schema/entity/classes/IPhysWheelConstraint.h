@@ -62,7 +62,6 @@ class IPhysWheelConstraint : public virtual IPhysConstraint
 {
 public:
     virtual ~IPhysWheelConstraint() = default;
-    CPhysWheelConstraint* GetOriginal() { return reinterpret_cast<CPhysWheelConstraint*>(IEntityInstance::GetOriginal()); }
 
     virtual float& SuspensionFrequency() = 0;
     virtual void SuspensionFrequencyUpdated() = 0;

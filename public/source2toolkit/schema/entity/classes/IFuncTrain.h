@@ -62,7 +62,6 @@ class IFuncTrain : public virtual IBasePlatTrain
 {
 public:
     virtual ~IFuncTrain() = default;
-    CFuncTrain* GetOriginal() { return reinterpret_cast<CFuncTrain*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& CurrentTarget() = 0;
     virtual void CurrentTargetUpdated() = 0;

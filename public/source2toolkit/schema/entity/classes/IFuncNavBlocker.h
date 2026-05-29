@@ -61,7 +61,6 @@ class IFuncNavBlocker : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncNavBlocker() = default;
-    CFuncNavBlocker* GetOriginal() { return reinterpret_cast<CFuncNavBlocker*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;

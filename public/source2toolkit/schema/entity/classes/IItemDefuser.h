@@ -62,7 +62,6 @@ class IItemDefuser : public virtual IItem
 {
 public:
     virtual ~IItemDefuser() = default;
-    CItemDefuser* GetOriginal() { return reinterpret_cast<CItemDefuser*>(IEntityInstance::GetOriginal()); }
 
     virtual ::EntitySpottedState_t& EntitySpottedState() = 0;
     virtual void EntitySpottedStateUpdated() = 0;

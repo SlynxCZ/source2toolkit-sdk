@@ -61,7 +61,6 @@ class IInfoLandmark : public virtual IPointEntity
 {
 public:
     virtual ~IInfoLandmark() = default;
-    CInfoLandmark* GetOriginal() { return reinterpret_cast<CInfoLandmark*>(IEntityInstance::GetOriginal()); }
 
     static IInfoLandmark* FromOriginal(CInfoLandmark* p);
 };

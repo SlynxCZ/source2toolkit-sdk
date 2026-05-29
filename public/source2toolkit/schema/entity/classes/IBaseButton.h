@@ -63,7 +63,6 @@ class IBaseButton : public virtual IBaseToggle
 {
 public:
     virtual ~IBaseButton() = default;
-    CBaseButton* GetOriginal() { return reinterpret_cast<CBaseButton*>(IEntityInstance::GetOriginal()); }
 
     virtual QAngle& MoveEntitySpace() = 0;
     virtual void MoveEntitySpaceUpdated() = 0;

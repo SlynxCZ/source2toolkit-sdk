@@ -61,7 +61,6 @@ class IEnvCubemapBox : public virtual IEnvCubemap
 {
 public:
     virtual ~IEnvCubemapBox() = default;
-    CEnvCubemapBox* GetOriginal() { return reinterpret_cast<CEnvCubemapBox*>(IEntityInstance::GetOriginal()); }
 
     static IEnvCubemapBox* FromOriginal(CEnvCubemapBox* p);
 };

@@ -61,7 +61,6 @@ class IEnvWindVolume : public virtual IBaseEntity
 {
 public:
     virtual ~IEnvWindVolume() = default;
-    CEnvWindVolume* GetOriginal() { return reinterpret_cast<CEnvWindVolume*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Active() = 0;
     virtual void ActiveUpdated() = 0;

@@ -61,7 +61,6 @@ class IDecoyGrenade : public virtual IBaseCSGrenade
 {
 public:
     virtual ~IDecoyGrenade() = default;
-    CDecoyGrenade* GetOriginal() { return reinterpret_cast<CDecoyGrenade*>(IEntityInstance::GetOriginal()); }
 
     static IDecoyGrenade* FromOriginal(CDecoyGrenade* p);
 };

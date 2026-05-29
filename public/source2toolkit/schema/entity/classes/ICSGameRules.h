@@ -70,7 +70,6 @@ class ICSGameRules : public virtual ITeamplayRules
 {
 public:
     virtual ~ICSGameRules() = default;
-    CCSGameRules* GetOriginal() { return reinterpret_cast<CCSGameRules*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& FreezePeriod() = 0;
     virtual void FreezePeriodUpdated() = 0;

@@ -61,7 +61,6 @@ class ISoundOpvarSetOBBEntity : public virtual ISoundOpvarSetAABBEntity
 {
 public:
     virtual ~ISoundOpvarSetOBBEntity() = default;
-    CSoundOpvarSetOBBEntity* GetOriginal() { return reinterpret_cast<CSoundOpvarSetOBBEntity*>(IEntityInstance::GetOriginal()); }
 
     static ISoundOpvarSetOBBEntity* FromOriginal(CSoundOpvarSetOBBEntity* p);
 };

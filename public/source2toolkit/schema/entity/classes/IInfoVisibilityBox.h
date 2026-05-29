@@ -61,7 +61,6 @@ class IInfoVisibilityBox : public virtual IBaseEntity
 {
 public:
     virtual ~IInfoVisibilityBox() = default;
-    CInfoVisibilityBox* GetOriginal() { return reinterpret_cast<CInfoVisibilityBox*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Mode() = 0;
     virtual void ModeUpdated() = 0;

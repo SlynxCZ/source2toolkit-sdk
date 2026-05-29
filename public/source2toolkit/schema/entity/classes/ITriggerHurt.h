@@ -64,7 +64,6 @@ class ITriggerHurt : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerHurt() = default;
-    CTriggerHurt* GetOriginal() { return reinterpret_cast<CTriggerHurt*>(IEntityInstance::GetOriginal()); }
 
     virtual float& OriginalDamage() = 0;
     virtual void OriginalDamageUpdated() = 0;

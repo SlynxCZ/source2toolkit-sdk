@@ -61,7 +61,6 @@ class IEnvSoundscapeTriggerableAlias_snd_soundscape_triggerable : public virtual
 {
 public:
     virtual ~IEnvSoundscapeTriggerableAlias_snd_soundscape_triggerable() = default;
-    CEnvSoundscapeTriggerableAlias_snd_soundscape_triggerable* GetOriginal() { return reinterpret_cast<CEnvSoundscapeTriggerableAlias_snd_soundscape_triggerable*>(IEntityInstance::GetOriginal()); }
 
     static IEnvSoundscapeTriggerableAlias_snd_soundscape_triggerable* FromOriginal(CEnvSoundscapeTriggerableAlias_snd_soundscape_triggerable* p);
 };

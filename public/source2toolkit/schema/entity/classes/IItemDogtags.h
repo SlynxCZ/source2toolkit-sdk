@@ -62,7 +62,6 @@ class IItemDogtags : public virtual IItem
 {
 public:
     virtual ~IItemDogtags() = default;
-    CItemDogtags* GetOriginal() { return reinterpret_cast<CItemDogtags*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CCSPlayerPawn>& OwningPlayer() = 0;
     virtual void OwningPlayerUpdated() = 0;

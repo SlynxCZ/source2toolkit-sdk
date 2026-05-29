@@ -62,7 +62,6 @@ class IEntityFlame : public virtual IBaseEntity
 {
 public:
     virtual ~IEntityFlame() = default;
-    CEntityFlame* GetOriginal() { return reinterpret_cast<CEntityFlame*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& EntAttached() = 0;
     virtual void EntAttachedUpdated() = 0;

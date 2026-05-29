@@ -61,7 +61,6 @@ class ILogicEventListener : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicEventListener() = default;
-    CLogicEventListener* GetOriginal() { return reinterpret_cast<CLogicEventListener*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlString& StrEventName() = 0;
     virtual void StrEventNameUpdated() = 0;

@@ -61,7 +61,6 @@ class IBaseProp : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IBaseProp() = default;
-    CBaseProp* GetOriginal() { return reinterpret_cast<CBaseProp*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& ModelOverrodeBlockLOS() = 0;
     virtual void ModelOverrodeBlockLOSUpdated() = 0;

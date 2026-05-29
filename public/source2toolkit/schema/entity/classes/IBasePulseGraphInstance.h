@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CBasePulseGraphInstance;
 
 class IBasePulseGraphInstance
 {
 public:
     virtual ~IBasePulseGraphInstance() = default;
-    CBasePulseGraphInstance* GetOriginal() { return reinterpret_cast<CBasePulseGraphInstance*>(IEntityInstance::GetOriginal()); }
+    virtual CBasePulseGraphInstance* GetOriginal() const = 0;
 
     static IBasePulseGraphInstance* FromOriginal(CBasePulseGraphInstance* p);
 };

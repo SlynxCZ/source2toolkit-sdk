@@ -62,7 +62,6 @@ class IPointProximitySensor : public virtual IPointEntity
 {
 public:
     virtual ~IPointProximitySensor() = default;
-    CPointProximitySensor* GetOriginal() { return reinterpret_cast<CPointProximitySensor*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;

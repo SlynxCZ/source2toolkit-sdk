@@ -62,7 +62,6 @@ class ITriggerPush : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerPush() = default;
-    CTriggerPush* GetOriginal() { return reinterpret_cast<CTriggerPush*>(IEntityInstance::GetOriginal()); }
 
     virtual QAngle& PushEntitySpace() = 0;
     virtual void PushEntitySpaceUpdated() = 0;

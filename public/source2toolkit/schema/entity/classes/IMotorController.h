@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CMotorController;
 
 class IMotorController
 {
 public:
     virtual ~IMotorController() = default;
-    CMotorController* GetOriginal() { return reinterpret_cast<CMotorController*>(IEntityInstance::GetOriginal()); }
+    virtual CMotorController* GetOriginal() const = 0;
 
     virtual float& Speed() = 0;
     virtual void SpeedUpdated() = 0;

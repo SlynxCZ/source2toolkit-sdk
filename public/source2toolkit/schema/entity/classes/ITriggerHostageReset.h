@@ -61,7 +61,6 @@ class ITriggerHostageReset : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerHostageReset() = default;
-    CTriggerHostageReset* GetOriginal() { return reinterpret_cast<CTriggerHostageReset*>(IEntityInstance::GetOriginal()); }
 
     static ITriggerHostageReset* FromOriginal(CTriggerHostageReset* p);
 };

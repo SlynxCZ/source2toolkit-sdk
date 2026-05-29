@@ -61,7 +61,6 @@ class ILogicAutosave : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicAutosave() = default;
-    CLogicAutosave* GetOriginal() { return reinterpret_cast<CLogicAutosave*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& ForceNewLevelUnit() = 0;
     virtual void ForceNewLevelUnitUpdated() = 0;

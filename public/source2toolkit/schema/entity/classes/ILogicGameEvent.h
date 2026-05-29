@@ -61,7 +61,6 @@ class ILogicGameEvent : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicGameEvent() = default;
-    CLogicGameEvent* GetOriginal() { return reinterpret_cast<CLogicGameEvent*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& EventName() = 0;
     virtual void EventNameUpdated() = 0;

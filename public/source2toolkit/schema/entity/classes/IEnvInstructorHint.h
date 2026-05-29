@@ -61,7 +61,6 @@ class IEnvInstructorHint : public virtual IPointEntity
 {
 public:
     virtual ~IEnvInstructorHint() = default;
-    CEnvInstructorHint* GetOriginal() { return reinterpret_cast<CEnvInstructorHint*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Name() = 0;
     virtual void NameUpdated() = 0;

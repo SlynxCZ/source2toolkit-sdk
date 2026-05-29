@@ -61,7 +61,6 @@ class IFuncTankTrain : public virtual IFuncTrackTrain
 {
 public:
     virtual ~IFuncTankTrain() = default;
-    CFuncTankTrain* GetOriginal() { return reinterpret_cast<CFuncTankTrain*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnDeath() = 0;
     virtual void OnDeathUpdated() = 0;

@@ -61,7 +61,6 @@ class IFuncPlatRot : public virtual IFuncPlat
 {
 public:
     virtual ~IFuncPlatRot() = default;
-    CFuncPlatRot* GetOriginal() { return reinterpret_cast<CFuncPlatRot*>(IEntityInstance::GetOriginal()); }
 
     virtual QAngle& End() = 0;
     virtual void EndUpdated() = 0;

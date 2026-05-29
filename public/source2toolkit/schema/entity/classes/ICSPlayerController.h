@@ -76,7 +76,6 @@ class ICSPlayerController : public virtual IBasePlayerController
 {
 public:
     virtual ~ICSPlayerController() = default;
-    CCSPlayerController* GetOriginal() { return reinterpret_cast<CCSPlayerController*>(IEntityInstance::GetOriginal()); }
 
     virtual CCSPlayerController_InGameMoneyServices*& InGameMoneyServices() = 0;
     virtual void InGameMoneyServicesUpdated() = 0;

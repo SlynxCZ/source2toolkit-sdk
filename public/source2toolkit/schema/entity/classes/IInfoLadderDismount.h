@@ -61,7 +61,6 @@ class IInfoLadderDismount : public virtual IBaseEntity
 {
 public:
     virtual ~IInfoLadderDismount() = default;
-    CInfoLadderDismount* GetOriginal() { return reinterpret_cast<CInfoLadderDismount*>(IEntityInstance::GetOriginal()); }
 
     static IInfoLadderDismount* FromOriginal(CInfoLadderDismount* p);
 };

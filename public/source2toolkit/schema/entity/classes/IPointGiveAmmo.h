@@ -62,7 +62,6 @@ class IPointGiveAmmo : public virtual IPointEntity
 {
 public:
     virtual ~IPointGiveAmmo() = default;
-    CPointGiveAmmo* GetOriginal() { return reinterpret_cast<CPointGiveAmmo*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& Activator() = 0;
     virtual void ActivatorUpdated() = 0;

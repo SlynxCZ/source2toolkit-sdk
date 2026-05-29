@@ -62,7 +62,6 @@ class ITestEffect : public virtual IBaseEntity
 {
 public:
     virtual ~ITestEffect() = default;
-    CTestEffect* GetOriginal() { return reinterpret_cast<CTestEffect*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Loop() = 0;
     virtual void LoopUpdated() = 0;

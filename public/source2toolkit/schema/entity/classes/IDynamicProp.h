@@ -63,7 +63,6 @@ class IDynamicProp : public virtual IBreakableProp
 {
 public:
     virtual ~IDynamicProp() = default;
-    CDynamicProp* GetOriginal() { return reinterpret_cast<CDynamicProp*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& CreateNavObstacle() = 0;
     virtual void CreateNavObstacleUpdated() = 0;

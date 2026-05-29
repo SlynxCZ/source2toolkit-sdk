@@ -61,7 +61,6 @@ class ILogicNPCCounterOBB : public virtual ILogicNPCCounterAABB
 {
 public:
     virtual ~ILogicNPCCounterOBB() = default;
-    CLogicNPCCounterOBB* GetOriginal() { return reinterpret_cast<CLogicNPCCounterOBB*>(IEntityInstance::GetOriginal()); }
 
     static ILogicNPCCounterOBB* FromOriginal(CLogicNPCCounterOBB* p);
 };

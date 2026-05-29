@@ -61,7 +61,6 @@ class IEnvGlobal : public virtual ILogicalEntity
 {
 public:
     virtual ~IEnvGlobal() = default;
-    CEnvGlobal* GetOriginal() { return reinterpret_cast<CEnvGlobal*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Globalstate() = 0;
     virtual void GlobalstateUpdated() = 0;

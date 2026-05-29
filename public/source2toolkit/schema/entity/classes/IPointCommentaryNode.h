@@ -62,7 +62,6 @@ class IPointCommentaryNode : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IPointCommentaryNode() = default;
-    CPointCommentaryNode* GetOriginal() { return reinterpret_cast<CPointCommentaryNode*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& PreCommands() = 0;
     virtual void PreCommandsUpdated() = 0;

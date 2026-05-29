@@ -61,7 +61,6 @@ class IPlayer_ItemServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~IPlayer_ItemServices() = default;
-    CPlayer_ItemServices* GetOriginal() { return reinterpret_cast<CPlayer_ItemServices*>(IEntityInstance::GetOriginal()); }
 
     static IPlayer_ItemServices* FromOriginal(CPlayer_ItemServices* p);
 };

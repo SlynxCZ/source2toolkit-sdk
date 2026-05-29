@@ -61,7 +61,6 @@ class IInfoFan : public virtual IPointEntity
 {
 public:
     virtual ~IInfoFan() = default;
-    CInfoFan* GetOriginal() { return reinterpret_cast<CInfoFan*>(IEntityInstance::GetOriginal()); }
 
     virtual float& FanForceMaxRadius() = 0;
     virtual void FanForceMaxRadiusUpdated() = 0;

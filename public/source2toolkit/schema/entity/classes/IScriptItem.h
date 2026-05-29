@@ -61,7 +61,6 @@ class IScriptItem : public virtual IItem
 {
 public:
     virtual ~IScriptItem() = default;
-    CScriptItem* GetOriginal() { return reinterpret_cast<CScriptItem*>(IEntityInstance::GetOriginal()); }
 
     virtual ::MoveType_t& MoveTypeOverride() = 0;
     virtual void MoveTypeOverrideUpdated() = 0;

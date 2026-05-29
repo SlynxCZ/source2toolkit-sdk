@@ -61,7 +61,6 @@ class ISpriteOriented : public virtual ISprite
 {
 public:
     virtual ~ISpriteOriented() = default;
-    CSpriteOriented* GetOriginal() { return reinterpret_cast<CSpriteOriented*>(IEntityInstance::GetOriginal()); }
 
     static ISpriteOriented* FromOriginal(CSpriteOriented* p);
 };

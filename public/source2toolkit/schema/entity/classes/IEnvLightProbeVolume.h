@@ -62,7 +62,6 @@ class IEnvLightProbeVolume : public virtual IBaseEntity
 {
 public:
     virtual ~IEnvLightProbeVolume() = default;
-    CEnvLightProbeVolume* GetOriginal() { return reinterpret_cast<CEnvLightProbeVolume*>(IEntityInstance::GetOriginal()); }
 
     virtual CStrongHandle<InfoForResourceTypeCTextureBase>& Entity_hLightProbeTexture_AmbientCube() = 0;
     virtual void Entity_hLightProbeTexture_AmbientCubeUpdated() = 0;

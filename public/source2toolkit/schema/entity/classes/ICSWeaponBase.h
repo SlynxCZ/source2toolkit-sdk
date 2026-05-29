@@ -66,7 +66,6 @@ class ICSWeaponBase : public virtual IBasePlayerWeapon
 {
 public:
     virtual ~ICSWeaponBase() = default;
-    CCSWeaponBase* GetOriginal() { return reinterpret_cast<CCSWeaponBase*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Removeable() = 0;
     virtual void RemoveableUpdated() = 0;

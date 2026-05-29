@@ -63,7 +63,6 @@ class IPathMoverEntitySpawner : public virtual ILogicalEntity
 {
 public:
     virtual ~IPathMoverEntitySpawner() = default;
-    CPathMoverEntitySpawner* GetOriginal() { return reinterpret_cast<CPathMoverEntitySpawner*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge* SpawnTemplates() = 0;
     virtual int32_t& SpawnIndex() = 0;

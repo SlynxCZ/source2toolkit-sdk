@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CNmTarget;
 
 class INmTarget
 {
 public:
     virtual ~INmTarget() = default;
-    CNmTarget* GetOriginal() { return reinterpret_cast<CNmTarget*>(IEntityInstance::GetOriginal()); }
+    virtual CNmTarget* GetOriginal() const = 0;
 
     virtual CTransform& Transform() = 0;
     virtual void TransformUpdated() = 0;

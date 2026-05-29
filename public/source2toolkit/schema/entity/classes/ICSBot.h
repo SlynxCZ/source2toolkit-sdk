@@ -65,7 +65,6 @@ class ICSBot : public virtual IBot
 {
 public:
     virtual ~ICSBot() = default;
-    CCSBot* GetOriginal() { return reinterpret_cast<CCSBot*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& EyePosition() = 0;
     virtual void EyePositionUpdated() = 0;

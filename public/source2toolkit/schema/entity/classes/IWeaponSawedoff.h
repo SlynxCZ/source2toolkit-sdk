@@ -61,7 +61,6 @@ class IWeaponSawedoff : public virtual ICSWeaponBaseShotgun
 {
 public:
     virtual ~IWeaponSawedoff() = default;
-    CWeaponSawedoff* GetOriginal() { return reinterpret_cast<CWeaponSawedoff*>(IEntityInstance::GetOriginal()); }
 
     static IWeaponSawedoff* FromOriginal(CWeaponSawedoff* p);
 };

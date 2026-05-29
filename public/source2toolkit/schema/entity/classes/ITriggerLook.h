@@ -62,7 +62,6 @@ class ITriggerLook : public virtual ITriggerOnce
 {
 public:
     virtual ~ITriggerLook() = default;
-    CTriggerLook* GetOriginal() { return reinterpret_cast<CTriggerLook*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& LookTarget() = 0;
     virtual void LookTargetUpdated() = 0;

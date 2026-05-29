@@ -61,7 +61,6 @@ class IWeaponUMP45 : public virtual ICSWeaponBaseGun
 {
 public:
     virtual ~IWeaponUMP45() = default;
-    CWeaponUMP45* GetOriginal() { return reinterpret_cast<CWeaponUMP45*>(IEntityInstance::GetOriginal()); }
 
     static IWeaponUMP45* FromOriginal(CWeaponUMP45* p);
 };

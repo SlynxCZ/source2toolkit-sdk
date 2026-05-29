@@ -61,7 +61,6 @@ class IRagdollManager : public virtual IBaseEntity
 {
 public:
     virtual ~IRagdollManager() = default;
-    CRagdollManager* GetOriginal() { return reinterpret_cast<CRagdollManager*>(IEntityInstance::GetOriginal()); }
 
     virtual int8_t& CurrentMaxRagdollCount() = 0;
     virtual void CurrentMaxRagdollCountUpdated() = 0;

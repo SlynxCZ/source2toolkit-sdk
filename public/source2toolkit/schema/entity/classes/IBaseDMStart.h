@@ -61,7 +61,6 @@ class IBaseDMStart : public virtual IPointEntity
 {
 public:
     virtual ~IBaseDMStart() = default;
-    CBaseDMStart* GetOriginal() { return reinterpret_cast<CBaseDMStart*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Master() = 0;
     virtual void MasterUpdated() = 0;

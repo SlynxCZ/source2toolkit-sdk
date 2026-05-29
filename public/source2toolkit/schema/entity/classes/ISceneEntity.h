@@ -66,7 +66,6 @@ class ISceneEntity : public virtual IPointEntity
 {
 public:
     virtual ~ISceneEntity() = default;
-    CSceneEntity* GetOriginal() { return reinterpret_cast<CSceneEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& SceneFile() = 0;
     virtual void SceneFileUpdated() = 0;

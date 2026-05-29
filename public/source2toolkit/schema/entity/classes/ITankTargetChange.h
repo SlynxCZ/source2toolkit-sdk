@@ -61,7 +61,6 @@ class ITankTargetChange : public virtual IPointEntity
 {
 public:
     virtual ~ITankTargetChange() = default;
-    CTankTargetChange* GetOriginal() { return reinterpret_cast<CTankTargetChange*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& NewTargetName() = 0;
     virtual void NewTargetNameUpdated() = 0;

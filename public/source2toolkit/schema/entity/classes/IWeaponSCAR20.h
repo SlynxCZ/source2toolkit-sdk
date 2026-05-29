@@ -61,7 +61,6 @@ class IWeaponSCAR20 : public virtual ICSWeaponBaseGun
 {
 public:
     virtual ~IWeaponSCAR20() = default;
-    CWeaponSCAR20* GetOriginal() { return reinterpret_cast<CWeaponSCAR20*>(IEntityInstance::GetOriginal()); }
 
     static IWeaponSCAR20* FromOriginal(CWeaponSCAR20* p);
 };

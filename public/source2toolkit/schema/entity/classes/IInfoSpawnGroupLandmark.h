@@ -61,7 +61,6 @@ class IInfoSpawnGroupLandmark : public virtual IPointEntity
 {
 public:
     virtual ~IInfoSpawnGroupLandmark() = default;
-    CInfoSpawnGroupLandmark* GetOriginal() { return reinterpret_cast<CInfoSpawnGroupLandmark*>(IEntityInstance::GetOriginal()); }
 
     static IInfoSpawnGroupLandmark* FromOriginal(CInfoSpawnGroupLandmark* p);
 };

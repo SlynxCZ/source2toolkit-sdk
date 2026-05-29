@@ -61,7 +61,6 @@ class IIncendiaryGrenade : public virtual IMolotovGrenade
 {
 public:
     virtual ~IIncendiaryGrenade() = default;
-    CIncendiaryGrenade* GetOriginal() { return reinterpret_cast<CIncendiaryGrenade*>(IEntityInstance::GetOriginal()); }
 
     static IIncendiaryGrenade* FromOriginal(CIncendiaryGrenade* p);
 };

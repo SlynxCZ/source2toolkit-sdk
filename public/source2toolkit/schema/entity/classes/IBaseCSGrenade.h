@@ -62,7 +62,6 @@ class IBaseCSGrenade : public virtual ICSWeaponBase
 {
 public:
     virtual ~IBaseCSGrenade() = default;
-    CBaseCSGrenade* GetOriginal() { return reinterpret_cast<CBaseCSGrenade*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Redraw() = 0;
     virtual void RedrawUpdated() = 0;

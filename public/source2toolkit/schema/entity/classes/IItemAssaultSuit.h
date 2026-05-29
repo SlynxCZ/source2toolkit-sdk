@@ -61,7 +61,6 @@ class IItemAssaultSuit : public virtual IItem
 {
 public:
     virtual ~IItemAssaultSuit() = default;
-    CItemAssaultSuit* GetOriginal() { return reinterpret_cast<CItemAssaultSuit*>(IEntityInstance::GetOriginal()); }
 
     static IItemAssaultSuit* FromOriginal(CItemAssaultSuit* p);
 };

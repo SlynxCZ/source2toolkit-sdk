@@ -61,7 +61,6 @@ class IShower : public virtual IModelPointEntity
 {
 public:
     virtual ~IShower() = default;
-    CShower* GetOriginal() { return reinterpret_cast<CShower*>(IEntityInstance::GetOriginal()); }
 
     static IShower* FromOriginal(CShower* p);
 };

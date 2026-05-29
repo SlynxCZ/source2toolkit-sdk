@@ -63,7 +63,6 @@ class IPathMover : public virtual IPathWithDynamicNodes
 {
 public:
     virtual ~IPathMover() = default;
-    CPathMover* GetOriginal() { return reinterpret_cast<CPathMover*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<CHandle<CFuncMover>>& Movers() = 0;
     virtual void MoversUpdated() = 0;

@@ -62,7 +62,6 @@ class IPhysMagnet : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IPhysMagnet() = default;
-    CPhysMagnet* GetOriginal() { return reinterpret_cast<CPhysMagnet*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnMagnetAttach() = 0;
     virtual void OnMagnetAttachUpdated() = 0;

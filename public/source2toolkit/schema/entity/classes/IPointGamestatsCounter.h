@@ -61,7 +61,6 @@ class IPointGamestatsCounter : public virtual IPointEntity
 {
 public:
     virtual ~IPointGamestatsCounter() = default;
-    CPointGamestatsCounter* GetOriginal() { return reinterpret_cast<CPointGamestatsCounter*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& StrStatisticName() = 0;
     virtual void StrStatisticNameUpdated() = 0;

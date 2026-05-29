@@ -70,7 +70,6 @@ class IScriptedSequence : public virtual IBaseEntity
 {
 public:
     virtual ~IScriptedSequence() = default;
-    CScriptedSequence* GetOriginal() { return reinterpret_cast<CScriptedSequence*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Entry() = 0;
     virtual void EntryUpdated() = 0;

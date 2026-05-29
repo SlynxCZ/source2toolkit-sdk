@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CInButtonState;
 
 class IInButtonState
 {
 public:
     virtual ~IInButtonState() = default;
-    CInButtonState* GetOriginal() { return reinterpret_cast<CInButtonState*>(IEntityInstance::GetOriginal()); }
+    virtual CInButtonState* GetOriginal() const = 0;
 
     virtual uint64_t* ButtonStates() = 0;
     static IInButtonState* FromOriginal(CInButtonState* p);

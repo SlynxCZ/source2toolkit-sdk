@@ -61,7 +61,6 @@ class IWeaponFamas : public virtual ICSWeaponBaseGun
 {
 public:
     virtual ~IWeaponFamas() = default;
-    CWeaponFamas* GetOriginal() { return reinterpret_cast<CWeaponFamas*>(IEntityInstance::GetOriginal()); }
 
     static IWeaponFamas* FromOriginal(CWeaponFamas* p);
 };

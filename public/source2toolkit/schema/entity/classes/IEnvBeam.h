@@ -65,7 +65,6 @@ class IEnvBeam : public virtual IBeam
 {
 public:
     virtual ~IEnvBeam() = default;
-    CEnvBeam* GetOriginal() { return reinterpret_cast<CEnvBeam*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Active() = 0;
     virtual void ActiveUpdated() = 0;

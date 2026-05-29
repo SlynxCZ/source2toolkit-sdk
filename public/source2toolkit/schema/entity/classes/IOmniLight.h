@@ -61,7 +61,6 @@ class IOmniLight : public virtual IBarnLight
 {
 public:
     virtual ~IOmniLight() = default;
-    COmniLight* GetOriginal() { return reinterpret_cast<COmniLight*>(IEntityInstance::GetOriginal()); }
 
     virtual float& InnerAngle() = 0;
     virtual void InnerAngleUpdated() = 0;

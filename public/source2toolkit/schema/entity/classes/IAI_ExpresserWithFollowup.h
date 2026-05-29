@@ -61,7 +61,6 @@ class IAI_ExpresserWithFollowup : public virtual IAI_Expresser
 {
 public:
     virtual ~IAI_ExpresserWithFollowup() = default;
-    CAI_ExpresserWithFollowup* GetOriginal() { return reinterpret_cast<CAI_ExpresserWithFollowup*>(IEntityInstance::GetOriginal()); }
 
     static IAI_ExpresserWithFollowup* FromOriginal(CAI_ExpresserWithFollowup* p);
 };

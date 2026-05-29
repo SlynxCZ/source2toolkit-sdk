@@ -61,7 +61,6 @@ class IDEagle : public virtual ICSWeaponBaseGun
 {
 public:
     virtual ~IDEagle() = default;
-    CDEagle* GetOriginal() { return reinterpret_cast<CDEagle*>(IEntityInstance::GetOriginal()); }
 
     static IDEagle* FromOriginal(CDEagle* p);
 };

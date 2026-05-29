@@ -65,7 +65,6 @@ class IEnvExplosion : public virtual IModelPointEntity
 {
 public:
     virtual ~IEnvExplosion() = default;
-    CEnvExplosion* GetOriginal() { return reinterpret_cast<CEnvExplosion*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Magnitude() = 0;
     virtual void MagnitudeUpdated() = 0;

@@ -62,7 +62,6 @@ class IBaseMoveBehavior : public virtual IPathKeyFrame
 {
 public:
     virtual ~IBaseMoveBehavior() = default;
-    CBaseMoveBehavior* GetOriginal() { return reinterpret_cast<CBaseMoveBehavior*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& PositionInterpolator() = 0;
     virtual void PositionInterpolatorUpdated() = 0;

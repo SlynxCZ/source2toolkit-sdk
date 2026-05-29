@@ -61,7 +61,6 @@ class IFuncRotating : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncRotating() = default;
-    CFuncRotating* GetOriginal() { return reinterpret_cast<CFuncRotating*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnStopped() = 0;
     virtual void OnStoppedUpdated() = 0;

@@ -53,6 +53,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CMovementStatsProperty;
 class CVectorExponentialMovingAverage;
 
@@ -60,7 +62,7 @@ class IMovementStatsProperty
 {
 public:
     virtual ~IMovementStatsProperty() = default;
-    CMovementStatsProperty* GetOriginal() { return reinterpret_cast<CMovementStatsProperty*>(IEntityInstance::GetOriginal()); }
+    virtual CMovementStatsProperty* GetOriginal() const = 0;
 
     virtual int32_t& UseCounter() = 0;
     virtual void UseCounterUpdated() = 0;

@@ -63,7 +63,6 @@ class IMarkupVolumeTagged_NavGame : public virtual IMarkupVolumeWithRef
 {
 public:
     virtual ~IMarkupVolumeTagged_NavGame() = default;
-    CMarkupVolumeTagged_NavGame* GetOriginal() { return reinterpret_cast<CMarkupVolumeTagged_NavGame*>(IEntityInstance::GetOriginal()); }
 
     virtual ::NavScopeFlags_t& Scopes() = 0;
     virtual void ScopesUpdated() = 0;

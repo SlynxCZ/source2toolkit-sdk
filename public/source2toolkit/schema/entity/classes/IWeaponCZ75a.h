@@ -61,7 +61,6 @@ class IWeaponCZ75a : public virtual ICSWeaponBaseGun
 {
 public:
     virtual ~IWeaponCZ75a() = default;
-    CWeaponCZ75a* GetOriginal() { return reinterpret_cast<CWeaponCZ75a*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& MagazineRemoved() = 0;
     virtual void MagazineRemovedUpdated() = 0;

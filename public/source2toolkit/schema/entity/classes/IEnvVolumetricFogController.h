@@ -62,7 +62,6 @@ class IEnvVolumetricFogController : public virtual IBaseEntity
 {
 public:
     virtual ~IEnvVolumetricFogController() = default;
-    CEnvVolumetricFogController* GetOriginal() { return reinterpret_cast<CEnvVolumetricFogController*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Scattering() = 0;
     virtual void ScatteringUpdated() = 0;

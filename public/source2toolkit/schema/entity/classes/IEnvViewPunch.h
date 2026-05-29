@@ -61,7 +61,6 @@ class IEnvViewPunch : public virtual IPointEntity
 {
 public:
     virtual ~IEnvViewPunch() = default;
-    CEnvViewPunch* GetOriginal() { return reinterpret_cast<CEnvViewPunch*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Radius() = 0;
     virtual void RadiusUpdated() = 0;

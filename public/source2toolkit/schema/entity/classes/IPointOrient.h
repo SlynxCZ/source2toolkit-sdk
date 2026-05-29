@@ -65,7 +65,6 @@ class IPointOrient : public virtual IBaseEntity
 {
 public:
     virtual ~IPointOrient() = default;
-    CPointOrient* GetOriginal() { return reinterpret_cast<CPointOrient*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& SpawnTargetName() = 0;
     virtual void SpawnTargetNameUpdated() = 0;

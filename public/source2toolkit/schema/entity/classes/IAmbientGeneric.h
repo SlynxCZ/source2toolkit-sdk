@@ -63,7 +63,6 @@ class IAmbientGeneric : public virtual IPointEntity
 {
 public:
     virtual ~IAmbientGeneric() = default;
-    CAmbientGeneric* GetOriginal() { return reinterpret_cast<CAmbientGeneric*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Radius() = 0;
     virtual void RadiusUpdated() = 0;

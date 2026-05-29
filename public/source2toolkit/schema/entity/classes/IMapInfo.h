@@ -61,7 +61,6 @@ class IMapInfo : public virtual IPointEntity
 {
 public:
     virtual ~IMapInfo() = default;
-    CMapInfo* GetOriginal() { return reinterpret_cast<CMapInfo*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& BuyingStatus() = 0;
     virtual void BuyingStatusUpdated() = 0;

@@ -61,7 +61,6 @@ class ITriggerMultiple : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerMultiple() = default;
-    CTriggerMultiple* GetOriginal() { return reinterpret_cast<CTriggerMultiple*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnTrigger() = 0;
     virtual void OnTriggerUpdated() = 0;

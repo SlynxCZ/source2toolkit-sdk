@@ -61,7 +61,6 @@ class ICSGameModeRules_ArmsRace : public virtual ICSGameModeRules
 {
 public:
     virtual ~ICSGameModeRules_ArmsRace() = default;
-    CCSGameModeRules_ArmsRace* GetOriginal() { return reinterpret_cast<CCSGameModeRules_ArmsRace*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<CUtlString>& WeaponSequence() = 0;
     virtual void WeaponSequenceUpdated() = 0;

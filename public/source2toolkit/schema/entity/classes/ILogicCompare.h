@@ -61,7 +61,6 @@ class ILogicCompare : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicCompare() = default;
-    CLogicCompare* GetOriginal() { return reinterpret_cast<CLogicCompare*>(IEntityInstance::GetOriginal()); }
 
     virtual float& InValue() = 0;
     virtual void InValueUpdated() = 0;

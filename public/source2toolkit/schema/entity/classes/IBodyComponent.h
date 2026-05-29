@@ -53,15 +53,16 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CBodyComponent;
-class CEntityInstance*;
 class CGameSceneNode;
 
 class IBodyComponent
 {
 public:
     virtual ~IBodyComponent() = default;
-    CBodyComponent* GetOriginal() { return reinterpret_cast<CBodyComponent*>(IEntityInstance::GetOriginal()); }
+    virtual CBodyComponent* GetOriginal() const = 0;
 
     virtual CGameSceneNode*& SceneNode() = 0;
     virtual void SceneNodeUpdated() = 0;

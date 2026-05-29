@@ -61,7 +61,6 @@ class IChangeLevel : public virtual IBaseTrigger
 {
 public:
     virtual ~IChangeLevel() = default;
-    CChangeLevel* GetOriginal() { return reinterpret_cast<CChangeLevel*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlString& MapName() = 0;
     virtual void MapNameUpdated() = 0;

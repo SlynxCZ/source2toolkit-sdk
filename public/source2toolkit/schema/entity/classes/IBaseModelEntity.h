@@ -69,7 +69,6 @@ class IBaseModelEntity : public virtual IBaseEntity
 {
 public:
     virtual ~IBaseModelEntity() = default;
-    CBaseModelEntity* GetOriginal() { return reinterpret_cast<CBaseModelEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual CRenderComponent*& RenderComponent() = 0;
     virtual void RenderComponentUpdated() = 0;
@@ -127,8 +126,6 @@ public:
     virtual void RenderToCubemapsUpdated() = 0;
     virtual bool& NoInterpolate() = 0;
     virtual void NoInterpolateUpdated() = 0;
-    virtual ::CCollisionProperty& Collision() = 0;
-    virtual void CollisionUpdated() = 0;
     virtual ::CGlowProperty& Glow() = 0;
     virtual void GlowUpdated() = 0;
     virtual float& GlowBackfaceMult() = 0;

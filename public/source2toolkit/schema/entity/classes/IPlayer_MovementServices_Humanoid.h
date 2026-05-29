@@ -61,7 +61,6 @@ class IPlayer_MovementServices_Humanoid : public virtual IPlayer_MovementService
 {
 public:
     virtual ~IPlayer_MovementServices_Humanoid() = default;
-    CPlayer_MovementServices_Humanoid* GetOriginal() { return reinterpret_cast<CPlayer_MovementServices_Humanoid*>(IEntityInstance::GetOriginal()); }
 
     virtual float& StepSoundTime() = 0;
     virtual void StepSoundTimeUpdated() = 0;

@@ -62,7 +62,6 @@ class IPointPrefab : public virtual IServerOnlyPointEntity
 {
 public:
     virtual ~IPointPrefab() = default;
-    CPointPrefab* GetOriginal() { return reinterpret_cast<CPointPrefab*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& TargetMapName() = 0;
     virtual void TargetMapNameUpdated() = 0;

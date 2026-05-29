@@ -61,7 +61,6 @@ class ICommentaryViewPosition : public virtual ISprite
 {
 public:
     virtual ~ICommentaryViewPosition() = default;
-    CCommentaryViewPosition* GetOriginal() { return reinterpret_cast<CCommentaryViewPosition*>(IEntityInstance::GetOriginal()); }
 
     static ICommentaryViewPosition* FromOriginal(CCommentaryViewPosition* p);
 };

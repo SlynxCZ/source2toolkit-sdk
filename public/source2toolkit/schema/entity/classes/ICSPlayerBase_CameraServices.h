@@ -62,7 +62,6 @@ class ICSPlayerBase_CameraServices : public virtual IPlayer_CameraServices
 {
 public:
     virtual ~ICSPlayerBase_CameraServices() = default;
-    CCSPlayerBase_CameraServices* GetOriginal() { return reinterpret_cast<CCSPlayerBase_CameraServices*>(IEntityInstance::GetOriginal()); }
 
     virtual uint32_t& FOV() = 0;
     virtual void FOVUpdated() = 0;

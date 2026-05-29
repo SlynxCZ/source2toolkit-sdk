@@ -61,7 +61,6 @@ class ILogicRelay : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicRelay() = default;
-    CLogicRelay* GetOriginal() { return reinterpret_cast<CLogicRelay*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnSpawn() = 0;
     virtual void OnSpawnUpdated() = 0;

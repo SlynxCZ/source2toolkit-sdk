@@ -61,7 +61,6 @@ class ICSPetPlacement : public virtual IBaseEntity
 {
 public:
     virtual ~ICSPetPlacement() = default;
-    CCSPetPlacement* GetOriginal() { return reinterpret_cast<CCSPetPlacement*>(IEntityInstance::GetOriginal()); }
 
     static ICSPetPlacement* FromOriginal(CCSPetPlacement* p);
 };

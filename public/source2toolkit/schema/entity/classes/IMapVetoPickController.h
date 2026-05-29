@@ -61,7 +61,6 @@ class IMapVetoPickController : public virtual IBaseEntity
 {
 public:
     virtual ~IMapVetoPickController() = default;
-    CMapVetoPickController* GetOriginal() { return reinterpret_cast<CMapVetoPickController*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& PlayedIntroVcd() = 0;
     virtual void PlayedIntroVcdUpdated() = 0;

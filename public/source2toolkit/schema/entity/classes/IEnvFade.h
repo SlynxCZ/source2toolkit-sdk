@@ -61,7 +61,6 @@ class IEnvFade : public virtual ILogicalEntity
 {
 public:
     virtual ~IEnvFade() = default;
-    CEnvFade* GetOriginal() { return reinterpret_cast<CEnvFade*>(IEntityInstance::GetOriginal()); }
 
     virtual Color& FadeColor() = 0;
     virtual void FadeColorUpdated() = 0;

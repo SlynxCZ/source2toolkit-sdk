@@ -61,7 +61,6 @@ class ISoundAreaEntityBase : public virtual IBaseEntity
 {
 public:
     virtual ~ISoundAreaEntityBase() = default;
-    CSoundAreaEntityBase* GetOriginal() { return reinterpret_cast<CSoundAreaEntityBase*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;

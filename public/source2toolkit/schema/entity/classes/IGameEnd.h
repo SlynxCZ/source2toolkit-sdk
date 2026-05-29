@@ -61,7 +61,6 @@ class IGameEnd : public virtual IRulePointEntity
 {
 public:
     virtual ~IGameEnd() = default;
-    CGameEnd* GetOriginal() { return reinterpret_cast<CGameEnd*>(IEntityInstance::GetOriginal()); }
 
     static IGameEnd* FromOriginal(CGameEnd* p);
 };

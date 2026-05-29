@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CConstantForceController;
 
 class IConstantForceController
 {
 public:
     virtual ~IConstantForceController() = default;
-    CConstantForceController* GetOriginal() { return reinterpret_cast<CConstantForceController*>(IEntityInstance::GetOriginal()); }
+    virtual CConstantForceController* GetOriginal() const = 0;
 
     virtual Vector& Linear() = 0;
     virtual void LinearUpdated() = 0;

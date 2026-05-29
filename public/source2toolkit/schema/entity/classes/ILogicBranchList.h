@@ -64,7 +64,6 @@ class ILogicBranchList : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicBranchList() = default;
-    CLogicBranchList* GetOriginal() { return reinterpret_cast<CLogicBranchList*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge* LogicBranchNames() = 0;
     virtual CUtlVector<CHandle<CBaseEntity>>& LogicBranchList() = 0;

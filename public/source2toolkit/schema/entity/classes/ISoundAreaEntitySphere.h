@@ -61,7 +61,6 @@ class ISoundAreaEntitySphere : public virtual ISoundAreaEntityBase
 {
 public:
     virtual ~ISoundAreaEntitySphere() = default;
-    CSoundAreaEntitySphere* GetOriginal() { return reinterpret_cast<CSoundAreaEntitySphere*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Radius() = 0;
     virtual void RadiusUpdated() = 0;

@@ -53,16 +53,17 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CBaseAnimGraphDestructibleParts_GraphController;
 class CBaseModelEntity;
 class CDestructiblePartsComponent;
-class CEntityInstance*;
 
 class IDestructiblePartsComponent
 {
 public:
     virtual ~IDestructiblePartsComponent() = default;
-    CDestructiblePartsComponent* GetOriginal() { return reinterpret_cast<CDestructiblePartsComponent*>(IEntityInstance::GetOriginal()); }
+    virtual CDestructiblePartsComponent* GetOriginal() const = 0;
 
     virtual ::CEntityInstance*& __m_pChainEntity() = 0;
     virtual void __m_pChainEntityUpdated() = 0;

@@ -61,7 +61,6 @@ class IEnvBeverage : public virtual IBaseEntity
 {
 public:
     virtual ~IEnvBeverage() = default;
-    CEnvBeverage* GetOriginal() { return reinterpret_cast<CEnvBeverage*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& CanInDispenser() = 0;
     virtual void CanInDispenserUpdated() = 0;

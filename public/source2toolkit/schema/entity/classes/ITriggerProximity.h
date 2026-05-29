@@ -62,7 +62,6 @@ class ITriggerProximity : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerProximity() = default;
-    CTriggerProximity* GetOriginal() { return reinterpret_cast<CTriggerProximity*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& MeasureTarget() = 0;
     virtual void MeasureTargetUpdated() = 0;

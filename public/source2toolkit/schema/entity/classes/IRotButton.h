@@ -61,7 +61,6 @@ class IRotButton : public virtual IBaseButton
 {
 public:
     virtual ~IRotButton() = default;
-    CRotButton* GetOriginal() { return reinterpret_cast<CRotButton*>(IEntityInstance::GetOriginal()); }
 
     static IRotButton* FromOriginal(CRotButton* p);
 };

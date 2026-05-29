@@ -61,7 +61,6 @@ class ITriggerRemove : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerRemove() = default;
-    CTriggerRemove* GetOriginal() { return reinterpret_cast<CTriggerRemove*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnRemove() = 0;
     virtual void OnRemoveUpdated() = 0;

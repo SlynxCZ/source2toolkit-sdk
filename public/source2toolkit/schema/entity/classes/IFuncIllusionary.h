@@ -61,7 +61,6 @@ class IFuncIllusionary : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncIllusionary() = default;
-    CFuncIllusionary* GetOriginal() { return reinterpret_cast<CFuncIllusionary*>(IEntityInstance::GetOriginal()); }
 
     static IFuncIllusionary* FromOriginal(CFuncIllusionary* p);
 };

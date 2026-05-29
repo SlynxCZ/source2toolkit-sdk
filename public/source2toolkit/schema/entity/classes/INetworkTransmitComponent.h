@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CNetworkTransmitComponent;
 
 class INetworkTransmitComponent
 {
 public:
     virtual ~INetworkTransmitComponent() = default;
-    CNetworkTransmitComponent* GetOriginal() { return reinterpret_cast<CNetworkTransmitComponent*>(IEntityInstance::GetOriginal()); }
+    virtual CNetworkTransmitComponent* GetOriginal() const = 0;
 
     virtual uint8_t& TransmitStateOwnedCounter() = 0;
     virtual void TransmitStateOwnedCounterUpdated() = 0;

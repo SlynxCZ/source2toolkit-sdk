@@ -66,7 +66,6 @@ class IPropDoorRotating : public virtual IBasePropDoor
 {
 public:
     virtual ~IPropDoorRotating() = default;
-    CPropDoorRotating* GetOriginal() { return reinterpret_cast<CPropDoorRotating*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& Axis() = 0;
     virtual void AxisUpdated() = 0;

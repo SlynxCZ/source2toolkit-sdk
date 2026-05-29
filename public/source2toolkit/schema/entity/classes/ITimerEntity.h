@@ -61,7 +61,6 @@ class ITimerEntity : public virtual ILogicalEntity
 {
 public:
     virtual ~ITimerEntity() = default;
-    CTimerEntity* GetOriginal() { return reinterpret_cast<CTimerEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnTimer() = 0;
     virtual void OnTimerUpdated() = 0;

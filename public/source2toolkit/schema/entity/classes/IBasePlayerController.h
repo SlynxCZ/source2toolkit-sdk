@@ -66,7 +66,6 @@ class IBasePlayerController : public virtual IBaseEntity
 {
 public:
     virtual ~IBasePlayerController() = default;
-    CBasePlayerController* GetOriginal() { return reinterpret_cast<CBasePlayerController*>(IEntityInstance::GetOriginal()); }
 
     virtual uint64_t& InButtonsWhichAreToggles() = 0;
     virtual void InButtonsWhichAreTogglesUpdated() = 0;

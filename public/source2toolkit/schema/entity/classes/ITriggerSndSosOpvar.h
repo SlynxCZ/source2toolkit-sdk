@@ -62,7 +62,6 @@ class ITriggerSndSosOpvar : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerSndSosOpvar() = default;
-    CTriggerSndSosOpvar* GetOriginal() { return reinterpret_cast<CTriggerSndSosOpvar*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<CHandle<CBaseEntity>>& TouchingPlayers() = 0;
     virtual void TouchingPlayersUpdated() = 0;

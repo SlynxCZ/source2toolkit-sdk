@@ -61,7 +61,6 @@ class IMolotovGrenade : public virtual IBaseCSGrenade
 {
 public:
     virtual ~IMolotovGrenade() = default;
-    CMolotovGrenade* GetOriginal() { return reinterpret_cast<CMolotovGrenade*>(IEntityInstance::GetOriginal()); }
 
     static IMolotovGrenade* FromOriginal(CMolotovGrenade* p);
 };

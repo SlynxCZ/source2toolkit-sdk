@@ -64,7 +64,6 @@ class IBasePlayerWeaponVData : public virtual IEntitySubclassVDataBase
 {
 public:
     virtual ~IBasePlayerWeaponVData() = default;
-    CBasePlayerWeaponVData* GetOriginal() { return reinterpret_cast<CBasePlayerWeaponVData*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& BuiltRightHanded() = 0;
     virtual void BuiltRightHandedUpdated() = 0;

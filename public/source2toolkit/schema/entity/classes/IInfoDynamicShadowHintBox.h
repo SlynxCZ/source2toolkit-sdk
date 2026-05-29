@@ -61,7 +61,6 @@ class IInfoDynamicShadowHintBox : public virtual IInfoDynamicShadowHint
 {
 public:
     virtual ~IInfoDynamicShadowHintBox() = default;
-    CInfoDynamicShadowHintBox* GetOriginal() { return reinterpret_cast<CInfoDynamicShadowHintBox*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& BoxMins() = 0;
     virtual void BoxMinsUpdated() = 0;

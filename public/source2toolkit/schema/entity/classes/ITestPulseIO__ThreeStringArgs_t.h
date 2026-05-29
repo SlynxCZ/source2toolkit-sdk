@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CTestPulseIO__ThreeStringArgs_t;
 
 class ITestPulseIO__ThreeStringArgs_t
 {
 public:
     virtual ~ITestPulseIO__ThreeStringArgs_t() = default;
-    CTestPulseIO__ThreeStringArgs_t* GetOriginal() { return reinterpret_cast<CTestPulseIO__ThreeStringArgs_t*>(IEntityInstance::GetOriginal()); }
+    virtual CTestPulseIO__ThreeStringArgs_t* GetOriginal() const = 0;
 
     virtual CUtlString& StrArg1() = 0;
     virtual void StrArg1Updated() = 0;

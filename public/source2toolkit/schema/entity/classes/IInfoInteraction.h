@@ -63,7 +63,6 @@ class IInfoInteraction : public virtual IPointEntity
 {
 public:
     virtual ~IInfoInteraction() = default;
-    CInfoInteraction* GetOriginal() { return reinterpret_cast<CInfoInteraction*>(IEntityInstance::GetOriginal()); }
 
     virtual ::SceneRequestHandle_t& SceneRequest() = 0;
     virtual void SceneRequestUpdated() = 0;

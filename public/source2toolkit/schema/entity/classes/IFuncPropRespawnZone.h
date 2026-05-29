@@ -61,7 +61,6 @@ class IFuncPropRespawnZone : public virtual IBaseEntity
 {
 public:
     virtual ~IFuncPropRespawnZone() = default;
-    CFuncPropRespawnZone* GetOriginal() { return reinterpret_cast<CFuncPropRespawnZone*>(IEntityInstance::GetOriginal()); }
 
     static IFuncPropRespawnZone* FromOriginal(CFuncPropRespawnZone* p);
 };

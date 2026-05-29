@@ -61,7 +61,6 @@ class IWeaponGalilAR : public virtual ICSWeaponBaseGun
 {
 public:
     virtual ~IWeaponGalilAR() = default;
-    CWeaponGalilAR* GetOriginal() { return reinterpret_cast<CWeaponGalilAR*>(IEntityInstance::GetOriginal()); }
 
     static IWeaponGalilAR* FromOriginal(CWeaponGalilAR* p);
 };

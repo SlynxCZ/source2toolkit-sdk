@@ -61,7 +61,6 @@ class IServerOnlyPointEntity : public virtual IServerOnlyEntity
 {
 public:
     virtual ~IServerOnlyPointEntity() = default;
-    CServerOnlyPointEntity* GetOriginal() { return reinterpret_cast<CServerOnlyPointEntity*>(IEntityInstance::GetOriginal()); }
 
     static IServerOnlyPointEntity* FromOriginal(CServerOnlyPointEntity* p);
 };

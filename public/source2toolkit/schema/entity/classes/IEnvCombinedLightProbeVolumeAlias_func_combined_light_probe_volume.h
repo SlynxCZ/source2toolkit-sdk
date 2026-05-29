@@ -61,7 +61,6 @@ class IEnvCombinedLightProbeVolumeAlias_func_combined_light_probe_volume : publi
 {
 public:
     virtual ~IEnvCombinedLightProbeVolumeAlias_func_combined_light_probe_volume() = default;
-    CEnvCombinedLightProbeVolumeAlias_func_combined_light_probe_volume* GetOriginal() { return reinterpret_cast<CEnvCombinedLightProbeVolumeAlias_func_combined_light_probe_volume*>(IEntityInstance::GetOriginal()); }
 
     static IEnvCombinedLightProbeVolumeAlias_func_combined_light_probe_volume* FromOriginal(CEnvCombinedLightProbeVolumeAlias_func_combined_light_probe_volume* p);
 };

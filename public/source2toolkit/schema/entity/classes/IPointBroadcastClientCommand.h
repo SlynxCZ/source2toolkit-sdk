@@ -61,7 +61,6 @@ class IPointBroadcastClientCommand : public virtual IPointEntity
 {
 public:
     virtual ~IPointBroadcastClientCommand() = default;
-    CPointBroadcastClientCommand* GetOriginal() { return reinterpret_cast<CPointBroadcastClientCommand*>(IEntityInstance::GetOriginal()); }
 
     static IPointBroadcastClientCommand* FromOriginal(CPointBroadcastClientCommand* p);
 };

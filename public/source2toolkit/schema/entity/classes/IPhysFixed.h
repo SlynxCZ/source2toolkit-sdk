@@ -61,7 +61,6 @@ class IPhysFixed : public virtual IPhysConstraint
 {
 public:
     virtual ~IPhysFixed() = default;
-    CPhysFixed* GetOriginal() { return reinterpret_cast<CPhysFixed*>(IEntityInstance::GetOriginal()); }
 
     virtual float& LinearFrequency() = 0;
     virtual void LinearFrequencyUpdated() = 0;

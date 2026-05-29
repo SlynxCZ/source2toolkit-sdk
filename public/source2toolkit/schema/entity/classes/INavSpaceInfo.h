@@ -61,7 +61,6 @@ class INavSpaceInfo : public virtual IPointEntity
 {
 public:
     virtual ~INavSpaceInfo() = default;
-    CNavSpaceInfo* GetOriginal() { return reinterpret_cast<CNavSpaceInfo*>(IEntityInstance::GetOriginal()); }
 
     static INavSpaceInfo* FromOriginal(CNavSpaceInfo* p);
 };

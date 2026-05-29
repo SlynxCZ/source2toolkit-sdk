@@ -61,7 +61,6 @@ class IDynamicPropAlias_prop_dynamic_override : public virtual IDynamicProp
 {
 public:
     virtual ~IDynamicPropAlias_prop_dynamic_override() = default;
-    CDynamicPropAlias_prop_dynamic_override* GetOriginal() { return reinterpret_cast<CDynamicPropAlias_prop_dynamic_override*>(IEntityInstance::GetOriginal()); }
 
     static IDynamicPropAlias_prop_dynamic_override* FromOriginal(CDynamicPropAlias_prop_dynamic_override* p);
 };

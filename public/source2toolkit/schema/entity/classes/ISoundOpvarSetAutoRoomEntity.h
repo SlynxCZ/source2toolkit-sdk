@@ -63,7 +63,6 @@ class ISoundOpvarSetAutoRoomEntity : public virtual ISoundOpvarSetPointEntity
 {
 public:
     virtual ~ISoundOpvarSetAutoRoomEntity() = default;
-    CSoundOpvarSetAutoRoomEntity* GetOriginal() { return reinterpret_cast<CSoundOpvarSetAutoRoomEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<SoundOpvarTraceResult_t>& TraceResults() = 0;
     virtual void TraceResultsUpdated() = 0;

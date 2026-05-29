@@ -61,7 +61,6 @@ class IPointCamera : public virtual IBaseEntity
 {
 public:
     virtual ~IPointCamera() = default;
-    CPointCamera* GetOriginal() { return reinterpret_cast<CPointCamera*>(IEntityInstance::GetOriginal()); }
 
     virtual float& FOV() = 0;
     virtual void FOVUpdated() = 0;

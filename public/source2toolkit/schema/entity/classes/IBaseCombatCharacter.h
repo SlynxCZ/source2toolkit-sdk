@@ -66,7 +66,6 @@ class IBaseCombatCharacter : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IBaseCombatCharacter() = default;
-    CBaseCombatCharacter* GetOriginal() { return reinterpret_cast<CBaseCombatCharacter*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& ForceServerRagdoll() = 0;
     virtual void ForceServerRagdollUpdated() = 0;

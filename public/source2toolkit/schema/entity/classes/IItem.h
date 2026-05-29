@@ -61,7 +61,6 @@ class IItem : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IItem() = default;
-    CItem* GetOriginal() { return reinterpret_cast<CItem*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnPlayerTouch() = 0;
     virtual void OnPlayerTouchUpdated() = 0;

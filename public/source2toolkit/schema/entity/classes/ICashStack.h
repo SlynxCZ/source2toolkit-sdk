@@ -61,7 +61,6 @@ class ICashStack : public virtual IBaseModelEntity
 {
 public:
     virtual ~ICashStack() = default;
-    CCashStack* GetOriginal() { return reinterpret_cast<CCashStack*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& CashStackValue() = 0;
     virtual void CashStackValueUpdated() = 0;

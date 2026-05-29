@@ -63,7 +63,6 @@ class ILogicNavigation : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicNavigation() = default;
-    CLogicNavigation* GetOriginal() { return reinterpret_cast<CLogicNavigation*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& IsOn() = 0;
     virtual void IsOnUpdated() = 0;

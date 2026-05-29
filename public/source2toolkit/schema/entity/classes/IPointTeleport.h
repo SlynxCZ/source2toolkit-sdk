@@ -61,7 +61,6 @@ class IPointTeleport : public virtual IServerOnlyPointEntity
 {
 public:
     virtual ~IPointTeleport() = default;
-    CPointTeleport* GetOriginal() { return reinterpret_cast<CPointTeleport*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& SaveOrigin() = 0;
     virtual void SaveOriginUpdated() = 0;

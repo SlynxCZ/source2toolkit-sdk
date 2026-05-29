@@ -62,7 +62,6 @@ class IGradientFog : public virtual IBaseEntity
 {
 public:
     virtual ~IGradientFog() = default;
-    CGradientFog* GetOriginal() { return reinterpret_cast<CGradientFog*>(IEntityInstance::GetOriginal()); }
 
     virtual CStrongHandle<InfoForResourceTypeCTextureBase>& GradientFogTexture() = 0;
     virtual void GradientFogTextureUpdated() = 0;

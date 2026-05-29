@@ -53,6 +53,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CAI_Expresser;
 class CBaseModelEntity;
 
@@ -60,7 +62,7 @@ class IAI_Expresser
 {
 public:
     virtual ~IAI_Expresser() = default;
-    CAI_Expresser* GetOriginal() { return reinterpret_cast<CAI_Expresser*>(IEntityInstance::GetOriginal()); }
+    virtual CAI_Expresser* GetOriginal() const = 0;
 
     virtual float& StopTalkTime() = 0;
     virtual void StopTalkTimeUpdated() = 0;

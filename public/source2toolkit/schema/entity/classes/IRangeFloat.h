@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CRangeFloat;
 
 class IRangeFloat
 {
 public:
     virtual ~IRangeFloat() = default;
-    CRangeFloat* GetOriginal() { return reinterpret_cast<CRangeFloat*>(IEntityInstance::GetOriginal()); }
+    virtual CRangeFloat* GetOriginal() const = 0;
 
     virtual float* Value() = 0;
     static IRangeFloat* FromOriginal(CRangeFloat* p);

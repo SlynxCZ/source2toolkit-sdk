@@ -61,7 +61,6 @@ class IHEGrenadeProjectile : public virtual IBaseCSGrenadeProjectile
 {
 public:
     virtual ~IHEGrenadeProjectile() = default;
-    CHEGrenadeProjectile* GetOriginal() { return reinterpret_cast<CHEGrenadeProjectile*>(IEntityInstance::GetOriginal()); }
 
     static IHEGrenadeProjectile* FromOriginal(CHEGrenadeProjectile* p);
 };

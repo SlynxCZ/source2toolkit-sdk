@@ -63,7 +63,6 @@ class IEconEntity : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IEconEntity() = default;
-    CEconEntity* GetOriginal() { return reinterpret_cast<CEconEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CAttributeContainer& AttributeManager() = 0;
     virtual void AttributeManagerUpdated() = 0;

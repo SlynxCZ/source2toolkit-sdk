@@ -63,7 +63,6 @@ class IBlood : public virtual IPointEntity
 {
 public:
     virtual ~IBlood() = default;
-    CBlood* GetOriginal() { return reinterpret_cast<CBlood*>(IEntityInstance::GetOriginal()); }
 
     virtual QAngle& SprayAngles() = 0;
     virtual void SprayAnglesUpdated() = 0;

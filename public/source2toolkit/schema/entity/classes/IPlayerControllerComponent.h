@@ -53,8 +53,9 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CCSPlayerController;
-class CEntityInstance*;
 class CPlayerControllerComponent;
 class ICSPlayerController;
 
@@ -62,7 +63,7 @@ class IPlayerControllerComponent
 {
 public:
     virtual ~IPlayerControllerComponent() = default;
-    CPlayerControllerComponent* GetOriginal() { return reinterpret_cast<CPlayerControllerComponent*>(IEntityInstance::GetOriginal()); }
+    virtual CPlayerControllerComponent* GetOriginal() const = 0;
 
     virtual ::CEntityInstance*& __m_pChainEntity() = 0;
     virtual void __m_pChainEntityUpdated() = 0;

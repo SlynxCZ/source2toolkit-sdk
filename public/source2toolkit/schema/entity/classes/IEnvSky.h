@@ -62,7 +62,6 @@ class IEnvSky : public virtual IBaseModelEntity
 {
 public:
     virtual ~IEnvSky() = default;
-    CEnvSky* GetOriginal() { return reinterpret_cast<CEnvSky*>(IEntityInstance::GetOriginal()); }
 
     virtual CStrongHandle<InfoForResourceTypeIMaterial2>& SkyMaterial() = 0;
     virtual void SkyMaterialUpdated() = 0;

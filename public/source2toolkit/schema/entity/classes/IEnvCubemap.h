@@ -62,7 +62,6 @@ class IEnvCubemap : public virtual IBaseEntity
 {
 public:
     virtual ~IEnvCubemap() = default;
-    CEnvCubemap* GetOriginal() { return reinterpret_cast<CEnvCubemap*>(IEntityInstance::GetOriginal()); }
 
     virtual CStrongHandle<InfoForResourceTypeCTextureBase>& Entity_hCubemapTexture() = 0;
     virtual void Entity_hCubemapTextureUpdated() = 0;

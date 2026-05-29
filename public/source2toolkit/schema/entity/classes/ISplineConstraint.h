@@ -63,7 +63,6 @@ class ISplineConstraint : public virtual IPhysConstraint
 {
 public:
     virtual ~ISplineConstraint() = default;
-    CSplineConstraint* GetOriginal() { return reinterpret_cast<CSplineConstraint*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& AnchorOffsetRestore() = 0;
     virtual void AnchorOffsetRestoreUpdated() = 0;

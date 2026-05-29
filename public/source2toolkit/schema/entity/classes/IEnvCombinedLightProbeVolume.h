@@ -62,7 +62,6 @@ class IEnvCombinedLightProbeVolume : public virtual IBaseEntity
 {
 public:
     virtual ~IEnvCombinedLightProbeVolume() = default;
-    CEnvCombinedLightProbeVolume* GetOriginal() { return reinterpret_cast<CEnvCombinedLightProbeVolume*>(IEntityInstance::GetOriginal()); }
 
     virtual Color& Entity_Color() = 0;
     virtual void Entity_ColorUpdated() = 0;

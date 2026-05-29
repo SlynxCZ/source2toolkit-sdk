@@ -61,7 +61,6 @@ class IMarkupVolume : public virtual IBaseModelEntity
 {
 public:
     virtual ~IMarkupVolume() = default;
-    CMarkupVolume* GetOriginal() { return reinterpret_cast<CMarkupVolume*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;

@@ -61,7 +61,6 @@ class ISoundOpvarSetPointEntity : public virtual ISoundOpvarSetPointBase
 {
 public:
     virtual ~ISoundOpvarSetPointEntity() = default;
-    CSoundOpvarSetPointEntity* GetOriginal() { return reinterpret_cast<CSoundOpvarSetPointEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnEnter() = 0;
     virtual void OnEnterUpdated() = 0;

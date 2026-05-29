@@ -61,7 +61,6 @@ class IEnvTilt : public virtual IPointEntity
 {
 public:
     virtual ~IEnvTilt() = default;
-    CEnvTilt* GetOriginal() { return reinterpret_cast<CEnvTilt*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Duration() = 0;
     virtual void DurationUpdated() = 0;

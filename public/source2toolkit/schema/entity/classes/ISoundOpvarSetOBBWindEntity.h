@@ -61,7 +61,6 @@ class ISoundOpvarSetOBBWindEntity : public virtual ISoundOpvarSetPointBase
 {
 public:
     virtual ~ISoundOpvarSetOBBWindEntity() = default;
-    CSoundOpvarSetOBBWindEntity* GetOriginal() { return reinterpret_cast<CSoundOpvarSetOBBWindEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& Mins() = 0;
     virtual void MinsUpdated() = 0;

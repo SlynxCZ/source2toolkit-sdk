@@ -53,6 +53,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CBaseEntity;
 class CEnvWindShared;
 
@@ -60,7 +62,7 @@ class IEnvWindShared
 {
 public:
     virtual ~IEnvWindShared() = default;
-    CEnvWindShared* GetOriginal() { return reinterpret_cast<CEnvWindShared*>(IEntityInstance::GetOriginal()); }
+    virtual CEnvWindShared* GetOriginal() const = 0;
 
     virtual float& StartTime() = 0;
     virtual void StartTimeUpdated() = 0;

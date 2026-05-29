@@ -61,7 +61,6 @@ class IScriptTriggerPush : public virtual ITriggerPush
 {
 public:
     virtual ~IScriptTriggerPush() = default;
-    CScriptTriggerPush* GetOriginal() { return reinterpret_cast<CScriptTriggerPush*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& Extent() = 0;
     virtual void ExtentUpdated() = 0;

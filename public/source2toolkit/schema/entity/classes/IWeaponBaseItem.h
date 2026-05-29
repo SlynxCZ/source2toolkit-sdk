@@ -61,7 +61,6 @@ class IWeaponBaseItem : public virtual ICSWeaponBase
 {
 public:
     virtual ~IWeaponBaseItem() = default;
-    CWeaponBaseItem* GetOriginal() { return reinterpret_cast<CWeaponBaseItem*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& SequenceInProgress() = 0;
     virtual void SequenceInProgressUpdated() = 0;

@@ -61,7 +61,6 @@ class INullEntity : public virtual IBaseEntity
 {
 public:
     virtual ~INullEntity() = default;
-    CNullEntity* GetOriginal() { return reinterpret_cast<CNullEntity*>(IEntityInstance::GetOriginal()); }
 
     static INullEntity* FromOriginal(CNullEntity* p);
 };

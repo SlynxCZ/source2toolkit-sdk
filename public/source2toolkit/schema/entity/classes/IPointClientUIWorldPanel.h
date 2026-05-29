@@ -61,7 +61,6 @@ class IPointClientUIWorldPanel : public virtual IBaseClientUIEntity
 {
 public:
     virtual ~IPointClientUIWorldPanel() = default;
-    CPointClientUIWorldPanel* GetOriginal() { return reinterpret_cast<CPointClientUIWorldPanel*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& IgnoreInput() = 0;
     virtual void IgnoreInputUpdated() = 0;

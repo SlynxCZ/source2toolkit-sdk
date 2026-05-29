@@ -53,6 +53,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CDecalGroupVData;
 class DecalGroupOption_t;
 
@@ -60,7 +62,7 @@ class IDecalGroupVData
 {
 public:
     virtual ~IDecalGroupVData() = default;
-    CDecalGroupVData* GetOriginal() { return reinterpret_cast<CDecalGroupVData*>(IEntityInstance::GetOriginal()); }
+    virtual CDecalGroupVData* GetOriginal() const = 0;
 
     virtual CUtlVector<DecalGroupOption_t>& Options() = 0;
     virtual void OptionsUpdated() = 0;

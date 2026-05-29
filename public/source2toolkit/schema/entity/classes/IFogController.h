@@ -62,7 +62,6 @@ class IFogController : public virtual IBaseEntity
 {
 public:
     virtual ~IFogController() = default;
-    CFogController* GetOriginal() { return reinterpret_cast<CFogController*>(IEntityInstance::GetOriginal()); }
 
     virtual ::fogparams_t& Fog() = 0;
     virtual void FogUpdated() = 0;

@@ -61,7 +61,6 @@ class IEnvHudHint : public virtual IPointEntity
 {
 public:
     virtual ~IEnvHudHint() = default;
-    CEnvHudHint* GetOriginal() { return reinterpret_cast<CEnvHudHint*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Message() = 0;
     virtual void MessageUpdated() = 0;

@@ -62,7 +62,6 @@ class ILogicMeasureMovement : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicMeasureMovement() = default;
-    CLogicMeasureMovement* GetOriginal() { return reinterpret_cast<CLogicMeasureMovement*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& StrMeasureTarget() = 0;
     virtual void StrMeasureTargetUpdated() = 0;

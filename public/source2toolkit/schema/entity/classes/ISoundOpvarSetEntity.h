@@ -61,7 +61,6 @@ class ISoundOpvarSetEntity : public virtual IBaseEntity
 {
 public:
     virtual ~ISoundOpvarSetEntity() = default;
-    CSoundOpvarSetEntity* GetOriginal() { return reinterpret_cast<CSoundOpvarSetEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& StackName() = 0;
     virtual void StackNameUpdated() = 0;

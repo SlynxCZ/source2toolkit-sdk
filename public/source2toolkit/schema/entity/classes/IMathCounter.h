@@ -61,7 +61,6 @@ class IMathCounter : public virtual ILogicalEntity
 {
 public:
     virtual ~IMathCounter() = default;
-    CMathCounter* GetOriginal() { return reinterpret_cast<CMathCounter*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Min() = 0;
     virtual void MinUpdated() = 0;

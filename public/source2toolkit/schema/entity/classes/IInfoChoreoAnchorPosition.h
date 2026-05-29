@@ -53,6 +53,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 #include "../enums/CInfoChoreoLocatorShapeType_t.h"
 
 class CInfoChoreoAnchorPosition;
@@ -61,7 +63,7 @@ class IInfoChoreoAnchorPosition
 {
 public:
     virtual ~IInfoChoreoAnchorPosition() = default;
-    CInfoChoreoAnchorPosition* GetOriginal() { return reinterpret_cast<CInfoChoreoAnchorPosition*>(IEntityInstance::GetOriginal()); }
+    virtual CInfoChoreoAnchorPosition* GetOriginal() const = 0;
 
     virtual Vector& Origin() = 0;
     virtual void OriginUpdated() = 0;

@@ -62,7 +62,6 @@ class IEnvLaser : public virtual IBeam
 {
 public:
     virtual ~IEnvLaser() = default;
-    CEnvLaser* GetOriginal() { return reinterpret_cast<CEnvLaser*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& LaserTarget() = 0;
     virtual void LaserTargetUpdated() = 0;

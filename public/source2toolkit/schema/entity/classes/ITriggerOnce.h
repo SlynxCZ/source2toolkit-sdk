@@ -61,7 +61,6 @@ class ITriggerOnce : public virtual ITriggerMultiple
 {
 public:
     virtual ~ITriggerOnce() = default;
-    CTriggerOnce* GetOriginal() { return reinterpret_cast<CTriggerOnce*>(IEntityInstance::GetOriginal()); }
 
     static ITriggerOnce* FromOriginal(CTriggerOnce* p);
 };

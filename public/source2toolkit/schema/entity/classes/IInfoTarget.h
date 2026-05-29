@@ -61,7 +61,6 @@ class IInfoTarget : public virtual IPointEntity
 {
 public:
     virtual ~IInfoTarget() = default;
-    CInfoTarget* GetOriginal() { return reinterpret_cast<CInfoTarget*>(IEntityInstance::GetOriginal()); }
 
     static IInfoTarget* FromOriginal(CInfoTarget* p);
 };

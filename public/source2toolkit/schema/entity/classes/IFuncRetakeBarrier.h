@@ -61,7 +61,6 @@ class IFuncRetakeBarrier : public virtual IDynamicProp
 {
 public:
     virtual ~IFuncRetakeBarrier() = default;
-    CFuncRetakeBarrier* GetOriginal() { return reinterpret_cast<CFuncRetakeBarrier*>(IEntityInstance::GetOriginal()); }
 
     static IFuncRetakeBarrier* FromOriginal(CFuncRetakeBarrier* p);
 };

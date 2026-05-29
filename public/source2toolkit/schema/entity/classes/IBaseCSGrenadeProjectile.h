@@ -62,7 +62,6 @@ class IBaseCSGrenadeProjectile : public virtual IBaseGrenade
 {
 public:
     virtual ~IBaseCSGrenadeProjectile() = default;
-    CBaseCSGrenadeProjectile* GetOriginal() { return reinterpret_cast<CBaseCSGrenadeProjectile*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& InitialPosition() = 0;
     virtual void InitialPositionUpdated() = 0;

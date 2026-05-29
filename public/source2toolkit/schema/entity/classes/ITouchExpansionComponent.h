@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CTouchExpansionComponent;
 
 class ITouchExpansionComponent
 {
 public:
     virtual ~ITouchExpansionComponent() = default;
-    CTouchExpansionComponent* GetOriginal() { return reinterpret_cast<CTouchExpansionComponent*>(IEntityInstance::GetOriginal()); }
+    virtual CTouchExpansionComponent* GetOriginal() const = 0;
 
     static ITouchExpansionComponent* FromOriginal(CTouchExpansionComponent* p);
 };

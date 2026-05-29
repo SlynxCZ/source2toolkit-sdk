@@ -81,7 +81,6 @@ class IBaseEntity : public virtual IEntityInstance
 {
 public:
     virtual ~IBaseEntity() = default;
-    CBaseEntity* GetOriginal() { return reinterpret_cast<CBaseEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual CBodyComponent*& BodyComponent() = 0;
     virtual void BodyComponentUpdated() = 0;

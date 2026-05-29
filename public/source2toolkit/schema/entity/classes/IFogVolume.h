@@ -61,7 +61,6 @@ class IFogVolume : public virtual IServerOnlyModelEntity
 {
 public:
     virtual ~IFogVolume() = default;
-    CFogVolume* GetOriginal() { return reinterpret_cast<CFogVolume*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& FogName() = 0;
     virtual void FogNameUpdated() = 0;

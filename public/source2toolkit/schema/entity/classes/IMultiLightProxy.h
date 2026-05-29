@@ -62,7 +62,6 @@ class IMultiLightProxy : public virtual ILogicalEntity
 {
 public:
     virtual ~IMultiLightProxy() = default;
-    CMultiLightProxy* GetOriginal() { return reinterpret_cast<CMultiLightProxy*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& LightNameFilter() = 0;
     virtual void LightNameFilterUpdated() = 0;

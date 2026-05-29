@@ -64,7 +64,6 @@ class IPhysForce : public virtual IPointEntity
 {
 public:
     virtual ~IPhysForce() = default;
-    CPhysForce* GetOriginal() { return reinterpret_cast<CPhysForce*>(IEntityInstance::GetOriginal()); }
 
     virtual IPhysicsMotionController*& Controller() = 0;
     virtual void ControllerUpdated() = 0;

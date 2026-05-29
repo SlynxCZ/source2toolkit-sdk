@@ -61,7 +61,6 @@ class IWeaponNegev : public virtual ICSWeaponBaseGun
 {
 public:
     virtual ~IWeaponNegev() = default;
-    CWeaponNegev* GetOriginal() { return reinterpret_cast<CWeaponNegev*>(IEntityInstance::GetOriginal()); }
 
     static IWeaponNegev* FromOriginal(CWeaponNegev* p);
 };

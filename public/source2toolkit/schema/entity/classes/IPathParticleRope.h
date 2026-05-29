@@ -62,7 +62,6 @@ class IPathParticleRope : public virtual IBaseEntity
 {
 public:
     virtual ~IPathParticleRope() = default;
-    CPathParticleRope* GetOriginal() { return reinterpret_cast<CPathParticleRope*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& StartActive() = 0;
     virtual void StartActiveUpdated() = 0;

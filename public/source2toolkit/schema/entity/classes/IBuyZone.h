@@ -61,7 +61,6 @@ class IBuyZone : public virtual IBaseTrigger
 {
 public:
     virtual ~IBuyZone() = default;
-    CBuyZone* GetOriginal() { return reinterpret_cast<CBuyZone*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& LegacyTeamNum() = 0;
     virtual void LegacyTeamNumUpdated() = 0;

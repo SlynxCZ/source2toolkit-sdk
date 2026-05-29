@@ -61,7 +61,6 @@ class IFilterContext : public virtual IBaseFilter
 {
 public:
     virtual ~IFilterContext() = default;
-    CFilterContext* GetOriginal() { return reinterpret_cast<CFilterContext*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& FilterContext() = 0;
     virtual void FilterContextUpdated() = 0;

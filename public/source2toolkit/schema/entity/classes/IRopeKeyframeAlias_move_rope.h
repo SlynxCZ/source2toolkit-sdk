@@ -61,7 +61,6 @@ class IRopeKeyframeAlias_move_rope : public virtual IRopeKeyframe
 {
 public:
     virtual ~IRopeKeyframeAlias_move_rope() = default;
-    CRopeKeyframeAlias_move_rope* GetOriginal() { return reinterpret_cast<CRopeKeyframeAlias_move_rope*>(IEntityInstance::GetOriginal()); }
 
     static IRopeKeyframeAlias_move_rope* FromOriginal(CRopeKeyframeAlias_move_rope* p);
 };

@@ -61,7 +61,6 @@ class ICSWeaponBaseGun : public virtual ICSWeaponBase
 {
 public:
     virtual ~ICSWeaponBaseGun() = default;
-    CCSWeaponBaseGun* GetOriginal() { return reinterpret_cast<CCSWeaponBaseGun*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& ZoomLevel() = 0;
     virtual void ZoomLevelUpdated() = 0;

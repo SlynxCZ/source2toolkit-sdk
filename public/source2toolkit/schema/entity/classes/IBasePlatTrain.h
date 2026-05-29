@@ -61,7 +61,6 @@ class IBasePlatTrain : public virtual IBaseToggle
 {
 public:
     virtual ~IBasePlatTrain() = default;
-    CBasePlatTrain* GetOriginal() { return reinterpret_cast<CBasePlatTrain*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& NoiseMoving() = 0;
     virtual void NoiseMovingUpdated() = 0;

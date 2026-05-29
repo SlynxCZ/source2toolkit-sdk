@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CTestPulseIO__FloatStringArgs_t;
 
 class ITestPulseIO__FloatStringArgs_t
 {
 public:
     virtual ~ITestPulseIO__FloatStringArgs_t() = default;
-    CTestPulseIO__FloatStringArgs_t* GetOriginal() { return reinterpret_cast<CTestPulseIO__FloatStringArgs_t*>(IEntityInstance::GetOriginal()); }
+    virtual CTestPulseIO__FloatStringArgs_t* GetOriginal() const = 0;
 
     virtual float& OutFloat() = 0;
     virtual void OutFloatUpdated() = 0;

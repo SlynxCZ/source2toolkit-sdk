@@ -53,6 +53,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CBuoyancyHelper;
 class IPhysicsMotionController;
 
@@ -60,7 +62,7 @@ class IBuoyancyHelper
 {
 public:
     virtual ~IBuoyancyHelper() = default;
-    CBuoyancyHelper* GetOriginal() { return reinterpret_cast<CBuoyancyHelper*>(IEntityInstance::GetOriginal()); }
+    virtual CBuoyancyHelper* GetOriginal() const = 0;
 
     virtual IPhysicsMotionController*& Controller() = 0;
     virtual void ControllerUpdated() = 0;

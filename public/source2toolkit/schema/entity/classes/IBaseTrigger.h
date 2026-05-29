@@ -63,7 +63,6 @@ class IBaseTrigger : public virtual IBaseToggle
 {
 public:
     virtual ~IBaseTrigger() = default;
-    CBaseTrigger* GetOriginal() { return reinterpret_cast<CBaseTrigger*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnStartTouch() = 0;
     virtual void OnStartTouchUpdated() = 0;

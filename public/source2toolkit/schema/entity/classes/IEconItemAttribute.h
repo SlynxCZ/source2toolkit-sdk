@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CEconItemAttribute;
 
 class IEconItemAttribute
 {
 public:
     virtual ~IEconItemAttribute() = default;
-    CEconItemAttribute* GetOriginal() { return reinterpret_cast<CEconItemAttribute*>(IEntityInstance::GetOriginal()); }
+    virtual CEconItemAttribute* GetOriginal() const = 0;
 
     virtual uint16_t& AttributeDefinitionIndex() = 0;
     virtual void AttributeDefinitionIndexUpdated() = 0;

@@ -62,7 +62,6 @@ class IInfoChoreoAnchor : public virtual IPointEntity
 {
 public:
     virtual ~IInfoChoreoAnchor() = default;
-    CInfoChoreoAnchor* GetOriginal() { return reinterpret_cast<CInfoChoreoAnchor*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<CInfoChoreoAnchorPosition>& TargetEntries() = 0;
     virtual void TargetEntriesUpdated() = 0;

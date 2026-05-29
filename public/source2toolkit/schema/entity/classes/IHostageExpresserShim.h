@@ -62,7 +62,6 @@ class IHostageExpresserShim : public virtual IBaseCombatCharacter
 {
 public:
     virtual ~IHostageExpresserShim() = default;
-    CHostageExpresserShim* GetOriginal() { return reinterpret_cast<CHostageExpresserShim*>(IEntityInstance::GetOriginal()); }
 
     virtual CAI_Expresser*& Expresser() = 0;
     virtual void ExpresserUpdated() = 0;

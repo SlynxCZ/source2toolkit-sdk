@@ -61,7 +61,6 @@ class ILightOrthoEntity : public virtual ILightEntity
 {
 public:
     virtual ~ILightOrthoEntity() = default;
-    CLightOrthoEntity* GetOriginal() { return reinterpret_cast<CLightOrthoEntity*>(IEntityInstance::GetOriginal()); }
 
     static ILightOrthoEntity* FromOriginal(CLightOrthoEntity* p);
 };

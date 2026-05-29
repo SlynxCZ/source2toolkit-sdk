@@ -61,7 +61,6 @@ class IInfoData : public virtual IServerOnlyEntity
 {
 public:
     virtual ~IInfoData() = default;
-    CInfoData* GetOriginal() { return reinterpret_cast<CInfoData*>(IEntityInstance::GetOriginal()); }
 
     static IInfoData* FromOriginal(CInfoData* p);
 };

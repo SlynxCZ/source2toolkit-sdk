@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CBaseModelEntity__OnDamageLevelChangedArgs_t;
 
 class IBaseModelEntity__OnDamageLevelChangedArgs_t
 {
 public:
     virtual ~IBaseModelEntity__OnDamageLevelChangedArgs_t() = default;
-    CBaseModelEntity__OnDamageLevelChangedArgs_t* GetOriginal() { return reinterpret_cast<CBaseModelEntity__OnDamageLevelChangedArgs_t*>(IEntityInstance::GetOriginal()); }
+    virtual CBaseModelEntity__OnDamageLevelChangedArgs_t* GetOriginal() const = 0;
 
     virtual ::HitGroup_t& HitGroup() = 0;
     virtual void HitGroupUpdated() = 0;

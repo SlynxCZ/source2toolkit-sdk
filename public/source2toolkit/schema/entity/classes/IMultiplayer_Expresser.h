@@ -61,7 +61,6 @@ class IMultiplayer_Expresser : public virtual IAI_ExpresserWithFollowup
 {
 public:
     virtual ~IMultiplayer_Expresser() = default;
-    CMultiplayer_Expresser* GetOriginal() { return reinterpret_cast<CMultiplayer_Expresser*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& AllowMultipleScenes() = 0;
     virtual void AllowMultipleScenesUpdated() = 0;

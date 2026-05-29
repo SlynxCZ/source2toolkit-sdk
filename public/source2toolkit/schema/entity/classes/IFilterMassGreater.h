@@ -61,7 +61,6 @@ class IFilterMassGreater : public virtual IBaseFilter
 {
 public:
     virtual ~IFilterMassGreater() = default;
-    CFilterMassGreater* GetOriginal() { return reinterpret_cast<CFilterMassGreater*>(IEntityInstance::GetOriginal()); }
 
     virtual float& FilterMass() = 0;
     virtual void FilterMassUpdated() = 0;

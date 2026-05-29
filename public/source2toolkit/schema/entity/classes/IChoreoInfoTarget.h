@@ -61,7 +61,6 @@ class IChoreoInfoTarget : public virtual IPointEntity
 {
 public:
     virtual ~IChoreoInfoTarget() = default;
-    CChoreoInfoTarget* GetOriginal() { return reinterpret_cast<CChoreoInfoTarget*>(IEntityInstance::GetOriginal()); }
 
     static IChoreoInfoTarget* FromOriginal(CChoreoInfoTarget* p);
 };

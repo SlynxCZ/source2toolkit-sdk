@@ -62,7 +62,6 @@ class ILogicLineToEntity : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicLineToEntity() = default;
-    CLogicLineToEntity* GetOriginal() { return reinterpret_cast<CLogicLineToEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& SourceName() = 0;
     virtual void SourceNameUpdated() = 0;

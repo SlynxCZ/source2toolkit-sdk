@@ -61,7 +61,6 @@ class ITriggerBombReset : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerBombReset() = default;
-    CTriggerBombReset* GetOriginal() { return reinterpret_cast<CTriggerBombReset*>(IEntityInstance::GetOriginal()); }
 
     static ITriggerBombReset* FromOriginal(CTriggerBombReset* p);
 };

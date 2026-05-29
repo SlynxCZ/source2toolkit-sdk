@@ -62,7 +62,6 @@ class IAttributeContainer : public virtual IAttributeManager
 {
 public:
     virtual ~IAttributeContainer() = default;
-    CAttributeContainer* GetOriginal() { return reinterpret_cast<CAttributeContainer*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEconItemView& Item() = 0;
     virtual void ItemUpdated() = 0;

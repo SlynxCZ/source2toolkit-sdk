@@ -61,7 +61,6 @@ class IMarkupVolumeTagged : public virtual IMarkupVolume
 {
 public:
     virtual ~IMarkupVolumeTagged() = default;
-    CMarkupVolumeTagged* GetOriginal() { return reinterpret_cast<CMarkupVolumeTagged*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<CGlobalSymbol>& GroupNames() = 0;
     virtual void GroupNamesUpdated() = 0;

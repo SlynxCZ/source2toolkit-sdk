@@ -61,7 +61,6 @@ class IPhysBallSocket : public virtual IPhysConstraint
 {
 public:
     virtual ~IPhysBallSocket() = default;
-    CPhysBallSocket* GetOriginal() { return reinterpret_cast<CPhysBallSocket*>(IEntityInstance::GetOriginal()); }
 
     virtual float& JointFriction() = 0;
     virtual void JointFrictionUpdated() = 0;

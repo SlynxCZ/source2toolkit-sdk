@@ -67,7 +67,6 @@ class IChicken : public virtual IDynamicProp
 {
 public:
     virtual ~IChicken() = default;
-    CChicken* GetOriginal() { return reinterpret_cast<CChicken*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CAttributeContainer& AttributeManager() = 0;
     virtual void AttributeManagerUpdated() = 0;

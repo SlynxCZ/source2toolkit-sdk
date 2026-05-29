@@ -71,7 +71,6 @@ class IFuncMover : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncMover() = default;
-    CFuncMover* GetOriginal() { return reinterpret_cast<CFuncMover*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& PathName() = 0;
     virtual void PathNameUpdated() = 0;

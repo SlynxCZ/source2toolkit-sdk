@@ -63,7 +63,6 @@ class ISprite : public virtual IBaseModelEntity
 {
 public:
     virtual ~ISprite() = default;
-    CSprite* GetOriginal() { return reinterpret_cast<CSprite*>(IEntityInstance::GetOriginal()); }
 
     virtual CStrongHandle<InfoForResourceTypeIMaterial2>& SpriteMaterial() = 0;
     virtual void SpriteMaterialUpdated() = 0;

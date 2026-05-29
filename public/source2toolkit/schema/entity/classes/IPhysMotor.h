@@ -65,7 +65,6 @@ class IPhysMotor : public virtual ILogicalEntity
 {
 public:
     virtual ~IPhysMotor() = default;
-    CPhysMotor* GetOriginal() { return reinterpret_cast<CPhysMotor*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& NameAttach() = 0;
     virtual void NameAttachUpdated() = 0;

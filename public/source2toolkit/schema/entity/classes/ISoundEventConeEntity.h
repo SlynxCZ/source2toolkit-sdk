@@ -61,7 +61,6 @@ class ISoundEventConeEntity : public virtual ISoundEventEntity
 {
 public:
     virtual ~ISoundEventConeEntity() = default;
-    CSoundEventConeEntity* GetOriginal() { return reinterpret_cast<CSoundEventConeEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual float& EmitterAngle() = 0;
     virtual void EmitterAngleUpdated() = 0;

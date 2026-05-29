@@ -53,6 +53,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 #include "../enums/CCSPlayerAnimationState__AirAction_t.h"
 #include "../enums/CCSPlayerAnimationState__Direction_t.h"
 #include "../enums/CCSPlayerAnimationState__GroundMoveState_t.h"
@@ -64,7 +66,7 @@ class ICSPlayerAnimationState
 {
 public:
     virtual ~ICSPlayerAnimationState() = default;
-    CCSPlayerAnimationState* GetOriginal() { return reinterpret_cast<CCSPlayerAnimationState*>(IEntityInstance::GetOriginal()); }
+    virtual CCSPlayerAnimationState* GetOriginal() const = 0;
 
     virtual ::CCSPlayerAnimationState__MoveType_t& CurrentMoveType() = 0;
     virtual void CurrentMoveTypeUpdated() = 0;

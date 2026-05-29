@@ -61,7 +61,6 @@ class IFuncNavObstruction : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncNavObstruction() = default;
-    CFuncNavObstruction* GetOriginal() { return reinterpret_cast<CFuncNavObstruction*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;

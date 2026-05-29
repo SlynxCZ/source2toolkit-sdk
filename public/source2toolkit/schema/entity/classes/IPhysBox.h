@@ -64,7 +64,6 @@ class IPhysBox : public virtual IBreakable
 {
 public:
     virtual ~IPhysBox() = default;
-    CPhysBox* GetOriginal() { return reinterpret_cast<CPhysBox*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& DamageType() = 0;
     virtual void DamageTypeUpdated() = 0;

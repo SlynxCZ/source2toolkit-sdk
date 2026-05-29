@@ -66,7 +66,6 @@ class ICSPlayerPawnBase : public virtual IBasePlayerPawn
 {
 public:
     virtual ~ICSPlayerPawnBase() = default;
-    CCSPlayerPawnBase* GetOriginal() { return reinterpret_cast<CCSPlayerPawnBase*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CTouchExpansionComponent& TouchExpansionComponent() = 0;
     virtual void TouchExpansionComponentUpdated() = 0;

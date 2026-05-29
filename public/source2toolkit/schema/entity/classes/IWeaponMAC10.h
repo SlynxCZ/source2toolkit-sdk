@@ -61,7 +61,6 @@ class IWeaponMAC10 : public virtual ICSWeaponBaseGun
 {
 public:
     virtual ~IWeaponMAC10() = default;
-    CWeaponMAC10* GetOriginal() { return reinterpret_cast<CWeaponMAC10*>(IEntityInstance::GetOriginal()); }
 
     static IWeaponMAC10* FromOriginal(CWeaponMAC10* p);
 };

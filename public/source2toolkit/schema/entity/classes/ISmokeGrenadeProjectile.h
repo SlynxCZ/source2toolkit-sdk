@@ -61,7 +61,6 @@ class ISmokeGrenadeProjectile : public virtual IBaseCSGrenadeProjectile
 {
 public:
     virtual ~ISmokeGrenadeProjectile() = default;
-    CSmokeGrenadeProjectile* GetOriginal() { return reinterpret_cast<CSmokeGrenadeProjectile*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& SmokeEffectTickBegin() = 0;
     virtual void SmokeEffectTickBeginUpdated() = 0;

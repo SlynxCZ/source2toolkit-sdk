@@ -61,7 +61,6 @@ class IAK47 : public virtual ICSWeaponBaseGun
 {
 public:
     virtual ~IAK47() = default;
-    CAK47* GetOriginal() { return reinterpret_cast<CAK47*>(IEntityInstance::GetOriginal()); }
 
     static IAK47* FromOriginal(CAK47* p);
 };

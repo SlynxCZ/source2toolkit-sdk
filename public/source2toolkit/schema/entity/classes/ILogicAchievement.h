@@ -61,7 +61,6 @@ class ILogicAchievement : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicAchievement() = default;
-    CLogicAchievement* GetOriginal() { return reinterpret_cast<CLogicAchievement*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;

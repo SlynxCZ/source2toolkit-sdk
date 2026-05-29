@@ -61,7 +61,6 @@ class ICSSprite : public virtual ISprite
 {
 public:
     virtual ~ICSSprite() = default;
-    CCSSprite* GetOriginal() { return reinterpret_cast<CCSSprite*>(IEntityInstance::GetOriginal()); }
 
     static ICSSprite* FromOriginal(CCSSprite* p);
 };

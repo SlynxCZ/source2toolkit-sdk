@@ -63,7 +63,6 @@ class IEntityDissolve : public virtual IBaseModelEntity
 {
 public:
     virtual ~IEntityDissolve() = default;
-    CEntityDissolve* GetOriginal() { return reinterpret_cast<CEntityDissolve*>(IEntityInstance::GetOriginal()); }
 
     virtual float& FadeInStart() = 0;
     virtual void FadeInStartUpdated() = 0;

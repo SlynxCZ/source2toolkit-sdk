@@ -62,7 +62,6 @@ class IPointVelocitySensor : public virtual IPointEntity
 {
 public:
     virtual ~IPointVelocitySensor() = default;
-    CPointVelocitySensor* GetOriginal() { return reinterpret_cast<CPointVelocitySensor*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& TargetEntity() = 0;
     virtual void TargetEntityUpdated() = 0;

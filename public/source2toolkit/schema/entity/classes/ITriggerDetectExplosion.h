@@ -61,7 +61,6 @@ class ITriggerDetectExplosion : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerDetectExplosion() = default;
-    CTriggerDetectExplosion* GetOriginal() { return reinterpret_cast<CTriggerDetectExplosion*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnDetectedExplosion() = 0;
     virtual void OnDetectedExplosionUpdated() = 0;

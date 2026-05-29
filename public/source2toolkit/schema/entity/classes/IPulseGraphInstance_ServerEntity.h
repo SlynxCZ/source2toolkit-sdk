@@ -62,7 +62,6 @@ class IPulseGraphInstance_ServerEntity : public virtual IBasePulseGraphInstance
 {
 public:
     virtual ~IPulseGraphInstance_ServerEntity() = default;
-    CPulseGraphInstance_ServerEntity* GetOriginal() { return reinterpret_cast<CPulseGraphInstance_ServerEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& Owner() = 0;
     virtual void OwnerUpdated() = 0;

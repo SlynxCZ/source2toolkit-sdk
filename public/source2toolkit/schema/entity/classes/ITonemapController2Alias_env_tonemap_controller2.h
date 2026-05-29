@@ -61,7 +61,6 @@ class ITonemapController2Alias_env_tonemap_controller2 : public virtual ITonemap
 {
 public:
     virtual ~ITonemapController2Alias_env_tonemap_controller2() = default;
-    CTonemapController2Alias_env_tonemap_controller2* GetOriginal() { return reinterpret_cast<CTonemapController2Alias_env_tonemap_controller2*>(IEntityInstance::GetOriginal()); }
 
     static ITonemapController2Alias_env_tonemap_controller2* FromOriginal(CTonemapController2Alias_env_tonemap_controller2* p);
 };

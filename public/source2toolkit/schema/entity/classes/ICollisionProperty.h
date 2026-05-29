@@ -53,6 +53,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 #include "../enums/SurroundingBoundsType_t.h"
 
 class CCollisionProperty;
@@ -62,7 +64,7 @@ class ICollisionProperty
 {
 public:
     virtual ~ICollisionProperty() = default;
-    CCollisionProperty* GetOriginal() { return reinterpret_cast<CCollisionProperty*>(IEntityInstance::GetOriginal()); }
+    virtual CCollisionProperty* GetOriginal() const = 0;
 
     virtual ::VPhysicsCollisionAttribute_t& CollisionAttribute() = 0;
     virtual void CollisionAttributeUpdated() = 0;

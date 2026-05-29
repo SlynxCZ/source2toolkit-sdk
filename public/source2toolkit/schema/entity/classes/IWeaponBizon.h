@@ -61,7 +61,6 @@ class IWeaponBizon : public virtual ICSWeaponBaseGun
 {
 public:
     virtual ~IWeaponBizon() = default;
-    CWeaponBizon* GetOriginal() { return reinterpret_cast<CWeaponBizon*>(IEntityInstance::GetOriginal()); }
 
     static IWeaponBizon* FromOriginal(CWeaponBizon* p);
 };

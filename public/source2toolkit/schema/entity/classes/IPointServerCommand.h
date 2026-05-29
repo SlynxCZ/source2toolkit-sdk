@@ -61,7 +61,6 @@ class IPointServerCommand : public virtual IPointEntity
 {
 public:
     virtual ~IPointServerCommand() = default;
-    CPointServerCommand* GetOriginal() { return reinterpret_cast<CPointServerCommand*>(IEntityInstance::GetOriginal()); }
 
     static IPointServerCommand* FromOriginal(CPointServerCommand* p);
 };

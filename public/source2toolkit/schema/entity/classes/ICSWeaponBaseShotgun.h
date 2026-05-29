@@ -61,7 +61,6 @@ class ICSWeaponBaseShotgun : public virtual ICSWeaponBase
 {
 public:
     virtual ~ICSWeaponBaseShotgun() = default;
-    CCSWeaponBaseShotgun* GetOriginal() { return reinterpret_cast<CCSWeaponBaseShotgun*>(IEntityInstance::GetOriginal()); }
 
     static ICSWeaponBaseShotgun* FromOriginal(CCSWeaponBaseShotgun* p);
 };

@@ -63,7 +63,6 @@ class IGenericConstraint : public virtual IPhysConstraint
 {
 public:
     virtual ~IGenericConstraint() = default;
-    CGenericConstraint* GetOriginal() { return reinterpret_cast<CGenericConstraint*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& PlaceAnchorsAtConstraintTransform() = 0;
     virtual void PlaceAnchorsAtConstraintTransformUpdated() = 0;

@@ -61,7 +61,6 @@ class IFuncWallToggle : public virtual IFuncWall
 {
 public:
     virtual ~IFuncWallToggle() = default;
-    CFuncWallToggle* GetOriginal() { return reinterpret_cast<CFuncWallToggle*>(IEntityInstance::GetOriginal()); }
 
     static IFuncWallToggle* FromOriginal(CFuncWallToggle* p);
 };

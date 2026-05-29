@@ -61,7 +61,6 @@ class ICSPlayerController_InGameMoneyServices : public virtual IPlayerController
 {
 public:
     virtual ~ICSPlayerController_InGameMoneyServices() = default;
-    CCSPlayerController_InGameMoneyServices* GetOriginal() { return reinterpret_cast<CCSPlayerController_InGameMoneyServices*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& ReceivesMoneyNextRound() = 0;
     virtual void ReceivesMoneyNextRoundUpdated() = 0;

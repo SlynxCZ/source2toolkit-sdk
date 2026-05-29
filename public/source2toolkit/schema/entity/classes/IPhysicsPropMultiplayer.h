@@ -61,7 +61,6 @@ class IPhysicsPropMultiplayer : public virtual IPhysicsProp
 {
 public:
     virtual ~IPhysicsPropMultiplayer() = default;
-    CPhysicsPropMultiplayer* GetOriginal() { return reinterpret_cast<CPhysicsPropMultiplayer*>(IEntityInstance::GetOriginal()); }
 
     static IPhysicsPropMultiplayer* FromOriginal(CPhysicsPropMultiplayer* p);
 };

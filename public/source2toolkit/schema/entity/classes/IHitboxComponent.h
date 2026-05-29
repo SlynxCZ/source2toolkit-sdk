@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CHitboxComponent;
 
 class IHitboxComponent
 {
 public:
     virtual ~IHitboxComponent() = default;
-    CHitboxComponent* GetOriginal() { return reinterpret_cast<CHitboxComponent*>(IEntityInstance::GetOriginal()); }
+    virtual CHitboxComponent* GetOriginal() const = 0;
 
     virtual float& BoundsExpandRadius() = 0;
     virtual void BoundsExpandRadiusUpdated() = 0;

@@ -61,7 +61,6 @@ class IDebugHistory : public virtual IBaseEntity
 {
 public:
     virtual ~IDebugHistory() = default;
-    CDebugHistory* GetOriginal() { return reinterpret_cast<CDebugHistory*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& NpcEvents() = 0;
     virtual void NpcEventsUpdated() = 0;

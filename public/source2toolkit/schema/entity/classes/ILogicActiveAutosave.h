@@ -61,7 +61,6 @@ class ILogicActiveAutosave : public virtual ILogicAutosave
 {
 public:
     virtual ~ILogicActiveAutosave() = default;
-    CLogicActiveAutosave* GetOriginal() { return reinterpret_cast<CLogicActiveAutosave*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& TriggerHitPoints() = 0;
     virtual void TriggerHitPointsUpdated() = 0;

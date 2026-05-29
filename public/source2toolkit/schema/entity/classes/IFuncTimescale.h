@@ -61,7 +61,6 @@ class IFuncTimescale : public virtual IBaseEntity
 {
 public:
     virtual ~IFuncTimescale() = default;
-    CFuncTimescale* GetOriginal() { return reinterpret_cast<CFuncTimescale*>(IEntityInstance::GetOriginal()); }
 
     virtual float& DesiredTimescale() = 0;
     virtual void DesiredTimescaleUpdated() = 0;

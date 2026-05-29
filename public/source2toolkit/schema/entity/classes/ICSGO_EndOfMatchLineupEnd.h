@@ -61,7 +61,6 @@ class ICSGO_EndOfMatchLineupEnd : public virtual ICSGO_EndOfMatchLineupEndpoint
 {
 public:
     virtual ~ICSGO_EndOfMatchLineupEnd() = default;
-    CCSGO_EndOfMatchLineupEnd* GetOriginal() { return reinterpret_cast<CCSGO_EndOfMatchLineupEnd*>(IEntityInstance::GetOriginal()); }
 
     static ICSGO_EndOfMatchLineupEnd* FromOriginal(CCSGO_EndOfMatchLineupEnd* p);
 };

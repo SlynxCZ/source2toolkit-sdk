@@ -61,7 +61,6 @@ class ISimpleMarkupVolumeTagged : public virtual IMarkupVolumeTagged
 {
 public:
     virtual ~ISimpleMarkupVolumeTagged() = default;
-    CSimpleMarkupVolumeTagged* GetOriginal() { return reinterpret_cast<CSimpleMarkupVolumeTagged*>(IEntityInstance::GetOriginal()); }
 
     static ISimpleMarkupVolumeTagged* FromOriginal(CSimpleMarkupVolumeTagged* p);
 };

@@ -62,7 +62,6 @@ class ICSPlayer_PingServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~ICSPlayer_PingServices() = default;
-    CCSPlayer_PingServices* GetOriginal() { return reinterpret_cast<CCSPlayer_PingServices*>(IEntityInstance::GetOriginal()); }
 
     virtual float* PlayerPingTokens() = 0;
     virtual CHandle<CPlayerPing>& PlayerPing() = 0;

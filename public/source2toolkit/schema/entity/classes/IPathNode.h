@@ -62,7 +62,6 @@ class IPathNode : public virtual IPointEntity
 {
 public:
     virtual ~IPathNode() = default;
-    CPathNode* GetOriginal() { return reinterpret_cast<CPathNode*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& InTangentLocal() = 0;
     virtual void InTangentLocalUpdated() = 0;

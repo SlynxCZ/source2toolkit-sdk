@@ -63,7 +63,6 @@ class IParticleSystem : public virtual IBaseModelEntity
 {
 public:
     virtual ~IParticleSystem() = default;
-    CParticleSystem* GetOriginal() { return reinterpret_cast<CParticleSystem*>(IEntityInstance::GetOriginal()); }
 
     virtual char* SnapshotFileName() = 0;
     virtual bool& Active() = 0;

@@ -61,7 +61,6 @@ class IHandleDummy : public virtual IBaseEntity
 {
 public:
     virtual ~IHandleDummy() = default;
-    CHandleDummy* GetOriginal() { return reinterpret_cast<CHandleDummy*>(IEntityInstance::GetOriginal()); }
 
     static IHandleDummy* FromOriginal(CHandleDummy* p);
 };

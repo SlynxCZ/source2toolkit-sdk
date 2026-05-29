@@ -63,7 +63,6 @@ class IEnvShake : public virtual IPointEntity
 {
 public:
     virtual ~IEnvShake() = default;
-    CEnvShake* GetOriginal() { return reinterpret_cast<CEnvShake*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& LimitToEntity() = 0;
     virtual void LimitToEntityUpdated() = 0;

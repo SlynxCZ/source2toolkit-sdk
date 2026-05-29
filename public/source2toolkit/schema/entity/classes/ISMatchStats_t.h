@@ -61,7 +61,6 @@ class ISMatchStats_t : public virtual ISPerRoundStats_t
 {
 public:
     virtual ~ISMatchStats_t() = default;
-    CSMatchStats_t* GetOriginal() { return reinterpret_cast<CSMatchStats_t*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Enemy5Ks() = 0;
     virtual void Enemy5KsUpdated() = 0;

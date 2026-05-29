@@ -61,7 +61,6 @@ class IRagdollPropAttached : public virtual IRagdollProp
 {
 public:
     virtual ~IRagdollPropAttached() = default;
-    CRagdollPropAttached* GetOriginal() { return reinterpret_cast<CRagdollPropAttached*>(IEntityInstance::GetOriginal()); }
 
     virtual uint32_t& BoneIndexAttached() = 0;
     virtual void BoneIndexAttachedUpdated() = 0;

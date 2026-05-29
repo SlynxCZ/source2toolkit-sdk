@@ -66,7 +66,6 @@ class IBaseAnimGraph : public virtual IBaseModelEntity
 {
 public:
     virtual ~IBaseAnimGraph() = default;
-    CBaseAnimGraph* GetOriginal() { return reinterpret_cast<CBaseAnimGraph*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CAnimGraphControllerManager& GraphControllerManager() = 0;
     virtual void GraphControllerManagerUpdated() = 0;

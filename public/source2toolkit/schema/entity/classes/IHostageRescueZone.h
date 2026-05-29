@@ -61,7 +61,6 @@ class IHostageRescueZone : public virtual IHostageRescueZoneShim
 {
 public:
     virtual ~IHostageRescueZone() = default;
-    CHostageRescueZone* GetOriginal() { return reinterpret_cast<CHostageRescueZone*>(IEntityInstance::GetOriginal()); }
 
     static IHostageRescueZone* FromOriginal(CHostageRescueZone* p);
 };

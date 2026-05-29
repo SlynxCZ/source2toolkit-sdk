@@ -61,7 +61,6 @@ class ICommentaryAuto : public virtual IBaseEntity
 {
 public:
     virtual ~ICommentaryAuto() = default;
-    CCommentaryAuto* GetOriginal() { return reinterpret_cast<CCommentaryAuto*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnCommentaryNewGame() = 0;
     virtual void OnCommentaryNewGameUpdated() = 0;

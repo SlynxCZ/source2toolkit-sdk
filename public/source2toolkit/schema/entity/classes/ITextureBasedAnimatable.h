@@ -62,7 +62,6 @@ class ITextureBasedAnimatable : public virtual IBaseModelEntity
 {
 public:
     virtual ~ITextureBasedAnimatable() = default;
-    CTextureBasedAnimatable* GetOriginal() { return reinterpret_cast<CTextureBasedAnimatable*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Loop() = 0;
     virtual void LoopUpdated() = 0;

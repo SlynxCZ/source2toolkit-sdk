@@ -61,7 +61,6 @@ class IEnvSplash : public virtual IPointEntity
 {
 public:
     virtual ~IEnvSplash() = default;
-    CEnvSplash* GetOriginal() { return reinterpret_cast<CEnvSplash*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Scale() = 0;
     virtual void ScaleUpdated() = 0;

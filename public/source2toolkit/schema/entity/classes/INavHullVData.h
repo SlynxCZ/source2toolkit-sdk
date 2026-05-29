@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CNavHullVData;
 
 class INavHullVData
 {
 public:
     virtual ~INavHullVData() = default;
-    CNavHullVData* GetOriginal() { return reinterpret_cast<CNavHullVData*>(IEntityInstance::GetOriginal()); }
+    virtual CNavHullVData* GetOriginal() const = 0;
 
     virtual bool& AgentEnabled() = 0;
     virtual void AgentEnabledUpdated() = 0;

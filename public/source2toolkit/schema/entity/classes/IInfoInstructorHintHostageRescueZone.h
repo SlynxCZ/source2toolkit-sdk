@@ -61,7 +61,6 @@ class IInfoInstructorHintHostageRescueZone : public virtual IPointEntity
 {
 public:
     virtual ~IInfoInstructorHintHostageRescueZone() = default;
-    CInfoInstructorHintHostageRescueZone* GetOriginal() { return reinterpret_cast<CInfoInstructorHintHostageRescueZone*>(IEntityInstance::GetOriginal()); }
 
     static IInfoInstructorHintHostageRescueZone* FromOriginal(CInfoInstructorHintHostageRescueZone* p);
 };

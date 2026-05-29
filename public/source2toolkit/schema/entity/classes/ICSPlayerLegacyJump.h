@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CCSPlayerLegacyJump;
 
 class ICSPlayerLegacyJump
 {
 public:
     virtual ~ICSPlayerLegacyJump() = default;
-    CCSPlayerLegacyJump* GetOriginal() { return reinterpret_cast<CCSPlayerLegacyJump*>(IEntityInstance::GetOriginal()); }
+    virtual CCSPlayerLegacyJump* GetOriginal() const = 0;
 
     virtual bool& OldJumpPressed() = 0;
     virtual void OldJumpPressedUpdated() = 0;

@@ -61,7 +61,6 @@ class IModelPointEntity : public virtual IBaseModelEntity
 {
 public:
     virtual ~IModelPointEntity() = default;
-    CModelPointEntity* GetOriginal() { return reinterpret_cast<CModelPointEntity*>(IEntityInstance::GetOriginal()); }
 
     static IModelPointEntity* FromOriginal(CModelPointEntity* p);
 };

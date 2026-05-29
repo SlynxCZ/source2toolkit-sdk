@@ -62,7 +62,6 @@ class ITestPulseIO : public virtual ILogicalEntity
 {
 public:
     virtual ~ITestPulseIO() = default;
-    CTestPulseIO* GetOriginal() { return reinterpret_cast<CTestPulseIO*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnVariantVoid() = 0;
     virtual void OnVariantVoidUpdated() = 0;

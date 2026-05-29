@@ -63,7 +63,6 @@ class ICSPlayerController_ActionTrackingServices : public virtual IPlayerControl
 {
 public:
     virtual ~ICSPlayerController_ActionTrackingServices() = default;
-    CCSPlayerController_ActionTrackingServices* GetOriginal() { return reinterpret_cast<CCSPlayerController_ActionTrackingServices*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<CSPerRoundStats_t>& PerRoundStats() = 0;
     virtual void PerRoundStatsUpdated() = 0;

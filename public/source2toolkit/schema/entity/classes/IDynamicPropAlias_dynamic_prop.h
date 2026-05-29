@@ -61,7 +61,6 @@ class IDynamicPropAlias_dynamic_prop : public virtual IDynamicProp
 {
 public:
     virtual ~IDynamicPropAlias_dynamic_prop() = default;
-    CDynamicPropAlias_dynamic_prop* GetOriginal() { return reinterpret_cast<CDynamicPropAlias_dynamic_prop*>(IEntityInstance::GetOriginal()); }
 
     static IDynamicPropAlias_dynamic_prop* FromOriginal(CDynamicPropAlias_dynamic_prop* p);
 };

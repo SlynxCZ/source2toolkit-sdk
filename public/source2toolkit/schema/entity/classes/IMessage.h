@@ -61,7 +61,6 @@ class IMessage : public virtual IPointEntity
 {
 public:
     virtual ~IMessage() = default;
-    CMessage* GetOriginal() { return reinterpret_cast<CMessage*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Message() = 0;
     virtual void MessageUpdated() = 0;

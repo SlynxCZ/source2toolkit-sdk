@@ -63,7 +63,6 @@ class IFishPool : public virtual IBaseEntity
 {
 public:
     virtual ~IFishPool() = default;
-    CFishPool* GetOriginal() { return reinterpret_cast<CFishPool*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& FishCount() = 0;
     virtual void FishCountUpdated() = 0;

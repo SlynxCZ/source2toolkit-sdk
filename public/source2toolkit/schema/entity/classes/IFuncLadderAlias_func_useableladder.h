@@ -61,7 +61,6 @@ class IFuncLadderAlias_func_useableladder : public virtual IFuncLadder
 {
 public:
     virtual ~IFuncLadderAlias_func_useableladder() = default;
-    CFuncLadderAlias_func_useableladder* GetOriginal() { return reinterpret_cast<CFuncLadderAlias_func_useableladder*>(IEntityInstance::GetOriginal()); }
 
     static IFuncLadderAlias_func_useableladder* FromOriginal(CFuncLadderAlias_func_useableladder* p);
 };

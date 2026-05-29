@@ -65,7 +65,6 @@ class IPointEntityFinder : public virtual IBaseEntity
 {
 public:
     virtual ~IPointEntityFinder() = default;
-    CPointEntityFinder* GetOriginal() { return reinterpret_cast<CPointEntityFinder*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& Entity() = 0;
     virtual void EntityUpdated() = 0;

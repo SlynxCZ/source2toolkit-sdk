@@ -53,6 +53,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 #include "../enums/attributeprovidertypes_t.h"
 
 class CAttributeManager;
@@ -63,7 +65,7 @@ class IAttributeManager
 {
 public:
     virtual ~IAttributeManager() = default;
-    CAttributeManager* GetOriginal() { return reinterpret_cast<CAttributeManager*>(IEntityInstance::GetOriginal()); }
+    virtual CAttributeManager* GetOriginal() const = 0;
 
     virtual CUtlVector<CHandle<CBaseEntity>>& Providers() = 0;
     virtual void ProvidersUpdated() = 0;

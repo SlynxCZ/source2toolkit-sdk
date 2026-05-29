@@ -63,7 +63,6 @@ class ITeam : public virtual IBaseEntity
 {
 public:
     virtual ~ITeam() = default;
-    CTeam* GetOriginal() { return reinterpret_cast<CTeam*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<CHandle<CBasePlayerController>>& PlayerControllers() = 0;
     virtual void PlayerControllersUpdated() = 0;

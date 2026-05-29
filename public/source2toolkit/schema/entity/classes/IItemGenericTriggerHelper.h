@@ -62,7 +62,6 @@ class IItemGenericTriggerHelper : public virtual IBaseModelEntity
 {
 public:
     virtual ~IItemGenericTriggerHelper() = default;
-    CItemGenericTriggerHelper* GetOriginal() { return reinterpret_cast<CItemGenericTriggerHelper*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CItemGeneric>& ParentItem() = 0;
     virtual void ParentItemUpdated() = 0;

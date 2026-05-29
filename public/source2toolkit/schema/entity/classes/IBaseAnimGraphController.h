@@ -72,7 +72,6 @@ class IBaseAnimGraphController : public virtual ISkeletonAnimationController
 {
 public:
     virtual ~IBaseAnimGraphController() = default;
-    CBaseAnimGraphController* GetOriginal() { return reinterpret_cast<CBaseAnimGraphController*>(IEntityInstance::GetOriginal()); }
 
     virtual ::AnimationAlgorithm_t& AnimationAlgorithm() = 0;
     virtual void AnimationAlgorithmUpdated() = 0;

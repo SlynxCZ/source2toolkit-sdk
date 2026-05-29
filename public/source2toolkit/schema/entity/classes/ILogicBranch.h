@@ -62,7 +62,6 @@ class ILogicBranch : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicBranch() = default;
-    CLogicBranch* GetOriginal() { return reinterpret_cast<CLogicBranch*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& InValue() = 0;
     virtual void InValueUpdated() = 0;

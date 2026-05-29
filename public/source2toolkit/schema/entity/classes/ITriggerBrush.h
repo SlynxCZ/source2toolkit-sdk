@@ -61,7 +61,6 @@ class ITriggerBrush : public virtual IBaseModelEntity
 {
 public:
     virtual ~ITriggerBrush() = default;
-    CTriggerBrush* GetOriginal() { return reinterpret_cast<CTriggerBrush*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnStartTouch() = 0;
     virtual void OnStartTouchUpdated() = 0;

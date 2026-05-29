@@ -68,7 +68,6 @@ class IPlayer_CameraServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~IPlayer_CameraServices() = default;
-    CPlayer_CameraServices* GetOriginal() { return reinterpret_cast<CPlayer_CameraServices*>(IEntityInstance::GetOriginal()); }
 
     virtual QAngle& CsViewPunchAngle() = 0;
     virtual void CsViewPunchAngleUpdated() = 0;

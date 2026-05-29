@@ -61,7 +61,6 @@ class IPointPulse : public virtual IBaseEntity
 {
 public:
     virtual ~IPointPulse() = default;
-    CPointPulse* GetOriginal() { return reinterpret_cast<CPointPulse*>(IEntityInstance::GetOriginal()); }
 
     static IPointPulse* FromOriginal(CPointPulse* p);
 };

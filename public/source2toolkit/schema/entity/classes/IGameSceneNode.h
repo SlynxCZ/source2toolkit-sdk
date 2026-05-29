@@ -53,6 +53,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CGameSceneNode;
 class CNetworkOriginCellCoordQuantizedVector;
 
@@ -60,7 +62,7 @@ class IGameSceneNode
 {
 public:
     virtual ~IGameSceneNode() = default;
-    CGameSceneNode* GetOriginal() { return reinterpret_cast<CGameSceneNode*>(IEntityInstance::GetOriginal()); }
+    virtual CGameSceneNode* GetOriginal() const = 0;
 
     virtual CTransform& NodeToWorld() = 0;
     virtual void NodeToWorldUpdated() = 0;

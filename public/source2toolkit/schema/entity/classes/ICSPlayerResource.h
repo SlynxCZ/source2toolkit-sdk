@@ -61,7 +61,6 @@ class ICSPlayerResource : public virtual IBaseEntity
 {
 public:
     virtual ~ICSPlayerResource() = default;
-    CCSPlayerResource* GetOriginal() { return reinterpret_cast<CCSPlayerResource*>(IEntityInstance::GetOriginal()); }
 
     virtual bool* HostageAlive() = 0;
     virtual bool* IsHostageFollowingSomeone() = 0;

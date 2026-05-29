@@ -61,7 +61,6 @@ class IRectLight : public virtual IBarnLight
 {
 public:
     virtual ~IRectLight() = default;
-    CRectLight* GetOriginal() { return reinterpret_cast<CRectLight*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& ShowLight() = 0;
     virtual void ShowLightUpdated() = 0;

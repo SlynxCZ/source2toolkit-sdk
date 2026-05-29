@@ -63,7 +63,6 @@ class IVoteController : public virtual IBaseEntity
 {
 public:
     virtual ~IVoteController() = default;
-    CVoteController* GetOriginal() { return reinterpret_cast<CVoteController*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& ActiveIssueIndex() = 0;
     virtual void ActiveIssueIndexUpdated() = 0;

@@ -61,7 +61,6 @@ class IBaseFilter : public virtual ILogicalEntity
 {
 public:
     virtual ~IBaseFilter() = default;
-    CBaseFilter* GetOriginal() { return reinterpret_cast<CBaseFilter*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Negated() = 0;
     virtual void NegatedUpdated() = 0;

@@ -61,7 +61,6 @@ class IMoverPathNode : public virtual IPathNode
 {
 public:
     virtual ~IMoverPathNode() = default;
-    CMoverPathNode* GetOriginal() { return reinterpret_cast<CMoverPathNode*>(IEntityInstance::GetOriginal()); }
 
     static IMoverPathNode* FromOriginal(CMoverPathNode* p);
 };

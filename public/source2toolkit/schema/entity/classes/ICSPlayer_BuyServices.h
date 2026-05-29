@@ -62,7 +62,6 @@ class ICSPlayer_BuyServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~ICSPlayer_BuyServices() = default;
-    CCSPlayer_BuyServices* GetOriginal() { return reinterpret_cast<CCSPlayer_BuyServices*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<SellbackPurchaseEntry_t>& SellbackPurchaseEntries() = 0;
     virtual void SellbackPurchaseEntriesUpdated() = 0;

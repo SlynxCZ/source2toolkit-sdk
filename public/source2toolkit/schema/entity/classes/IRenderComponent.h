@@ -53,14 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
-class CEntityInstance*;
+#include "IEntityInstance.h"
+
 class CRenderComponent;
 
 class IRenderComponent
 {
 public:
     virtual ~IRenderComponent() = default;
-    CRenderComponent* GetOriginal() { return reinterpret_cast<CRenderComponent*>(IEntityInstance::GetOriginal()); }
+    virtual CRenderComponent* GetOriginal() const = 0;
 
     virtual ::CEntityInstance*& __m_pChainEntity() = 0;
     virtual void __m_pChainEntityUpdated() = 0;

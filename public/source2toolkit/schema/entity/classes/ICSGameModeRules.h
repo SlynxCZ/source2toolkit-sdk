@@ -53,14 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CCSGameModeRules;
-class CEntityInstance*;
 
 class ICSGameModeRules
 {
 public:
     virtual ~ICSGameModeRules() = default;
-    CCSGameModeRules* GetOriginal() { return reinterpret_cast<CCSGameModeRules*>(IEntityInstance::GetOriginal()); }
+    virtual CCSGameModeRules* GetOriginal() const = 0;
 
     virtual ::CEntityInstance*& __m_pChainEntity() = 0;
     virtual void __m_pChainEntityUpdated() = 0;

@@ -62,7 +62,6 @@ class IGameText : public virtual IRulePointEntity
 {
 public:
     virtual ~IGameText() = default;
-    CGameText* GetOriginal() { return reinterpret_cast<CGameText*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Message() = 0;
     virtual void MessageUpdated() = 0;

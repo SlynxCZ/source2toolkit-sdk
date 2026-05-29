@@ -53,6 +53,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CCSPlayerPawn;
 class CRetakeGameRules;
 
@@ -60,7 +62,7 @@ class IRetakeGameRules
 {
 public:
     virtual ~IRetakeGameRules() = default;
-    CRetakeGameRules* GetOriginal() { return reinterpret_cast<CRetakeGameRules*>(IEntityInstance::GetOriginal()); }
+    virtual CRetakeGameRules* GetOriginal() const = 0;
 
     virtual int32_t& MatchSeed() = 0;
     virtual void MatchSeedUpdated() = 0;

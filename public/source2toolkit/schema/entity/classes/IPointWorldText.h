@@ -65,7 +65,6 @@ class IPointWorldText : public virtual IModelPointEntity
 {
 public:
     virtual ~IPointWorldText() = default;
-    CPointWorldText* GetOriginal() { return reinterpret_cast<CPointWorldText*>(IEntityInstance::GetOriginal()); }
 
     virtual char* MessageText() = 0;
     virtual char* FontName() = 0;

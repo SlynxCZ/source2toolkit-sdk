@@ -61,7 +61,6 @@ class IEnvDetailController : public virtual IBaseEntity
 {
 public:
     virtual ~IEnvDetailController() = default;
-    CEnvDetailController* GetOriginal() { return reinterpret_cast<CEnvDetailController*>(IEntityInstance::GetOriginal()); }
 
     virtual float& FadeStartDist() = 0;
     virtual void FadeStartDistUpdated() = 0;

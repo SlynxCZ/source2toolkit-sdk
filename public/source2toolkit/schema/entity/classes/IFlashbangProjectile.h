@@ -61,7 +61,6 @@ class IFlashbangProjectile : public virtual IBaseCSGrenadeProjectile
 {
 public:
     virtual ~IFlashbangProjectile() = default;
-    CFlashbangProjectile* GetOriginal() { return reinterpret_cast<CFlashbangProjectile*>(IEntityInstance::GetOriginal()); }
 
     virtual float& TimeToDetonate() = 0;
     virtual void TimeToDetonateUpdated() = 0;

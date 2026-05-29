@@ -62,7 +62,6 @@ class IPathSimple : public virtual IBaseEntity
 {
 public:
     virtual ~IPathSimple() = default;
-    CPathSimple* GetOriginal() { return reinterpret_cast<CPathSimple*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CPathQueryComponent& PathQueryComponent() = 0;
     virtual void PathQueryComponentUpdated() = 0;

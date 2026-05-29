@@ -61,7 +61,6 @@ class ICSMinimapBoundary : public virtual IBaseEntity
 {
 public:
     virtual ~ICSMinimapBoundary() = default;
-    CCSMinimapBoundary* GetOriginal() { return reinterpret_cast<CCSMinimapBoundary*>(IEntityInstance::GetOriginal()); }
 
     static ICSMinimapBoundary* FromOriginal(CCSMinimapBoundary* p);
 };

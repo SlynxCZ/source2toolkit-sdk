@@ -61,7 +61,6 @@ class IWaterBullet : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IWaterBullet() = default;
-    CWaterBullet* GetOriginal() { return reinterpret_cast<CWaterBullet*>(IEntityInstance::GetOriginal()); }
 
     static IWaterBullet* FromOriginal(CWaterBullet* p);
 };

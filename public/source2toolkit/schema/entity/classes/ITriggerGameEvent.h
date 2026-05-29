@@ -61,7 +61,6 @@ class ITriggerGameEvent : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerGameEvent() = default;
-    CTriggerGameEvent* GetOriginal() { return reinterpret_cast<CTriggerGameEvent*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlString& StrStartTouchEventName() = 0;
     virtual void StrStartTouchEventNameUpdated() = 0;

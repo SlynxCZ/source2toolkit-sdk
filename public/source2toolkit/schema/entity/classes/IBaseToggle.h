@@ -64,7 +64,6 @@ class IBaseToggle : public virtual IBaseModelEntity
 {
 public:
     virtual ~IBaseToggle() = default;
-    CBaseToggle* GetOriginal() { return reinterpret_cast<CBaseToggle*>(IEntityInstance::GetOriginal()); }
 
     virtual ::TOGGLE_STATE& Toggle_state() = 0;
     virtual void Toggle_stateUpdated() = 0;

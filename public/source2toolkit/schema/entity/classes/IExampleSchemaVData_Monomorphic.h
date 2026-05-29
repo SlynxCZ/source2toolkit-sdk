@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CExampleSchemaVData_Monomorphic;
 
 class IExampleSchemaVData_Monomorphic
 {
 public:
     virtual ~IExampleSchemaVData_Monomorphic() = default;
-    CExampleSchemaVData_Monomorphic* GetOriginal() { return reinterpret_cast<CExampleSchemaVData_Monomorphic*>(IEntityInstance::GetOriginal()); }
+    virtual CExampleSchemaVData_Monomorphic* GetOriginal() const = 0;
 
     virtual int32_t& Example1() = 0;
     virtual void Example1Updated() = 0;

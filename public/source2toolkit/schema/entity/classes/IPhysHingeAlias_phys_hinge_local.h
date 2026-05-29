@@ -61,7 +61,6 @@ class IPhysHingeAlias_phys_hinge_local : public virtual IPhysHinge
 {
 public:
     virtual ~IPhysHingeAlias_phys_hinge_local() = default;
-    CPhysHingeAlias_phys_hinge_local* GetOriginal() { return reinterpret_cast<CPhysHingeAlias_phys_hinge_local*>(IEntityInstance::GetOriginal()); }
 
     static IPhysHingeAlias_phys_hinge_local* FromOriginal(CPhysHingeAlias_phys_hinge_local* p);
 };

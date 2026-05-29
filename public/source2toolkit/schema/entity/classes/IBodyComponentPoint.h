@@ -62,7 +62,6 @@ class IBodyComponentPoint : public virtual IBodyComponent
 {
 public:
     virtual ~IBodyComponentPoint() = default;
-    CBodyComponentPoint* GetOriginal() { return reinterpret_cast<CBodyComponentPoint*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CGameSceneNode& SceneNode() = 0;
     virtual void SceneNodeUpdated() = 0;

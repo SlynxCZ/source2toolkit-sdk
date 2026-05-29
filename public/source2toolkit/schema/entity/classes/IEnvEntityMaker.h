@@ -62,7 +62,6 @@ class IEnvEntityMaker : public virtual IPointEntity
 {
 public:
     virtual ~IEnvEntityMaker() = default;
-    CEnvEntityMaker* GetOriginal() { return reinterpret_cast<CEnvEntityMaker*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& EntityMins() = 0;
     virtual void EntityMinsUpdated() = 0;

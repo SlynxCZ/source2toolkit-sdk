@@ -62,7 +62,6 @@ class IFuncWater : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncWater() = default;
-    CFuncWater* GetOriginal() { return reinterpret_cast<CFuncWater*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CBuoyancyHelper& BuoyancyHelper() = 0;
     virtual void BuoyancyHelperUpdated() = 0;

@@ -61,7 +61,6 @@ class IPhysPulley : public virtual IPhysConstraint
 {
 public:
     virtual ~IPhysPulley() = default;
-    CPhysPulley* GetOriginal() { return reinterpret_cast<CPhysPulley*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& Position2() = 0;
     virtual void Position2Updated() = 0;

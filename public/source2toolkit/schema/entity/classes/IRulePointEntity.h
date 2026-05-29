@@ -61,7 +61,6 @@ class IRulePointEntity : public virtual IRuleEntity
 {
 public:
     virtual ~IRulePointEntity() = default;
-    CRulePointEntity* GetOriginal() { return reinterpret_cast<CRulePointEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Score() = 0;
     virtual void ScoreUpdated() = 0;

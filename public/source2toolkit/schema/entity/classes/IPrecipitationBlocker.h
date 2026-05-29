@@ -61,7 +61,6 @@ class IPrecipitationBlocker : public virtual IBaseModelEntity
 {
 public:
     virtual ~IPrecipitationBlocker() = default;
-    CPrecipitationBlocker* GetOriginal() { return reinterpret_cast<CPrecipitationBlocker*>(IEntityInstance::GetOriginal()); }
 
     static IPrecipitationBlocker* FromOriginal(CPrecipitationBlocker* p);
 };

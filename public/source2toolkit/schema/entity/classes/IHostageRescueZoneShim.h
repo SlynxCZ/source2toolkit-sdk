@@ -61,7 +61,6 @@ class IHostageRescueZoneShim : public virtual IBaseTrigger
 {
 public:
     virtual ~IHostageRescueZoneShim() = default;
-    CHostageRescueZoneShim* GetOriginal() { return reinterpret_cast<CHostageRescueZoneShim*>(IEntityInstance::GetOriginal()); }
 
     static IHostageRescueZoneShim* FromOriginal(CHostageRescueZoneShim* p);
 };

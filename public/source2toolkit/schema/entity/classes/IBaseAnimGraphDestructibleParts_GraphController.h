@@ -61,7 +61,6 @@ class IBaseAnimGraphDestructibleParts_GraphController : public virtual IAnimGrap
 {
 public:
     virtual ~IBaseAnimGraphDestructibleParts_GraphController() = default;
-    CBaseAnimGraphDestructibleParts_GraphController* GetOriginal() { return reinterpret_cast<CBaseAnimGraphDestructibleParts_GraphController*>(IEntityInstance::GetOriginal()); }
 
     static IBaseAnimGraphDestructibleParts_GraphController* FromOriginal(CBaseAnimGraphDestructibleParts_GraphController* p);
 };

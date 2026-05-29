@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CFiringModeInt;
 
 class IFiringModeInt
 {
 public:
     virtual ~IFiringModeInt() = default;
-    CFiringModeInt* GetOriginal() { return reinterpret_cast<CFiringModeInt*>(IEntityInstance::GetOriginal()); }
+    virtual CFiringModeInt* GetOriginal() const = 0;
 
     virtual int32_t* Values() = 0;
     static IFiringModeInt* FromOriginal(CFiringModeInt* p);

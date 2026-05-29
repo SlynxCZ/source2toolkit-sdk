@@ -62,7 +62,6 @@ class IDynamicNavConnectionsVolume : public virtual ITriggerMultiple
 {
 public:
     virtual ~IDynamicNavConnectionsVolume() = default;
-    CDynamicNavConnectionsVolume* GetOriginal() { return reinterpret_cast<CDynamicNavConnectionsVolume*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& ConnectionTarget() = 0;
     virtual void ConnectionTargetUpdated() = 0;

@@ -62,7 +62,6 @@ class IFuncLadder : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncLadder() = default;
-    CFuncLadder* GetOriginal() { return reinterpret_cast<CFuncLadder*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& LadderDir() = 0;
     virtual void LadderDirUpdated() = 0;

@@ -61,7 +61,6 @@ class IPhysLength : public virtual IPhysConstraint
 {
 public:
     virtual ~IPhysLength() = default;
-    CPhysLength* GetOriginal() { return reinterpret_cast<CPhysLength*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector* Offset() = 0;
     virtual Vector& Attach() = 0;

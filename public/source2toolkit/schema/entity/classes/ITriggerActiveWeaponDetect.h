@@ -61,7 +61,6 @@ class ITriggerActiveWeaponDetect : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerActiveWeaponDetect() = default;
-    CTriggerActiveWeaponDetect* GetOriginal() { return reinterpret_cast<CTriggerActiveWeaponDetect*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnTouchedActiveWeapon() = 0;
     virtual void OnTouchedActiveWeaponUpdated() = 0;

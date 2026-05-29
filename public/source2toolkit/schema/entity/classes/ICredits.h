@@ -61,7 +61,6 @@ class ICredits : public virtual IPointEntity
 {
 public:
     virtual ~ICredits() = default;
-    CCredits* GetOriginal() { return reinterpret_cast<CCredits*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnCreditsDone() = 0;
     virtual void OnCreditsDoneUpdated() = 0;

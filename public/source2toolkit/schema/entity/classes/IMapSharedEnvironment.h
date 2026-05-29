@@ -61,7 +61,6 @@ class IMapSharedEnvironment : public virtual ILogicalEntity
 {
 public:
     virtual ~IMapSharedEnvironment() = default;
-    CMapSharedEnvironment* GetOriginal() { return reinterpret_cast<CMapSharedEnvironment*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& TargetMapName() = 0;
     virtual void TargetMapNameUpdated() = 0;

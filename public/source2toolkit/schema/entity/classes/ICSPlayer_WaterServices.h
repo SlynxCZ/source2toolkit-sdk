@@ -61,7 +61,6 @@ class ICSPlayer_WaterServices : public virtual IPlayer_WaterServices
 {
 public:
     virtual ~ICSPlayer_WaterServices() = default;
-    CCSPlayer_WaterServices* GetOriginal() { return reinterpret_cast<CCSPlayer_WaterServices*>(IEntityInstance::GetOriginal()); }
 
     virtual float& NextDrownDamageTime() = 0;
     virtual void NextDrownDamageTimeUpdated() = 0;

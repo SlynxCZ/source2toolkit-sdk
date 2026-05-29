@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CSkillInt;
 
 class ISkillInt
 {
 public:
     virtual ~ISkillInt() = default;
-    CSkillInt* GetOriginal() { return reinterpret_cast<CSkillInt*>(IEntityInstance::GetOriginal()); }
+    virtual CSkillInt* GetOriginal() const = 0;
 
     virtual int32_t* Value() = 0;
     static ISkillInt* FromOriginal(CSkillInt* p);

@@ -61,7 +61,6 @@ class ISoundOpvarSetPointBase : public virtual IBaseEntity
 {
 public:
     virtual ~ISoundOpvarSetPointBase() = default;
-    CSoundOpvarSetPointBase* GetOriginal() { return reinterpret_cast<CSoundOpvarSetPointBase*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;

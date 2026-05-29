@@ -61,7 +61,6 @@ class IPlayerVisibility : public virtual IBaseEntity
 {
 public:
     virtual ~IPlayerVisibility() = default;
-    CPlayerVisibility* GetOriginal() { return reinterpret_cast<CPlayerVisibility*>(IEntityInstance::GetOriginal()); }
 
     virtual float& VisibilityStrength() = 0;
     virtual void VisibilityStrengthUpdated() = 0;

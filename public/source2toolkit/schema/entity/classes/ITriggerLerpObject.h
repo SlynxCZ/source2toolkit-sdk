@@ -63,7 +63,6 @@ class ITriggerLerpObject : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerLerpObject() = default;
-    CTriggerLerpObject* GetOriginal() { return reinterpret_cast<CTriggerLerpObject*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& LerpTarget() = 0;
     virtual void LerpTargetUpdated() = 0;

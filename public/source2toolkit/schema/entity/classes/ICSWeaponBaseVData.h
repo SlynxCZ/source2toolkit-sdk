@@ -69,7 +69,6 @@ class ICSWeaponBaseVData : public virtual IBasePlayerWeaponVData
 {
 public:
     virtual ~ICSWeaponBaseVData() = default;
-    CCSWeaponBaseVData* GetOriginal() { return reinterpret_cast<CCSWeaponBaseVData*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CSWeaponType& WeaponType() = 0;
     virtual void WeaponTypeUpdated() = 0;

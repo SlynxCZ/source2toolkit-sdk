@@ -63,7 +63,6 @@ class ICSPlayer_ItemServices : public virtual IPlayer_ItemServices
 {
 public:
     virtual ~ICSPlayer_ItemServices() = default;
-    CCSPlayer_ItemServices* GetOriginal() { return reinterpret_cast<CCSPlayer_ItemServices*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& HasDefuser() = 0;
     virtual void HasDefuserUpdated() = 0;

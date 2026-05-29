@@ -65,7 +65,6 @@ class IBasePropDoor : public virtual IDynamicProp
 {
 public:
     virtual ~IBasePropDoor() = default;
-    CBasePropDoor* GetOriginal() { return reinterpret_cast<CBasePropDoor*>(IEntityInstance::GetOriginal()); }
 
     virtual float& AutoReturnDelay() = 0;
     virtual void AutoReturnDelayUpdated() = 0;

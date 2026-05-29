@@ -61,7 +61,6 @@ class IInfoPlayerStart : public virtual IPointEntity
 {
 public:
     virtual ~IInfoPlayerStart() = default;
-    CInfoPlayerStart* GetOriginal() { return reinterpret_cast<CInfoPlayerStart*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;

@@ -64,7 +64,6 @@ class ICSPlayerController_InventoryServices : public virtual IPlayerControllerCo
 {
 public:
     virtual ~ICSPlayerController_InventoryServices() = default;
-    CCSPlayerController_InventoryServices* GetOriginal() { return reinterpret_cast<CCSPlayerController_InventoryServices*>(IEntityInstance::GetOriginal()); }
 
     virtual uint16_t& MusicID() = 0;
     virtual void MusicIDUpdated() = 0;

@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CTestPulseIO__EntityHandleIntArgs_t;
 
 class ITestPulseIO__EntityHandleIntArgs_t
 {
 public:
     virtual ~ITestPulseIO__EntityHandleIntArgs_t() = default;
-    CTestPulseIO__EntityHandleIntArgs_t* GetOriginal() { return reinterpret_cast<CTestPulseIO__EntityHandleIntArgs_t*>(IEntityInstance::GetOriginal()); }
+    virtual CTestPulseIO__EntityHandleIntArgs_t* GetOriginal() const = 0;
 
     virtual CEntityHandle& HandleA() = 0;
     virtual void HandleAUpdated() = 0;

@@ -68,7 +68,6 @@ class IFuncRotator : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncRotator() = default;
-    CFuncRotator* GetOriginal() { return reinterpret_cast<CFuncRotator*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& RotatorTarget() = 0;
     virtual void RotatorTargetUpdated() = 0;

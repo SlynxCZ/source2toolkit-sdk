@@ -61,7 +61,6 @@ class IServerOnlyModelEntity : public virtual IBaseModelEntity
 {
 public:
     virtual ~IServerOnlyModelEntity() = default;
-    CServerOnlyModelEntity* GetOriginal() { return reinterpret_cast<CServerOnlyModelEntity*>(IEntityInstance::GetOriginal()); }
 
     static IServerOnlyModelEntity* FromOriginal(CServerOnlyModelEntity* p);
 };

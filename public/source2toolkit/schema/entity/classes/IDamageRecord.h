@@ -53,6 +53,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 #include "../enums/EKillTypes_t.h"
 
 class CCSPlayerController;
@@ -63,7 +65,7 @@ class IDamageRecord
 {
 public:
     virtual ~IDamageRecord() = default;
-    CDamageRecord* GetOriginal() { return reinterpret_cast<CDamageRecord*>(IEntityInstance::GetOriginal()); }
+    virtual CDamageRecord* GetOriginal() const = 0;
 
     virtual CHandle<CCSPlayerPawn>& PlayerDamager() = 0;
     virtual void PlayerDamagerUpdated() = 0;

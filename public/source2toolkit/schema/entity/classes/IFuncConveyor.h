@@ -62,7 +62,6 @@ class IFuncConveyor : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncConveyor() = default;
-    CFuncConveyor* GetOriginal() { return reinterpret_cast<CFuncConveyor*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& ConveyorModels() = 0;
     virtual void ConveyorModelsUpdated() = 0;

@@ -62,7 +62,6 @@ class IC4 : public virtual ICSWeaponBase
 {
 public:
     virtual ~IC4() = default;
-    CC4* GetOriginal() { return reinterpret_cast<CC4*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& LastValidPlayerHeldPosition() = 0;
     virtual void LastValidPlayerHeldPositionUpdated() = 0;

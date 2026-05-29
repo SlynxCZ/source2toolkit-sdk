@@ -62,7 +62,6 @@ class IGunTarget : public virtual IBaseToggle
 {
 public:
     virtual ~IGunTarget() = default;
-    CGunTarget* GetOriginal() { return reinterpret_cast<CGunTarget*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& On() = 0;
     virtual void OnUpdated() = 0;

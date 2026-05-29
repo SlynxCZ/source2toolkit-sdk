@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CNmGraphInstance;
 
 class INmGraphInstance
 {
 public:
     virtual ~INmGraphInstance() = default;
-    CNmGraphInstance* GetOriginal() { return reinterpret_cast<CNmGraphInstance*>(IEntityInstance::GetOriginal()); }
+    virtual CNmGraphInstance* GetOriginal() const = 0;
 
     static INmGraphInstance* FromOriginal(CNmGraphInstance* p);
 };

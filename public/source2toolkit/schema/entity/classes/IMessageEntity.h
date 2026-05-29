@@ -61,7 +61,6 @@ class IMessageEntity : public virtual IPointEntity
 {
 public:
     virtual ~IMessageEntity() = default;
-    CMessageEntity* GetOriginal() { return reinterpret_cast<CMessageEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Radius() = 0;
     virtual void RadiusUpdated() = 0;

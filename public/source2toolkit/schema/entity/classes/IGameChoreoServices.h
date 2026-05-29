@@ -53,6 +53,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 #include "../enums/IChoreoServices__ChoreoState_t.h"
 #include "../enums/IChoreoServices__ScriptState_t.h"
 
@@ -64,7 +66,7 @@ class IGameChoreoServices
 {
 public:
     virtual ~IGameChoreoServices() = default;
-    CGameChoreoServices* GetOriginal() { return reinterpret_cast<CGameChoreoServices*>(IEntityInstance::GetOriginal()); }
+    virtual CGameChoreoServices* GetOriginal() const = 0;
 
     virtual CHandle<CBaseModelEntity>& Owner() = 0;
     virtual void OwnerUpdated() = 0;

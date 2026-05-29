@@ -61,7 +61,6 @@ class IPlayerSprayDecal : public virtual IModelPointEntity
 {
 public:
     virtual ~IPlayerSprayDecal() = default;
-    CPlayerSprayDecal* GetOriginal() { return reinterpret_cast<CPlayerSprayDecal*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& UniqueID() = 0;
     virtual void UniqueIDUpdated() = 0;

@@ -62,7 +62,6 @@ class IHandleTest : public virtual IBaseEntity
 {
 public:
     virtual ~IHandleTest() = default;
-    CHandleTest* GetOriginal() { return reinterpret_cast<CHandleTest*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& Handle() = 0;
     virtual void HandleUpdated() = 0;

@@ -61,7 +61,6 @@ class ITriggerDetectBulletFire : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerDetectBulletFire() = default;
-    CTriggerDetectBulletFire* GetOriginal() { return reinterpret_cast<CTriggerDetectBulletFire*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& PlayerFireOnly() = 0;
     virtual void PlayerFireOnlyUpdated() = 0;

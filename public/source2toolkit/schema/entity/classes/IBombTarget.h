@@ -62,7 +62,6 @@ class IBombTarget : public virtual IBaseTrigger
 {
 public:
     virtual ~IBombTarget() = default;
-    CBombTarget* GetOriginal() { return reinterpret_cast<CBombTarget*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnBombExplode() = 0;
     virtual void OnBombExplodeUpdated() = 0;

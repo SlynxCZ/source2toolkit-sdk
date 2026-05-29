@@ -61,7 +61,6 @@ class INavWalkable : public virtual IPointEntity
 {
 public:
     virtual ~INavWalkable() = default;
-    CNavWalkable* GetOriginal() { return reinterpret_cast<CNavWalkable*>(IEntityInstance::GetOriginal()); }
 
     static INavWalkable* FromOriginal(CNavWalkable* p);
 };

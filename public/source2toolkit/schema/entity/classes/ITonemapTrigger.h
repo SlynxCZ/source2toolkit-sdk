@@ -61,7 +61,6 @@ class ITonemapTrigger : public virtual IBaseTrigger
 {
 public:
     virtual ~ITonemapTrigger() = default;
-    CTonemapTrigger* GetOriginal() { return reinterpret_cast<CTonemapTrigger*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& TonemapControllerName() = 0;
     virtual void TonemapControllerNameUpdated() = 0;

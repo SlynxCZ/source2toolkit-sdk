@@ -62,7 +62,6 @@ class ICSGO_TeamPreviewCharacterPosition : public virtual IBaseEntity
 {
 public:
     virtual ~ICSGO_TeamPreviewCharacterPosition() = default;
-    CCSGO_TeamPreviewCharacterPosition* GetOriginal() { return reinterpret_cast<CCSGO_TeamPreviewCharacterPosition*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Variant() = 0;
     virtual void VariantUpdated() = 0;

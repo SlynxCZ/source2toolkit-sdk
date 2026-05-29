@@ -61,7 +61,6 @@ class IPhysTorque : public virtual IPhysForce
 {
 public:
     virtual ~IPhysTorque() = default;
-    CPhysTorque* GetOriginal() { return reinterpret_cast<CPhysTorque*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& Axis() = 0;
     virtual void AxisUpdated() = 0;

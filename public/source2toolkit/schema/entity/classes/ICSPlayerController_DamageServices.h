@@ -62,7 +62,6 @@ class ICSPlayerController_DamageServices : public virtual IPlayerControllerCompo
 {
 public:
     virtual ~ICSPlayerController_DamageServices() = default;
-    CCSPlayerController_DamageServices* GetOriginal() { return reinterpret_cast<CCSPlayerController_DamageServices*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& SendUpdate() = 0;
     virtual void SendUpdateUpdated() = 0;

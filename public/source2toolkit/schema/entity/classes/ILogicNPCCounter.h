@@ -61,7 +61,6 @@ class ILogicNPCCounter : public virtual IBaseEntity
 {
 public:
     virtual ~ILogicNPCCounter() = default;
-    CLogicNPCCounter* GetOriginal() { return reinterpret_cast<CLogicNPCCounter*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CEntityIOOutput& OnMinCountAll() = 0;
     virtual void OnMinCountAllUpdated() = 0;

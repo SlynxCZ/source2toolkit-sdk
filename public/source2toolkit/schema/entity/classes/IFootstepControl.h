@@ -61,7 +61,6 @@ class IFootstepControl : public virtual IBaseTrigger
 {
 public:
     virtual ~IFootstepControl() = default;
-    CFootstepControl* GetOriginal() { return reinterpret_cast<CFootstepControl*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Source() = 0;
     virtual void SourceUpdated() = 0;

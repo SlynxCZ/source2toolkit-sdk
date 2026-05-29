@@ -63,7 +63,6 @@ class IPlayerPing : public virtual IBaseEntity
 {
 public:
     virtual ~IPlayerPing() = default;
-    CPlayerPing* GetOriginal() { return reinterpret_cast<CPlayerPing*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CCSPlayerPawn>& Player() = 0;
     virtual void PlayerUpdated() = 0;

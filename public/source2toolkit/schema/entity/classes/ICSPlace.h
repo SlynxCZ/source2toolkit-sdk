@@ -61,7 +61,6 @@ class ICSPlace : public virtual IServerOnlyModelEntity
 {
 public:
     virtual ~ICSPlace() = default;
-    CCSPlace* GetOriginal() { return reinterpret_cast<CCSPlace*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Name() = 0;
     virtual void NameUpdated() = 0;

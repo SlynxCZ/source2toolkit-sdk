@@ -61,7 +61,6 @@ class IMathRemap : public virtual ILogicalEntity
 {
 public:
     virtual ~IMathRemap() = default;
-    CMathRemap* GetOriginal() { return reinterpret_cast<CMathRemap*>(IEntityInstance::GetOriginal()); }
 
     virtual float& InMin() = 0;
     virtual void InMinUpdated() = 0;

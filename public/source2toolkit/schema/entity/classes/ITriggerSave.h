@@ -61,7 +61,6 @@ class ITriggerSave : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerSave() = default;
-    CTriggerSave* GetOriginal() { return reinterpret_cast<CTriggerSave*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& ForceNewLevelUnit() = 0;
     virtual void ForceNewLevelUnitUpdated() = 0;

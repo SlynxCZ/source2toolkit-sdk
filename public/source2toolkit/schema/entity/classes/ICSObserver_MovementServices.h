@@ -61,7 +61,6 @@ class ICSObserver_MovementServices : public virtual IPlayer_MovementServices
 {
 public:
     virtual ~ICSObserver_MovementServices() = default;
-    CCSObserver_MovementServices* GetOriginal() { return reinterpret_cast<CCSObserver_MovementServices*>(IEntityInstance::GetOriginal()); }
 
     static ICSObserver_MovementServices* FromOriginal(CCSObserver_MovementServices* p);
 };

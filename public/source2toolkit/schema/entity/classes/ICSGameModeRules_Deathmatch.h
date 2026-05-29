@@ -61,7 +61,6 @@ class ICSGameModeRules_Deathmatch : public virtual ICSGameModeRules
 {
 public:
     virtual ~ICSGameModeRules_Deathmatch() = default;
-    CCSGameModeRules_Deathmatch* GetOriginal() { return reinterpret_cast<CCSGameModeRules_Deathmatch*>(IEntityInstance::GetOriginal()); }
 
     virtual float& DMBonusStartTime() = 0;
     virtual void DMBonusStartTimeUpdated() = 0;

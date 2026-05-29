@@ -61,7 +61,6 @@ class ISoundOpvarSetAABBEntity : public virtual ISoundOpvarSetPointEntity
 {
 public:
     virtual ~ISoundOpvarSetAABBEntity() = default;
-    CSoundOpvarSetAABBEntity* GetOriginal() { return reinterpret_cast<CSoundOpvarSetAABBEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& DistanceInnerMins() = 0;
     virtual void DistanceInnerMinsUpdated() = 0;

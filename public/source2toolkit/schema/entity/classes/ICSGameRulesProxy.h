@@ -62,7 +62,6 @@ class ICSGameRulesProxy : public virtual IGameRulesProxy
 {
 public:
     virtual ~ICSGameRulesProxy() = default;
-    CCSGameRulesProxy* GetOriginal() { return reinterpret_cast<CCSGameRulesProxy*>(IEntityInstance::GetOriginal()); }
 
     virtual CCSGameRules*& GameRules() = 0;
     virtual void GameRulesUpdated() = 0;

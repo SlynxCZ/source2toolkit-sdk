@@ -62,7 +62,6 @@ class ISkeletonInstance : public virtual IGameSceneNode
 {
 public:
     virtual ~ISkeletonInstance() = default;
-    CSkeletonInstance* GetOriginal() { return reinterpret_cast<CSkeletonInstance*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CModelState& ModelState() = 0;
     virtual void ModelStateUpdated() = 0;

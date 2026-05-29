@@ -62,7 +62,6 @@ class IBasePlayerVData : public virtual IEntitySubclassVDataBase
 {
 public:
     virtual ~IBasePlayerVData() = default;
-    CBasePlayerVData* GetOriginal() { return reinterpret_cast<CBasePlayerVData*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CSkillFloat& HeadDamageMultiplier() = 0;
     virtual void HeadDamageMultiplierUpdated() = 0;

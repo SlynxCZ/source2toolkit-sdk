@@ -61,7 +61,6 @@ class IWeaponUSPSilencer : public virtual ICSWeaponBaseGun
 {
 public:
     virtual ~IWeaponUSPSilencer() = default;
-    CWeaponUSPSilencer* GetOriginal() { return reinterpret_cast<CWeaponUSPSilencer*>(IEntityInstance::GetOriginal()); }
 
     static IWeaponUSPSilencer* FromOriginal(CWeaponUSPSilencer* p);
 };

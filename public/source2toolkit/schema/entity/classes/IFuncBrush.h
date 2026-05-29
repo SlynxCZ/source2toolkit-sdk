@@ -63,7 +63,6 @@ class IFuncBrush : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncBrush() = default;
-    CFuncBrush* GetOriginal() { return reinterpret_cast<CFuncBrush*>(IEntityInstance::GetOriginal()); }
 
     virtual ::BrushSolidities_e& Solidity() = 0;
     virtual void SolidityUpdated() = 0;

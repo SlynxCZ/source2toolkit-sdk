@@ -61,7 +61,6 @@ class ICSPlayer_AimPunchServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~ICSPlayer_AimPunchServices() = default;
-    CCSPlayer_AimPunchServices* GetOriginal() { return reinterpret_cast<CCSPlayer_AimPunchServices*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& PredictableBaseTick() = 0;
     virtual void PredictableBaseTickUpdated() = 0;

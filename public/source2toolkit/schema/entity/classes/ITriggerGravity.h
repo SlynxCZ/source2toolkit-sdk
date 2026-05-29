@@ -61,7 +61,6 @@ class ITriggerGravity : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerGravity() = default;
-    CTriggerGravity* GetOriginal() { return reinterpret_cast<CTriggerGravity*>(IEntityInstance::GetOriginal()); }
 
     static ITriggerGravity* FromOriginal(CTriggerGravity* p);
 };

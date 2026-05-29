@@ -61,7 +61,6 @@ class IBodyComponentBaseModelEntity : public virtual IBodyComponentSkeletonInsta
 {
 public:
     virtual ~IBodyComponentBaseModelEntity() = default;
-    CBodyComponentBaseModelEntity* GetOriginal() { return reinterpret_cast<CBodyComponentBaseModelEntity*>(IEntityInstance::GetOriginal()); }
 
     static IBodyComponentBaseModelEntity* FromOriginal(CBodyComponentBaseModelEntity* p);
 };

@@ -61,7 +61,6 @@ class ICSPointScriptEntity : public virtual IBaseEntity
 {
 public:
     virtual ~ICSPointScriptEntity() = default;
-    CCSPointScriptEntity* GetOriginal() { return reinterpret_cast<CCSPointScriptEntity*>(IEntityInstance::GetOriginal()); }
 
     static ICSPointScriptEntity* FromOriginal(CCSPointScriptEntity* p);
 };

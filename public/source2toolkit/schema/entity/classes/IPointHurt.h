@@ -64,7 +64,6 @@ class IPointHurt : public virtual IPointEntity
 {
 public:
     virtual ~IPointHurt() = default;
-    CPointHurt* GetOriginal() { return reinterpret_cast<CPointHurt*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Damage() = 0;
     virtual void DamageUpdated() = 0;

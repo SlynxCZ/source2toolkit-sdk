@@ -53,6 +53,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CModelState;
 class IPhysAggregateInstance;
 class InfoForResourceTypeCModel;
@@ -61,7 +63,7 @@ class IModelState
 {
 public:
     virtual ~IModelState() = default;
-    CModelState* GetOriginal() { return reinterpret_cast<CModelState*>(IEntityInstance::GetOriginal()); }
+    virtual CModelState* GetOriginal() const = 0;
 
     virtual CStrongHandle<InfoForResourceTypeCModel>& Model() = 0;
     virtual void ModelUpdated() = 0;

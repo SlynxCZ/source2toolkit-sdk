@@ -61,7 +61,6 @@ class IEnvSpark : public virtual IPointEntity
 {
 public:
     virtual ~IEnvSpark() = default;
-    CEnvSpark* GetOriginal() { return reinterpret_cast<CEnvSpark*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Delay() = 0;
     virtual void DelayUpdated() = 0;

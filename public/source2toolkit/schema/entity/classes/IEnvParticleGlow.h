@@ -62,7 +62,6 @@ class IEnvParticleGlow : public virtual IParticleSystem
 {
 public:
     virtual ~IEnvParticleGlow() = default;
-    CEnvParticleGlow* GetOriginal() { return reinterpret_cast<CEnvParticleGlow*>(IEntityInstance::GetOriginal()); }
 
     virtual float& AlphaScale() = 0;
     virtual void AlphaScaleUpdated() = 0;

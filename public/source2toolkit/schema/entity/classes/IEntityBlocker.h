@@ -61,7 +61,6 @@ class IEntityBlocker : public virtual IBaseModelEntity
 {
 public:
     virtual ~IEntityBlocker() = default;
-    CEntityBlocker* GetOriginal() { return reinterpret_cast<CEntityBlocker*>(IEntityInstance::GetOriginal()); }
 
     static IEntityBlocker* FromOriginal(CEntityBlocker* p);
 };

@@ -53,13 +53,15 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CSPerRoundStats_t;
 
 class ISPerRoundStats_t
 {
 public:
     virtual ~ISPerRoundStats_t() = default;
-    CSPerRoundStats_t* GetOriginal() { return reinterpret_cast<CSPerRoundStats_t*>(IEntityInstance::GetOriginal()); }
+    virtual CSPerRoundStats_t* GetOriginal() const = 0;
 
     virtual int32_t& Kills() = 0;
     virtual void KillsUpdated() = 0;

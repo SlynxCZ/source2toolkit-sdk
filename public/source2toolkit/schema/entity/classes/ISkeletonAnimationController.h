@@ -53,6 +53,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "IEntityInstance.h"
+
 class CSkeletonAnimationController;
 class CSkeletonInstance;
 
@@ -60,7 +62,7 @@ class ISkeletonAnimationController
 {
 public:
     virtual ~ISkeletonAnimationController() = default;
-    CSkeletonAnimationController* GetOriginal() { return reinterpret_cast<CSkeletonAnimationController*>(IEntityInstance::GetOriginal()); }
+    virtual CSkeletonAnimationController* GetOriginal() const = 0;
 
     virtual CSkeletonInstance*& SkeletonInstance() = 0;
     virtual void SkeletonInstanceUpdated() = 0;

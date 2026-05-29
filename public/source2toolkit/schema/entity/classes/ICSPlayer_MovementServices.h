@@ -64,7 +64,6 @@ class ICSPlayer_MovementServices : public virtual IPlayer_MovementServices_Human
 {
 public:
     virtual ~ICSPlayer_MovementServices() = default;
-    CCSPlayer_MovementServices* GetOriginal() { return reinterpret_cast<CCSPlayer_MovementServices*>(IEntityInstance::GetOriginal()); }
 
     virtual ::CCSPlayerAnimationState& AnimationState() = 0;
     virtual void AnimationStateUpdated() = 0;

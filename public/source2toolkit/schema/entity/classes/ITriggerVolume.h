@@ -62,7 +62,6 @@ class ITriggerVolume : public virtual IBaseModelEntity
 {
 public:
     virtual ~ITriggerVolume() = default;
-    CTriggerVolume* GetOriginal() { return reinterpret_cast<CTriggerVolume*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& FilterName() = 0;
     virtual void FilterNameUpdated() = 0;

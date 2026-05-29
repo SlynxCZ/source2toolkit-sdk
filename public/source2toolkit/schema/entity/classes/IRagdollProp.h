@@ -67,7 +67,6 @@ class IRagdollProp : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IRagdollProp() = default;
-    CRagdollProp* GetOriginal() { return reinterpret_cast<CRagdollProp*>(IEntityInstance::GetOriginal()); }
 
     virtual ::ragdoll_t& Ragdoll() = 0;
     virtual void RagdollUpdated() = 0;
