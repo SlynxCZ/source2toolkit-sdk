@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CInfoInstructorHintHostageRescueZone;
 
 class IInfoInstructorHintHostageRescueZone : public virtual IPointEntity
 {
 public:
     virtual ~IInfoInstructorHintHostageRescueZone() = default;
+    CInfoInstructorHintHostageRescueZone* GetOriginal() { return reinterpret_cast<CInfoInstructorHintHostageRescueZone*>(IEntityInstance::GetOriginal()); }
 
+    static IInfoInstructorHintHostageRescueZone* FromOriginal(CInfoInstructorHintHostageRescueZone* p);
 };
 
 #endif // _INCLUDE_IINFOINSTRUCTORHINTHOSTAGERESCUEZONE_H

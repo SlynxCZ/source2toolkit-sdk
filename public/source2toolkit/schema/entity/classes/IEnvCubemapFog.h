@@ -50,10 +50,12 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
 
+class CEnvCubemapFog;
 class InfoForResourceTypeCTextureBase;
 class InfoForResourceTypeIMaterial2;
 
@@ -61,6 +63,7 @@ class IEnvCubemapFog : public virtual IBaseEntity
 {
 public:
     virtual ~IEnvCubemapFog() = default;
+    CEnvCubemapFog* GetOriginal() { return reinterpret_cast<CEnvCubemapFog*>(IEntityInstance::GetOriginal()); }
 
     virtual float& EndDistance() = 0;
     virtual void EndDistanceUpdated() = 0;
@@ -110,6 +113,7 @@ public:
     virtual void HasHeightFogEndUpdated() = 0;
     virtual bool& FirstTime() = 0;
     virtual void FirstTimeUpdated() = 0;
+    static IEnvCubemapFog* FromOriginal(CEnvCubemapFog* p);
 };
 
 #endif // _INCLUDE_IENVCUBEMAPFOG_H

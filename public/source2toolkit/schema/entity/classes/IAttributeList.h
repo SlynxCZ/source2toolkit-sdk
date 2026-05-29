@@ -50,8 +50,10 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+class CAttributeList;
 class CAttributeManager;
 class CEconItemAttribute;
 
@@ -59,11 +61,13 @@ class IAttributeList
 {
 public:
     virtual ~IAttributeList() = default;
+    CAttributeList* GetOriginal() { return reinterpret_cast<CAttributeList*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<CEconItemAttribute>& Attributes() = 0;
     virtual void AttributesUpdated() = 0;
     virtual CAttributeManager*& Manager() = 0;
     virtual void ManagerUpdated() = 0;
+    static IAttributeList* FromOriginal(CAttributeList* p);
 };
 
 #endif // _INCLUDE_IATTRIBUTELIST_H

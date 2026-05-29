@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBasePlayerPawn.h"
@@ -57,6 +58,7 @@
 #include "../enums/CSPlayerState.h"
 
 class CCSPlayerController;
+class CCSPlayerPawnBase;
 class CCSPlayer_PingServices;
 class CTouchExpansionComponent;
 
@@ -64,16 +66,17 @@ class ICSPlayerPawnBase : public virtual IBasePlayerPawn
 {
 public:
     virtual ~ICSPlayerPawnBase() = default;
+    CCSPlayerPawnBase* GetOriginal() { return reinterpret_cast<CCSPlayerPawnBase*>(IEntityInstance::GetOriginal()); }
 
-    virtual CTouchExpansionComponent& CTouchExpansionComponent() = 0;
-    virtual void CTouchExpansionComponentUpdated() = 0;
+    virtual ::CTouchExpansionComponent& TouchExpansionComponent() = 0;
+    virtual void TouchExpansionComponentUpdated() = 0;
     virtual CCSPlayer_PingServices*& PingServices() = 0;
     virtual void PingServicesUpdated() = 0;
     virtual float& BlindUntilTime() = 0;
     virtual void BlindUntilTimeUpdated() = 0;
     virtual float& BlindStartTime() = 0;
     virtual void BlindStartTimeUpdated() = 0;
-    virtual CSPlayerState& PlayerState() = 0;
+    virtual ::CSPlayerState& PlayerState() = 0;
     virtual void PlayerStateUpdated() = 0;
     virtual bool& Respawning() = 0;
     virtual void RespawningUpdated() = 0;
@@ -95,6 +98,7 @@ public:
     virtual void ProgressBarDurationUpdated() = 0;
     virtual CHandle<CCSPlayerController>& OriginalController() = 0;
     virtual void OriginalControllerUpdated() = 0;
+    static ICSPlayerPawnBase* FromOriginal(CCSPlayerPawnBase* p);
 };
 
 #endif // _INCLUDE_ICSPLAYERPAWNBASE_H

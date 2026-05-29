@@ -50,12 +50,16 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CCSPlayerModernJump;
 
 class ICSPlayerModernJump
 {
 public:
     virtual ~ICSPlayerModernJump() = default;
+    CCSPlayerModernJump* GetOriginal() { return reinterpret_cast<CCSPlayerModernJump*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& LastActualJumpPressTick() = 0;
     virtual void LastActualJumpPressTickUpdated() = 0;
@@ -75,6 +79,7 @@ public:
     virtual void LastLandedVelocityYUpdated() = 0;
     virtual float& LastLandedVelocityZ() = 0;
     virtual void LastLandedVelocityZUpdated() = 0;
+    static ICSPlayerModernJump* FromOriginal(CCSPlayerModernJump* p);
 };
 
 #endif // _INCLUDE_ICSPLAYERMODERNJUMP_H

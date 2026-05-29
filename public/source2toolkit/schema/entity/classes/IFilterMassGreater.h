@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseFilter.h"
+
+class CFilterMassGreater;
 
 class IFilterMassGreater : public virtual IBaseFilter
 {
 public:
     virtual ~IFilterMassGreater() = default;
+    CFilterMassGreater* GetOriginal() { return reinterpret_cast<CFilterMassGreater*>(IEntityInstance::GetOriginal()); }
 
     virtual float& FilterMass() = 0;
     virtual void FilterMassUpdated() = 0;
+    static IFilterMassGreater* FromOriginal(CFilterMassGreater* p);
 };
 
 #endif // _INCLUDE_IFILTERMASSGREATER_H

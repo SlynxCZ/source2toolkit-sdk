@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseFilter.h"
+
+class CFilterLOS;
 
 class IFilterLOS : public virtual IBaseFilter
 {
 public:
     virtual ~IFilterLOS() = default;
+    CFilterLOS* GetOriginal() { return reinterpret_cast<CFilterLOS*>(IEntityInstance::GetOriginal()); }
 
+    static IFilterLOS* FromOriginal(CFilterLOS* p);
 };
 
 #endif // _INCLUDE_IFILTERLOS_H

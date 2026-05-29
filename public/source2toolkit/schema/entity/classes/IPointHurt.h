@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
@@ -57,15 +58,17 @@
 #include "../enums/DamageTypes_t.h"
 
 class CBaseEntity;
+class CPointHurt;
 
 class IPointHurt : public virtual IPointEntity
 {
 public:
     virtual ~IPointHurt() = default;
+    CPointHurt* GetOriginal() { return reinterpret_cast<CPointHurt*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Damage() = 0;
     virtual void DamageUpdated() = 0;
-    virtual DamageTypes_t& BitsDamageType() = 0;
+    virtual ::DamageTypes_t& BitsDamageType() = 0;
     virtual void BitsDamageTypeUpdated() = 0;
     virtual float& Radius() = 0;
     virtual void RadiusUpdated() = 0;
@@ -75,6 +78,7 @@ public:
     virtual void StrTargetUpdated() = 0;
     virtual CHandle<CBaseEntity>& Activator() = 0;
     virtual void ActivatorUpdated() = 0;
+    static IPointHurt* FromOriginal(CPointHurt* p);
 };
 
 #endif // _INCLUDE_IPOINTHURT_H

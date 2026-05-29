@@ -50,16 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
 
 #include "../enums/BloodType.h"
 
+class CBlood;
+
 class IBlood : public virtual IPointEntity
 {
 public:
     virtual ~IBlood() = default;
+    CBlood* GetOriginal() { return reinterpret_cast<CBlood*>(IEntityInstance::GetOriginal()); }
 
     virtual QAngle& SprayAngles() = 0;
     virtual void SprayAnglesUpdated() = 0;
@@ -67,8 +71,9 @@ public:
     virtual void SprayDirUpdated() = 0;
     virtual float& Amount() = 0;
     virtual void AmountUpdated() = 0;
-    virtual BloodType& Color() = 0;
+    virtual ::BloodType& Color() = 0;
     virtual void ColorUpdated() = 0;
+    static IBlood* FromOriginal(CBlood* p);
 };
 
 #endif // _INCLUDE_IBLOOD_H

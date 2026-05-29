@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
@@ -57,23 +58,26 @@
 #include "../enums/CLogicBranchList__LogicBranchListenerLastState_t.h"
 
 class CBaseEntity;
+class CLogicBranchList;
 
 class ILogicBranchList : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicBranchList() = default;
+    CLogicBranchList* GetOriginal() { return reinterpret_cast<CLogicBranchList*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge* LogicBranchNames() = 0;
     virtual CUtlVector<CHandle<CBaseEntity>>& LogicBranchList() = 0;
     virtual void LogicBranchListUpdated() = 0;
-    virtual CLogicBranchList__LogicBranchListenerLastState_t& LastState() = 0;
+    virtual ::CLogicBranchList__LogicBranchListenerLastState_t& LastState() = 0;
     virtual void LastStateUpdated() = 0;
-    virtual CEntityIOOutput& OnAllTrue() = 0;
+    virtual ::CEntityIOOutput& OnAllTrue() = 0;
     virtual void OnAllTrueUpdated() = 0;
-    virtual CEntityIOOutput& OnAllFalse() = 0;
+    virtual ::CEntityIOOutput& OnAllFalse() = 0;
     virtual void OnAllFalseUpdated() = 0;
-    virtual CEntityIOOutput& OnMixed() = 0;
+    virtual ::CEntityIOOutput& OnMixed() = 0;
     virtual void OnMixedUpdated() = 0;
+    static ILogicBranchList* FromOriginal(CLogicBranchList* p);
 };
 
 #endif // _INCLUDE_ILOGICBRANCHLIST_H

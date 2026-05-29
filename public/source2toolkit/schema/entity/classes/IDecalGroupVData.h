@@ -50,19 +50,23 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+class CDecalGroupVData;
 class DecalGroupOption_t;
 
 class IDecalGroupVData
 {
 public:
     virtual ~IDecalGroupVData() = default;
+    CDecalGroupVData* GetOriginal() { return reinterpret_cast<CDecalGroupVData*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<DecalGroupOption_t>& Options() = 0;
     virtual void OptionsUpdated() = 0;
     virtual float& TotalProbability() = 0;
     virtual void TotalProbabilityUpdated() = 0;
+    static IDecalGroupVData* FromOriginal(CDecalGroupVData* p);
 };
 
 #endif // _INCLUDE_IDECALGROUPVDATA_H

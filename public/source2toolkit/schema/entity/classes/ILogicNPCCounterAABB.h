@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicNPCCounter.h"
+
+class CLogicNPCCounterAABB;
 
 class ILogicNPCCounterAABB : public virtual ILogicNPCCounter
 {
 public:
     virtual ~ILogicNPCCounterAABB() = default;
+    CLogicNPCCounterAABB* GetOriginal() { return reinterpret_cast<CLogicNPCCounterAABB*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& DistanceOuterMins() = 0;
     virtual void DistanceOuterMinsUpdated() = 0;
@@ -67,6 +71,7 @@ public:
     virtual void OuterMinsUpdated() = 0;
     virtual Vector& OuterMaxs() = 0;
     virtual void OuterMaxsUpdated() = 0;
+    static ILogicNPCCounterAABB* FromOriginal(CLogicNPCCounterAABB* p);
 };
 
 #endif // _INCLUDE_ILOGICNPCCOUNTERAABB_H

@@ -50,12 +50,14 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
 
 class CBaseEntity;
 class CMotorController;
+class CPhysMotor;
 class IPhysicsBody;
 class IPhysicsJoint;
 
@@ -63,6 +65,7 @@ class IPhysMotor : public virtual ILogicalEntity
 {
 public:
     virtual ~IPhysMotor() = default;
+    CPhysMotor* GetOriginal() { return reinterpret_cast<CPhysMotor*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& NameAttach() = 0;
     virtual void NameAttachUpdated() = 0;
@@ -92,8 +95,9 @@ public:
     virtual void FixedWorldBodyUpdated() = 0;
     virtual IPhysicsJoint*& MotorJoint() = 0;
     virtual void MotorJointUpdated() = 0;
-    virtual CMotorController& Motor() = 0;
+    virtual ::CMotorController& Motor() = 0;
     virtual void MotorUpdated() = 0;
+    static IPhysMotor* FromOriginal(CPhysMotor* p);
 };
 
 #endif // _INCLUDE_IPHYSMOTOR_H

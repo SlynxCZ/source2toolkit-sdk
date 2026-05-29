@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CEnvSpark;
 
 class IEnvSpark : public virtual IPointEntity
 {
 public:
     virtual ~IEnvSpark() = default;
+    CEnvSpark* GetOriginal() { return reinterpret_cast<CEnvSpark*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Delay() = 0;
     virtual void DelayUpdated() = 0;
@@ -67,8 +71,9 @@ public:
     virtual void TrailLengthUpdated() = 0;
     virtual int32_t& Type() = 0;
     virtual void TypeUpdated() = 0;
-    virtual CEntityIOOutput& OnSpark() = 0;
+    virtual ::CEntityIOOutput& OnSpark() = 0;
     virtual void OnSparkUpdated() = 0;
+    static IEnvSpark* FromOriginal(CEnvSpark* p);
 };
 
 #endif // _INCLUDE_IENVSPARK_H

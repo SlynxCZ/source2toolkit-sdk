@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CNavSpaceInfo;
 
 class INavSpaceInfo : public virtual IPointEntity
 {
 public:
     virtual ~INavSpaceInfo() = default;
+    CNavSpaceInfo* GetOriginal() { return reinterpret_cast<CNavSpaceInfo*>(IEntityInstance::GetOriginal()); }
 
+    static INavSpaceInfo* FromOriginal(CNavSpaceInfo* p);
 };
 
 #endif // _INCLUDE_INAVSPACEINFO_H

@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseFilter.h"
+
+class CFilterEnemy;
 
 class IFilterEnemy : public virtual IBaseFilter
 {
 public:
     virtual ~IFilterEnemy() = default;
+    CFilterEnemy* GetOriginal() { return reinterpret_cast<CFilterEnemy*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& EnemyName() = 0;
     virtual void EnemyNameUpdated() = 0;
@@ -69,6 +73,7 @@ public:
     virtual void MaxSquadmatesPerEnemyUpdated() = 0;
     virtual CUtlSymbolLarge& PlayerName() = 0;
     virtual void PlayerNameUpdated() = 0;
+    static IFilterEnemy* FromOriginal(CFilterEnemy* p);
 };
 
 #endif // _INCLUDE_IFILTERENEMY_H

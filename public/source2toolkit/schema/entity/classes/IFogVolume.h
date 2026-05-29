@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IServerOnlyModelEntity.h"
+
+class CFogVolume;
 
 class IFogVolume : public virtual IServerOnlyModelEntity
 {
 public:
     virtual ~IFogVolume() = default;
+    CFogVolume* GetOriginal() { return reinterpret_cast<CFogVolume*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& FogName() = 0;
     virtual void FogNameUpdated() = 0;
@@ -69,6 +73,7 @@ public:
     virtual void DisabledUpdated() = 0;
     virtual bool& InFogVolumesList() = 0;
     virtual void InFogVolumesListUpdated() = 0;
+    static IFogVolume* FromOriginal(CFogVolume* p);
 };
 
 #endif // _INCLUDE_IFOGVOLUME_H

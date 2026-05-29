@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
+
+class CEnvFade;
 
 class IEnvFade : public virtual ILogicalEntity
 {
 public:
     virtual ~IEnvFade() = default;
+    CEnvFade* GetOriginal() { return reinterpret_cast<CEnvFade*>(IEntityInstance::GetOriginal()); }
 
     virtual Color& FadeColor() = 0;
     virtual void FadeColorUpdated() = 0;
@@ -65,8 +69,9 @@ public:
     virtual void DurationUpdated() = 0;
     virtual float& HoldDuration() = 0;
     virtual void HoldDurationUpdated() = 0;
-    virtual CEntityIOOutput& OnBeginFade() = 0;
+    virtual ::CEntityIOOutput& OnBeginFade() = 0;
     virtual void OnBeginFadeUpdated() = 0;
+    static IEnvFade* FromOriginal(CEnvFade* p);
 };
 
 #endif // _INCLUDE_IENVFADE_H

@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CMapVetoPickController;
 
 class IMapVetoPickController : public virtual IBaseEntity
 {
 public:
     virtual ~IMapVetoPickController() = default;
+    CMapVetoPickController* GetOriginal() { return reinterpret_cast<CMapVetoPickController*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& PlayedIntroVcd() = 0;
     virtual void PlayedIntroVcdUpdated() = 0;
@@ -87,6 +91,7 @@ public:
     virtual void PhaseStartTickUpdated() = 0;
     virtual int32_t& PhaseDurationTicks() = 0;
     virtual void PhaseDurationTicksUpdated() = 0;
+    static IMapVetoPickController* FromOriginal(CMapVetoPickController* p);
 };
 
 #endif // _INCLUDE_IMAPVETOPICKCONTROLLER_H

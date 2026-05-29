@@ -50,24 +50,28 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseAnimGraph.h"
+
+class CItem;
 
 class IItem : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IItem() = default;
+    CItem* GetOriginal() { return reinterpret_cast<CItem*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnPlayerTouch() = 0;
+    virtual ::CEntityIOOutput& OnPlayerTouch() = 0;
     virtual void OnPlayerTouchUpdated() = 0;
-    virtual CEntityIOOutput& OnPlayerPickup() = 0;
+    virtual ::CEntityIOOutput& OnPlayerPickup() = 0;
     virtual void OnPlayerPickupUpdated() = 0;
     virtual bool& ActivateWhenAtRest() = 0;
     virtual void ActivateWhenAtRestUpdated() = 0;
-    virtual CEntityIOOutput& OnCacheInteraction() = 0;
+    virtual ::CEntityIOOutput& OnCacheInteraction() = 0;
     virtual void OnCacheInteractionUpdated() = 0;
-    virtual CEntityIOOutput& OnGlovePulled() = 0;
+    virtual ::CEntityIOOutput& OnGlovePulled() = 0;
     virtual void OnGlovePulledUpdated() = 0;
     virtual Vector& OriginalSpawnOrigin() = 0;
     virtual void OriginalSpawnOriginUpdated() = 0;
@@ -75,6 +79,7 @@ public:
     virtual void OriginalSpawnAnglesUpdated() = 0;
     virtual bool& PhysStartAsleep() = 0;
     virtual void PhysStartAsleepUpdated() = 0;
+    static IItem* FromOriginal(CItem* p);
 };
 
 #endif // _INCLUDE_IITEM_H

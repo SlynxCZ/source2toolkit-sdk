@@ -50,20 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayerPawnComponent.h"
 
+class CCSPlayer_PingServices;
 class CPlayerPing;
 
 class ICSPlayer_PingServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~ICSPlayer_PingServices() = default;
+    CCSPlayer_PingServices* GetOriginal() { return reinterpret_cast<CCSPlayer_PingServices*>(IEntityInstance::GetOriginal()); }
 
     virtual float* PlayerPingTokens() = 0;
     virtual CHandle<CPlayerPing>& PlayerPing() = 0;
     virtual void PlayerPingUpdated() = 0;
+    static ICSPlayer_PingServices* FromOriginal(CCSPlayer_PingServices* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_PINGSERVICES_H

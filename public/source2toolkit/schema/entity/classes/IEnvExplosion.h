@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IModelPointEntity.h"
@@ -58,11 +59,13 @@
 #include "../enums/DamageTypes_t.h"
 
 class CBaseEntity;
+class CEnvExplosion;
 
 class IEnvExplosion : public virtual IModelPointEntity
 {
 public:
     virtual ~IEnvExplosion() = default;
+    CEnvExplosion* GetOriginal() { return reinterpret_cast<CEnvExplosion*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Magnitude() = 0;
     virtual void MagnitudeUpdated() = 0;
@@ -76,7 +79,7 @@ public:
     virtual void DamageForceUpdated() = 0;
     virtual CHandle<CBaseEntity>& Inflictor() = 0;
     virtual void InflictorUpdated() = 0;
-    virtual DamageTypes_t& CustomDamageType() = 0;
+    virtual ::DamageTypes_t& CustomDamageType() = 0;
     virtual void CustomDamageTypeUpdated() = 0;
     virtual bool& CreateDebris() = 0;
     virtual void CreateDebrisUpdated() = 0;
@@ -86,14 +89,15 @@ public:
     virtual void CustomSoundNameUpdated() = 0;
     virtual bool& SuppressParticleImpulse() = 0;
     virtual void SuppressParticleImpulseUpdated() = 0;
-    virtual Class_T& ClassIgnore() = 0;
+    virtual ::Class_T& ClassIgnore() = 0;
     virtual void ClassIgnoreUpdated() = 0;
-    virtual Class_T& ClassIgnore2() = 0;
+    virtual ::Class_T& ClassIgnore2() = 0;
     virtual void ClassIgnore2Updated() = 0;
     virtual CUtlSymbolLarge& EntityIgnoreName() = 0;
     virtual void EntityIgnoreNameUpdated() = 0;
     virtual CHandle<CBaseEntity>& EntityIgnore() = 0;
     virtual void EntityIgnoreUpdated() = 0;
+    static IEnvExplosion* FromOriginal(CEnvExplosion* p);
 };
 
 #endif // _INCLUDE_IENVEXPLOSION_H

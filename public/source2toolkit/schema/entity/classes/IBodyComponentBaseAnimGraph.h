@@ -50,19 +50,23 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBodyComponentSkeletonInstance.h"
 
 class CBaseAnimGraphController;
+class CBodyComponentBaseAnimGraph;
 
 class IBodyComponentBaseAnimGraph : public virtual IBodyComponentSkeletonInstance
 {
 public:
     virtual ~IBodyComponentBaseAnimGraph() = default;
+    CBodyComponentBaseAnimGraph* GetOriginal() { return reinterpret_cast<CBodyComponentBaseAnimGraph*>(IEntityInstance::GetOriginal()); }
 
-    virtual CBaseAnimGraphController& AnimationController() = 0;
+    virtual ::CBaseAnimGraphController& AnimationController() = 0;
     virtual void AnimationControllerUpdated() = 0;
+    static IBodyComponentBaseAnimGraph* FromOriginal(CBodyComponentBaseAnimGraph* p);
 };
 
 #endif // _INCLUDE_IBODYCOMPONENTBASEANIMGRAPH_H

@@ -50,17 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ISoundOpvarSetPointEntity.h"
 
 class AutoRoomDoorwayPairs_t;
+class CSoundOpvarSetAutoRoomEntity;
 class SoundOpvarTraceResult_t;
 
 class ISoundOpvarSetAutoRoomEntity : public virtual ISoundOpvarSetPointEntity
 {
 public:
     virtual ~ISoundOpvarSetAutoRoomEntity() = default;
+    CSoundOpvarSetAutoRoomEntity* GetOriginal() { return reinterpret_cast<CSoundOpvarSetAutoRoomEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<SoundOpvarTraceResult_t>& TraceResults() = 0;
     virtual void TraceResultsUpdated() = 0;
@@ -72,6 +75,7 @@ public:
     virtual void HeightToleranceUpdated() = 0;
     virtual float& SizeSqr() = 0;
     virtual void SizeSqrUpdated() = 0;
+    static ISoundOpvarSetAutoRoomEntity* FromOriginal(CSoundOpvarSetAutoRoomEntity* p);
 };
 
 #endif // _INCLUDE_ISOUNDOPVARSETAUTOROOMENTITY_H

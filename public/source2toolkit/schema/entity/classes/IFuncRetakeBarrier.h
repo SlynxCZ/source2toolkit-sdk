@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IDynamicProp.h"
+
+class CFuncRetakeBarrier;
 
 class IFuncRetakeBarrier : public virtual IDynamicProp
 {
 public:
     virtual ~IFuncRetakeBarrier() = default;
+    CFuncRetakeBarrier* GetOriginal() { return reinterpret_cast<CFuncRetakeBarrier*>(IEntityInstance::GetOriginal()); }
 
+    static IFuncRetakeBarrier* FromOriginal(CFuncRetakeBarrier* p);
 };
 
 #endif // _INCLUDE_IFUNCRETAKEBARRIER_H

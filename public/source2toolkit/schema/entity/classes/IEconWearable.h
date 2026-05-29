@@ -50,19 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IEconEntity.h"
+
+class CEconWearable;
 
 class IEconWearable : public virtual IEconEntity
 {
 public:
     virtual ~IEconWearable() = default;
+    CEconWearable* GetOriginal() { return reinterpret_cast<CEconWearable*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& ForceSkin() = 0;
     virtual void ForceSkinUpdated() = 0;
     virtual bool& AlwaysAllow() = 0;
     virtual void AlwaysAllowUpdated() = 0;
+    static IEconWearable* FromOriginal(CEconWearable* p);
 };
 
 #endif // _INCLUDE_IECONWEARABLE_H

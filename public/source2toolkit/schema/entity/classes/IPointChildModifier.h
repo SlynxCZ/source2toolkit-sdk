@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CPointChildModifier;
 
 class IPointChildModifier : public virtual IPointEntity
 {
 public:
     virtual ~IPointChildModifier() = default;
+    CPointChildModifier* GetOriginal() { return reinterpret_cast<CPointChildModifier*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& OrphanInsteadOfDeletingChildrenOnRemove() = 0;
     virtual void OrphanInsteadOfDeletingChildrenOnRemoveUpdated() = 0;
+    static IPointChildModifier* FromOriginal(CPointChildModifier* p);
 };
 
 #endif // _INCLUDE_IPOINTCHILDMODIFIER_H

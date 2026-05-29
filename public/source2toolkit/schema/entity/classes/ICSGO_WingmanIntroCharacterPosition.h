@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ICSGO_TeamIntroCharacterPosition.h"
+
+class CCSGO_WingmanIntroCharacterPosition;
 
 class ICSGO_WingmanIntroCharacterPosition : public virtual ICSGO_TeamIntroCharacterPosition
 {
 public:
     virtual ~ICSGO_WingmanIntroCharacterPosition() = default;
+    CCSGO_WingmanIntroCharacterPosition* GetOriginal() { return reinterpret_cast<CCSGO_WingmanIntroCharacterPosition*>(IEntityInstance::GetOriginal()); }
 
+    static ICSGO_WingmanIntroCharacterPosition* FromOriginal(CCSGO_WingmanIntroCharacterPosition* p);
 };
 
 #endif // _INCLUDE_ICSGO_WINGMANINTROCHARACTERPOSITION_H

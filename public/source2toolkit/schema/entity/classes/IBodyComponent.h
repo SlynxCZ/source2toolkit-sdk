@@ -50,8 +50,10 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+class CBodyComponent;
 class CEntityInstance*;
 class CGameSceneNode;
 
@@ -59,11 +61,13 @@ class IBodyComponent
 {
 public:
     virtual ~IBodyComponent() = default;
+    CBodyComponent* GetOriginal() { return reinterpret_cast<CBodyComponent*>(IEntityInstance::GetOriginal()); }
 
     virtual CGameSceneNode*& SceneNode() = 0;
     virtual void SceneNodeUpdated() = 0;
-    virtual CEntityInstance*& __m_pChainEntity() = 0;
+    virtual ::CEntityInstance*& __m_pChainEntity() = 0;
     virtual void __m_pChainEntityUpdated() = 0;
+    static IBodyComponent* FromOriginal(CBodyComponent* p);
 };
 
 #endif // _INCLUDE_IBODYCOMPONENT_H

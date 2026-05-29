@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILightDirectionalEntity.h"
+
+class CLightEnvironmentEntity;
 
 class ILightEnvironmentEntity : public virtual ILightDirectionalEntity
 {
 public:
     virtual ~ILightEnvironmentEntity() = default;
+    CLightEnvironmentEntity* GetOriginal() { return reinterpret_cast<CLightEnvironmentEntity*>(IEntityInstance::GetOriginal()); }
 
+    static ILightEnvironmentEntity* FromOriginal(CLightEnvironmentEntity* p);
 };
 
 #endif // _INCLUDE_ILIGHTENVIRONMENTENTITY_H

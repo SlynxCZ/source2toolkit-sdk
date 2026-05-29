@@ -50,19 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
+
+class CLogicCompare;
 
 class ILogicCompare : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicCompare() = default;
+    CLogicCompare* GetOriginal() { return reinterpret_cast<CLogicCompare*>(IEntityInstance::GetOriginal()); }
 
     virtual float& InValue() = 0;
     virtual void InValueUpdated() = 0;
     virtual float& CompareValue() = 0;
     virtual void CompareValueUpdated() = 0;
+    static ILogicCompare* FromOriginal(CLogicCompare* p);
 };
 
 #endif // _INCLUDE_ILOGICCOMPARE_H

@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
+
+class CPrecipitationBlocker;
 
 class IPrecipitationBlocker : public virtual IBaseModelEntity
 {
 public:
     virtual ~IPrecipitationBlocker() = default;
+    CPrecipitationBlocker* GetOriginal() { return reinterpret_cast<CPrecipitationBlocker*>(IEntityInstance::GetOriginal()); }
 
+    static IPrecipitationBlocker* FromOriginal(CPrecipitationBlocker* p);
 };
 
 #endif // _INCLUDE_IPRECIPITATIONBLOCKER_H

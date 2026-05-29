@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
+
+class CDynamicLight;
 
 class IDynamicLight : public virtual IBaseModelEntity
 {
 public:
     virtual ~IDynamicLight() = default;
+    CDynamicLight* GetOriginal() { return reinterpret_cast<CDynamicLight*>(IEntityInstance::GetOriginal()); }
 
     virtual uint8_t& ActualFlags() = 0;
     virtual void ActualFlagsUpdated() = 0;
@@ -77,6 +81,7 @@ public:
     virtual void OuterAngleUpdated() = 0;
     virtual float& SpotRadius() = 0;
     virtual void SpotRadiusUpdated() = 0;
+    static IDynamicLight* FromOriginal(CDynamicLight* p);
 };
 
 #endif // _INCLUDE_IDYNAMICLIGHT_H

@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseCSGrenadeProjectile.h"
+
+class CHEGrenadeProjectile;
 
 class IHEGrenadeProjectile : public virtual IBaseCSGrenadeProjectile
 {
 public:
     virtual ~IHEGrenadeProjectile() = default;
+    CHEGrenadeProjectile* GetOriginal() { return reinterpret_cast<CHEGrenadeProjectile*>(IEntityInstance::GetOriginal()); }
 
+    static IHEGrenadeProjectile* FromOriginal(CHEGrenadeProjectile* p);
 };
 
 #endif // _INCLUDE_IHEGRENADEPROJECTILE_H

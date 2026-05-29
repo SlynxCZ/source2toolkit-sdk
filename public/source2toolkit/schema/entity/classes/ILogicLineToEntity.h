@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
 
 class CBaseEntity;
+class CLogicLineToEntity;
 
 class ILogicLineToEntity : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicLineToEntity() = default;
+    CLogicLineToEntity* GetOriginal() { return reinterpret_cast<CLogicLineToEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& SourceName() = 0;
     virtual void SourceNameUpdated() = 0;
@@ -67,6 +70,7 @@ public:
     virtual void StartEntityUpdated() = 0;
     virtual CHandle<CBaseEntity>& EndEntity() = 0;
     virtual void EndEntityUpdated() = 0;
+    static ILogicLineToEntity* FromOriginal(CLogicLineToEntity* p);
 };
 
 #endif // _INCLUDE_ILOGICLINETOENTITY_H

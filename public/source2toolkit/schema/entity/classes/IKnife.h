@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ICSWeaponBase.h"
+
+class CKnife;
 
 class IKnife : public virtual ICSWeaponBase
 {
 public:
     virtual ~IKnife() = default;
+    CKnife* GetOriginal() { return reinterpret_cast<CKnife*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& FirstAttack() = 0;
     virtual void FirstAttackUpdated() = 0;
+    static IKnife* FromOriginal(CKnife* p);
 };
 
 #endif // _INCLUDE_IKNIFE_H

@@ -50,37 +50,42 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CLogicAuto;
 
 class ILogicAuto : public virtual IBaseEntity
 {
 public:
     virtual ~ILogicAuto() = default;
+    CLogicAuto* GetOriginal() { return reinterpret_cast<CLogicAuto*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnMapSpawn() = 0;
+    virtual ::CEntityIOOutput& OnMapSpawn() = 0;
     virtual void OnMapSpawnUpdated() = 0;
-    virtual CEntityIOOutput& OnDemoMapSpawn() = 0;
+    virtual ::CEntityIOOutput& OnDemoMapSpawn() = 0;
     virtual void OnDemoMapSpawnUpdated() = 0;
-    virtual CEntityIOOutput& OnNewGame() = 0;
+    virtual ::CEntityIOOutput& OnNewGame() = 0;
     virtual void OnNewGameUpdated() = 0;
-    virtual CEntityIOOutput& OnLoadGame() = 0;
+    virtual ::CEntityIOOutput& OnLoadGame() = 0;
     virtual void OnLoadGameUpdated() = 0;
-    virtual CEntityIOOutput& OnMapTransition() = 0;
+    virtual ::CEntityIOOutput& OnMapTransition() = 0;
     virtual void OnMapTransitionUpdated() = 0;
-    virtual CEntityIOOutput& OnBackgroundMap() = 0;
+    virtual ::CEntityIOOutput& OnBackgroundMap() = 0;
     virtual void OnBackgroundMapUpdated() = 0;
-    virtual CEntityIOOutput& OnMultiNewMap() = 0;
+    virtual ::CEntityIOOutput& OnMultiNewMap() = 0;
     virtual void OnMultiNewMapUpdated() = 0;
-    virtual CEntityIOOutput& OnMultiNewRound() = 0;
+    virtual ::CEntityIOOutput& OnMultiNewRound() = 0;
     virtual void OnMultiNewRoundUpdated() = 0;
-    virtual CEntityIOOutput& OnVREnabled() = 0;
+    virtual ::CEntityIOOutput& OnVREnabled() = 0;
     virtual void OnVREnabledUpdated() = 0;
-    virtual CEntityIOOutput& OnVRNotEnabled() = 0;
+    virtual ::CEntityIOOutput& OnVRNotEnabled() = 0;
     virtual void OnVRNotEnabledUpdated() = 0;
     virtual CUtlSymbolLarge& Globalstate() = 0;
     virtual void GlobalstateUpdated() = 0;
+    static ILogicAuto* FromOriginal(CLogicAuto* p);
 };
 
 #endif // _INCLUDE_ILOGICAUTO_H

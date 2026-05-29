@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPhysConstraint.h"
+
+class CPhysLength;
 
 class IPhysLength : public virtual IPhysConstraint
 {
 public:
     virtual ~IPhysLength() = default;
+    CPhysLength* GetOriginal() { return reinterpret_cast<CPhysLength*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector* Offset() = 0;
     virtual Vector& Attach() = 0;
@@ -68,6 +72,7 @@ public:
     virtual void MinLengthUpdated() = 0;
     virtual float& TotalLength() = 0;
     virtual void TotalLengthUpdated() = 0;
+    static IPhysLength* FromOriginal(CPhysLength* p);
 };
 
 #endif // _INCLUDE_IPHYSLENGTH_H

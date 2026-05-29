@@ -50,10 +50,12 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
 
+class CInfoInteraction;
 class SceneOpportunityHandle_t;
 class SceneRequestHandle_t;
 
@@ -61,10 +63,11 @@ class IInfoInteraction : public virtual IPointEntity
 {
 public:
     virtual ~IInfoInteraction() = default;
+    CInfoInteraction* GetOriginal() { return reinterpret_cast<CInfoInteraction*>(IEntityInstance::GetOriginal()); }
 
-    virtual SceneRequestHandle_t& SceneRequest() = 0;
+    virtual ::SceneRequestHandle_t& SceneRequest() = 0;
     virtual void SceneRequestUpdated() = 0;
-    virtual SceneOpportunityHandle_t& SceneOpportunity() = 0;
+    virtual ::SceneOpportunityHandle_t& SceneOpportunity() = 0;
     virtual void SceneOpportunityUpdated() = 0;
     virtual bool& Enabled() = 0;
     virtual void EnabledUpdated() = 0;
@@ -92,6 +95,7 @@ public:
     virtual void RepeatCountUpdated() = 0;
     virtual bool& DisableOnExit() = 0;
     virtual void DisableOnExitUpdated() = 0;
+    static IInfoInteraction* FromOriginal(CInfoInteraction* p);
 };
 
 #endif // _INCLUDE_IINFOINTERACTION_H

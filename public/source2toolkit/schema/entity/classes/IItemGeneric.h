@@ -50,11 +50,13 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IItem.h"
 
 class CBaseFilter;
+class CItemGeneric;
 class CItemGenericTriggerHelper;
 class InfoForResourceTypeIParticleSystemDefinition;
 
@@ -62,6 +64,7 @@ class IItemGeneric : public virtual IItem
 {
 public:
     virtual ~IItemGeneric() = default;
+    CItemGeneric* GetOriginal() { return reinterpret_cast<CItemGeneric*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& HasTriggerRadius() = 0;
     virtual void HasTriggerRadiusUpdated() = 0;
@@ -101,15 +104,15 @@ public:
     virtual void PickupFilterNameUpdated() = 0;
     virtual CHandle<CBaseFilter>& PickupFilter() = 0;
     virtual void PickupFilterUpdated() = 0;
-    virtual CEntityIOOutput& OnPickup() = 0;
+    virtual ::CEntityIOOutput& OnPickup() = 0;
     virtual void OnPickupUpdated() = 0;
-    virtual CEntityIOOutput& OnTimeout() = 0;
+    virtual ::CEntityIOOutput& OnTimeout() = 0;
     virtual void OnTimeoutUpdated() = 0;
-    virtual CEntityIOOutput& OnTriggerStartTouch() = 0;
+    virtual ::CEntityIOOutput& OnTriggerStartTouch() = 0;
     virtual void OnTriggerStartTouchUpdated() = 0;
-    virtual CEntityIOOutput& OnTriggerTouch() = 0;
+    virtual ::CEntityIOOutput& OnTriggerTouch() = 0;
     virtual void OnTriggerTouchUpdated() = 0;
-    virtual CEntityIOOutput& OnTriggerEndTouch() = 0;
+    virtual ::CEntityIOOutput& OnTriggerEndTouch() = 0;
     virtual void OnTriggerEndTouchUpdated() = 0;
     virtual CUtlSymbolLarge& AllowPickupScriptFunction() = 0;
     virtual void AllowPickupScriptFunctionUpdated() = 0;
@@ -127,6 +130,7 @@ public:
     virtual void UseableUpdated() = 0;
     virtual CHandle<CItemGenericTriggerHelper>& TriggerHelper() = 0;
     virtual void TriggerHelperUpdated() = 0;
+    static IItemGeneric* FromOriginal(CItemGeneric* p);
 };
 
 #endif // _INCLUDE_IITEMGENERIC_H

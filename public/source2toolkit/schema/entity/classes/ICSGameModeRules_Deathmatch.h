@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ICSGameModeRules.h"
+
+class CCSGameModeRules_Deathmatch;
 
 class ICSGameModeRules_Deathmatch : public virtual ICSGameModeRules
 {
 public:
     virtual ~ICSGameModeRules_Deathmatch() = default;
+    CCSGameModeRules_Deathmatch* GetOriginal() { return reinterpret_cast<CCSGameModeRules_Deathmatch*>(IEntityInstance::GetOriginal()); }
 
     virtual float& DMBonusStartTime() = 0;
     virtual void DMBonusStartTimeUpdated() = 0;
@@ -65,6 +69,7 @@ public:
     virtual void DMBonusTimeLengthUpdated() = 0;
     virtual CUtlString& DMBonusWeapon() = 0;
     virtual void DMBonusWeaponUpdated() = 0;
+    static ICSGameModeRules_Deathmatch* FromOriginal(CCSGameModeRules_Deathmatch* p);
 };
 
 #endif // _INCLUDE_ICSGAMEMODERULES_DEATHMATCH_H

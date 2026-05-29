@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CGameRulesProxy;
 
 class IGameRulesProxy : public virtual IBaseEntity
 {
 public:
     virtual ~IGameRulesProxy() = default;
+    CGameRulesProxy* GetOriginal() { return reinterpret_cast<CGameRulesProxy*>(IEntityInstance::GetOriginal()); }
 
+    static IGameRulesProxy* FromOriginal(CGameRulesProxy* p);
 };
 
 #endif // _INCLUDE_IGAMERULESPROXY_H

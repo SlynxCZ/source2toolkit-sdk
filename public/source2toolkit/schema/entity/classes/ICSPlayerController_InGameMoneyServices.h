@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayerControllerComponent.h"
+
+class CCSPlayerController_InGameMoneyServices;
 
 class ICSPlayerController_InGameMoneyServices : public virtual IPlayerControllerComponent
 {
 public:
     virtual ~ICSPlayerController_InGameMoneyServices() = default;
+    CCSPlayerController_InGameMoneyServices* GetOriginal() { return reinterpret_cast<CCSPlayerController_InGameMoneyServices*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& ReceivesMoneyNextRound() = 0;
     virtual void ReceivesMoneyNextRoundUpdated() = 0;
@@ -71,6 +75,7 @@ public:
     virtual void TotalCashSpentUpdated() = 0;
     virtual int32_t& CashSpentThisRound() = 0;
     virtual void CashSpentThisRoundUpdated() = 0;
+    static ICSPlayerController_InGameMoneyServices* FromOriginal(CCSPlayerController_InGameMoneyServices* p);
 };
 
 #endif // _INCLUDE_ICSPLAYERCONTROLLER_INGAMEMONEYSERVICES_H

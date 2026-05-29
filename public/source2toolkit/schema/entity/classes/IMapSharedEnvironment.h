@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
+
+class CMapSharedEnvironment;
 
 class IMapSharedEnvironment : public virtual ILogicalEntity
 {
 public:
     virtual ~IMapSharedEnvironment() = default;
+    CMapSharedEnvironment* GetOriginal() { return reinterpret_cast<CMapSharedEnvironment*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& TargetMapName() = 0;
     virtual void TargetMapNameUpdated() = 0;
+    static IMapSharedEnvironment* FromOriginal(CMapSharedEnvironment* p);
 };
 
 #endif // _INCLUDE_IMAPSHAREDENVIRONMENT_H

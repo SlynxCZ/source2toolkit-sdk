@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPathNode.h"
+
+class CMoverPathNode;
 
 class IMoverPathNode : public virtual IPathNode
 {
 public:
     virtual ~IMoverPathNode() = default;
+    CMoverPathNode* GetOriginal() { return reinterpret_cast<CMoverPathNode*>(IEntityInstance::GetOriginal()); }
 
+    static IMoverPathNode* FromOriginal(CMoverPathNode* p);
 };
 
 #endif // _INCLUDE_IMOVERPATHNODE_H

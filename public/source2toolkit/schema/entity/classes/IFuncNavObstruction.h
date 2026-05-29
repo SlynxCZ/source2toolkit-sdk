@@ -50,19 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
+
+class CFuncNavObstruction;
 
 class IFuncNavObstruction : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncNavObstruction() = default;
+    CFuncNavObstruction* GetOriginal() { return reinterpret_cast<CFuncNavObstruction*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;
     virtual bool& UseAsyncObstacleUpdate() = 0;
     virtual void UseAsyncObstacleUpdateUpdated() = 0;
+    static IFuncNavObstruction* FromOriginal(CFuncNavObstruction* p);
 };
 
 #endif // _INCLUDE_IFUNCNAVOBSTRUCTION_H

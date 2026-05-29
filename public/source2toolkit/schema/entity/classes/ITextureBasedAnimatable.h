@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
 
+class CTextureBasedAnimatable;
 class InfoForResourceTypeCTextureBase;
 
 class ITextureBasedAnimatable : public virtual IBaseModelEntity
 {
 public:
     virtual ~ITextureBasedAnimatable() = default;
+    CTextureBasedAnimatable* GetOriginal() { return reinterpret_cast<CTextureBasedAnimatable*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Loop() = 0;
     virtual void LoopUpdated() = 0;
@@ -77,6 +80,7 @@ public:
     virtual void StartTimeUpdated() = 0;
     virtual float& StartFrame() = 0;
     virtual void StartFrameUpdated() = 0;
+    static ITextureBasedAnimatable* FromOriginal(CTextureBasedAnimatable* p);
 };
 
 #endif // _INCLUDE_ITEXTUREBASEDANIMATABLE_H

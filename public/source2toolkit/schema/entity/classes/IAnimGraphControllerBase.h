@@ -50,17 +50,21 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+class CAnimGraphControllerBase;
 class ExternalAnimGraphHandle_t;
 
 class IAnimGraphControllerBase
 {
 public:
     virtual ~IAnimGraphControllerBase() = default;
+    CAnimGraphControllerBase* GetOriginal() { return reinterpret_cast<CAnimGraphControllerBase*>(IEntityInstance::GetOriginal()); }
 
-    virtual ExternalAnimGraphHandle_t& ExternalGraph() = 0;
+    virtual ::ExternalAnimGraphHandle_t& ExternalGraph() = 0;
     virtual void ExternalGraphUpdated() = 0;
+    static IAnimGraphControllerBase* FromOriginal(CAnimGraphControllerBase* p);
 };
 
 #endif // _INCLUDE_IANIMGRAPHCONTROLLERBASE_H

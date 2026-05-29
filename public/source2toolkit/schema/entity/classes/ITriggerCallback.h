@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
+
+class CTriggerCallback;
 
 class ITriggerCallback : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerCallback() = default;
+    CTriggerCallback* GetOriginal() { return reinterpret_cast<CTriggerCallback*>(IEntityInstance::GetOriginal()); }
 
+    static ITriggerCallback* FromOriginal(CTriggerCallback* p);
 };
 
 #endif // _INCLUDE_ITRIGGERCALLBACK_H

@@ -50,14 +50,17 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+class CBuoyancyHelper;
 class IPhysicsMotionController;
 
 class IBuoyancyHelper
 {
 public:
     virtual ~IBuoyancyHelper() = default;
+    CBuoyancyHelper* GetOriginal() { return reinterpret_cast<CBuoyancyHelper*>(IEntityInstance::GetOriginal()); }
 
     virtual IPhysicsMotionController*& Controller() = 0;
     virtual void ControllerUpdated() = 0;
@@ -80,6 +83,7 @@ public:
     virtual void FractionOfWheelSubmergedForWheelDragUpdated() = 0;
     virtual CUtlVector<float>& WheelDrag() = 0;
     virtual void WheelDragUpdated() = 0;
+    static IBuoyancyHelper* FromOriginal(CBuoyancyHelper* p);
 };
 
 #endif // _INCLUDE_IBUOYANCYHELPER_H

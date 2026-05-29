@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
+
+class CHostageRescueZoneShim;
 
 class IHostageRescueZoneShim : public virtual IBaseTrigger
 {
 public:
     virtual ~IHostageRescueZoneShim() = default;
+    CHostageRescueZoneShim* GetOriginal() { return reinterpret_cast<CHostageRescueZoneShim*>(IEntityInstance::GetOriginal()); }
 
+    static IHostageRescueZoneShim* FromOriginal(CHostageRescueZoneShim* p);
 };
 
 #endif // _INCLUDE_IHOSTAGERESCUEZONESHIM_H

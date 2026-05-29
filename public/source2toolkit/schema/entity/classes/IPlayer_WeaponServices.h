@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayerPawnComponent.h"
 
 class CBasePlayerWeapon;
+class CPlayer_WeaponServices;
 
 class IPlayer_WeaponServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~IPlayer_WeaponServices() = default;
+    CPlayer_WeaponServices* GetOriginal() { return reinterpret_cast<CPlayer_WeaponServices*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<CHandle<CBasePlayerWeapon>>& MyWeapons() = 0;
     virtual void MyWeaponsUpdated() = 0;
@@ -70,6 +73,7 @@ public:
     virtual uint16_t* Ammo() = 0;
     virtual bool& PreventWeaponPickup() = 0;
     virtual void PreventWeaponPickupUpdated() = 0;
+    static IPlayer_WeaponServices* FromOriginal(CPlayer_WeaponServices* p);
 };
 
 #endif // _INCLUDE_IPLAYER_WEAPONSERVICES_H

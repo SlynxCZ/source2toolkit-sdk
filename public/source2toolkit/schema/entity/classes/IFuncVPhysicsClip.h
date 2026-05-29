@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
+
+class CFuncVPhysicsClip;
 
 class IFuncVPhysicsClip : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncVPhysicsClip() = default;
+    CFuncVPhysicsClip* GetOriginal() { return reinterpret_cast<CFuncVPhysicsClip*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;
+    static IFuncVPhysicsClip* FromOriginal(CFuncVPhysicsClip* p);
 };
 
 #endif // _INCLUDE_IFUNCVPHYSICSCLIP_H

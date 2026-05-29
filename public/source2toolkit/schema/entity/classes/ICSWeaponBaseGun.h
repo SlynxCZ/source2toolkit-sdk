@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ICSWeaponBase.h"
+
+class CCSWeaponBaseGun;
 
 class ICSWeaponBaseGun : public virtual ICSWeaponBase
 {
 public:
     virtual ~ICSWeaponBaseGun() = default;
+    CCSWeaponBaseGun* GetOriginal() { return reinterpret_cast<CCSWeaponBaseGun*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& ZoomLevel() = 0;
     virtual void ZoomLevelUpdated() = 0;
@@ -79,6 +83,7 @@ public:
     virtual void SkillBoltInterruptAvailableUpdated() = 0;
     virtual bool& SkillBoltLiftedFireKey() = 0;
     virtual void SkillBoltLiftedFireKeyUpdated() = 0;
+    static ICSWeaponBaseGun* FromOriginal(CCSWeaponBaseGun* p);
 };
 
 #endif // _INCLUDE_ICSWEAPONBASEGUN_H

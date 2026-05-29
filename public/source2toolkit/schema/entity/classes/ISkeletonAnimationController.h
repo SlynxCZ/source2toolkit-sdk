@@ -50,17 +50,21 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+class CSkeletonAnimationController;
 class CSkeletonInstance;
 
 class ISkeletonAnimationController
 {
 public:
     virtual ~ISkeletonAnimationController() = default;
+    CSkeletonAnimationController* GetOriginal() { return reinterpret_cast<CSkeletonAnimationController*>(IEntityInstance::GetOriginal()); }
 
     virtual CSkeletonInstance*& SkeletonInstance() = 0;
     virtual void SkeletonInstanceUpdated() = 0;
+    static ISkeletonAnimationController* FromOriginal(CSkeletonAnimationController* p);
 };
 
 #endif // _INCLUDE_ISKELETONANIMATIONCONTROLLER_H

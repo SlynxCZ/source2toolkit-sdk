@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IFuncBrush.h"
+
+class CFuncElectrifiedVolume;
 
 class IFuncElectrifiedVolume : public virtual IFuncBrush
 {
 public:
     virtual ~IFuncElectrifiedVolume() = default;
+    CFuncElectrifiedVolume* GetOriginal() { return reinterpret_cast<CFuncElectrifiedVolume*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& EffectName() = 0;
     virtual void EffectNameUpdated() = 0;
@@ -67,6 +71,7 @@ public:
     virtual void EffectZapNameUpdated() = 0;
     virtual CUtlSymbolLarge& EffectSource() = 0;
     virtual void EffectSourceUpdated() = 0;
+    static IFuncElectrifiedVolume* FromOriginal(CFuncElectrifiedVolume* p);
 };
 
 #endif // _INCLUDE_IFUNCELECTRIFIEDVOLUME_H

@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseClientUIEntity.h"
+
+class CPointClientUIWorldPanel;
 
 class IPointClientUIWorldPanel : public virtual IBaseClientUIEntity
 {
 public:
     virtual ~IPointClientUIWorldPanel() = default;
+    CPointClientUIWorldPanel* GetOriginal() { return reinterpret_cast<CPointClientUIWorldPanel*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& IgnoreInput() = 0;
     virtual void IgnoreInputUpdated() = 0;
@@ -85,8 +89,8 @@ public:
     virtual void OrientationUpdated() = 0;
     virtual bool& AllowInteractionFromAllSceneWorlds() = 0;
     virtual void AllowInteractionFromAllSceneWorldsUpdated() = 0;
-    virtual CUtlVector<CUtlSymbolLarge>& CSSClasses() = 0;
-    virtual void CSSClassesUpdated() = 0;
+    virtual CUtlVector<CUtlSymbolLarge>& SSClasses() = 0;
+    virtual void SSClassesUpdated() = 0;
     virtual bool& Opaque() = 0;
     virtual void OpaqueUpdated() = 0;
     virtual bool& NoDepth() = 0;
@@ -107,6 +111,7 @@ public:
     virtual void DisableMipGenUpdated() = 0;
     virtual int32_t& ExplicitImageLayout() = 0;
     virtual void ExplicitImageLayoutUpdated() = 0;
+    static IPointClientUIWorldPanel* FromOriginal(CPointClientUIWorldPanel* p);
 };
 
 #endif // _INCLUDE_IPOINTCLIENTUIWORLDPANEL_H

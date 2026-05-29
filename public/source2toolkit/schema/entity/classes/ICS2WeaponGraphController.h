@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IAnimGraphControllerBase.h"
+
+class CCS2WeaponGraphController;
 
 class ICS2WeaponGraphController : public virtual IAnimGraphControllerBase
 {
 public:
     virtual ~ICS2WeaponGraphController() = default;
+    CCS2WeaponGraphController* GetOriginal() { return reinterpret_cast<CCS2WeaponGraphController*>(IEntityInstance::GetOriginal()); }
 
+    static ICS2WeaponGraphController* FromOriginal(CCS2WeaponGraphController* p);
 };
 
 #endif // _INCLUDE_ICS2WEAPONGRAPHCONTROLLER_H

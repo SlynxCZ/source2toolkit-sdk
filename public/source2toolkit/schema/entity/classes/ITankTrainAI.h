@@ -50,17 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
 
 class CBaseEntity;
 class CFuncTrackTrain;
+class CTankTrainAI;
 
 class ITankTrainAI : public virtual IPointEntity
 {
 public:
     virtual ~ITankTrainAI() = default;
+    CTankTrainAI* GetOriginal() { return reinterpret_cast<CTankTrainAI*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CFuncTrackTrain>& Train() = 0;
     virtual void TrainUpdated() = 0;
@@ -76,6 +79,7 @@ public:
     virtual void MovementSoundNameUpdated() = 0;
     virtual CUtlSymbolLarge& TargetEntityName() = 0;
     virtual void TargetEntityNameUpdated() = 0;
+    static ITankTrainAI* FromOriginal(CTankTrainAI* p);
 };
 
 #endif // _INCLUDE_ITANKTRAINAI_H

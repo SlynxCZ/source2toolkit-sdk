@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
 
+class CEnvDecal;
 class InfoForResourceTypeIMaterial2;
 
 class IEnvDecal : public virtual IBaseModelEntity
 {
 public:
     virtual ~IEnvDecal() = default;
+    CEnvDecal* GetOriginal() { return reinterpret_cast<CEnvDecal*>(IEntityInstance::GetOriginal()); }
 
     virtual CStrongHandle<InfoForResourceTypeIMaterial2>& DecalMaterial() = 0;
     virtual void DecalMaterialUpdated() = 0;
@@ -79,6 +82,7 @@ public:
     virtual void ProjectOnWaterUpdated() = 0;
     virtual float& DepthSortBias() = 0;
     virtual void DepthSortBiasUpdated() = 0;
+    static IEnvDecal* FromOriginal(CEnvDecal* p);
 };
 
 #endif // _INCLUDE_IENVDECAL_H

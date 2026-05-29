@@ -50,25 +50,29 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
 
+class CTestPulseIO;
 class CTestPulseIOComponent_Derived;
 
 class ITestPulseIO : public virtual ILogicalEntity
 {
 public:
     virtual ~ITestPulseIO() = default;
+    CTestPulseIO* GetOriginal() { return reinterpret_cast<CTestPulseIO*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnVariantVoid() = 0;
+    virtual ::CEntityIOOutput& OnVariantVoid() = 0;
     virtual void OnVariantVoidUpdated() = 0;
     virtual bool& AllowEmptyInputs() = 0;
     virtual void AllowEmptyInputsUpdated() = 0;
-    virtual CTestPulseIOComponent_Derived& TestComponent() = 0;
+    virtual ::CTestPulseIOComponent_Derived& TestComponent() = 0;
     virtual void TestComponentUpdated() = 0;
-    virtual CEntityIOOutput& OnInternalTestVoid() = 0;
+    virtual ::CEntityIOOutput& OnInternalTestVoid() = 0;
     virtual void OnInternalTestVoidUpdated() = 0;
+    static ITestPulseIO* FromOriginal(CTestPulseIO* p);
 };
 
 #endif // _INCLUDE_ITESTPULSEIO_H

@@ -50,19 +50,23 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IGameRulesProxy.h"
 
 class CCSGameRules;
+class CCSGameRulesProxy;
 
 class ICSGameRulesProxy : public virtual IGameRulesProxy
 {
 public:
     virtual ~ICSGameRulesProxy() = default;
+    CCSGameRulesProxy* GetOriginal() { return reinterpret_cast<CCSGameRulesProxy*>(IEntityInstance::GetOriginal()); }
 
     virtual CCSGameRules*& GameRules() = 0;
     virtual void GameRulesUpdated() = 0;
+    static ICSGameRulesProxy* FromOriginal(CCSGameRulesProxy* p);
 };
 
 #endif // _INCLUDE_ICSGAMERULESPROXY_H

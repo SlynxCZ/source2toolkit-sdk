@@ -50,14 +50,17 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+class CAI_Expresser;
 class CBaseModelEntity;
 
 class IAI_Expresser
 {
 public:
     virtual ~IAI_Expresser() = default;
+    CAI_Expresser* GetOriginal() { return reinterpret_cast<CAI_Expresser*>(IEntityInstance::GetOriginal()); }
 
     virtual float& StopTalkTime() = 0;
     virtual void StopTalkTimeUpdated() = 0;
@@ -81,6 +84,7 @@ public:
     virtual void LastSpokenPriorityUpdated() = 0;
     virtual CBaseModelEntity*& Outer() = 0;
     virtual void OuterUpdated() = 0;
+    static IAI_Expresser* FromOriginal(CAI_Expresser* p);
 };
 
 #endif // _INCLUDE_IAI_EXPRESSER_H

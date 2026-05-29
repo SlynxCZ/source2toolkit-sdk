@@ -50,20 +50,23 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseAnimGraph.h"
 
+class CBaseGrenade;
 class CCSPlayerPawn;
 
 class IBaseGrenade : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IBaseGrenade() = default;
+    CBaseGrenade* GetOriginal() { return reinterpret_cast<CBaseGrenade*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnPlayerPickup() = 0;
+    virtual ::CEntityIOOutput& OnPlayerPickup() = 0;
     virtual void OnPlayerPickupUpdated() = 0;
-    virtual CEntityIOOutput& OnExplode() = 0;
+    virtual ::CEntityIOOutput& OnExplode() = 0;
     virtual void OnExplodeUpdated() = 0;
     virtual bool& HasWarnedAI() = 0;
     virtual void HasWarnedAIUpdated() = 0;
@@ -89,6 +92,7 @@ public:
     virtual void NextAttackUpdated() = 0;
     virtual CHandle<CCSPlayerPawn>& OriginalThrower() = 0;
     virtual void OriginalThrowerUpdated() = 0;
+    static IBaseGrenade* FromOriginal(CBaseGrenade* p);
 };
 
 #endif // _INCLUDE_IBASEGRENADE_H

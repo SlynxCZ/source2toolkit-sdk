@@ -50,19 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IFuncPlat.h"
+
+class CFuncPlatRot;
 
 class IFuncPlatRot : public virtual IFuncPlat
 {
 public:
     virtual ~IFuncPlatRot() = default;
+    CFuncPlatRot* GetOriginal() { return reinterpret_cast<CFuncPlatRot*>(IEntityInstance::GetOriginal()); }
 
     virtual QAngle& End() = 0;
     virtual void EndUpdated() = 0;
     virtual QAngle& Start() = 0;
     virtual void StartUpdated() = 0;
+    static IFuncPlatRot* FromOriginal(CFuncPlatRot* p);
 };
 
 #endif // _INCLUDE_IFUNCPLATROT_H

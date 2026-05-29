@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IModelPointEntity.h"
+
+class CPlayerSprayDecal;
 
 class IPlayerSprayDecal : public virtual IModelPointEntity
 {
 public:
     virtual ~IPlayerSprayDecal() = default;
+    CPlayerSprayDecal* GetOriginal() { return reinterpret_cast<CPlayerSprayDecal*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& UniqueID() = 0;
     virtual void UniqueIDUpdated() = 0;
@@ -88,6 +92,7 @@ public:
     virtual uint8_t& Version() = 0;
     virtual void VersionUpdated() = 0;
     virtual uint8_t* Signature() = 0;
+    static IPlayerSprayDecal* FromOriginal(CPlayerSprayDecal* p);
 };
 
 #endif // _INCLUDE_IPLAYERSPRAYDECAL_H

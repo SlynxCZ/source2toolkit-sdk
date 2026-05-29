@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBarnLight.h"
+
+class COmniLight;
 
 class IOmniLight : public virtual IBarnLight
 {
 public:
     virtual ~IOmniLight() = default;
+    COmniLight* GetOriginal() { return reinterpret_cast<COmniLight*>(IEntityInstance::GetOriginal()); }
 
     virtual float& InnerAngle() = 0;
     virtual void InnerAngleUpdated() = 0;
@@ -65,6 +69,7 @@ public:
     virtual void OuterAngleUpdated() = 0;
     virtual bool& ShowLight() = 0;
     virtual void ShowLightUpdated() = 0;
+    static IOmniLight* FromOriginal(COmniLight* p);
 };
 
 #endif // _INCLUDE_IOMNILIGHT_H

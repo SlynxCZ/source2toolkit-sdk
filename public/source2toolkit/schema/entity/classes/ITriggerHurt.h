@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
@@ -57,11 +58,13 @@
 #include "../enums/DamageTypes_t.h"
 
 class CBaseEntity;
+class CTriggerHurt;
 
 class ITriggerHurt : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerHurt() = default;
+    CTriggerHurt* GetOriginal() { return reinterpret_cast<CTriggerHurt*>(IEntityInstance::GetOriginal()); }
 
     virtual float& OriginalDamage() = 0;
     virtual void OriginalDamageUpdated() = 0;
@@ -73,7 +76,7 @@ public:
     virtual void LastDmgTimeUpdated() = 0;
     virtual float& ForgivenessDelay() = 0;
     virtual void ForgivenessDelayUpdated() = 0;
-    virtual DamageTypes_t& BitsDamageInflict() = 0;
+    virtual ::DamageTypes_t& BitsDamageInflict() = 0;
     virtual void BitsDamageInflictUpdated() = 0;
     virtual int32_t& DamageModel() = 0;
     virtual void DamageModelUpdated() = 0;
@@ -85,12 +88,13 @@ public:
     virtual void ThinkAlwaysUpdated() = 0;
     virtual float& HurtThinkPeriod() = 0;
     virtual void HurtThinkPeriodUpdated() = 0;
-    virtual CEntityIOOutput& OnHurt() = 0;
+    virtual ::CEntityIOOutput& OnHurt() = 0;
     virtual void OnHurtUpdated() = 0;
-    virtual CEntityIOOutput& OnHurtPlayer() = 0;
+    virtual ::CEntityIOOutput& OnHurtPlayer() = 0;
     virtual void OnHurtPlayerUpdated() = 0;
     virtual CUtlVector<CHandle<CBaseEntity>>& HurtEntities() = 0;
     virtual void HurtEntitiesUpdated() = 0;
+    static ITriggerHurt* FromOriginal(CTriggerHurt* p);
 };
 
 #endif // _INCLUDE_ITRIGGERHURT_H

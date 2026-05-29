@@ -50,14 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CSkillInt;
 
 class ISkillInt
 {
 public:
     virtual ~ISkillInt() = default;
+    CSkillInt* GetOriginal() { return reinterpret_cast<CSkillInt*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t* Value() = 0;
+    static ISkillInt* FromOriginal(CSkillInt* p);
 };
 
 #endif // _INCLUDE_ISKILLINT_H

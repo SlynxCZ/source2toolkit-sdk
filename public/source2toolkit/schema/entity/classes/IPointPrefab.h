@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IServerOnlyPointEntity.h"
 
 class CBaseEntity;
+class CPointPrefab;
 
 class IPointPrefab : public virtual IServerOnlyPointEntity
 {
 public:
     virtual ~IPointPrefab() = default;
+    CPointPrefab* GetOriginal() { return reinterpret_cast<CPointPrefab*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& TargetMapName() = 0;
     virtual void TargetMapNameUpdated() = 0;
@@ -75,6 +78,7 @@ public:
     virtual void AssociatedRelayEntityUpdated() = 0;
     virtual CUtlVector<CHandle<CBaseEntity>>& ProceduralRelaySources() = 0;
     virtual void ProceduralRelaySourcesUpdated() = 0;
+    static IPointPrefab* FromOriginal(CPointPrefab* p);
 };
 
 #endif // _INCLUDE_IPOINTPREFAB_H

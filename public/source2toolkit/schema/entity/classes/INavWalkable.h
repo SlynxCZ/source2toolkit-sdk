@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CNavWalkable;
 
 class INavWalkable : public virtual IPointEntity
 {
 public:
     virtual ~INavWalkable() = default;
+    CNavWalkable* GetOriginal() { return reinterpret_cast<CNavWalkable*>(IEntityInstance::GetOriginal()); }
 
+    static INavWalkable* FromOriginal(CNavWalkable* p);
 };
 
 #endif // _INCLUDE_INAVWALKABLE_H

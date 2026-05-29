@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
+
+class CFuncWall;
 
 class IFuncWall : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncWall() = default;
+    CFuncWall* GetOriginal() { return reinterpret_cast<CFuncWall*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& State() = 0;
     virtual void StateUpdated() = 0;
+    static IFuncWall* FromOriginal(CFuncWall* p);
 };
 
 #endif // _INCLUDE_IFUNCWALL_H

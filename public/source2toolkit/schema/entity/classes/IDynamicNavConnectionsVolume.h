@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ITriggerMultiple.h"
 
+class CDynamicNavConnectionsVolume;
 class DynamicVolumeDef_t;
 
 class IDynamicNavConnectionsVolume : public virtual ITriggerMultiple
 {
 public:
     virtual ~IDynamicNavConnectionsVolume() = default;
+    CDynamicNavConnectionsVolume* GetOriginal() { return reinterpret_cast<CDynamicNavConnectionsVolume*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& ConnectionTarget() = 0;
     virtual void ConnectionTargetUpdated() = 0;
@@ -75,6 +78,7 @@ public:
     virtual void UpdateDistanceUpdated() = 0;
     virtual float& MaxConnectionDistance() = 0;
     virtual void MaxConnectionDistanceUpdated() = 0;
+    static IDynamicNavConnectionsVolume* FromOriginal(CDynamicNavConnectionsVolume* p);
 };
 
 #endif // _INCLUDE_IDYNAMICNAVCONNECTIONSVOLUME_H

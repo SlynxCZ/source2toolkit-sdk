@@ -50,18 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
 
 #include "../enums/BrushSolidities_e.h"
 
+class CFuncBrush;
+
 class IFuncBrush : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncBrush() = default;
+    CFuncBrush* GetOriginal() { return reinterpret_cast<CFuncBrush*>(IEntityInstance::GetOriginal()); }
 
-    virtual BrushSolidities_e& Solidity() = 0;
+    virtual ::BrushSolidities_e& Solidity() = 0;
     virtual void SolidityUpdated() = 0;
     virtual int32_t& Disabled() = 0;
     virtual void DisabledUpdated() = 0;
@@ -73,6 +77,7 @@ public:
     virtual void InvertExclusionUpdated() = 0;
     virtual bool& ScriptedMovement() = 0;
     virtual void ScriptedMovementUpdated() = 0;
+    static IFuncBrush* FromOriginal(CFuncBrush* p);
 };
 
 #endif // _INCLUDE_IFUNCBRUSH_H

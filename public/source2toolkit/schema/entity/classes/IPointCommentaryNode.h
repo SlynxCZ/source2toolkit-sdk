@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseAnimGraph.h"
 
 class CBaseEntity;
+class CPointCommentaryNode;
 
 class IPointCommentaryNode : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IPointCommentaryNode() = default;
+    CPointCommentaryNode* GetOriginal() { return reinterpret_cast<CPointCommentaryNode*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& PreCommands() = 0;
     virtual void PreCommandsUpdated() = 0;
@@ -101,9 +104,9 @@ public:
     virtual void TeleportOriginUpdated() = 0;
     virtual float& AbortedPlaybackAt() = 0;
     virtual void AbortedPlaybackAtUpdated() = 0;
-    virtual CEntityIOOutput& OnCommentaryStarted() = 0;
+    virtual ::CEntityIOOutput& OnCommentaryStarted() = 0;
     virtual void OnCommentaryStartedUpdated() = 0;
-    virtual CEntityIOOutput& OnCommentaryStopped() = 0;
+    virtual ::CEntityIOOutput& OnCommentaryStopped() = 0;
     virtual void OnCommentaryStoppedUpdated() = 0;
     virtual bool& Active() = 0;
     virtual void ActiveUpdated() = 0;
@@ -121,6 +124,7 @@ public:
     virtual void NodeNumberMaxUpdated() = 0;
     virtual bool& ListenedTo() = 0;
     virtual void ListenedToUpdated() = 0;
+    static IPointCommentaryNode* FromOriginal(CPointCommentaryNode* p);
 };
 
 #endif // _INCLUDE_IPOINTCOMMENTARYNODE_H

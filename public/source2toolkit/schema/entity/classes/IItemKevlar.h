@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IItem.h"
+
+class CItemKevlar;
 
 class IItemKevlar : public virtual IItem
 {
 public:
     virtual ~IItemKevlar() = default;
+    CItemKevlar* GetOriginal() { return reinterpret_cast<CItemKevlar*>(IEntityInstance::GetOriginal()); }
 
+    static IItemKevlar* FromOriginal(CItemKevlar* p);
 };
 
 #endif // _INCLUDE_IITEMKEVLAR_H

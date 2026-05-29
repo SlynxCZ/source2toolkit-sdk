@@ -50,17 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
 
 class CBaseEntity;
+class CSprite;
 class InfoForResourceTypeIMaterial2;
 
 class ISprite : public virtual IBaseModelEntity
 {
 public:
     virtual ~ISprite() = default;
+    CSprite* GetOriginal() { return reinterpret_cast<CSprite*>(IEntityInstance::GetOriginal()); }
 
     virtual CStrongHandle<InfoForResourceTypeIMaterial2>& SpriteMaterial() = 0;
     virtual void SpriteMaterialUpdated() = 0;
@@ -106,6 +109,7 @@ public:
     virtual void SpriteWidthUpdated() = 0;
     virtual int32_t& SpriteHeight() = 0;
     virtual void SpriteHeightUpdated() = 0;
+    static ISprite* FromOriginal(CSprite* p);
 };
 
 #endif // _INCLUDE_ISPRITE_H

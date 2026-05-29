@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
+
+class CTriggerMultiple;
 
 class ITriggerMultiple : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerMultiple() = default;
+    CTriggerMultiple* GetOriginal() { return reinterpret_cast<CTriggerMultiple*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnTrigger() = 0;
+    virtual ::CEntityIOOutput& OnTrigger() = 0;
     virtual void OnTriggerUpdated() = 0;
+    static ITriggerMultiple* FromOriginal(CTriggerMultiple* p);
 };
 
 #endif // _INCLUDE_ITRIGGERMULTIPLE_H

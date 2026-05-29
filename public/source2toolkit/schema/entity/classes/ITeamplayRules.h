@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IMultiplayRules.h"
+
+class CTeamplayRules;
 
 class ITeamplayRules : public virtual IMultiplayRules
 {
 public:
     virtual ~ITeamplayRules() = default;
+    CTeamplayRules* GetOriginal() { return reinterpret_cast<CTeamplayRules*>(IEntityInstance::GetOriginal()); }
 
+    static ITeamplayRules* FromOriginal(CTeamplayRules* p);
 };
 
 #endif // _INCLUDE_ITEAMPLAYRULES_H

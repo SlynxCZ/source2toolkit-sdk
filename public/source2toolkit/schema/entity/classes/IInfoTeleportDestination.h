@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CInfoTeleportDestination;
 
 class IInfoTeleportDestination : public virtual IPointEntity
 {
 public:
     virtual ~IInfoTeleportDestination() = default;
+    CInfoTeleportDestination* GetOriginal() { return reinterpret_cast<CInfoTeleportDestination*>(IEntityInstance::GetOriginal()); }
 
+    static IInfoTeleportDestination* FromOriginal(CInfoTeleportDestination* p);
 };
 
 #endif // _INCLUDE_IINFOTELEPORTDESTINATION_H

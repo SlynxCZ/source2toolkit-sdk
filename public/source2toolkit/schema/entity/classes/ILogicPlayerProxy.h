@@ -50,25 +50,29 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
 
 class CBaseEntity;
+class CLogicPlayerProxy;
 
 class ILogicPlayerProxy : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicPlayerProxy() = default;
+    CLogicPlayerProxy* GetOriginal() { return reinterpret_cast<CLogicPlayerProxy*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& PlayerHasAmmo() = 0;
+    virtual ::CEntityIOOutput& PlayerHasAmmo() = 0;
     virtual void PlayerHasAmmoUpdated() = 0;
-    virtual CEntityIOOutput& PlayerHasNoAmmo() = 0;
+    virtual ::CEntityIOOutput& PlayerHasNoAmmo() = 0;
     virtual void PlayerHasNoAmmoUpdated() = 0;
-    virtual CEntityIOOutput& PlayerDied() = 0;
+    virtual ::CEntityIOOutput& PlayerDied() = 0;
     virtual void PlayerDiedUpdated() = 0;
     virtual CHandle<CBaseEntity>& Player() = 0;
     virtual void PlayerUpdated() = 0;
+    static ILogicPlayerProxy* FromOriginal(CLogicPlayerProxy* p);
 };
 
 #endif // _INCLUDE_ILOGICPLAYERPROXY_H

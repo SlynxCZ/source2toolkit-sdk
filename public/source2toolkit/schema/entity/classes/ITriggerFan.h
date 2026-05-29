@@ -50,17 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
 
 class CInfoFan;
+class CTriggerFan;
 class CountdownTimer;
 
 class ITriggerFan : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerFan() = default;
+    CTriggerFan* GetOriginal() { return reinterpret_cast<CTriggerFan*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& FanOriginOffset() = 0;
     virtual void FanOriginOffsetUpdated() = 0;
@@ -78,7 +81,7 @@ public:
     virtual void ForceUpdated() = 0;
     virtual bool& Falloff() = 0;
     virtual void FalloffUpdated() = 0;
-    virtual CountdownTimer& RampTimer() = 0;
+    virtual ::CountdownTimer& RampTimer() = 0;
     virtual void RampTimerUpdated() = 0;
     virtual Vector& FanOriginWS() = 0;
     virtual void FanOriginWSUpdated() = 0;
@@ -112,6 +115,7 @@ public:
     virtual void RampDownUpdated() = 0;
     virtual int32_t& ManagerFanIdx() = 0;
     virtual void ManagerFanIdxUpdated() = 0;
+    static ITriggerFan* FromOriginal(CTriggerFan* p);
 };
 
 #endif // _INCLUDE_ITRIGGERFAN_H

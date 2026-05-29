@@ -50,16 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CEnvSoundscape;
 
 class IEnvSoundscape : public virtual IBaseEntity
 {
 public:
     virtual ~IEnvSoundscape() = default;
+    CEnvSoundscape* GetOriginal() { return reinterpret_cast<CEnvSoundscape*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnPlay() = 0;
+    virtual ::CEntityIOOutput& OnPlay() = 0;
     virtual void OnPlayUpdated() = 0;
     virtual float& Radius() = 0;
     virtual void RadiusUpdated() = 0;
@@ -80,6 +84,7 @@ public:
     virtual void SoundscapeNameUpdated() = 0;
     virtual uint32_t& SoundEventHash() = 0;
     virtual void SoundEventHashUpdated() = 0;
+    static IEnvSoundscape* FromOriginal(CEnvSoundscape* p);
 };
 
 #endif // _INCLUDE_IENVSOUNDSCAPE_H

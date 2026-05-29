@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CSoundAreaEntityBase;
 
 class ISoundAreaEntityBase : public virtual IBaseEntity
 {
 public:
     virtual ~ISoundAreaEntityBase() = default;
+    CSoundAreaEntityBase* GetOriginal() { return reinterpret_cast<CSoundAreaEntityBase*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;
@@ -65,6 +69,7 @@ public:
     virtual void SoundAreaTypeUpdated() = 0;
     virtual Vector& Pos() = 0;
     virtual void PosUpdated() = 0;
+    static ISoundAreaEntityBase* FromOriginal(CSoundAreaEntityBase* p);
 };
 
 #endif // _INCLUDE_ISOUNDAREAENTITYBASE_H

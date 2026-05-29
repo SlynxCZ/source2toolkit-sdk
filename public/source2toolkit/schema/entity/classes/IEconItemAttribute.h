@@ -50,12 +50,16 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CEconItemAttribute;
 
 class IEconItemAttribute
 {
 public:
     virtual ~IEconItemAttribute() = default;
+    CEconItemAttribute* GetOriginal() { return reinterpret_cast<CEconItemAttribute*>(IEntityInstance::GetOriginal()); }
 
     virtual uint16_t& AttributeDefinitionIndex() = 0;
     virtual void AttributeDefinitionIndexUpdated() = 0;
@@ -67,6 +71,7 @@ public:
     virtual void RefundableCurrencyUpdated() = 0;
     virtual bool& SetBonus() = 0;
     virtual void SetBonusUpdated() = 0;
+    static IEconItemAttribute* FromOriginal(CEconItemAttribute* p);
 };
 
 #endif // _INCLUDE_IECONITEMATTRIBUTE_H

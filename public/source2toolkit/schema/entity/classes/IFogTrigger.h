@@ -50,19 +50,23 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
 
+class CFogTrigger;
 class fogparams_t;
 
 class IFogTrigger : public virtual IBaseTrigger
 {
 public:
     virtual ~IFogTrigger() = default;
+    CFogTrigger* GetOriginal() { return reinterpret_cast<CFogTrigger*>(IEntityInstance::GetOriginal()); }
 
-    virtual fogparams_t& Fog() = 0;
+    virtual ::fogparams_t& Fog() = 0;
     virtual void FogUpdated() = 0;
+    static IFogTrigger* FromOriginal(CFogTrigger* p);
 };
 
 #endif // _INCLUDE_IFOGTRIGGER_H

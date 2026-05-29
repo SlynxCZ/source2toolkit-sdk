@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ISceneEntity.h"
+
+class CSceneEntityAlias_logic_choreographed_scene;
 
 class ISceneEntityAlias_logic_choreographed_scene : public virtual ISceneEntity
 {
 public:
     virtual ~ISceneEntityAlias_logic_choreographed_scene() = default;
+    CSceneEntityAlias_logic_choreographed_scene* GetOriginal() { return reinterpret_cast<CSceneEntityAlias_logic_choreographed_scene*>(IEntityInstance::GetOriginal()); }
 
+    static ISceneEntityAlias_logic_choreographed_scene* FromOriginal(CSceneEntityAlias_logic_choreographed_scene* p);
 };
 
 #endif // _INCLUDE_ISCENEENTITYALIAS_LOGIC_CHOREOGRAPHED_SCENE_H

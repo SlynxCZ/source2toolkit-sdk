@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CGameGibManager;
 
 class IGameGibManager : public virtual IBaseEntity
 {
 public:
     virtual ~IGameGibManager() = default;
+    CGameGibManager* GetOriginal() { return reinterpret_cast<CGameGibManager*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& AllowNewGibs() = 0;
     virtual void AllowNewGibsUpdated() = 0;
@@ -67,6 +71,7 @@ public:
     virtual void MaxPiecesUpdated() = 0;
     virtual int32_t& LastFrame() = 0;
     virtual void LastFrameUpdated() = 0;
+    static IGameGibManager* FromOriginal(CGameGibManager* p);
 };
 
 #endif // _INCLUDE_IGAMEGIBMANAGER_H

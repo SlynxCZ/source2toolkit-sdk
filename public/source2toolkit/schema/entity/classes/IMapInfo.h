@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CMapInfo;
 
 class IMapInfo : public virtual IPointEntity
 {
 public:
     virtual ~IMapInfo() = default;
+    CMapInfo* GetOriginal() { return reinterpret_cast<CMapInfo*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& BuyingStatus() = 0;
     virtual void BuyingStatusUpdated() = 0;
@@ -89,6 +93,7 @@ public:
     virtual void EnvWetnessCoverageUpdated() = 0;
     virtual float& EnvWetnessDryingAmount() = 0;
     virtual void EnvWetnessDryingAmountUpdated() = 0;
+    static IMapInfo* FromOriginal(CMapInfo* p);
 };
 
 #endif // _INCLUDE_IMAPINFO_H

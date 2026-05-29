@@ -50,18 +50,21 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
 
+class CEnvWindController;
 class CEnvWindShared;
 
 class IEnvWindController : public virtual IBaseEntity
 {
 public:
     virtual ~IEnvWindController() = default;
+    CEnvWindController* GetOriginal() { return reinterpret_cast<CEnvWindController*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEnvWindShared& EnvWindShared() = 0;
+    virtual ::CEnvWindShared& EnvWindShared() = 0;
     virtual void EnvWindSharedUpdated() = 0;
     virtual float& DirectionVariation() = 0;
     virtual void DirectionVariationUpdated() = 0;
@@ -83,6 +86,7 @@ public:
     virtual void IsMasterUpdated() = 0;
     virtual bool& FirstTime() = 0;
     virtual void FirstTimeUpdated() = 0;
+    static IEnvWindController* FromOriginal(CEnvWindController* p);
 };
 
 #endif // _INCLUDE_IENVWINDCONTROLLER_H

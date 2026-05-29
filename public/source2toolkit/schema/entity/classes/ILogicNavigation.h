@@ -50,21 +50,26 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
 
 #include "../enums/navproperties_t.h"
 
+class CLogicNavigation;
+
 class ILogicNavigation : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicNavigation() = default;
+    CLogicNavigation* GetOriginal() { return reinterpret_cast<CLogicNavigation*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& IsOn() = 0;
     virtual void IsOnUpdated() = 0;
-    virtual navproperties_t& NavProperty() = 0;
+    virtual ::navproperties_t& NavProperty() = 0;
     virtual void NavPropertyUpdated() = 0;
+    static ILogicNavigation* FromOriginal(CLogicNavigation* p);
 };
 
 #endif // _INCLUDE_ILOGICNAVIGATION_H

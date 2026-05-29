@@ -50,19 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseAnimGraph.h"
 
 class CAttributeContainer;
 class CBaseEntity;
+class CEconEntity;
 
 class IEconEntity : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IEconEntity() = default;
+    CEconEntity* GetOriginal() { return reinterpret_cast<CEconEntity*>(IEntityInstance::GetOriginal()); }
 
-    virtual CAttributeContainer& AttributeManager() = 0;
+    virtual ::CAttributeContainer& AttributeManager() = 0;
     virtual void AttributeManagerUpdated() = 0;
     virtual uint32_t& OriginalOwnerXuidLow() = 0;
     virtual void OriginalOwnerXuidLowUpdated() = 0;
@@ -80,6 +83,7 @@ public:
     virtual void OldProvideeUpdated() = 0;
     virtual int32_t& OldOwnerClass() = 0;
     virtual void OldOwnerClassUpdated() = 0;
+    static IEconEntity* FromOriginal(CEconEntity* p);
 };
 
 #endif // _INCLUDE_IECONENTITY_H

@@ -50,12 +50,14 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseCombatCharacter.h"
 
 class CAI_Expresser;
 class CBasePlayerController;
+class CBasePlayerPawn;
 class CBasePlayerWeapon;
 class CPlayer_AutoaimServices;
 class CPlayer_CameraServices;
@@ -66,6 +68,7 @@ class CPlayer_ObserverServices;
 class CPlayer_UseServices;
 class CPlayer_WaterServices;
 class CPlayer_WeaponServices;
+class IBasePlayerWeapon;
 class ViewAngleServerChange_t;
 class sky3dparams_t;
 class sndopvarlatchdata_t;
@@ -74,6 +77,7 @@ class IBasePlayerPawn : public virtual IBaseCombatCharacter
 {
 public:
     virtual ~IBasePlayerPawn() = default;
+    CBasePlayerPawn* GetOriginal() { return reinterpret_cast<CBasePlayerPawn*>(IEntityInstance::GetOriginal()); }
 
     virtual CPlayer_WeaponServices*& WeaponServices() = 0;
     virtual void WeaponServicesUpdated() = 0;
@@ -101,7 +105,7 @@ public:
     virtual void V_anglePreviousUpdated() = 0;
     virtual uint32_t& HideHUD() = 0;
     virtual void HideHUDUpdated() = 0;
-    virtual sky3dparams_t& Skybox3d() = 0;
+    virtual ::sky3dparams_t& Skybox3d() = 0;
     virtual void Skybox3dUpdated() = 0;
     virtual float& TimeLastHurt() = 0;
     virtual void TimeLastHurtUpdated() = 0;
@@ -126,8 +130,11 @@ public:
     virtual CUtlVector<sndopvarlatchdata_t>& SndOpvarLatchData() = 0;
     virtual void SndOpvarLatchDataUpdated() = 0;
 
+    /// <summary>Force suicide.</summary>
     virtual void CommitSuicide(bool bExplode, bool bForce) = 0;
-    virtual void RemovePlayerItem(CBasePlayerWeapon* pWeapon) = 0;
+    /// <summary>Remove weapon from player.</summary>
+    virtual void RemovePlayerItem(IBasePlayerWeapon* pWeapon) = 0;
+    static IBasePlayerPawn* FromOriginal(CBasePlayerPawn* p);
 };
 
 #endif // _INCLUDE_IBASEPLAYERPAWN_H

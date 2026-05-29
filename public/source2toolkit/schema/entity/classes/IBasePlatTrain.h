@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseToggle.h"
+
+class CBasePlatTrain;
 
 class IBasePlatTrain : public virtual IBaseToggle
 {
 public:
     virtual ~IBasePlatTrain() = default;
+    CBasePlatTrain* GetOriginal() { return reinterpret_cast<CBasePlatTrain*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& NoiseMoving() = 0;
     virtual void NoiseMovingUpdated() = 0;
@@ -69,6 +73,7 @@ public:
     virtual void TWidthUpdated() = 0;
     virtual float& TLength() = 0;
     virtual void TLengthUpdated() = 0;
+    static IBasePlatTrain* FromOriginal(CBasePlatTrain* p);
 };
 
 #endif // _INCLUDE_IBASEPLATTRAIN_H

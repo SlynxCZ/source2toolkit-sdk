@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CSoundOpvarSetEntity;
 
 class ISoundOpvarSetEntity : public virtual IBaseEntity
 {
 public:
     virtual ~ISoundOpvarSetEntity() = default;
+    CSoundOpvarSetEntity* GetOriginal() { return reinterpret_cast<CSoundOpvarSetEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& StackName() = 0;
     virtual void StackNameUpdated() = 0;
@@ -75,6 +79,7 @@ public:
     virtual void OpvarValueStringUpdated() = 0;
     virtual bool& SetOnSpawn() = 0;
     virtual void SetOnSpawnUpdated() = 0;
+    static ISoundOpvarSetEntity* FromOriginal(CSoundOpvarSetEntity* p);
 };
 
 #endif // _INCLUDE_ISOUNDOPVARSETENTITY_H

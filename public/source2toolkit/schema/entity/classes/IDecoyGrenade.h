@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseCSGrenade.h"
+
+class CDecoyGrenade;
 
 class IDecoyGrenade : public virtual IBaseCSGrenade
 {
 public:
     virtual ~IDecoyGrenade() = default;
+    CDecoyGrenade* GetOriginal() { return reinterpret_cast<CDecoyGrenade*>(IEntityInstance::GetOriginal()); }
 
+    static IDecoyGrenade* FromOriginal(CDecoyGrenade* p);
 };
 
 #endif // _INCLUDE_IDECOYGRENADE_H

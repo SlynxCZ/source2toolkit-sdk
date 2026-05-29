@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IRuleEntity.h"
+
+class CRulePointEntity;
 
 class IRulePointEntity : public virtual IRuleEntity
 {
 public:
     virtual ~IRulePointEntity() = default;
+    CRulePointEntity* GetOriginal() { return reinterpret_cast<CRulePointEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Score() = 0;
     virtual void ScoreUpdated() = 0;
+    static IRulePointEntity* FromOriginal(CRulePointEntity* p);
 };
 
 #endif // _INCLUDE_IRULEPOINTENTITY_H

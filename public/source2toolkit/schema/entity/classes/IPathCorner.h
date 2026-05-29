@@ -50,21 +50,26 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CPathCorner;
 
 class IPathCorner : public virtual IPointEntity
 {
 public:
     virtual ~IPathCorner() = default;
+    CPathCorner* GetOriginal() { return reinterpret_cast<CPathCorner*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Wait() = 0;
     virtual void WaitUpdated() = 0;
     virtual float& Radius() = 0;
     virtual void RadiusUpdated() = 0;
-    virtual CEntityIOOutput& OnPass() = 0;
+    virtual ::CEntityIOOutput& OnPass() = 0;
     virtual void OnPassUpdated() = 0;
+    static IPathCorner* FromOriginal(CPathCorner* p);
 };
 
 #endif // _INCLUDE_IPATHCORNER_H

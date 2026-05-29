@@ -50,20 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
+
+class CTimerEntity;
 
 class ITimerEntity : public virtual ILogicalEntity
 {
 public:
     virtual ~ITimerEntity() = default;
+    CTimerEntity* GetOriginal() { return reinterpret_cast<CTimerEntity*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnTimer() = 0;
+    virtual ::CEntityIOOutput& OnTimer() = 0;
     virtual void OnTimerUpdated() = 0;
-    virtual CEntityIOOutput& OnTimerHigh() = 0;
+    virtual ::CEntityIOOutput& OnTimerHigh() = 0;
     virtual void OnTimerHighUpdated() = 0;
-    virtual CEntityIOOutput& OnTimerLow() = 0;
+    virtual ::CEntityIOOutput& OnTimerLow() = 0;
     virtual void OnTimerLowUpdated() = 0;
     virtual int32_t& Disabled() = 0;
     virtual void DisabledUpdated() = 0;
@@ -85,6 +89,7 @@ public:
     virtual void RemainingTimeUpdated() = 0;
     virtual bool& Paused() = 0;
     virtual void PausedUpdated() = 0;
+    static ITimerEntity* FromOriginal(CTimerEntity* p);
 };
 
 #endif // _INCLUDE_ITIMERENTITY_H

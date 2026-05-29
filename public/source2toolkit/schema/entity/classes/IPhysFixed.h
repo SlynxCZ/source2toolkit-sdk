@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPhysConstraint.h"
+
+class CPhysFixed;
 
 class IPhysFixed : public virtual IPhysConstraint
 {
 public:
     virtual ~IPhysFixed() = default;
+    CPhysFixed* GetOriginal() { return reinterpret_cast<CPhysFixed*>(IEntityInstance::GetOriginal()); }
 
     virtual float& LinearFrequency() = 0;
     virtual void LinearFrequencyUpdated() = 0;
@@ -75,6 +79,7 @@ public:
     virtual void BoneName1Updated() = 0;
     virtual CUtlSymbolLarge& BoneName2() = 0;
     virtual void BoneName2Updated() = 0;
+    static IPhysFixed* FromOriginal(CPhysFixed* p);
 };
 
 #endif // _INCLUDE_IPHYSFIXED_H

@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IFuncLadder.h"
+
+class CFuncLadderAlias_func_useableladder;
 
 class IFuncLadderAlias_func_useableladder : public virtual IFuncLadder
 {
 public:
     virtual ~IFuncLadderAlias_func_useableladder() = default;
+    CFuncLadderAlias_func_useableladder* GetOriginal() { return reinterpret_cast<CFuncLadderAlias_func_useableladder*>(IEntityInstance::GetOriginal()); }
 
+    static IFuncLadderAlias_func_useableladder* FromOriginal(CFuncLadderAlias_func_useableladder* p);
 };
 
 #endif // _INCLUDE_IFUNCLADDERALIAS_FUNC_USEABLELADDER_H

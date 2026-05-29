@@ -50,10 +50,12 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseAnimGraph.h"
 
+class CFish;
 class CFishPool;
 class CountdownTimer;
 
@@ -61,6 +63,7 @@ class IFish : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IFish() = default;
+    CFish* GetOriginal() { return reinterpret_cast<CFish*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CFishPool>& Pool() = 0;
     virtual void PoolUpdated() = 0;
@@ -94,22 +97,23 @@ public:
     virtual void PanicSpeedUpdated() = 0;
     virtual float& AvoidRange() = 0;
     virtual void AvoidRangeUpdated() = 0;
-    virtual CountdownTimer& TurnTimer() = 0;
+    virtual ::CountdownTimer& TurnTimer() = 0;
     virtual void TurnTimerUpdated() = 0;
     virtual bool& TurnClockwise() = 0;
     virtual void TurnClockwiseUpdated() = 0;
-    virtual CountdownTimer& GoTimer() = 0;
+    virtual ::CountdownTimer& GoTimer() = 0;
     virtual void GoTimerUpdated() = 0;
-    virtual CountdownTimer& MoveTimer() = 0;
+    virtual ::CountdownTimer& MoveTimer() = 0;
     virtual void MoveTimerUpdated() = 0;
-    virtual CountdownTimer& PanicTimer() = 0;
+    virtual ::CountdownTimer& PanicTimer() = 0;
     virtual void PanicTimerUpdated() = 0;
-    virtual CountdownTimer& DisperseTimer() = 0;
+    virtual ::CountdownTimer& DisperseTimer() = 0;
     virtual void DisperseTimerUpdated() = 0;
-    virtual CountdownTimer& ProximityTimer() = 0;
+    virtual ::CountdownTimer& ProximityTimer() = 0;
     virtual void ProximityTimerUpdated() = 0;
     virtual CUtlVector<CFish*>& Visible() = 0;
     virtual void VisibleUpdated() = 0;
+    static IFish* FromOriginal(CFish* p);
 };
 
 #endif // _INCLUDE_IFISH_H

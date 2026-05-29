@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CEnvTilt;
 
 class IEnvTilt : public virtual IPointEntity
 {
 public:
     virtual ~IEnvTilt() = default;
+    CEnvTilt* GetOriginal() { return reinterpret_cast<CEnvTilt*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Duration() = 0;
     virtual void DurationUpdated() = 0;
@@ -67,6 +71,7 @@ public:
     virtual void TiltTimeUpdated() = 0;
     virtual float& StopTime() = 0;
     virtual void StopTimeUpdated() = 0;
+    static IEnvTilt* FromOriginal(CEnvTilt* p);
 };
 
 #endif // _INCLUDE_IENVTILT_H

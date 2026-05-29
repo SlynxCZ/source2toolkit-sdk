@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayerPawnComponent.h"
+
+class CCSPlayer_AimPunchServices;
 
 class ICSPlayer_AimPunchServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~ICSPlayer_AimPunchServices() = default;
+    CCSPlayer_AimPunchServices* GetOriginal() { return reinterpret_cast<CCSPlayer_AimPunchServices*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& PredictableBaseTick() = 0;
     virtual void PredictableBaseTickUpdated() = 0;
@@ -71,6 +75,7 @@ public:
     virtual void UnpredictableBaseTickUpdated() = 0;
     virtual QAngle& UnpredictableBaseAngle() = 0;
     virtual void UnpredictableBaseAngleUpdated() = 0;
+    static ICSPlayer_AimPunchServices* FromOriginal(CCSPlayer_AimPunchServices* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_AIMPUNCHSERVICES_H

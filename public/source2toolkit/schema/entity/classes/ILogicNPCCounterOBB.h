@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicNPCCounterAABB.h"
+
+class CLogicNPCCounterOBB;
 
 class ILogicNPCCounterOBB : public virtual ILogicNPCCounterAABB
 {
 public:
     virtual ~ILogicNPCCounterOBB() = default;
+    CLogicNPCCounterOBB* GetOriginal() { return reinterpret_cast<CLogicNPCCounterOBB*>(IEntityInstance::GetOriginal()); }
 
+    static ILogicNPCCounterOBB* FromOriginal(CLogicNPCCounterOBB* p);
 };
 
 #endif // _INCLUDE_ILOGICNPCCOUNTEROBB_H

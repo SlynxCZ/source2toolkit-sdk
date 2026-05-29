@@ -50,23 +50,27 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseToggle.h"
 
 class CBaseEntity;
+class CGunTarget;
 
 class IGunTarget : public virtual IBaseToggle
 {
 public:
     virtual ~IGunTarget() = default;
+    CGunTarget* GetOriginal() { return reinterpret_cast<CGunTarget*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& On() = 0;
     virtual void OnUpdated() = 0;
     virtual CHandle<CBaseEntity>& TargetEnt() = 0;
     virtual void TargetEntUpdated() = 0;
-    virtual CEntityIOOutput& OnDeath() = 0;
+    virtual ::CEntityIOOutput& OnDeath() = 0;
     virtual void OnDeathUpdated() = 0;
+    static IGunTarget* FromOriginal(CGunTarget* p);
 };
 
 #endif // _INCLUDE_IGUNTARGET_H

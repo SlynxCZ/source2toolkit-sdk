@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CTestPulseIOComponent;
 
 class ITestPulseIOComponent
 {
 public:
     virtual ~ITestPulseIOComponent() = default;
+    CTestPulseIOComponent* GetOriginal() { return reinterpret_cast<CTestPulseIOComponent*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlString& ComponentData() = 0;
     virtual void ComponentDataUpdated() = 0;
+    static ITestPulseIOComponent* FromOriginal(CTestPulseIOComponent* p);
 };
 
 #endif // _INCLUDE_ITESTPULSEIOCOMPONENT_H

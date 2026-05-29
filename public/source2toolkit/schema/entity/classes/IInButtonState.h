@@ -50,14 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CInButtonState;
 
 class IInButtonState
 {
 public:
     virtual ~IInButtonState() = default;
+    CInButtonState* GetOriginal() { return reinterpret_cast<CInButtonState*>(IEntityInstance::GetOriginal()); }
 
     virtual uint64_t* ButtonStates() = 0;
+    static IInButtonState* FromOriginal(CInButtonState* p);
 };
 
 #endif // _INCLUDE_IINBUTTONSTATE_H

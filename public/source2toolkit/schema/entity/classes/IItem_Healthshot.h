@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IWeaponBaseItem.h"
+
+class CItem_Healthshot;
 
 class IItem_Healthshot : public virtual IWeaponBaseItem
 {
 public:
     virtual ~IItem_Healthshot() = default;
+    CItem_Healthshot* GetOriginal() { return reinterpret_cast<CItem_Healthshot*>(IEntityInstance::GetOriginal()); }
 
+    static IItem_Healthshot* FromOriginal(CItem_Healthshot* p);
 };
 
 #endif // _INCLUDE_IITEM_HEALTHSHOT_H

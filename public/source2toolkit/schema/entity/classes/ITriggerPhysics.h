@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
 
+class CTriggerPhysics;
 class IPhysicsMotionController;
 
 class ITriggerPhysics : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerPhysics() = default;
+    CTriggerPhysics* GetOriginal() { return reinterpret_cast<CTriggerPhysics*>(IEntityInstance::GetOriginal()); }
 
     virtual IPhysicsMotionController*& Controller() = 0;
     virtual void ControllerUpdated() = 0;
@@ -89,6 +92,7 @@ public:
     virtual void LinearForceDirectionUpdated() = 0;
     virtual bool& ConvertToDebrisWhenPossible() = 0;
     virtual void ConvertToDebrisWhenPossibleUpdated() = 0;
+    static ITriggerPhysics* FromOriginal(CTriggerPhysics* p);
 };
 
 #endif // _INCLUDE_ITRIGGERPHYSICS_H

@@ -50,16 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CInfoWorldLayer;
 
 class IInfoWorldLayer : public virtual IBaseEntity
 {
 public:
     virtual ~IInfoWorldLayer() = default;
+    CInfoWorldLayer* GetOriginal() { return reinterpret_cast<CInfoWorldLayer*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OutputOnEntitiesSpawned() = 0;
+    virtual ::CEntityIOOutput& OutputOnEntitiesSpawned() = 0;
     virtual void OutputOnEntitiesSpawnedUpdated() = 0;
     virtual CUtlSymbolLarge& WorldName() = 0;
     virtual void WorldNameUpdated() = 0;
@@ -73,6 +77,7 @@ public:
     virtual void CreateAsChildSpawnGroupUpdated() = 0;
     virtual uint32_t& LayerSpawnGroup() = 0;
     virtual void LayerSpawnGroupUpdated() = 0;
+    static IInfoWorldLayer* FromOriginal(CInfoWorldLayer* p);
 };
 
 #endif // _INCLUDE_IINFOWORLDLAYER_H

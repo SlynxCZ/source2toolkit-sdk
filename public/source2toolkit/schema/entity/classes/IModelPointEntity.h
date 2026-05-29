@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
+
+class CModelPointEntity;
 
 class IModelPointEntity : public virtual IBaseModelEntity
 {
 public:
     virtual ~IModelPointEntity() = default;
+    CModelPointEntity* GetOriginal() { return reinterpret_cast<CModelPointEntity*>(IEntityInstance::GetOriginal()); }
 
+    static IModelPointEntity* FromOriginal(CModelPointEntity* p);
 };
 
 #endif // _INCLUDE_IMODELPOINTENTITY_H

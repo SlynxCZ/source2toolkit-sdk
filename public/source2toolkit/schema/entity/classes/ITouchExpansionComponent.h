@@ -50,13 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CTouchExpansionComponent;
 
 class ITouchExpansionComponent
 {
 public:
     virtual ~ITouchExpansionComponent() = default;
+    CTouchExpansionComponent* GetOriginal() { return reinterpret_cast<CTouchExpansionComponent*>(IEntityInstance::GetOriginal()); }
 
+    static ITouchExpansionComponent* FromOriginal(CTouchExpansionComponent* p);
 };
 
 #endif // _INCLUDE_ITOUCHEXPANSIONCOMPONENT_H

@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ISprite.h"
+
+class CSpriteOriented;
 
 class ISpriteOriented : public virtual ISprite
 {
 public:
     virtual ~ISpriteOriented() = default;
+    CSpriteOriented* GetOriginal() { return reinterpret_cast<CSpriteOriented*>(IEntityInstance::GetOriginal()); }
 
+    static ISpriteOriented* FromOriginal(CSpriteOriented* p);
 };
 
 #endif // _INCLUDE_ISPRITEORIENTED_H

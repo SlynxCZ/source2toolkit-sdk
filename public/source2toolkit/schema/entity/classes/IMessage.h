@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CMessage;
 
 class IMessage : public virtual IPointEntity
 {
 public:
     virtual ~IMessage() = default;
+    CMessage* GetOriginal() { return reinterpret_cast<CMessage*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Message() = 0;
     virtual void MessageUpdated() = 0;
@@ -69,8 +73,9 @@ public:
     virtual void RadiusUpdated() = 0;
     virtual CUtlSymbolLarge& Noise() = 0;
     virtual void NoiseUpdated() = 0;
-    virtual CEntityIOOutput& OnShowMessage() = 0;
+    virtual ::CEntityIOOutput& OnShowMessage() = 0;
     virtual void OnShowMessageUpdated() = 0;
+    static IMessage* FromOriginal(CMessage* p);
 };
 
 #endif // _INCLUDE_IMESSAGE_H

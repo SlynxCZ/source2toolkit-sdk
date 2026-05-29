@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CAI_ChangeHintGroup;
 
 class IAI_ChangeHintGroup : public virtual IBaseEntity
 {
 public:
     virtual ~IAI_ChangeHintGroup() = default;
+    CAI_ChangeHintGroup* GetOriginal() { return reinterpret_cast<CAI_ChangeHintGroup*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& SearchType() = 0;
     virtual void SearchTypeUpdated() = 0;
@@ -67,6 +71,7 @@ public:
     virtual void StrNewHintGroupUpdated() = 0;
     virtual float& Radius() = 0;
     virtual void RadiusUpdated() = 0;
+    static IAI_ChangeHintGroup* FromOriginal(CAI_ChangeHintGroup* p);
 };
 
 #endif // _INCLUDE_IAI_CHANGEHINTGROUP_H

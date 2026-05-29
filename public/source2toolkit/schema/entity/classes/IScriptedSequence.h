@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
@@ -63,11 +64,13 @@
 
 class CBaseAnimGraph;
 class CBaseEntity;
+class CScriptedSequence;
 
 class IScriptedSequence : public virtual IBaseEntity
 {
 public:
     virtual ~IScriptedSequence() = default;
+    CScriptedSequence* GetOriginal() { return reinterpret_cast<CScriptedSequence*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Entry() = 0;
     virtual void EntryUpdated() = 0;
@@ -85,13 +88,13 @@ public:
     virtual void EntityUpdated() = 0;
     virtual CUtlSymbolLarge& SyncGroup() = 0;
     virtual void SyncGroupUpdated() = 0;
-    virtual ScriptedMoveTo_t& MoveTo() = 0;
+    virtual ::ScriptedMoveTo_t& MoveTo() = 0;
     virtual void MoveToUpdated() = 0;
-    virtual SharedMovementGait_t& MoveToGait() = 0;
+    virtual ::SharedMovementGait_t& MoveToGait() = 0;
     virtual void MoveToGaitUpdated() = 0;
-    virtual ScriptedHeldWeaponBehavior_t& HeldWeaponBehavior() = 0;
+    virtual ::ScriptedHeldWeaponBehavior_t& HeldWeaponBehavior() = 0;
     virtual void HeldWeaponBehaviorUpdated() = 0;
-    virtual ForcedCrouchState_t& ForcedCrouchState() = 0;
+    virtual ::ForcedCrouchState_t& ForcedCrouchState() = 0;
     virtual void ForcedCrouchStateUpdated() = 0;
     virtual bool& IsPlayingPreIdle() = 0;
     virtual void IsPlayingPreIdleUpdated() = 0;
@@ -197,21 +200,21 @@ public:
     virtual void PreventUpdateYawOnFinishUpdated() = 0;
     virtual bool& EnsureOnNavmeshOnFinish() = 0;
     virtual void EnsureOnNavmeshOnFinishUpdated() = 0;
-    virtual ScriptedOnDeath_t& OnDeathBehavior() = 0;
+    virtual ::ScriptedOnDeath_t& OnDeathBehavior() = 0;
     virtual void OnDeathBehaviorUpdated() = 0;
-    virtual ScriptedConflictResponse_t& ConflictResponse() = 0;
+    virtual ::ScriptedConflictResponse_t& ConflictResponse() = 0;
     virtual void ConflictResponseUpdated() = 0;
-    virtual CEntityIOOutput& OnBeginSequence() = 0;
+    virtual ::CEntityIOOutput& OnBeginSequence() = 0;
     virtual void OnBeginSequenceUpdated() = 0;
-    virtual CEntityIOOutput& OnActionStartOrLoop() = 0;
+    virtual ::CEntityIOOutput& OnActionStartOrLoop() = 0;
     virtual void OnActionStartOrLoopUpdated() = 0;
-    virtual CEntityIOOutput& OnEndSequence() = 0;
+    virtual ::CEntityIOOutput& OnEndSequence() = 0;
     virtual void OnEndSequenceUpdated() = 0;
-    virtual CEntityIOOutput& OnPostIdleEndSequence() = 0;
+    virtual ::CEntityIOOutput& OnPostIdleEndSequence() = 0;
     virtual void OnPostIdleEndSequenceUpdated() = 0;
-    virtual CEntityIOOutput& OnCancelSequence() = 0;
+    virtual ::CEntityIOOutput& OnCancelSequence() = 0;
     virtual void OnCancelSequenceUpdated() = 0;
-    virtual CEntityIOOutput& OnCancelFailedSequence() = 0;
+    virtual ::CEntityIOOutput& OnCancelFailedSequence() = 0;
     virtual void OnCancelFailedSequenceUpdated() = 0;
     virtual CEntityIOOutput* OnScriptEvent() = 0;
     virtual CTransform& MatOtherToMain() = 0;
@@ -222,6 +225,7 @@ public:
     virtual void PlayerDeathBehaviorUpdated() = 0;
     virtual bool& SkipFadeIn() = 0;
     virtual void SkipFadeInUpdated() = 0;
+    static IScriptedSequence* FromOriginal(CScriptedSequence* p);
 };
 
 #endif // _INCLUDE_ISCRIPTEDSEQUENCE_H

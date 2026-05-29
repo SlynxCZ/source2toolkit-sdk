@@ -50,21 +50,25 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
 
 class CSkyCamera;
+class CSkyboxReference;
 
 class ISkyboxReference : public virtual IBaseEntity
 {
 public:
     virtual ~ISkyboxReference() = default;
+    CSkyboxReference* GetOriginal() { return reinterpret_cast<CSkyboxReference*>(IEntityInstance::GetOriginal()); }
 
     virtual WorldGroupId_t& WorldGroupId() = 0;
     virtual void WorldGroupIdUpdated() = 0;
     virtual CHandle<CSkyCamera>& SkyCamera() = 0;
     virtual void SkyCameraUpdated() = 0;
+    static ISkyboxReference* FromOriginal(CSkyboxReference* p);
 };
 
 #endif // _INCLUDE_ISKYBOXREFERENCE_H

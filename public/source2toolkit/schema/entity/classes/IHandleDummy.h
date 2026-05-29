@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CHandleDummy;
 
 class IHandleDummy : public virtual IBaseEntity
 {
 public:
     virtual ~IHandleDummy() = default;
+    CHandleDummy* GetOriginal() { return reinterpret_cast<CHandleDummy*>(IEntityInstance::GetOriginal()); }
 
+    static IHandleDummy* FromOriginal(CHandleDummy* p);
 };
 
 #endif // _INCLUDE_IHANDLEDUMMY_H

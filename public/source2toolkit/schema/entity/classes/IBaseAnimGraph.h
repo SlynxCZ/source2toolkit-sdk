@@ -50,12 +50,14 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
 
 class CAnimGraphControllerBase;
 class CAnimGraphControllerManager;
+class CBaseAnimGraph;
 class IChoreoServices;
 class IPhysicsRagdollControl;
 class PhysicsRagdollPose_t;
@@ -64,8 +66,9 @@ class IBaseAnimGraph : public virtual IBaseModelEntity
 {
 public:
     virtual ~IBaseAnimGraph() = default;
+    CBaseAnimGraph* GetOriginal() { return reinterpret_cast<CBaseAnimGraph*>(IEntityInstance::GetOriginal()); }
 
-    virtual CAnimGraphControllerManager& GraphControllerManager() = 0;
+    virtual ::CAnimGraphControllerManager& GraphControllerManager() = 0;
     virtual void GraphControllerManagerUpdated() = 0;
     virtual CAnimGraphControllerBase*& MainGraphController() = 0;
     virtual void MainGraphControllerUpdated() = 0;
@@ -83,7 +86,7 @@ public:
     virtual void ForceBoneUpdated() = 0;
     virtual IPhysicsRagdollControl*& RagdollControl() = 0;
     virtual void RagdollControlUpdated() = 0;
-    virtual PhysicsRagdollPose_t& RagdollPose() = 0;
+    virtual ::PhysicsRagdollPose_t& RagdollPose() = 0;
     virtual void RagdollPoseUpdated() = 0;
     virtual bool& RagdollEnabled() = 0;
     virtual void RagdollEnabledUpdated() = 0;
@@ -91,6 +94,7 @@ public:
     virtual void RagdollClientSideUpdated() = 0;
     virtual CTransform& XParentedRagdollRootInEntitySpace() = 0;
     virtual void XParentedRagdollRootInEntitySpaceUpdated() = 0;
+    static IBaseAnimGraph* FromOriginal(CBaseAnimGraph* p);
 };
 
 #endif // _INCLUDE_IBASEANIMGRAPH_H

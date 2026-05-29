@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IAnimGraphControllerBase.h"
+
+class CEmptyGraphController;
 
 class IEmptyGraphController : public virtual IAnimGraphControllerBase
 {
 public:
     virtual ~IEmptyGraphController() = default;
+    CEmptyGraphController* GetOriginal() { return reinterpret_cast<CEmptyGraphController*>(IEntityInstance::GetOriginal()); }
 
+    static IEmptyGraphController* FromOriginal(CEmptyGraphController* p);
 };
 
 #endif // _INCLUDE_IEMPTYGRAPHCONTROLLER_H

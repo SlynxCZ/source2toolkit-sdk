@@ -50,14 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CFiringModeInt;
 
 class IFiringModeInt
 {
 public:
     virtual ~IFiringModeInt() = default;
+    CFiringModeInt* GetOriginal() { return reinterpret_cast<CFiringModeInt*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t* Values() = 0;
+    static IFiringModeInt* FromOriginal(CFiringModeInt* p);
 };
 
 #endif // _INCLUDE_IFIRINGMODEINT_H

@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
 
 class CBaseEntity;
+class CTriggerSndSosOpvar;
 
 class ITriggerSndSosOpvar : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerSndSosOpvar() = default;
+    CTriggerSndSosOpvar* GetOriginal() { return reinterpret_cast<CTriggerSndSosOpvar*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<CHandle<CBaseEntity>>& TouchingPlayers() = 0;
     virtual void TouchingPlayersUpdated() = 0;
@@ -86,6 +89,7 @@ public:
     virtual void VecNormPosUpdated() = 0;
     virtual float& NormCenterSize() = 0;
     virtual void NormCenterSizeUpdated() = 0;
+    static ITriggerSndSosOpvar* FromOriginal(CTriggerSndSosOpvar* p);
 };
 
 #endif // _INCLUDE_ITRIGGERSNDSOSOPVAR_H

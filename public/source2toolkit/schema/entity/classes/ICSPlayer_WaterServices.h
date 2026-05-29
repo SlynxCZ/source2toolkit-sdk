@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayer_WaterServices.h"
+
+class CCSPlayer_WaterServices;
 
 class ICSPlayer_WaterServices : public virtual IPlayer_WaterServices
 {
 public:
     virtual ~ICSPlayer_WaterServices() = default;
+    CCSPlayer_WaterServices* GetOriginal() { return reinterpret_cast<CCSPlayer_WaterServices*>(IEntityInstance::GetOriginal()); }
 
     virtual float& NextDrownDamageTime() = 0;
     virtual void NextDrownDamageTimeUpdated() = 0;
@@ -71,6 +75,7 @@ public:
     virtual void WaterJumpVelUpdated() = 0;
     virtual float& SwimSoundTime() = 0;
     virtual void SwimSoundTimeUpdated() = 0;
+    static ICSPlayer_WaterServices* FromOriginal(CCSPlayer_WaterServices* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_WATERSERVICES_H

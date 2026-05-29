@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ICSPlayerBase_CameraServices.h"
+
+class CCSObserver_CameraServices;
 
 class ICSObserver_CameraServices : public virtual ICSPlayerBase_CameraServices
 {
 public:
     virtual ~ICSObserver_CameraServices() = default;
+    CCSObserver_CameraServices* GetOriginal() { return reinterpret_cast<CCSObserver_CameraServices*>(IEntityInstance::GetOriginal()); }
 
+    static ICSObserver_CameraServices* FromOriginal(CCSObserver_CameraServices* p);
 };
 
 #endif // _INCLUDE_ICSOBSERVER_CAMERASERVICES_H

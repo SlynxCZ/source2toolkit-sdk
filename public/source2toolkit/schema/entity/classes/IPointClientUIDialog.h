@@ -50,21 +50,25 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseClientUIEntity.h"
 
 class CBaseEntity;
+class CPointClientUIDialog;
 
 class IPointClientUIDialog : public virtual IBaseClientUIEntity
 {
 public:
     virtual ~IPointClientUIDialog() = default;
+    CPointClientUIDialog* GetOriginal() { return reinterpret_cast<CPointClientUIDialog*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& Activator() = 0;
     virtual void ActivatorUpdated() = 0;
     virtual bool& StartEnabled() = 0;
     virtual void StartEnabledUpdated() = 0;
+    static IPointClientUIDialog* FromOriginal(CPointClientUIDialog* p);
 };
 
 #endif // _INCLUDE_IPOINTCLIENTUIDIALOG_H

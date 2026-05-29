@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IHostageExpresserShim.h"
@@ -57,6 +58,7 @@
 class CBaseEntity;
 class CCSPlayerPawn;
 class CCSPlayerPawnBase;
+class CHostage;
 class CountdownTimer;
 class EntitySpottedState_t;
 
@@ -64,16 +66,17 @@ class IHostage : public virtual IHostageExpresserShim
 {
 public:
     virtual ~IHostage() = default;
+    CHostage* GetOriginal() { return reinterpret_cast<CHostage*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnHostageBeginGrab() = 0;
+    virtual ::CEntityIOOutput& OnHostageBeginGrab() = 0;
     virtual void OnHostageBeginGrabUpdated() = 0;
-    virtual CEntityIOOutput& OnFirstPickedUp() = 0;
+    virtual ::CEntityIOOutput& OnFirstPickedUp() = 0;
     virtual void OnFirstPickedUpUpdated() = 0;
-    virtual CEntityIOOutput& OnDroppedNotRescued() = 0;
+    virtual ::CEntityIOOutput& OnDroppedNotRescued() = 0;
     virtual void OnDroppedNotRescuedUpdated() = 0;
-    virtual CEntityIOOutput& OnRescued() = 0;
+    virtual ::CEntityIOOutput& OnRescued() = 0;
     virtual void OnRescuedUpdated() = 0;
-    virtual EntitySpottedState_t& EntitySpottedState() = 0;
+    virtual ::EntitySpottedState_t& EntitySpottedState() = 0;
     virtual void EntitySpottedStateUpdated() = 0;
     virtual int32_t& SpotRules() = 0;
     virtual void SpotRulesUpdated() = 0;
@@ -95,7 +98,7 @@ public:
     virtual void LeaderUpdated() = 0;
     virtual CHandle<CCSPlayerPawnBase>& LastLeader() = 0;
     virtual void LastLeaderUpdated() = 0;
-    virtual CountdownTimer& ReuseTimer() = 0;
+    virtual ::CountdownTimer& ReuseTimer() = 0;
     virtual void ReuseTimerUpdated() = 0;
     virtual bool& HasBeenUsed() = 0;
     virtual void HasBeenUsedUpdated() = 0;
@@ -105,17 +108,17 @@ public:
     virtual void IsRunningUpdated() = 0;
     virtual bool& IsCrouching() = 0;
     virtual void IsCrouchingUpdated() = 0;
-    virtual CountdownTimer& JumpTimer() = 0;
+    virtual ::CountdownTimer& JumpTimer() = 0;
     virtual void JumpTimerUpdated() = 0;
     virtual bool& IsWaitingForLeader() = 0;
     virtual void IsWaitingForLeaderUpdated() = 0;
-    virtual CountdownTimer& RepathTimer() = 0;
+    virtual ::CountdownTimer& RepathTimer() = 0;
     virtual void RepathTimerUpdated() = 0;
-    virtual CountdownTimer& InhibitDoorTimer() = 0;
+    virtual ::CountdownTimer& InhibitDoorTimer() = 0;
     virtual void InhibitDoorTimerUpdated() = 0;
-    virtual CountdownTimer& InhibitObstacleAvoidanceTimer() = 0;
+    virtual ::CountdownTimer& InhibitObstacleAvoidanceTimer() = 0;
     virtual void InhibitObstacleAvoidanceTimerUpdated() = 0;
-    virtual CountdownTimer& WiggleTimer() = 0;
+    virtual ::CountdownTimer& WiggleTimer() = 0;
     virtual void WiggleTimerUpdated() = 0;
     virtual bool& IsAdjusted() = 0;
     virtual void IsAdjustedUpdated() = 0;
@@ -143,6 +146,7 @@ public:
     virtual void SpawnGroundPosUpdated() = 0;
     virtual Vector& HostageResetPosition() = 0;
     virtual void HostageResetPositionUpdated() = 0;
+    static IHostage* FromOriginal(CHostage* p);
 };
 
 #endif // _INCLUDE_IHOSTAGE_H

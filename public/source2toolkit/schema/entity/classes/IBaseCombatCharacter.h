@@ -50,12 +50,14 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseAnimGraph.h"
 
 #include "../enums/Hull_t.h"
 
+class CBaseCombatCharacter;
 class CEconWearable;
 class CMovementStatsProperty;
 class RelationshipOverride_t;
@@ -64,6 +66,7 @@ class IBaseCombatCharacter : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IBaseCombatCharacter() = default;
+    CBaseCombatCharacter* GetOriginal() { return reinterpret_cast<CBaseCombatCharacter*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& ForceServerRagdoll() = 0;
     virtual void ForceServerRagdollUpdated() = 0;
@@ -79,12 +82,13 @@ public:
     virtual void VecRelationshipsUpdated() = 0;
     virtual CUtlSymbolLarge& StrRelationships() = 0;
     virtual void StrRelationshipsUpdated() = 0;
-    virtual Hull_t& Hull() = 0;
+    virtual ::Hull_t& Hull() = 0;
     virtual void HullUpdated() = 0;
     virtual uint32_t& NavHullIdx() = 0;
     virtual void NavHullIdxUpdated() = 0;
-    virtual CMovementStatsProperty& MovementStats() = 0;
+    virtual ::CMovementStatsProperty& MovementStats() = 0;
     virtual void MovementStatsUpdated() = 0;
+    static IBaseCombatCharacter* FromOriginal(CBaseCombatCharacter* p);
 };
 
 #endif // _INCLUDE_IBASECOMBATCHARACTER_H

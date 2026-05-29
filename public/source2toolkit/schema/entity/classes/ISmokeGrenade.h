@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseCSGrenade.h"
+
+class CSmokeGrenade;
 
 class ISmokeGrenade : public virtual IBaseCSGrenade
 {
 public:
     virtual ~ISmokeGrenade() = default;
+    CSmokeGrenade* GetOriginal() { return reinterpret_cast<CSmokeGrenade*>(IEntityInstance::GetOriginal()); }
 
+    static ISmokeGrenade* FromOriginal(CSmokeGrenade* p);
 };
 
 #endif // _INCLUDE_ISMOKEGRENADE_H

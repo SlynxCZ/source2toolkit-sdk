@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CMessageEntity;
 
 class IMessageEntity : public virtual IPointEntity
 {
 public:
     virtual ~IMessageEntity() = default;
+    CMessageEntity* GetOriginal() { return reinterpret_cast<CMessageEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Radius() = 0;
     virtual void RadiusUpdated() = 0;
@@ -69,6 +73,7 @@ public:
     virtual void DeveloperOnlyUpdated() = 0;
     virtual bool& Enabled() = 0;
     virtual void EnabledUpdated() = 0;
+    static IMessageEntity* FromOriginal(CMessageEntity* p);
 };
 
 #endif // _INCLUDE_IMESSAGEENTITY_H

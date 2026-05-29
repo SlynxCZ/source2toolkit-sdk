@@ -50,17 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 class CEntityInstance*;
+class CLightComponent;
 class InfoForResourceTypeCTextureBase;
 
 class ILightComponent
 {
 public:
     virtual ~ILightComponent() = default;
+    CLightComponent* GetOriginal() { return reinterpret_cast<CLightComponent*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityInstance*& __m_pChainEntity() = 0;
+    virtual ::CEntityInstance*& __m_pChainEntity() = 0;
     virtual void __m_pChainEntityUpdated() = 0;
     virtual Color& Color() = 0;
     virtual void ColorUpdated() = 0;
@@ -202,6 +205,7 @@ public:
     virtual void MinRoughnessUpdated() = 0;
     virtual bool& PvsModifyEntity() = 0;
     virtual void PvsModifyEntityUpdated() = 0;
+    static ILightComponent* FromOriginal(CLightComponent* p);
 };
 
 #endif // _INCLUDE_ILIGHTCOMPONENT_H

@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
 
+class CEnvVolumetricFogController;
 class InfoForResourceTypeCTextureBase;
 
 class IEnvVolumetricFogController : public virtual IBaseEntity
 {
 public:
     virtual ~IEnvVolumetricFogController() = default;
+    CEnvVolumetricFogController* GetOriginal() { return reinterpret_cast<CEnvVolumetricFogController*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Scattering() = 0;
     virtual void ScatteringUpdated() = 0;
@@ -133,6 +136,7 @@ public:
     virtual void WindDirectionUpdated() = 0;
     virtual bool& FirstTime() = 0;
     virtual void FirstTimeUpdated() = 0;
+    static IEnvVolumetricFogController* FromOriginal(CEnvVolumetricFogController* p);
 };
 
 #endif // _INCLUDE_IENVVOLUMETRICFOGCONTROLLER_H

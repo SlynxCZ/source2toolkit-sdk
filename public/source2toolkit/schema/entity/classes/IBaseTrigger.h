@@ -50,31 +50,34 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseToggle.h"
 
 class CBaseEntity;
 class CBaseFilter;
+class CBaseTrigger;
 
 class IBaseTrigger : public virtual IBaseToggle
 {
 public:
     virtual ~IBaseTrigger() = default;
+    CBaseTrigger* GetOriginal() { return reinterpret_cast<CBaseTrigger*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnStartTouch() = 0;
+    virtual ::CEntityIOOutput& OnStartTouch() = 0;
     virtual void OnStartTouchUpdated() = 0;
-    virtual CEntityIOOutput& OnStartTouchAll() = 0;
+    virtual ::CEntityIOOutput& OnStartTouchAll() = 0;
     virtual void OnStartTouchAllUpdated() = 0;
-    virtual CEntityIOOutput& OnEndTouch() = 0;
+    virtual ::CEntityIOOutput& OnEndTouch() = 0;
     virtual void OnEndTouchUpdated() = 0;
-    virtual CEntityIOOutput& OnEndTouchAll() = 0;
+    virtual ::CEntityIOOutput& OnEndTouchAll() = 0;
     virtual void OnEndTouchAllUpdated() = 0;
-    virtual CEntityIOOutput& OnTouching() = 0;
+    virtual ::CEntityIOOutput& OnTouching() = 0;
     virtual void OnTouchingUpdated() = 0;
-    virtual CEntityIOOutput& OnTouchingEachEntity() = 0;
+    virtual ::CEntityIOOutput& OnTouchingEachEntity() = 0;
     virtual void OnTouchingEachEntityUpdated() = 0;
-    virtual CEntityIOOutput& OnNotTouching() = 0;
+    virtual ::CEntityIOOutput& OnNotTouching() = 0;
     virtual void OnNotTouchingUpdated() = 0;
     virtual CUtlVector<CHandle<CBaseEntity>>& TouchingEntities() = 0;
     virtual void TouchingEntitiesUpdated() = 0;
@@ -86,6 +89,7 @@ public:
     virtual void DisabledUpdated() = 0;
     virtual bool& UseAsyncQueries() = 0;
     virtual void UseAsyncQueriesUpdated() = 0;
+    static IBaseTrigger* FromOriginal(CBaseTrigger* p);
 };
 
 #endif // _INCLUDE_IBASETRIGGER_H

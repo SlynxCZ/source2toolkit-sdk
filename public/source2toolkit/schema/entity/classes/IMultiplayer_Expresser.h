@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IAI_ExpresserWithFollowup.h"
+
+class CMultiplayer_Expresser;
 
 class IMultiplayer_Expresser : public virtual IAI_ExpresserWithFollowup
 {
 public:
     virtual ~IMultiplayer_Expresser() = default;
+    CMultiplayer_Expresser* GetOriginal() { return reinterpret_cast<CMultiplayer_Expresser*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& AllowMultipleScenes() = 0;
     virtual void AllowMultipleScenesUpdated() = 0;
+    static IMultiplayer_Expresser* FromOriginal(CMultiplayer_Expresser* p);
 };
 
 #endif // _INCLUDE_IMULTIPLAYER_EXPRESSER_H

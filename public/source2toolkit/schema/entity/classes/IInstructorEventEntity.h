@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
 
 class CBasePlayerPawn;
+class CInstructorEventEntity;
 
 class IInstructorEventEntity : public virtual IPointEntity
 {
 public:
     virtual ~IInstructorEventEntity() = default;
+    CInstructorEventEntity* GetOriginal() { return reinterpret_cast<CInstructorEventEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Name() = 0;
     virtual void NameUpdated() = 0;
@@ -67,6 +70,7 @@ public:
     virtual void HintTargetEntityUpdated() = 0;
     virtual CHandle<CBasePlayerPawn>& TargetPlayer() = 0;
     virtual void TargetPlayerUpdated() = 0;
+    static IInstructorEventEntity* FromOriginal(CInstructorEventEntity* p);
 };
 
 #endif // _INCLUDE_IINSTRUCTOREVENTENTITY_H

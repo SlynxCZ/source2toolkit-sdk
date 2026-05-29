@@ -50,19 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CEnvMuzzleFlash;
 
 class IEnvMuzzleFlash : public virtual IPointEntity
 {
 public:
     virtual ~IEnvMuzzleFlash() = default;
+    CEnvMuzzleFlash* GetOriginal() { return reinterpret_cast<CEnvMuzzleFlash*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Scale() = 0;
     virtual void ScaleUpdated() = 0;
     virtual CUtlSymbolLarge& ParentAttachment() = 0;
     virtual void ParentAttachmentUpdated() = 0;
+    static IEnvMuzzleFlash* FromOriginal(CEnvMuzzleFlash* p);
 };
 
 #endif // _INCLUDE_IENVMUZZLEFLASH_H

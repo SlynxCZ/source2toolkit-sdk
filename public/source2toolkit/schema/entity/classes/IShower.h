@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IModelPointEntity.h"
+
+class CShower;
 
 class IShower : public virtual IModelPointEntity
 {
 public:
     virtual ~IShower() = default;
+    CShower* GetOriginal() { return reinterpret_cast<CShower*>(IEntityInstance::GetOriginal()); }
 
+    static IShower* FromOriginal(CShower* p);
 };
 
 #endif // _INCLUDE_ISHOWER_H

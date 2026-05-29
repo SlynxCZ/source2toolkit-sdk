@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPulseGraphInstance_ServerEntity.h"
+
+class CPulseGraphInstance_GameBlackboard;
 
 class IPulseGraphInstance_GameBlackboard : public virtual IPulseGraphInstance_ServerEntity
 {
 public:
     virtual ~IPulseGraphInstance_GameBlackboard() = default;
+    CPulseGraphInstance_GameBlackboard* GetOriginal() { return reinterpret_cast<CPulseGraphInstance_GameBlackboard*>(IEntityInstance::GetOriginal()); }
 
+    static IPulseGraphInstance_GameBlackboard* FromOriginal(CPulseGraphInstance_GameBlackboard* p);
 };
 
 #endif // _INCLUDE_IPULSEGRAPHINSTANCE_GAMEBLACKBOARD_H

@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
 
 class CBaseModelEntity;
+class CInfoOffscreenPanoramaTexture;
 
 class IInfoOffscreenPanoramaTexture : public virtual IPointEntity
 {
 public:
     virtual ~IInfoOffscreenPanoramaTexture() = default;
+    CInfoOffscreenPanoramaTexture* GetOriginal() { return reinterpret_cast<CInfoOffscreenPanoramaTexture*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;
@@ -77,12 +80,13 @@ public:
     virtual void TargetEntitiesUpdated() = 0;
     virtual int32_t& TargetChangeCount() = 0;
     virtual void TargetChangeCountUpdated() = 0;
-    virtual CUtlVector<CUtlSymbolLarge>& CSSClasses() = 0;
-    virtual void CSSClassesUpdated() = 0;
+    virtual CUtlVector<CUtlSymbolLarge>& SSClasses() = 0;
+    virtual void SSClassesUpdated() = 0;
     virtual CUtlSymbolLarge& TargetsName() = 0;
     virtual void TargetsNameUpdated() = 0;
     virtual CUtlVector<CHandle<CBaseModelEntity>>& AdditionalTargetEntities() = 0;
     virtual void AdditionalTargetEntitiesUpdated() = 0;
+    static IInfoOffscreenPanoramaTexture* FromOriginal(CInfoOffscreenPanoramaTexture* p);
 };
 
 #endif // _INCLUDE_IINFOOFFSCREENPANORAMATEXTURE_H

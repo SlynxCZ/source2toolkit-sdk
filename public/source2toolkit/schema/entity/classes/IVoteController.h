@@ -50,17 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
 
 class CBaseIssue;
+class CVoteController;
 class CountdownTimer;
 
 class IVoteController : public virtual IBaseEntity
 {
 public:
     virtual ~IVoteController() = default;
+    CVoteController* GetOriginal() { return reinterpret_cast<CVoteController*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& ActiveIssueIndex() = 0;
     virtual void ActiveIssueIndexUpdated() = 0;
@@ -71,11 +74,11 @@ public:
     virtual void PotentialVotesUpdated() = 0;
     virtual bool& IsYesNoVote() = 0;
     virtual void IsYesNoVoteUpdated() = 0;
-    virtual CountdownTimer& AcceptingVotesTimer() = 0;
+    virtual ::CountdownTimer& AcceptingVotesTimer() = 0;
     virtual void AcceptingVotesTimerUpdated() = 0;
-    virtual CountdownTimer& ExecuteCommandTimer() = 0;
+    virtual ::CountdownTimer& ExecuteCommandTimer() = 0;
     virtual void ExecuteCommandTimerUpdated() = 0;
-    virtual CountdownTimer& ResetVoteTimer() = 0;
+    virtual ::CountdownTimer& ResetVoteTimer() = 0;
     virtual void ResetVoteTimerUpdated() = 0;
     virtual int32_t* VotesCast() = 0;
     virtual int32_t& PlayerHoldingVote() = 0;
@@ -88,6 +91,7 @@ public:
     virtual void PotentialIssuesUpdated() = 0;
     virtual CUtlVector<char*>& VoteOptions() = 0;
     virtual void VoteOptionsUpdated() = 0;
+    static IVoteController* FromOriginal(CVoteController* p);
 };
 
 #endif // _INCLUDE_IVOTECONTROLLER_H

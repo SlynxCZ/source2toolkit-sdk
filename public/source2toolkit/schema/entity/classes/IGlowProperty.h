@@ -50,12 +50,16 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CGlowProperty;
 
 class IGlowProperty
 {
 public:
     virtual ~IGlowProperty() = default;
+    CGlowProperty* GetOriginal() { return reinterpret_cast<CGlowProperty*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& GlowColor() = 0;
     virtual void GlowColorUpdated() = 0;
@@ -79,6 +83,7 @@ public:
     virtual void EligibleForScreenHighlightUpdated() = 0;
     virtual bool& Glowing() = 0;
     virtual void GlowingUpdated() = 0;
+    static IGlowProperty* FromOriginal(CGlowProperty* p);
 };
 
 #endif // _INCLUDE_IGLOWPROPERTY_H

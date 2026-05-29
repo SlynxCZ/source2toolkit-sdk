@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IRagdollProp.h"
+
+class CRagdollPropAttached;
 
 class IRagdollPropAttached : public virtual IRagdollProp
 {
 public:
     virtual ~IRagdollPropAttached() = default;
+    CRagdollPropAttached* GetOriginal() { return reinterpret_cast<CRagdollPropAttached*>(IEntityInstance::GetOriginal()); }
 
     virtual uint32_t& BoneIndexAttached() = 0;
     virtual void BoneIndexAttachedUpdated() = 0;
@@ -71,6 +75,7 @@ public:
     virtual void ShouldDetachUpdated() = 0;
     virtual bool& ShouldDeleteAttachedActivationRecord() = 0;
     virtual void ShouldDeleteAttachedActivationRecordUpdated() = 0;
+    static IRagdollPropAttached* FromOriginal(CRagdollPropAttached* p);
 };
 
 #endif // _INCLUDE_IRAGDOLLPROPATTACHED_H

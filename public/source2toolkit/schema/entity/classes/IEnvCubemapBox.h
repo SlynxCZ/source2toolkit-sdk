@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IEnvCubemap.h"
+
+class CEnvCubemapBox;
 
 class IEnvCubemapBox : public virtual IEnvCubemap
 {
 public:
     virtual ~IEnvCubemapBox() = default;
+    CEnvCubemapBox* GetOriginal() { return reinterpret_cast<CEnvCubemapBox*>(IEntityInstance::GetOriginal()); }
 
+    static IEnvCubemapBox* FromOriginal(CEnvCubemapBox* p);
 };
 
 #endif // _INCLUDE_IENVCUBEMAPBOX_H

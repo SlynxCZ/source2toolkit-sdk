@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBasePlayerController.h"
@@ -58,17 +59,24 @@
 #include "../enums/QuestProgress__Reason.h"
 
 class CCSObserverPawn;
+class CCSPlayerController;
 class CCSPlayerController_ActionTrackingServices;
 class CCSPlayerController_DamageServices;
 class CCSPlayerController_InGameMoneyServices;
 class CCSPlayerController_InventoryServices;
 class CCSPlayerPawn;
+class ICSObserverPawn;
+class ICSPlayerController;
+class ICSPlayerPawn;
+class IGameEvent;
+class IP;
 class IntervalTimer;
 
 class ICSPlayerController : public virtual IBasePlayerController
 {
 public:
     virtual ~ICSPlayerController() = default;
+    CCSPlayerController* GetOriginal() { return reinterpret_cast<CCSPlayerController*>(IEntityInstance::GetOriginal()); }
 
     virtual CCSPlayerController_InGameMoneyServices*& InGameMoneyServices() = 0;
     virtual void InGameMoneyServicesUpdated() = 0;
@@ -138,7 +146,7 @@ public:
     virtual void ActiveQuestIdUpdated() = 0;
     virtual uint32_t& RtActiveMissionPeriod() = 0;
     virtual void RtActiveMissionPeriodUpdated() = 0;
-    virtual QuestProgress__Reason& QuestProgressReason() = 0;
+    virtual ::QuestProgress__Reason& QuestProgressReason() = 0;
     virtual void QuestProgressReasonUpdated() = 0;
     virtual uint32_t& PlayerTvControlFlags() = 0;
     virtual void PlayerTvControlFlagsUpdated() = 0;
@@ -227,7 +235,7 @@ public:
     virtual void UpdateCounterUpdated() = 0;
     virtual float& SmoothedPing() = 0;
     virtual void SmoothedPingUpdated() = 0;
-    virtual IntervalTimer& LastHeldVoteTimer() = 0;
+    virtual ::IntervalTimer& LastHeldVoteTimer() = 0;
     virtual void LastHeldVoteTimerUpdated() = 0;
     virtual bool& ShowHints() = 0;
     virtual void ShowHintsUpdated() = 0;
@@ -254,33 +262,76 @@ public:
     virtual bool& FireBulletsSeedSynchronized() = 0;
     virtual void FireBulletsSeedSynchronizedUpdated() = 0;
 
+    /// <summary>Print to console.</summary>
     virtual void PrintToConsole(const char* pszMessage) = 0;
+    /// <summary>Print to chat.</summary>
     virtual void PrintToChat(const char* pszMessage) = 0;
+    /// <summary>Print to center.</summary>
     virtual void PrintToCenter(const char* pszMessage) = 0;
+    /// <summary>Print alert.</summary>
     virtual void PrintToCenterAlert(const char* pszMessage) = 0;
+    /// <summary>Print to center in HTML.</summary>
     virtual void PrintToCenterHtml(const char* pszMessage, int iDuration = 5) = 0;
-    virtual void TakeDamage(CCSPlayerController* pAttacker, int iDamage, DamageTypes_t bitsDamageType) = 0;
+    /// <summary>Take damage from player</summary>
+    virtual void TakeDamage(ICSPlayerController* pAttacker, int iDamage, DamageTypes_t bitsDamageType) = 0;
+    /// <summary>Respawn player.</summary>
     virtual void Respawn() = 0;
+    /// <summary>Switch team without killing.</summary>
     virtual void SwitchTeam(int nTeam) = 0;
+    /// <summary>Change team like jointeam.</summary>
     virtual void ChangeTeam(int nTeam) = 0;
+    /// <summary>Is bot.</summary>
     virtual bool IsBot() = 0;
+    /// <summary>Disconnect player.</summary>
     virtual void Disconnect(ENetworkDisconnectionReason eReason) = 0;
+    /// <summary>Execute client command.</summary>
     virtual void ExecuteClientCommand(const char* pszCommand) = 0;
+    /// <summary>Execute command from server.</summary>
     virtual void ExecuteClientCommandFromServer(const char* pszCommand) = 0;
-    virtual CCSPlayerPawn* GetPawn() = 0;
-    virtual CCSPlayerPawn* GetPlayerPawn() = 0;
-    virtual CCSObserverPawn* GetObserverPawn() = 0;
+    /// <summary>Get pawn.</summary>
+    virtual ICSPlayerPawn* GetPawn() = 0;
+    /// <summary>Get player pawn.</summary>
+    virtual ICSPlayerPawn* GetPlayerPawn() = 0;
+    /// <summary>Get observer pawn.</summary>
+    virtual ICSObserverPawn* GetObserverPawn() = 0;
+    /// <summary>Get player index.</summary>
     virtual CEntityIndex GetPlayerIndex() = 0;
+    /// <summary>Get slot.</summary>
     virtual int GetSlot() = 0;
+    /// <summary>Get player slot.</summary>
     virtual CPlayerSlot GetPlayerSlot() = 0;
+    /// <summary>Get steamid.</summary>
     virtual int GetUserID() = 0;
+    /// <summary>Get player userid.</summary>
     virtual CPlayerUserId GetPlayerUserID() = 0;
+    /// <summary>Get steamid.</summary>
     virtual uint64 GetSteamID() = 0;
+    /// <summary>Get player steamid.</summary>
     virtual CSteamID GetPlayerSteamID() = 0;
+    /// <summary>Get player name.</summary>
     virtual const char* GetPlayerName() = 0;
+    /// <summary>Get IP address.</summary>
     virtual CUtlString GetIpAddress() = 0;
+    /// <summary>Replicate convar.</summary>
     virtual void ReplicateConVar(const char* pszConVar, const char* pszValue) = 0;
+    /// <summary>Fires gameEvent to client's legacy listener.</summary>
     virtual void FireEventToClient(IGameEvent* pEvent) = 0;
+
+    /// <summary>Get controller from pawn.</summary>
+    static ICSPlayerController* FromPawn(ICSPlayerPawn* pPawn);
+    /// <summary>Get controller from slot.</summary>
+    static ICSPlayerController* FromSlot(int iSlot);
+    /// <summary>Get controller from slot.</summary>
+    static ICSPlayerController* FromSlot(CPlayerSlot slot);
+    /// <summary>Get controller from user id.</summary>
+    static ICSPlayerController* FromUserId(int iUserId);
+    /// <summary>Get controller from user id.</summary>
+    static ICSPlayerController* FromUserId(CPlayerUserId userId);
+    /// <summary>Get controller from steam id.</summary>
+    static ICSPlayerController* FromSteamId(uint64 uSteamId);
+    /// <summary>Get controller from steam id.</summary>
+    static ICSPlayerController* FromSteamId(CSteamID steamId);
+    static ICSPlayerController* FromOriginal(CCSPlayerController* p);
 };
 
 #endif // _INCLUDE_ICSPLAYERCONTROLLER_H

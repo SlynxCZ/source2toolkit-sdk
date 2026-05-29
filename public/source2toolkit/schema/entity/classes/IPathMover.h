@@ -50,17 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPathWithDynamicNodes.h"
 
 class CFuncMover;
+class CPathMover;
 class CPathMoverEntitySpawner;
 
 class IPathMover : public virtual IPathWithDynamicNodes
 {
 public:
     virtual ~IPathMover() = default;
+    CPathMover* GetOriginal() { return reinterpret_cast<CPathMover*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<CHandle<CFuncMover>>& Movers() = 0;
     virtual void MoversUpdated() = 0;
@@ -68,6 +71,7 @@ public:
     virtual void MoverSpawnerUpdated() = 0;
     virtual CUtlSymbolLarge& MoverSpawnerName() = 0;
     virtual void MoverSpawnerNameUpdated() = 0;
+    static IPathMover* FromOriginal(CPathMover* p);
 };
 
 #endif // _INCLUDE_IPATHMOVER_H

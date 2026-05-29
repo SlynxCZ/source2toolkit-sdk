@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CTestPulseIO__FloatStringArgs_t;
 
 class ITestPulseIO__FloatStringArgs_t
 {
 public:
     virtual ~ITestPulseIO__FloatStringArgs_t() = default;
+    CTestPulseIO__FloatStringArgs_t* GetOriginal() { return reinterpret_cast<CTestPulseIO__FloatStringArgs_t*>(IEntityInstance::GetOriginal()); }
 
     virtual float& OutFloat() = 0;
     virtual void OutFloatUpdated() = 0;
     virtual CUtlSymbolLarge& StrOutString() = 0;
     virtual void StrOutStringUpdated() = 0;
+    static ITestPulseIO__FloatStringArgs_t* FromOriginal(CTestPulseIO__FloatStringArgs_t* p);
 };
 
 #endif // _INCLUDE_ITESTPULSEIO__FLOATSTRINGARGS_T_H

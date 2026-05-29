@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
 
 class CBaseEntity;
+class CFuncConveyor;
 
 class IFuncConveyor : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncConveyor() = default;
+    CFuncConveyor* GetOriginal() { return reinterpret_cast<CFuncConveyor*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& ConveyorModels() = 0;
     virtual void ConveyorModelsUpdated() = 0;
@@ -79,6 +82,7 @@ public:
     virtual void TransitionStartSpeedUpdated() = 0;
     virtual CUtlVector<CHandle<CBaseEntity>>& ConveyorModels() = 0;
     virtual void ConveyorModelsUpdated() = 0;
+    static IFuncConveyor* FromOriginal(CFuncConveyor* p);
 };
 
 #endif // _INCLUDE_IFUNCCONVEYOR_H

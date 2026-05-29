@@ -50,14 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CFiringModeFloat;
 
 class IFiringModeFloat
 {
 public:
     virtual ~IFiringModeFloat() = default;
+    CFiringModeFloat* GetOriginal() { return reinterpret_cast<CFiringModeFloat*>(IEntityInstance::GetOriginal()); }
 
     virtual float* Values() = 0;
+    static IFiringModeFloat* FromOriginal(CFiringModeFloat* p);
 };
 
 #endif // _INCLUDE_IFIRINGMODEFLOAT_H

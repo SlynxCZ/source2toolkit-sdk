@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CCSPlayerResource;
 
 class ICSPlayerResource : public virtual IBaseEntity
 {
 public:
     virtual ~ICSPlayerResource() = default;
+    CCSPlayerResource* GetOriginal() { return reinterpret_cast<CCSPlayerResource*>(IEntityInstance::GetOriginal()); }
 
     virtual bool* HostageAlive() = 0;
     virtual bool* IsHostageFollowingSomeone() = 0;
@@ -73,6 +77,7 @@ public:
     virtual void EndMatchNextMapAllVotedUpdated() = 0;
     virtual bool& FoundGoalPositions() = 0;
     virtual void FoundGoalPositionsUpdated() = 0;
+    static ICSPlayerResource* FromOriginal(CCSPlayerResource* p);
 };
 
 #endif // _INCLUDE_ICSPLAYERRESOURCE_H

@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IFuncTrackChange.h"
+
+class CFuncTrackAuto;
 
 class IFuncTrackAuto : public virtual IFuncTrackChange
 {
 public:
     virtual ~IFuncTrackAuto() = default;
+    CFuncTrackAuto* GetOriginal() { return reinterpret_cast<CFuncTrackAuto*>(IEntityInstance::GetOriginal()); }
 
+    static IFuncTrackAuto* FromOriginal(CFuncTrackAuto* p);
 };
 
 #endif // _INCLUDE_IFUNCTRACKAUTO_H

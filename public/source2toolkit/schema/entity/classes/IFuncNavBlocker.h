@@ -50,19 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
+
+class CFuncNavBlocker;
 
 class IFuncNavBlocker : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncNavBlocker() = default;
+    CFuncNavBlocker* GetOriginal() { return reinterpret_cast<CFuncNavBlocker*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;
     virtual int32_t& BlockedTeamNumber() = 0;
     virtual void BlockedTeamNumberUpdated() = 0;
+    static IFuncNavBlocker* FromOriginal(CFuncNavBlocker* p);
 };
 
 #endif // _INCLUDE_IFUNCNAVBLOCKER_H

@@ -50,17 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
 
 class CBasePlayerPawn;
 class CEnvSoundscapeTriggerable;
+class CTriggerSoundscape;
 
 class ITriggerSoundscape : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerSoundscape() = default;
+    CTriggerSoundscape* GetOriginal() { return reinterpret_cast<CTriggerSoundscape*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CEnvSoundscapeTriggerable>& Soundscape() = 0;
     virtual void SoundscapeUpdated() = 0;
@@ -68,6 +71,7 @@ public:
     virtual void SoundscapeNameUpdated() = 0;
     virtual CUtlVector<CHandle<CBasePlayerPawn>>& Spectators() = 0;
     virtual void SpectatorsUpdated() = 0;
+    static ITriggerSoundscape* FromOriginal(CTriggerSoundscape* p);
 };
 
 #endif // _INCLUDE_ITRIGGERSOUNDSCAPE_H

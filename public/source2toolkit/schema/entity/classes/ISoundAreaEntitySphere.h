@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ISoundAreaEntityBase.h"
+
+class CSoundAreaEntitySphere;
 
 class ISoundAreaEntitySphere : public virtual ISoundAreaEntityBase
 {
 public:
     virtual ~ISoundAreaEntitySphere() = default;
+    CSoundAreaEntitySphere* GetOriginal() { return reinterpret_cast<CSoundAreaEntitySphere*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Radius() = 0;
     virtual void RadiusUpdated() = 0;
+    static ISoundAreaEntitySphere* FromOriginal(CSoundAreaEntitySphere* p);
 };
 
 #endif // _INCLUDE_ISOUNDAREAENTITYSPHERE_H

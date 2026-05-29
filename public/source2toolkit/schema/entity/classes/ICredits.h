@@ -50,21 +50,26 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CCredits;
 
 class ICredits : public virtual IPointEntity
 {
 public:
     virtual ~ICredits() = default;
+    CCredits* GetOriginal() { return reinterpret_cast<CCredits*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnCreditsDone() = 0;
+    virtual ::CEntityIOOutput& OnCreditsDone() = 0;
     virtual void OnCreditsDoneUpdated() = 0;
     virtual bool& RolledOutroCredits() = 0;
     virtual void RolledOutroCreditsUpdated() = 0;
     virtual float& LogoLength() = 0;
     virtual void LogoLengthUpdated() = 0;
+    static ICredits* FromOriginal(CCredits* p);
 };
 
 #endif // _INCLUDE_ICREDITS_H

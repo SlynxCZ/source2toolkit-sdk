@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ISoundOpvarSetPointEntity.h"
+
+class CSoundOpvarSetAABBEntity;
 
 class ISoundOpvarSetAABBEntity : public virtual ISoundOpvarSetPointEntity
 {
 public:
     virtual ~ISoundOpvarSetAABBEntity() = default;
+    CSoundOpvarSetAABBEntity* GetOriginal() { return reinterpret_cast<CSoundOpvarSetAABBEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& DistanceInnerMins() = 0;
     virtual void DistanceInnerMinsUpdated() = 0;
@@ -77,6 +81,7 @@ public:
     virtual void OuterMinsUpdated() = 0;
     virtual Vector& OuterMaxs() = 0;
     virtual void OuterMaxsUpdated() = 0;
+    static ISoundOpvarSetAABBEntity* FromOriginal(CSoundOpvarSetAABBEntity* p);
 };
 
 #endif // _INCLUDE_ISOUNDOPVARSETAABBENTITY_H

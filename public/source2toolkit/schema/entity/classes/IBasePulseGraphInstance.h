@@ -50,13 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CBasePulseGraphInstance;
 
 class IBasePulseGraphInstance
 {
 public:
     virtual ~IBasePulseGraphInstance() = default;
+    CBasePulseGraphInstance* GetOriginal() { return reinterpret_cast<CBasePulseGraphInstance*>(IEntityInstance::GetOriginal()); }
 
+    static IBasePulseGraphInstance* FromOriginal(CBasePulseGraphInstance* p);
 };
 
 #endif // _INCLUDE_IBASEPULSEGRAPHINSTANCE_H

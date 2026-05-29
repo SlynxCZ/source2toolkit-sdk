@@ -50,12 +50,14 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IFuncPlatRot.h"
 
 #include "../enums/TRAIN_CODE.h"
 
+class CFuncTrackChange;
 class CFuncTrackTrain;
 class CPathTrack;
 
@@ -63,6 +65,7 @@ class IFuncTrackChange : public virtual IFuncPlatRot
 {
 public:
     virtual ~IFuncTrackChange() = default;
+    CFuncTrackChange* GetOriginal() { return reinterpret_cast<CFuncTrackChange*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CPathTrack>& TrackTop() = 0;
     virtual void TrackTopUpdated() = 0;
@@ -76,12 +79,13 @@ public:
     virtual void TrackBottomNameUpdated() = 0;
     virtual CUtlSymbolLarge& TrainName() = 0;
     virtual void TrainNameUpdated() = 0;
-    virtual TRAIN_CODE& Code() = 0;
+    virtual ::TRAIN_CODE& Code() = 0;
     virtual void CodeUpdated() = 0;
     virtual int32_t& TargetState() = 0;
     virtual void TargetStateUpdated() = 0;
     virtual int32_t& Use() = 0;
     virtual void UseUpdated() = 0;
+    static IFuncTrackChange* FromOriginal(CFuncTrackChange* p);
 };
 
 #endif // _INCLUDE_IFUNCTRACKCHANGE_H

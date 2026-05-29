@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ICSPlayerPawnBase.h"
+
+class CCSObserverPawn;
 
 class ICSObserverPawn : public virtual ICSPlayerPawnBase
 {
 public:
     virtual ~ICSObserverPawn() = default;
+    CCSObserverPawn* GetOriginal() { return reinterpret_cast<CCSObserverPawn*>(IEntityInstance::GetOriginal()); }
 
+    static ICSObserverPawn* FromOriginal(CCSObserverPawn* p);
 };
 
 #endif // _INCLUDE_ICSOBSERVERPAWN_H

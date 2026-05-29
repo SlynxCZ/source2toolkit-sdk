@@ -50,10 +50,12 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPhysConstraint.h"
 
+class CPhysHinge;
 class ConstraintSoundInfo;
 class constraint_hingeparams_t;
 
@@ -61,18 +63,19 @@ class IPhysHinge : public virtual IPhysConstraint
 {
 public:
     virtual ~IPhysHinge() = default;
+    CPhysHinge* GetOriginal() { return reinterpret_cast<CPhysHinge*>(IEntityInstance::GetOriginal()); }
 
-    virtual ConstraintSoundInfo& SoundInfo() = 0;
+    virtual ::ConstraintSoundInfo& SoundInfo() = 0;
     virtual void SoundInfoUpdated() = 0;
-    virtual CEntityIOOutput& NotifyMinLimitReached() = 0;
+    virtual ::CEntityIOOutput& NotifyMinLimitReached() = 0;
     virtual void NotifyMinLimitReachedUpdated() = 0;
-    virtual CEntityIOOutput& NotifyMaxLimitReached() = 0;
+    virtual ::CEntityIOOutput& NotifyMaxLimitReached() = 0;
     virtual void NotifyMaxLimitReachedUpdated() = 0;
     virtual bool& AtMinLimit() = 0;
     virtual void AtMinLimitUpdated() = 0;
     virtual bool& AtMaxLimit() = 0;
     virtual void AtMaxLimitUpdated() = 0;
-    virtual constraint_hingeparams_t& Hinge() = 0;
+    virtual ::constraint_hingeparams_t& Hinge() = 0;
     virtual void HingeUpdated() = 0;
     virtual float& HingeFriction() = 0;
     virtual void HingeFrictionUpdated() = 0;
@@ -96,10 +99,11 @@ public:
     virtual void AngleSpeedThresholdUpdated() = 0;
     virtual float& LimitsDebugVisRotation() = 0;
     virtual void LimitsDebugVisRotationUpdated() = 0;
-    virtual CEntityIOOutput& OnStartMoving() = 0;
+    virtual ::CEntityIOOutput& OnStartMoving() = 0;
     virtual void OnStartMovingUpdated() = 0;
-    virtual CEntityIOOutput& OnStopMoving() = 0;
+    virtual ::CEntityIOOutput& OnStopMoving() = 0;
     virtual void OnStopMovingUpdated() = 0;
+    static IPhysHinge* FromOriginal(CPhysHinge* p);
 };
 
 #endif // _INCLUDE_IPHYSHINGE_H

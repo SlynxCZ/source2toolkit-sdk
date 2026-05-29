@@ -50,16 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBreakableProp.h"
 
 #include "../enums/AnimLoopMode_t.h"
 
+class CDynamicProp;
+
 class IDynamicProp : public virtual IBreakableProp
 {
 public:
     virtual ~IDynamicProp() = default;
+    CDynamicProp* GetOriginal() { return reinterpret_cast<CDynamicProp*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& CreateNavObstacle() = 0;
     virtual void CreateNavObstacleUpdated() = 0;
@@ -69,19 +73,19 @@ public:
     virtual void UseHitboxesForRenderBoxUpdated() = 0;
     virtual bool& UseAnimGraph() = 0;
     virtual void UseAnimGraphUpdated() = 0;
-    virtual CEntityIOOutput& OutputAnimBegun() = 0;
+    virtual ::CEntityIOOutput& OutputAnimBegun() = 0;
     virtual void OutputAnimBegunUpdated() = 0;
-    virtual CEntityIOOutput& OutputAnimOver() = 0;
+    virtual ::CEntityIOOutput& OutputAnimOver() = 0;
     virtual void OutputAnimOverUpdated() = 0;
-    virtual CEntityIOOutput& OutputAnimLoopCycleOver() = 0;
+    virtual ::CEntityIOOutput& OutputAnimLoopCycleOver() = 0;
     virtual void OutputAnimLoopCycleOverUpdated() = 0;
-    virtual CEntityIOOutput& OnAnimReachedStart() = 0;
+    virtual ::CEntityIOOutput& OnAnimReachedStart() = 0;
     virtual void OnAnimReachedStartUpdated() = 0;
-    virtual CEntityIOOutput& OnAnimReachedEnd() = 0;
+    virtual ::CEntityIOOutput& OnAnimReachedEnd() = 0;
     virtual void OnAnimReachedEndUpdated() = 0;
     virtual CUtlSymbolLarge& IdleAnim() = 0;
     virtual void IdleAnimUpdated() = 0;
-    virtual AnimLoopMode_t& IdleAnimLoopMode() = 0;
+    virtual ::AnimLoopMode_t& IdleAnimLoopMode() = 0;
     virtual void IdleAnimLoopModeUpdated() = 0;
     virtual bool& RandomizeCycle() = 0;
     virtual void RandomizeCycleUpdated() = 0;
@@ -105,6 +109,7 @@ public:
     virtual void GlowColorUpdated() = 0;
     virtual int32_t& GlowTeam() = 0;
     virtual void GlowTeamUpdated() = 0;
+    static IDynamicProp* FromOriginal(CDynamicProp* p);
 };
 
 #endif // _INCLUDE_IDYNAMICPROP_H

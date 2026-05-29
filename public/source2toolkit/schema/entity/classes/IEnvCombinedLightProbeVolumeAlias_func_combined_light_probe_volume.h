@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IEnvCombinedLightProbeVolume.h"
+
+class CEnvCombinedLightProbeVolumeAlias_func_combined_light_probe_volume;
 
 class IEnvCombinedLightProbeVolumeAlias_func_combined_light_probe_volume : public virtual IEnvCombinedLightProbeVolume
 {
 public:
     virtual ~IEnvCombinedLightProbeVolumeAlias_func_combined_light_probe_volume() = default;
+    CEnvCombinedLightProbeVolumeAlias_func_combined_light_probe_volume* GetOriginal() { return reinterpret_cast<CEnvCombinedLightProbeVolumeAlias_func_combined_light_probe_volume*>(IEntityInstance::GetOriginal()); }
 
+    static IEnvCombinedLightProbeVolumeAlias_func_combined_light_probe_volume* FromOriginal(CEnvCombinedLightProbeVolumeAlias_func_combined_light_probe_volume* p);
 };
 
 #endif // _INCLUDE_IENVCOMBINEDLIGHTPROBEVOLUMEALIAS_FUNC_COMBINED_LIGHT_PROBE_VOLUME_H

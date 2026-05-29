@@ -50,17 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
 
 class CFish;
+class CFishPool;
 class CountdownTimer;
 
 class IFishPool : public virtual IBaseEntity
 {
 public:
     virtual ~IFishPool() = default;
+    CFishPool* GetOriginal() { return reinterpret_cast<CFishPool*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& FishCount() = 0;
     virtual void FishCountUpdated() = 0;
@@ -74,8 +77,9 @@ public:
     virtual void IsDormantUpdated() = 0;
     virtual CUtlVector<CHandle<CFish>>& Fishes() = 0;
     virtual void FishesUpdated() = 0;
-    virtual CountdownTimer& VisTimer() = 0;
+    virtual ::CountdownTimer& VisTimer() = 0;
     virtual void VisTimerUpdated() = 0;
+    static IFishPool* FromOriginal(CFishPool* p);
 };
 
 #endif // _INCLUDE_IFISHPOOL_H

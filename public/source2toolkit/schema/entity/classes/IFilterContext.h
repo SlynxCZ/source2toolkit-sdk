@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseFilter.h"
+
+class CFilterContext;
 
 class IFilterContext : public virtual IBaseFilter
 {
 public:
     virtual ~IFilterContext() = default;
+    CFilterContext* GetOriginal() { return reinterpret_cast<CFilterContext*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& FilterContext() = 0;
     virtual void FilterContextUpdated() = 0;
+    static IFilterContext* FromOriginal(CFilterContext* p);
 };
 
 #endif // _INCLUDE_IFILTERCONTEXT_H

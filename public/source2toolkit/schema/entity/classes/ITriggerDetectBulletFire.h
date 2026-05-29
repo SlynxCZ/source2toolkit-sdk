@@ -50,19 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
+
+class CTriggerDetectBulletFire;
 
 class ITriggerDetectBulletFire : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerDetectBulletFire() = default;
+    CTriggerDetectBulletFire* GetOriginal() { return reinterpret_cast<CTriggerDetectBulletFire*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& PlayerFireOnly() = 0;
     virtual void PlayerFireOnlyUpdated() = 0;
-    virtual CEntityIOOutput& OnDetectedBulletFire() = 0;
+    virtual ::CEntityIOOutput& OnDetectedBulletFire() = 0;
     virtual void OnDetectedBulletFireUpdated() = 0;
+    static ITriggerDetectBulletFire* FromOriginal(CTriggerDetectBulletFire* p);
 };
 
 #endif // _INCLUDE_ITRIGGERDETECTBULLETFIRE_H

@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CCSPointScriptEntity;
 
 class ICSPointScriptEntity : public virtual IBaseEntity
 {
 public:
     virtual ~ICSPointScriptEntity() = default;
+    CCSPointScriptEntity* GetOriginal() { return reinterpret_cast<CCSPointScriptEntity*>(IEntityInstance::GetOriginal()); }
 
+    static ICSPointScriptEntity* FromOriginal(CCSPointScriptEntity* p);
 };
 
 #endif // _INCLUDE_ICSPOINTSCRIPTENTITY_H

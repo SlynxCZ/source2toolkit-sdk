@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
+
+class CTriggerTeleport;
 
 class ITriggerTeleport : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerTeleport() = default;
+    CTriggerTeleport* GetOriginal() { return reinterpret_cast<CTriggerTeleport*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Landmark() = 0;
     virtual void LandmarkUpdated() = 0;
@@ -67,6 +71,7 @@ public:
     virtual void MirrorPlayerUpdated() = 0;
     virtual bool& CheckDestIfClearForPlayer() = 0;
     virtual void CheckDestIfClearForPlayerUpdated() = 0;
+    static ITriggerTeleport* FromOriginal(CTriggerTeleport* p);
 };
 
 #endif // _INCLUDE_ITRIGGERTELEPORT_H

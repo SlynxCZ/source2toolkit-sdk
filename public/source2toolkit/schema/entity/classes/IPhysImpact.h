@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CPhysImpact;
 
 class IPhysImpact : public virtual IPointEntity
 {
 public:
     virtual ~IPhysImpact() = default;
+    CPhysImpact* GetOriginal() { return reinterpret_cast<CPhysImpact*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Damage() = 0;
     virtual void DamageUpdated() = 0;
@@ -65,6 +69,7 @@ public:
     virtual void DistanceUpdated() = 0;
     virtual CUtlSymbolLarge& DirectionEntityName() = 0;
     virtual void DirectionEntityNameUpdated() = 0;
+    static IPhysImpact* FromOriginal(CPhysImpact* p);
 };
 
 #endif // _INCLUDE_IPHYSIMPACT_H

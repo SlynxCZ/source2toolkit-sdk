@@ -50,17 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
 
 class CBaseEntity;
+class CKeepUpright;
 class IPhysicsMotionController;
 
 class IKeepUpright : public virtual IPointEntity
 {
 public:
     virtual ~IKeepUpright() = default;
+    CKeepUpright* GetOriginal() { return reinterpret_cast<CKeepUpright*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& WorldGoalAxis() = 0;
     virtual void WorldGoalAxisUpdated() = 0;
@@ -78,6 +81,7 @@ public:
     virtual void ActiveUpdated() = 0;
     virtual bool& DampAllRotation() = 0;
     virtual void DampAllRotationUpdated() = 0;
+    static IKeepUpright* FromOriginal(CKeepUpright* p);
 };
 
 #endif // _INCLUDE_IKEEPUPRIGHT_H

@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
+
+class CFuncIllusionary;
 
 class IFuncIllusionary : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncIllusionary() = default;
+    CFuncIllusionary* GetOriginal() { return reinterpret_cast<CFuncIllusionary*>(IEntityInstance::GetOriginal()); }
 
+    static IFuncIllusionary* FromOriginal(CFuncIllusionary* p);
 };
 
 #endif // _INCLUDE_IFUNCILLUSIONARY_H

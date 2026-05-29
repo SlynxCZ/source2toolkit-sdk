@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayer_MovementServices.h"
+
+class CPlayer_MovementServices_Humanoid;
 
 class IPlayer_MovementServices_Humanoid : public virtual IPlayer_MovementServices
 {
 public:
     virtual ~IPlayer_MovementServices_Humanoid() = default;
+    CPlayer_MovementServices_Humanoid* GetOriginal() { return reinterpret_cast<CPlayer_MovementServices_Humanoid*>(IEntityInstance::GetOriginal()); }
 
     virtual float& StepSoundTime() = 0;
     virtual void StepSoundTimeUpdated() = 0;
@@ -72,6 +76,7 @@ public:
     virtual void StepsideUpdated() = 0;
     virtual Vector& SmoothedVelocity() = 0;
     virtual void SmoothedVelocityUpdated() = 0;
+    static IPlayer_MovementServices_Humanoid* FromOriginal(CPlayer_MovementServices_Humanoid* p);
 };
 
 #endif // _INCLUDE_IPLAYER_MOVEMENTSERVICES_HUMANOID_H

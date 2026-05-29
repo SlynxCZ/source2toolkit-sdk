@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ICSGO_TeamSelectCharacterPosition.h"
+
+class CCSGO_TeamSelectCounterTerroristPosition;
 
 class ICSGO_TeamSelectCounterTerroristPosition : public virtual ICSGO_TeamSelectCharacterPosition
 {
 public:
     virtual ~ICSGO_TeamSelectCounterTerroristPosition() = default;
+    CCSGO_TeamSelectCounterTerroristPosition* GetOriginal() { return reinterpret_cast<CCSGO_TeamSelectCounterTerroristPosition*>(IEntityInstance::GetOriginal()); }
 
+    static ICSGO_TeamSelectCounterTerroristPosition* FromOriginal(CCSGO_TeamSelectCounterTerroristPosition* p);
 };
 
 #endif // _INCLUDE_ICSGO_TEAMSELECTCOUNTERTERRORISTPOSITION_H

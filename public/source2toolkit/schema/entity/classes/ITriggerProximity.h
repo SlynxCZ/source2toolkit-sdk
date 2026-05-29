@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
 
 class CBaseEntity;
+class CTriggerProximity;
 
 class ITriggerProximity : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerProximity() = default;
+    CTriggerProximity* GetOriginal() { return reinterpret_cast<CTriggerProximity*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& MeasureTarget() = 0;
     virtual void MeasureTargetUpdated() = 0;
@@ -69,6 +72,7 @@ public:
     virtual void RadiusUpdated() = 0;
     virtual int32_t& Touchers() = 0;
     virtual void TouchersUpdated() = 0;
+    static ITriggerProximity* FromOriginal(CTriggerProximity* p);
 };
 
 #endif // _INCLUDE_ITRIGGERPROXIMITY_H

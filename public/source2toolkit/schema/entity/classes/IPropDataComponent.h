@@ -50,12 +50,16 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CPropDataComponent;
 
 class IPropDataComponent
 {
 public:
     virtual ~IPropDataComponent() = default;
+    CPropDataComponent* GetOriginal() { return reinterpret_cast<CPropDataComponent*>(IEntityInstance::GetOriginal()); }
 
     virtual float& DmgModBullet() = 0;
     virtual void DmgModBulletUpdated() = 0;
@@ -77,6 +81,7 @@ public:
     virtual void DisableTakePhysicsDamageSpawnFlagUpdated() = 0;
     virtual int32_t& MotionDisabledSpawnFlag() = 0;
     virtual void MotionDisabledSpawnFlagUpdated() = 0;
+    static IPropDataComponent* FromOriginal(CPropDataComponent* p);
 };
 
 #endif // _INCLUDE_IPROPDATACOMPONENT_H

@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CPlayerVisibility;
 
 class IPlayerVisibility : public virtual IBaseEntity
 {
 public:
     virtual ~IPlayerVisibility() = default;
+    CPlayerVisibility* GetOriginal() { return reinterpret_cast<CPlayerVisibility*>(IEntityInstance::GetOriginal()); }
 
     virtual float& VisibilityStrength() = 0;
     virtual void VisibilityStrengthUpdated() = 0;
@@ -71,6 +75,7 @@ public:
     virtual void StartDisabledUpdated() = 0;
     virtual bool& IsEnabled() = 0;
     virtual void IsEnabledUpdated() = 0;
+    static IPlayerVisibility* FromOriginal(CPlayerVisibility* p);
 };
 
 #endif // _INCLUDE_IPLAYERVISIBILITY_H

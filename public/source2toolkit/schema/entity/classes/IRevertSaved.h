@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IModelPointEntity.h"
+
+class CRevertSaved;
 
 class IRevertSaved : public virtual IModelPointEntity
 {
 public:
     virtual ~IRevertSaved() = default;
+    CRevertSaved* GetOriginal() { return reinterpret_cast<CRevertSaved*>(IEntityInstance::GetOriginal()); }
 
     virtual float& LoadTime() = 0;
     virtual void LoadTimeUpdated() = 0;
@@ -65,6 +69,7 @@ public:
     virtual void DurationUpdated() = 0;
     virtual float& HoldTime() = 0;
     virtual void HoldTimeUpdated() = 0;
+    static IRevertSaved* FromOriginal(CRevertSaved* p);
 };
 
 #endif // _INCLUDE_IREVERTSAVED_H

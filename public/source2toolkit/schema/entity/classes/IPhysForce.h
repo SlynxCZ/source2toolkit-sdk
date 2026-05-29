@@ -50,18 +50,21 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
 
 class CBaseEntity;
 class CConstantForceController;
+class CPhysForce;
 class IPhysicsMotionController;
 
 class IPhysForce : public virtual IPointEntity
 {
 public:
     virtual ~IPhysForce() = default;
+    CPhysForce* GetOriginal() { return reinterpret_cast<CPhysForce*>(IEntityInstance::GetOriginal()); }
 
     virtual IPhysicsMotionController*& Controller() = 0;
     virtual void ControllerUpdated() = 0;
@@ -75,8 +78,9 @@ public:
     virtual void AttachedObjectUpdated() = 0;
     virtual bool& WasRestored() = 0;
     virtual void WasRestoredUpdated() = 0;
-    virtual CConstantForceController& Integrator() = 0;
+    virtual ::CConstantForceController& Integrator() = 0;
     virtual void IntegratorUpdated() = 0;
+    static IPhysForce* FromOriginal(CPhysForce* p);
 };
 
 #endif // _INCLUDE_IPHYSFORCE_H

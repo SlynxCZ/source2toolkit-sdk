@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
@@ -57,10 +58,13 @@
 #include "../enums/PointTemplateClientOnlyEntityBehavior_t.h"
 #include "../enums/PointTemplateOwnerSpawnGroupType_t.h"
 
+class CPointTemplate;
+
 class IPointTemplate : public virtual ILogicalEntity
 {
 public:
     virtual ~IPointTemplate() = default;
+    CPointTemplate* GetOriginal() { return reinterpret_cast<CPointTemplate*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& WorldName() = 0;
     virtual void WorldNameUpdated() = 0;
@@ -72,14 +76,15 @@ public:
     virtual void TimeoutIntervalUpdated() = 0;
     virtual bool& AsynchronouslySpawnEntities() = 0;
     virtual void AsynchronouslySpawnEntitiesUpdated() = 0;
-    virtual PointTemplateClientOnlyEntityBehavior_t& ClientOnlyEntityBehavior() = 0;
+    virtual ::PointTemplateClientOnlyEntityBehavior_t& ClientOnlyEntityBehavior() = 0;
     virtual void ClientOnlyEntityBehaviorUpdated() = 0;
-    virtual PointTemplateOwnerSpawnGroupType_t& OwnerSpawnGroupType() = 0;
+    virtual ::PointTemplateOwnerSpawnGroupType_t& OwnerSpawnGroupType() = 0;
     virtual void OwnerSpawnGroupTypeUpdated() = 0;
     virtual CUtlVector<uint32_t>& CreatedSpawnGroupHandles() = 0;
     virtual void CreatedSpawnGroupHandlesUpdated() = 0;
     virtual CUtlVector<CEntityHandle>& SpawnedEntityHandles() = 0;
     virtual void SpawnedEntityHandlesUpdated() = 0;
+    static IPointTemplate* FromOriginal(CPointTemplate* p);
 };
 
 #endif // _INCLUDE_IPOINTTEMPLATE_H

@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ISoundOpvarSetPointEntity.h"
+
+class CSoundOpvarSetPathCornerEntity;
 
 class ISoundOpvarSetPathCornerEntity : public virtual ISoundOpvarSetPointEntity
 {
 public:
     virtual ~ISoundOpvarSetPathCornerEntity() = default;
+    CSoundOpvarSetPathCornerEntity* GetOriginal() { return reinterpret_cast<CSoundOpvarSetPathCornerEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& UseParentedPath() = 0;
     virtual void UseParentedPathUpdated() = 0;
@@ -67,6 +71,7 @@ public:
     virtual void DistMaxSqrUpdated() = 0;
     virtual CUtlSymbolLarge& PathCornerEntityName() = 0;
     virtual void PathCornerEntityNameUpdated() = 0;
+    static ISoundOpvarSetPathCornerEntity* FromOriginal(CSoundOpvarSetPathCornerEntity* p);
 };
 
 #endif // _INCLUDE_ISOUNDOPVARSETPATHCORNERENTITY_H

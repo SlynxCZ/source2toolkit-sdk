@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
 
 class CBaseFilter;
+class CPointPush;
 
 class IPointPush : public virtual IPointEntity
 {
 public:
     virtual ~IPointPush() = default;
+    CPointPush* GetOriginal() { return reinterpret_cast<CPointPush*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Enabled() = 0;
     virtual void EnabledUpdated() = 0;
@@ -75,6 +78,7 @@ public:
     virtual void FilterNameUpdated() = 0;
     virtual CHandle<CBaseFilter>& Filter() = 0;
     virtual void FilterUpdated() = 0;
+    static IPointPush* FromOriginal(CPointPush* p);
 };
 
 #endif // _INCLUDE_IPOINTPUSH_H

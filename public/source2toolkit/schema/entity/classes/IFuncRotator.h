@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
@@ -59,6 +60,7 @@
 
 class CBaseEntity;
 class CFuncMover;
+class CFuncRotator;
 class RotatorHistoryEntry_t;
 class RotatorQueueEntry_t;
 
@@ -66,6 +68,7 @@ class IFuncRotator : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncRotator() = default;
+    CFuncRotator* GetOriginal() { return reinterpret_cast<CFuncRotator*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& RotatorTarget() = 0;
     virtual void RotatorTargetUpdated() = 0;
@@ -93,33 +96,33 @@ public:
     virtual void LSInitUpdated() = 0;
     virtual Quaternion& LSOrientation() = 0;
     virtual void LSOrientationUpdated() = 0;
-    virtual CEntityIOOutput& OnRotationStarted() = 0;
+    virtual ::CEntityIOOutput& OnRotationStarted() = 0;
     virtual void OnRotationStartedUpdated() = 0;
-    virtual CEntityIOOutput& OnRotationCompleted() = 0;
+    virtual ::CEntityIOOutput& OnRotationCompleted() = 0;
     virtual void OnRotationCompletedUpdated() = 0;
-    virtual CEntityIOOutput& OnOscillate() = 0;
+    virtual ::CEntityIOOutput& OnOscillate() = 0;
     virtual void OnOscillateUpdated() = 0;
-    virtual CEntityIOOutput& OnOscillateStartArrive() = 0;
+    virtual ::CEntityIOOutput& OnOscillateStartArrive() = 0;
     virtual void OnOscillateStartArriveUpdated() = 0;
-    virtual CEntityIOOutput& OnOscillateStartDepart() = 0;
+    virtual ::CEntityIOOutput& OnOscillateStartDepart() = 0;
     virtual void OnOscillateStartDepartUpdated() = 0;
-    virtual CEntityIOOutput& OnOscillateEndArrive() = 0;
+    virtual ::CEntityIOOutput& OnOscillateEndArrive() = 0;
     virtual void OnOscillateEndArriveUpdated() = 0;
-    virtual CEntityIOOutput& OnOscillateEndDepart() = 0;
+    virtual ::CEntityIOOutput& OnOscillateEndDepart() = 0;
     virtual void OnOscillateEndDepartUpdated() = 0;
     virtual bool& OscillateDepart() = 0;
     virtual void OscillateDepartUpdated() = 0;
     virtual int32_t& OscillateCount() = 0;
     virtual void OscillateCountUpdated() = 0;
-    virtual CFuncRotator__Rotate_t& RotateType() = 0;
+    virtual ::CFuncRotator__Rotate_t& RotateType() = 0;
     virtual void RotateTypeUpdated() = 0;
-    virtual CFuncRotator__Rotate_t& PrevRotateType() = 0;
+    virtual ::CFuncRotator__Rotate_t& PrevRotateType() = 0;
     virtual void PrevRotateTypeUpdated() = 0;
     virtual bool& HasTargetOverride() = 0;
     virtual void HasTargetOverrideUpdated() = 0;
     virtual Quaternion& OrientationOverride() = 0;
     virtual void OrientationOverrideUpdated() = 0;
-    virtual RotatorTargetSpace_t& SpaceOverride() = 0;
+    virtual ::RotatorTargetSpace_t& SpaceOverride() = 0;
     virtual void SpaceOverrideUpdated() = 0;
     virtual QAngle& AngularVelocity() = 0;
     virtual void AngularVelocityUpdated() = 0;
@@ -137,7 +140,7 @@ public:
     virtual void RotatorQueueUpdated() = 0;
     virtual CUtlVector<RotatorHistoryEntry_t>& RotatorQueueHistory() = 0;
     virtual void RotatorQueueHistoryUpdated() = 0;
-    virtual SolidType_t& SolidType() = 0;
+    virtual ::SolidType_t& SolidType() = 0;
     virtual void SolidTypeUpdated() = 0;
     virtual CHandle<CFuncMover>& SpeedFromMover() = 0;
     virtual void SpeedFromMoverUpdated() = 0;
@@ -149,6 +152,7 @@ public:
     virtual void MinYawRotationUpdated() = 0;
     virtual float& MaxYawRotation() = 0;
     virtual void MaxYawRotationUpdated() = 0;
+    static IFuncRotator* FromOriginal(CFuncRotator* p);
 };
 
 #endif // _INCLUDE_IFUNCROTATOR_H

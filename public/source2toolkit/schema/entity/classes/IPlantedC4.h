@@ -50,18 +50,21 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseAnimGraph.h"
 
 class CAttributeContainer;
 class CCSPlayerPawn;
+class CPlantedC4;
 class EntitySpottedState_t;
 
 class IPlantedC4 : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IPlantedC4() = default;
+    CPlantedC4* GetOriginal() { return reinterpret_cast<CPlantedC4*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& BombTicking() = 0;
     virtual void BombTickingUpdated() = 0;
@@ -73,17 +76,17 @@ public:
     virtual void SourceSoundscapeHashUpdated() = 0;
     virtual bool& AbortDetonationBecauseWorldIsFrozen() = 0;
     virtual void AbortDetonationBecauseWorldIsFrozenUpdated() = 0;
-    virtual CAttributeContainer& AttributeManager() = 0;
+    virtual ::CAttributeContainer& AttributeManager() = 0;
     virtual void AttributeManagerUpdated() = 0;
-    virtual CEntityIOOutput& OnBombDefused() = 0;
+    virtual ::CEntityIOOutput& OnBombDefused() = 0;
     virtual void OnBombDefusedUpdated() = 0;
-    virtual CEntityIOOutput& OnBombBeginDefuse() = 0;
+    virtual ::CEntityIOOutput& OnBombBeginDefuse() = 0;
     virtual void OnBombBeginDefuseUpdated() = 0;
-    virtual CEntityIOOutput& OnBombDefuseAborted() = 0;
+    virtual ::CEntityIOOutput& OnBombDefuseAborted() = 0;
     virtual void OnBombDefuseAbortedUpdated() = 0;
     virtual bool& CannotBeDefused() = 0;
     virtual void CannotBeDefusedUpdated() = 0;
-    virtual EntitySpottedState_t& EntitySpottedState() = 0;
+    virtual ::EntitySpottedState_t& EntitySpottedState() = 0;
     virtual void EntitySpottedStateUpdated() = 0;
     virtual int32_t& SpotRules() = 0;
     virtual void SpotRulesUpdated() = 0;
@@ -116,6 +119,7 @@ public:
     virtual void CatchUpToPlayerEyeUpdated() = 0;
     virtual float& LastSpinDetectionTime() = 0;
     virtual void LastSpinDetectionTimeUpdated() = 0;
+    static IPlantedC4* FromOriginal(CPlantedC4* p);
 };
 
 #endif // _INCLUDE_IPLANTEDC4_H

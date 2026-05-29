@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 class CEntityInstance*;
+class CGameRules;
 
 class IGameRules
 {
 public:
     virtual ~IGameRules() = default;
+    CGameRules* GetOriginal() { return reinterpret_cast<CGameRules*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityInstance*& __m_pChainEntity() = 0;
+    virtual ::CEntityInstance*& __m_pChainEntity() = 0;
     virtual void __m_pChainEntityUpdated() = 0;
     virtual char* QuestName() = 0;
     virtual int32_t& QuestPhase() = 0;
@@ -74,6 +77,7 @@ public:
     virtual void PauseStartTickUpdated() = 0;
     virtual bool& GamePaused() = 0;
     virtual void GamePausedUpdated() = 0;
+    static IGameRules* FromOriginal(CGameRules* p);
 };
 
 #endif // _INCLUDE_IGAMERULES_H

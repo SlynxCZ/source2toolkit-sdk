@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "../enums/CInfoChoreoLocatorShapeType_t.h"
+
+class CInfoChoreoAnchorPosition;
 
 class IInfoChoreoAnchorPosition
 {
 public:
     virtual ~IInfoChoreoAnchorPosition() = default;
+    CInfoChoreoAnchorPosition* GetOriginal() { return reinterpret_cast<CInfoChoreoAnchorPosition*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& Origin() = 0;
     virtual void OriginUpdated() = 0;
@@ -69,8 +73,9 @@ public:
     virtual void ExtentsMaxUpdated() = 0;
     virtual float& Radius() = 0;
     virtual void RadiusUpdated() = 0;
-    virtual CInfoChoreoLocatorShapeType_t& ShapeType() = 0;
+    virtual ::CInfoChoreoLocatorShapeType_t& ShapeType() = 0;
     virtual void ShapeTypeUpdated() = 0;
+    static IInfoChoreoAnchorPosition* FromOriginal(CInfoChoreoAnchorPosition* p);
 };
 
 #endif // _INCLUDE_IINFOCHOREOANCHORPOSITION_H

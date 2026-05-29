@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CSoundEventEntity;
 
 class ISoundEventEntity : public virtual IBaseEntity
 {
 public:
     virtual ~ISoundEventEntity() = default;
+    CSoundEventEntity* GetOriginal() { return reinterpret_cast<CSoundEventEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& StartOnSpawn() = 0;
     virtual void StartOnSpawnUpdated() = 0;
@@ -75,7 +79,7 @@ public:
     virtual void SourceEntityNameUpdated() = 0;
     virtual CUtlSymbolLarge& AttachmentName() = 0;
     virtual void AttachmentNameUpdated() = 0;
-    virtual CEntityIOOutput& OnSoundFinished() = 0;
+    virtual ::CEntityIOOutput& OnSoundFinished() = 0;
     virtual void OnSoundFinishedUpdated() = 0;
     virtual float& ClientCullRadius() = 0;
     virtual void ClientCullRadiusUpdated() = 0;
@@ -85,6 +89,7 @@ public:
     virtual void SourceUpdated() = 0;
     virtual int32_t& EntityIndexSelection() = 0;
     virtual void EntityIndexSelectionUpdated() = 0;
+    static ISoundEventEntity* FromOriginal(CSoundEventEntity* p);
 };
 
 #endif // _INCLUDE_ISOUNDEVENTENTITY_H

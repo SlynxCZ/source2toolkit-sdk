@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBeam.h"
 
+class CEnvLaser;
 class CSprite;
 
 class IEnvLaser : public virtual IBeam
 {
 public:
     virtual ~IEnvLaser() = default;
+    CEnvLaser* GetOriginal() { return reinterpret_cast<CEnvLaser*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& LaserTarget() = 0;
     virtual void LaserTargetUpdated() = 0;
@@ -71,6 +74,7 @@ public:
     virtual void FirePositionUpdated() = 0;
     virtual float& StartFrame() = 0;
     virtual void StartFrameUpdated() = 0;
+    static IEnvLaser* FromOriginal(CEnvLaser* p);
 };
 
 #endif // _INCLUDE_IENVLASER_H

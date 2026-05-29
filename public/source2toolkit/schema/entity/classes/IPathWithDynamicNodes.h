@@ -50,21 +50,25 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPathSimple.h"
 
 class CPathNode;
+class CPathWithDynamicNodes;
 
 class IPathWithDynamicNodes : public virtual IPathSimple
 {
 public:
     virtual ~IPathWithDynamicNodes() = default;
+    CPathWithDynamicNodes* GetOriginal() { return reinterpret_cast<CPathWithDynamicNodes*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<CHandle<CPathNode>>& PathNodes() = 0;
     virtual void PathNodesUpdated() = 0;
     virtual CTransform& XInitialPathWorldToLocal() = 0;
     virtual void XInitialPathWorldToLocalUpdated() = 0;
+    static IPathWithDynamicNodes* FromOriginal(CPathWithDynamicNodes* p);
 };
 
 #endif // _INCLUDE_IPATHWITHDYNAMICNODES_H

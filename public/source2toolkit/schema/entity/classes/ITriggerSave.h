@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
+
+class CTriggerSave;
 
 class ITriggerSave : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerSave() = default;
+    CTriggerSave* GetOriginal() { return reinterpret_cast<CTriggerSave*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& ForceNewLevelUnit() = 0;
     virtual void ForceNewLevelUnitUpdated() = 0;
@@ -65,6 +69,7 @@ public:
     virtual void DangerousTimerUpdated() = 0;
     virtual int32_t& MinHitPoints() = 0;
     virtual void MinHitPointsUpdated() = 0;
+    static ITriggerSave* FromOriginal(CTriggerSave* p);
 };
 
 #endif // _INCLUDE_ITRIGGERSAVE_H

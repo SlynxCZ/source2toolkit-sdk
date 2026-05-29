@@ -57,11 +57,11 @@
 #define NULL 0
 #endif
 
-#include "entities.h"
 #include "entityhandle.h"
 #include "entityinstance.h"
 #include "entitysystem.h"
 #include "string_t.h"
+#include "source2toolkit/IToolkitTypes.h"
 
 /* =========================
 Connection descriptors
@@ -227,21 +227,7 @@ public:
 
     * @brief Removes listener.
       */
-    void Unhook()
-    {
-        if (!m_pListener)
-            return;
-
-        UTIL_RemoveEntityIOListener(
-            m_pListener,
-            m_szClassname.c_str(),
-            m_szOutput.c_str(),
-            m_nMode
-        );
-
-        delete m_pListener;
-        m_pListener = nullptr;
-    }
+    void Unhook();
 
     /**
 

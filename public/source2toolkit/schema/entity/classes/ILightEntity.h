@@ -50,19 +50,23 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
 
 class CLightComponent;
+class CLightEntity;
 
 class ILightEntity : public virtual IBaseModelEntity
 {
 public:
     virtual ~ILightEntity() = default;
+    CLightEntity* GetOriginal() { return reinterpret_cast<CLightEntity*>(IEntityInstance::GetOriginal()); }
 
-    virtual CLightComponent*& CLightComponent() = 0;
-    virtual void CLightComponentUpdated() = 0;
+    virtual CLightComponent*& LightComponent() = 0;
+    virtual void LightComponentUpdated() = 0;
+    static ILightEntity* FromOriginal(CLightEntity* p);
 };
 
 #endif // _INCLUDE_ILIGHTENTITY_H

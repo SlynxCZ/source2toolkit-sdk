@@ -50,22 +50,25 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
 
 class CBaseEntity;
+class CBombTarget;
 
 class IBombTarget : public virtual IBaseTrigger
 {
 public:
     virtual ~IBombTarget() = default;
+    CBombTarget* GetOriginal() { return reinterpret_cast<CBombTarget*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnBombExplode() = 0;
+    virtual ::CEntityIOOutput& OnBombExplode() = 0;
     virtual void OnBombExplodeUpdated() = 0;
-    virtual CEntityIOOutput& OnBombPlanted() = 0;
+    virtual ::CEntityIOOutput& OnBombPlanted() = 0;
     virtual void OnBombPlantedUpdated() = 0;
-    virtual CEntityIOOutput& OnBombDefused() = 0;
+    virtual ::CEntityIOOutput& OnBombDefused() = 0;
     virtual void OnBombDefusedUpdated() = 0;
     virtual bool& IsBombSiteB() = 0;
     virtual void IsBombSiteBUpdated() = 0;
@@ -79,6 +82,7 @@ public:
     virtual void InstructorHintUpdated() = 0;
     virtual int32_t& BombSiteDesignation() = 0;
     virtual void BombSiteDesignationUpdated() = 0;
+    static IBombTarget* FromOriginal(CBombTarget* p);
 };
 
 #endif // _INCLUDE_IBOMBTARGET_H

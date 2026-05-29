@@ -50,14 +50,17 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 class CCSPlayerPawn;
+class CRetakeGameRules;
 
 class IRetakeGameRules
 {
 public:
     virtual ~IRetakeGameRules() = default;
+    CRetakeGameRules* GetOriginal() { return reinterpret_cast<CRetakeGameRules*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& MatchSeed() = 0;
     virtual void MatchSeedUpdated() = 0;
@@ -71,6 +74,7 @@ public:
     virtual void BombSiteUpdated() = 0;
     virtual CHandle<CCSPlayerPawn>& BombPlanter() = 0;
     virtual void BombPlanterUpdated() = 0;
+    static IRetakeGameRules* FromOriginal(CRetakeGameRules* p);
 };
 
 #endif // _INCLUDE_IRETAKEGAMERULES_H

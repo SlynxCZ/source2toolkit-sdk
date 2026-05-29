@@ -50,25 +50,29 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
 
 class CBaseEntity;
+class CLogicBranch;
 
 class ILogicBranch : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicBranch() = default;
+    CLogicBranch* GetOriginal() { return reinterpret_cast<CLogicBranch*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& InValue() = 0;
     virtual void InValueUpdated() = 0;
     virtual CUtlVector<CHandle<CBaseEntity>>& Listeners() = 0;
     virtual void ListenersUpdated() = 0;
-    virtual CEntityIOOutput& OnTrue() = 0;
+    virtual ::CEntityIOOutput& OnTrue() = 0;
     virtual void OnTrueUpdated() = 0;
-    virtual CEntityIOOutput& OnFalse() = 0;
+    virtual ::CEntityIOOutput& OnFalse() = 0;
     virtual void OnFalseUpdated() = 0;
+    static ILogicBranch* FromOriginal(CLogicBranch* p);
 };
 
 #endif // _INCLUDE_ILOGICBRANCH_H

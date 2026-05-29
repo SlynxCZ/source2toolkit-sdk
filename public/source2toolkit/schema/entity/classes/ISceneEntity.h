@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
@@ -58,12 +59,14 @@
 
 class CBaseEntity;
 class CBaseModelEntity;
+class CSceneEntity;
 class CSceneListManager;
 
 class ISceneEntity : public virtual IPointEntity
 {
 public:
     virtual ~ISceneEntity() = default;
+    CSceneEntity* GetOriginal() { return reinterpret_cast<CSceneEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& SceneFile() = 0;
     virtual void SceneFileUpdated() = 0;
@@ -155,17 +158,17 @@ public:
     virtual void RemoveActorListUpdated() = 0;
     virtual uint16_t& SceneStringIndex() = 0;
     virtual void SceneStringIndexUpdated() = 0;
-    virtual CEntityIOOutput& OnStart() = 0;
+    virtual ::CEntityIOOutput& OnStart() = 0;
     virtual void OnStartUpdated() = 0;
-    virtual CEntityIOOutput& OnCompletion() = 0;
+    virtual ::CEntityIOOutput& OnCompletion() = 0;
     virtual void OnCompletionUpdated() = 0;
-    virtual CEntityIOOutput& OnCanceled() = 0;
+    virtual ::CEntityIOOutput& OnCanceled() = 0;
     virtual void OnCanceledUpdated() = 0;
-    virtual CEntityIOOutput& OnPaused() = 0;
+    virtual ::CEntityIOOutput& OnPaused() = 0;
     virtual void OnPausedUpdated() = 0;
-    virtual CEntityIOOutput& OnResumed() = 0;
+    virtual ::CEntityIOOutput& OnResumed() = 0;
     virtual void OnResumedUpdated() = 0;
-    virtual CEntityIOOutput& OnPulseRequirement() = 0;
+    virtual ::CEntityIOOutput& OnPulseRequirement() = 0;
     virtual void OnPulseRequirementUpdated() = 0;
     virtual CHandle<CSceneEntity>& InterruptScene() = 0;
     virtual void InterruptSceneUpdated() = 0;
@@ -195,8 +198,9 @@ public:
     virtual void ActivatorUpdated() = 0;
     virtual int32_t& BusyActor() = 0;
     virtual void BusyActorUpdated() = 0;
-    virtual SceneOnPlayerDeath_t& PlayerDeathBehavior() = 0;
+    virtual ::SceneOnPlayerDeath_t& PlayerDeathBehavior() = 0;
     virtual void PlayerDeathBehaviorUpdated() = 0;
+    static ISceneEntity* FromOriginal(CSceneEntity* p);
 };
 
 #endif // _INCLUDE_ISCENEENTITY_H

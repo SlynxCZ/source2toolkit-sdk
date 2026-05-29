@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseCSGrenadeProjectile.h"
+
+class CDecoyProjectile;
 
 class IDecoyProjectile : public virtual IBaseCSGrenadeProjectile
 {
 public:
     virtual ~IDecoyProjectile() = default;
+    CDecoyProjectile* GetOriginal() { return reinterpret_cast<CDecoyProjectile*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& DecoyShotTick() = 0;
     virtual void DecoyShotTickUpdated() = 0;
@@ -67,6 +71,7 @@ public:
     virtual void ExpireTimeUpdated() = 0;
     virtual uint16_t& DecoyWeaponDefIndex() = 0;
     virtual void DecoyWeaponDefIndexUpdated() = 0;
+    static IDecoyProjectile* FromOriginal(CDecoyProjectile* p);
 };
 
 #endif // _INCLUDE_IDECOYPROJECTILE_H

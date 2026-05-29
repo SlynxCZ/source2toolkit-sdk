@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseFilter.h"
+
+class CFilterAttributeInt;
 
 class IFilterAttributeInt : public virtual IBaseFilter
 {
 public:
     virtual ~IFilterAttributeInt() = default;
+    CFilterAttributeInt* GetOriginal() { return reinterpret_cast<CFilterAttributeInt*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& AttributeName() = 0;
     virtual void AttributeNameUpdated() = 0;
+    static IFilterAttributeInt* FromOriginal(CFilterAttributeInt* p);
 };
 
 #endif // _INCLUDE_IFILTERATTRIBUTEINT_H

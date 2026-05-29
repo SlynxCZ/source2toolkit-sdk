@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
+
+class CSoundStackSave;
 
 class ISoundStackSave : public virtual ILogicalEntity
 {
 public:
     virtual ~ISoundStackSave() = default;
+    CSoundStackSave* GetOriginal() { return reinterpret_cast<CSoundStackSave*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& StackName() = 0;
     virtual void StackNameUpdated() = 0;
+    static ISoundStackSave* FromOriginal(CSoundStackSave* p);
 };
 
 #endif // _INCLUDE_ISOUNDSTACKSAVE_H

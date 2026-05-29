@@ -50,20 +50,25 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "../enums/ENPCBehaviorOverride_t.h"
 #include "../enums/InteractionPriority_t.h"
 
+class CScenePayloadVData;
+
 class IScenePayloadVData
 {
 public:
     virtual ~IScenePayloadVData() = default;
+    CScenePayloadVData* GetOriginal() { return reinterpret_cast<CScenePayloadVData*>(IEntityInstance::GetOriginal()); }
 
-    virtual ENPCBehaviorOverride_t& NPCBehavior() = 0;
+    virtual ::ENPCBehaviorOverride_t& NPCBehavior() = 0;
     virtual void NPCBehaviorUpdated() = 0;
-    virtual InteractionPriority_t& Priority() = 0;
+    virtual ::InteractionPriority_t& Priority() = 0;
     virtual void PriorityUpdated() = 0;
+    static IScenePayloadVData* FromOriginal(CScenePayloadVData* p);
 };
 
 #endif // _INCLUDE_ISCENEPAYLOADVDATA_H

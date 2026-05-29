@@ -50,16 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
 
 #include "../enums/TrackOrientationType_t.h"
 
+class CPathTrack;
+
 class IPathTrack : public virtual IPointEntity
 {
 public:
     virtual ~IPathTrack() = default;
+    CPathTrack* GetOriginal() { return reinterpret_cast<CPathTrack*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CPathTrack>& Pnext() = 0;
     virtual void PnextUpdated() = 0;
@@ -75,10 +79,11 @@ public:
     virtual void AltNameUpdated() = 0;
     virtual int32_t& IterVal() = 0;
     virtual void IterValUpdated() = 0;
-    virtual TrackOrientationType_t& OrientationType() = 0;
+    virtual ::TrackOrientationType_t& OrientationType() = 0;
     virtual void OrientationTypeUpdated() = 0;
-    virtual CEntityIOOutput& OnPass() = 0;
+    virtual ::CEntityIOOutput& OnPass() = 0;
     virtual void OnPassUpdated() = 0;
+    static IPathTrack* FromOriginal(CPathTrack* p);
 };
 
 #endif // _INCLUDE_IPATHTRACK_H

@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
 
+class CEnvLightProbeVolume;
 class InfoForResourceTypeCTextureBase;
 
 class IEnvLightProbeVolume : public virtual IBaseEntity
 {
 public:
     virtual ~IEnvLightProbeVolume() = default;
+    CEnvLightProbeVolume* GetOriginal() { return reinterpret_cast<CEnvLightProbeVolume*>(IEntityInstance::GetOriginal()); }
 
     virtual CStrongHandle<InfoForResourceTypeCTextureBase>& Entity_hLightProbeTexture_AmbientCube() = 0;
     virtual void Entity_hLightProbeTexture_AmbientCubeUpdated() = 0;
@@ -105,6 +108,7 @@ public:
     virtual void Entity_nLightProbeAtlasZUpdated() = 0;
     virtual bool& Entity_bEnabled() = 0;
     virtual void Entity_bEnabledUpdated() = 0;
+    static IEnvLightProbeVolume* FromOriginal(CEnvLightProbeVolume* p);
 };
 
 #endif // _INCLUDE_IENVLIGHTPROBEVOLUME_H

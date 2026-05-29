@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBreakableProp.h"
@@ -58,24 +59,27 @@
 #include "../enums/DynamicContinuousContactBehavior_t.h"
 #include "../enums/INavObstacle__NavObstacleType_t.h"
 
+class CPhysicsProp;
+
 class IPhysicsProp : public virtual IBreakableProp
 {
 public:
     virtual ~IPhysicsProp() = default;
+    CPhysicsProp* GetOriginal() { return reinterpret_cast<CPhysicsProp*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& MotionEnabled() = 0;
+    virtual ::CEntityIOOutput& MotionEnabled() = 0;
     virtual void MotionEnabledUpdated() = 0;
-    virtual CEntityIOOutput& OnAwakened() = 0;
+    virtual ::CEntityIOOutput& OnAwakened() = 0;
     virtual void OnAwakenedUpdated() = 0;
-    virtual CEntityIOOutput& OnAwake() = 0;
+    virtual ::CEntityIOOutput& OnAwake() = 0;
     virtual void OnAwakeUpdated() = 0;
-    virtual CEntityIOOutput& OnAsleep() = 0;
+    virtual ::CEntityIOOutput& OnAsleep() = 0;
     virtual void OnAsleepUpdated() = 0;
-    virtual CEntityIOOutput& OnPlayerUse() = 0;
+    virtual ::CEntityIOOutput& OnPlayerUse() = 0;
     virtual void OnPlayerUseUpdated() = 0;
-    virtual CEntityIOOutput& OnOutOfWorld() = 0;
+    virtual ::CEntityIOOutput& OnOutOfWorld() = 0;
     virtual void OnOutOfWorldUpdated() = 0;
-    virtual CEntityIOOutput& OnPlayerPickup() = 0;
+    virtual ::CEntityIOOutput& OnPlayerPickup() = 0;
     virtual void OnPlayerPickupUpdated() = 0;
     virtual bool& ForceNavIgnore() = 0;
     virtual void ForceNavIgnoreUpdated() = 0;
@@ -107,7 +111,7 @@ public:
     virtual void IsOverridePropUpdated() = 0;
     virtual float& LastBurn() = 0;
     virtual void LastBurnUpdated() = 0;
-    virtual DynamicContinuousContactBehavior_t& DynamicContinuousContactBehavior() = 0;
+    virtual ::DynamicContinuousContactBehavior_t& DynamicContinuousContactBehavior() = 0;
     virtual void DynamicContinuousContactBehaviorUpdated() = 0;
     virtual float& NextCheckDisableMotionContactsTime() = 0;
     virtual void NextCheckDisableMotionContactsTimeUpdated() = 0;
@@ -123,7 +127,7 @@ public:
     virtual void ShouldAutoConvertBackFromDebrisUpdated() = 0;
     virtual bool& MuteImpactEffects() = 0;
     virtual void MuteImpactEffectsUpdated() = 0;
-    virtual INavObstacle__NavObstacleType_t& NavObstacleType() = 0;
+    virtual ::INavObstacle__NavObstacleType_t& NavObstacleType() = 0;
     virtual void NavObstacleTypeUpdated() = 0;
     virtual bool& UpdateNavWhenMoving() = 0;
     virtual void UpdateNavWhenMovingUpdated() = 0;
@@ -135,7 +139,7 @@ public:
     virtual void AcceptDamageFromHeldObjectsUpdated() = 0;
     virtual bool& EnableUseOutput() = 0;
     virtual void EnableUseOutputUpdated() = 0;
-    virtual CPhysicsProp__CrateType_t& CrateType() = 0;
+    virtual ::CPhysicsProp__CrateType_t& CrateType() = 0;
     virtual void CrateTypeUpdated() = 0;
     virtual CUtlSymbolLarge* StrItemClass() = 0;
     virtual int32_t* ItemCount() = 0;
@@ -145,6 +149,7 @@ public:
     virtual void AwakeUpdated() = 0;
     virtual bool& AttachedToReferenceFrame() = 0;
     virtual void AttachedToReferenceFrameUpdated() = 0;
+    static IPhysicsProp* FromOriginal(CPhysicsProp* p);
 };
 
 #endif // _INCLUDE_IPHYSICSPROP_H

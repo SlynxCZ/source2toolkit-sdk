@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CInfoPlayerStart;
 
 class IInfoPlayerStart : public virtual IPointEntity
 {
 public:
     virtual ~IInfoPlayerStart() = default;
+    CInfoPlayerStart* GetOriginal() { return reinterpret_cast<CInfoPlayerStart*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;
@@ -65,6 +69,7 @@ public:
     virtual void IsMasterUpdated() = 0;
     virtual CGlobalSymbol& PawnSubclass() = 0;
     virtual void PawnSubclassUpdated() = 0;
+    static IInfoPlayerStart* FromOriginal(CInfoPlayerStart* p);
 };
 
 #endif // _INCLUDE_IINFOPLAYERSTART_H

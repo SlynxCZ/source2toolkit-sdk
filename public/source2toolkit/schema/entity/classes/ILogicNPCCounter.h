@@ -50,30 +50,34 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CLogicNPCCounter;
 
 class ILogicNPCCounter : public virtual IBaseEntity
 {
 public:
     virtual ~ILogicNPCCounter() = default;
+    CLogicNPCCounter* GetOriginal() { return reinterpret_cast<CLogicNPCCounter*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnMinCountAll() = 0;
+    virtual ::CEntityIOOutput& OnMinCountAll() = 0;
     virtual void OnMinCountAllUpdated() = 0;
-    virtual CEntityIOOutput& OnMaxCountAll() = 0;
+    virtual ::CEntityIOOutput& OnMaxCountAll() = 0;
     virtual void OnMaxCountAllUpdated() = 0;
-    virtual CEntityIOOutput& OnMinCount_1() = 0;
+    virtual ::CEntityIOOutput& OnMinCount_1() = 0;
     virtual void OnMinCount_1Updated() = 0;
-    virtual CEntityIOOutput& OnMaxCount_1() = 0;
+    virtual ::CEntityIOOutput& OnMaxCount_1() = 0;
     virtual void OnMaxCount_1Updated() = 0;
-    virtual CEntityIOOutput& OnMinCount_2() = 0;
+    virtual ::CEntityIOOutput& OnMinCount_2() = 0;
     virtual void OnMinCount_2Updated() = 0;
-    virtual CEntityIOOutput& OnMaxCount_2() = 0;
+    virtual ::CEntityIOOutput& OnMaxCount_2() = 0;
     virtual void OnMaxCount_2Updated() = 0;
-    virtual CEntityIOOutput& OnMinCount_3() = 0;
+    virtual ::CEntityIOOutput& OnMinCount_3() = 0;
     virtual void OnMinCount_3Updated() = 0;
-    virtual CEntityIOOutput& OnMaxCount_3() = 0;
+    virtual ::CEntityIOOutput& OnMaxCount_3() = 0;
     virtual void OnMaxCount_3Updated() = 0;
     virtual CEntityHandle& Source() = 0;
     virtual void SourceUpdated() = 0;
@@ -139,6 +143,7 @@ public:
     virtual void MaxFactor_3Updated() = 0;
     virtual float& DefaultDist_3() = 0;
     virtual void DefaultDist_3Updated() = 0;
+    static ILogicNPCCounter* FromOriginal(CLogicNPCCounter* p);
 };
 
 #endif // _INCLUDE_ILOGICNPCCOUNTER_H

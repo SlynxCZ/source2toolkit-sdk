@@ -50,29 +50,33 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "../enums/IChoreoServices__ChoreoState_t.h"
 #include "../enums/IChoreoServices__ScriptState_t.h"
 
 class CBaseModelEntity;
+class CGameChoreoServices;
 class CScriptedSequence;
 
 class IGameChoreoServices
 {
 public:
     virtual ~IGameChoreoServices() = default;
+    CGameChoreoServices* GetOriginal() { return reinterpret_cast<CGameChoreoServices*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseModelEntity>& Owner() = 0;
     virtual void OwnerUpdated() = 0;
     virtual CHandle<CScriptedSequence>& ScriptedSequence() = 0;
     virtual void ScriptedSequenceUpdated() = 0;
-    virtual IChoreoServices__ScriptState_t& ScriptState() = 0;
+    virtual ::IChoreoServices__ScriptState_t& ScriptState() = 0;
     virtual void ScriptStateUpdated() = 0;
-    virtual IChoreoServices__ChoreoState_t& ChoreoState() = 0;
+    virtual ::IChoreoServices__ChoreoState_t& ChoreoState() = 0;
     virtual void ChoreoStateUpdated() = 0;
     virtual float& TimeStartedState() = 0;
     virtual void TimeStartedStateUpdated() = 0;
+    static IGameChoreoServices* FromOriginal(CGameChoreoServices* p);
 };
 
 #endif // _INCLUDE_IGAMECHOREOSERVICES_H

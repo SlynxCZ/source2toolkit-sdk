@@ -50,12 +50,16 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CTestPulseIO__ThreeStringArgs_t;
 
 class ITestPulseIO__ThreeStringArgs_t
 {
 public:
     virtual ~ITestPulseIO__ThreeStringArgs_t() = default;
+    CTestPulseIO__ThreeStringArgs_t* GetOriginal() { return reinterpret_cast<CTestPulseIO__ThreeStringArgs_t*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlString& StrArg1() = 0;
     virtual void StrArg1Updated() = 0;
@@ -63,6 +67,7 @@ public:
     virtual void StrArg2Updated() = 0;
     virtual CUtlString& StrArg3() = 0;
     virtual void StrArg3Updated() = 0;
+    static ITestPulseIO__ThreeStringArgs_t* FromOriginal(CTestPulseIO__ThreeStringArgs_t* p);
 };
 
 #endif // _INCLUDE_ITESTPULSEIO__THREESTRINGARGS_T_H

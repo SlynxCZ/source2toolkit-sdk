@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CFuncTimescale;
 
 class IFuncTimescale : public virtual IBaseEntity
 {
 public:
     virtual ~IFuncTimescale() = default;
+    CFuncTimescale* GetOriginal() { return reinterpret_cast<CFuncTimescale*>(IEntityInstance::GetOriginal()); }
 
     virtual float& DesiredTimescale() = 0;
     virtual void DesiredTimescaleUpdated() = 0;
@@ -69,6 +73,7 @@ public:
     virtual void BlendDeltaMultiplierUpdated() = 0;
     virtual bool& IsStarted() = 0;
     virtual void IsStartedUpdated() = 0;
+    static IFuncTimescale* FromOriginal(CFuncTimescale* p);
 };
 
 #endif // _INCLUDE_IFUNCTIMESCALE_H

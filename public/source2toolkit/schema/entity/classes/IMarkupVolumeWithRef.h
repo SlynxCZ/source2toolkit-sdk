@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IMarkupVolumeTagged.h"
+
+class CMarkupVolumeWithRef;
 
 class IMarkupVolumeWithRef : public virtual IMarkupVolumeTagged
 {
 public:
     virtual ~IMarkupVolumeWithRef() = default;
+    CMarkupVolumeWithRef* GetOriginal() { return reinterpret_cast<CMarkupVolumeWithRef*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& UseRef() = 0;
     virtual void UseRefUpdated() = 0;
@@ -67,6 +71,7 @@ public:
     virtual void RefPosWorldSpaceUpdated() = 0;
     virtual float& RefDot() = 0;
     virtual void RefDotUpdated() = 0;
+    static IMarkupVolumeWithRef* FromOriginal(CMarkupVolumeWithRef* p);
 };
 
 #endif // _INCLUDE_IMARKUPVOLUMEWITHREF_H

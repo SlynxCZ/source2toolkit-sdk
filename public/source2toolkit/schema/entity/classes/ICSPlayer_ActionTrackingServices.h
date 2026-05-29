@@ -50,26 +50,30 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayerPawnComponent.h"
 
 class CBasePlayerWeapon;
+class CCSPlayer_ActionTrackingServices;
 class WeaponPurchaseTracker_t;
 
 class ICSPlayer_ActionTrackingServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~ICSPlayer_ActionTrackingServices() = default;
+    CCSPlayer_ActionTrackingServices* GetOriginal() { return reinterpret_cast<CCSPlayer_ActionTrackingServices*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBasePlayerWeapon>& LastWeaponBeforeC4AutoSwitch() = 0;
     virtual void LastWeaponBeforeC4AutoSwitchUpdated() = 0;
     virtual bool& IsRescuing() = 0;
     virtual void IsRescuingUpdated() = 0;
-    virtual WeaponPurchaseTracker_t& WeaponPurchasesThisMatch() = 0;
+    virtual ::WeaponPurchaseTracker_t& WeaponPurchasesThisMatch() = 0;
     virtual void WeaponPurchasesThisMatchUpdated() = 0;
-    virtual WeaponPurchaseTracker_t& WeaponPurchasesThisRound() = 0;
+    virtual ::WeaponPurchaseTracker_t& WeaponPurchasesThisRound() = 0;
     virtual void WeaponPurchasesThisRoundUpdated() = 0;
+    static ICSPlayer_ActionTrackingServices* FromOriginal(CCSPlayer_ActionTrackingServices* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_ACTIONTRACKINGSERVICES_H

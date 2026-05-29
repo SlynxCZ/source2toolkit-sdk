@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayerPawnComponent.h"
+
+class CPlayer_WaterServices;
 
 class IPlayer_WaterServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~IPlayer_WaterServices() = default;
+    CPlayer_WaterServices* GetOriginal() { return reinterpret_cast<CPlayer_WaterServices*>(IEntityInstance::GetOriginal()); }
 
+    static IPlayer_WaterServices* FromOriginal(CPlayer_WaterServices* p);
 };
 
 #endif // _INCLUDE_IPLAYER_WATERSERVICES_H

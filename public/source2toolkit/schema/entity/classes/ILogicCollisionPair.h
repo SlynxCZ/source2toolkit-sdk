@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
+
+class CLogicCollisionPair;
 
 class ILogicCollisionPair : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicCollisionPair() = default;
+    CLogicCollisionPair* GetOriginal() { return reinterpret_cast<CLogicCollisionPair*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& NameAttach1() = 0;
     virtual void NameAttach1Updated() = 0;
@@ -71,6 +75,7 @@ public:
     virtual void DisabledUpdated() = 0;
     virtual bool& Succeeded() = 0;
     virtual void SucceededUpdated() = 0;
+    static ILogicCollisionPair* FromOriginal(CLogicCollisionPair* p);
 };
 
 #endif // _INCLUDE_ILOGICCOLLISIONPAIR_H

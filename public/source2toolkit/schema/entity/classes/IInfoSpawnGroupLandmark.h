@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CInfoSpawnGroupLandmark;
 
 class IInfoSpawnGroupLandmark : public virtual IPointEntity
 {
 public:
     virtual ~IInfoSpawnGroupLandmark() = default;
+    CInfoSpawnGroupLandmark* GetOriginal() { return reinterpret_cast<CInfoSpawnGroupLandmark*>(IEntityInstance::GetOriginal()); }
 
+    static IInfoSpawnGroupLandmark* FromOriginal(CInfoSpawnGroupLandmark* p);
 };
 
 #endif // _INCLUDE_IINFOSPAWNGROUPLANDMARK_H

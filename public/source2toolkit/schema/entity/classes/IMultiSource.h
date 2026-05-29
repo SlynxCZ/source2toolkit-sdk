@@ -50,25 +50,29 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
 
 class CBaseEntity;
+class CMultiSource;
 
 class IMultiSource : public virtual ILogicalEntity
 {
 public:
     virtual ~IMultiSource() = default;
+    CMultiSource* GetOriginal() { return reinterpret_cast<CMultiSource*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>* RgEntities() = 0;
     virtual int32_t* RgTriggered() = 0;
-    virtual CEntityIOOutput& OnTrigger() = 0;
+    virtual ::CEntityIOOutput& OnTrigger() = 0;
     virtual void OnTriggerUpdated() = 0;
     virtual int32_t& Total() = 0;
     virtual void TotalUpdated() = 0;
     virtual CUtlSymbolLarge& Globalstate() = 0;
     virtual void GlobalstateUpdated() = 0;
+    static IMultiSource* FromOriginal(CMultiSource* p);
 };
 
 #endif // _INCLUDE_IMULTISOURCE_H

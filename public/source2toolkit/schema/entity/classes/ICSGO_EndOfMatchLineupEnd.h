@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ICSGO_EndOfMatchLineupEndpoint.h"
+
+class CCSGO_EndOfMatchLineupEnd;
 
 class ICSGO_EndOfMatchLineupEnd : public virtual ICSGO_EndOfMatchLineupEndpoint
 {
 public:
     virtual ~ICSGO_EndOfMatchLineupEnd() = default;
+    CCSGO_EndOfMatchLineupEnd* GetOriginal() { return reinterpret_cast<CCSGO_EndOfMatchLineupEnd*>(IEntityInstance::GetOriginal()); }
 
+    static ICSGO_EndOfMatchLineupEnd* FromOriginal(CCSGO_EndOfMatchLineupEnd* p);
 };
 
 #endif // _INCLUDE_ICSGO_ENDOFMATCHLINEUPEND_H

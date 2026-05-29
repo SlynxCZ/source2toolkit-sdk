@@ -50,19 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CPointGamestatsCounter;
 
 class IPointGamestatsCounter : public virtual IPointEntity
 {
 public:
     virtual ~IPointGamestatsCounter() = default;
+    CPointGamestatsCounter* GetOriginal() { return reinterpret_cast<CPointGamestatsCounter*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& StrStatisticName() = 0;
     virtual void StrStatisticNameUpdated() = 0;
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;
+    static IPointGamestatsCounter* FromOriginal(CPointGamestatsCounter* p);
 };
 
 #endif // _INCLUDE_IPOINTGAMESTATSCOUNTER_H

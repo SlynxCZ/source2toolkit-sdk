@@ -50,18 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ISoundOpvarSetPointBase.h"
+
+class CSoundOpvarSetPointEntity;
 
 class ISoundOpvarSetPointEntity : public virtual ISoundOpvarSetPointBase
 {
 public:
     virtual ~ISoundOpvarSetPointEntity() = default;
+    CSoundOpvarSetPointEntity* GetOriginal() { return reinterpret_cast<CSoundOpvarSetPointEntity*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnEnter() = 0;
+    virtual ::CEntityIOOutput& OnEnter() = 0;
     virtual void OnEnterUpdated() = 0;
-    virtual CEntityIOOutput& OnExit() = 0;
+    virtual ::CEntityIOOutput& OnExit() = 0;
     virtual void OnExitUpdated() = 0;
     virtual bool& AutoDisable() = 0;
     virtual void AutoDisableUpdated() = 0;
@@ -107,6 +111,7 @@ public:
     virtual void PathingDirectionUpdated() = 0;
     virtual int32_t& PathingSourceIndex() = 0;
     virtual void PathingSourceIndexUpdated() = 0;
+    static ISoundOpvarSetPointEntity* FromOriginal(CSoundOpvarSetPointEntity* p);
 };
 
 #endif // _INCLUDE_ISOUNDOPVARSETPOINTENTITY_H

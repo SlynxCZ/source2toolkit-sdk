@@ -50,21 +50,25 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
 
 class CBaseEntity;
+class CPointProximitySensor;
 
 class IPointProximitySensor : public virtual IPointEntity
 {
 public:
     virtual ~IPointProximitySensor() = default;
+    CPointProximitySensor* GetOriginal() { return reinterpret_cast<CPointProximitySensor*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;
     virtual CHandle<CBaseEntity>& TargetEntity() = 0;
     virtual void TargetEntityUpdated() = 0;
+    static IPointProximitySensor* FromOriginal(CPointProximitySensor* p);
 };
 
 #endif // _INCLUDE_IPOINTPROXIMITYSENSOR_H

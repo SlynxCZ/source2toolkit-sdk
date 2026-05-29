@@ -50,23 +50,27 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseCSGrenadeProjectile.h"
 
+class CMolotovProjectile;
 class IntervalTimer;
 
 class IMolotovProjectile : public virtual IBaseCSGrenadeProjectile
 {
 public:
     virtual ~IMolotovProjectile() = default;
+    CMolotovProjectile* GetOriginal() { return reinterpret_cast<CMolotovProjectile*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& IsIncGrenade() = 0;
     virtual void IsIncGrenadeUpdated() = 0;
     virtual bool& Detonated() = 0;
     virtual void DetonatedUpdated() = 0;
-    virtual IntervalTimer& StillTimer() = 0;
+    virtual ::IntervalTimer& StillTimer() = 0;
     virtual void StillTimerUpdated() = 0;
+    static IMolotovProjectile* FromOriginal(CMolotovProjectile* p);
 };
 
 #endif // _INCLUDE_IMOLOTOVPROJECTILE_H

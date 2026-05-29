@@ -50,21 +50,25 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayerControllerComponent.h"
 
+class CCSPlayerController_DamageServices;
 class CDamageRecord;
 
 class ICSPlayerController_DamageServices : public virtual IPlayerControllerComponent
 {
 public:
     virtual ~ICSPlayerController_DamageServices() = default;
+    CCSPlayerController_DamageServices* GetOriginal() { return reinterpret_cast<CCSPlayerController_DamageServices*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& SendUpdate() = 0;
     virtual void SendUpdateUpdated() = 0;
     virtual CUtlVector<CDamageRecord>& DamageList() = 0;
     virtual void DamageListUpdated() = 0;
+    static ICSPlayerController_DamageServices* FromOriginal(CCSPlayerController_DamageServices* p);
 };
 
 #endif // _INCLUDE_ICSPLAYERCONTROLLER_DAMAGESERVICES_H

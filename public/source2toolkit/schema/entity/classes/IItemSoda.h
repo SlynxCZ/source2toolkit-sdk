@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseAnimGraph.h"
+
+class CItemSoda;
 
 class IItemSoda : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IItemSoda() = default;
+    CItemSoda* GetOriginal() { return reinterpret_cast<CItemSoda*>(IEntityInstance::GetOriginal()); }
 
+    static IItemSoda* FromOriginal(CItemSoda* p);
 };
 
 #endif // _INCLUDE_IITEMSODA_H

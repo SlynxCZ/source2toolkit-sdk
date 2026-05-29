@@ -50,18 +50,21 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "../enums/SurroundingBoundsType_t.h"
 
+class CCollisionProperty;
 class VPhysicsCollisionAttribute_t;
 
 class ICollisionProperty
 {
 public:
     virtual ~ICollisionProperty() = default;
+    CCollisionProperty* GetOriginal() { return reinterpret_cast<CCollisionProperty*>(IEntityInstance::GetOriginal()); }
 
-    virtual VPhysicsCollisionAttribute_t& CollisionAttribute() = 0;
+    virtual ::VPhysicsCollisionAttribute_t& CollisionAttribute() = 0;
     virtual void CollisionAttributeUpdated() = 0;
     virtual Vector& Mins() = 0;
     virtual void MinsUpdated() = 0;
@@ -69,11 +72,11 @@ public:
     virtual void MaxsUpdated() = 0;
     virtual uint8_t& SolidFlags() = 0;
     virtual void SolidFlagsUpdated() = 0;
-    virtual SolidType_t& SolidType() = 0;
+    virtual ::SolidType_t& SolidType() = 0;
     virtual void SolidTypeUpdated() = 0;
     virtual uint8_t& TriggerBloat() = 0;
     virtual void TriggerBloatUpdated() = 0;
-    virtual SurroundingBoundsType_t& SurroundType() = 0;
+    virtual ::SurroundingBoundsType_t& SurroundType() = 0;
     virtual void SurroundTypeUpdated() = 0;
     virtual uint8_t& CollisionGroup() = 0;
     virtual void CollisionGroupUpdated() = 0;
@@ -95,6 +98,7 @@ public:
     virtual void CapsuleCenter2Updated() = 0;
     virtual float& CapsuleRadius() = 0;
     virtual void CapsuleRadiusUpdated() = 0;
+    static ICollisionProperty* FromOriginal(CCollisionProperty* p);
 };
 
 #endif // _INCLUDE_ICOLLISIONPROPERTY_H

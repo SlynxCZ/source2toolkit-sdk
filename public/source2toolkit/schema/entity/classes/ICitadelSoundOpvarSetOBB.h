@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CCitadelSoundOpvarSetOBB;
 
 class ICitadelSoundOpvarSetOBB : public virtual IBaseEntity
 {
 public:
     virtual ~ICitadelSoundOpvarSetOBB() = default;
+    CCitadelSoundOpvarSetOBB* GetOriginal() { return reinterpret_cast<CCitadelSoundOpvarSetOBB*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& StackName() = 0;
     virtual void StackNameUpdated() = 0;
@@ -75,6 +79,7 @@ public:
     virtual void DistanceOuterMaxsUpdated() = 0;
     virtual int32_t& AABBDirection() = 0;
     virtual void AABBDirectionUpdated() = 0;
+    static ICitadelSoundOpvarSetOBB* FromOriginal(CCitadelSoundOpvarSetOBB* p);
 };
 
 #endif // _INCLUDE_ICITADELSOUNDOPVARSETOBB_H

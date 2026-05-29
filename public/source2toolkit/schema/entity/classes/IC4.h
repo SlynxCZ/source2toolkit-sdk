@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ICSWeaponBase.h"
 
+class CC4;
 class EntitySpottedState_t;
 
 class IC4 : public virtual ICSWeaponBase
 {
 public:
     virtual ~IC4() = default;
+    CC4* GetOriginal() { return reinterpret_cast<CC4*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& LastValidPlayerHeldPosition() = 0;
     virtual void LastValidPlayerHeldPositionUpdated() = 0;
@@ -75,13 +78,14 @@ public:
     virtual void BombPlacedAnimationUpdated() = 0;
     virtual bool& IsPlantingViaUse() = 0;
     virtual void IsPlantingViaUseUpdated() = 0;
-    virtual EntitySpottedState_t& EntitySpottedState() = 0;
+    virtual ::EntitySpottedState_t& EntitySpottedState() = 0;
     virtual void EntitySpottedStateUpdated() = 0;
     virtual int32_t& SpotRules() = 0;
     virtual void SpotRulesUpdated() = 0;
     virtual bool* PlayedArmingBeeps() = 0;
     virtual bool& BombPlanted() = 0;
     virtual void BombPlantedUpdated() = 0;
+    static IC4* FromOriginal(CC4* p);
 };
 
 #endif // _INCLUDE_IC4_H

@@ -50,21 +50,25 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
 
 class CBaseFilter;
+class CTriggerVolume;
 
 class ITriggerVolume : public virtual IBaseModelEntity
 {
 public:
     virtual ~ITriggerVolume() = default;
+    CTriggerVolume* GetOriginal() { return reinterpret_cast<CTriggerVolume*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& FilterName() = 0;
     virtual void FilterNameUpdated() = 0;
     virtual CHandle<CBaseFilter>& Filter() = 0;
     virtual void FilterUpdated() = 0;
+    static ITriggerVolume* FromOriginal(CTriggerVolume* p);
 };
 
 #endif // _INCLUDE_ITRIGGERVOLUME_H

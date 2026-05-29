@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayerPawnComponent.h"
+
+class CCSPlayer_RadioServices;
 
 class ICSPlayer_RadioServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~ICSPlayer_RadioServices() = default;
+    CCSPlayer_RadioServices* GetOriginal() { return reinterpret_cast<CCSPlayer_RadioServices*>(IEntityInstance::GetOriginal()); }
 
     virtual float& GotHostageTalkTimer() = 0;
     virtual void GotHostageTalkTimerUpdated() = 0;
@@ -68,6 +72,7 @@ public:
     virtual float* RadioTokenSlots() = 0;
     virtual bool& IgnoreRadio() = 0;
     virtual void IgnoreRadioUpdated() = 0;
+    static ICSPlayer_RadioServices* FromOriginal(CCSPlayer_RadioServices* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_RADIOSERVICES_H

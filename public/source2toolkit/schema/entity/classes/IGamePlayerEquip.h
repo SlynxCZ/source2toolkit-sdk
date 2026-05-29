@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IRulePointEntity.h"
+
+class CGamePlayerEquip;
 
 class IGamePlayerEquip : public virtual IRulePointEntity
 {
 public:
     virtual ~IGamePlayerEquip() = default;
+    CGamePlayerEquip* GetOriginal() { return reinterpret_cast<CGamePlayerEquip*>(IEntityInstance::GetOriginal()); }
 
+    static IGamePlayerEquip* FromOriginal(CGamePlayerEquip* p);
 };
 
 #endif // _INCLUDE_IGAMEPLAYEREQUIP_H

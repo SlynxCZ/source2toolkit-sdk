@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ISprite.h"
+
+class CCommentaryViewPosition;
 
 class ICommentaryViewPosition : public virtual ISprite
 {
 public:
     virtual ~ICommentaryViewPosition() = default;
+    CCommentaryViewPosition* GetOriginal() { return reinterpret_cast<CCommentaryViewPosition*>(IEntityInstance::GetOriginal()); }
 
+    static ICommentaryViewPosition* FromOriginal(CCommentaryViewPosition* p);
 };
 
 #endif // _INCLUDE_ICOMMENTARYVIEWPOSITION_H

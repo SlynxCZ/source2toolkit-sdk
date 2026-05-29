@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IServerOnlyPointEntity.h"
+
+class CPointTeleport;
 
 class IPointTeleport : public virtual IServerOnlyPointEntity
 {
 public:
     virtual ~IPointTeleport() = default;
+    CPointTeleport* GetOriginal() { return reinterpret_cast<CPointTeleport*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& SaveOrigin() = 0;
     virtual void SaveOriginUpdated() = 0;
@@ -67,6 +71,7 @@ public:
     virtual void TeleportParentedEntitiesUpdated() = 0;
     virtual bool& TeleportUseCurrentAngle() = 0;
     virtual void TeleportUseCurrentAngleUpdated() = 0;
+    static IPointTeleport* FromOriginal(CPointTeleport* p);
 };
 
 #endif // _INCLUDE_IPOINTTELEPORT_H

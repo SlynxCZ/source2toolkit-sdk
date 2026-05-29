@@ -50,21 +50,25 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
 
 class CBuoyancyHelper;
+class CTriggerBuoyancy;
 
 class ITriggerBuoyancy : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerBuoyancy() = default;
+    CTriggerBuoyancy* GetOriginal() { return reinterpret_cast<CTriggerBuoyancy*>(IEntityInstance::GetOriginal()); }
 
-    virtual CBuoyancyHelper& BuoyancyHelper() = 0;
+    virtual ::CBuoyancyHelper& BuoyancyHelper() = 0;
     virtual void BuoyancyHelperUpdated() = 0;
     virtual float& FluidDensity() = 0;
     virtual void FluidDensityUpdated() = 0;
+    static ITriggerBuoyancy* FromOriginal(CTriggerBuoyancy* p);
 };
 
 #endif // _INCLUDE_ITRIGGERBUOYANCY_H

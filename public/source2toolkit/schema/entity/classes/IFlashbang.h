@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseCSGrenade.h"
+
+class CFlashbang;
 
 class IFlashbang : public virtual IBaseCSGrenade
 {
 public:
     virtual ~IFlashbang() = default;
+    CFlashbang* GetOriginal() { return reinterpret_cast<CFlashbang*>(IEntityInstance::GetOriginal()); }
 
+    static IFlashbang* FromOriginal(CFlashbang* p);
 };
 
 #endif // _INCLUDE_IFLASHBANG_H

@@ -50,12 +50,16 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CAttributeManager__cached_attribute_float_t;
 
 class IAttributeManager__cached_attribute_float_t
 {
 public:
     virtual ~IAttributeManager__cached_attribute_float_t() = default;
+    CAttributeManager__cached_attribute_float_t* GetOriginal() { return reinterpret_cast<CAttributeManager__cached_attribute_float_t*>(IEntityInstance::GetOriginal()); }
 
     virtual float& In() = 0;
     virtual void InUpdated() = 0;
@@ -63,6 +67,7 @@ public:
     virtual void AttribHookUpdated() = 0;
     virtual float& Out() = 0;
     virtual void OutUpdated() = 0;
+    static IAttributeManager__cached_attribute_float_t* FromOriginal(CAttributeManager__cached_attribute_float_t* p);
 };
 
 #endif // _INCLUDE_IATTRIBUTEMANAGER__CACHED_ATTRIBUTE_FLOAT_T_H

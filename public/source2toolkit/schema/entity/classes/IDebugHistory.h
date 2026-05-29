@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CDebugHistory;
 
 class IDebugHistory : public virtual IBaseEntity
 {
 public:
     virtual ~IDebugHistory() = default;
+    CDebugHistory* GetOriginal() { return reinterpret_cast<CDebugHistory*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& NpcEvents() = 0;
     virtual void NpcEventsUpdated() = 0;
+    static IDebugHistory* FromOriginal(CDebugHistory* p);
 };
 
 #endif // _INCLUDE_IDEBUGHISTORY_H

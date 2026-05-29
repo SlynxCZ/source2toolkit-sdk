@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IItem.h"
+
+class CItemAssaultSuit;
 
 class IItemAssaultSuit : public virtual IItem
 {
 public:
     virtual ~IItemAssaultSuit() = default;
+    CItemAssaultSuit* GetOriginal() { return reinterpret_cast<CItemAssaultSuit*>(IEntityInstance::GetOriginal()); }
 
+    static IItemAssaultSuit* FromOriginal(CItemAssaultSuit* p);
 };
 
 #endif // _INCLUDE_IITEMASSAULTSUIT_H

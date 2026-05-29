@@ -50,19 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CInfoGameEventProxy;
 
 class IInfoGameEventProxy : public virtual IPointEntity
 {
 public:
     virtual ~IInfoGameEventProxy() = default;
+    CInfoGameEventProxy* GetOriginal() { return reinterpret_cast<CInfoGameEventProxy*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& EventName() = 0;
     virtual void EventNameUpdated() = 0;
     virtual float& Range() = 0;
     virtual void RangeUpdated() = 0;
+    static IInfoGameEventProxy* FromOriginal(CInfoGameEventProxy* p);
 };
 
 #endif // _INCLUDE_IINFOGAMEEVENTPROXY_H

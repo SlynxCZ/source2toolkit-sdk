@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CTankTargetChange;
 
 class ITankTargetChange : public virtual IPointEntity
 {
 public:
     virtual ~ITankTargetChange() = default;
+    CTankTargetChange* GetOriginal() { return reinterpret_cast<CTankTargetChange*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& NewTargetName() = 0;
     virtual void NewTargetNameUpdated() = 0;
+    static ITankTargetChange* FromOriginal(CTankTargetChange* p);
 };
 
 #endif // _INCLUDE_ITANKTARGETCHANGE_H

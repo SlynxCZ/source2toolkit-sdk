@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CBaseModelEntity__OnDamageLevelChangedArgs_t;
 
 class IBaseModelEntity__OnDamageLevelChangedArgs_t
 {
 public:
     virtual ~IBaseModelEntity__OnDamageLevelChangedArgs_t() = default;
+    CBaseModelEntity__OnDamageLevelChangedArgs_t* GetOriginal() { return reinterpret_cast<CBaseModelEntity__OnDamageLevelChangedArgs_t*>(IEntityInstance::GetOriginal()); }
 
-    virtual HitGroup_t& HitGroup() = 0;
+    virtual ::HitGroup_t& HitGroup() = 0;
     virtual void HitGroupUpdated() = 0;
     virtual int32_t& DamageLevel() = 0;
     virtual void DamageLevelUpdated() = 0;
@@ -65,6 +69,7 @@ public:
     virtual void DamageLevelsRemainingUpdated() = 0;
     virtual int32_t& PrevDamageLevel() = 0;
     virtual void PrevDamageLevelUpdated() = 0;
+    static IBaseModelEntity__OnDamageLevelChangedArgs_t* FromOriginal(CBaseModelEntity__OnDamageLevelChangedArgs_t* p);
 };
 
 #endif // _INCLUDE_IBASEMODELENTITY__ONDAMAGELEVELCHANGEDARGS_T_H

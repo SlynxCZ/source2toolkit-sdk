@@ -50,12 +50,16 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CIronSightController;
 
 class IIronSightController
 {
 public:
     virtual ~IIronSightController() = default;
+    CIronSightController* GetOriginal() { return reinterpret_cast<CIronSightController*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& IronSightAvailable() = 0;
     virtual void IronSightAvailableUpdated() = 0;
@@ -65,6 +69,7 @@ public:
     virtual void IronSightAmountGainedUpdated() = 0;
     virtual float& IronSightAmountBiased() = 0;
     virtual void IronSightAmountBiasedUpdated() = 0;
+    static IIronSightController* FromOriginal(CIronSightController* p);
 };
 
 #endif // _INCLUDE_IIRONSIGHTCONTROLLER_H

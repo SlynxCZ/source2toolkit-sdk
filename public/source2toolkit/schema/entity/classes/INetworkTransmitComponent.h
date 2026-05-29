@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CNetworkTransmitComponent;
 
 class INetworkTransmitComponent
 {
 public:
     virtual ~INetworkTransmitComponent() = default;
+    CNetworkTransmitComponent* GetOriginal() { return reinterpret_cast<CNetworkTransmitComponent*>(IEntityInstance::GetOriginal()); }
 
     virtual uint8_t& TransmitStateOwnedCounter() = 0;
     virtual void TransmitStateOwnedCounterUpdated() = 0;
+    static INetworkTransmitComponent* FromOriginal(CNetworkTransmitComponent* p);
 };
 
 #endif // _INCLUDE_INETWORKTRANSMITCOMPONENT_H

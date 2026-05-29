@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ISkeletonAnimationController.h"
@@ -60,6 +61,7 @@
 
 class AnimGraph2SerializedPoseRecipeSlot_t;
 class CBaseAnimGraph;
+class CBaseAnimGraphController;
 class CNmGraphInstance;
 class ExternalAnimGraphHandle_t;
 class ExternalAnimGraph_t;
@@ -70,10 +72,11 @@ class IBaseAnimGraphController : public virtual ISkeletonAnimationController
 {
 public:
     virtual ~IBaseAnimGraphController() = default;
+    CBaseAnimGraphController* GetOriginal() { return reinterpret_cast<CBaseAnimGraphController*>(IEntityInstance::GetOriginal()); }
 
-    virtual AnimationAlgorithm_t& AnimationAlgorithm() = 0;
+    virtual ::AnimationAlgorithm_t& AnimationAlgorithm() = 0;
     virtual void AnimationAlgorithmUpdated() = 0;
-    virtual ExternalAnimGraphHandle_t& NextExternalGraphHandle() = 0;
+    virtual ::ExternalAnimGraphHandle_t& NextExternalGraphHandle() = 0;
     virtual void NextExternalGraphHandleUpdated() = 0;
     virtual CUtlVector<CGlobalSymbol>& SecondarySkeletonSlotIDs() = 0;
     virtual void SecondarySkeletonSlotIDsUpdated() = 0;
@@ -91,11 +94,11 @@ public:
     virtual void SeqStartTimeUpdated() = 0;
     virtual float& SeqFixedCycle() = 0;
     virtual void SeqFixedCycleUpdated() = 0;
-    virtual AnimLoopMode_t& AnimLoopMode() = 0;
+    virtual ::AnimLoopMode_t& AnimLoopMode() = 0;
     virtual void AnimLoopModeUpdated() = 0;
     virtual float& PlaybackRate() = 0;
     virtual void PlaybackRateUpdated() = 0;
-    virtual SequenceFinishNotifyState_t& NotifyState() = 0;
+    virtual ::SequenceFinishNotifyState_t& NotifyState() = 0;
     virtual void NotifyStateUpdated() = 0;
     virtual bool& NetworkedAnimationInputsChanged() = 0;
     virtual void NetworkedAnimationInputsChangedUpdated() = 0;
@@ -121,7 +124,7 @@ public:
     virtual void ServerGraphInstanceIterationUpdated() = 0;
     virtual int32_t& ServerSerializationContextIteration() = 0;
     virtual void ServerSerializationContextIterationUpdated() = 0;
-    virtual ResourceId_t& PrimaryGraphId() = 0;
+    virtual ::ResourceId_t& PrimaryGraphId() = 0;
     virtual void PrimaryGraphIdUpdated() = 0;
     virtual CUtlVector<ResourceId_t>& ExternalGraphIds() = 0;
     virtual void ExternalGraphIdsUpdated() = 0;
@@ -133,6 +136,7 @@ public:
     virtual void GraphInstanceAG2Updated() = 0;
     virtual CUtlVector<ExternalAnimGraph_t>& ExternalGraphs() = 0;
     virtual void ExternalGraphsUpdated() = 0;
+    static IBaseAnimGraphController* FromOriginal(CBaseAnimGraphController* p);
 };
 
 #endif // _INCLUDE_IBASEANIMGRAPHCONTROLLER_H

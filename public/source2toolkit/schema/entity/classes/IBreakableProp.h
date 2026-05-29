@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseProp.h"
@@ -59,20 +60,22 @@
 
 class CBaseEntity;
 class CBasePlayerPawn;
+class CBreakableProp;
 class CPropDataComponent;
 
 class IBreakableProp : public virtual IBaseProp
 {
 public:
     virtual ~IBreakableProp() = default;
+    CBreakableProp* GetOriginal() { return reinterpret_cast<CBreakableProp*>(IEntityInstance::GetOriginal()); }
 
-    virtual CPropDataComponent& CPropDataComponent() = 0;
-    virtual void CPropDataComponentUpdated() = 0;
-    virtual CEntityIOOutput& OnStartDeath() = 0;
+    virtual ::CPropDataComponent& PropDataComponent() = 0;
+    virtual void PropDataComponentUpdated() = 0;
+    virtual ::CEntityIOOutput& OnStartDeath() = 0;
     virtual void OnStartDeathUpdated() = 0;
-    virtual CEntityIOOutput& OnBreak() = 0;
+    virtual ::CEntityIOOutput& OnBreak() = 0;
     virtual void OnBreakUpdated() = 0;
-    virtual CEntityIOOutput& OnTakeDamage() = 0;
+    virtual ::CEntityIOOutput& OnTakeDamage() = 0;
     virtual void OnTakeDamageUpdated() = 0;
     virtual float& ImpactEnergyScale() = 0;
     virtual void ImpactEnergyScaleUpdated() = 0;
@@ -88,11 +91,11 @@ public:
     virtual void DefBurstOffsetUpdated() = 0;
     virtual CHandle<CBaseEntity>& Breaker() = 0;
     virtual void BreakerUpdated() = 0;
-    virtual PerformanceMode_t& PerformanceMode() = 0;
+    virtual ::PerformanceMode_t& PerformanceMode() = 0;
     virtual void PerformanceModeUpdated() = 0;
     virtual float& PreventDamageBeforeTime() = 0;
     virtual void PreventDamageBeforeTimeUpdated() = 0;
-    virtual BreakableContentsType_t& BreakableContentsType() = 0;
+    virtual ::BreakableContentsType_t& BreakableContentsType() = 0;
     virtual void BreakableContentsTypeUpdated() = 0;
     virtual CUtlString& StrBreakableContentsPropGroupOverride() = 0;
     virtual void StrBreakableContentsPropGroupOverrideUpdated() = 0;
@@ -130,6 +133,7 @@ public:
     virtual void UsePuntSoundUpdated() = 0;
     virtual bool& OriginalBlockLOS() = 0;
     virtual void OriginalBlockLOSUpdated() = 0;
+    static IBreakableProp* FromOriginal(CBreakableProp* p);
 };
 
 #endif // _INCLUDE_IBREAKABLEPROP_H

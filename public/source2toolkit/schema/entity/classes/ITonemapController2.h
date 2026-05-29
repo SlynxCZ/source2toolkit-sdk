@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CTonemapController2;
 
 class ITonemapController2 : public virtual IBaseEntity
 {
 public:
     virtual ~ITonemapController2() = default;
+    CTonemapController2* GetOriginal() { return reinterpret_cast<CTonemapController2*>(IEntityInstance::GetOriginal()); }
 
     virtual float& AutoExposureMin() = 0;
     virtual void AutoExposureMinUpdated() = 0;
@@ -69,6 +73,7 @@ public:
     virtual void ExposureAdaptationSpeedDownUpdated() = 0;
     virtual float& TonemapEVSmoothingRange() = 0;
     virtual void TonemapEVSmoothingRangeUpdated() = 0;
+    static ITonemapController2* FromOriginal(CTonemapController2* p);
 };
 
 #endif // _INCLUDE_ITONEMAPCONTROLLER2_H

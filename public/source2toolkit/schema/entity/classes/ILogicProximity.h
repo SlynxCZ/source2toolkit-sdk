@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CLogicProximity;
 
 class ILogicProximity : public virtual IPointEntity
 {
 public:
     virtual ~ILogicProximity() = default;
+    CLogicProximity* GetOriginal() { return reinterpret_cast<CLogicProximity*>(IEntityInstance::GetOriginal()); }
 
+    static ILogicProximity* FromOriginal(CLogicProximity* p);
 };
 
 #endif // _INCLUDE_ILOGICPROXIMITY_H

@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CChoreoInfoTarget;
 
 class IChoreoInfoTarget : public virtual IPointEntity
 {
 public:
     virtual ~IChoreoInfoTarget() = default;
+    CChoreoInfoTarget* GetOriginal() { return reinterpret_cast<CChoreoInfoTarget*>(IEntityInstance::GetOriginal()); }
 
+    static IChoreoInfoTarget* FromOriginal(CChoreoInfoTarget* p);
 };
 
 #endif // _INCLUDE_ICHOREOINFOTARGET_H

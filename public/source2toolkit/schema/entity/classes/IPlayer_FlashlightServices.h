@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayerPawnComponent.h"
+
+class CPlayer_FlashlightServices;
 
 class IPlayer_FlashlightServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~IPlayer_FlashlightServices() = default;
+    CPlayer_FlashlightServices* GetOriginal() { return reinterpret_cast<CPlayer_FlashlightServices*>(IEntityInstance::GetOriginal()); }
 
+    static IPlayer_FlashlightServices* FromOriginal(CPlayer_FlashlightServices* p);
 };
 
 #endif // _INCLUDE_IPLAYER_FLASHLIGHTSERVICES_H

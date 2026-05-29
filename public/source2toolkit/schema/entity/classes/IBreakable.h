@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
@@ -61,20 +62,22 @@
 
 class CBaseEntity;
 class CBasePlayerPawn;
+class CBreakable;
 class CPropDataComponent;
 
 class IBreakable : public virtual IBaseModelEntity
 {
 public:
     virtual ~IBreakable() = default;
+    CBreakable* GetOriginal() { return reinterpret_cast<CBreakable*>(IEntityInstance::GetOriginal()); }
 
-    virtual CPropDataComponent& CPropDataComponent() = 0;
-    virtual void CPropDataComponentUpdated() = 0;
-    virtual Materials& Material() = 0;
+    virtual ::CPropDataComponent& PropDataComponent() = 0;
+    virtual void PropDataComponentUpdated() = 0;
+    virtual ::Materials& Material() = 0;
     virtual void MaterialUpdated() = 0;
     virtual CHandle<CBaseEntity>& Breaker() = 0;
     virtual void BreakerUpdated() = 0;
-    virtual Explosions& Explosion() = 0;
+    virtual ::Explosions& Explosion() = 0;
     virtual void ExplosionUpdated() = 0;
     virtual CUtlSymbolLarge& SpawnObject() = 0;
     virtual void SpawnObjectUpdated() = 0;
@@ -86,18 +89,19 @@ public:
     virtual void PropDataUpdated() = 0;
     virtual float& ImpactEnergyScale() = 0;
     virtual void ImpactEnergyScaleUpdated() = 0;
-    virtual EOverrideBlockLOS_t& OverrideBlockLOS() = 0;
+    virtual ::EOverrideBlockLOS_t& OverrideBlockLOS() = 0;
     virtual void OverrideBlockLOSUpdated() = 0;
-    virtual CEntityIOOutput& OnStartDeath() = 0;
+    virtual ::CEntityIOOutput& OnStartDeath() = 0;
     virtual void OnStartDeathUpdated() = 0;
-    virtual CEntityIOOutput& OnBreak() = 0;
+    virtual ::CEntityIOOutput& OnBreak() = 0;
     virtual void OnBreakUpdated() = 0;
-    virtual PerformanceMode_t& PerformanceMode() = 0;
+    virtual ::PerformanceMode_t& PerformanceMode() = 0;
     virtual void PerformanceModeUpdated() = 0;
     virtual CHandle<CBasePlayerPawn>& PhysicsAttacker() = 0;
     virtual void PhysicsAttackerUpdated() = 0;
     virtual float& LastPhysicsInfluenceTime() = 0;
     virtual void LastPhysicsInfluenceTimeUpdated() = 0;
+    static IBreakable* FromOriginal(CBreakable* p);
 };
 
 #endif // _INCLUDE_IBREAKABLE_H

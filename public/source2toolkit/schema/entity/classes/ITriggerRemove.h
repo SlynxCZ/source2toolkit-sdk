@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
+
+class CTriggerRemove;
 
 class ITriggerRemove : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerRemove() = default;
+    CTriggerRemove* GetOriginal() { return reinterpret_cast<CTriggerRemove*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnRemove() = 0;
+    virtual ::CEntityIOOutput& OnRemove() = 0;
     virtual void OnRemoveUpdated() = 0;
+    static ITriggerRemove* FromOriginal(CTriggerRemove* p);
 };
 
 #endif // _INCLUDE_ITRIGGERREMOVE_H

@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
+
+class CMathRemap;
 
 class IMathRemap : public virtual ILogicalEntity
 {
 public:
     virtual ~IMathRemap() = default;
+    CMathRemap* GetOriginal() { return reinterpret_cast<CMathRemap*>(IEntityInstance::GetOriginal()); }
 
     virtual float& InMin() = 0;
     virtual void InMinUpdated() = 0;
@@ -71,14 +75,15 @@ public:
     virtual void OldInValueUpdated() = 0;
     virtual bool& Enabled() = 0;
     virtual void EnabledUpdated() = 0;
-    virtual CEntityIOOutput& OnRoseAboveMin() = 0;
+    virtual ::CEntityIOOutput& OnRoseAboveMin() = 0;
     virtual void OnRoseAboveMinUpdated() = 0;
-    virtual CEntityIOOutput& OnRoseAboveMax() = 0;
+    virtual ::CEntityIOOutput& OnRoseAboveMax() = 0;
     virtual void OnRoseAboveMaxUpdated() = 0;
-    virtual CEntityIOOutput& OnFellBelowMin() = 0;
+    virtual ::CEntityIOOutput& OnFellBelowMin() = 0;
     virtual void OnFellBelowMinUpdated() = 0;
-    virtual CEntityIOOutput& OnFellBelowMax() = 0;
+    virtual ::CEntityIOOutput& OnFellBelowMax() = 0;
     virtual void OnFellBelowMaxUpdated() = 0;
+    static IMathRemap* FromOriginal(CMathRemap* p);
 };
 
 #endif // _INCLUDE_IMATHREMAP_H

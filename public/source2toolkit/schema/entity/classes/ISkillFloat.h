@@ -50,14 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CSkillFloat;
 
 class ISkillFloat
 {
 public:
     virtual ~ISkillFloat() = default;
+    CSkillFloat* GetOriginal() { return reinterpret_cast<CSkillFloat*>(IEntityInstance::GetOriginal()); }
 
     virtual float* Value() = 0;
+    static ISkillFloat* FromOriginal(CSkillFloat* p);
 };
 
 #endif // _INCLUDE_ISKILLFLOAT_H

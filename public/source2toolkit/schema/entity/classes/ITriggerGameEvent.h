@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
+
+class CTriggerGameEvent;
 
 class ITriggerGameEvent : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerGameEvent() = default;
+    CTriggerGameEvent* GetOriginal() { return reinterpret_cast<CTriggerGameEvent*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlString& StrStartTouchEventName() = 0;
     virtual void StrStartTouchEventNameUpdated() = 0;
@@ -65,6 +69,7 @@ public:
     virtual void StrEndTouchEventNameUpdated() = 0;
     virtual CUtlString& StrTriggerID() = 0;
     virtual void StrTriggerIDUpdated() = 0;
+    static ITriggerGameEvent* FromOriginal(CTriggerGameEvent* p);
 };
 
 #endif // _INCLUDE_ITRIGGERGAMEEVENT_H

@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CNullEntity;
 
 class INullEntity : public virtual IBaseEntity
 {
 public:
     virtual ~INullEntity() = default;
+    CNullEntity* GetOriginal() { return reinterpret_cast<CNullEntity*>(IEntityInstance::GetOriginal()); }
 
+    static INullEntity* FromOriginal(CNullEntity* p);
 };
 
 #endif // _INCLUDE_INULLENTITY_H

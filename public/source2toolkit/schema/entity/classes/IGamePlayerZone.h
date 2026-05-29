@@ -50,19 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IRuleBrushEntity.h"
+
+class CGamePlayerZone;
 
 class IGamePlayerZone : public virtual IRuleBrushEntity
 {
 public:
     virtual ~IGamePlayerZone() = default;
+    CGamePlayerZone* GetOriginal() { return reinterpret_cast<CGamePlayerZone*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnPlayerInZone() = 0;
+    virtual ::CEntityIOOutput& OnPlayerInZone() = 0;
     virtual void OnPlayerInZoneUpdated() = 0;
-    virtual CEntityIOOutput& OnPlayerOutZone() = 0;
+    virtual ::CEntityIOOutput& OnPlayerOutZone() = 0;
     virtual void OnPlayerOutZoneUpdated() = 0;
+    static IGamePlayerZone* FromOriginal(CGamePlayerZone* p);
 };
 
 #endif // _INCLUDE_IGAMEPLAYERZONE_H

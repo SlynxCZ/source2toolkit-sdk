@@ -50,21 +50,26 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
 
 #include "../enums/RotatorTargetSpace_t.h"
 
+class CRotatorTarget;
+
 class IRotatorTarget : public virtual IPointEntity
 {
 public:
     virtual ~IRotatorTarget() = default;
+    CRotatorTarget* GetOriginal() { return reinterpret_cast<CRotatorTarget*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnArrivedAt() = 0;
+    virtual ::CEntityIOOutput& OnArrivedAt() = 0;
     virtual void OnArrivedAtUpdated() = 0;
-    virtual RotatorTargetSpace_t& Space() = 0;
+    virtual ::RotatorTargetSpace_t& Space() = 0;
     virtual void SpaceUpdated() = 0;
+    static IRotatorTarget* FromOriginal(CRotatorTarget* p);
 };
 
 #endif // _INCLUDE_IROTATORTARGET_H

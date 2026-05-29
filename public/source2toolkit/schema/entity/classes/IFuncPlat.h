@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBasePlatTrain.h"
+
+class CFuncPlat;
 
 class IFuncPlat : public virtual IBasePlatTrain
 {
 public:
     virtual ~IFuncPlat() = default;
+    CFuncPlat* GetOriginal() { return reinterpret_cast<CFuncPlat*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Noise() = 0;
     virtual void NoiseUpdated() = 0;
+    static IFuncPlat* FromOriginal(CFuncPlat* p);
 };
 
 #endif // _INCLUDE_IFUNCPLAT_H

@@ -50,18 +50,21 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IGameSceneNode.h"
 
 class CModelState;
+class CSkeletonInstance;
 
 class ISkeletonInstance : public virtual IGameSceneNode
 {
 public:
     virtual ~ISkeletonInstance() = default;
+    CSkeletonInstance* GetOriginal() { return reinterpret_cast<CSkeletonInstance*>(IEntityInstance::GetOriginal()); }
 
-    virtual CModelState& ModelState() = 0;
+    virtual ::CModelState& ModelState() = 0;
     virtual void ModelStateUpdated() = 0;
     virtual bool& UseParentRenderBounds() = 0;
     virtual void UseParentRenderBoundsUpdated() = 0;
@@ -72,6 +75,7 @@ public:
     virtual void HitboxSetUpdated() = 0;
     virtual bool& ForceServerConstraintsEnabled() = 0;
     virtual void ForceServerConstraintsEnabledUpdated() = 0;
+    static ISkeletonInstance* FromOriginal(CSkeletonInstance* p);
 };
 
 #endif // _INCLUDE_ISKELETONINSTANCE_H

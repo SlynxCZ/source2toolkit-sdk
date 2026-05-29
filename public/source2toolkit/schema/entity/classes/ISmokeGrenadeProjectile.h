@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseCSGrenadeProjectile.h"
+
+class CSmokeGrenadeProjectile;
 
 class ISmokeGrenadeProjectile : public virtual IBaseCSGrenadeProjectile
 {
 public:
     virtual ~ISmokeGrenadeProjectile() = default;
+    CSmokeGrenadeProjectile* GetOriginal() { return reinterpret_cast<CSmokeGrenadeProjectile*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& SmokeEffectTickBegin() = 0;
     virtual void SmokeEffectTickBeginUpdated() = 0;
@@ -83,6 +87,7 @@ public:
     virtual void ExplodeFromInfernoUpdated() = 0;
     virtual bool& DidGroundScorch() = 0;
     virtual void DidGroundScorchUpdated() = 0;
+    static ISmokeGrenadeProjectile* FromOriginal(CSmokeGrenadeProjectile* p);
 };
 
 #endif // _INCLUDE_ISMOKEGRENADEPROJECTILE_H

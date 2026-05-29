@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
 
 class CBaseEntity;
+class CPhysicsEntitySolver;
 
 class IPhysicsEntitySolver : public virtual ILogicalEntity
 {
 public:
     virtual ~IPhysicsEntitySolver() = default;
+    CPhysicsEntitySolver* GetOriginal() { return reinterpret_cast<CPhysicsEntitySolver*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& MovingEntity() = 0;
     virtual void MovingEntityUpdated() = 0;
@@ -69,6 +72,7 @@ public:
     virtual void SeparationDurationUpdated() = 0;
     virtual float& CancelTime() = 0;
     virtual void CancelTimeUpdated() = 0;
+    static IPhysicsEntitySolver* FromOriginal(CPhysicsEntitySolver* p);
 };
 
 #endif // _INCLUDE_IPHYSICSENTITYSOLVER_H

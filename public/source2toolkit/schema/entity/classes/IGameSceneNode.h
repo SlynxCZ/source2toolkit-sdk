@@ -50,14 +50,17 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+class CGameSceneNode;
 class CNetworkOriginCellCoordQuantizedVector;
 
 class IGameSceneNode
 {
 public:
     virtual ~IGameSceneNode() = default;
+    CGameSceneNode* GetOriginal() { return reinterpret_cast<CGameSceneNode*>(IEntityInstance::GetOriginal()); }
 
     virtual CTransform& NodeToWorld() = 0;
     virtual void NodeToWorldUpdated() = 0;
@@ -69,7 +72,7 @@ public:
     virtual void ChildUpdated() = 0;
     virtual CGameSceneNode*& NextSibling() = 0;
     virtual void NextSiblingUpdated() = 0;
-    virtual CNetworkOriginCellCoordQuantizedVector& Origin() = 0;
+    virtual ::CNetworkOriginCellCoordQuantizedVector& Origin() = 0;
     virtual void OriginUpdated() = 0;
     virtual QAngle& Rotation() = 0;
     virtual void RotationUpdated() = 0;
@@ -101,6 +104,7 @@ public:
     virtual void ClientLocalScaleUpdated() = 0;
     virtual Vector& RenderOrigin() = 0;
     virtual void RenderOriginUpdated() = 0;
+    static IGameSceneNode* FromOriginal(CGameSceneNode* p);
 };
 
 #endif // _INCLUDE_IGAMESCENENODE_H

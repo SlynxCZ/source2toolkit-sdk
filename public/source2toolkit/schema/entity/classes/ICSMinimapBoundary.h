@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CCSMinimapBoundary;
 
 class ICSMinimapBoundary : public virtual IBaseEntity
 {
 public:
     virtual ~ICSMinimapBoundary() = default;
+    CCSMinimapBoundary* GetOriginal() { return reinterpret_cast<CCSMinimapBoundary*>(IEntityInstance::GetOriginal()); }
 
+    static ICSMinimapBoundary* FromOriginal(CCSMinimapBoundary* p);
 };
 
 #endif // _INCLUDE_ICSMINIMAPBOUNDARY_H

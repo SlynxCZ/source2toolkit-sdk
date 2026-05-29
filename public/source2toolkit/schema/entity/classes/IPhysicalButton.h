@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseButton.h"
+
+class CPhysicalButton;
 
 class IPhysicalButton : public virtual IBaseButton
 {
 public:
     virtual ~IPhysicalButton() = default;
+    CPhysicalButton* GetOriginal() { return reinterpret_cast<CPhysicalButton*>(IEntityInstance::GetOriginal()); }
 
+    static IPhysicalButton* FromOriginal(CPhysicalButton* p);
 };
 
 #endif // _INCLUDE_IPHYSICALBUTTON_H

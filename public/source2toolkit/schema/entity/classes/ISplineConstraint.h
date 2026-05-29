@@ -50,17 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPhysConstraint.h"
 
 class CBaseEntity;
+class CSplineConstraint;
 class IPhysicsBody;
 
 class ISplineConstraint : public virtual IPhysConstraint
 {
 public:
     virtual ~ISplineConstraint() = default;
+    CSplineConstraint* GetOriginal() { return reinterpret_cast<CSplineConstraint*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& AnchorOffsetRestore() = 0;
     virtual void AnchorOffsetRestoreUpdated() = 0;
@@ -92,6 +95,7 @@ public:
     virtual void StartTransitionTimeUpdated() = 0;
     virtual Vector& TangentSpaceAnchorAtTransitionStart() = 0;
     virtual void TangentSpaceAnchorAtTransitionStartUpdated() = 0;
+    static ISplineConstraint* FromOriginal(CSplineConstraint* p);
 };
 
 #endif // _INCLUDE_ISPLINECONSTRAINT_H

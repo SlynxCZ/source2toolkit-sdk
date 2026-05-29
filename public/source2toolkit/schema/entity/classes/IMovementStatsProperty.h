@@ -50,19 +50,23 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+class CMovementStatsProperty;
 class CVectorExponentialMovingAverage;
 
 class IMovementStatsProperty
 {
 public:
     virtual ~IMovementStatsProperty() = default;
+    CMovementStatsProperty* GetOriginal() { return reinterpret_cast<CMovementStatsProperty*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& UseCounter() = 0;
     virtual void UseCounterUpdated() = 0;
-    virtual CVectorExponentialMovingAverage& EmaMovementDirection() = 0;
+    virtual ::CVectorExponentialMovingAverage& EmaMovementDirection() = 0;
     virtual void EmaMovementDirectionUpdated() = 0;
+    static IMovementStatsProperty* FromOriginal(CMovementStatsProperty* p);
 };
 
 #endif // _INCLUDE_IMOVEMENTSTATSPROPERTY_H

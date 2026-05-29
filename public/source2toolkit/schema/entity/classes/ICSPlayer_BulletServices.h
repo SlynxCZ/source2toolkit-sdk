@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayerPawnComponent.h"
+
+class CCSPlayer_BulletServices;
 
 class ICSPlayer_BulletServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~ICSPlayer_BulletServices() = default;
+    CCSPlayer_BulletServices* GetOriginal() { return reinterpret_cast<CCSPlayer_BulletServices*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& TotalHitsOnServer() = 0;
     virtual void TotalHitsOnServerUpdated() = 0;
+    static ICSPlayer_BulletServices* FromOriginal(CCSPlayer_BulletServices* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_BULLETSERVICES_H

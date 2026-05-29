@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IFuncMoveLinear.h"
+
+class CFuncMoveLinearAlias_momentary_door;
 
 class IFuncMoveLinearAlias_momentary_door : public virtual IFuncMoveLinear
 {
 public:
     virtual ~IFuncMoveLinearAlias_momentary_door() = default;
+    CFuncMoveLinearAlias_momentary_door* GetOriginal() { return reinterpret_cast<CFuncMoveLinearAlias_momentary_door*>(IEntityInstance::GetOriginal()); }
 
+    static IFuncMoveLinearAlias_momentary_door* FromOriginal(CFuncMoveLinearAlias_momentary_door* p);
 };
 
 #endif // _INCLUDE_IFUNCMOVELINEARALIAS_MOMENTARY_DOOR_H

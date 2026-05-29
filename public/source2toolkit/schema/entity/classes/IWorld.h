@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
+
+class CWorld;
 
 class IWorld : public virtual IBaseModelEntity
 {
 public:
     virtual ~IWorld() = default;
+    CWorld* GetOriginal() { return reinterpret_cast<CWorld*>(IEntityInstance::GetOriginal()); }
 
+    static IWorld* FromOriginal(CWorld* p);
 };
 
 #endif // _INCLUDE_IWORLD_H

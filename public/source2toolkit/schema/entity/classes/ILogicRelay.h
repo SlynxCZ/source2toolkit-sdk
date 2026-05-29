@@ -50,18 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
+
+class CLogicRelay;
 
 class ILogicRelay : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicRelay() = default;
+    CLogicRelay* GetOriginal() { return reinterpret_cast<CLogicRelay*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnSpawn() = 0;
+    virtual ::CEntityIOOutput& OnSpawn() = 0;
     virtual void OnSpawnUpdated() = 0;
-    virtual CEntityIOOutput& OnTrigger() = 0;
+    virtual ::CEntityIOOutput& OnTrigger() = 0;
     virtual void OnTriggerUpdated() = 0;
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;
@@ -73,6 +77,7 @@ public:
     virtual void FastRetriggerUpdated() = 0;
     virtual bool& PassthoughCaller() = 0;
     virtual void PassthoughCallerUpdated() = 0;
+    static ILogicRelay* FromOriginal(CLogicRelay* p);
 };
 
 #endif // _INCLUDE_ILOGICRELAY_H

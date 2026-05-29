@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
@@ -57,12 +58,14 @@
 #include "../enums/TrainOrientationType_t.h"
 #include "../enums/TrainVelocityType_t.h"
 
+class CFuncTrackTrain;
 class CPathTrack;
 
 class IFuncTrackTrain : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncTrackTrain() = default;
+    CFuncTrackTrain* GetOriginal() { return reinterpret_cast<CFuncTrackTrain*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CPathTrack>& Ppath() = 0;
     virtual void PpathUpdated() = 0;
@@ -114,15 +117,15 @@ public:
     virtual void MoveSoundMinPitchUpdated() = 0;
     virtual float& MoveSoundMaxPitch() = 0;
     virtual void MoveSoundMaxPitchUpdated() = 0;
-    virtual TrainOrientationType_t& OrientationType() = 0;
+    virtual ::TrainOrientationType_t& OrientationType() = 0;
     virtual void OrientationTypeUpdated() = 0;
-    virtual TrainVelocityType_t& VelocityType() = 0;
+    virtual ::TrainVelocityType_t& VelocityType() = 0;
     virtual void VelocityTypeUpdated() = 0;
-    virtual CEntityIOOutput& OnStart() = 0;
+    virtual ::CEntityIOOutput& OnStart() = 0;
     virtual void OnStartUpdated() = 0;
-    virtual CEntityIOOutput& OnNext() = 0;
+    virtual ::CEntityIOOutput& OnNext() = 0;
     virtual void OnNextUpdated() = 0;
-    virtual CEntityIOOutput& OnArrivedAtDestinationNode() = 0;
+    virtual ::CEntityIOOutput& OnArrivedAtDestinationNode() = 0;
     virtual void OnArrivedAtDestinationNodeUpdated() = 0;
     virtual bool& ManualSpeedChanges() = 0;
     virtual void ManualSpeedChangesUpdated() = 0;
@@ -138,6 +141,7 @@ public:
     virtual void AccelToSpeedUpdated() = 0;
     virtual float& NextMPSoundTime() = 0;
     virtual void NextMPSoundTimeUpdated() = 0;
+    static IFuncTrackTrain* FromOriginal(CFuncTrackTrain* p);
 };
 
 #endif // _INCLUDE_IFUNCTRACKTRAIN_H

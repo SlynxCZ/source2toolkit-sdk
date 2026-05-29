@@ -50,16 +50,21 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointClientUIWorldPanel.h"
+
+class CPointClientUIWorldTextPanel;
 
 class IPointClientUIWorldTextPanel : public virtual IPointClientUIWorldPanel
 {
 public:
     virtual ~IPointClientUIWorldTextPanel() = default;
+    CPointClientUIWorldTextPanel* GetOriginal() { return reinterpret_cast<CPointClientUIWorldTextPanel*>(IEntityInstance::GetOriginal()); }
 
     virtual char* MessageText() = 0;
+    static IPointClientUIWorldTextPanel* FromOriginal(CPointClientUIWorldTextPanel* p);
 };
 
 #endif // _INCLUDE_IPOINTCLIENTUIWORLDTEXTPANEL_H

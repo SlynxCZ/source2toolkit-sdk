@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "../enums/CCSPlayerAnimationState__AirAction_t.h"
@@ -57,18 +58,21 @@
 #include "../enums/CCSPlayerAnimationState__GroundMoveState_t.h"
 #include "../enums/CCSPlayerAnimationState__MoveType_t.h"
 
+class CCSPlayerAnimationState;
+
 class ICSPlayerAnimationState
 {
 public:
     virtual ~ICSPlayerAnimationState() = default;
+    CCSPlayerAnimationState* GetOriginal() { return reinterpret_cast<CCSPlayerAnimationState*>(IEntityInstance::GetOriginal()); }
 
-    virtual CCSPlayerAnimationState__MoveType_t& CurrentMoveType() = 0;
+    virtual ::CCSPlayerAnimationState__MoveType_t& CurrentMoveType() = 0;
     virtual void CurrentMoveTypeUpdated() = 0;
-    virtual CCSPlayerAnimationState__GroundMoveState_t& GroundMoveState() = 0;
+    virtual ::CCSPlayerAnimationState__GroundMoveState_t& GroundMoveState() = 0;
     virtual void GroundMoveStateUpdated() = 0;
-    virtual CCSPlayerAnimationState__Direction_t& GroundActionDirection() = 0;
+    virtual ::CCSPlayerAnimationState__Direction_t& GroundActionDirection() = 0;
     virtual void GroundActionDirectionUpdated() = 0;
-    virtual CCSPlayerAnimationState__AirAction_t& AirAction() = 0;
+    virtual ::CCSPlayerAnimationState__AirAction_t& AirAction() = 0;
     virtual void AirActionUpdated() = 0;
     virtual bool& WasOnGroundLastUpdate() = 0;
     virtual void WasOnGroundLastUpdateUpdated() = 0;
@@ -94,6 +98,7 @@ public:
     virtual void WeaponDropPercentageDueToMovementUpdated() = 0;
     virtual float& WeaponDropSmoothDampVelocity() = 0;
     virtual void WeaponDropSmoothDampVelocityUpdated() = 0;
+    static ICSPlayerAnimationState* FromOriginal(CCSPlayerAnimationState* p);
 };
 
 #endif // _INCLUDE_ICSPLAYERANIMATIONSTATE_H

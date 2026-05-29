@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
+
+class CPrecipitation;
 
 class IPrecipitation : public virtual IBaseTrigger
 {
 public:
     virtual ~IPrecipitation() = default;
+    CPrecipitation* GetOriginal() { return reinterpret_cast<CPrecipitation*>(IEntityInstance::GetOriginal()); }
 
+    static IPrecipitation* FromOriginal(CPrecipitation* p);
 };
 
 #endif // _INCLUDE_IPRECIPITATION_H

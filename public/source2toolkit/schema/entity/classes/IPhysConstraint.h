@@ -50,17 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
 
 class CBaseEntity;
+class CPhysConstraint;
 class IPhysicsJoint;
 
 class IPhysConstraint : public virtual ILogicalEntity
 {
 public:
     virtual ~IPhysConstraint() = default;
+    CPhysConstraint* GetOriginal() { return reinterpret_cast<CPhysConstraint*>(IEntityInstance::GetOriginal()); }
 
     virtual IPhysicsJoint*& Joint() = 0;
     virtual void JointUpdated() = 0;
@@ -88,8 +91,9 @@ public:
     virtual void SnapObjectPositionsUpdated() = 0;
     virtual bool& TreatEntity1AsInfiniteMass() = 0;
     virtual void TreatEntity1AsInfiniteMassUpdated() = 0;
-    virtual CEntityIOOutput& OnBreak() = 0;
+    virtual ::CEntityIOOutput& OnBreak() = 0;
     virtual void OnBreakUpdated() = 0;
+    static IPhysConstraint* FromOriginal(CPhysConstraint* p);
 };
 
 #endif // _INCLUDE_IPHYSCONSTRAINT_H

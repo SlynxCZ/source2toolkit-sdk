@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ITriggerMultiple.h"
+
+class CScriptTriggerMultiple;
 
 class IScriptTriggerMultiple : public virtual ITriggerMultiple
 {
 public:
     virtual ~IScriptTriggerMultiple() = default;
+    CScriptTriggerMultiple* GetOriginal() { return reinterpret_cast<CScriptTriggerMultiple*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& Extent() = 0;
     virtual void ExtentUpdated() = 0;
+    static IScriptTriggerMultiple* FromOriginal(CScriptTriggerMultiple* p);
 };
 
 #endif // _INCLUDE_ISCRIPTTRIGGERMULTIPLE_H

@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
+
+class CTriggerBombReset;
 
 class ITriggerBombReset : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerBombReset() = default;
+    CTriggerBombReset* GetOriginal() { return reinterpret_cast<CTriggerBombReset*>(IEntityInstance::GetOriginal()); }
 
+    static ITriggerBombReset* FromOriginal(CTriggerBombReset* p);
 };
 
 #endif // _INCLUDE_ITRIGGERBOMBRESET_H

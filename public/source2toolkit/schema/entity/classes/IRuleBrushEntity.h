@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IRuleEntity.h"
+
+class CRuleBrushEntity;
 
 class IRuleBrushEntity : public virtual IRuleEntity
 {
 public:
     virtual ~IRuleBrushEntity() = default;
+    CRuleBrushEntity* GetOriginal() { return reinterpret_cast<CRuleBrushEntity*>(IEntityInstance::GetOriginal()); }
 
+    static IRuleBrushEntity* FromOriginal(CRuleBrushEntity* p);
 };
 
 #endif // _INCLUDE_IRULEBRUSHENTITY_H

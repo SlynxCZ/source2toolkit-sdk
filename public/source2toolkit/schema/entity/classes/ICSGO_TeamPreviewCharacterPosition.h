@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
 
+class CCSGO_TeamPreviewCharacterPosition;
 class CEconItemView;
 
 class ICSGO_TeamPreviewCharacterPosition : public virtual IBaseEntity
 {
 public:
     virtual ~ICSGO_TeamPreviewCharacterPosition() = default;
+    CCSGO_TeamPreviewCharacterPosition* GetOriginal() { return reinterpret_cast<CCSGO_TeamPreviewCharacterPosition*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Variant() = 0;
     virtual void VariantUpdated() = 0;
@@ -71,12 +74,13 @@ public:
     virtual void WeaponNameUpdated() = 0;
     virtual uint64_t& Xuid() = 0;
     virtual void XuidUpdated() = 0;
-    virtual CEconItemView& AgentItem() = 0;
+    virtual ::CEconItemView& AgentItem() = 0;
     virtual void AgentItemUpdated() = 0;
-    virtual CEconItemView& GlovesItem() = 0;
+    virtual ::CEconItemView& GlovesItem() = 0;
     virtual void GlovesItemUpdated() = 0;
-    virtual CEconItemView& WeaponItem() = 0;
+    virtual ::CEconItemView& WeaponItem() = 0;
     virtual void WeaponItemUpdated() = 0;
+    static ICSGO_TeamPreviewCharacterPosition* FromOriginal(CCSGO_TeamPreviewCharacterPosition* p);
 };
 
 #endif // _INCLUDE_ICSGO_TEAMPREVIEWCHARACTERPOSITION_H

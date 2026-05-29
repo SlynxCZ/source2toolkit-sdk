@@ -50,20 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
+
+class CChangeLevel;
 
 class IChangeLevel : public virtual IBaseTrigger
 {
 public:
     virtual ~IChangeLevel() = default;
+    CChangeLevel* GetOriginal() { return reinterpret_cast<CChangeLevel*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlString& MapName() = 0;
     virtual void MapNameUpdated() = 0;
     virtual CUtlString& LandmarkName() = 0;
     virtual void LandmarkNameUpdated() = 0;
-    virtual CEntityIOOutput& OnChangeLevel() = 0;
+    virtual ::CEntityIOOutput& OnChangeLevel() = 0;
     virtual void OnChangeLevelUpdated() = 0;
     virtual bool& Touched() = 0;
     virtual void TouchedUpdated() = 0;
@@ -73,6 +77,7 @@ public:
     virtual void NewChapterUpdated() = 0;
     virtual bool& OnChangeLevelFired() = 0;
     virtual void OnChangeLevelFiredUpdated() = 0;
+    static IChangeLevel* FromOriginal(CChangeLevel* p);
 };
 
 #endif // _INCLUDE_ICHANGELEVEL_H

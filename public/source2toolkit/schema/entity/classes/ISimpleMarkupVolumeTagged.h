@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IMarkupVolumeTagged.h"
+
+class CSimpleMarkupVolumeTagged;
 
 class ISimpleMarkupVolumeTagged : public virtual IMarkupVolumeTagged
 {
 public:
     virtual ~ISimpleMarkupVolumeTagged() = default;
+    CSimpleMarkupVolumeTagged* GetOriginal() { return reinterpret_cast<CSimpleMarkupVolumeTagged*>(IEntityInstance::GetOriginal()); }
 
+    static ISimpleMarkupVolumeTagged* FromOriginal(CSimpleMarkupVolumeTagged* p);
 };
 
 #endif // _INCLUDE_ISIMPLEMARKUPVOLUMETAGGED_H

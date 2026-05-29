@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "../enums/MoodType_t.h"
+
+class CMoodVData;
 
 class IMoodVData
 {
 public:
     virtual ~IMoodVData() = default;
+    CMoodVData* GetOriginal() { return reinterpret_cast<CMoodVData*>(IEntityInstance::GetOriginal()); }
 
-    virtual MoodType_t& MoodType() = 0;
+    virtual ::MoodType_t& MoodType() = 0;
     virtual void MoodTypeUpdated() = 0;
+    static IMoodVData* FromOriginal(CMoodVData* p);
 };
 
 #endif // _INCLUDE_IMOODVDATA_H

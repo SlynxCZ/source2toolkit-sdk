@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPhysicsProp.h"
+
+class CPhysicsPropMultiplayer;
 
 class IPhysicsPropMultiplayer : public virtual IPhysicsProp
 {
 public:
     virtual ~IPhysicsPropMultiplayer() = default;
+    CPhysicsPropMultiplayer* GetOriginal() { return reinterpret_cast<CPhysicsPropMultiplayer*>(IEntityInstance::GetOriginal()); }
 
+    static IPhysicsPropMultiplayer* FromOriginal(CPhysicsPropMultiplayer* p);
 };
 
 #endif // _INCLUDE_IPHYSICSPROPMULTIPLAYER_H

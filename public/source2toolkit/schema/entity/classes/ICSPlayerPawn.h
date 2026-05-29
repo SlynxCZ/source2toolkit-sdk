@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ICSPlayerPawnBase.h"
@@ -60,6 +61,7 @@
 class CBaseEntity;
 class CCSBot;
 class CCSPlayerController;
+class CCSPlayerPawn;
 class CCSPlayer_ActionTrackingServices;
 class CCSPlayer_AimPunchServices;
 class CCSPlayer_BulletServices;
@@ -69,11 +71,13 @@ class CCSPlayer_HostageServices;
 class CCSPlayer_RadioServices;
 class CEconItemView;
 class EntitySpottedState_t;
+class ICSPlayerController;
 
 class ICSPlayerPawn : public virtual ICSPlayerPawnBase
 {
 public:
     virtual ~ICSPlayerPawn() = default;
+    CCSPlayerPawn* GetOriginal() { return reinterpret_cast<CCSPlayerPawn*>(IEntityInstance::GetOriginal()); }
 
     virtual CCSPlayer_BulletServices*& BulletServices() = 0;
     virtual void BulletServicesUpdated() = 0;
@@ -120,7 +124,7 @@ public:
     virtual void RetakesMVPLastRoundUpdated() = 0;
     virtual int32_t& RetakesMVPBoostItem() = 0;
     virtual void RetakesMVPBoostItemUpdated() = 0;
-    virtual loadout_slot_t& RetakesMVPBoostExtraUtility() = 0;
+    virtual ::loadout_slot_t& RetakesMVPBoostExtraUtility() = 0;
     virtual void RetakesMVPBoostExtraUtilityUpdated() = 0;
     virtual float& HealthShotBoostExpirationTime() = 0;
     virtual void HealthShotBoostExpirationTimeUpdated() = 0;
@@ -151,7 +155,7 @@ public:
     virtual void RagdollDamageHeadshotUpdated() = 0;
     virtual Vector& RagdollServerOrigin() = 0;
     virtual void RagdollServerOriginUpdated() = 0;
-    virtual CEconItemView& EconGloves() = 0;
+    virtual ::CEconItemView& EconGloves() = 0;
     virtual void EconGlovesUpdated() = 0;
     virtual uint8_t& EconGlovesChanged() = 0;
     virtual void EconGlovesChangedUpdated() = 0;
@@ -187,7 +191,7 @@ public:
     virtual void ResetArmorNextSpawnUpdated() = 0;
     virtual CEntityIndex& LastKillerIndex() = 0;
     virtual void LastKillerIndexUpdated() = 0;
-    virtual EntitySpottedState_t& EntitySpottedState() = 0;
+    virtual ::EntitySpottedState_t& EntitySpottedState() = 0;
     virtual void EntitySpottedStateUpdated() = 0;
     virtual int32_t& SpotRules() = 0;
     virtual void SpotRulesUpdated() = 0;
@@ -199,7 +203,7 @@ public:
     virtual void IsDefusingUpdated() = 0;
     virtual bool& IsGrabbingHostage() = 0;
     virtual void IsGrabbingHostageUpdated() = 0;
-    virtual CSPlayerBlockingUseAction_t& BlockingUseActionInProgress() = 0;
+    virtual ::CSPlayerBlockingUseAction_t& BlockingUseActionInProgress() = 0;
     virtual void BlockingUseActionInProgressUpdated() = 0;
     virtual float& EmitSoundTime() = 0;
     virtual void EmitSoundTimeUpdated() = 0;
@@ -286,9 +290,13 @@ public:
     virtual QAngle& EyeAngles() = 0;
     virtual void EyeAnglesUpdated() = 0;
 
-    virtual CCSPlayerController* GetController() = 0;
-    virtual CCSPlayerController* GetDefaultController() = 0;
-    virtual CCSPlayerController* GetOriginalController() = 0;
+    /// <summary>Get controller.</summary>
+    virtual ICSPlayerController* GetController() = 0;
+    /// <summary>Get default controller.</summary>
+    virtual ICSPlayerController* GetDefaultController() = 0;
+    /// <summary>Get original controller.</summary>
+    virtual ICSPlayerController* GetOriginalController() = 0;
+    static ICSPlayerPawn* FromOriginal(CCSPlayerPawn* p);
 };
 
 #endif // _INCLUDE_ICSPLAYERPAWN_H

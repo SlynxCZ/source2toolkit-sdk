@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
 
+class CGradientFog;
 class InfoForResourceTypeCTextureBase;
 
 class IGradientFog : public virtual IBaseEntity
 {
 public:
     virtual ~IGradientFog() = default;
+    CGradientFog* GetOriginal() { return reinterpret_cast<CGradientFog*>(IEntityInstance::GetOriginal()); }
 
     virtual CStrongHandle<InfoForResourceTypeCTextureBase>& GradientFogTexture() = 0;
     virtual void GradientFogTextureUpdated() = 0;
@@ -93,6 +96,7 @@ public:
     virtual void IsEnabledUpdated() = 0;
     virtual bool& GradientFogNeedsTextures() = 0;
     virtual void GradientFogNeedsTexturesUpdated() = 0;
+    static IGradientFog* FromOriginal(CGradientFog* p);
 };
 
 #endif // _INCLUDE_IGRADIENTFOG_H

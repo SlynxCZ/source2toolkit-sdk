@@ -50,23 +50,28 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IMarkupVolumeWithRef.h"
 
 #include "../enums/NavScopeFlags_t.h"
 
+class CMarkupVolumeTagged_NavGame;
+
 class IMarkupVolumeTagged_NavGame : public virtual IMarkupVolumeWithRef
 {
 public:
     virtual ~IMarkupVolumeTagged_NavGame() = default;
+    CMarkupVolumeTagged_NavGame* GetOriginal() { return reinterpret_cast<CMarkupVolumeTagged_NavGame*>(IEntityInstance::GetOriginal()); }
 
-    virtual NavScopeFlags_t& Scopes() = 0;
+    virtual ::NavScopeFlags_t& Scopes() = 0;
     virtual void ScopesUpdated() = 0;
     virtual bool& FloodFillAttribute() = 0;
     virtual void FloodFillAttributeUpdated() = 0;
     virtual bool& SplitNavSpace() = 0;
     virtual void SplitNavSpaceUpdated() = 0;
+    static IMarkupVolumeTagged_NavGame* FromOriginal(CMarkupVolumeTagged_NavGame* p);
 };
 
 #endif // _INCLUDE_IMARKUPVOLUMETAGGED_NAVGAME_H

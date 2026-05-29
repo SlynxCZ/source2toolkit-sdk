@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
@@ -61,6 +62,7 @@
 #include "../enums/CFuncMover__TransitionToPathNodeAction_t.h"
 
 class CBaseEntity;
+class CFuncMover;
 class CMoverPathNode;
 class CPathMover;
 class FuncMoverMovementSummary_t;
@@ -69,6 +71,7 @@ class IFuncMover : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncMover() = default;
+    CFuncMover* GetOriginal() { return reinterpret_cast<CFuncMover*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& PathName() = 0;
     virtual void PathNameUpdated() = 0;
@@ -82,7 +85,7 @@ public:
     virtual void PathNodeEndUpdated() = 0;
     virtual bool& IgnoreEndNode() = 0;
     virtual void IgnoreEndNodeUpdated() = 0;
-    virtual CFuncMover__Move_t& MoveType() = 0;
+    virtual ::CFuncMover__Move_t& MoveType() = 0;
     virtual void MoveTypeUpdated() = 0;
     virtual bool& IsReversing() = 0;
     virtual void IsReversingUpdated() = 0;
@@ -96,7 +99,7 @@ public:
     virtual void CurrentNodeIndexUpdated() = 0;
     virtual int32_t& PreviousNodeIndex() = 0;
     virtual void PreviousNodeIndexUpdated() = 0;
-    virtual SolidType_t& SolidType() = 0;
+    virtual ::SolidType_t& SolidType() = 0;
     virtual void SolidTypeUpdated() = 0;
     virtual bool& IsMoving() = 0;
     virtual void IsMovingUpdated() = 0;
@@ -142,7 +145,7 @@ public:
     virtual void StopReverseSoundUpdated() = 0;
     virtual CUtlSymbolLarge& ArriveAtDestinationSound() = 0;
     virtual void ArriveAtDestinationSoundUpdated() = 0;
-    virtual CEntityIOOutput& OnMovementEnd() = 0;
+    virtual ::CEntityIOOutput& OnMovementEnd() = 0;
     virtual void OnMovementEndUpdated() = 0;
     virtual bool& StartAtClosestPoint() = 0;
     virtual void StartAtClosestPointUpdated() = 0;
@@ -150,7 +153,7 @@ public:
     virtual void StartAtEndUpdated() = 0;
     virtual bool& StartFollowingClosestMover() = 0;
     virtual void StartFollowingClosestMoverUpdated() = 0;
-    virtual CFuncMover__OrientationUpdate_t& OrientationUpdate() = 0;
+    virtual ::CFuncMover__OrientationUpdate_t& OrientationUpdate() = 0;
     virtual void OrientationUpdateUpdated() = 0;
     virtual float& TimeStartOrientationChange() = 0;
     virtual void TimeStartOrientationChangeUpdated() = 0;
@@ -176,11 +179,11 @@ public:
     virtual void LerpToPositionTUpdated() = 0;
     virtual float& LerpToPositionDeltaT() = 0;
     virtual void LerpToPositionDeltaTUpdated() = 0;
-    virtual CEntityIOOutput& OnLerpToPositionComplete() = 0;
+    virtual ::CEntityIOOutput& OnLerpToPositionComplete() = 0;
     virtual void OnLerpToPositionCompleteUpdated() = 0;
     virtual bool& IsPaused() = 0;
     virtual void IsPausedUpdated() = 0;
-    virtual CFuncMover__TransitionToPathNodeAction_t& TransitionedToPathNodeAction() = 0;
+    virtual ::CFuncMover__TransitionToPathNodeAction_t& TransitionedToPathNodeAction() = 0;
     virtual void TransitionedToPathNodeActionUpdated() = 0;
     virtual Quaternion& TransitionSourceOrientation() = 0;
     virtual void TransitionSourceOrientationUpdated() = 0;
@@ -202,21 +205,21 @@ public:
     virtual void StrOrientationFaceEntityNameUpdated() = 0;
     virtual CHandle<CBaseEntity>& OrientationFaceEntity() = 0;
     virtual void OrientationFaceEntityUpdated() = 0;
-    virtual CEntityIOOutput& OnStart() = 0;
+    virtual ::CEntityIOOutput& OnStart() = 0;
     virtual void OnStartUpdated() = 0;
-    virtual CEntityIOOutput& OnStartForward() = 0;
+    virtual ::CEntityIOOutput& OnStartForward() = 0;
     virtual void OnStartForwardUpdated() = 0;
-    virtual CEntityIOOutput& OnStartReverse() = 0;
+    virtual ::CEntityIOOutput& OnStartReverse() = 0;
     virtual void OnStartReverseUpdated() = 0;
-    virtual CEntityIOOutput& OnStop() = 0;
+    virtual ::CEntityIOOutput& OnStop() = 0;
     virtual void OnStopUpdated() = 0;
-    virtual CEntityIOOutput& OnStopped() = 0;
+    virtual ::CEntityIOOutput& OnStopped() = 0;
     virtual void OnStoppedUpdated() = 0;
     virtual bool& NextNodeReturnsCurrent() = 0;
     virtual void NextNodeReturnsCurrentUpdated() = 0;
     virtual bool& StartedMoving() = 0;
     virtual void StartedMovingUpdated() = 0;
-    virtual CFuncMover__FollowEntityDirection_t& FollowEntityDirection() = 0;
+    virtual ::CFuncMover__FollowEntityDirection_t& FollowEntityDirection() = 0;
     virtual void FollowEntityDirectionUpdated() = 0;
     virtual CHandle<CFuncMover>& FollowMover() = 0;
     virtual void FollowMoverUpdated() = 0;
@@ -234,7 +237,7 @@ public:
     virtual void FollowMoverConstraintPriorityUpdated() = 0;
     virtual bool& FollowConstraintsInitialized() = 0;
     virtual void FollowConstraintsInitializedUpdated() = 0;
-    virtual CFuncMover__FollowConstraint_t& FollowConstraint() = 0;
+    virtual ::CFuncMover__FollowConstraint_t& FollowConstraint() = 0;
     virtual void FollowConstraintUpdated() = 0;
     virtual float& FollowMoverSpeed() = 0;
     virtual void FollowMoverSpeedUpdated() = 0;
@@ -242,7 +245,7 @@ public:
     virtual void FollowMoverVelocityUpdated() = 0;
     virtual int32_t& TickMovementRan() = 0;
     virtual void TickMovementRanUpdated() = 0;
-    virtual FuncMoverMovementSummary_t& MovementSummary() = 0;
+    virtual ::FuncMoverMovementSummary_t& MovementSummary() = 0;
     virtual void MovementSummaryUpdated() = 0;
     virtual bool& StopFromBeginStopTarget() = 0;
     virtual void StopFromBeginStopTargetUpdated() = 0;
@@ -250,6 +253,7 @@ public:
     virtual void QueueStopUpdated() = 0;
     virtual bool& QueueStopMoving() = 0;
     virtual void QueueStopMovingUpdated() = 0;
+    static IFuncMover* FromOriginal(CFuncMover* p);
 };
 
 #endif // _INCLUDE_IFUNCMOVER_H

@@ -50,21 +50,25 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IRulePointEntity.h"
 
+class CGameText;
 class hudtextparms_t;
 
 class IGameText : public virtual IRulePointEntity
 {
 public:
     virtual ~IGameText() = default;
+    CGameText* GetOriginal() { return reinterpret_cast<CGameText*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Message() = 0;
     virtual void MessageUpdated() = 0;
-    virtual hudtextparms_t& TextParms() = 0;
+    virtual ::hudtextparms_t& TextParms() = 0;
     virtual void TextParmsUpdated() = 0;
+    static IGameText* FromOriginal(CGameText* p);
 };
 
 #endif // _INCLUDE_IGAMETEXT_H

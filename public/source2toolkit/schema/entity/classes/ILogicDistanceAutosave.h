@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
+
+class CLogicDistanceAutosave;
 
 class ILogicDistanceAutosave : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicDistanceAutosave() = default;
+    CLogicDistanceAutosave* GetOriginal() { return reinterpret_cast<CLogicDistanceAutosave*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& TargetEntity() = 0;
     virtual void TargetEntityUpdated() = 0;
@@ -71,6 +75,7 @@ public:
     virtual void ThinkDangerousUpdated() = 0;
     virtual float& DangerousTime() = 0;
     virtual void DangerousTimeUpdated() = 0;
+    static ILogicDistanceAutosave* FromOriginal(CLogicDistanceAutosave* p);
 };
 
 #endif // _INCLUDE_ILOGICDISTANCEAUTOSAVE_H

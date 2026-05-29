@@ -50,22 +50,26 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
+
+class CInfoSpawnGroupLoadUnload;
 
 class IInfoSpawnGroupLoadUnload : public virtual ILogicalEntity
 {
 public:
     virtual ~IInfoSpawnGroupLoadUnload() = default;
+    CInfoSpawnGroupLoadUnload* GetOriginal() { return reinterpret_cast<CInfoSpawnGroupLoadUnload*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnSpawnGroupLoadStarted() = 0;
+    virtual ::CEntityIOOutput& OnSpawnGroupLoadStarted() = 0;
     virtual void OnSpawnGroupLoadStartedUpdated() = 0;
-    virtual CEntityIOOutput& OnSpawnGroupLoadFinished() = 0;
+    virtual ::CEntityIOOutput& OnSpawnGroupLoadFinished() = 0;
     virtual void OnSpawnGroupLoadFinishedUpdated() = 0;
-    virtual CEntityIOOutput& OnSpawnGroupUnloadStarted() = 0;
+    virtual ::CEntityIOOutput& OnSpawnGroupUnloadStarted() = 0;
     virtual void OnSpawnGroupUnloadStartedUpdated() = 0;
-    virtual CEntityIOOutput& OnSpawnGroupUnloadFinished() = 0;
+    virtual ::CEntityIOOutput& OnSpawnGroupUnloadFinished() = 0;
     virtual void OnSpawnGroupUnloadFinishedUpdated() = 0;
     virtual CUtlSymbolLarge& SpawnGroupName() = 0;
     virtual void SpawnGroupNameUpdated() = 0;
@@ -85,6 +89,7 @@ public:
     virtual void QueueActiveSpawnGroupChangeUpdated() = 0;
     virtual bool& QueueFinishLoading() = 0;
     virtual void QueueFinishLoadingUpdated() = 0;
+    static IInfoSpawnGroupLoadUnload* FromOriginal(CInfoSpawnGroupLoadUnload* p);
 };
 
 #endif // _INCLUDE_IINFOSPAWNGROUPLOADUNLOAD_H

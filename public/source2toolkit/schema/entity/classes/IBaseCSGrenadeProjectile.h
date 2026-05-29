@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseGrenade.h"
 
+class CBaseCSGrenadeProjectile;
 class InfoForResourceTypeIParticleSystemDefinition;
 
 class IBaseCSGrenadeProjectile : public virtual IBaseGrenade
 {
 public:
     virtual ~IBaseCSGrenadeProjectile() = default;
+    CBaseCSGrenadeProjectile* GetOriginal() { return reinterpret_cast<CBaseCSGrenadeProjectile*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& InitialPosition() = 0;
     virtual void InitialPositionUpdated() = 0;
@@ -93,6 +96,7 @@ public:
     virtual void TicksAtZeroVelocityUpdated() = 0;
     virtual bool& HasEverHitEnemy() = 0;
     virtual void HasEverHitEnemyUpdated() = 0;
+    static IBaseCSGrenadeProjectile* FromOriginal(CBaseCSGrenadeProjectile* p);
 };
 
 #endif // _INCLUDE_IBASECSGRENADEPROJECTILE_H

@@ -50,19 +50,23 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseCombatCharacter.h"
 
 class CAI_Expresser;
+class CHostageExpresserShim;
 
 class IHostageExpresserShim : public virtual IBaseCombatCharacter
 {
 public:
     virtual ~IHostageExpresserShim() = default;
+    CHostageExpresserShim* GetOriginal() { return reinterpret_cast<CHostageExpresserShim*>(IEntityInstance::GetOriginal()); }
 
     virtual CAI_Expresser*& Expresser() = 0;
     virtual void ExpresserUpdated() = 0;
+    static IHostageExpresserShim* FromOriginal(CHostageExpresserShim* p);
 };
 
 #endif // _INCLUDE_IHOSTAGEEXPRESSERSHIM_H

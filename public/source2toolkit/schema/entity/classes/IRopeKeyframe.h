@@ -50,17 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
 
 class CBaseEntity;
+class CRopeKeyframe;
 class InfoForResourceTypeIMaterial2;
 
 class IRopeKeyframe : public virtual IBaseModelEntity
 {
 public:
     virtual ~IRopeKeyframe() = default;
+    CRopeKeyframe* GetOriginal() { return reinterpret_cast<CRopeKeyframe*>(IEntityInstance::GetOriginal()); }
 
     virtual uint16_t& RopeFlags() = 0;
     virtual void RopeFlagsUpdated() = 0;
@@ -100,6 +103,7 @@ public:
     virtual void StartPointUpdated() = 0;
     virtual CHandle<CBaseEntity>& EndPoint() = 0;
     virtual void EndPointUpdated() = 0;
+    static IRopeKeyframe* FromOriginal(CRopeKeyframe* p);
 };
 
 #endif // _INCLUDE_IROPEKEYFRAME_H

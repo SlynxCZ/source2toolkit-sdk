@@ -50,17 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
 
 class CBaseEntity;
 class CCSPlayerPawn;
+class CPlayerPing;
 
 class IPlayerPing : public virtual IBaseEntity
 {
 public:
     virtual ~IPlayerPing() = default;
+    CPlayerPing* GetOriginal() { return reinterpret_cast<CPlayerPing*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CCSPlayerPawn>& Player() = 0;
     virtual void PlayerUpdated() = 0;
@@ -71,6 +74,7 @@ public:
     virtual bool& Urgent() = 0;
     virtual void UrgentUpdated() = 0;
     virtual char* PlaceName() = 0;
+    static IPlayerPing* FromOriginal(CPlayerPing* p);
 };
 
 #endif // _INCLUDE_IPLAYERPING_H

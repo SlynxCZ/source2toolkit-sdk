@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CColorCorrection;
 
 class IColorCorrection : public virtual IBaseEntity
 {
 public:
     virtual ~IColorCorrection() = default;
+    CColorCorrection* GetOriginal() { return reinterpret_cast<CColorCorrection*>(IEntityInstance::GetOriginal()); }
 
     virtual float& FadeInDuration() = 0;
     virtual void FadeInDurationUpdated() = 0;
@@ -92,6 +96,7 @@ public:
     virtual char* NetlookupFilename() = 0;
     virtual CUtlSymbolLarge& LookupFilename() = 0;
     virtual void LookupFilenameUpdated() = 0;
+    static IColorCorrection* FromOriginal(CColorCorrection* p);
 };
 
 #endif // _INCLUDE_ICOLORCORRECTION_H

@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseAnimGraph.h"
+
+class CBaseProp;
 
 class IBaseProp : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IBaseProp() = default;
+    CBaseProp* GetOriginal() { return reinterpret_cast<CBaseProp*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& ModelOverrodeBlockLOS() = 0;
     virtual void ModelOverrodeBlockLOSUpdated() = 0;
@@ -67,6 +71,7 @@ public:
     virtual void ConformToCollisionBoundsUpdated() = 0;
     virtual CTransform& MPreferredCatchTransform() = 0;
     virtual void MPreferredCatchTransformUpdated() = 0;
+    static IBaseProp* FromOriginal(CBaseProp* p);
 };
 
 #endif // _INCLUDE_IBASEPROP_H

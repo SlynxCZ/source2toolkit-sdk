@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
+
+class CBuyZone;
 
 class IBuyZone : public virtual IBaseTrigger
 {
 public:
     virtual ~IBuyZone() = default;
+    CBuyZone* GetOriginal() { return reinterpret_cast<CBuyZone*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& LegacyTeamNum() = 0;
     virtual void LegacyTeamNumUpdated() = 0;
+    static IBuyZone* FromOriginal(CBuyZone* p);
 };
 
 #endif // _INCLUDE_IBUYZONE_H

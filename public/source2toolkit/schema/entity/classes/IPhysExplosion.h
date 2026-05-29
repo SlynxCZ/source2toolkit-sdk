@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CPhysExplosion;
 
 class IPhysExplosion : public virtual IPointEntity
 {
 public:
     virtual ~IPhysExplosion() = default;
+    CPhysExplosion* GetOriginal() { return reinterpret_cast<CPhysExplosion*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& ExplodeOnSpawn() = 0;
     virtual void ExplodeOnSpawnUpdated() = 0;
@@ -79,8 +83,9 @@ public:
     virtual void AffectInvulnerableEntsUpdated() = 0;
     virtual bool& DisablePushClamp() = 0;
     virtual void DisablePushClampUpdated() = 0;
-    virtual CEntityIOOutput& OnPushedPlayer() = 0;
+    virtual ::CEntityIOOutput& OnPushedPlayer() = 0;
     virtual void OnPushedPlayerUpdated() = 0;
+    static IPhysExplosion* FromOriginal(CPhysExplosion* p);
 };
 
 #endif // _INCLUDE_IPHYSEXPLOSION_H

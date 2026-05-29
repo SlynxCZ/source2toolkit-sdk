@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IParticleSystem.h"
 
+class CEnvParticleGlow;
 class InfoForResourceTypeCTextureBase;
 
 class IEnvParticleGlow : public virtual IParticleSystem
 {
 public:
     virtual ~IEnvParticleGlow() = default;
+    CEnvParticleGlow* GetOriginal() { return reinterpret_cast<CEnvParticleGlow*>(IEntityInstance::GetOriginal()); }
 
     virtual float& AlphaScale() = 0;
     virtual void AlphaScaleUpdated() = 0;
@@ -71,6 +74,7 @@ public:
     virtual void ColorTintUpdated() = 0;
     virtual CStrongHandle<InfoForResourceTypeCTextureBase>& TextureOverride() = 0;
     virtual void TextureOverrideUpdated() = 0;
+    static IEnvParticleGlow* FromOriginal(CEnvParticleGlow* p);
 };
 
 #endif // _INCLUDE_IENVPARTICLEGLOW_H

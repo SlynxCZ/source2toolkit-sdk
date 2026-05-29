@@ -50,20 +50,23 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseAnimGraph.h"
 
+class CPhysMagnet;
 class magnetted_objects_t;
 
 class IPhysMagnet : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IPhysMagnet() = default;
+    CPhysMagnet* GetOriginal() { return reinterpret_cast<CPhysMagnet*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnMagnetAttach() = 0;
+    virtual ::CEntityIOOutput& OnMagnetAttach() = 0;
     virtual void OnMagnetAttachUpdated() = 0;
-    virtual CEntityIOOutput& OnMagnetDetach() = 0;
+    virtual ::CEntityIOOutput& OnMagnetDetach() = 0;
     virtual void OnMagnetDetachUpdated() = 0;
     virtual float& MassScale() = 0;
     virtual void MassScaleUpdated() = 0;
@@ -85,6 +88,7 @@ public:
     virtual void NextSuckTimeUpdated() = 0;
     virtual int32_t& MaxObjectsAttached() = 0;
     virtual void MaxObjectsAttachedUpdated() = 0;
+    static IPhysMagnet* FromOriginal(CPhysMagnet* p);
 };
 
 #endif // _INCLUDE_IPHYSMAGNET_H

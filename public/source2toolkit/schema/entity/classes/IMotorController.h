@@ -50,12 +50,16 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CMotorController;
 
 class IMotorController
 {
 public:
     virtual ~IMotorController() = default;
+    CMotorController* GetOriginal() { return reinterpret_cast<CMotorController*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Speed() = 0;
     virtual void SpeedUpdated() = 0;
@@ -65,6 +69,7 @@ public:
     virtual void AxisUpdated() = 0;
     virtual float& InertiaFactor() = 0;
     virtual void InertiaFactorUpdated() = 0;
+    static IMotorController* FromOriginal(CMotorController* p);
 };
 
 #endif // _INCLUDE_IMOTORCONTROLLER_H

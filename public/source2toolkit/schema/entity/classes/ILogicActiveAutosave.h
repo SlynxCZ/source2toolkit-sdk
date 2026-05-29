@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicAutosave.h"
+
+class CLogicActiveAutosave;
 
 class ILogicActiveAutosave : public virtual ILogicAutosave
 {
 public:
     virtual ~ILogicActiveAutosave() = default;
+    CLogicActiveAutosave* GetOriginal() { return reinterpret_cast<CLogicActiveAutosave*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& TriggerHitPoints() = 0;
     virtual void TriggerHitPointsUpdated() = 0;
@@ -67,6 +71,7 @@ public:
     virtual void StartTimeUpdated() = 0;
     virtual float& DangerousTime() = 0;
     virtual void DangerousTimeUpdated() = 0;
+    static ILogicActiveAutosave* FromOriginal(CLogicActiveAutosave* p);
 };
 
 #endif // _INCLUDE_ILOGICACTIVEAUTOSAVE_H

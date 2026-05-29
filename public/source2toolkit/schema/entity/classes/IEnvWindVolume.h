@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CEnvWindVolume;
 
 class IEnvWindVolume : public virtual IBaseEntity
 {
 public:
     virtual ~IEnvWindVolume() = default;
+    CEnvWindVolume* GetOriginal() { return reinterpret_cast<CEnvWindVolume*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Active() = 0;
     virtual void ActiveUpdated() = 0;
@@ -77,6 +81,7 @@ public:
     virtual void WindSpeedVariationMultiplierUpdated() = 0;
     virtual float& WindDirectionVariationMultiplier() = 0;
     virtual void WindDirectionVariationMultiplierUpdated() = 0;
+    static IEnvWindVolume* FromOriginal(CEnvWindVolume* p);
 };
 
 #endif // _INCLUDE_IENVWINDVOLUME_H

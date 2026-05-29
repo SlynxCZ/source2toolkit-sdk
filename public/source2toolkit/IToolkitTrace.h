@@ -63,7 +63,8 @@ Forward declarations
 ========================= */
 
 class CTraceFilterEx;
-class CBaseEntity;
+class IBaseEntity;
+class CEntityInstance;
 
 /* =========================
 Trace options
@@ -211,7 +212,7 @@ public:
       */
     virtual TraceResult TraceShape(const Vector& vecStart,
                                    const QAngle& angAngles,
-                                   CBaseEntity* pIgnoreEntity,
+                                   IBaseEntity* pIgnoreEntity,
                                    TraceOptions* pTraceOptions) = 0;
 
     /**
@@ -220,7 +221,7 @@ public:
       */
     virtual TraceResult TraceEndShape(const Vector& vecStart,
                                       const Vector& vecEnd,
-                                      CBaseEntity* pIgnoreEntity,
+                                      IBaseEntity* pIgnoreEntity,
                                       TraceOptions* pTraceOptions) = 0;
 
     /**
@@ -231,7 +232,7 @@ public:
                                        const Vector& vecEnd,
                                        const Vector& vecMins,
                                        const Vector& vecMaxs,
-                                       CBaseEntity* pIgnoreEntity,
+                                       IBaseEntity* pIgnoreEntity,
                                        TraceOptions* pTraceOptions) = 0;
 
     /**
@@ -255,14 +256,14 @@ public:
     * @brief Checks whether a nav area overlaps with an entity.
       */
     virtual bool CheckAreaOverlappingEntity(const void* const rArea,
-                                            const CBaseEntity* const rEntity,
+                                            const IBaseEntity* const rEntity,
                                             bool bExtrudeHullHeight) = 0;
 
     /**
 
     * @brief Retrieves the world-space AABB of an entity.
       */
-    virtual void GetEntityWorldSpaceAABB(const CBaseEntity* const rEntity,
+    virtual void GetEntityWorldSpaceAABB(const IBaseEntity* const rEntity,
                                          Vector* pMinsOut,
                                          Vector* pMaxsOut) = 0;
 };

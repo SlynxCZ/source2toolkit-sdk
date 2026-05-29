@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
 
 class CPathSimple;
+class CTriggerPush;
 
 class ITriggerPush : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerPush() = default;
+    CTriggerPush* GetOriginal() { return reinterpret_cast<CTriggerPush*>(IEntityInstance::GetOriginal()); }
 
     virtual QAngle& PushEntitySpace() = 0;
     virtual void PushEntitySpaceUpdated() = 0;
@@ -75,6 +78,7 @@ public:
     virtual void PathSimpleUpdated() = 0;
     virtual uint32_t& SplinePushType() = 0;
     virtual void SplinePushTypeUpdated() = 0;
+    static ITriggerPush* FromOriginal(CTriggerPush* p);
 };
 
 #endif // _INCLUDE_ITRIGGERPUSH_H

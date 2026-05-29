@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 class CEntityInstance*;
+class CRenderComponent;
 
 class IRenderComponent
 {
 public:
     virtual ~IRenderComponent() = default;
+    CRenderComponent* GetOriginal() { return reinterpret_cast<CRenderComponent*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityInstance*& __m_pChainEntity() = 0;
+    virtual ::CEntityInstance*& __m_pChainEntity() = 0;
     virtual void __m_pChainEntityUpdated() = 0;
     virtual bool& IsRenderingWithViewModels() = 0;
     virtual void IsRenderingWithViewModelsUpdated() = 0;
@@ -69,6 +72,7 @@ public:
     virtual void EnableRenderingUpdated() = 0;
     virtual bool& InterpolationReadyToDraw() = 0;
     virtual void InterpolationReadyToDrawUpdated() = 0;
+    static IRenderComponent* FromOriginal(CRenderComponent* p);
 };
 
 #endif // _INCLUDE_IRENDERCOMPONENT_H

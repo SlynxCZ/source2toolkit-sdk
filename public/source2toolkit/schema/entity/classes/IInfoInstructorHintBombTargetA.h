@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CInfoInstructorHintBombTargetA;
 
 class IInfoInstructorHintBombTargetA : public virtual IPointEntity
 {
 public:
     virtual ~IInfoInstructorHintBombTargetA() = default;
+    CInfoInstructorHintBombTargetA* GetOriginal() { return reinterpret_cast<CInfoInstructorHintBombTargetA*>(IEntityInstance::GetOriginal()); }
 
+    static IInfoInstructorHintBombTargetA* FromOriginal(CInfoInstructorHintBombTargetA* p);
 };
 
 #endif // _INCLUDE_IINFOINSTRUCTORHINTBOMBTARGETA_H

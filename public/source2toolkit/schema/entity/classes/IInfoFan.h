@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CInfoFan;
 
 class IInfoFan : public virtual IPointEntity
 {
 public:
     virtual ~IInfoFan() = default;
+    CInfoFan* GetOriginal() { return reinterpret_cast<CInfoFan*>(IEntityInstance::GetOriginal()); }
 
     virtual float& FanForceMaxRadius() = 0;
     virtual void FanForceMaxRadiusUpdated() = 0;
@@ -67,6 +71,7 @@ public:
     virtual void CurveDistRangeUpdated() = 0;
     virtual CUtlSymbolLarge& FanForceCurveString() = 0;
     virtual void FanForceCurveStringUpdated() = 0;
+    static IInfoFan* FromOriginal(CInfoFan* p);
 };
 
 #endif // _INCLUDE_IINFOFAN_H

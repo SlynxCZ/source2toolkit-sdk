@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
@@ -58,11 +59,13 @@
 #include "../enums/PointOrientGoalDirectionType_t.h"
 
 class CBaseEntity;
+class CPointOrient;
 
 class IPointOrient : public virtual IBaseEntity
 {
 public:
     virtual ~IPointOrient() = default;
+    CPointOrient* GetOriginal() { return reinterpret_cast<CPointOrient*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& SpawnTargetName() = 0;
     virtual void SpawnTargetNameUpdated() = 0;
@@ -70,14 +73,15 @@ public:
     virtual void TargetUpdated() = 0;
     virtual bool& Active() = 0;
     virtual void ActiveUpdated() = 0;
-    virtual PointOrientGoalDirectionType_t& GoalDirection() = 0;
+    virtual ::PointOrientGoalDirectionType_t& GoalDirection() = 0;
     virtual void GoalDirectionUpdated() = 0;
-    virtual PointOrientConstraint_t& Constraint() = 0;
+    virtual ::PointOrientConstraint_t& Constraint() = 0;
     virtual void ConstraintUpdated() = 0;
     virtual float& MaxTurnRate() = 0;
     virtual void MaxTurnRateUpdated() = 0;
     virtual float& LastGameTime() = 0;
     virtual void LastGameTimeUpdated() = 0;
+    static IPointOrient* FromOriginal(CPointOrient* p);
 };
 
 #endif // _INCLUDE_IPOINTORIENT_H

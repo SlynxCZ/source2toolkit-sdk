@@ -50,17 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
 
 class CBaseEntity;
+class CParticleSystem;
 class InfoForResourceTypeIParticleSystemDefinition;
 
 class IParticleSystem : public virtual IBaseModelEntity
 {
 public:
     virtual ~IParticleSystem() = default;
+    CParticleSystem* GetOriginal() { return reinterpret_cast<CParticleSystem*>(IEntityInstance::GetOriginal()); }
 
     virtual char* SnapshotFileName() = 0;
     virtual bool& Active() = 0;
@@ -101,6 +104,7 @@ public:
     virtual void TintCPUpdated() = 0;
     virtual Color& Tint() = 0;
     virtual void TintUpdated() = 0;
+    static IParticleSystem* FromOriginal(CParticleSystem* p);
 };
 
 #endif // _INCLUDE_IPARTICLESYSTEM_H

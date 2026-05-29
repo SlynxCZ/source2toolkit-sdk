@@ -50,13 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CVectorExponentialMovingAverage;
 
 class IVectorExponentialMovingAverage
 {
 public:
     virtual ~IVectorExponentialMovingAverage() = default;
+    CVectorExponentialMovingAverage* GetOriginal() { return reinterpret_cast<CVectorExponentialMovingAverage*>(IEntityInstance::GetOriginal()); }
 
+    static IVectorExponentialMovingAverage* FromOriginal(CVectorExponentialMovingAverage* p);
 };
 
 #endif // _INCLUDE_IVECTOREXPONENTIALMOVINGAVERAGE_H

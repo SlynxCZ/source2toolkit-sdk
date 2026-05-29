@@ -50,12 +50,16 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CNavHullVData;
 
 class INavHullVData
 {
 public:
     virtual ~INavHullVData() = default;
+    CNavHullVData* GetOriginal() { return reinterpret_cast<CNavHullVData*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& AgentEnabled() = 0;
     virtual void AgentEnabledUpdated() = 0;
@@ -87,6 +91,7 @@ public:
     virtual void FlowMapGenerationEnabledUpdated() = 0;
     virtual float& FlowMapNodeMaxRadius() = 0;
     virtual void FlowMapNodeMaxRadiusUpdated() = 0;
+    static INavHullVData* FromOriginal(CNavHullVData* p);
 };
 
 #endif // _INCLUDE_INAVHULLVDATA_H

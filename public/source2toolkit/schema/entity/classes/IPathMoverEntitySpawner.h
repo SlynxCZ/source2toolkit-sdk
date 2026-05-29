@@ -50,17 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
 
 class CFuncMover;
 class CPathMover;
+class CPathMoverEntitySpawner;
 
 class IPathMoverEntitySpawner : public virtual ILogicalEntity
 {
 public:
     virtual ~IPathMoverEntitySpawner() = default;
+    CPathMoverEntitySpawner* GetOriginal() { return reinterpret_cast<CPathMoverEntitySpawner*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge* SpawnTemplates() = 0;
     virtual int32_t& SpawnIndex() = 0;
@@ -83,10 +86,11 @@ public:
     virtual void DestroyMoverOnArrivedAtEndUpdated() = 0;
     virtual CUtlVector<CHandle<CFuncMover>>& QueuedRemovals() = 0;
     virtual void QueuedRemovalsUpdated() = 0;
-    virtual CEntityIOOutput& OnTemplateSpawned() = 0;
+    virtual ::CEntityIOOutput& OnTemplateSpawned() = 0;
     virtual void OnTemplateSpawnedUpdated() = 0;
-    virtual CEntityIOOutput& OnTemplateGroupSpawned() = 0;
+    virtual ::CEntityIOOutput& OnTemplateGroupSpawned() = 0;
     virtual void OnTemplateGroupSpawnedUpdated() = 0;
+    static IPathMoverEntitySpawner* FromOriginal(CPathMoverEntitySpawner* p);
 };
 
 #endif // _INCLUDE_IPATHMOVERENTITYSPAWNER_H

@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IGameRules.h"
+
+class CMultiplayRules;
 
 class IMultiplayRules : public virtual IGameRules
 {
 public:
     virtual ~IMultiplayRules() = default;
+    CMultiplayRules* GetOriginal() { return reinterpret_cast<CMultiplayRules*>(IEntityInstance::GetOriginal()); }
 
+    static IMultiplayRules* FromOriginal(CMultiplayRules* p);
 };
 
 #endif // _INCLUDE_IMULTIPLAYRULES_H

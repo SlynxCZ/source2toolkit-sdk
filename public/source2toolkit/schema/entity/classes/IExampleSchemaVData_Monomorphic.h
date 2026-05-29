@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CExampleSchemaVData_Monomorphic;
 
 class IExampleSchemaVData_Monomorphic
 {
 public:
     virtual ~IExampleSchemaVData_Monomorphic() = default;
+    CExampleSchemaVData_Monomorphic* GetOriginal() { return reinterpret_cast<CExampleSchemaVData_Monomorphic*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Example1() = 0;
     virtual void Example1Updated() = 0;
     virtual int32_t& Example2() = 0;
     virtual void Example2Updated() = 0;
+    static IExampleSchemaVData_Monomorphic* FromOriginal(CExampleSchemaVData_Monomorphic* p);
 };
 
 #endif // _INCLUDE_IEXAMPLESCHEMAVDATA_MONOMORPHIC_H

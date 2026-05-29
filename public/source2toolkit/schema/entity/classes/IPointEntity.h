@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CPointEntity;
 
 class IPointEntity : public virtual IBaseEntity
 {
 public:
     virtual ~IPointEntity() = default;
+    CPointEntity* GetOriginal() { return reinterpret_cast<CPointEntity*>(IEntityInstance::GetOriginal()); }
 
+    static IPointEntity* FromOriginal(CPointEntity* p);
 };
 
 #endif // _INCLUDE_IPOINTENTITY_H

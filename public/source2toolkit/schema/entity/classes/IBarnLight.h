@@ -50,10 +50,12 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
 
+class CBarnLight;
 class CBaseModelEntity;
 class InfoForResourceTypeCTextureBase;
 
@@ -61,6 +63,7 @@ class IBarnLight : public virtual IBaseModelEntity
 {
 public:
     virtual ~IBarnLight() = default;
+    CBarnLight* GetOriginal() { return reinterpret_cast<CBarnLight*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Enabled() = 0;
     virtual void EnabledUpdated() = 0;
@@ -215,6 +218,7 @@ public:
     virtual void TransmitAlwaysUpdated() = 0;
     virtual CUtlVector<uint16_t>& VisClusters() = 0;
     virtual void VisClustersUpdated() = 0;
+    static IBarnLight* FromOriginal(CBarnLight* p);
 };
 
 #endif // _INCLUDE_IBARNLIGHT_H

@@ -50,19 +50,23 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
 
 class CItemGeneric;
+class CItemGenericTriggerHelper;
 
 class IItemGenericTriggerHelper : public virtual IBaseModelEntity
 {
 public:
     virtual ~IItemGenericTriggerHelper() = default;
+    CItemGenericTriggerHelper* GetOriginal() { return reinterpret_cast<CItemGenericTriggerHelper*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CItemGeneric>& ParentItem() = 0;
     virtual void ParentItemUpdated() = 0;
+    static IItemGenericTriggerHelper* FromOriginal(CItemGenericTriggerHelper* p);
 };
 
 #endif // _INCLUDE_IITEMGENERICTRIGGERHELPER_H

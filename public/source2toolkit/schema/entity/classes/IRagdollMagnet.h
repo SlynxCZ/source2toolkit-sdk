@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CRagdollMagnet;
 
 class IRagdollMagnet : public virtual IPointEntity
 {
 public:
     virtual ~IRagdollMagnet() = default;
+    CRagdollMagnet* GetOriginal() { return reinterpret_cast<CRagdollMagnet*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;
@@ -67,6 +71,7 @@ public:
     virtual void ForceUpdated() = 0;
     virtual Vector& Axis() = 0;
     virtual void AxisUpdated() = 0;
+    static IRagdollMagnet* FromOriginal(CRagdollMagnet* p);
 };
 
 #endif // _INCLUDE_IRAGDOLLMAGNET_H

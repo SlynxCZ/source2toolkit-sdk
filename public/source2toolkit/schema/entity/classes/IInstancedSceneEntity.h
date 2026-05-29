@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ISceneEntity.h"
 
 class CBaseEntity;
+class CInstancedSceneEntity;
 
 class IInstancedSceneEntity : public virtual ISceneEntity
 {
 public:
     virtual ~IInstancedSceneEntity() = default;
+    CInstancedSceneEntity* GetOriginal() { return reinterpret_cast<CInstancedSceneEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& Owner() = 0;
     virtual void OwnerUpdated() = 0;
@@ -75,6 +78,7 @@ public:
     virtual void RemoveOnCompletionUpdated() = 0;
     virtual CHandle<CBaseEntity>& Target() = 0;
     virtual void TargetUpdated() = 0;
+    static IInstancedSceneEntity* FromOriginal(CInstancedSceneEntity* p);
 };
 
 #endif // _INCLUDE_IINSTANCEDSCENEENTITY_H

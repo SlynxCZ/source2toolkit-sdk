@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
 
 class CBeam;
+class CTestEffect;
 
 class ITestEffect : public virtual IBaseEntity
 {
 public:
     virtual ~ITestEffect() = default;
+    CTestEffect* GetOriginal() { return reinterpret_cast<CTestEffect*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Loop() = 0;
     virtual void LoopUpdated() = 0;
@@ -69,6 +72,7 @@ public:
     virtual float* BeamTime() = 0;
     virtual float& StartTime() = 0;
     virtual void StartTimeUpdated() = 0;
+    static ITestEffect* FromOriginal(CTestEffect* p);
 };
 
 #endif // _INCLUDE_ITESTEFFECT_H

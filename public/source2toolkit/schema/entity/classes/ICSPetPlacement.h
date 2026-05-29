@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CCSPetPlacement;
 
 class ICSPetPlacement : public virtual IBaseEntity
 {
 public:
     virtual ~ICSPetPlacement() = default;
+    CCSPetPlacement* GetOriginal() { return reinterpret_cast<CCSPetPlacement*>(IEntityInstance::GetOriginal()); }
 
+    static ICSPetPlacement* FromOriginal(CCSPetPlacement* p);
 };
 
 #endif // _INCLUDE_ICSPETPLACEMENT_H

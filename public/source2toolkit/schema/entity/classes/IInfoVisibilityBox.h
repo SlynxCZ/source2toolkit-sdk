@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CInfoVisibilityBox;
 
 class IInfoVisibilityBox : public virtual IBaseEntity
 {
 public:
     virtual ~IInfoVisibilityBox() = default;
+    CInfoVisibilityBox* GetOriginal() { return reinterpret_cast<CInfoVisibilityBox*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Mode() = 0;
     virtual void ModeUpdated() = 0;
@@ -65,6 +69,7 @@ public:
     virtual void BoxSizeUpdated() = 0;
     virtual bool& Enabled() = 0;
     virtual void EnabledUpdated() = 0;
+    static IInfoVisibilityBox* FromOriginal(CInfoVisibilityBox* p);
 };
 
 #endif // _INCLUDE_IINFOVISIBILITYBOX_H

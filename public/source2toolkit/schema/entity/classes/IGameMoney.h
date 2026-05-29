@@ -50,23 +50,28 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IRulePointEntity.h"
+
+class CGameMoney;
 
 class IGameMoney : public virtual IRulePointEntity
 {
 public:
     virtual ~IGameMoney() = default;
+    CGameMoney* GetOriginal() { return reinterpret_cast<CGameMoney*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnMoneySpent() = 0;
+    virtual ::CEntityIOOutput& OnMoneySpent() = 0;
     virtual void OnMoneySpentUpdated() = 0;
-    virtual CEntityIOOutput& OnMoneySpentFail() = 0;
+    virtual ::CEntityIOOutput& OnMoneySpentFail() = 0;
     virtual void OnMoneySpentFailUpdated() = 0;
     virtual int32_t& Money() = 0;
     virtual void MoneyUpdated() = 0;
     virtual CUtlString& StrAwardText() = 0;
     virtual void StrAwardTextUpdated() = 0;
+    static IGameMoney* FromOriginal(CGameMoney* p);
 };
 
 #endif // _INCLUDE_IGAMEMONEY_H

@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
+
+class CLogicAutosave;
 
 class ILogicAutosave : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicAutosave() = default;
+    CLogicAutosave* GetOriginal() { return reinterpret_cast<CLogicAutosave*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& ForceNewLevelUnit() = 0;
     virtual void ForceNewLevelUnitUpdated() = 0;
@@ -65,6 +69,7 @@ public:
     virtual void MinHitPointsUpdated() = 0;
     virtual int32_t& MinHitPointsToCommit() = 0;
     virtual void MinHitPointsToCommitUpdated() = 0;
+    static ILogicAutosave* FromOriginal(CLogicAutosave* p);
 };
 
 #endif // _INCLUDE_ILOGICAUTOSAVE_H

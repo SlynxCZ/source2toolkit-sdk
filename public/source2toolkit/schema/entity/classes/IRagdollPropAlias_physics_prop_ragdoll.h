@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IRagdollProp.h"
+
+class CRagdollPropAlias_physics_prop_ragdoll;
 
 class IRagdollPropAlias_physics_prop_ragdoll : public virtual IRagdollProp
 {
 public:
     virtual ~IRagdollPropAlias_physics_prop_ragdoll() = default;
+    CRagdollPropAlias_physics_prop_ragdoll* GetOriginal() { return reinterpret_cast<CRagdollPropAlias_physics_prop_ragdoll*>(IEntityInstance::GetOriginal()); }
 
+    static IRagdollPropAlias_physics_prop_ragdoll* FromOriginal(CRagdollPropAlias_physics_prop_ragdoll* p);
 };
 
 #endif // _INCLUDE_IRAGDOLLPROPALIAS_PHYSICS_PROP_RAGDOLL_H

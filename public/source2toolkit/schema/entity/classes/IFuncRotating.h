@@ -50,20 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
+
+class CFuncRotating;
 
 class IFuncRotating : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncRotating() = default;
+    CFuncRotating* GetOriginal() { return reinterpret_cast<CFuncRotating*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnStopped() = 0;
+    virtual ::CEntityIOOutput& OnStopped() = 0;
     virtual void OnStoppedUpdated() = 0;
-    virtual CEntityIOOutput& OnStarted() = 0;
+    virtual ::CEntityIOOutput& OnStarted() = 0;
     virtual void OnStartedUpdated() = 0;
-    virtual CEntityIOOutput& OnReachedStart() = 0;
+    virtual ::CEntityIOOutput& OnReachedStart() = 0;
     virtual void OnReachedStartUpdated() = 0;
     virtual RotationVector& LocalRotationVector() = 0;
     virtual void LocalRotationVectorUpdated() = 0;
@@ -95,6 +99,7 @@ public:
     virtual void ClientOriginUpdated() = 0;
     virtual QAngle& ClientAngles() = 0;
     virtual void ClientAnglesUpdated() = 0;
+    static IFuncRotating* FromOriginal(CFuncRotating* p);
 };
 
 #endif // _INCLUDE_IFUNCROTATING_H

@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseFilter.h"
+
+class CFilterTeam;
 
 class IFilterTeam : public virtual IBaseFilter
 {
 public:
     virtual ~IFilterTeam() = default;
+    CFilterTeam* GetOriginal() { return reinterpret_cast<CFilterTeam*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& FilterTeam() = 0;
     virtual void FilterTeamUpdated() = 0;
+    static IFilterTeam* FromOriginal(CFilterTeam* p);
 };
 
 #endif // _INCLUDE_IFILTERTEAM_H

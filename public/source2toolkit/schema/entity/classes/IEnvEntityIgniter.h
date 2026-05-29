@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CEnvEntityIgniter;
 
 class IEnvEntityIgniter : public virtual IBaseEntity
 {
 public:
     virtual ~IEnvEntityIgniter() = default;
+    CEnvEntityIgniter* GetOriginal() { return reinterpret_cast<CEnvEntityIgniter*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Lifetime() = 0;
     virtual void LifetimeUpdated() = 0;
+    static IEnvEntityIgniter* FromOriginal(CEnvEntityIgniter* p);
 };
 
 #endif // _INCLUDE_IENVENTITYIGNITER_H

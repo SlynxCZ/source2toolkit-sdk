@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayer_UseServices.h"
 
 class CBaseEntity;
+class CCSPlayer_UseServices;
 
 class ICSPlayer_UseServices : public virtual IPlayer_UseServices
 {
 public:
     virtual ~ICSPlayer_UseServices() = default;
+    CCSPlayer_UseServices* GetOriginal() { return reinterpret_cast<CCSPlayer_UseServices*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& LastKnownUseEntity() = 0;
     virtual void LastKnownUseEntityUpdated() = 0;
@@ -67,6 +70,7 @@ public:
     virtual void LastUseTimeStampUpdated() = 0;
     virtual float& TimeLastUsedWindow() = 0;
     virtual void TimeLastUsedWindowUpdated() = 0;
+    static ICSPlayer_UseServices* FromOriginal(CCSPlayer_UseServices* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_USESERVICES_H

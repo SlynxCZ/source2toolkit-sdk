@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayer_CameraServices.h"
 
 class CBaseEntity;
+class CCSPlayerBase_CameraServices;
 
 class ICSPlayerBase_CameraServices : public virtual IPlayer_CameraServices
 {
 public:
     virtual ~ICSPlayerBase_CameraServices() = default;
+    CCSPlayerBase_CameraServices* GetOriginal() { return reinterpret_cast<CCSPlayerBase_CameraServices*>(IEntityInstance::GetOriginal()); }
 
     virtual uint32_t& FOV() = 0;
     virtual void FOVUpdated() = 0;
@@ -75,6 +78,7 @@ public:
     virtual void TriggerFogListUpdated() = 0;
     virtual CHandle<CBaseEntity>& LastFogTrigger() = 0;
     virtual void LastFogTriggerUpdated() = 0;
+    static ICSPlayerBase_CameraServices* FromOriginal(CCSPlayerBase_CameraServices* p);
 };
 
 #endif // _INCLUDE_ICSPLAYERBASE_CAMERASERVICES_H

@@ -50,20 +50,26 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 class CCSPlayerPawn;
 class CEntityInstance*;
+class CPlayerPawnComponent;
+class ICSPlayerPawn;
 
 class IPlayerPawnComponent
 {
 public:
     virtual ~IPlayerPawnComponent() = default;
+    CPlayerPawnComponent* GetOriginal() { return reinterpret_cast<CPlayerPawnComponent*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityInstance*& __m_pChainEntity() = 0;
+    virtual ::CEntityInstance*& __m_pChainEntity() = 0;
     virtual void __m_pChainEntityUpdated() = 0;
 
-    virtual CCSPlayerPawn* GetPlayerPawn() = 0;
+    /// <summary>Get player pawn.</summary>
+    virtual ICSPlayerPawn* GetPlayerPawn() = 0;
+    static IPlayerPawnComponent* FromOriginal(CPlayerPawnComponent* p);
 };
 
 #endif // _INCLUDE_IPLAYERPAWNCOMPONENT_H

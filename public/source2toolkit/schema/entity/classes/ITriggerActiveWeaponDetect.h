@@ -50,19 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
+
+class CTriggerActiveWeaponDetect;
 
 class ITriggerActiveWeaponDetect : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerActiveWeaponDetect() = default;
+    CTriggerActiveWeaponDetect* GetOriginal() { return reinterpret_cast<CTriggerActiveWeaponDetect*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnTouchedActiveWeapon() = 0;
+    virtual ::CEntityIOOutput& OnTouchedActiveWeapon() = 0;
     virtual void OnTouchedActiveWeaponUpdated() = 0;
     virtual CUtlSymbolLarge& WeaponClassName() = 0;
     virtual void WeaponClassNameUpdated() = 0;
+    static ITriggerActiveWeaponDetect* FromOriginal(CTriggerActiveWeaponDetect* p);
 };
 
 #endif // _INCLUDE_ITRIGGERACTIVEWEAPONDETECT_H

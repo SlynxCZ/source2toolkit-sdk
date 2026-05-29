@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IAnimGraphControllerBase.h"
+
+class CBaseAnimGraphDestructibleParts_GraphController;
 
 class IBaseAnimGraphDestructibleParts_GraphController : public virtual IAnimGraphControllerBase
 {
 public:
     virtual ~IBaseAnimGraphDestructibleParts_GraphController() = default;
+    CBaseAnimGraphDestructibleParts_GraphController* GetOriginal() { return reinterpret_cast<CBaseAnimGraphDestructibleParts_GraphController*>(IEntityInstance::GetOriginal()); }
 
+    static IBaseAnimGraphDestructibleParts_GraphController* FromOriginal(CBaseAnimGraphDestructibleParts_GraphController* p);
 };
 
 #endif // _INCLUDE_IBASEANIMGRAPHDESTRUCTIBLEPARTS_GRAPHCONTROLLER_H

@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBasePropDoor.h"
@@ -59,23 +60,25 @@
 #include "../enums/doorCheck_e.h"
 
 class CEntityBlocker;
+class CPropDoorRotating;
 
 class IPropDoorRotating : public virtual IBasePropDoor
 {
 public:
     virtual ~IPropDoorRotating() = default;
+    CPropDoorRotating* GetOriginal() { return reinterpret_cast<CPropDoorRotating*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& Axis() = 0;
     virtual void AxisUpdated() = 0;
     virtual float& Distance() = 0;
     virtual void DistanceUpdated() = 0;
-    virtual PropDoorRotatingSpawnPos_t& SpawnPosition() = 0;
+    virtual ::PropDoorRotatingSpawnPos_t& SpawnPosition() = 0;
     virtual void SpawnPositionUpdated() = 0;
-    virtual PropDoorRotatingOpenDirection_e& OpenDirection() = 0;
+    virtual ::PropDoorRotatingOpenDirection_e& OpenDirection() = 0;
     virtual void OpenDirectionUpdated() = 0;
-    virtual PropDoorRotatingOpenDirection_e& CurrentOpenDirection() = 0;
+    virtual ::PropDoorRotatingOpenDirection_e& CurrentOpenDirection() = 0;
     virtual void CurrentOpenDirectionUpdated() = 0;
-    virtual doorCheck_e& DefaultCheckDirection() = 0;
+    virtual ::doorCheck_e& DefaultCheckDirection() = 0;
     virtual void DefaultCheckDirectionUpdated() = 0;
     virtual float& AjarAngle() = 0;
     virtual void AjarAngleUpdated() = 0;
@@ -101,6 +104,7 @@ public:
     virtual void AjarDoorShouldntAlwaysOpenUpdated() = 0;
     virtual CHandle<CEntityBlocker>& EntityBlocker() = 0;
     virtual void EntityBlockerUpdated() = 0;
+    static IPropDoorRotating* FromOriginal(CPropDoorRotating* p);
 };
 
 #endif // _INCLUDE_IPROPDOORROTATING_H

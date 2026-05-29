@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseAnimGraph.h"
@@ -58,6 +59,7 @@
 
 class CBaseEntity;
 class CBasePlayerPawn;
+class CRagdollProp;
 class INavObstacle;
 class ragdoll_t;
 
@@ -65,8 +67,9 @@ class IRagdollProp : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IRagdollProp() = default;
+    CRagdollProp* GetOriginal() { return reinterpret_cast<CRagdollProp*>(IEntityInstance::GetOriginal()); }
 
-    virtual ragdoll_t& Ragdoll() = 0;
+    virtual ::ragdoll_t& Ragdoll() = 0;
     virtual void RagdollUpdated() = 0;
     virtual bool& StartDisabled() = 0;
     virtual void StartDisabledUpdated() = 0;
@@ -82,7 +85,7 @@ public:
     virtual void AllAsleepUpdated() = 0;
     virtual bool& FirstCollisionAfterLaunch() = 0;
     virtual void FirstCollisionAfterLaunchUpdated() = 0;
-    virtual INavObstacle__NavObstacleType_t& NavObstacleType() = 0;
+    virtual ::INavObstacle__NavObstacleType_t& NavObstacleType() = 0;
     virtual void NavObstacleTypeUpdated() = 0;
     virtual bool& UpdateNavWhenMoving() = 0;
     virtual void UpdateNavWhenMovingUpdated() = 0;
@@ -128,6 +131,7 @@ public:
     virtual void ShouldDeleteActivationRecordUpdated() = 0;
     virtual CUtlVector<INavObstacle*>& NavObstacles() = 0;
     virtual void NavObstaclesUpdated() = 0;
+    static IRagdollProp* FromOriginal(CRagdollProp* p);
 };
 
 #endif // _INCLUDE_IRAGDOLLPROP_H

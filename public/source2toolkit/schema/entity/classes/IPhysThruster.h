@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPhysForce.h"
+
+class CPhysThruster;
 
 class IPhysThruster : public virtual IPhysForce
 {
 public:
     virtual ~IPhysThruster() = default;
+    CPhysThruster* GetOriginal() { return reinterpret_cast<CPhysThruster*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& LocalOrigin() = 0;
     virtual void LocalOriginUpdated() = 0;
+    static IPhysThruster* FromOriginal(CPhysThruster* p);
 };
 
 #endif // _INCLUDE_IPHYSTHRUSTER_H

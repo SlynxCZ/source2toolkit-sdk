@@ -50,13 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CNmGraphInstance;
 
 class INmGraphInstance
 {
 public:
     virtual ~INmGraphInstance() = default;
+    CNmGraphInstance* GetOriginal() { return reinterpret_cast<CNmGraphInstance*>(IEntityInstance::GetOriginal()); }
 
+    static INmGraphInstance* FromOriginal(CNmGraphInstance* p);
 };
 
 #endif // _INCLUDE_INMGRAPHINSTANCE_H

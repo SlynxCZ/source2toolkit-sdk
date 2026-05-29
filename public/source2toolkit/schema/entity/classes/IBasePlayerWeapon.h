@@ -50,17 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IEconEntity.h"
 
-class CCSWeaponBase;
+class CBasePlayerWeapon;
 class CCSWeaponBaseVData;
+class ICSWeaponBaseVData;
 
 class IBasePlayerWeapon : public virtual IEconEntity
 {
 public:
     virtual ~IBasePlayerWeapon() = default;
+    CBasePlayerWeapon* GetOriginal() { return reinterpret_cast<CBasePlayerWeapon*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& NextPrimaryAttackTick() = 0;
     virtual void NextPrimaryAttackTickUpdated() = 0;
@@ -75,11 +78,14 @@ public:
     virtual int32_t& Clip2() = 0;
     virtual void Clip2Updated() = 0;
     virtual int32_t* ReserveAmmo() = 0;
-    virtual CEntityIOOutput& OnPlayerUse() = 0;
+    virtual ::CEntityIOOutput& OnPlayerUse() = 0;
     virtual void OnPlayerUseUpdated() = 0;
 
-    virtual CCSWeaponBaseVData* GetWeaponVData() = 0;
+    /// <summary>Get weapon VData.</summary>
+    virtual ICSWeaponBaseVData* GetWeaponVData() = 0;
+    /// <summary>Get weapon classname.</summary>
     virtual const char* GetWeaponClassname() = 0;
+    static IBasePlayerWeapon* FromOriginal(CBasePlayerWeapon* p);
 };
 
 #endif // _INCLUDE_IBASEPLAYERWEAPON_H

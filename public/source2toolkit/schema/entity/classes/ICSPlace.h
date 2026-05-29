@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IServerOnlyModelEntity.h"
+
+class CCSPlace;
 
 class ICSPlace : public virtual IServerOnlyModelEntity
 {
 public:
     virtual ~ICSPlace() = default;
+    CCSPlace* GetOriginal() { return reinterpret_cast<CCSPlace*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Name() = 0;
     virtual void NameUpdated() = 0;
+    static ICSPlace* FromOriginal(CCSPlace* p);
 };
 
 #endif // _INCLUDE_ICSPLACE_H

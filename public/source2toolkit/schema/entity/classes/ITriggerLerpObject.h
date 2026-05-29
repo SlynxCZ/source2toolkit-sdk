@@ -50,17 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
 
 class CBaseEntity;
+class CTriggerLerpObject;
 class lerpdata_t;
 
 class ITriggerLerpObject : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerLerpObject() = default;
+    CTriggerLerpObject* GetOriginal() { return reinterpret_cast<CTriggerLerpObject*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& LerpTarget() = 0;
     virtual void LerpTargetUpdated() = 0;
@@ -86,12 +89,13 @@ public:
     virtual void AttachTouchingObjectUpdated() = 0;
     virtual CHandle<CBaseEntity>& EntityToWaitForDisconnect() = 0;
     virtual void EntityToWaitForDisconnectUpdated() = 0;
-    virtual CEntityIOOutput& OnLerpStarted() = 0;
+    virtual ::CEntityIOOutput& OnLerpStarted() = 0;
     virtual void OnLerpStartedUpdated() = 0;
-    virtual CEntityIOOutput& OnLerpFinished() = 0;
+    virtual ::CEntityIOOutput& OnLerpFinished() = 0;
     virtual void OnLerpFinishedUpdated() = 0;
-    virtual CEntityIOOutput& OnDetached() = 0;
+    virtual ::CEntityIOOutput& OnDetached() = 0;
     virtual void OnDetachedUpdated() = 0;
+    static ITriggerLerpObject* FromOriginal(CTriggerLerpObject* p);
 };
 
 #endif // _INCLUDE_ITRIGGERLERPOBJECT_H

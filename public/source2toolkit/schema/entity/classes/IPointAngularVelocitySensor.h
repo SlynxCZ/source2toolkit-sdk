@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
 
 class CBaseEntity;
+class CPointAngularVelocitySensor;
 
 class IPointAngularVelocitySensor : public virtual IPointEntity
 {
 public:
     virtual ~IPointAngularVelocitySensor() = default;
+    CPointAngularVelocitySensor* GetOriginal() { return reinterpret_cast<CPointAngularVelocitySensor*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& TargetEntity() = 0;
     virtual void TargetEntityUpdated() = 0;
@@ -81,16 +84,17 @@ public:
     virtual void AxisUpdated() = 0;
     virtual bool& UseHelper() = 0;
     virtual void UseHelperUpdated() = 0;
-    virtual CEntityIOOutput& OnLessThan() = 0;
+    virtual ::CEntityIOOutput& OnLessThan() = 0;
     virtual void OnLessThanUpdated() = 0;
-    virtual CEntityIOOutput& OnLessThanOrEqualTo() = 0;
+    virtual ::CEntityIOOutput& OnLessThanOrEqualTo() = 0;
     virtual void OnLessThanOrEqualToUpdated() = 0;
-    virtual CEntityIOOutput& OnGreaterThan() = 0;
+    virtual ::CEntityIOOutput& OnGreaterThan() = 0;
     virtual void OnGreaterThanUpdated() = 0;
-    virtual CEntityIOOutput& OnGreaterThanOrEqualTo() = 0;
+    virtual ::CEntityIOOutput& OnGreaterThanOrEqualTo() = 0;
     virtual void OnGreaterThanOrEqualToUpdated() = 0;
-    virtual CEntityIOOutput& OnEqualTo() = 0;
+    virtual ::CEntityIOOutput& OnEqualTo() = 0;
     virtual void OnEqualToUpdated() = 0;
+    static IPointAngularVelocitySensor* FromOriginal(CPointAngularVelocitySensor* p);
 };
 
 #endif // _INCLUDE_IPOINTANGULARVELOCITYSENSOR_H

@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBasePlayerWeaponVData.h"
@@ -60,6 +61,7 @@
 #include "../enums/gear_slot_t.h"
 #include "../enums/loadout_slot_t.h"
 
+class CCSWeaponBaseVData;
 class CFiringModeFloat;
 class CFiringModeInt;
 
@@ -67,20 +69,21 @@ class ICSWeaponBaseVData : public virtual IBasePlayerWeaponVData
 {
 public:
     virtual ~ICSWeaponBaseVData() = default;
+    CCSWeaponBaseVData* GetOriginal() { return reinterpret_cast<CCSWeaponBaseVData*>(IEntityInstance::GetOriginal()); }
 
-    virtual CSWeaponType& WeaponType() = 0;
+    virtual ::CSWeaponType& WeaponType() = 0;
     virtual void WeaponTypeUpdated() = 0;
-    virtual CSWeaponCategory& WeaponCategory() = 0;
+    virtual ::CSWeaponCategory& WeaponCategory() = 0;
     virtual void WeaponCategoryUpdated() = 0;
     virtual Vector& MuzzlePos0() = 0;
     virtual void MuzzlePos0Updated() = 0;
     virtual Vector& MuzzlePos1() = 0;
     virtual void MuzzlePos1Updated() = 0;
-    virtual gear_slot_t& GearSlot() = 0;
+    virtual ::gear_slot_t& GearSlot() = 0;
     virtual void GearSlotUpdated() = 0;
     virtual int32_t& GearSlotPosition() = 0;
     virtual void GearSlotPositionUpdated() = 0;
-    virtual loadout_slot_t& DefaultLoadoutSlot() = 0;
+    virtual ::loadout_slot_t& DefaultLoadoutSlot() = 0;
     virtual void DefaultLoadoutSlotUpdated() = 0;
     virtual int32_t& Price() = 0;
     virtual void PriceUpdated() = 0;
@@ -100,7 +103,7 @@ public:
     virtual void CannotShootUnderwaterUpdated() = 0;
     virtual CGlobalSymbol& Name() = 0;
     virtual void NameUpdated() = 0;
-    virtual CSWeaponSilencerType& SilencerType() = 0;
+    virtual ::CSWeaponSilencerType& SilencerType() = 0;
     virtual void SilencerTypeUpdated() = 0;
     virtual int32_t& CrosshairMinDistance() = 0;
     virtual void CrosshairMinDistanceUpdated() = 0;
@@ -112,39 +115,39 @@ public:
     virtual void NumBulletsUpdated() = 0;
     virtual bool& ReloadsSingleShells() = 0;
     virtual void ReloadsSingleShellsUpdated() = 0;
-    virtual CFiringModeFloat& CycleTime() = 0;
+    virtual ::CFiringModeFloat& CycleTime() = 0;
     virtual void CycleTimeUpdated() = 0;
     virtual float& CycleTimeWhenInBurstMode() = 0;
     virtual void CycleTimeWhenInBurstModeUpdated() = 0;
     virtual float& TimeBetweenBurstShots() = 0;
     virtual void TimeBetweenBurstShotsUpdated() = 0;
-    virtual CFiringModeFloat& MaxSpeed() = 0;
+    virtual ::CFiringModeFloat& MaxSpeed() = 0;
     virtual void MaxSpeedUpdated() = 0;
-    virtual CFiringModeFloat& Spread() = 0;
+    virtual ::CFiringModeFloat& Spread() = 0;
     virtual void SpreadUpdated() = 0;
-    virtual CFiringModeFloat& InaccuracyCrouch() = 0;
+    virtual ::CFiringModeFloat& InaccuracyCrouch() = 0;
     virtual void InaccuracyCrouchUpdated() = 0;
-    virtual CFiringModeFloat& InaccuracyStand() = 0;
+    virtual ::CFiringModeFloat& InaccuracyStand() = 0;
     virtual void InaccuracyStandUpdated() = 0;
-    virtual CFiringModeFloat& InaccuracyJump() = 0;
+    virtual ::CFiringModeFloat& InaccuracyJump() = 0;
     virtual void InaccuracyJumpUpdated() = 0;
-    virtual CFiringModeFloat& InaccuracyLand() = 0;
+    virtual ::CFiringModeFloat& InaccuracyLand() = 0;
     virtual void InaccuracyLandUpdated() = 0;
-    virtual CFiringModeFloat& InaccuracyLadder() = 0;
+    virtual ::CFiringModeFloat& InaccuracyLadder() = 0;
     virtual void InaccuracyLadderUpdated() = 0;
-    virtual CFiringModeFloat& InaccuracyFire() = 0;
+    virtual ::CFiringModeFloat& InaccuracyFire() = 0;
     virtual void InaccuracyFireUpdated() = 0;
-    virtual CFiringModeFloat& InaccuracyMove() = 0;
+    virtual ::CFiringModeFloat& InaccuracyMove() = 0;
     virtual void InaccuracyMoveUpdated() = 0;
-    virtual CFiringModeFloat& RecoilAngle() = 0;
+    virtual ::CFiringModeFloat& RecoilAngle() = 0;
     virtual void RecoilAngleUpdated() = 0;
-    virtual CFiringModeFloat& RecoilAngleVariance() = 0;
+    virtual ::CFiringModeFloat& RecoilAngleVariance() = 0;
     virtual void RecoilAngleVarianceUpdated() = 0;
-    virtual CFiringModeFloat& RecoilMagnitude() = 0;
+    virtual ::CFiringModeFloat& RecoilMagnitude() = 0;
     virtual void RecoilMagnitudeUpdated() = 0;
-    virtual CFiringModeFloat& RecoilMagnitudeVariance() = 0;
+    virtual ::CFiringModeFloat& RecoilMagnitudeVariance() = 0;
     virtual void RecoilMagnitudeVarianceUpdated() = 0;
-    virtual CFiringModeInt& TracerFrequency() = 0;
+    virtual ::CFiringModeInt& TracerFrequency() = 0;
     virtual void TracerFrequencyUpdated() = 0;
     virtual float& InaccuracyJumpInitial() = 0;
     virtual void InaccuracyJumpInitialUpdated() = 0;
@@ -232,6 +235,7 @@ public:
     virtual void SmokeColorUpdated() = 0;
     virtual CGlobalSymbol& AnimClass() = 0;
     virtual void AnimClassUpdated() = 0;
+    static ICSWeaponBaseVData* FromOriginal(CCSWeaponBaseVData* p);
 };
 
 #endif // _INCLUDE_ICSWEAPONBASEVDATA_H

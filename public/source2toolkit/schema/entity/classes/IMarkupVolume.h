@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
+
+class CMarkupVolume;
 
 class IMarkupVolume : public virtual IBaseModelEntity
 {
 public:
     virtual ~IMarkupVolume() = default;
+    CMarkupVolume* GetOriginal() { return reinterpret_cast<CMarkupVolume*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;
+    static IMarkupVolume* FromOriginal(CMarkupVolume* p);
 };
 
 #endif // _INCLUDE_IMARKUPVOLUME_H

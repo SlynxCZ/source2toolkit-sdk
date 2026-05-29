@@ -50,19 +50,23 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBodyComponent.h"
 
+class CBodyComponentPoint;
 class CGameSceneNode;
 
 class IBodyComponentPoint : public virtual IBodyComponent
 {
 public:
     virtual ~IBodyComponentPoint() = default;
+    CBodyComponentPoint* GetOriginal() { return reinterpret_cast<CBodyComponentPoint*>(IEntityInstance::GetOriginal()); }
 
-    virtual CGameSceneNode& SceneNode() = 0;
+    virtual ::CGameSceneNode& SceneNode() = 0;
     virtual void SceneNodeUpdated() = 0;
+    static IBodyComponentPoint* FromOriginal(CBodyComponentPoint* p);
 };
 
 #endif // _INCLUDE_IBODYCOMPONENTPOINT_H

@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBarnLight.h"
+
+class CRectLight;
 
 class IRectLight : public virtual IBarnLight
 {
 public:
     virtual ~IRectLight() = default;
+    CRectLight* GetOriginal() { return reinterpret_cast<CRectLight*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& ShowLight() = 0;
     virtual void ShowLightUpdated() = 0;
+    static IRectLight* FromOriginal(CRectLight* p);
 };
 
 #endif // _INCLUDE_IRECTLIGHT_H

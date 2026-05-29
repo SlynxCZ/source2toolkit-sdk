@@ -50,12 +50,16 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CSPerRoundStats_t;
 
 class ISPerRoundStats_t
 {
 public:
     virtual ~ISPerRoundStats_t() = default;
+    CSPerRoundStats_t* GetOriginal() { return reinterpret_cast<CSPerRoundStats_t*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Kills() = 0;
     virtual void KillsUpdated() = 0;
@@ -83,6 +87,7 @@ public:
     virtual void UtilityDamageUpdated() = 0;
     virtual int32_t& EnemiesFlashed() = 0;
     virtual void EnemiesFlashedUpdated() = 0;
+    static ISPerRoundStats_t* FromOriginal(CSPerRoundStats_t* p);
 };
 
 #endif // _INCLUDE_ISPERROUNDSTATS_T_H

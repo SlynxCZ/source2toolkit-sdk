@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
@@ -57,12 +58,15 @@
 #include "../enums/ChatIgnoreType_t.h"
 #include "../enums/PlayerConnectedState.h"
 
+class CBasePlayerController;
 class CBasePlayerPawn;
+class IBasePlayerPawn;
 
 class IBasePlayerController : public virtual IBaseEntity
 {
 public:
     virtual ~IBasePlayerController() = default;
+    CBasePlayerController* GetOriginal() { return reinterpret_cast<CBasePlayerController*>(IEntityInstance::GetOriginal()); }
 
     virtual uint64_t& InButtonsWhichAreToggles() = 0;
     virtual void InButtonsWhichAreTogglesUpdated() = 0;
@@ -80,9 +84,9 @@ public:
     virtual void SplitScreenPlayersUpdated() = 0;
     virtual bool& IsHLTV() = 0;
     virtual void IsHLTVUpdated() = 0;
-    virtual PlayerConnectedState& Connected() = 0;
+    virtual ::PlayerConnectedState& Connected() = 0;
     virtual void ConnectedUpdated() = 0;
-    virtual PlayerConnectedState& MostConnected() = 0;
+    virtual ::PlayerConnectedState& MostConnected() = 0;
     virtual void MostConnectedUpdated() = 0;
     virtual char* PlayerName() = 0;
     virtual CUtlString& NetworkIDString() = 0;
@@ -97,7 +101,7 @@ public:
     virtual void IsLowViolenceUpdated() = 0;
     virtual bool& GamePaused() = 0;
     virtual void GamePausedUpdated() = 0;
-    virtual ChatIgnoreType_t& IgnoreGlobalChat() = 0;
+    virtual ::ChatIgnoreType_t& IgnoreGlobalChat() = 0;
     virtual void IgnoreGlobalChatUpdated() = 0;
     virtual float& LastPlayerTalkTime() = 0;
     virtual void LastPlayerTalkTimeUpdated() = 0;
@@ -114,7 +118,9 @@ public:
     virtual uint32_t& DesiredFOV() = 0;
     virtual void DesiredFOVUpdated() = 0;
 
-    virtual void SetPawn(CBasePlayerPawn* pPawn) = 0;
+    /// <summary>Set pawn for controller.</summary>
+    virtual void SetPawn(IBasePlayerPawn* pPawn) = 0;
+    static IBasePlayerController* FromOriginal(CBasePlayerController* p);
 };
 
 #endif // _INCLUDE_IBASEPLAYERCONTROLLER_H

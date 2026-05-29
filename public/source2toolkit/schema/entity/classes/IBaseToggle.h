@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
@@ -57,13 +58,15 @@
 #include "../enums/TOGGLE_STATE.h"
 
 class CBaseEntity;
+class CBaseToggle;
 
 class IBaseToggle : public virtual IBaseModelEntity
 {
 public:
     virtual ~IBaseToggle() = default;
+    CBaseToggle* GetOriginal() { return reinterpret_cast<CBaseToggle*>(IEntityInstance::GetOriginal()); }
 
-    virtual TOGGLE_STATE& Toggle_state() = 0;
+    virtual ::TOGGLE_STATE& Toggle_state() = 0;
     virtual void Toggle_stateUpdated() = 0;
     virtual float& MoveDistance() = 0;
     virtual void MoveDistanceUpdated() = 0;
@@ -95,6 +98,7 @@ public:
     virtual void MovementTypeUpdated() = 0;
     virtual CUtlSymbolLarge& Master() = 0;
     virtual void MasterUpdated() = 0;
+    static IBaseToggle* FromOriginal(CBaseToggle* p);
 };
 
 #endif // _INCLUDE_IBASETOGGLE_H

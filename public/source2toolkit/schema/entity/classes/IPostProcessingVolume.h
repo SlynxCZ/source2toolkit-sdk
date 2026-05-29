@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
 
+class CPostProcessingVolume;
 class InfoForResourceTypeCPostProcessingResource;
 
 class IPostProcessingVolume : public virtual IBaseTrigger
 {
 public:
     virtual ~IPostProcessingVolume() = default;
+    CPostProcessingVolume* GetOriginal() { return reinterpret_cast<CPostProcessingVolume*>(IEntityInstance::GetOriginal()); }
 
     virtual CStrongHandle<InfoForResourceTypeCPostProcessingResource>& PostSettings() = 0;
     virtual void PostSettingsUpdated() = 0;
@@ -85,6 +88,7 @@ public:
     virtual void MasterUpdated() = 0;
     virtual bool& ExposureControl() = 0;
     virtual void ExposureControlUpdated() = 0;
+    static IPostProcessingVolume* FromOriginal(CPostProcessingVolume* p);
 };
 
 #endif // _INCLUDE_IPOSTPROCESSINGVOLUME_H

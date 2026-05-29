@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPhysConstraint.h"
+
+class CRagdollConstraint;
 
 class IRagdollConstraint : public virtual IPhysConstraint
 {
 public:
     virtual ~IRagdollConstraint() = default;
+    CRagdollConstraint* GetOriginal() { return reinterpret_cast<CRagdollConstraint*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Xmin() = 0;
     virtual void XminUpdated() = 0;
@@ -77,6 +81,7 @@ public:
     virtual void YfrictionUpdated() = 0;
     virtual float& Zfriction() = 0;
     virtual void ZfrictionUpdated() = 0;
+    static IRagdollConstraint* FromOriginal(CRagdollConstraint* p);
 };
 
 #endif // _INCLUDE_IRAGDOLLCONSTRAINT_H

@@ -50,14 +50,17 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+class CBaseIssue;
 class CVoteController;
 
 class IBaseIssue
 {
 public:
     virtual ~IBaseIssue() = default;
+    CBaseIssue* GetOriginal() { return reinterpret_cast<CBaseIssue*>(IEntityInstance::GetOriginal()); }
 
     virtual char* TypeString() = 0;
     virtual char* DetailsString() = 0;
@@ -69,6 +72,7 @@ public:
     virtual void NumPotentialVotesUpdated() = 0;
     virtual CVoteController*& VoteController() = 0;
     virtual void VoteControllerUpdated() = 0;
+    static IBaseIssue* FromOriginal(CBaseIssue* p);
 };
 
 #endif // _INCLUDE_IBASEISSUE_H

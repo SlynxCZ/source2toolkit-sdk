@@ -50,10 +50,12 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
 
+class CAmbientGeneric;
 class CBaseEntity;
 class dynpitchvol_t;
 
@@ -61,14 +63,15 @@ class IAmbientGeneric : public virtual IPointEntity
 {
 public:
     virtual ~IAmbientGeneric() = default;
+    CAmbientGeneric* GetOriginal() { return reinterpret_cast<CAmbientGeneric*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Radius() = 0;
     virtual void RadiusUpdated() = 0;
     virtual float& MaxRadius() = 0;
     virtual void MaxRadiusUpdated() = 0;
-    virtual soundlevel_t& SoundLevel() = 0;
+    virtual ::soundlevel_t& SoundLevel() = 0;
     virtual void SoundLevelUpdated() = 0;
-    virtual dynpitchvol_t& Dpv() = 0;
+    virtual ::dynpitchvol_t& Dpv() = 0;
     virtual void DpvUpdated() = 0;
     virtual bool& Active() = 0;
     virtual void ActiveUpdated() = 0;
@@ -82,6 +85,7 @@ public:
     virtual void SoundSourceUpdated() = 0;
     virtual CEntityIndex& SoundSourceEntIndex() = 0;
     virtual void SoundSourceEntIndexUpdated() = 0;
+    static IAmbientGeneric* FromOriginal(CAmbientGeneric* p);
 };
 
 #endif // _INCLUDE_IAMBIENTGENERIC_H

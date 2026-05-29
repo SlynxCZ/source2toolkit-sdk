@@ -50,10 +50,12 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseToggle.h"
 
+class CBaseButton;
 class CBaseModelEntity;
 class locksound_t;
 
@@ -61,6 +63,7 @@ class IBaseButton : public virtual IBaseToggle
 {
 public:
     virtual ~IBaseButton() = default;
+    CBaseButton* GetOriginal() { return reinterpret_cast<CBaseButton*>(IEntityInstance::GetOriginal()); }
 
     virtual QAngle& MoveEntitySpace() = 0;
     virtual void MoveEntitySpaceUpdated() = 0;
@@ -68,7 +71,7 @@ public:
     virtual void StayPushedUpdated() = 0;
     virtual bool& Rotating() = 0;
     virtual void RotatingUpdated() = 0;
-    virtual locksound_t& Ls() = 0;
+    virtual ::locksound_t& Ls() = 0;
     virtual void LsUpdated() = 0;
     virtual CUtlSymbolLarge& UseSound() = 0;
     virtual void UseSoundUpdated() = 0;
@@ -86,15 +89,15 @@ public:
     virtual void UseLockedTimeUpdated() = 0;
     virtual bool& SolidBsp() = 0;
     virtual void SolidBspUpdated() = 0;
-    virtual CEntityIOOutput& OnDamaged() = 0;
+    virtual ::CEntityIOOutput& OnDamaged() = 0;
     virtual void OnDamagedUpdated() = 0;
-    virtual CEntityIOOutput& OnPressed() = 0;
+    virtual ::CEntityIOOutput& OnPressed() = 0;
     virtual void OnPressedUpdated() = 0;
-    virtual CEntityIOOutput& OnUseLocked() = 0;
+    virtual ::CEntityIOOutput& OnUseLocked() = 0;
     virtual void OnUseLockedUpdated() = 0;
-    virtual CEntityIOOutput& OnIn() = 0;
+    virtual ::CEntityIOOutput& OnIn() = 0;
     virtual void OnInUpdated() = 0;
-    virtual CEntityIOOutput& OnOut() = 0;
+    virtual ::CEntityIOOutput& OnOut() = 0;
     virtual void OnOutUpdated() = 0;
     virtual int32_t& State() = 0;
     virtual void StateUpdated() = 0;
@@ -112,6 +115,7 @@ public:
     virtual void UsableUpdated() = 0;
     virtual CUtlSymbolLarge& DisplayText() = 0;
     virtual void DisplayTextUpdated() = 0;
+    static IBaseButton* FromOriginal(CBaseButton* p);
 };
 
 #endif // _INCLUDE_IBASEBUTTON_H

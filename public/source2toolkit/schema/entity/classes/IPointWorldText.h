@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IModelPointEntity.h"
@@ -58,10 +59,13 @@
 #include "../enums/PointWorldTextJustifyVertical_t.h"
 #include "../enums/PointWorldTextReorientMode_t.h"
 
+class CPointWorldText;
+
 class IPointWorldText : public virtual IModelPointEntity
 {
 public:
     virtual ~IPointWorldText() = default;
+    CPointWorldText* GetOriginal() { return reinterpret_cast<CPointWorldText*>(IEntityInstance::GetOriginal()); }
 
     virtual char* MessageText() = 0;
     virtual char* FontName() = 0;
@@ -86,12 +90,13 @@ public:
     virtual void BackgroundWorldToUVUpdated() = 0;
     virtual Color& Color() = 0;
     virtual void ColorUpdated() = 0;
-    virtual PointWorldTextJustifyHorizontal_t& JustifyHorizontal() = 0;
+    virtual ::PointWorldTextJustifyHorizontal_t& JustifyHorizontal() = 0;
     virtual void JustifyHorizontalUpdated() = 0;
-    virtual PointWorldTextJustifyVertical_t& JustifyVertical() = 0;
+    virtual ::PointWorldTextJustifyVertical_t& JustifyVertical() = 0;
     virtual void JustifyVerticalUpdated() = 0;
-    virtual PointWorldTextReorientMode_t& ReorientMode() = 0;
+    virtual ::PointWorldTextReorientMode_t& ReorientMode() = 0;
     virtual void ReorientModeUpdated() = 0;
+    static IPointWorldText* FromOriginal(CPointWorldText* p);
 };
 
 #endif // _INCLUDE_IPOINTWORLDTEXT_H

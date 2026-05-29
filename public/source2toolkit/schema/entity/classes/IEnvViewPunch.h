@@ -50,19 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CEnvViewPunch;
 
 class IEnvViewPunch : public virtual IPointEntity
 {
 public:
     virtual ~IEnvViewPunch() = default;
+    CEnvViewPunch* GetOriginal() { return reinterpret_cast<CEnvViewPunch*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Radius() = 0;
     virtual void RadiusUpdated() = 0;
     virtual QAngle& ViewPunch() = 0;
     virtual void ViewPunchUpdated() = 0;
+    static IEnvViewPunch* FromOriginal(CEnvViewPunch* p);
 };
 
 #endif // _INCLUDE_IENVVIEWPUNCH_H

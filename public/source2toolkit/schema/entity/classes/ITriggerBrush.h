@@ -50,25 +50,30 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
+
+class CTriggerBrush;
 
 class ITriggerBrush : public virtual IBaseModelEntity
 {
 public:
     virtual ~ITriggerBrush() = default;
+    CTriggerBrush* GetOriginal() { return reinterpret_cast<CTriggerBrush*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnStartTouch() = 0;
+    virtual ::CEntityIOOutput& OnStartTouch() = 0;
     virtual void OnStartTouchUpdated() = 0;
-    virtual CEntityIOOutput& OnEndTouch() = 0;
+    virtual ::CEntityIOOutput& OnEndTouch() = 0;
     virtual void OnEndTouchUpdated() = 0;
-    virtual CEntityIOOutput& OnUse() = 0;
+    virtual ::CEntityIOOutput& OnUse() = 0;
     virtual void OnUseUpdated() = 0;
     virtual int32_t& InputFilter() = 0;
     virtual void InputFilterUpdated() = 0;
     virtual int32_t& DontMessageParent() = 0;
     virtual void DontMessageParentUpdated() = 0;
+    static ITriggerBrush* FromOriginal(CTriggerBrush* p);
 };
 
 #endif // _INCLUDE_ITRIGGERBRUSH_H

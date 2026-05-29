@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
+
+class CBaseClientUIEntity;
 
 class IBaseClientUIEntity : public virtual IBaseModelEntity
 {
 public:
     virtual ~IBaseClientUIEntity() = default;
+    CBaseClientUIEntity* GetOriginal() { return reinterpret_cast<CBaseClientUIEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Enabled() = 0;
     virtual void EnabledUpdated() = 0;
@@ -67,6 +71,7 @@ public:
     virtual void PanelClassNameUpdated() = 0;
     virtual CUtlSymbolLarge& PanelID() = 0;
     virtual void PanelIDUpdated() = 0;
+    static IBaseClientUIEntity* FromOriginal(CBaseClientUIEntity* p);
 };
 
 #endif // _INCLUDE_IBASECLIENTUIENTITY_H

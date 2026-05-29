@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ISPerRoundStats_t.h"
+
+class CSMatchStats_t;
 
 class ISMatchStats_t : public virtual ISPerRoundStats_t
 {
 public:
     virtual ~ISMatchStats_t() = default;
+    CSMatchStats_t* GetOriginal() { return reinterpret_cast<CSMatchStats_t*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Enemy5Ks() = 0;
     virtual void Enemy5KsUpdated() = 0;
@@ -101,6 +105,7 @@ public:
     virtual void EntryCountUpdated() = 0;
     virtual int32_t& EntryWins() = 0;
     virtual void EntryWinsUpdated() = 0;
+    static ISMatchStats_t* FromOriginal(CSMatchStats_t* p);
 };
 
 #endif // _INCLUDE_ISMATCHSTATS_T_H

@@ -50,21 +50,26 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
+
+class CBaseFilter;
 
 class IBaseFilter : public virtual ILogicalEntity
 {
 public:
     virtual ~IBaseFilter() = default;
+    CBaseFilter* GetOriginal() { return reinterpret_cast<CBaseFilter*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Negated() = 0;
     virtual void NegatedUpdated() = 0;
-    virtual CEntityIOOutput& OnPass() = 0;
+    virtual ::CEntityIOOutput& OnPass() = 0;
     virtual void OnPassUpdated() = 0;
-    virtual CEntityIOOutput& OnFail() = 0;
+    virtual ::CEntityIOOutput& OnFail() = 0;
     virtual void OnFailUpdated() = 0;
+    static IBaseFilter* FromOriginal(CBaseFilter* p);
 };
 
 #endif // _INCLUDE_IBASEFILTER_H

@@ -50,21 +50,25 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IItem.h"
 
 class CCSPlayerPawn;
+class CItemDogtags;
 
 class IItemDogtags : public virtual IItem
 {
 public:
     virtual ~IItemDogtags() = default;
+    CItemDogtags* GetOriginal() { return reinterpret_cast<CItemDogtags*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CCSPlayerPawn>& OwningPlayer() = 0;
     virtual void OwningPlayerUpdated() = 0;
     virtual CHandle<CCSPlayerPawn>& KillingPlayer() = 0;
     virtual void KillingPlayerUpdated() = 0;
+    static IItemDogtags* FromOriginal(CItemDogtags* p);
 };
 
 #endif // _INCLUDE_IITEMDOGTAGS_H

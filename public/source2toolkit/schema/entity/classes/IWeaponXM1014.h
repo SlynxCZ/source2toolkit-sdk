@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ICSWeaponBaseShotgun.h"
+
+class CWeaponXM1014;
 
 class IWeaponXM1014 : public virtual ICSWeaponBaseShotgun
 {
 public:
     virtual ~IWeaponXM1014() = default;
+    CWeaponXM1014* GetOriginal() { return reinterpret_cast<CWeaponXM1014*>(IEntityInstance::GetOriginal()); }
 
+    static IWeaponXM1014* FromOriginal(CWeaponXM1014* p);
 };
 
 #endif // _INCLUDE_IWEAPONXM1014_H

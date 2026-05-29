@@ -50,10 +50,12 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "../enums/attributeprovidertypes_t.h"
 
+class CAttributeManager;
 class CAttributeManager__cached_attribute_float_t;
 class CBaseEntity;
 
@@ -61,6 +63,7 @@ class IAttributeManager
 {
 public:
     virtual ~IAttributeManager() = default;
+    CAttributeManager* GetOriginal() { return reinterpret_cast<CAttributeManager*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<CHandle<CBaseEntity>>& Providers() = 0;
     virtual void ProvidersUpdated() = 0;
@@ -70,10 +73,11 @@ public:
     virtual void OuterUpdated() = 0;
     virtual bool& PreventLoopback() = 0;
     virtual void PreventLoopbackUpdated() = 0;
-    virtual attributeprovidertypes_t& ProviderType() = 0;
+    virtual ::attributeprovidertypes_t& ProviderType() = 0;
     virtual void ProviderTypeUpdated() = 0;
     virtual CUtlVector<CAttributeManager__cached_attribute_float_t>& CachedResults() = 0;
     virtual void CachedResultsUpdated() = 0;
+    static IAttributeManager* FromOriginal(CAttributeManager* p);
 };
 
 #endif // _INCLUDE_IATTRIBUTEMANAGER_H

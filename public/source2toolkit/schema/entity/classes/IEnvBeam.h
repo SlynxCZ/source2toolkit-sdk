@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBeam.h"
@@ -57,12 +58,14 @@
 #include "../enums/Touch_t.h"
 
 class CBaseEntity;
+class CEnvBeam;
 class InfoForResourceTypeIMaterial2;
 
 class IEnvBeam : public virtual IBeam
 {
 public:
     virtual ~IEnvBeam() = default;
+    CEnvBeam* GetOriginal() { return reinterpret_cast<CEnvBeam*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Active() = 0;
     virtual void ActiveUpdated() = 0;
@@ -92,7 +95,7 @@ public:
     virtual void EndPointRelativeUpdated() = 0;
     virtual float& Radius() = 0;
     virtual void RadiusUpdated() = 0;
-    virtual Touch_t& TouchType() = 0;
+    virtual ::Touch_t& TouchType() = 0;
     virtual void TouchTypeUpdated() = 0;
     virtual CUtlSymbolLarge& FilterName() = 0;
     virtual void FilterNameUpdated() = 0;
@@ -100,8 +103,9 @@ public:
     virtual void FilterUpdated() = 0;
     virtual CUtlSymbolLarge& Decal() = 0;
     virtual void DecalUpdated() = 0;
-    virtual CEntityIOOutput& OnTouchedByEntity() = 0;
+    virtual ::CEntityIOOutput& OnTouchedByEntity() = 0;
     virtual void OnTouchedByEntityUpdated() = 0;
+    static IEnvBeam* FromOriginal(CEnvBeam* p);
 };
 
 #endif // _INCLUDE_IENVBEAM_H

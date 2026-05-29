@@ -50,19 +50,23 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBodyComponent.h"
 
+class CBodyComponentSkeletonInstance;
 class CSkeletonInstance;
 
 class IBodyComponentSkeletonInstance : public virtual IBodyComponent
 {
 public:
     virtual ~IBodyComponentSkeletonInstance() = default;
+    CBodyComponentSkeletonInstance* GetOriginal() { return reinterpret_cast<CBodyComponentSkeletonInstance*>(IEntityInstance::GetOriginal()); }
 
-    virtual CSkeletonInstance& SkeletonInstance() = 0;
+    virtual ::CSkeletonInstance& SkeletonInstance() = 0;
     virtual void SkeletonInstanceUpdated() = 0;
+    static IBodyComponentSkeletonInstance* FromOriginal(CBodyComponentSkeletonInstance* p);
 };
 
 #endif // _INCLUDE_IBODYCOMPONENTSKELETONINSTANCE_H

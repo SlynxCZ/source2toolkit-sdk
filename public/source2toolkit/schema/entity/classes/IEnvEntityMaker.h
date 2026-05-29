@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
 
 class CBaseEntity;
+class CEnvEntityMaker;
 
 class IEnvEntityMaker : public virtual IPointEntity
 {
 public:
     virtual ~IEnvEntityMaker() = default;
+    CEnvEntityMaker* GetOriginal() { return reinterpret_cast<CEnvEntityMaker*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& EntityMins() = 0;
     virtual void EntityMinsUpdated() = 0;
@@ -81,10 +84,11 @@ public:
     virtual void PostSpawnUseAnglesUpdated() = 0;
     virtual CUtlSymbolLarge& Template() = 0;
     virtual void TemplateUpdated() = 0;
-    virtual CEntityIOOutput& OutputOnSpawned() = 0;
+    virtual ::CEntityIOOutput& OutputOnSpawned() = 0;
     virtual void OutputOnSpawnedUpdated() = 0;
-    virtual CEntityIOOutput& OutputOnFailedSpawn() = 0;
+    virtual ::CEntityIOOutput& OutputOnFailedSpawn() = 0;
     virtual void OutputOnFailedSpawnUpdated() = 0;
+    static IEnvEntityMaker* FromOriginal(CEnvEntityMaker* p);
 };
 
 #endif // _INCLUDE_IENVENTITYMAKER_H

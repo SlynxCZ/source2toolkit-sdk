@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CServerOnlyEntity;
 
 class IServerOnlyEntity : public virtual IBaseEntity
 {
 public:
     virtual ~IServerOnlyEntity() = default;
+    CServerOnlyEntity* GetOriginal() { return reinterpret_cast<CServerOnlyEntity*>(IEntityInstance::GetOriginal()); }
 
+    static IServerOnlyEntity* FromOriginal(CServerOnlyEntity* p);
 };
 
 #endif // _INCLUDE_ISERVERONLYENTITY_H

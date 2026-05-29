@@ -50,19 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CSoundEventParameter;
 
 class ISoundEventParameter : public virtual IBaseEntity
 {
 public:
     virtual ~ISoundEventParameter() = default;
+    CSoundEventParameter* GetOriginal() { return reinterpret_cast<CSoundEventParameter*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& ParamName() = 0;
     virtual void ParamNameUpdated() = 0;
     virtual float& FloatValue() = 0;
     virtual void FloatValueUpdated() = 0;
+    static ISoundEventParameter* FromOriginal(CSoundEventParameter* p);
 };
 
 #endif // _INCLUDE_ISOUNDEVENTPARAMETER_H

@@ -50,21 +50,25 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
 
 class CBaseEntity;
+class CSceneListManager;
 
 class ISceneListManager : public virtual ILogicalEntity
 {
 public:
     virtual ~ISceneListManager() = default;
+    CSceneListManager* GetOriginal() { return reinterpret_cast<CSceneListManager*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<CHandle<CSceneListManager>>& ListManagers() = 0;
     virtual void ListManagersUpdated() = 0;
     virtual CUtlSymbolLarge* Scenes() = 0;
     virtual CHandle<CBaseEntity>* Scenes() = 0;
+    static ISceneListManager* FromOriginal(CSceneListManager* p);
 };
 
 #endif // _INCLUDE_ISCENELISTMANAGER_H

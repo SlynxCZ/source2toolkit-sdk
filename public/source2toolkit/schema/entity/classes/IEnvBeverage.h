@@ -50,19 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CEnvBeverage;
 
 class IEnvBeverage : public virtual IBaseEntity
 {
 public:
     virtual ~IEnvBeverage() = default;
+    CEnvBeverage* GetOriginal() { return reinterpret_cast<CEnvBeverage*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& CanInDispenser() = 0;
     virtual void CanInDispenserUpdated() = 0;
     virtual int32_t& BeverageType() = 0;
     virtual void BeverageTypeUpdated() = 0;
+    static IEnvBeverage* FromOriginal(CEnvBeverage* p);
 };
 
 #endif // _INCLUDE_IENVBEVERAGE_H

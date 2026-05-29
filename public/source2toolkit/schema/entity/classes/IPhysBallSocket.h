@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPhysConstraint.h"
+
+class CPhysBallSocket;
 
 class IPhysBallSocket : public virtual IPhysConstraint
 {
 public:
     virtual ~IPhysBallSocket() = default;
+    CPhysBallSocket* GetOriginal() { return reinterpret_cast<CPhysBallSocket*>(IEntityInstance::GetOriginal()); }
 
     virtual float& JointFriction() = 0;
     virtual void JointFrictionUpdated() = 0;
@@ -71,6 +75,7 @@ public:
     virtual void MinTwistAngleUpdated() = 0;
     virtual float& MaxTwistAngle() = 0;
     virtual void MaxTwistAngleUpdated() = 0;
+    static IPhysBallSocket* FromOriginal(CPhysBallSocket* p);
 };
 
 #endif // _INCLUDE_IPHYSBALLSOCKET_H

@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CRagdollManager;
 
 class IRagdollManager : public virtual IBaseEntity
 {
 public:
     virtual ~IRagdollManager() = default;
+    CRagdollManager* GetOriginal() { return reinterpret_cast<CRagdollManager*>(IEntityInstance::GetOriginal()); }
 
     virtual int8_t& CurrentMaxRagdollCount() = 0;
     virtual void CurrentMaxRagdollCountUpdated() = 0;
@@ -67,6 +71,7 @@ public:
     virtual void SaveImportantUpdated() = 0;
     virtual bool& CanTakeDamage() = 0;
     virtual void CanTakeDamageUpdated() = 0;
+    static IRagdollManager* FromOriginal(CRagdollManager* p);
 };
 
 #endif // _INCLUDE_IRAGDOLLMANAGER_H

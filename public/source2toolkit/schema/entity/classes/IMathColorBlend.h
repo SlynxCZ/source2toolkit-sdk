@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
+
+class CMathColorBlend;
 
 class IMathColorBlend : public virtual ILogicalEntity
 {
 public:
     virtual ~IMathColorBlend() = default;
+    CMathColorBlend* GetOriginal() { return reinterpret_cast<CMathColorBlend*>(IEntityInstance::GetOriginal()); }
 
     virtual float& InMin() = 0;
     virtual void InMinUpdated() = 0;
@@ -67,6 +71,7 @@ public:
     virtual void OutColor1Updated() = 0;
     virtual Color& OutColor2() = 0;
     virtual void OutColor2Updated() = 0;
+    static IMathColorBlend* FromOriginal(CMathColorBlend* p);
 };
 
 #endif // _INCLUDE_IMATHCOLORBLEND_H

@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayer_ObserverServices.h"
+
+class CCSObserver_ObserverServices;
 
 class ICSObserver_ObserverServices : public virtual IPlayer_ObserverServices
 {
 public:
     virtual ~ICSObserver_ObserverServices() = default;
+    CCSObserver_ObserverServices* GetOriginal() { return reinterpret_cast<CCSObserver_ObserverServices*>(IEntityInstance::GetOriginal()); }
 
+    static ICSObserver_ObserverServices* FromOriginal(CCSObserver_ObserverServices* p);
 };
 
 #endif // _INCLUDE_ICSOBSERVER_OBSERVERSERVICES_H

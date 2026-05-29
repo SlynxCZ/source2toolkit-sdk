@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CEnvVolumetricFogVolume;
 
 class IEnvVolumetricFogVolume : public virtual IBaseEntity
 {
 public:
     virtual ~IEnvVolumetricFogVolume() = default;
+    CEnvVolumetricFogVolume* GetOriginal() { return reinterpret_cast<CEnvVolumetricFogVolume*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Active() = 0;
     virtual void ActiveUpdated() = 0;
@@ -95,6 +99,7 @@ public:
     virtual void OverrideSunLightStrengthUpdated() = 0;
     virtual bool& OverrideNoiseStrength() = 0;
     virtual void OverrideNoiseStrengthUpdated() = 0;
+    static IEnvVolumetricFogVolume* FromOriginal(CEnvVolumetricFogVolume* p);
 };
 
 #endif // _INCLUDE_IENVVOLUMETRICFOGVOLUME_H

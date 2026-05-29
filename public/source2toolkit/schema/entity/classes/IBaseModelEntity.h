@@ -50,10 +50,12 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
 
+class CBaseModelEntity;
 class CChoreoComponent;
 class CCollisionProperty;
 class CDestructiblePartsComponent;
@@ -67,22 +69,23 @@ class IBaseModelEntity : public virtual IBaseEntity
 {
 public:
     virtual ~IBaseModelEntity() = default;
+    CBaseModelEntity* GetOriginal() { return reinterpret_cast<CBaseModelEntity*>(IEntityInstance::GetOriginal()); }
 
-    virtual CRenderComponent*& CRenderComponent() = 0;
-    virtual void CRenderComponentUpdated() = 0;
-    virtual CHitboxComponent& CHitboxComponent() = 0;
-    virtual void CHitboxComponentUpdated() = 0;
+    virtual CRenderComponent*& RenderComponent() = 0;
+    virtual void RenderComponentUpdated() = 0;
+    virtual ::CHitboxComponent& HitboxComponent() = 0;
+    virtual void HitboxComponentUpdated() = 0;
     virtual CChoreoComponent*& ChoreoComponent() = 0;
     virtual void ChoreoComponentUpdated() = 0;
-    virtual HitGroup_t& DestructiblePartInitialStateDestructed0() = 0;
+    virtual ::HitGroup_t& DestructiblePartInitialStateDestructed0() = 0;
     virtual void DestructiblePartInitialStateDestructed0Updated() = 0;
-    virtual HitGroup_t& DestructiblePartInitialStateDestructed1() = 0;
+    virtual ::HitGroup_t& DestructiblePartInitialStateDestructed1() = 0;
     virtual void DestructiblePartInitialStateDestructed1Updated() = 0;
-    virtual HitGroup_t& DestructiblePartInitialStateDestructed2() = 0;
+    virtual ::HitGroup_t& DestructiblePartInitialStateDestructed2() = 0;
     virtual void DestructiblePartInitialStateDestructed2Updated() = 0;
-    virtual HitGroup_t& DestructiblePartInitialStateDestructed3() = 0;
+    virtual ::HitGroup_t& DestructiblePartInitialStateDestructed3() = 0;
     virtual void DestructiblePartInitialStateDestructed3Updated() = 0;
-    virtual HitGroup_t& DestructiblePartInitialStateDestructed4() = 0;
+    virtual ::HitGroup_t& DestructiblePartInitialStateDestructed4() = 0;
     virtual void DestructiblePartInitialStateDestructed4Updated() = 0;
     virtual int32_t& DestructiblePartInitialStateDestructed0_PartIndex() = 0;
     virtual void DestructiblePartInitialStateDestructed0_PartIndexUpdated() = 0;
@@ -108,11 +111,11 @@ public:
     virtual void DestructiblePartsSystemComponentUpdated() = 0;
     virtual float& DissolveStartTime() = 0;
     virtual void DissolveStartTimeUpdated() = 0;
-    virtual CEntityIOOutput& OnIgnite() = 0;
+    virtual ::CEntityIOOutput& OnIgnite() = 0;
     virtual void OnIgniteUpdated() = 0;
-    virtual RenderMode_t& RenderMode() = 0;
+    virtual ::RenderMode_t& RenderMode() = 0;
     virtual void RenderModeUpdated() = 0;
-    virtual RenderFx_t& RenderFX() = 0;
+    virtual ::RenderFx_t& RenderFX() = 0;
     virtual void RenderFXUpdated() = 0;
     virtual bool& AllowFadeInView() = 0;
     virtual void AllowFadeInViewUpdated() = 0;
@@ -124,9 +127,9 @@ public:
     virtual void RenderToCubemapsUpdated() = 0;
     virtual bool& NoInterpolate() = 0;
     virtual void NoInterpolateUpdated() = 0;
-    virtual CCollisionProperty& Collision() = 0;
+    virtual ::CCollisionProperty& Collision() = 0;
     virtual void CollisionUpdated() = 0;
-    virtual CGlowProperty& Glow() = 0;
+    virtual ::CGlowProperty& Glow() = 0;
     virtual void GlowUpdated() = 0;
     virtual float& GlowBackfaceMult() = 0;
     virtual void GlowBackfaceMultUpdated() = 0;
@@ -140,13 +143,17 @@ public:
     virtual void ShadowStrengthUpdated() = 0;
     virtual uint8_t& ObjectCulling() = 0;
     virtual void ObjectCullingUpdated() = 0;
-    virtual CNetworkViewOffsetVector& ViewOffset() = 0;
+    virtual ::CNetworkViewOffsetVector& ViewOffset() = 0;
     virtual void ViewOffsetUpdated() = 0;
     virtual uint32_t* DisabledHitGroups() = 0;
 
+    /// <summary>Get model name.</summary>
     virtual CUtlSymbolLarge GetModelName() = 0;
+    /// <summary>Get eye position.</summary>
     virtual Vector GetEyePosition() = 0;
+    /// <summary>Set entity model.</summary>
     virtual void SetModel(const char* pszModel) = 0;
+    static IBaseModelEntity* FromOriginal(CBaseModelEntity* p);
 };
 
 #endif // _INCLUDE_IBASEMODELENTITY_H

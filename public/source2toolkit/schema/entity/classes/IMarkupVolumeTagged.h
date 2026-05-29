@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IMarkupVolume.h"
+
+class CMarkupVolumeTagged;
 
 class IMarkupVolumeTagged : public virtual IMarkupVolume
 {
 public:
     virtual ~IMarkupVolumeTagged() = default;
+    CMarkupVolumeTagged* GetOriginal() { return reinterpret_cast<CMarkupVolumeTagged*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<CGlobalSymbol>& GroupNames() = 0;
     virtual void GroupNamesUpdated() = 0;
@@ -73,6 +77,7 @@ public:
     virtual void GroupOtherGroupsUpdated() = 0;
     virtual bool& IsInGroup() = 0;
     virtual void IsInGroupUpdated() = 0;
+    static IMarkupVolumeTagged* FromOriginal(CMarkupVolumeTagged* p);
 };
 
 #endif // _INCLUDE_IMARKUPVOLUMETAGGED_H

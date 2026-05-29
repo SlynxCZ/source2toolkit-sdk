@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
+
+class CFuncVehicleClip;
 
 class IFuncVehicleClip : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncVehicleClip() = default;
+    CFuncVehicleClip* GetOriginal() { return reinterpret_cast<CFuncVehicleClip*>(IEntityInstance::GetOriginal()); }
 
+    static IFuncVehicleClip* FromOriginal(CFuncVehicleClip* p);
 };
 
 #endif // _INCLUDE_IFUNCVEHICLECLIP_H

@@ -50,23 +50,27 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
 
+class CFogController;
 class fogparams_t;
 
 class IFogController : public virtual IBaseEntity
 {
 public:
     virtual ~IFogController() = default;
+    CFogController* GetOriginal() { return reinterpret_cast<CFogController*>(IEntityInstance::GetOriginal()); }
 
-    virtual fogparams_t& Fog() = 0;
+    virtual ::fogparams_t& Fog() = 0;
     virtual void FogUpdated() = 0;
     virtual bool& UseAngles() = 0;
     virtual void UseAnglesUpdated() = 0;
     virtual int32_t& ChangedVariables() = 0;
     virtual void ChangedVariablesUpdated() = 0;
+    static IFogController* FromOriginal(CFogController* p);
 };
 
 #endif // _INCLUDE_IFOGCONTROLLER_H

@@ -50,26 +50,29 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IEntitySubclassVDataBase.h"
 
+class CBasePlayerVData;
 class CSkillFloat;
 
 class IBasePlayerVData : public virtual IEntitySubclassVDataBase
 {
 public:
     virtual ~IBasePlayerVData() = default;
+    CBasePlayerVData* GetOriginal() { return reinterpret_cast<CBasePlayerVData*>(IEntityInstance::GetOriginal()); }
 
-    virtual CSkillFloat& HeadDamageMultiplier() = 0;
+    virtual ::CSkillFloat& HeadDamageMultiplier() = 0;
     virtual void HeadDamageMultiplierUpdated() = 0;
-    virtual CSkillFloat& ChestDamageMultiplier() = 0;
+    virtual ::CSkillFloat& ChestDamageMultiplier() = 0;
     virtual void ChestDamageMultiplierUpdated() = 0;
-    virtual CSkillFloat& StomachDamageMultiplier() = 0;
+    virtual ::CSkillFloat& StomachDamageMultiplier() = 0;
     virtual void StomachDamageMultiplierUpdated() = 0;
-    virtual CSkillFloat& ArmDamageMultiplier() = 0;
+    virtual ::CSkillFloat& ArmDamageMultiplier() = 0;
     virtual void ArmDamageMultiplierUpdated() = 0;
-    virtual CSkillFloat& LegDamageMultiplier() = 0;
+    virtual ::CSkillFloat& LegDamageMultiplier() = 0;
     virtual void LegDamageMultiplierUpdated() = 0;
     virtual float& HoldBreathTime() = 0;
     virtual void HoldBreathTimeUpdated() = 0;
@@ -87,6 +90,7 @@ public:
     virtual void UseAngleToleranceUpdated() = 0;
     virtual float& CrouchTime() = 0;
     virtual void CrouchTimeUpdated() = 0;
+    static IBasePlayerVData* FromOriginal(CBasePlayerVData* p);
 };
 
 #endif // _INCLUDE_IBASEPLAYERVDATA_H

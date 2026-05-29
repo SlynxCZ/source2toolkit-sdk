@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IDynamicProp.h"
@@ -59,42 +60,44 @@
 class CAttributeContainer;
 class CBaseEntity;
 class CCSPlayerPawn;
+class CChicken;
 class CountdownTimer;
 
 class IChicken : public virtual IDynamicProp
 {
 public:
     virtual ~IChicken() = default;
+    CChicken* GetOriginal() { return reinterpret_cast<CChicken*>(IEntityInstance::GetOriginal()); }
 
-    virtual CAttributeContainer& AttributeManager() = 0;
+    virtual ::CAttributeContainer& AttributeManager() = 0;
     virtual void AttributeManagerUpdated() = 0;
-    virtual CountdownTimer& UpdateTimer() = 0;
+    virtual ::CountdownTimer& UpdateTimer() = 0;
     virtual void UpdateTimerUpdated() = 0;
     virtual Vector& StuckAnchor() = 0;
     virtual void StuckAnchorUpdated() = 0;
-    virtual CountdownTimer& StuckTimer() = 0;
+    virtual ::CountdownTimer& StuckTimer() = 0;
     virtual void StuckTimerUpdated() = 0;
-    virtual CountdownTimer& CollisionStuckTimer() = 0;
+    virtual ::CountdownTimer& CollisionStuckTimer() = 0;
     virtual void CollisionStuckTimerUpdated() = 0;
     virtual bool& IsOnGround() = 0;
     virtual void IsOnGroundUpdated() = 0;
     virtual Vector& FallVelocity() = 0;
     virtual void FallVelocityUpdated() = 0;
-    virtual ChickenActivity& DesiredActivity() = 0;
+    virtual ::ChickenActivity& DesiredActivity() = 0;
     virtual void DesiredActivityUpdated() = 0;
-    virtual ChickenActivity& CurrentActivity() = 0;
+    virtual ::ChickenActivity& CurrentActivity() = 0;
     virtual void CurrentActivityUpdated() = 0;
-    virtual CountdownTimer& ActivityTimer() = 0;
+    virtual ::CountdownTimer& ActivityTimer() = 0;
     virtual void ActivityTimerUpdated() = 0;
     virtual float& TurnRate() = 0;
     virtual void TurnRateUpdated() = 0;
     virtual CHandle<CBaseEntity>& FleeFrom() = 0;
     virtual void FleeFromUpdated() = 0;
-    virtual CountdownTimer& MoveRateThrottleTimer() = 0;
+    virtual ::CountdownTimer& MoveRateThrottleTimer() = 0;
     virtual void MoveRateThrottleTimerUpdated() = 0;
-    virtual CountdownTimer& StartleTimer() = 0;
+    virtual ::CountdownTimer& StartleTimer() = 0;
     virtual void StartleTimerUpdated() = 0;
-    virtual CountdownTimer& VocalizeTimer() = 0;
+    virtual ::CountdownTimer& VocalizeTimer() = 0;
     virtual void VocalizeTimerUpdated() = 0;
     virtual float& WhenZombified() = 0;
     virtual void WhenZombifiedUpdated() = 0;
@@ -102,26 +105,27 @@ public:
     virtual void JumpedThisFrameUpdated() = 0;
     virtual CHandle<CCSPlayerPawn>& Leader() = 0;
     virtual void LeaderUpdated() = 0;
-    virtual CountdownTimer& ReuseTimer() = 0;
+    virtual ::CountdownTimer& ReuseTimer() = 0;
     virtual void ReuseTimerUpdated() = 0;
     virtual bool& HasBeenUsed() = 0;
     virtual void HasBeenUsedUpdated() = 0;
-    virtual CountdownTimer& JumpTimer() = 0;
+    virtual ::CountdownTimer& JumpTimer() = 0;
     virtual void JumpTimerUpdated() = 0;
     virtual float& LastJumpTime() = 0;
     virtual void LastJumpTimeUpdated() = 0;
     virtual bool& InJump() = 0;
     virtual void InJumpUpdated() = 0;
-    virtual CountdownTimer& RepathTimer() = 0;
+    virtual ::CountdownTimer& RepathTimer() = 0;
     virtual void RepathTimerUpdated() = 0;
     virtual Vector& PathGoal() = 0;
     virtual void PathGoalUpdated() = 0;
     virtual float& ActiveFollowStartTime() = 0;
     virtual void ActiveFollowStartTimeUpdated() = 0;
-    virtual CountdownTimer& FollowMinuteTimer() = 0;
+    virtual ::CountdownTimer& FollowMinuteTimer() = 0;
     virtual void FollowMinuteTimerUpdated() = 0;
-    virtual CountdownTimer& BlockDirectionTimer() = 0;
+    virtual ::CountdownTimer& BlockDirectionTimer() = 0;
     virtual void BlockDirectionTimerUpdated() = 0;
+    static IChicken* FromOriginal(CChicken* p);
 };
 
 #endif // _INCLUDE_ICHICKEN_H

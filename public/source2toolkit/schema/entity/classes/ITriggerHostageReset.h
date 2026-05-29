@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
+
+class CTriggerHostageReset;
 
 class ITriggerHostageReset : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerHostageReset() = default;
+    CTriggerHostageReset* GetOriginal() { return reinterpret_cast<CTriggerHostageReset*>(IEntityInstance::GetOriginal()); }
 
+    static ITriggerHostageReset* FromOriginal(CTriggerHostageReset* p);
 };
 
 #endif // _INCLUDE_ITRIGGERHOSTAGERESET_H

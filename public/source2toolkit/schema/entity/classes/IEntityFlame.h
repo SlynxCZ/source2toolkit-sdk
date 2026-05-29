@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
 
 class CBaseEntity;
+class CEntityFlame;
 
 class IEntityFlame : public virtual IBaseEntity
 {
 public:
     virtual ~IEntityFlame() = default;
+    CEntityFlame* GetOriginal() { return reinterpret_cast<CEntityFlame*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& EntAttached() = 0;
     virtual void EntAttachedUpdated() = 0;
@@ -81,6 +84,7 @@ public:
     virtual void DirectDamagePerSecondUpdated() = 0;
     virtual int32_t& CustomDamageType() = 0;
     virtual void CustomDamageTypeUpdated() = 0;
+    static IEntityFlame* FromOriginal(CEntityFlame* p);
 };
 
 #endif // _INCLUDE_IENTITYFLAME_H

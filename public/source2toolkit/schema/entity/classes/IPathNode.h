@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
 
+class CPathNode;
 class CPathWithDynamicNodes;
 
 class IPathNode : public virtual IPointEntity
 {
 public:
     virtual ~IPathNode() = default;
+    CPathNode* GetOriginal() { return reinterpret_cast<CPathNode*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& InTangentLocal() = 0;
     virtual void InTangentLocalUpdated() = 0;
@@ -73,6 +76,7 @@ public:
     virtual void XWSPrevParentUpdated() = 0;
     virtual CHandle<CPathWithDynamicNodes>& Path() = 0;
     virtual void PathUpdated() = 0;
+    static IPathNode* FromOriginal(CPathNode* p);
 };
 
 #endif // _INCLUDE_IPATHNODE_H

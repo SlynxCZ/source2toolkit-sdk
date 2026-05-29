@@ -50,21 +50,25 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
 
 class CBaseEntity;
+class CHandleTest;
 
 class IHandleTest : public virtual IBaseEntity
 {
 public:
     virtual ~IHandleTest() = default;
+    CHandleTest* GetOriginal() { return reinterpret_cast<CHandleTest*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& Handle() = 0;
     virtual void HandleUpdated() = 0;
     virtual bool& SendHandle() = 0;
     virtual void SendHandleUpdated() = 0;
+    static IHandleTest* FromOriginal(CHandleTest* p);
 };
 
 #endif // _INCLUDE_IHANDLETEST_H

@@ -50,19 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ICSWeaponBase.h"
+
+class CWeaponBaseItem;
 
 class IWeaponBaseItem : public virtual ICSWeaponBase
 {
 public:
     virtual ~IWeaponBaseItem() = default;
+    CWeaponBaseItem* GetOriginal() { return reinterpret_cast<CWeaponBaseItem*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& SequenceInProgress() = 0;
     virtual void SequenceInProgressUpdated() = 0;
     virtual bool& Redraw() = 0;
     virtual void RedrawUpdated() = 0;
+    static IWeaponBaseItem* FromOriginal(CWeaponBaseItem* p);
 };
 
 #endif // _INCLUDE_IWEAPONBASEITEM_H

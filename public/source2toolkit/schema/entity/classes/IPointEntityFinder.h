@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
@@ -58,11 +59,13 @@
 
 class CBaseEntity;
 class CBaseFilter;
+class CPointEntityFinder;
 
 class IPointEntityFinder : public virtual IBaseEntity
 {
 public:
     virtual ~IPointEntityFinder() = default;
+    CPointEntityFinder* GetOriginal() { return reinterpret_cast<CPointEntityFinder*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& Entity() = 0;
     virtual void EntityUpdated() = 0;
@@ -74,10 +77,11 @@ public:
     virtual void RefNameUpdated() = 0;
     virtual CHandle<CBaseEntity>& Reference() = 0;
     virtual void ReferenceUpdated() = 0;
-    virtual EntFinderMethod_t& FindMethod() = 0;
+    virtual ::EntFinderMethod_t& FindMethod() = 0;
     virtual void FindMethodUpdated() = 0;
-    virtual CEntityIOOutput& OnFoundEntity() = 0;
+    virtual ::CEntityIOOutput& OnFoundEntity() = 0;
     virtual void OnFoundEntityUpdated() = 0;
+    static IPointEntityFinder* FromOriginal(CPointEntityFinder* p);
 };
 
 #endif // _INCLUDE_IPOINTENTITYFINDER_H

@@ -50,24 +50,28 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPhysConstraint.h"
 
 #include "../enums/JointMotion_t.h"
 
+class CGenericConstraint;
+
 class IGenericConstraint : public virtual IPhysConstraint
 {
 public:
     virtual ~IGenericConstraint() = default;
+    CGenericConstraint* GetOriginal() { return reinterpret_cast<CGenericConstraint*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& PlaceAnchorsAtConstraintTransform() = 0;
     virtual void PlaceAnchorsAtConstraintTransformUpdated() = 0;
-    virtual JointMotion_t& LinearMotionX() = 0;
+    virtual ::JointMotion_t& LinearMotionX() = 0;
     virtual void LinearMotionXUpdated() = 0;
-    virtual JointMotion_t& LinearMotionY() = 0;
+    virtual ::JointMotion_t& LinearMotionY() = 0;
     virtual void LinearMotionYUpdated() = 0;
-    virtual JointMotion_t& LinearMotionZ() = 0;
+    virtual ::JointMotion_t& LinearMotionZ() = 0;
     virtual void LinearMotionZUpdated() = 0;
     virtual float& LinearFrequencyX() = 0;
     virtual void LinearFrequencyXUpdated() = 0;
@@ -129,11 +133,11 @@ public:
     virtual void AxisNotifiedYUpdated() = 0;
     virtual bool& AxisNotifiedZ() = 0;
     virtual void AxisNotifiedZUpdated() = 0;
-    virtual JointMotion_t& AngularMotionX() = 0;
+    virtual ::JointMotion_t& AngularMotionX() = 0;
     virtual void AngularMotionXUpdated() = 0;
-    virtual JointMotion_t& AngularMotionY() = 0;
+    virtual ::JointMotion_t& AngularMotionY() = 0;
     virtual void AngularMotionYUpdated() = 0;
-    virtual JointMotion_t& AngularMotionZ() = 0;
+    virtual ::JointMotion_t& AngularMotionZ() = 0;
     virtual void AngularMotionZUpdated() = 0;
     virtual float& AngularFrequencyX() = 0;
     virtual void AngularFrequencyXUpdated() = 0;
@@ -153,12 +157,13 @@ public:
     virtual void MaxAngularImpulseYUpdated() = 0;
     virtual float& MaxAngularImpulseZ() = 0;
     virtual void MaxAngularImpulseZUpdated() = 0;
-    virtual CEntityIOOutput& NotifyForceReachedX() = 0;
+    virtual ::CEntityIOOutput& NotifyForceReachedX() = 0;
     virtual void NotifyForceReachedXUpdated() = 0;
-    virtual CEntityIOOutput& NotifyForceReachedY() = 0;
+    virtual ::CEntityIOOutput& NotifyForceReachedY() = 0;
     virtual void NotifyForceReachedYUpdated() = 0;
-    virtual CEntityIOOutput& NotifyForceReachedZ() = 0;
+    virtual ::CEntityIOOutput& NotifyForceReachedZ() = 0;
     virtual void NotifyForceReachedZUpdated() = 0;
+    static IGenericConstraint* FromOriginal(CGenericConstraint* p);
 };
 
 #endif // _INCLUDE_IGENERICCONSTRAINT_H

@@ -50,19 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ISoundEventEntity.h"
+
+class CSoundEventAABBEntity;
 
 class ISoundEventAABBEntity : public virtual ISoundEventEntity
 {
 public:
     virtual ~ISoundEventAABBEntity() = default;
+    CSoundEventAABBEntity* GetOriginal() { return reinterpret_cast<CSoundEventAABBEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& Mins() = 0;
     virtual void MinsUpdated() = 0;
     virtual Vector& Maxs() = 0;
     virtual void MaxsUpdated() = 0;
+    static ISoundEventAABBEntity* FromOriginal(CSoundEventAABBEntity* p);
 };
 
 #endif // _INCLUDE_ISOUNDEVENTAABBENTITY_H

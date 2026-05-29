@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ITeam.h"
+
+class CCSTeam;
 
 class ICSTeam : public virtual ITeam
 {
 public:
     virtual ~ICSTeam() = default;
+    CCSTeam* GetOriginal() { return reinterpret_cast<CCSTeam*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& LastRecievedShorthandedRoundBonus() = 0;
     virtual void LastRecievedShorthandedRoundBonusUpdated() = 0;
@@ -83,6 +87,7 @@ public:
     virtual void NextResourceTimeUpdated() = 0;
     virtual int32_t& LastUpdateSentAt() = 0;
     virtual void LastUpdateSentAtUpdated() = 0;
+    static ICSTeam* FromOriginal(CCSTeam* p);
 };
 
 #endif // _INCLUDE_ICSTEAM_H

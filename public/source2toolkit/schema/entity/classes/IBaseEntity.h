@@ -50,13 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 #include <functional>
+#include "entity2/entitysystem.h"
+
+#include "IEntityInstance.h"
 
 #include "../enums/BloodType.h"
 #include "../enums/EntityPlatformTypes_t.h"
 #include "../enums/TakeDamageFlags_t.h"
 
+class CBaseEntity;
 class CBaseFilter;
 class CBodyComponent;
 class CCollisionProperty;
@@ -67,17 +72,20 @@ class CEntitySubclassVDataBase;
 class CNetworkTransmitComponent;
 class CNetworkVelocityVector;
 class CPulseGraphInstance_ServerEntity;
+class IBaseEntity;
+class IO;
 class ResponseContext_t;
 class thinkfunc_t;
 
-class IBaseEntity
+class IBaseEntity : public virtual IEntityInstance
 {
 public:
     virtual ~IBaseEntity() = default;
+    CBaseEntity* GetOriginal() { return reinterpret_cast<CBaseEntity*>(IEntityInstance::GetOriginal()); }
 
-    virtual CBodyComponent*& CBodyComponent() = 0;
-    virtual void CBodyComponentUpdated() = 0;
-    virtual CNetworkTransmitComponent& NetworkTransmitComponent() = 0;
+    virtual CBodyComponent*& BodyComponent() = 0;
+    virtual void BodyComponentUpdated() = 0;
+    virtual ::CNetworkTransmitComponent& NetworkTransmitComponent() = 0;
     virtual void NetworkTransmitComponentUpdated() = 0;
     virtual CUtlVector<thinkfunc_t>& ThinkFunctions() = 0;
     virtual void ThinkFunctionsUpdated() = 0;
@@ -115,17 +123,17 @@ public:
     virtual void DamageAccumulatorUpdated() = 0;
     virtual bool& TakesDamage() = 0;
     virtual void TakesDamageUpdated() = 0;
-    virtual TakeDamageFlags_t& TakeDamageFlags() = 0;
+    virtual ::TakeDamageFlags_t& TakeDamageFlags() = 0;
     virtual void TakeDamageFlagsUpdated() = 0;
-    virtual EntityPlatformTypes_t& PlatformType() = 0;
+    virtual ::EntityPlatformTypes_t& PlatformType() = 0;
     virtual void PlatformTypeUpdated() = 0;
-    virtual MoveCollide_t& MoveCollide() = 0;
+    virtual ::MoveCollide_t& MoveCollide() = 0;
     virtual void MoveCollideUpdated() = 0;
-    virtual MoveType_t& MoveType() = 0;
+    virtual ::MoveType_t& MoveType() = 0;
     virtual void MoveTypeUpdated() = 0;
-    virtual MoveType_t& PreviouslySetMoveType() = 0;
+    virtual ::MoveType_t& PreviouslySetMoveType() = 0;
     virtual void PreviouslySetMoveTypeUpdated() = 0;
-    virtual MoveType_t& ActualMoveType() = 0;
+    virtual ::MoveType_t& ActualMoveType() = 0;
     virtual void ActualMoveTypeUpdated() = 0;
     virtual uint8_t& WaterTouch() = 0;
     virtual void WaterTouchUpdated() = 0;
@@ -170,13 +178,13 @@ public:
     virtual void NextThinkTickUpdated() = 0;
     virtual int32_t& SimulationTick() = 0;
     virtual void SimulationTickUpdated() = 0;
-    virtual CEntityIOOutput& OnKilled() = 0;
+    virtual ::CEntityIOOutput& OnKilled() = 0;
     virtual void OnKilledUpdated() = 0;
     virtual uint32_t& Flags() = 0;
     virtual void FlagsUpdated() = 0;
     virtual Vector& AbsVelocity() = 0;
     virtual void AbsVelocityUpdated() = 0;
-    virtual CNetworkVelocityVector& Velocity() = 0;
+    virtual ::CNetworkVelocityVector& Velocity() = 0;
     virtual void VelocityUpdated() = 0;
     virtual Vector& BaseVelocity() = 0;
     virtual void BaseVelocityUpdated() = 0;
@@ -218,13 +226,13 @@ public:
     virtual void WaterTypeUpdated() = 0;
     virtual int32_t& EFlags() = 0;
     virtual void EFlagsUpdated() = 0;
-    virtual CEntityIOOutput& OnUser1() = 0;
+    virtual ::CEntityIOOutput& OnUser1() = 0;
     virtual void OnUser1Updated() = 0;
-    virtual CEntityIOOutput& OnUser2() = 0;
+    virtual ::CEntityIOOutput& OnUser2() = 0;
     virtual void OnUser2Updated() = 0;
-    virtual CEntityIOOutput& OnUser3() = 0;
+    virtual ::CEntityIOOutput& OnUser3() = 0;
     virtual void OnUser3Updated() = 0;
-    virtual CEntityIOOutput& OnUser4() = 0;
+    virtual ::CEntityIOOutput& OnUser4() = 0;
     virtual void OnUser4Updated() = 0;
     virtual int32_t& InitialTeamNum() = 0;
     virtual void InitialTeamNumUpdated() = 0;
@@ -242,33 +250,59 @@ public:
     virtual void LocalTimeUpdated() = 0;
     virtual float& VPhysicsUpdateLocalTime() = 0;
     virtual void VPhysicsUpdateLocalTimeUpdated() = 0;
-    virtual BloodType& BloodType() = 0;
+    virtual ::BloodType& BloodType() = 0;
     virtual void BloodTypeUpdated() = 0;
     virtual CPulseGraphInstance_ServerEntity*& PulseGraphInstance() = 0;
     virtual void PulseGraphInstanceUpdated() = 0;
 
+    /// <summary>Accepts entity input.</summary>
     virtual void AcceptInput(const char* pszInput, CEntityInstance* pActivator = nullptr, CEntityInstance* pCaller = nullptr, const char* pszValue = "") = 0;
+    /// <summary>Add delayed entity IO event.</summary>
     virtual void AddEntityIOEvent(const char* pszInput, CEntityInstance* pActivator = nullptr, CEntityInstance* pCaller = nullptr, const char* pszValue = "", float flDelay = 0.0f) = 0;
+    /// <summary>Add signle entity IO listener.</summary>
     virtual CEntityIOListenerHandle* AddSingleEntityIOListener(const char* pszOutput, std::function<Action(const char*,CEntityInstance*, CEntityInstance*, float, Mode)> callback, Mode mode) = 0;
+    /// <summary>Get absolute origin.</summary>
     virtual Vector GetAbsOrigin() = 0;
+    /// <summary>Get local rotation.</summary>
     virtual QAngle GetAngRotation() = 0;
+    /// <summary>Get absolute rotation.</summary>
     virtual QAngle GetAbsRotation() = 0;
+    /// <summary>Get absolute velocity.</summary>
     virtual Vector GetAbsVelocity() = 0;
+    /// <summary>Set absolute origin.</summary>
     virtual void SetAbsOrigin(Vector vecOrigin) = 0;
+    /// <summary>Set absolute rotation.</summary>
     virtual void SetAbsRotation(QAngle angAbsRotation) = 0;
+    /// <summary>Set local rotation.</summary>
     virtual void SetAngRotation(QAngle angRotation) = 0;
+    /// <summary>Set absolute velocity.</summary>
     virtual void SetAbsVelocity(Vector vecVelocity) = 0;
+    /// <summary>Set base velocity.</summary>
     virtual void SetBaseVelocity(Vector vecVelocity) = 0;
+    /// <summary>Get entity VData.</summary>
     virtual CEntitySubclassVDataBase* GetVData() = 0;
+    /// <summary>Spawn entity.</summary>
     virtual void DispatchSpawn(CEntityKeyValues* pEntityKeyValues = nullptr) = 0;
+    /// <summary>Teleport entity.</summary>
     virtual void Teleport(const Vector* pPosition, const QAngle* pAngles, const Vector* pVelocity) = 0;
+    /// <summary>Set move type.</summary>
     virtual void SetMoveType(MoveType_t nMoveType) = 0;
+    /// <summary>Get collision group.</summary>
     virtual uint8 GetCollisionGroup() = 0;
+    /// <summary>Set collision group.</summary>
     virtual void SetCollisionGroup(uint8 nCollisionGroup) = 0;
+    /// <summary>Notify collision rules changed.</summary>
     virtual void CollisionRulesChanged() = 0;
+    /// <summary>Get entity index.</summary>
     virtual int GetIndex() = 0;
+    /// <summary>Get entity handle.</summary>
     virtual CHandle<CBaseEntity> GetHandle() = 0;
+    /// <summary>Get entity name.</summary>
     virtual const char* GetName() const = 0;
+
+    /// <summary>Creates entity by classname.</summary>
+    static IBaseEntity* CreateEntityByName(const char* pszClassName);
+    static IBaseEntity* FromOriginal(CBaseEntity* p);
 };
 
 #endif // _INCLUDE_IBASEENTITY_H

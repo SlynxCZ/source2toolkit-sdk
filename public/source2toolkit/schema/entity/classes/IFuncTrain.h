@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBasePlatTrain.h"
 
 class CBaseEntity;
+class CFuncTrain;
 
 class IFuncTrain : public virtual IBasePlatTrain
 {
 public:
     virtual ~IFuncTrain() = default;
+    CFuncTrain* GetOriginal() { return reinterpret_cast<CFuncTrain*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& CurrentTarget() = 0;
     virtual void CurrentTargetUpdated() = 0;
@@ -73,6 +76,7 @@ public:
     virtual void NextBlockTimeUpdated() = 0;
     virtual CUtlSymbolLarge& LastTarget() = 0;
     virtual void LastTargetUpdated() = 0;
+    static IFuncTrain* FromOriginal(CFuncTrain* p);
 };
 
 #endif // _INCLUDE_IFUNCTRAIN_H

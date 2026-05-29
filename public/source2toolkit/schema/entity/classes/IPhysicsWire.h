@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CPhysicsWire;
 
 class IPhysicsWire : public virtual IBaseEntity
 {
 public:
     virtual ~IPhysicsWire() = default;
+    CPhysicsWire* GetOriginal() { return reinterpret_cast<CPhysicsWire*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Density() = 0;
     virtual void DensityUpdated() = 0;
+    static IPhysicsWire* FromOriginal(CPhysicsWire* p);
 };
 
 #endif // _INCLUDE_IPHYSICSWIRE_H

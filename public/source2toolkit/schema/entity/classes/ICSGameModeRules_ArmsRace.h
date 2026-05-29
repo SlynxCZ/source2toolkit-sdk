@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ICSGameModeRules.h"
+
+class CCSGameModeRules_ArmsRace;
 
 class ICSGameModeRules_ArmsRace : public virtual ICSGameModeRules
 {
 public:
     virtual ~ICSGameModeRules_ArmsRace() = default;
+    CCSGameModeRules_ArmsRace* GetOriginal() { return reinterpret_cast<CCSGameModeRules_ArmsRace*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<CUtlString>& WeaponSequence() = 0;
     virtual void WeaponSequenceUpdated() = 0;
+    static ICSGameModeRules_ArmsRace* FromOriginal(CCSGameModeRules_ArmsRace* p);
 };
 
 #endif // _INCLUDE_ICSGAMEMODERULES_ARMSRACE_H

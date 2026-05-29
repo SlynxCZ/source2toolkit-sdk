@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPathParticleRope.h"
+
+class CPathParticleRopeAlias_path_particle_rope_clientside;
 
 class IPathParticleRopeAlias_path_particle_rope_clientside : public virtual IPathParticleRope
 {
 public:
     virtual ~IPathParticleRopeAlias_path_particle_rope_clientside() = default;
+    CPathParticleRopeAlias_path_particle_rope_clientside* GetOriginal() { return reinterpret_cast<CPathParticleRopeAlias_path_particle_rope_clientside*>(IEntityInstance::GetOriginal()); }
 
+    static IPathParticleRopeAlias_path_particle_rope_clientside* FromOriginal(CPathParticleRopeAlias_path_particle_rope_clientside* p);
 };
 
 #endif // _INCLUDE_IPATHPARTICLEROPEALIAS_PATH_PARTICLE_ROPE_CLIENTSIDE_H

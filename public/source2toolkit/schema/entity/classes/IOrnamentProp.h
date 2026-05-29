@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IDynamicProp.h"
+
+class COrnamentProp;
 
 class IOrnamentProp : public virtual IDynamicProp
 {
 public:
     virtual ~IOrnamentProp() = default;
+    COrnamentProp* GetOriginal() { return reinterpret_cast<COrnamentProp*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& InitialOwner() = 0;
     virtual void InitialOwnerUpdated() = 0;
+    static IOrnamentProp* FromOriginal(COrnamentProp* p);
 };
 
 #endif // _INCLUDE_IORNAMENTPROP_H

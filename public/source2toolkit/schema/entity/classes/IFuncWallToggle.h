@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IFuncWall.h"
+
+class CFuncWallToggle;
 
 class IFuncWallToggle : public virtual IFuncWall
 {
 public:
     virtual ~IFuncWallToggle() = default;
+    CFuncWallToggle* GetOriginal() { return reinterpret_cast<CFuncWallToggle*>(IEntityInstance::GetOriginal()); }
 
+    static IFuncWallToggle* FromOriginal(CFuncWallToggle* p);
 };
 
 #endif // _INCLUDE_IFUNCWALLTOGGLE_H

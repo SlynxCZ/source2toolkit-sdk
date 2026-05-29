@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
 
 class CBaseEntity;
+class CPointVelocitySensor;
 
 class IPointVelocitySensor : public virtual IPointEntity
 {
 public:
     virtual ~IPointVelocitySensor() = default;
+    CPointVelocitySensor* GetOriginal() { return reinterpret_cast<CPointVelocitySensor*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& TargetEntity() = 0;
     virtual void TargetEntityUpdated() = 0;
@@ -71,6 +74,7 @@ public:
     virtual void PrevVelocityUpdated() = 0;
     virtual float& AvgInterval() = 0;
     virtual void AvgIntervalUpdated() = 0;
+    static IPointVelocitySensor* FromOriginal(CPointVelocitySensor* p);
 };
 
 #endif // _INCLUDE_IPOINTVELOCITYSENSOR_H

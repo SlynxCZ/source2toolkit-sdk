@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CNavHullPresetVData;
 
 class INavHullPresetVData
 {
 public:
     virtual ~INavHullPresetVData() = default;
+    CNavHullPresetVData* GetOriginal() { return reinterpret_cast<CNavHullPresetVData*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<CUtlString>& NavHulls() = 0;
     virtual void NavHullsUpdated() = 0;
+    static INavHullPresetVData* FromOriginal(CNavHullPresetVData* p);
 };
 
 #endif // _INCLUDE_INAVHULLPRESETVDATA_H

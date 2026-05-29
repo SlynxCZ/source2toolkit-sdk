@@ -35,56 +35,31 @@
  * Project: Source2Toolkit
  */
 
-/**
+#include "source2toolkit/schema/entityio.h"
 
-* @file events.h
-* @brief High-level helper functions for game event handling.
-*
-* These functions provide simplified access to the IToolkitEvents interface,
-* allowing plugins to register callbacks for Source2 game events.
-*
-* @note Internally wraps IToolkitEvents.
-*/
-
-#ifndef _INCLUDE_ITOOLKIT_UTILS_EVENTS_H
-#define _INCLUDE_ITOOLKIT_UTILS_EVENTS_H
-
-#pragma once
+#include "core/entities.h"
 
 #ifdef SOURCE2TOOLKIT_CORE
-#include "core/events.h"
+#include "core/shared.h"
+#include "core/addresses.h"
 #else
-#include "source2toolkit/IToolkitEvents.h"
+#include "source2toolkit/IToolkitAddresses.h"
+#include "source2toolkit/IToolkitApi.h"
+#include "source2toolkit/IToolkitGameConfig.h"
+#include "source2toolkit/IToolkitTypes.h"
 #endif
 
-/**
+void CEntityIOListenerHandle::Unhook()
+{
+    if (!m_pListener)
+        return;
 
-* @brief Registers a game event listener.
-*
-* @param pchName Event name (e.g. "player_death", "round_start")
-* @param handler Callback executed when the event is fired
-* @param mode Execution mode (Pre = before engine processing, Post = after)
-*
-* @param handler parameters:
-* * event: Pointer to game event data
-* * mode: Execution mode (Pre/Post)
-* * dontBroadcast: Set to true to prevent event from being broadcast to clients
-*
-* @return Action:
-* * Ignore: no changes
-* * Override: modify event but still allow original processing (Pre only)
-* * Supersede: block original processing (Pre only)
-*
-* @note Wrapper around IToolkitEvents::RegGameEvent()
-*
-* @code
-* UTIL_RegGameEvent("player_death", [](IGameEvent* event, Mode mode, bool& dontBroadcast) {
-      dontBroadcast = true; // hide event from clients
-      return Action::Ignore;
-* }, Mode::Pre);
-* @endcode
-  */
-void UTIL_RegGameEvent(const char* pchName, GameEventHandler handler, Mode mode);
+#ifdef SOURCE2TOOLKIT_CORE
+    entities::entitiesManager.RemoveEntityIOListener(m_pListener, m_szClassname.c_str(), m_szOutput.c_str(), m_nMode);
+#else
+    g_ToolkitAPI->Entities()->RemoveEntityIOListener(m_pListener, m_szClassname.c_str(), m_szOutput.c_str(), m_nMode);
+#endif
 
-#endif //_INCLUDE_ITOOLKIT_UTILS_EVENTS_H
-
+    delete m_pListener;
+    m_pListener = nullptr;
+}

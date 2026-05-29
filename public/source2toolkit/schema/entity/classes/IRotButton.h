@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseButton.h"
+
+class CRotButton;
 
 class IRotButton : public virtual IBaseButton
 {
 public:
     virtual ~IRotButton() = default;
+    CRotButton* GetOriginal() { return reinterpret_cast<CRotButton*>(IEntityInstance::GetOriginal()); }
 
+    static IRotButton* FromOriginal(CRotButton* p);
 };
 
 #endif // _INCLUDE_IROTBUTTON_H

@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
+
+class CTriggerDetectExplosion;
 
 class ITriggerDetectExplosion : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerDetectExplosion() = default;
+    CTriggerDetectExplosion* GetOriginal() { return reinterpret_cast<CTriggerDetectExplosion*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnDetectedExplosion() = 0;
+    virtual ::CEntityIOOutput& OnDetectedExplosion() = 0;
     virtual void OnDetectedExplosionUpdated() = 0;
+    static ITriggerDetectExplosion* FromOriginal(CTriggerDetectExplosion* p);
 };
 
 #endif // _INCLUDE_ITRIGGERDETECTEXPLOSION_H

@@ -50,18 +50,21 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 class CBaseAnimGraphDestructibleParts_GraphController;
 class CBaseModelEntity;
+class CDestructiblePartsComponent;
 class CEntityInstance*;
 
 class IDestructiblePartsComponent
 {
 public:
     virtual ~IDestructiblePartsComponent() = default;
+    CDestructiblePartsComponent* GetOriginal() { return reinterpret_cast<CDestructiblePartsComponent*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityInstance*& __m_pChainEntity() = 0;
+    virtual ::CEntityInstance*& __m_pChainEntity() = 0;
     virtual void __m_pChainEntityUpdated() = 0;
     virtual CUtlVector<uint16_t>& DamageTakenByHitGroup() = 0;
     virtual void DamageTakenByHitGroupUpdated() = 0;
@@ -69,6 +72,7 @@ public:
     virtual void OwnerUpdated() = 0;
     virtual CBaseAnimGraphDestructibleParts_GraphController*& AnimGraphDestructibleGraphController() = 0;
     virtual void AnimGraphDestructibleGraphControllerUpdated() = 0;
+    static IDestructiblePartsComponent* FromOriginal(CDestructiblePartsComponent* p);
 };
 
 #endif // _INCLUDE_IDESTRUCTIBLEPARTSCOMPONENT_H

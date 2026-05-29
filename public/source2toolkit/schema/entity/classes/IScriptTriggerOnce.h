@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ITriggerOnce.h"
+
+class CScriptTriggerOnce;
 
 class IScriptTriggerOnce : public virtual ITriggerOnce
 {
 public:
     virtual ~IScriptTriggerOnce() = default;
+    CScriptTriggerOnce* GetOriginal() { return reinterpret_cast<CScriptTriggerOnce*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& Extent() = 0;
     virtual void ExtentUpdated() = 0;
+    static IScriptTriggerOnce* FromOriginal(CScriptTriggerOnce* p);
 };
 
 #endif // _INCLUDE_ISCRIPTTRIGGERONCE_H

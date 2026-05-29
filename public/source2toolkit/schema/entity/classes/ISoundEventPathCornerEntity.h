@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ISoundEventEntity.h"
+
+class CSoundEventPathCornerEntity;
 
 class ISoundEventPathCornerEntity : public virtual ISoundEventEntity
 {
 public:
     virtual ~ISoundEventPathCornerEntity() = default;
+    CSoundEventPathCornerEntity* GetOriginal() { return reinterpret_cast<CSoundEventPathCornerEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& PathCorner() = 0;
     virtual void PathCornerUpdated() = 0;
@@ -71,6 +75,7 @@ public:
     virtual void DotProductMaxUpdated() = 0;
     virtual bool& Playing() = 0;
     virtual void PlayingUpdated() = 0;
+    static ISoundEventPathCornerEntity* FromOriginal(CSoundEventPathCornerEntity* p);
 };
 
 #endif // _INCLUDE_ISOUNDEVENTPATHCORNERENTITY_H

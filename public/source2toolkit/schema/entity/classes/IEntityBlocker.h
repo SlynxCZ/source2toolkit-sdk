@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
+
+class CEntityBlocker;
 
 class IEntityBlocker : public virtual IBaseModelEntity
 {
 public:
     virtual ~IEntityBlocker() = default;
+    CEntityBlocker* GetOriginal() { return reinterpret_cast<CEntityBlocker*>(IEntityInstance::GetOriginal()); }
 
+    static IEntityBlocker* FromOriginal(CEntityBlocker* p);
 };
 
 #endif // _INCLUDE_IENTITYBLOCKER_H

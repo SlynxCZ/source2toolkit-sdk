@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayerPawnComponent.h"
@@ -57,6 +58,7 @@
 class CBaseEntity;
 class CColorCorrection;
 class CEnvSoundscapeTriggerable;
+class CPlayer_CameraServices;
 class CPostProcessingVolume;
 class CTonemapController2;
 class audioparams_t;
@@ -66,6 +68,7 @@ class IPlayer_CameraServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~IPlayer_CameraServices() = default;
+    CPlayer_CameraServices* GetOriginal() { return reinterpret_cast<CPlayer_CameraServices*>(IEntityInstance::GetOriginal()); }
 
     virtual QAngle& CsViewPunchAngle() = 0;
     virtual void CsViewPunchAngleUpdated() = 0;
@@ -73,7 +76,7 @@ public:
     virtual void CsViewPunchAngleTickUpdated() = 0;
     virtual float& CsViewPunchAngleTickRatio() = 0;
     virtual void CsViewPunchAngleTickRatioUpdated() = 0;
-    virtual fogplayerparams_t& PlayerFog() = 0;
+    virtual ::fogplayerparams_t& PlayerFog() = 0;
     virtual void PlayerFogUpdated() = 0;
     virtual CHandle<CColorCorrection>& ColorCorrectionCtrl() = 0;
     virtual void ColorCorrectionCtrlUpdated() = 0;
@@ -81,7 +84,7 @@ public:
     virtual void ViewEntityUpdated() = 0;
     virtual CHandle<CTonemapController2>& TonemapController() = 0;
     virtual void TonemapControllerUpdated() = 0;
-    virtual audioparams_t& Audio() = 0;
+    virtual ::audioparams_t& Audio() = 0;
     virtual void AudioUpdated() = 0;
     virtual CUtlVector<CHandle<CPostProcessingVolume>>& PostProcessingVolumes() = 0;
     virtual void PostProcessingVolumesUpdated() = 0;
@@ -91,6 +94,7 @@ public:
     virtual void OldPlayerViewOffsetZUpdated() = 0;
     virtual CUtlVector<CHandle<CEnvSoundscapeTriggerable>>& TriggerSoundscapeList() = 0;
     virtual void TriggerSoundscapeListUpdated() = 0;
+    static IPlayer_CameraServices* FromOriginal(CPlayer_CameraServices* p);
 };
 
 #endif // _INCLUDE_IPLAYER_CAMERASERVICES_H

@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CSoundOpvarSetPointBase;
 
 class ISoundOpvarSetPointBase : public virtual IBaseEntity
 {
 public:
     virtual ~ISoundOpvarSetPointBase() = default;
+    CSoundOpvarSetPointBase* GetOriginal() { return reinterpret_cast<CSoundOpvarSetPointBase*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;
@@ -81,6 +85,7 @@ public:
     virtual void UseAutoCompareUpdated() = 0;
     virtual bool& FastRefresh() = 0;
     virtual void FastRefreshUpdated() = 0;
+    static ISoundOpvarSetPointBase* FromOriginal(CSoundOpvarSetPointBase* p);
 };
 
 #endif // _INCLUDE_ISOUNDOPVARSETPOINTBASE_H

@@ -50,19 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
+
+class CTonemapTrigger;
 
 class ITonemapTrigger : public virtual IBaseTrigger
 {
 public:
     virtual ~ITonemapTrigger() = default;
+    CTonemapTrigger* GetOriginal() { return reinterpret_cast<CTonemapTrigger*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& TonemapControllerName() = 0;
     virtual void TonemapControllerNameUpdated() = 0;
     virtual CEntityHandle& TonemapController() = 0;
     virtual void TonemapControllerUpdated() = 0;
+    static ITonemapTrigger* FromOriginal(CTonemapTrigger* p);
 };
 
 #endif // _INCLUDE_ITONEMAPTRIGGER_H

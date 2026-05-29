@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CCSPlayerLegacyJump;
 
 class ICSPlayerLegacyJump
 {
 public:
     virtual ~ICSPlayerLegacyJump() = default;
+    CCSPlayerLegacyJump* GetOriginal() { return reinterpret_cast<CCSPlayerLegacyJump*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& OldJumpPressed() = 0;
     virtual void OldJumpPressedUpdated() = 0;
     virtual float& JumpPressedTime() = 0;
     virtual void JumpPressedTimeUpdated() = 0;
+    static ICSPlayerLegacyJump* FromOriginal(CCSPlayerLegacyJump* p);
 };
 
 #endif // _INCLUDE_ICSPLAYERLEGACYJUMP_H

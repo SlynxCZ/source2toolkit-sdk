@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ISoundOpvarSetPointBase.h"
+
+class CSoundOpvarSetOBBWindEntity;
 
 class ISoundOpvarSetOBBWindEntity : public virtual ISoundOpvarSetPointBase
 {
 public:
     virtual ~ISoundOpvarSetOBBWindEntity() = default;
+    CSoundOpvarSetOBBWindEntity* GetOriginal() { return reinterpret_cast<CSoundOpvarSetOBBWindEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& Mins() = 0;
     virtual void MinsUpdated() = 0;
@@ -75,6 +79,7 @@ public:
     virtual void WindMapMinUpdated() = 0;
     virtual float& WindMapMax() = 0;
     virtual void WindMapMaxUpdated() = 0;
+    static ISoundOpvarSetOBBWindEntity* FromOriginal(CSoundOpvarSetOBBWindEntity* p);
 };
 
 #endif // _INCLUDE_ISOUNDOPVARSETOBBWINDENTITY_H

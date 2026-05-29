@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IAI_Expresser.h"
+
+class CAI_ExpresserWithFollowup;
 
 class IAI_ExpresserWithFollowup : public virtual IAI_Expresser
 {
 public:
     virtual ~IAI_ExpresserWithFollowup() = default;
+    CAI_ExpresserWithFollowup* GetOriginal() { return reinterpret_cast<CAI_ExpresserWithFollowup*>(IEntityInstance::GetOriginal()); }
 
+    static IAI_ExpresserWithFollowup* FromOriginal(CAI_ExpresserWithFollowup* p);
 };
 
 #endif // _INCLUDE_IAI_EXPRESSERWITHFOLLOWUP_H

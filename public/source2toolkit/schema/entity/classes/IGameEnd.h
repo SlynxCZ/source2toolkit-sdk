@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IRulePointEntity.h"
+
+class CGameEnd;
 
 class IGameEnd : public virtual IRulePointEntity
 {
 public:
     virtual ~IGameEnd() = default;
+    CGameEnd* GetOriginal() { return reinterpret_cast<CGameEnd*>(IEntityInstance::GetOriginal()); }
 
+    static IGameEnd* FromOriginal(CGameEnd* p);
 };
 
 #endif // _INCLUDE_IGAMEEND_H

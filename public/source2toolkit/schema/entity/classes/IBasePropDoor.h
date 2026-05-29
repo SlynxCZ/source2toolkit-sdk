@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IDynamicProp.h"
@@ -57,12 +58,14 @@
 #include "../enums/DoorState_t.h"
 
 class CBaseEntity;
+class CBasePropDoor;
 class locksound_t;
 
 class IBasePropDoor : public virtual IDynamicProp
 {
 public:
     virtual ~IBasePropDoor() = default;
+    CBasePropDoor* GetOriginal() { return reinterpret_cast<CBasePropDoor*>(IEntityInstance::GetOriginal()); }
 
     virtual float& AutoReturnDelay() = 0;
     virtual void AutoReturnDelayUpdated() = 0;
@@ -72,7 +75,7 @@ public:
     virtual void HardwareTypeUpdated() = 0;
     virtual bool& NeedsHardware() = 0;
     virtual void NeedsHardwareUpdated() = 0;
-    virtual DoorState_t& DoorState() = 0;
+    virtual ::DoorState_t& DoorState() = 0;
     virtual void DoorStateUpdated() = 0;
     virtual bool& Locked() = 0;
     virtual void LockedUpdated() = 0;
@@ -86,7 +89,7 @@ public:
     virtual void BlockerUpdated() = 0;
     virtual bool& FirstBlocked() = 0;
     virtual void FirstBlockedUpdated() = 0;
-    virtual locksound_t& Ls() = 0;
+    virtual ::locksound_t& Ls() = 0;
     virtual void LsUpdated() = 0;
     virtual bool& ForceClosed() = 0;
     virtual void ForceClosedUpdated() = 0;
@@ -119,26 +122,27 @@ public:
     virtual void SlaveNameUpdated() = 0;
     virtual CHandle<CBasePropDoor>& Master() = 0;
     virtual void MasterUpdated() = 0;
-    virtual CEntityIOOutput& OnBlockedClosing() = 0;
+    virtual ::CEntityIOOutput& OnBlockedClosing() = 0;
     virtual void OnBlockedClosingUpdated() = 0;
-    virtual CEntityIOOutput& OnBlockedOpening() = 0;
+    virtual ::CEntityIOOutput& OnBlockedOpening() = 0;
     virtual void OnBlockedOpeningUpdated() = 0;
-    virtual CEntityIOOutput& OnUnblockedClosing() = 0;
+    virtual ::CEntityIOOutput& OnUnblockedClosing() = 0;
     virtual void OnUnblockedClosingUpdated() = 0;
-    virtual CEntityIOOutput& OnUnblockedOpening() = 0;
+    virtual ::CEntityIOOutput& OnUnblockedOpening() = 0;
     virtual void OnUnblockedOpeningUpdated() = 0;
-    virtual CEntityIOOutput& OnFullyClosed() = 0;
+    virtual ::CEntityIOOutput& OnFullyClosed() = 0;
     virtual void OnFullyClosedUpdated() = 0;
-    virtual CEntityIOOutput& OnFullyOpen() = 0;
+    virtual ::CEntityIOOutput& OnFullyOpen() = 0;
     virtual void OnFullyOpenUpdated() = 0;
-    virtual CEntityIOOutput& OnClose() = 0;
+    virtual ::CEntityIOOutput& OnClose() = 0;
     virtual void OnCloseUpdated() = 0;
-    virtual CEntityIOOutput& OnOpen() = 0;
+    virtual ::CEntityIOOutput& OnOpen() = 0;
     virtual void OnOpenUpdated() = 0;
-    virtual CEntityIOOutput& OnLockedUse() = 0;
+    virtual ::CEntityIOOutput& OnLockedUse() = 0;
     virtual void OnLockedUseUpdated() = 0;
-    virtual CEntityIOOutput& OnAjarOpen() = 0;
+    virtual ::CEntityIOOutput& OnAjarOpen() = 0;
     virtual void OnAjarOpenUpdated() = 0;
+    static IBasePropDoor* FromOriginal(CBasePropDoor* p);
 };
 
 #endif // _INCLUDE_IBASEPROPDOOR_H

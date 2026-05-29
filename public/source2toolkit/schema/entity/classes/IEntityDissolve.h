@@ -50,16 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
 
 #include "../enums/EntityDisolveType_t.h"
 
+class CEntityDissolve;
+
 class IEntityDissolve : public virtual IBaseModelEntity
 {
 public:
     virtual ~IEntityDissolve() = default;
+    CEntityDissolve* GetOriginal() { return reinterpret_cast<CEntityDissolve*>(IEntityInstance::GetOriginal()); }
 
     virtual float& FadeInStart() = 0;
     virtual void FadeInStartUpdated() = 0;
@@ -75,12 +79,13 @@ public:
     virtual void FadeOutLengthUpdated() = 0;
     virtual float& StartTime() = 0;
     virtual void StartTimeUpdated() = 0;
-    virtual EntityDisolveType_t& DissolveType() = 0;
+    virtual ::EntityDisolveType_t& DissolveType() = 0;
     virtual void DissolveTypeUpdated() = 0;
     virtual Vector& DissolverOrigin() = 0;
     virtual void DissolverOriginUpdated() = 0;
     virtual uint32_t& Magnitude() = 0;
     virtual void MagnitudeUpdated() = 0;
+    static IEntityDissolve* FromOriginal(CEntityDissolve* p);
 };
 
 #endif // _INCLUDE_IENTITYDISSOLVE_H

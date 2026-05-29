@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ISoundEventEntity.h"
+
+class CSoundEventSphereEntity;
 
 class ISoundEventSphereEntity : public virtual ISoundEventEntity
 {
 public:
     virtual ~ISoundEventSphereEntity() = default;
+    CSoundEventSphereEntity* GetOriginal() { return reinterpret_cast<CSoundEventSphereEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Radius() = 0;
     virtual void RadiusUpdated() = 0;
+    static ISoundEventSphereEntity* FromOriginal(CSoundEventSphereEntity* p);
 };
 
 #endif // _INCLUDE_ISOUNDEVENTSPHEREENTITY_H

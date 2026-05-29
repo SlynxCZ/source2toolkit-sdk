@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CHitboxComponent;
 
 class IHitboxComponent
 {
 public:
     virtual ~IHitboxComponent() = default;
+    CHitboxComponent* GetOriginal() { return reinterpret_cast<CHitboxComponent*>(IEntityInstance::GetOriginal()); }
 
     virtual float& BoundsExpandRadius() = 0;
     virtual void BoundsExpandRadiusUpdated() = 0;
+    static IHitboxComponent* FromOriginal(CHitboxComponent* p);
 };
 
 #endif // _INCLUDE_IHITBOXCOMPONENT_H

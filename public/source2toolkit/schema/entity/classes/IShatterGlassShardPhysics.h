@@ -50,23 +50,27 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPhysicsProp.h"
 
+class CShatterGlassShardPhysics;
 class shard_model_desc_t;
 
 class IShatterGlassShardPhysics : public virtual IPhysicsProp
 {
 public:
     virtual ~IShatterGlassShardPhysics() = default;
+    CShatterGlassShardPhysics* GetOriginal() { return reinterpret_cast<CShatterGlassShardPhysics*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Debris() = 0;
     virtual void DebrisUpdated() = 0;
     virtual uint32_t& ParentShard() = 0;
     virtual void ParentShardUpdated() = 0;
-    virtual shard_model_desc_t& ShardDesc() = 0;
+    virtual ::shard_model_desc_t& ShardDesc() = 0;
     virtual void ShardDescUpdated() = 0;
+    static IShatterGlassShardPhysics* FromOriginal(CShatterGlassShardPhysics* p);
 };
 
 #endif // _INCLUDE_ISHATTERGLASSSHARDPHYSICS_H

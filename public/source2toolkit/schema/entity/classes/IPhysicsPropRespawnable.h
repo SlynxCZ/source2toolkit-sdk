@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPhysicsProp.h"
+
+class CPhysicsPropRespawnable;
 
 class IPhysicsPropRespawnable : public virtual IPhysicsProp
 {
 public:
     virtual ~IPhysicsPropRespawnable() = default;
+    CPhysicsPropRespawnable* GetOriginal() { return reinterpret_cast<CPhysicsPropRespawnable*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& OriginalSpawnOrigin() = 0;
     virtual void OriginalSpawnOriginUpdated() = 0;
@@ -69,6 +73,7 @@ public:
     virtual void OriginalMaxsUpdated() = 0;
     virtual float& RespawnDuration() = 0;
     virtual void RespawnDurationUpdated() = 0;
+    static IPhysicsPropRespawnable* FromOriginal(CPhysicsPropRespawnable* p);
 };
 
 #endif // _INCLUDE_IPHYSICSPROPRESPAWNABLE_H

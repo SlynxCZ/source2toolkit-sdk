@@ -50,17 +50,21 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+class CCSGameModeRules;
 class CEntityInstance*;
 
 class ICSGameModeRules
 {
 public:
     virtual ~ICSGameModeRules() = default;
+    CCSGameModeRules* GetOriginal() { return reinterpret_cast<CCSGameModeRules*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityInstance*& __m_pChainEntity() = 0;
+    virtual ::CEntityInstance*& __m_pChainEntity() = 0;
     virtual void __m_pChainEntityUpdated() = 0;
+    static ICSGameModeRules* FromOriginal(CCSGameModeRules* p);
 };
 
 #endif // _INCLUDE_ICSGAMEMODERULES_H

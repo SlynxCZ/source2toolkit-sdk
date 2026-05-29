@@ -50,9 +50,11 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 class CBaseModelEntity;
+class CChoreoComponent;
 class CEntityInstance*;
 class SceneEventId_t;
 
@@ -60,17 +62,19 @@ class IChoreoComponent
 {
 public:
     virtual ~IChoreoComponent() = default;
+    CChoreoComponent* GetOriginal() { return reinterpret_cast<CChoreoComponent*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityInstance*& __m_pChainEntity() = 0;
+    virtual ::CEntityInstance*& __m_pChainEntity() = 0;
     virtual void __m_pChainEntityUpdated() = 0;
     virtual CHandle<CBaseModelEntity>& Owner() = 0;
     virtual void OwnerUpdated() = 0;
-    virtual SceneEventId_t& NextSceneEventId() = 0;
+    virtual ::SceneEventId_t& NextSceneEventId() = 0;
     virtual void NextSceneEventIdUpdated() = 0;
     virtual bool& UpdateLayerPriorities() = 0;
     virtual void UpdateLayerPrioritiesUpdated() = 0;
     virtual float& AllowResponsesEndTime() = 0;
     virtual void AllowResponsesEndTimeUpdated() = 0;
+    static IChoreoComponent* FromOriginal(CChoreoComponent* p);
 };
 
 #endif // _INCLUDE_ICHOREOCOMPONENT_H

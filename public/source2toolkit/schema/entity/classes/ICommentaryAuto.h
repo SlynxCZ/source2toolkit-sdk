@@ -50,21 +50,26 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CCommentaryAuto;
 
 class ICommentaryAuto : public virtual IBaseEntity
 {
 public:
     virtual ~ICommentaryAuto() = default;
+    CCommentaryAuto* GetOriginal() { return reinterpret_cast<CCommentaryAuto*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnCommentaryNewGame() = 0;
+    virtual ::CEntityIOOutput& OnCommentaryNewGame() = 0;
     virtual void OnCommentaryNewGameUpdated() = 0;
-    virtual CEntityIOOutput& OnCommentaryMidGame() = 0;
+    virtual ::CEntityIOOutput& OnCommentaryMidGame() = 0;
     virtual void OnCommentaryMidGameUpdated() = 0;
-    virtual CEntityIOOutput& OnCommentaryMultiplayerSpawn() = 0;
+    virtual ::CEntityIOOutput& OnCommentaryMultiplayerSpawn() = 0;
     virtual void OnCommentaryMultiplayerSpawnUpdated() = 0;
+    static ICommentaryAuto* FromOriginal(CCommentaryAuto* p);
 };
 
 #endif // _INCLUDE_ICOMMENTARYAUTO_H

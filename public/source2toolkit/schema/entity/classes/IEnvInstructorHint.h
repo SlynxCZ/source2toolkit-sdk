@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CEnvInstructorHint;
 
 class IEnvInstructorHint : public virtual IPointEntity
 {
 public:
     virtual ~IEnvInstructorHint() = default;
+    CEnvInstructorHint* GetOriginal() { return reinterpret_cast<CEnvInstructorHint*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Name() = 0;
     virtual void NameUpdated() = 0;
@@ -107,6 +111,7 @@ public:
     virtual void AutoStartUpdated() = 0;
     virtual bool& LocalPlayerOnly() = 0;
     virtual void LocalPlayerOnlyUpdated() = 0;
+    static IEnvInstructorHint* FromOriginal(CEnvInstructorHint* p);
 };
 
 #endif // _INCLUDE_IENVINSTRUCTORHINT_H

@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILightEntity.h"
+
+class CLightOrthoEntity;
 
 class ILightOrthoEntity : public virtual ILightEntity
 {
 public:
     virtual ~ILightOrthoEntity() = default;
+    CLightOrthoEntity* GetOriginal() { return reinterpret_cast<CLightOrthoEntity*>(IEntityInstance::GetOriginal()); }
 
+    static ILightOrthoEntity* FromOriginal(CLightOrthoEntity* p);
 };
 
 #endif // _INCLUDE_ILIGHTORTHOENTITY_H

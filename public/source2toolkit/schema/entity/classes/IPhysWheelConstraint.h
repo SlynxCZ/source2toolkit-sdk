@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPhysConstraint.h"
 
 class CBaseEntity;
+class CPhysWheelConstraint;
 
 class IPhysWheelConstraint : public virtual IPhysConstraint
 {
 public:
     virtual ~IPhysWheelConstraint() = default;
+    CPhysWheelConstraint* GetOriginal() { return reinterpret_cast<CPhysWheelConstraint*>(IEntityInstance::GetOriginal()); }
 
     virtual float& SuspensionFrequency() = 0;
     virtual void SuspensionFrequencyUpdated() = 0;
@@ -85,6 +88,7 @@ public:
     virtual void SpinAxisFrictionUpdated() = 0;
     virtual CHandle<CBaseEntity>& SteeringMimicsEntity() = 0;
     virtual void SteeringMimicsEntityUpdated() = 0;
+    static IPhysWheelConstraint* FromOriginal(CPhysWheelConstraint* p);
 };
 
 #endif // _INCLUDE_IPHYSWHEELCONSTRAINT_H

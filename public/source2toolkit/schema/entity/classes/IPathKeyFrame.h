@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
+
+class CPathKeyFrame;
 
 class IPathKeyFrame : public virtual ILogicalEntity
 {
 public:
     virtual ~IPathKeyFrame() = default;
+    CPathKeyFrame* GetOriginal() { return reinterpret_cast<CPathKeyFrame*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& Origin() = 0;
     virtual void OriginUpdated() = 0;
@@ -75,6 +79,7 @@ public:
     virtual void PrevKeyUpdated() = 0;
     virtual float& MoveSpeed() = 0;
     virtual void MoveSpeedUpdated() = 0;
+    static IPathKeyFrame* FromOriginal(CPathKeyFrame* p);
 };
 
 #endif // _INCLUDE_IPATHKEYFRAME_H

@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
+
+class CFuncTrainControls;
 
 class IFuncTrainControls : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncTrainControls() = default;
+    CFuncTrainControls* GetOriginal() { return reinterpret_cast<CFuncTrainControls*>(IEntityInstance::GetOriginal()); }
 
+    static IFuncTrainControls* FromOriginal(CFuncTrainControls* p);
 };
 
 #endif // _INCLUDE_IFUNCTRAINCONTROLS_H

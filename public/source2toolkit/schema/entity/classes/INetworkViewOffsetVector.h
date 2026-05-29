@@ -50,12 +50,16 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CNetworkViewOffsetVector;
 
 class INetworkViewOffsetVector
 {
 public:
     virtual ~INetworkViewOffsetVector() = default;
+    CNetworkViewOffsetVector* GetOriginal() { return reinterpret_cast<CNetworkViewOffsetVector*>(IEntityInstance::GetOriginal()); }
 
     virtual float& X() = 0;
     virtual void XUpdated() = 0;
@@ -63,6 +67,7 @@ public:
     virtual void YUpdated() = 0;
     virtual float& Z() = 0;
     virtual void ZUpdated() = 0;
+    static INetworkViewOffsetVector* FromOriginal(CNetworkViewOffsetVector* p);
 };
 
 #endif // _INCLUDE_INETWORKVIEWOFFSETVECTOR_H

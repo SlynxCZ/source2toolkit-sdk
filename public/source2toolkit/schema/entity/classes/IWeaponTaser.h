@@ -50,19 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ICSWeaponBaseGun.h"
+
+class CWeaponTaser;
 
 class IWeaponTaser : public virtual ICSWeaponBaseGun
 {
 public:
     virtual ~IWeaponTaser() = default;
+    CWeaponTaser* GetOriginal() { return reinterpret_cast<CWeaponTaser*>(IEntityInstance::GetOriginal()); }
 
     virtual float& FireTime() = 0;
     virtual void FireTimeUpdated() = 0;
     virtual int32_t& LastAttackTick() = 0;
     virtual void LastAttackTickUpdated() = 0;
+    static IWeaponTaser* FromOriginal(CWeaponTaser* p);
 };
 
 #endif // _INCLUDE_IWEAPONTASER_H

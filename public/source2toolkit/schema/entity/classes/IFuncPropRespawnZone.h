@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CFuncPropRespawnZone;
 
 class IFuncPropRespawnZone : public virtual IBaseEntity
 {
 public:
     virtual ~IFuncPropRespawnZone() = default;
+    CFuncPropRespawnZone* GetOriginal() { return reinterpret_cast<CFuncPropRespawnZone*>(IEntityInstance::GetOriginal()); }
 
+    static IFuncPropRespawnZone* FromOriginal(CFuncPropRespawnZone* p);
 };
 
 #endif // _INCLUDE_IFUNCPROPRESPAWNZONE_H

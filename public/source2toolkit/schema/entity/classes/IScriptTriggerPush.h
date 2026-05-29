@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ITriggerPush.h"
+
+class CScriptTriggerPush;
 
 class IScriptTriggerPush : public virtual ITriggerPush
 {
 public:
     virtual ~IScriptTriggerPush() = default;
+    CScriptTriggerPush* GetOriginal() { return reinterpret_cast<CScriptTriggerPush*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& Extent() = 0;
     virtual void ExtentUpdated() = 0;
+    static IScriptTriggerPush* FromOriginal(CScriptTriggerPush* p);
 };
 
 #endif // _INCLUDE_ISCRIPTTRIGGERPUSH_H

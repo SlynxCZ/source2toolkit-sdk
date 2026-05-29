@@ -50,13 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CEntitySubclassVDataBase;
 
 class IEntitySubclassVDataBase
 {
 public:
     virtual ~IEntitySubclassVDataBase() = default;
+    CEntitySubclassVDataBase* GetOriginal() { return reinterpret_cast<CEntitySubclassVDataBase*>(IEntityInstance::GetOriginal()); }
 
+    static IEntitySubclassVDataBase* FromOriginal(CEntitySubclassVDataBase* p);
 };
 
 #endif // _INCLUDE_IENTITYSUBCLASSVDATABASE_H

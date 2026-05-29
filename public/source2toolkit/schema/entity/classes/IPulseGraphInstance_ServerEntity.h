@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBasePulseGraphInstance.h"
 
 class CBaseEntity;
+class CPulseGraphInstance_ServerEntity;
 
 class IPulseGraphInstance_ServerEntity : public virtual IBasePulseGraphInstance
 {
 public:
     virtual ~IPulseGraphInstance_ServerEntity() = default;
+    CPulseGraphInstance_ServerEntity* GetOriginal() { return reinterpret_cast<CPulseGraphInstance_ServerEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& Owner() = 0;
     virtual void OwnerUpdated() = 0;
@@ -73,6 +76,7 @@ public:
     virtual void NameFixupLocalUpdated() = 0;
     virtual CUtlSymbolLarge& ProceduralWorldNameForRelays() = 0;
     virtual void ProceduralWorldNameForRelaysUpdated() = 0;
+    static IPulseGraphInstance_ServerEntity* FromOriginal(CPulseGraphInstance_ServerEntity* p);
 };
 
 #endif // _INCLUDE_IPULSEGRAPHINSTANCE_SERVERENTITY_H

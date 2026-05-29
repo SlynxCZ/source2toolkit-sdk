@@ -50,13 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CEntityAttributeTable;
 
 class IEntityAttributeTable
 {
 public:
     virtual ~IEntityAttributeTable() = default;
+    CEntityAttributeTable* GetOriginal() { return reinterpret_cast<CEntityAttributeTable*>(IEntityInstance::GetOriginal()); }
 
+    static IEntityAttributeTable* FromOriginal(CEntityAttributeTable* p);
 };
 
 #endif // _INCLUDE_IENTITYATTRIBUTETABLE_H

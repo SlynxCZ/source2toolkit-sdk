@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
 
+class CPhysicsSpring;
 class IPhysicsJoint;
 
 class IPhysicsSpring : public virtual IBaseEntity
 {
 public:
     virtual ~IPhysicsSpring() = default;
+    CPhysicsSpring* GetOriginal() { return reinterpret_cast<CPhysicsSpring*>(IEntityInstance::GetOriginal()); }
 
     virtual IPhysicsJoint*& SpringJoint() = 0;
     virtual void SpringJointUpdated() = 0;
@@ -79,6 +82,7 @@ public:
     virtual void EndUpdated() = 0;
     virtual uint32_t& TeleportTick() = 0;
     virtual void TeleportTickUpdated() = 0;
+    static IPhysicsSpring* FromOriginal(CPhysicsSpring* p);
 };
 
 #endif // _INCLUDE_IPHYSICSSPRING_H

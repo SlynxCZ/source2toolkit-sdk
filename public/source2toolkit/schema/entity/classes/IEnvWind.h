@@ -50,19 +50,23 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
 
+class CEnvWind;
 class CEnvWindShared;
 
 class IEnvWind : public virtual IBaseEntity
 {
 public:
     virtual ~IEnvWind() = default;
+    CEnvWind* GetOriginal() { return reinterpret_cast<CEnvWind*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEnvWindShared& EnvWindShared() = 0;
+    virtual ::CEnvWindShared& EnvWindShared() = 0;
     virtual void EnvWindSharedUpdated() = 0;
+    static IEnvWind* FromOriginal(CEnvWind* p);
 };
 
 #endif // _INCLUDE_IENVWIND_H

@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
 
+class CPathParticleRope;
 class InfoForResourceTypeIParticleSystemDefinition;
 
 class IPathParticleRope : public virtual IBaseEntity
 {
 public:
     virtual ~IPathParticleRope() = default;
+    CPathParticleRope* GetOriginal() { return reinterpret_cast<CPathParticleRope*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& StartActive() = 0;
     virtual void StartActiveUpdated() = 0;
@@ -93,6 +96,7 @@ public:
     virtual void PathNodes_PinEnabledUpdated() = 0;
     virtual CUtlVector<float>& PathNodes_RadiusScale() = 0;
     virtual void PathNodes_RadiusScaleUpdated() = 0;
+    static IPathParticleRope* FromOriginal(CPathParticleRope* p);
 };
 
 #endif // _INCLUDE_IPATHPARTICLEROPE_H

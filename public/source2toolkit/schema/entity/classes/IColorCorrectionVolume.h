@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
+
+class CColorCorrectionVolume;
 
 class IColorCorrectionVolume : public virtual IBaseTrigger
 {
 public:
     virtual ~IColorCorrectionVolume() = default;
+    CColorCorrectionVolume* GetOriginal() { return reinterpret_cast<CColorCorrectionVolume*>(IEntityInstance::GetOriginal()); }
 
     virtual float& MaxWeight() = 0;
     virtual void MaxWeightUpdated() = 0;
@@ -74,6 +78,7 @@ public:
     virtual void LastExitWeightUpdated() = 0;
     virtual float& LastExitTime() = 0;
     virtual void LastExitTimeUpdated() = 0;
+    static IColorCorrectionVolume* FromOriginal(CColorCorrectionVolume* p);
 };
 
 #endif // _INCLUDE_ICOLORCORRECTIONVOLUME_H

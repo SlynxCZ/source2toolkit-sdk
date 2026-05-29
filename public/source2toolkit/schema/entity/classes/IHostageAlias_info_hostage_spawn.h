@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IHostage.h"
+
+class CHostageAlias_info_hostage_spawn;
 
 class IHostageAlias_info_hostage_spawn : public virtual IHostage
 {
 public:
     virtual ~IHostageAlias_info_hostage_spawn() = default;
+    CHostageAlias_info_hostage_spawn* GetOriginal() { return reinterpret_cast<CHostageAlias_info_hostage_spawn*>(IEntityInstance::GetOriginal()); }
 
+    static IHostageAlias_info_hostage_spawn* FromOriginal(CHostageAlias_info_hostage_spawn* p);
 };
 
 #endif // _INCLUDE_IHOSTAGEALIAS_INFO_HOSTAGE_SPAWN_H

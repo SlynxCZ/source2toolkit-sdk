@@ -50,19 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IInfoDynamicShadowHint.h"
+
+class CInfoDynamicShadowHintBox;
 
 class IInfoDynamicShadowHintBox : public virtual IInfoDynamicShadowHint
 {
 public:
     virtual ~IInfoDynamicShadowHintBox() = default;
+    CInfoDynamicShadowHintBox* GetOriginal() { return reinterpret_cast<CInfoDynamicShadowHintBox*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& BoxMins() = 0;
     virtual void BoxMinsUpdated() = 0;
     virtual Vector& BoxMaxs() = 0;
     virtual void BoxMaxsUpdated() = 0;
+    static IInfoDynamicShadowHintBox* FromOriginal(CInfoDynamicShadowHintBox* p);
 };
 
 #endif // _INCLUDE_IINFODYNAMICSHADOWHINTBOX_H

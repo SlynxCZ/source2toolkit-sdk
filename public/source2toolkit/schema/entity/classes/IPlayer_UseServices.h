@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayerPawnComponent.h"
+
+class CPlayer_UseServices;
 
 class IPlayer_UseServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~IPlayer_UseServices() = default;
+    CPlayer_UseServices* GetOriginal() { return reinterpret_cast<CPlayer_UseServices*>(IEntityInstance::GetOriginal()); }
 
+    static IPlayer_UseServices* FromOriginal(CPlayer_UseServices* p);
 };
 
 #endif // _INCLUDE_IPLAYER_USESERVICES_H

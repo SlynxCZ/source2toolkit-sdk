@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
+
+class CRuleEntity;
 
 class IRuleEntity : public virtual IBaseModelEntity
 {
 public:
     virtual ~IRuleEntity() = default;
+    CRuleEntity* GetOriginal() { return reinterpret_cast<CRuleEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Master() = 0;
     virtual void MasterUpdated() = 0;
+    static IRuleEntity* FromOriginal(CRuleEntity* p);
 };
 
 #endif // _INCLUDE_IRULEENTITY_H

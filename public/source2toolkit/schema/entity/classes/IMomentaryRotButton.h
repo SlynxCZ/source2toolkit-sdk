@@ -50,22 +50,26 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IRotButton.h"
+
+class CMomentaryRotButton;
 
 class IMomentaryRotButton : public virtual IRotButton
 {
 public:
     virtual ~IMomentaryRotButton() = default;
+    CMomentaryRotButton* GetOriginal() { return reinterpret_cast<CMomentaryRotButton*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnUnpressed() = 0;
+    virtual ::CEntityIOOutput& OnUnpressed() = 0;
     virtual void OnUnpressedUpdated() = 0;
-    virtual CEntityIOOutput& OnFullyOpen() = 0;
+    virtual ::CEntityIOOutput& OnFullyOpen() = 0;
     virtual void OnFullyOpenUpdated() = 0;
-    virtual CEntityIOOutput& OnFullyClosed() = 0;
+    virtual ::CEntityIOOutput& OnFullyClosed() = 0;
     virtual void OnFullyClosedUpdated() = 0;
-    virtual CEntityIOOutput& OnReachedPosition() = 0;
+    virtual ::CEntityIOOutput& OnReachedPosition() = 0;
     virtual void OnReachedPositionUpdated() = 0;
     virtual int32_t& LastUsed() = 0;
     virtual void LastUsedUpdated() = 0;
@@ -85,6 +89,7 @@ public:
     virtual void ReturnSpeedUpdated() = 0;
     virtual float& StartPosition() = 0;
     virtual void StartPositionUpdated() = 0;
+    static IMomentaryRotButton* FromOriginal(CMomentaryRotButton* p);
 };
 
 #endif // _INCLUDE_IMOMENTARYROTBUTTON_H

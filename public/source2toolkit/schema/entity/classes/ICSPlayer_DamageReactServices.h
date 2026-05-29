@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayerPawnComponent.h"
+
+class CCSPlayer_DamageReactServices;
 
 class ICSPlayer_DamageReactServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~ICSPlayer_DamageReactServices() = default;
+    CCSPlayer_DamageReactServices* GetOriginal() { return reinterpret_cast<CCSPlayer_DamageReactServices*>(IEntityInstance::GetOriginal()); }
 
+    static ICSPlayer_DamageReactServices* FromOriginal(CCSPlayer_DamageReactServices* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_DAMAGEREACTSERVICES_H

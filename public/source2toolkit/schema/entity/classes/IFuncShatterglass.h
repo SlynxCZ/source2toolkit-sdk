@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
 
+class CFuncShatterglass;
 class InfoForResourceTypeIMaterial2;
 
 class IFuncShatterglass : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncShatterglass() = default;
+    CFuncShatterglass* GetOriginal() { return reinterpret_cast<CFuncShatterglass*>(IEntityInstance::GetOriginal()); }
 
     virtual matrix3x4_t& MatPanelTransform() = 0;
     virtual void MatPanelTransformUpdated() = 0;
@@ -107,12 +110,13 @@ public:
     virtual void ExtraDamagePositionsUpdated() = 0;
     virtual CUtlVector<Vector4D>& InitialPanelVertices() = 0;
     virtual void InitialPanelVerticesUpdated() = 0;
-    virtual CEntityIOOutput& OnBroken() = 0;
+    virtual ::CEntityIOOutput& OnBroken() = 0;
     virtual void OnBrokenUpdated() = 0;
     virtual uint8_t& SurfaceType() = 0;
     virtual void SurfaceTypeUpdated() = 0;
     virtual CStrongHandle<InfoForResourceTypeIMaterial2>& MaterialDamageBase() = 0;
     virtual void MaterialDamageBaseUpdated() = 0;
+    static IFuncShatterglass* FromOriginal(CFuncShatterglass* p);
 };
 
 #endif // _INCLUDE_IFUNCSHATTERGLASS_H

@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ISoundOpvarSetAABBEntity.h"
+
+class CSoundOpvarSetOBBEntity;
 
 class ISoundOpvarSetOBBEntity : public virtual ISoundOpvarSetAABBEntity
 {
 public:
     virtual ~ISoundOpvarSetOBBEntity() = default;
+    CSoundOpvarSetOBBEntity* GetOriginal() { return reinterpret_cast<CSoundOpvarSetOBBEntity*>(IEntityInstance::GetOriginal()); }
 
+    static ISoundOpvarSetOBBEntity* FromOriginal(CSoundOpvarSetOBBEntity* p);
 };
 
 #endif // _INCLUDE_ISOUNDOPVARSETOBBENTITY_H

@@ -50,20 +50,23 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayerPawnComponent.h"
 
 class CInButtonState;
+class CPlayer_MovementServices;
 
 class IPlayer_MovementServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~IPlayer_MovementServices() = default;
+    CPlayer_MovementServices* GetOriginal() { return reinterpret_cast<CPlayer_MovementServices*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Impulse() = 0;
     virtual void ImpulseUpdated() = 0;
-    virtual CInButtonState& Buttons() = 0;
+    virtual ::CInButtonState& Buttons() = 0;
     virtual void ButtonsUpdated() = 0;
     virtual uint64_t& QueuedButtonDownMask() = 0;
     virtual void QueuedButtonDownMaskUpdated() = 0;
@@ -95,6 +98,7 @@ public:
     virtual void LastMovementImpulsesUpdated() = 0;
     virtual QAngle& OldViewAngles() = 0;
     virtual void OldViewAnglesUpdated() = 0;
+    static IPlayer_MovementServices* FromOriginal(CPlayer_MovementServices* p);
 };
 
 #endif // _INCLUDE_IPLAYER_MOVEMENTSERVICES_H

@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CPhysicsShake;
 
 class IPhysicsShake
 {
 public:
     virtual ~IPhysicsShake() = default;
+    CPhysicsShake* GetOriginal() { return reinterpret_cast<CPhysicsShake*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& Force() = 0;
     virtual void ForceUpdated() = 0;
+    static IPhysicsShake* FromOriginal(CPhysicsShake* p);
 };
 
 #endif // _INCLUDE_IPHYSICSSHAKE_H

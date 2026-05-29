@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CBaseDMStart;
 
 class IBaseDMStart : public virtual IPointEntity
 {
 public:
     virtual ~IBaseDMStart() = default;
+    CBaseDMStart* GetOriginal() { return reinterpret_cast<CBaseDMStart*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Master() = 0;
     virtual void MasterUpdated() = 0;
+    static IBaseDMStart* FromOriginal(CBaseDMStart* p);
 };
 
 #endif // _INCLUDE_IBASEDMSTART_H

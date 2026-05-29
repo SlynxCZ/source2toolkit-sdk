@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ITriggerOnce.h"
 
 class CBaseEntity;
+class CTriggerLook;
 
 class ITriggerLook : public virtual ITriggerOnce
 {
 public:
     virtual ~ITriggerLook() = default;
+    CTriggerLook* GetOriginal() { return reinterpret_cast<CTriggerLook*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& LookTarget() = 0;
     virtual void LookTargetUpdated() = 0;
@@ -85,12 +88,13 @@ public:
     virtual void TestOcclusionUpdated() = 0;
     virtual bool& TestAllVisibleOcclusion() = 0;
     virtual void TestAllVisibleOcclusionUpdated() = 0;
-    virtual CEntityIOOutput& OnTimeout() = 0;
+    virtual ::CEntityIOOutput& OnTimeout() = 0;
     virtual void OnTimeoutUpdated() = 0;
-    virtual CEntityIOOutput& OnStartLook() = 0;
+    virtual ::CEntityIOOutput& OnStartLook() = 0;
     virtual void OnStartLookUpdated() = 0;
-    virtual CEntityIOOutput& OnEndLook() = 0;
+    virtual ::CEntityIOOutput& OnEndLook() = 0;
     virtual void OnEndLookUpdated() = 0;
+    static ITriggerLook* FromOriginal(CTriggerLook* p);
 };
 
 #endif // _INCLUDE_ITRIGGERLOOK_H

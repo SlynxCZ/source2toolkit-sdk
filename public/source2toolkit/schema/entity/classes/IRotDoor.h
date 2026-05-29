@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseDoor.h"
+
+class CRotDoor;
 
 class IRotDoor : public virtual IBaseDoor
 {
 public:
     virtual ~IRotDoor() = default;
+    CRotDoor* GetOriginal() { return reinterpret_cast<CRotDoor*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& SolidBsp() = 0;
     virtual void SolidBspUpdated() = 0;
+    static IRotDoor* FromOriginal(CRotDoor* p);
 };
 
 #endif // _INCLUDE_IROTDOOR_H

@@ -50,21 +50,25 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayerPawnComponent.h"
 
 class CBaseEntity;
+class CCSPlayer_HostageServices;
 
 class ICSPlayer_HostageServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~ICSPlayer_HostageServices() = default;
+    CCSPlayer_HostageServices* GetOriginal() { return reinterpret_cast<CCSPlayer_HostageServices*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CBaseEntity>& CarriedHostage() = 0;
     virtual void CarriedHostageUpdated() = 0;
     virtual CHandle<CBaseEntity>& CarriedHostageProp() = 0;
     virtual void CarriedHostagePropUpdated() = 0;
+    static ICSPlayer_HostageServices* FromOriginal(CCSPlayer_HostageServices* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_HOSTAGESERVICES_H

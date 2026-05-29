@@ -50,8 +50,10 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+class CModelState;
 class IPhysAggregateInstance;
 class InfoForResourceTypeCModel;
 
@@ -59,6 +61,7 @@ class IModelState
 {
 public:
     virtual ~IModelState() = default;
+    CModelState* GetOriginal() { return reinterpret_cast<CModelState*>(IEntityInstance::GetOriginal()); }
 
     virtual CStrongHandle<InfoForResourceTypeCModel>& Model() = 0;
     virtual void ModelUpdated() = 0;
@@ -88,6 +91,7 @@ public:
     virtual void ForceLODUpdated() = 0;
     virtual int8_t& ClothUpdateFlags() = 0;
     virtual void ClothUpdateFlagsUpdated() = 0;
+    static IModelState* FromOriginal(CModelState* p);
 };
 
 #endif // _INCLUDE_IMODELSTATE_H

@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ICS2WeaponGraphController.h"
+
+class CCS2PawnGraphController;
 
 class ICS2PawnGraphController : public virtual ICS2WeaponGraphController
 {
 public:
     virtual ~ICS2PawnGraphController() = default;
+    CCS2PawnGraphController* GetOriginal() { return reinterpret_cast<CCS2PawnGraphController*>(IEntityInstance::GetOriginal()); }
 
+    static ICS2PawnGraphController* FromOriginal(CCS2PawnGraphController* p);
 };
 
 #endif // _INCLUDE_ICS2PAWNGRAPHCONTROLLER_H

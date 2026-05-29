@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
 
+class CFuncLadder;
 class CInfoLadderDismount;
 
 class IFuncLadder : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncLadder() = default;
+    CFuncLadder* GetOriginal() { return reinterpret_cast<CFuncLadder*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& LadderDir() = 0;
     virtual void LadderDirUpdated() = 0;
@@ -81,10 +84,11 @@ public:
     virtual void HasSlackUpdated() = 0;
     virtual CUtlSymbolLarge& SurfacePropName() = 0;
     virtual void SurfacePropNameUpdated() = 0;
-    virtual CEntityIOOutput& OnPlayerGotOnLadder() = 0;
+    virtual ::CEntityIOOutput& OnPlayerGotOnLadder() = 0;
     virtual void OnPlayerGotOnLadderUpdated() = 0;
-    virtual CEntityIOOutput& OnPlayerGotOffLadder() = 0;
+    virtual ::CEntityIOOutput& OnPlayerGotOffLadder() = 0;
     virtual void OnPlayerGotOffLadderUpdated() = 0;
+    static IFuncLadder* FromOriginal(CFuncLadder* p);
 };
 
 #endif // _INCLUDE_IFUNCLADDER_H

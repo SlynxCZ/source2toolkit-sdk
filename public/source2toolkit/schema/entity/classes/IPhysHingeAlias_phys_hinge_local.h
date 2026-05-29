@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPhysHinge.h"
+
+class CPhysHingeAlias_phys_hinge_local;
 
 class IPhysHingeAlias_phys_hinge_local : public virtual IPhysHinge
 {
 public:
     virtual ~IPhysHingeAlias_phys_hinge_local() = default;
+    CPhysHingeAlias_phys_hinge_local* GetOriginal() { return reinterpret_cast<CPhysHingeAlias_phys_hinge_local*>(IEntityInstance::GetOriginal()); }
 
+    static IPhysHingeAlias_phys_hinge_local* FromOriginal(CPhysHingeAlias_phys_hinge_local* p);
 };
 
 #endif // _INCLUDE_IPHYSHINGEALIAS_PHYS_HINGE_LOCAL_H

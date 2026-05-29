@@ -50,17 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "../enums/EKillTypes_t.h"
 
 class CCSPlayerController;
 class CCSPlayerPawn;
+class CDamageRecord;
 
 class IDamageRecord
 {
 public:
     virtual ~IDamageRecord() = default;
+    CDamageRecord* GetOriginal() { return reinterpret_cast<CDamageRecord*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CCSPlayerPawn>& PlayerDamager() = 0;
     virtual void PlayerDamagerUpdated() = 0;
@@ -90,8 +93,9 @@ public:
     virtual void LastBulletUpdateUpdated() = 0;
     virtual bool& IsOtherEnemy() = 0;
     virtual void IsOtherEnemyUpdated() = 0;
-    virtual EKillTypes_t& KillType() = 0;
+    virtual ::EKillTypes_t& KillType() = 0;
     virtual void KillTypeUpdated() = 0;
+    static IDamageRecord* FromOriginal(CDamageRecord* p);
 };
 
 #endif // _INCLUDE_IDAMAGERECORD_H

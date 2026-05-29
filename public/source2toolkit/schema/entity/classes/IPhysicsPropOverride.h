@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPhysicsProp.h"
+
+class CPhysicsPropOverride;
 
 class IPhysicsPropOverride : public virtual IPhysicsProp
 {
 public:
     virtual ~IPhysicsPropOverride() = default;
+    CPhysicsPropOverride* GetOriginal() { return reinterpret_cast<CPhysicsPropOverride*>(IEntityInstance::GetOriginal()); }
 
+    static IPhysicsPropOverride* FromOriginal(CPhysicsPropOverride* p);
 };
 
 #endif // _INCLUDE_IPHYSICSPROPOVERRIDE_H

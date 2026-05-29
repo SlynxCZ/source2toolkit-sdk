@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
 
 class CLightEntity;
+class CMultiLightProxy;
 
 class IMultiLightProxy : public virtual ILogicalEntity
 {
 public:
     virtual ~IMultiLightProxy() = default;
+    CMultiLightProxy* GetOriginal() { return reinterpret_cast<CMultiLightProxy*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& LightNameFilter() = 0;
     virtual void LightNameFilterUpdated() = 0;
@@ -77,6 +80,7 @@ public:
     virtual void CurrentBrightnessMultiplierUpdated() = 0;
     virtual CUtlVector<CHandle<CLightEntity>>& Lights() = 0;
     virtual void LightsUpdated() = 0;
+    static IMultiLightProxy* FromOriginal(CMultiLightProxy* p);
 };
 
 #endif // _INCLUDE_IMULTILIGHTPROXY_H

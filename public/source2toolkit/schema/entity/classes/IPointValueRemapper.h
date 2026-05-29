@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
@@ -62,17 +63,19 @@
 
 class CBaseEntity;
 class CBasePlayerPawn;
+class CPointValueRemapper;
 
 class IPointValueRemapper : public virtual IBaseEntity
 {
 public:
     virtual ~IPointValueRemapper() = default;
+    CPointValueRemapper* GetOriginal() { return reinterpret_cast<CPointValueRemapper*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;
     virtual bool& UpdateOnClient() = 0;
     virtual void UpdateOnClientUpdated() = 0;
-    virtual ValueRemapperInputType_t& InputType() = 0;
+    virtual ::ValueRemapperInputType_t& InputType() = 0;
     virtual void InputTypeUpdated() = 0;
     virtual CUtlSymbolLarge& RemapLineStartName() = 0;
     virtual void RemapLineStartNameUpdated() = 0;
@@ -90,7 +93,7 @@ public:
     virtual void EngageDistanceUpdated() = 0;
     virtual bool& RequiresUseKey() = 0;
     virtual void RequiresUseKeyUpdated() = 0;
-    virtual ValueRemapperOutputType_t& OutputType() = 0;
+    virtual ::ValueRemapperOutputType_t& OutputType() = 0;
     virtual void OutputTypeUpdated() = 0;
     virtual CUtlSymbolLarge& OutputEntityName() = 0;
     virtual void OutputEntityNameUpdated() = 0;
@@ -102,9 +105,9 @@ public:
     virtual void OutputEntity4NameUpdated() = 0;
     virtual CUtlVector<CHandle<CBaseEntity>>& OutputEntities() = 0;
     virtual void OutputEntitiesUpdated() = 0;
-    virtual ValueRemapperHapticsType_t& HapticsType() = 0;
+    virtual ::ValueRemapperHapticsType_t& HapticsType() = 0;
     virtual void HapticsTypeUpdated() = 0;
-    virtual ValueRemapperMomentumType_t& MomentumType() = 0;
+    virtual ::ValueRemapperMomentumType_t& MomentumType() = 0;
     virtual void MomentumTypeUpdated() = 0;
     virtual float& MomentumModifier() = 0;
     virtual void MomentumModifierUpdated() = 0;
@@ -112,7 +115,7 @@ public:
     virtual void SnapValueUpdated() = 0;
     virtual float& CurrentMomentum() = 0;
     virtual void CurrentMomentumUpdated() = 0;
-    virtual ValueRemapperRatchetType_t& RatchetType() = 0;
+    virtual ::ValueRemapperRatchetType_t& RatchetType() = 0;
     virtual void RatchetTypeUpdated() = 0;
     virtual float& RatchetOffset() = 0;
     virtual void RatchetOffsetUpdated() = 0;
@@ -142,16 +145,17 @@ public:
     virtual void SoundReachedValueOneUpdated() = 0;
     virtual CUtlSymbolLarge& SoundMovingLoop() = 0;
     virtual void SoundMovingLoopUpdated() = 0;
-    virtual CEntityIOOutput& OnReachedValueZero() = 0;
+    virtual ::CEntityIOOutput& OnReachedValueZero() = 0;
     virtual void OnReachedValueZeroUpdated() = 0;
-    virtual CEntityIOOutput& OnReachedValueOne() = 0;
+    virtual ::CEntityIOOutput& OnReachedValueOne() = 0;
     virtual void OnReachedValueOneUpdated() = 0;
-    virtual CEntityIOOutput& OnReachedValueCustom() = 0;
+    virtual ::CEntityIOOutput& OnReachedValueCustom() = 0;
     virtual void OnReachedValueCustomUpdated() = 0;
-    virtual CEntityIOOutput& OnEngage() = 0;
+    virtual ::CEntityIOOutput& OnEngage() = 0;
     virtual void OnEngageUpdated() = 0;
-    virtual CEntityIOOutput& OnDisengage() = 0;
+    virtual ::CEntityIOOutput& OnDisengage() = 0;
     virtual void OnDisengageUpdated() = 0;
+    static IPointValueRemapper* FromOriginal(CPointValueRemapper* p);
 };
 
 #endif // _INCLUDE_IPOINTVALUEREMAPPER_H

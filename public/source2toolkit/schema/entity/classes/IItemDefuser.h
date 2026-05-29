@@ -50,21 +50,25 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IItem.h"
 
+class CItemDefuser;
 class EntitySpottedState_t;
 
 class IItemDefuser : public virtual IItem
 {
 public:
     virtual ~IItemDefuser() = default;
+    CItemDefuser* GetOriginal() { return reinterpret_cast<CItemDefuser*>(IEntityInstance::GetOriginal()); }
 
-    virtual EntitySpottedState_t& EntitySpottedState() = 0;
+    virtual ::EntitySpottedState_t& EntitySpottedState() = 0;
     virtual void EntitySpottedStateUpdated() = 0;
     virtual int32_t& SpotRules() = 0;
     virtual void SpotRulesUpdated() = 0;
+    static IItemDefuser* FromOriginal(CItemDefuser* p);
 };
 
 #endif // _INCLUDE_IITEMDEFUSER_H

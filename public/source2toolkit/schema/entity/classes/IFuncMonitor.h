@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IFuncBrush.h"
 
 class CBaseEntity;
+class CFuncMonitor;
 
 class IFuncMonitor : public virtual IFuncBrush
 {
 public:
     virtual ~IFuncMonitor() = default;
+    CFuncMonitor* GetOriginal() { return reinterpret_cast<CFuncMonitor*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlString& TargetCamera() = 0;
     virtual void TargetCameraUpdated() = 0;
@@ -79,6 +82,7 @@ public:
     virtual void Draw3DSkyboxUpdated() = 0;
     virtual bool& StartEnabled() = 0;
     virtual void StartEnabledUpdated() = 0;
+    static IFuncMonitor* FromOriginal(CFuncMonitor* p);
 };
 
 #endif // _INCLUDE_IFUNCMONITOR_H

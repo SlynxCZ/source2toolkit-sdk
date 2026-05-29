@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseCSGrenadeProjectile.h"
+
+class CFlashbangProjectile;
 
 class IFlashbangProjectile : public virtual IBaseCSGrenadeProjectile
 {
 public:
     virtual ~IFlashbangProjectile() = default;
+    CFlashbangProjectile* GetOriginal() { return reinterpret_cast<CFlashbangProjectile*>(IEntityInstance::GetOriginal()); }
 
     virtual float& TimeToDetonate() = 0;
     virtual void TimeToDetonateUpdated() = 0;
@@ -65,6 +69,7 @@ public:
     virtual void NumOpponentsHitUpdated() = 0;
     virtual uint8_t& NumTeammatesHit() = 0;
     virtual void NumTeammatesHitUpdated() = 0;
+    static IFlashbangProjectile* FromOriginal(CFlashbangProjectile* p);
 };
 
 #endif // _INCLUDE_IFLASHBANGPROJECTILE_H

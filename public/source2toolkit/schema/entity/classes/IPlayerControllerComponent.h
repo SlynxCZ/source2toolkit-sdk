@@ -50,20 +50,26 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 class CCSPlayerController;
 class CEntityInstance*;
+class CPlayerControllerComponent;
+class ICSPlayerController;
 
 class IPlayerControllerComponent
 {
 public:
     virtual ~IPlayerControllerComponent() = default;
+    CPlayerControllerComponent* GetOriginal() { return reinterpret_cast<CPlayerControllerComponent*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityInstance*& __m_pChainEntity() = 0;
+    virtual ::CEntityInstance*& __m_pChainEntity() = 0;
     virtual void __m_pChainEntityUpdated() = 0;
 
-    virtual CCSPlayerController* GetPlayerController() = 0;
+    /// <summary>Get player controller.</summary>
+    virtual ICSPlayerController* GetPlayerController() = 0;
+    static IPlayerControllerComponent* FromOriginal(CPlayerControllerComponent* p);
 };
 
 #endif // _INCLUDE_IPLAYERCONTROLLERCOMPONENT_H

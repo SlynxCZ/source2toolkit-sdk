@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBreakable.h"
@@ -57,11 +58,13 @@
 #include "../enums/HoverPoseFlags_t.h"
 
 class CBasePlayerPawn;
+class CPhysBox;
 
 class IPhysBox : public virtual IBreakable
 {
 public:
     virtual ~IPhysBox() = default;
+    CPhysBox* GetOriginal() { return reinterpret_cast<CPhysBox*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& DamageType() = 0;
     virtual void DamageTypeUpdated() = 0;
@@ -77,22 +80,23 @@ public:
     virtual void NotSolidToWorldUpdated() = 0;
     virtual bool& EnableUseOutput() = 0;
     virtual void EnableUseOutputUpdated() = 0;
-    virtual HoverPoseFlags_t& HoverPoseFlags() = 0;
+    virtual ::HoverPoseFlags_t& HoverPoseFlags() = 0;
     virtual void HoverPoseFlagsUpdated() = 0;
     virtual float& TouchOutputPerEntityDelay() = 0;
     virtual void TouchOutputPerEntityDelayUpdated() = 0;
-    virtual CEntityIOOutput& OnDamaged() = 0;
+    virtual ::CEntityIOOutput& OnDamaged() = 0;
     virtual void OnDamagedUpdated() = 0;
-    virtual CEntityIOOutput& OnAwakened() = 0;
+    virtual ::CEntityIOOutput& OnAwakened() = 0;
     virtual void OnAwakenedUpdated() = 0;
-    virtual CEntityIOOutput& OnMotionEnabled() = 0;
+    virtual ::CEntityIOOutput& OnMotionEnabled() = 0;
     virtual void OnMotionEnabledUpdated() = 0;
-    virtual CEntityIOOutput& OnPlayerUse() = 0;
+    virtual ::CEntityIOOutput& OnPlayerUse() = 0;
     virtual void OnPlayerUseUpdated() = 0;
-    virtual CEntityIOOutput& OnStartTouch() = 0;
+    virtual ::CEntityIOOutput& OnStartTouch() = 0;
     virtual void OnStartTouchUpdated() = 0;
     virtual CHandle<CBasePlayerPawn>& CarryingPlayer() = 0;
     virtual void CarryingPlayerUpdated() = 0;
+    static IPhysBox* FromOriginal(CPhysBox* p);
 };
 
 #endif // _INCLUDE_IPHYSBOX_H

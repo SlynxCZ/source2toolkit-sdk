@@ -50,17 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
 
 class CBasePlayerController;
 class CBasePlayerPawn;
+class CTeam;
 
 class ITeam : public virtual IBaseEntity
 {
 public:
     virtual ~ITeam() = default;
+    CTeam* GetOriginal() { return reinterpret_cast<CTeam*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<CHandle<CBasePlayerController>>& PlayerControllers() = 0;
     virtual void PlayerControllersUpdated() = 0;
@@ -69,6 +72,7 @@ public:
     virtual int32_t& Score() = 0;
     virtual void ScoreUpdated() = 0;
     virtual char* Teamname() = 0;
+    static ITeam* FromOriginal(CTeam* p);
 };
 
 #endif // _INCLUDE_ITEAM_H

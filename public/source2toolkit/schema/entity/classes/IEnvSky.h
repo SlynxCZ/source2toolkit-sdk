@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
 
+class CEnvSky;
 class InfoForResourceTypeIMaterial2;
 
 class IEnvSky : public virtual IBaseModelEntity
 {
 public:
     virtual ~IEnvSky() = default;
+    CEnvSky* GetOriginal() { return reinterpret_cast<CEnvSky*>(IEntityInstance::GetOriginal()); }
 
     virtual CStrongHandle<InfoForResourceTypeIMaterial2>& SkyMaterial() = 0;
     virtual void SkyMaterialUpdated() = 0;
@@ -85,6 +88,7 @@ public:
     virtual void FogMaxEndUpdated() = 0;
     virtual bool& Enabled() = 0;
     virtual void EnabledUpdated() = 0;
+    static IEnvSky* FromOriginal(CEnvSky* p);
 };
 
 #endif // _INCLUDE_IENVSKY_H

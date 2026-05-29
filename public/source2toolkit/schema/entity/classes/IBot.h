@@ -50,8 +50,10 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+class CBot;
 class CCSPlayerController;
 class CCSPlayerPawn;
 
@@ -59,6 +61,7 @@ class IBot
 {
 public:
     virtual ~IBot() = default;
+    CBot* GetOriginal() { return reinterpret_cast<CBot*>(IEntityInstance::GetOriginal()); }
 
     virtual CCSPlayerController*& Controller() = 0;
     virtual void ControllerUpdated() = 0;
@@ -86,6 +89,7 @@ public:
     virtual void ViewForwardUpdated() = 0;
     virtual int32_t& PostureStackIndex() = 0;
     virtual void PostureStackIndexUpdated() = 0;
+    static IBot* FromOriginal(CBot* p);
 };
 
 #endif // _INCLUDE_IBOT_H

@@ -50,11 +50,13 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBot.h"
 
 class CBaseEntity;
+class CCSBot;
 class CCSPlayerPawn;
 class CountdownTimer;
 class IntervalTimer;
@@ -63,6 +65,7 @@ class ICSBot : public virtual IBot
 {
 public:
     virtual ~ICSBot() = default;
+    CCSBot* GetOriginal() { return reinterpret_cast<CCSBot*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& EyePosition() = 0;
     virtual void EyePositionUpdated() = 0;
@@ -71,7 +74,7 @@ public:
     virtual void CombatRangeUpdated() = 0;
     virtual bool& IsRogue() = 0;
     virtual void IsRogueUpdated() = 0;
-    virtual CountdownTimer& RogueTimer() = 0;
+    virtual ::CountdownTimer& RogueTimer() = 0;
     virtual void RogueTimerUpdated() = 0;
     virtual bool& DiedLastRound() = 0;
     virtual void DiedLastRoundUpdated() = 0;
@@ -81,7 +84,7 @@ public:
     virtual void WasSafeUpdated() = 0;
     virtual bool& BlindFire() = 0;
     virtual void BlindFireUpdated() = 0;
-    virtual CountdownTimer& SurpriseTimer() = 0;
+    virtual ::CountdownTimer& SurpriseTimer() = 0;
     virtual void SurpriseTimerUpdated() = 0;
     virtual bool& AllowActive() = 0;
     virtual void AllowActiveUpdated() = 0;
@@ -93,13 +96,13 @@ public:
     virtual void FollowTimestampUpdated() = 0;
     virtual float& AllowAutoFollowTime() = 0;
     virtual void AllowAutoFollowTimeUpdated() = 0;
-    virtual CountdownTimer& HurryTimer() = 0;
+    virtual ::CountdownTimer& HurryTimer() = 0;
     virtual void HurryTimerUpdated() = 0;
-    virtual CountdownTimer& AlertTimer() = 0;
+    virtual ::CountdownTimer& AlertTimer() = 0;
     virtual void AlertTimerUpdated() = 0;
-    virtual CountdownTimer& SneakTimer() = 0;
+    virtual ::CountdownTimer& SneakTimer() = 0;
     virtual void SneakTimerUpdated() = 0;
-    virtual CountdownTimer& PanicTimer() = 0;
+    virtual ::CountdownTimer& PanicTimer() = 0;
     virtual void PanicTimerUpdated() = 0;
     virtual float& StateTimestamp() = 0;
     virtual void StateTimestampUpdated() = 0;
@@ -121,7 +124,7 @@ public:
     virtual void IsStoppingUpdated() = 0;
     virtual bool& HasVisitedEnemySpawn() = 0;
     virtual void HasVisitedEnemySpawnUpdated() = 0;
-    virtual IntervalTimer& StillTimer() = 0;
+    virtual ::IntervalTimer& StillTimer() = 0;
     virtual void StillTimerUpdated() = 0;
     virtual bool& EyeAnglesUnderPathFinderControl() = 0;
     virtual void EyeAnglesUnderPathFinderControlUpdated() = 0;
@@ -129,23 +132,23 @@ public:
     virtual void PathIndexUpdated() = 0;
     virtual float& AreaEnteredTimestamp() = 0;
     virtual void AreaEnteredTimestampUpdated() = 0;
-    virtual CountdownTimer& RepathTimer() = 0;
+    virtual ::CountdownTimer& RepathTimer() = 0;
     virtual void RepathTimerUpdated() = 0;
-    virtual CountdownTimer& AvoidFriendTimer() = 0;
+    virtual ::CountdownTimer& AvoidFriendTimer() = 0;
     virtual void AvoidFriendTimerUpdated() = 0;
     virtual bool& IsFriendInTheWay() = 0;
     virtual void IsFriendInTheWayUpdated() = 0;
-    virtual CountdownTimer& PoliteTimer() = 0;
+    virtual ::CountdownTimer& PoliteTimer() = 0;
     virtual void PoliteTimerUpdated() = 0;
     virtual bool& IsWaitingBehindFriend() = 0;
     virtual void IsWaitingBehindFriendUpdated() = 0;
     virtual float& PathLadderEnd() = 0;
     virtual void PathLadderEndUpdated() = 0;
-    virtual CountdownTimer& MustRunTimer() = 0;
+    virtual ::CountdownTimer& MustRunTimer() = 0;
     virtual void MustRunTimerUpdated() = 0;
-    virtual CountdownTimer& WaitTimer() = 0;
+    virtual ::CountdownTimer& WaitTimer() = 0;
     virtual void WaitTimerUpdated() = 0;
-    virtual CountdownTimer& UpdateTravelDistanceTimer() = 0;
+    virtual ::CountdownTimer& UpdateTravelDistanceTimer() = 0;
     virtual void UpdateTravelDistanceTimerUpdated() = 0;
     virtual float* PlayerTravelDistance() = 0;
     virtual uint8_t& TravelDistancePhase() = 0;
@@ -160,9 +163,9 @@ public:
     virtual void HasJoinedUpdated() = 0;
     virtual bool& IsWaitingForHostage() = 0;
     virtual void IsWaitingForHostageUpdated() = 0;
-    virtual CountdownTimer& InhibitWaitingForHostageTimer() = 0;
+    virtual ::CountdownTimer& InhibitWaitingForHostageTimer() = 0;
     virtual void InhibitWaitingForHostageTimerUpdated() = 0;
-    virtual CountdownTimer& WaitForHostageTimer() = 0;
+    virtual ::CountdownTimer& WaitForHostageTimer() = 0;
     virtual void WaitForHostageTimerUpdated() = 0;
     virtual Vector& NoisePosition() = 0;
     virtual void NoisePositionUpdated() = 0;
@@ -172,7 +175,7 @@ public:
     virtual void NoiseTimestampUpdated() = 0;
     virtual CCSPlayerPawn*& NoiseSource() = 0;
     virtual void NoiseSourceUpdated() = 0;
-    virtual CountdownTimer& NoiseBendTimer() = 0;
+    virtual ::CountdownTimer& NoiseBendTimer() = 0;
     virtual void NoiseBendTimerUpdated() = 0;
     virtual Vector& BentNoisePosition() = 0;
     virtual void BentNoisePositionUpdated() = 0;
@@ -208,11 +211,11 @@ public:
     virtual void ApproachPointCountUpdated() = 0;
     virtual Vector& ApproachPointViewPosition() = 0;
     virtual void ApproachPointViewPositionUpdated() = 0;
-    virtual IntervalTimer& ViewSteadyTimer() = 0;
+    virtual ::IntervalTimer& ViewSteadyTimer() = 0;
     virtual void ViewSteadyTimerUpdated() = 0;
-    virtual CountdownTimer& TossGrenadeTimer() = 0;
+    virtual ::CountdownTimer& TossGrenadeTimer() = 0;
     virtual void TossGrenadeTimerUpdated() = 0;
-    virtual CountdownTimer& IsAvoidingGrenade() = 0;
+    virtual ::CountdownTimer& IsAvoidingGrenade() = 0;
     virtual void IsAvoidingGrenadeUpdated() = 0;
     virtual float& SpotCheckTimestamp() = 0;
     virtual void SpotCheckTimestampUpdated() = 0;
@@ -244,7 +247,7 @@ public:
     virtual void AimFocusIntervalUpdated() = 0;
     virtual float& AimFocusNextUpdate() = 0;
     virtual void AimFocusNextUpdateUpdated() = 0;
-    virtual CountdownTimer& IgnoreEnemiesTimer() = 0;
+    virtual ::CountdownTimer& IgnoreEnemiesTimer() = 0;
     virtual void IgnoreEnemiesTimerUpdated() = 0;
     virtual CHandle<CCSPlayerPawn>& Enemy() = 0;
     virtual void EnemyUpdated() = 0;
@@ -276,13 +279,13 @@ public:
     virtual void ClosestVisibleFriendUpdated() = 0;
     virtual CHandle<CCSPlayerPawn>& ClosestVisibleHumanFriend() = 0;
     virtual void ClosestVisibleHumanFriendUpdated() = 0;
-    virtual IntervalTimer& AttentionInterval() = 0;
+    virtual ::IntervalTimer& AttentionInterval() = 0;
     virtual void AttentionIntervalUpdated() = 0;
     virtual CHandle<CCSPlayerPawn>& Attacker() = 0;
     virtual void AttackerUpdated() = 0;
     virtual float& AttackedTimestamp() = 0;
     virtual void AttackedTimestampUpdated() = 0;
-    virtual IntervalTimer& BurnedByFlamesTimer() = 0;
+    virtual ::IntervalTimer& BurnedByFlamesTimer() = 0;
     virtual void BurnedByFlamesTimerUpdated() = 0;
     virtual int32_t& LastVictimID() = 0;
     virtual void LastVictimIDUpdated() = 0;
@@ -290,19 +293,19 @@ public:
     virtual void IsAimingAtEnemyUpdated() = 0;
     virtual bool& IsRapidFiring() = 0;
     virtual void IsRapidFiringUpdated() = 0;
-    virtual IntervalTimer& EquipTimer() = 0;
+    virtual ::IntervalTimer& EquipTimer() = 0;
     virtual void EquipTimerUpdated() = 0;
-    virtual CountdownTimer& ZoomTimer() = 0;
+    virtual ::CountdownTimer& ZoomTimer() = 0;
     virtual void ZoomTimerUpdated() = 0;
     virtual float& FireWeaponTimestamp() = 0;
     virtual void FireWeaponTimestampUpdated() = 0;
-    virtual CountdownTimer& LookForWeaponsOnGroundTimer() = 0;
+    virtual ::CountdownTimer& LookForWeaponsOnGroundTimer() = 0;
     virtual void LookForWeaponsOnGroundTimerUpdated() = 0;
     virtual bool& IsSleeping() = 0;
     virtual void IsSleepingUpdated() = 0;
     virtual bool& IsEnemySniperVisible() = 0;
     virtual void IsEnemySniperVisibleUpdated() = 0;
-    virtual CountdownTimer& SawEnemySniperTimer() = 0;
+    virtual ::CountdownTimer& SawEnemySniperTimer() = 0;
     virtual void SawEnemySniperTimerUpdated() = 0;
     virtual uint8_t& EnemyQueueIndex() = 0;
     virtual void EnemyQueueIndexUpdated() = 0;
@@ -316,9 +319,9 @@ public:
     virtual void StuckTimestampUpdated() = 0;
     virtual Vector& StuckSpot() = 0;
     virtual void StuckSpotUpdated() = 0;
-    virtual CountdownTimer& WiggleTimer() = 0;
+    virtual ::CountdownTimer& WiggleTimer() = 0;
     virtual void WiggleTimerUpdated() = 0;
-    virtual CountdownTimer& StuckJumpTimer() = 0;
+    virtual ::CountdownTimer& StuckJumpTimer() = 0;
     virtual void StuckJumpTimerUpdated() = 0;
     virtual float& NextCleanupCheckTimestamp() = 0;
     virtual void NextCleanupCheckTimestampUpdated() = 0;
@@ -341,6 +344,7 @@ public:
     virtual void VoiceEndTimestampUpdated() = 0;
     virtual int32_t& LastValidReactionQueueFrame() = 0;
     virtual void LastValidReactionQueueFrameUpdated() = 0;
+    static ICSBot* FromOriginal(CCSBot* p);
 };
 
 #endif // _INCLUDE_ICSBOT_H

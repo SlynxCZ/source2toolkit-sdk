@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IEntitySubclassVDataBase.h"
@@ -57,10 +58,13 @@
 #include "../enums/ItemFlagTypes_t.h"
 #include "../enums/RumbleEffect_t.h"
 
+class CBasePlayerWeaponVData;
+
 class IBasePlayerWeaponVData : public virtual IEntitySubclassVDataBase
 {
 public:
     virtual ~IBasePlayerWeaponVData() = default;
+    CBasePlayerWeaponVData* GetOriginal() { return reinterpret_cast<CBasePlayerWeaponVData*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& BuiltRightHanded() = 0;
     virtual void BuiltRightHandedUpdated() = 0;
@@ -78,7 +82,7 @@ public:
     virtual void GenerateMuzzleLightUpdated() = 0;
     virtual bool& LinkedCooldowns() = 0;
     virtual void LinkedCooldownsUpdated() = 0;
-    virtual ItemFlagTypes_t& Flags() = 0;
+    virtual ::ItemFlagTypes_t& Flags() = 0;
     virtual void FlagsUpdated() = 0;
     virtual int32_t& Weight() = 0;
     virtual void WeightUpdated() = 0;
@@ -104,7 +108,7 @@ public:
     virtual void TreatAsSingleClipUpdated() = 0;
     virtual bool& KeepLoadedAmmo() = 0;
     virtual void KeepLoadedAmmoUpdated() = 0;
-    virtual RumbleEffect_t& RumbleEffect() = 0;
+    virtual ::RumbleEffect_t& RumbleEffect() = 0;
     virtual void RumbleEffectUpdated() = 0;
     virtual float& DropSpeed() = 0;
     virtual void DropSpeedUpdated() = 0;
@@ -112,6 +116,7 @@ public:
     virtual void SlotUpdated() = 0;
     virtual int32_t& Position() = 0;
     virtual void PositionUpdated() = 0;
+    static IBasePlayerWeaponVData* FromOriginal(CBasePlayerWeaponVData* p);
 };
 
 #endif // _INCLUDE_IBASEPLAYERWEAPONVDATA_H

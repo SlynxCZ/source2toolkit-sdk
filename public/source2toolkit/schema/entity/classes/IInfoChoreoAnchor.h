@@ -50,21 +50,25 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
 
+class CInfoChoreoAnchor;
 class CInfoChoreoAnchorPosition;
 
 class IInfoChoreoAnchor : public virtual IPointEntity
 {
 public:
     virtual ~IInfoChoreoAnchor() = default;
+    CInfoChoreoAnchor* GetOriginal() { return reinterpret_cast<CInfoChoreoAnchor*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<CInfoChoreoAnchorPosition>& TargetEntries() = 0;
     virtual void TargetEntriesUpdated() = 0;
     virtual CUtlVector<CInfoChoreoAnchorPosition>& TargetWarps() = 0;
     virtual void TargetWarpsUpdated() = 0;
+    static IInfoChoreoAnchor* FromOriginal(CInfoChoreoAnchor* p);
 };
 
 #endif // _INCLUDE_IINFOCHOREOANCHOR_H

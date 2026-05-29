@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
+
+class CTriggerGravity;
 
 class ITriggerGravity : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerGravity() = default;
+    CTriggerGravity* GetOriginal() { return reinterpret_cast<CTriggerGravity*>(IEntityInstance::GetOriginal()); }
 
+    static ITriggerGravity* FromOriginal(CTriggerGravity* p);
 };
 
 #endif // _INCLUDE_ITRIGGERGRAVITY_H

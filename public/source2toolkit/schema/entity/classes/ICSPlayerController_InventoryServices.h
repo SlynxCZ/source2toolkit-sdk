@@ -50,18 +50,21 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayerControllerComponent.h"
 
 #include "../enums/MedalRank_t.h"
 
+class CCSPlayerController_InventoryServices;
 class ServerAuthoritativeWeaponSlot_t;
 
 class ICSPlayerController_InventoryServices : public virtual IPlayerControllerComponent
 {
 public:
     virtual ~ICSPlayerController_InventoryServices() = default;
+    CCSPlayerController_InventoryServices* GetOriginal() { return reinterpret_cast<CCSPlayerController_InventoryServices*>(IEntityInstance::GetOriginal()); }
 
     virtual uint16_t& MusicID() = 0;
     virtual void MusicIDUpdated() = 0;
@@ -81,6 +84,7 @@ public:
     virtual void CurrentLoadoutHashUpdated() = 0;
     virtual CUtlVector<ServerAuthoritativeWeaponSlot_t>& ServerAuthoritativeWeaponSlots() = 0;
     virtual void ServerAuthoritativeWeaponSlotsUpdated() = 0;
+    static ICSPlayerController_InventoryServices* FromOriginal(CCSPlayerController_InventoryServices* p);
 };
 
 #endif // _INCLUDE_ICSPLAYERCONTROLLER_INVENTORYSERVICES_H

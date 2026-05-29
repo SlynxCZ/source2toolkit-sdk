@@ -50,19 +50,23 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
 
 class CBuoyancyHelper;
+class CFuncWater;
 
 class IFuncWater : public virtual IBaseModelEntity
 {
 public:
     virtual ~IFuncWater() = default;
+    CFuncWater* GetOriginal() { return reinterpret_cast<CFuncWater*>(IEntityInstance::GetOriginal()); }
 
-    virtual CBuoyancyHelper& BuoyancyHelper() = 0;
+    virtual ::CBuoyancyHelper& BuoyancyHelper() = 0;
     virtual void BuoyancyHelperUpdated() = 0;
+    static IFuncWater* FromOriginal(CFuncWater* p);
 };
 
 #endif // _INCLUDE_IFUNCWATER_H

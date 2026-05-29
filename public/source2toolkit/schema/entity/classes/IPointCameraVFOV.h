@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointCamera.h"
+
+class CPointCameraVFOV;
 
 class IPointCameraVFOV : public virtual IPointCamera
 {
 public:
     virtual ~IPointCameraVFOV() = default;
+    CPointCameraVFOV* GetOriginal() { return reinterpret_cast<CPointCameraVFOV*>(IEntityInstance::GetOriginal()); }
 
     virtual float& VerticalFOV() = 0;
     virtual void VerticalFOVUpdated() = 0;
+    static IPointCameraVFOV* FromOriginal(CPointCameraVFOV* p);
 };
 
 #endif // _INCLUDE_IPOINTCAMERAVFOV_H

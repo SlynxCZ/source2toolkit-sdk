@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPhysConstraint.h"
 
+class CPhysSlideConstraint;
 class ConstraintSoundInfo;
 
 class IPhysSlideConstraint : public virtual IPhysConstraint
 {
 public:
     virtual ~IPhysSlideConstraint() = default;
+    CPhysSlideConstraint* GetOriginal() { return reinterpret_cast<CPhysSlideConstraint*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& AxisEnd() = 0;
     virtual void AxisEndUpdated() = 0;
@@ -79,8 +82,9 @@ public:
     virtual void MotorDampingRatioUpdated() = 0;
     virtual bool& UseEntityPivot() = 0;
     virtual void UseEntityPivotUpdated() = 0;
-    virtual ConstraintSoundInfo& SoundInfo() = 0;
+    virtual ::ConstraintSoundInfo& SoundInfo() = 0;
     virtual void SoundInfoUpdated() = 0;
+    static IPhysSlideConstraint* FromOriginal(CPhysSlideConstraint* p);
 };
 
 #endif // _INCLUDE_IPHYSSLIDECONSTRAINT_H

@@ -50,25 +50,33 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayer_ItemServices.h"
 
 class CBasePlayerWeapon;
+class CCSPlayer_ItemServices;
+class IBasePlayerWeapon;
 
 class ICSPlayer_ItemServices : public virtual IPlayer_ItemServices
 {
 public:
     virtual ~ICSPlayer_ItemServices() = default;
+    CCSPlayer_ItemServices* GetOriginal() { return reinterpret_cast<CCSPlayer_ItemServices*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& HasDefuser() = 0;
     virtual void HasDefuserUpdated() = 0;
     virtual bool& HasHelmet() = 0;
     virtual void HasHelmetUpdated() = 0;
 
-    virtual void DropActivePlayerWeapon(CBasePlayerWeapon* pActiveWeapon) = 0;
+    /// <summary>Drop active weapon, recommended to use DropWeapon instead (parameter is ignored here)</summary>
+    virtual void DropActivePlayerWeapon(IBasePlayerWeapon* pActiveWeapon) = 0;
+    /// <summary>Remove all weapons.</summary>
     virtual void RemoveWeapons() = 0;
-    virtual CBasePlayerWeapon* GiveNamedItem(const char* pszItem) = 0;
+    /// <summary>Give item.</summary>
+    virtual IBasePlayerWeapon* GiveNamedItem(const char* pszItem) = 0;
+    static ICSPlayer_ItemServices* FromOriginal(CCSPlayer_ItemServices* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_ITEMSERVICES_H

@@ -50,19 +50,23 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayerPawnComponent.h"
 
+class CCSPlayer_BuyServices;
 class SellbackPurchaseEntry_t;
 
 class ICSPlayer_BuyServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~ICSPlayer_BuyServices() = default;
+    CCSPlayer_BuyServices* GetOriginal() { return reinterpret_cast<CCSPlayer_BuyServices*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<SellbackPurchaseEntry_t>& SellbackPurchaseEntries() = 0;
     virtual void SellbackPurchaseEntriesUpdated() = 0;
+    static ICSPlayer_BuyServices* FromOriginal(CCSPlayer_BuyServices* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_BUYSERVICES_H

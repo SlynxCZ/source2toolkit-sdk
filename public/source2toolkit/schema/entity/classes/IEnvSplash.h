@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CEnvSplash;
 
 class IEnvSplash : public virtual IPointEntity
 {
 public:
     virtual ~IEnvSplash() = default;
+    CEnvSplash* GetOriginal() { return reinterpret_cast<CEnvSplash*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Scale() = 0;
     virtual void ScaleUpdated() = 0;
+    static IEnvSplash* FromOriginal(CEnvSplash* p);
 };
 
 #endif // _INCLUDE_IENVSPLASH_H

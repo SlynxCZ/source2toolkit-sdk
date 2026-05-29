@@ -50,19 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CEnvDetailController;
 
 class IEnvDetailController : public virtual IBaseEntity
 {
 public:
     virtual ~IEnvDetailController() = default;
+    CEnvDetailController* GetOriginal() { return reinterpret_cast<CEnvDetailController*>(IEntityInstance::GetOriginal()); }
 
     virtual float& FadeStartDist() = 0;
     virtual void FadeStartDistUpdated() = 0;
     virtual float& FadeEndDist() = 0;
     virtual void FadeEndDistUpdated() = 0;
+    static IEnvDetailController* FromOriginal(CEnvDetailController* p);
 };
 
 #endif // _INCLUDE_IENVDETAILCONTROLLER_H

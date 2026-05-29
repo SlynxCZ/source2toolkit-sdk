@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
+
+class CLogicCase;
 
 class ILogicCase : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicCase() = default;
+    CLogicCase* GetOriginal() { return reinterpret_cast<CLogicCase*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge* Case() = 0;
     virtual int32_t& ShuffleCases() = 0;
@@ -66,6 +70,7 @@ public:
     virtual void LastShuffleCaseUpdated() = 0;
     virtual uint8_t* UchShuffleCaseMap() = 0;
     virtual CEntityIOOutput* OnCase() = 0;
+    static ILogicCase* FromOriginal(CLogicCase* p);
 };
 
 #endif // _INCLUDE_ILOGICCASE_H

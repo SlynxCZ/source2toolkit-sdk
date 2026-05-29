@@ -50,13 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CInfoPlayerTerrorist;
 
 class IInfoPlayerTerrorist
 {
 public:
     virtual ~IInfoPlayerTerrorist() = default;
+    CInfoPlayerTerrorist* GetOriginal() { return reinterpret_cast<CInfoPlayerTerrorist*>(IEntityInstance::GetOriginal()); }
 
+    static IInfoPlayerTerrorist* FromOriginal(CInfoPlayerTerrorist* p);
 };
 
 #endif // _INCLUDE_IINFOPLAYERTERRORIST_H

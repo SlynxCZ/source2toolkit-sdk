@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
+
+class CSpotlightEnd;
 
 class ISpotlightEnd : public virtual IBaseModelEntity
 {
 public:
     virtual ~ISpotlightEnd() = default;
+    CSpotlightEnd* GetOriginal() { return reinterpret_cast<CSpotlightEnd*>(IEntityInstance::GetOriginal()); }
 
     virtual float& LightScale() = 0;
     virtual void LightScaleUpdated() = 0;
@@ -67,6 +71,7 @@ public:
     virtual void SpotlightDirUpdated() = 0;
     virtual Vector& SpotlightOrg() = 0;
     virtual void SpotlightOrgUpdated() = 0;
+    static ISpotlightEnd* FromOriginal(CSpotlightEnd* p);
 };
 
 #endif // _INCLUDE_ISPOTLIGHTEND_H

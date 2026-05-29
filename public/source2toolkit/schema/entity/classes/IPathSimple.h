@@ -50,23 +50,27 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
 
 class CPathQueryComponent;
+class CPathSimple;
 
 class IPathSimple : public virtual IBaseEntity
 {
 public:
     virtual ~IPathSimple() = default;
+    CPathSimple* GetOriginal() { return reinterpret_cast<CPathSimple*>(IEntityInstance::GetOriginal()); }
 
-    virtual CPathQueryComponent& CPathQueryComponent() = 0;
-    virtual void CPathQueryComponentUpdated() = 0;
+    virtual ::CPathQueryComponent& PathQueryComponent() = 0;
+    virtual void PathQueryComponentUpdated() = 0;
     virtual CUtlString& PathString() = 0;
     virtual void PathStringUpdated() = 0;
     virtual bool& ClosedLoop() = 0;
     virtual void ClosedLoopUpdated() = 0;
+    static IPathSimple* FromOriginal(CPathSimple* p);
 };
 
 #endif // _INCLUDE_IPATHSIMPLE_H

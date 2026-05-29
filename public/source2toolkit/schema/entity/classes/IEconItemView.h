@@ -50,14 +50,17 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 class CAttributeList;
+class CEconItemView;
 
 class IEconItemView
 {
 public:
     virtual ~IEconItemView() = default;
+    CEconItemView* GetOriginal() { return reinterpret_cast<CEconItemView*>(IEntityInstance::GetOriginal()); }
 
     virtual uint16_t& ItemDefinitionIndex() = 0;
     virtual void ItemDefinitionIndexUpdated() = 0;
@@ -77,12 +80,13 @@ public:
     virtual void InventoryPositionUpdated() = 0;
     virtual bool& Initialized() = 0;
     virtual void InitializedUpdated() = 0;
-    virtual CAttributeList& AttributeList() = 0;
+    virtual ::CAttributeList& AttributeList() = 0;
     virtual void AttributeListUpdated() = 0;
-    virtual CAttributeList& NetworkedDynamicAttributes() = 0;
+    virtual ::CAttributeList& NetworkedDynamicAttributes() = 0;
     virtual void NetworkedDynamicAttributesUpdated() = 0;
     virtual char* CustomName() = 0;
     virtual char* CustomNameOverride() = 0;
+    static IEconItemView* FromOriginal(CEconItemView* p);
 };
 
 #endif // _INCLUDE_IECONITEMVIEW_H

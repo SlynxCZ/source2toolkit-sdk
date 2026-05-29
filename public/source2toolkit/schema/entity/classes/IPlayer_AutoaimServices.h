@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayerPawnComponent.h"
+
+class CPlayer_AutoaimServices;
 
 class IPlayer_AutoaimServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~IPlayer_AutoaimServices() = default;
+    CPlayer_AutoaimServices* GetOriginal() { return reinterpret_cast<CPlayer_AutoaimServices*>(IEntityInstance::GetOriginal()); }
 
+    static IPlayer_AutoaimServices* FromOriginal(CPlayer_AutoaimServices* p);
 };
 
 #endif // _INCLUDE_IPLAYER_AUTOAIMSERVICES_H

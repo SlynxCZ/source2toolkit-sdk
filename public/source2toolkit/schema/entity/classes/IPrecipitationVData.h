@@ -50,22 +50,25 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IEntitySubclassVDataBase.h"
 
 #include "../enums/ParticleAttachment_t.h"
 
+class CPrecipitationVData;
 class PrecipitationFilter_t;
 
 class IPrecipitationVData : public virtual IEntitySubclassVDataBase
 {
 public:
     virtual ~IPrecipitationVData() = default;
+    CPrecipitationVData* GetOriginal() { return reinterpret_cast<CPrecipitationVData*>(IEntityInstance::GetOriginal()); }
 
     virtual float& InnerDistance() = 0;
     virtual void InnerDistanceUpdated() = 0;
-    virtual ParticleAttachment_t& AttachType() = 0;
+    virtual ::ParticleAttachment_t& AttachType() = 0;
     virtual void AttachTypeUpdated() = 0;
     virtual bool& BatchSameVolumeType() = 0;
     virtual void BatchSameVolumeTypeUpdated() = 0;
@@ -77,8 +80,9 @@ public:
     virtual void ModifierUpdated() = 0;
     virtual int32_t& UseSnapshotFromSurfaceGraph() = 0;
     virtual void UseSnapshotFromSurfaceGraphUpdated() = 0;
-    virtual PrecipitationFilter_t& SnapshotFilter() = 0;
+    virtual ::PrecipitationFilter_t& SnapshotFilter() = 0;
     virtual void SnapshotFilterUpdated() = 0;
+    static IPrecipitationVData* FromOriginal(CPrecipitationVData* p);
 };
 
 #endif // _INCLUDE_IPRECIPITATIONVDATA_H

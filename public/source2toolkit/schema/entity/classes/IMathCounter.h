@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
+
+class CMathCounter;
 
 class IMathCounter : public virtual ILogicalEntity
 {
 public:
     virtual ~IMathCounter() = default;
+    CMathCounter* GetOriginal() { return reinterpret_cast<CMathCounter*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Min() = 0;
     virtual void MinUpdated() = 0;
@@ -69,14 +73,15 @@ public:
     virtual void HitMaxUpdated() = 0;
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;
-    virtual CEntityIOOutput& OnHitMin() = 0;
+    virtual ::CEntityIOOutput& OnHitMin() = 0;
     virtual void OnHitMinUpdated() = 0;
-    virtual CEntityIOOutput& OnHitMax() = 0;
+    virtual ::CEntityIOOutput& OnHitMax() = 0;
     virtual void OnHitMaxUpdated() = 0;
-    virtual CEntityIOOutput& OnChangedFromMin() = 0;
+    virtual ::CEntityIOOutput& OnChangedFromMin() = 0;
     virtual void OnChangedFromMinUpdated() = 0;
-    virtual CEntityIOOutput& OnChangedFromMax() = 0;
+    virtual ::CEntityIOOutput& OnChangedFromMax() = 0;
     virtual void OnChangedFromMaxUpdated() = 0;
+    static IMathCounter* FromOriginal(CMathCounter* p);
 };
 
 #endif // _INCLUDE_IMATHCOUNTER_H

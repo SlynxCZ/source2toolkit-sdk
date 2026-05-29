@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
+
+class CLogicDistanceCheck;
 
 class ILogicDistanceCheck : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicDistanceCheck() = default;
+    CLogicDistanceCheck* GetOriginal() { return reinterpret_cast<CLogicDistanceCheck*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& EntityA() = 0;
     virtual void EntityAUpdated() = 0;
@@ -67,12 +71,13 @@ public:
     virtual void Zone1DistanceUpdated() = 0;
     virtual float& Zone2Distance() = 0;
     virtual void Zone2DistanceUpdated() = 0;
-    virtual CEntityIOOutput& InZone1() = 0;
+    virtual ::CEntityIOOutput& InZone1() = 0;
     virtual void InZone1Updated() = 0;
-    virtual CEntityIOOutput& InZone2() = 0;
+    virtual ::CEntityIOOutput& InZone2() = 0;
     virtual void InZone2Updated() = 0;
-    virtual CEntityIOOutput& InZone3() = 0;
+    virtual ::CEntityIOOutput& InZone3() = 0;
     virtual void InZone3Updated() = 0;
+    static ILogicDistanceCheck* FromOriginal(CLogicDistanceCheck* p);
 };
 
 #endif // _INCLUDE_ILOGICDISTANCECHECK_H

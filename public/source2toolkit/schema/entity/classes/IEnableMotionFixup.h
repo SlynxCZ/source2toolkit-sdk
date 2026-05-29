@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CEnableMotionFixup;
 
 class IEnableMotionFixup : public virtual IBaseEntity
 {
 public:
     virtual ~IEnableMotionFixup() = default;
+    CEnableMotionFixup* GetOriginal() { return reinterpret_cast<CEnableMotionFixup*>(IEntityInstance::GetOriginal()); }
 
+    static IEnableMotionFixup* FromOriginal(CEnableMotionFixup* p);
 };
 
 #endif // _INCLUDE_IENABLEMOTIONFIXUP_H

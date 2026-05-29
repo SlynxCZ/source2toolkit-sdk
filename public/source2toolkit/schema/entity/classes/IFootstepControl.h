@@ -50,19 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
+
+class CFootstepControl;
 
 class IFootstepControl : public virtual IBaseTrigger
 {
 public:
     virtual ~IFootstepControl() = default;
+    CFootstepControl* GetOriginal() { return reinterpret_cast<CFootstepControl*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Source() = 0;
     virtual void SourceUpdated() = 0;
     virtual CUtlSymbolLarge& Destination() = 0;
     virtual void DestinationUpdated() = 0;
+    static IFootstepControl* FromOriginal(CFootstepControl* p);
 };
 
 #endif // _INCLUDE_IFOOTSTEPCONTROL_H

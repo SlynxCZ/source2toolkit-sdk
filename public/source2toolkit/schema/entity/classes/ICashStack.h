@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
+
+class CCashStack;
 
 class ICashStack : public virtual IBaseModelEntity
 {
 public:
     virtual ~ICashStack() = default;
+    CCashStack* GetOriginal() { return reinterpret_cast<CCashStack*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& CashStackValue() = 0;
     virtual void CashStackValueUpdated() = 0;
+    static ICashStack* FromOriginal(CCashStack* p);
 };
 
 #endif // _INCLUDE_ICASHSTACK_H

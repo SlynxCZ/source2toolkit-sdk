@@ -50,19 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IAnimGraphControllerBase.h"
+
+class CCS2ChickenGraphController;
 
 class ICS2ChickenGraphController : public virtual IAnimGraphControllerBase
 {
 public:
     virtual ~ICS2ChickenGraphController() = default;
+    CCS2ChickenGraphController* GetOriginal() { return reinterpret_cast<CCS2ChickenGraphController*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& HasActionCompletedEvent() = 0;
     virtual void HasActionCompletedEventUpdated() = 0;
     virtual bool& WaitingForCompletedEvent() = 0;
     virtual void WaitingForCompletedEventUpdated() = 0;
+    static ICS2ChickenGraphController* FromOriginal(CCS2ChickenGraphController* p);
 };
 
 #endif // _INCLUDE_ICS2CHICKENGRAPHCONTROLLER_H

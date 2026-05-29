@@ -50,14 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CRangeFloat;
 
 class IRangeFloat
 {
 public:
     virtual ~IRangeFloat() = default;
+    CRangeFloat* GetOriginal() { return reinterpret_cast<CRangeFloat*>(IEntityInstance::GetOriginal()); }
 
     virtual float* Value() = 0;
+    static IRangeFloat* FromOriginal(CRangeFloat* p);
 };
 
 #endif // _INCLUDE_IRANGEFLOAT_H

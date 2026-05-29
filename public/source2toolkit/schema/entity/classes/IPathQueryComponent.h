@@ -50,13 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CPathQueryComponent;
 
 class IPathQueryComponent
 {
 public:
     virtual ~IPathQueryComponent() = default;
+    CPathQueryComponent* GetOriginal() { return reinterpret_cast<CPathQueryComponent*>(IEntityInstance::GetOriginal()); }
 
+    static IPathQueryComponent* FromOriginal(CPathQueryComponent* p);
 };
 
 #endif // _INCLUDE_IPATHQUERYCOMPONENT_H

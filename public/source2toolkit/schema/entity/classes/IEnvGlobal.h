@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
+
+class CEnvGlobal;
 
 class IEnvGlobal : public virtual ILogicalEntity
 {
 public:
     virtual ~IEnvGlobal() = default;
+    CEnvGlobal* GetOriginal() { return reinterpret_cast<CEnvGlobal*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& Globalstate() = 0;
     virtual void GlobalstateUpdated() = 0;
@@ -67,6 +71,7 @@ public:
     virtual void InitialstateUpdated() = 0;
     virtual int32_t& Counter() = 0;
     virtual void CounterUpdated() = 0;
+    static IEnvGlobal* FromOriginal(CEnvGlobal* p);
 };
 
 #endif // _INCLUDE_IENVGLOBAL_H

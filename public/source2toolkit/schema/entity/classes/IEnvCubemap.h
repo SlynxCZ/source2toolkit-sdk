@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
 
+class CEnvCubemap;
 class InfoForResourceTypeCTextureBase;
 
 class IEnvCubemap : public virtual IBaseEntity
 {
 public:
     virtual ~IEnvCubemap() = default;
+    CEnvCubemap* GetOriginal() { return reinterpret_cast<CEnvCubemap*>(IEntityInstance::GetOriginal()); }
 
     virtual CStrongHandle<InfoForResourceTypeCTextureBase>& Entity_hCubemapTexture() = 0;
     virtual void Entity_hCubemapTextureUpdated() = 0;
@@ -97,6 +100,7 @@ public:
     virtual void Entity_bCopyDiffuseFromDefaultCubemapUpdated() = 0;
     virtual bool& Entity_bEnabled() = 0;
     virtual void Entity_bEnabledUpdated() = 0;
+    static IEnvCubemap* FromOriginal(CEnvCubemap* p);
 };
 
 #endif // _INCLUDE_IENVCUBEMAP_H

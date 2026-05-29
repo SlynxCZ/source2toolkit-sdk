@@ -50,19 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ISoundAreaEntityBase.h"
+
+class CSoundAreaEntityOrientedBox;
 
 class ISoundAreaEntityOrientedBox : public virtual ISoundAreaEntityBase
 {
 public:
     virtual ~ISoundAreaEntityOrientedBox() = default;
+    CSoundAreaEntityOrientedBox* GetOriginal() { return reinterpret_cast<CSoundAreaEntityOrientedBox*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& Min() = 0;
     virtual void MinUpdated() = 0;
     virtual Vector& Max() = 0;
     virtual void MaxUpdated() = 0;
+    static ISoundAreaEntityOrientedBox* FromOriginal(CSoundAreaEntityOrientedBox* p);
 };
 
 #endif // _INCLUDE_ISOUNDAREAENTITYORIENTEDBOX_H

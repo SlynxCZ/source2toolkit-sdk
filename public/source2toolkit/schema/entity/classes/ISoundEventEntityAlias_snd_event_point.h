@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ISoundEventEntity.h"
+
+class CSoundEventEntityAlias_snd_event_point;
 
 class ISoundEventEntityAlias_snd_event_point : public virtual ISoundEventEntity
 {
 public:
     virtual ~ISoundEventEntityAlias_snd_event_point() = default;
+    CSoundEventEntityAlias_snd_event_point* GetOriginal() { return reinterpret_cast<CSoundEventEntityAlias_snd_event_point*>(IEntityInstance::GetOriginal()); }
 
+    static ISoundEventEntityAlias_snd_event_point* FromOriginal(CSoundEventEntityAlias_snd_event_point* p);
 };
 
 #endif // _INCLUDE_ISOUNDEVENTENTITYALIAS_SND_EVENT_POINT_H

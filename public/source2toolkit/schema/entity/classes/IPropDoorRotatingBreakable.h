@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPropDoorRotating.h"
+
+class CPropDoorRotatingBreakable;
 
 class IPropDoorRotatingBreakable : public virtual IPropDoorRotating
 {
 public:
     virtual ~IPropDoorRotatingBreakable() = default;
+    CPropDoorRotatingBreakable* GetOriginal() { return reinterpret_cast<CPropDoorRotatingBreakable*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Breakable() = 0;
     virtual void BreakableUpdated() = 0;
@@ -67,6 +71,7 @@ public:
     virtual void CurrentDamageStateUpdated() = 0;
     virtual CUtlVector<CUtlSymbolLarge>& DamageStates() = 0;
     virtual void DamageStatesUpdated() = 0;
+    static IPropDoorRotatingBreakable* FromOriginal(CPropDoorRotatingBreakable* p);
 };
 
 #endif // _INCLUDE_IPROPDOORROTATINGBREAKABLE_H

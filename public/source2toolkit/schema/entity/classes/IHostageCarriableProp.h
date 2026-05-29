@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseAnimGraph.h"
+
+class CHostageCarriableProp;
 
 class IHostageCarriableProp : public virtual IBaseAnimGraph
 {
 public:
     virtual ~IHostageCarriableProp() = default;
+    CHostageCarriableProp* GetOriginal() { return reinterpret_cast<CHostageCarriableProp*>(IEntityInstance::GetOriginal()); }
 
+    static IHostageCarriableProp* FromOriginal(CHostageCarriableProp* p);
 };
 
 #endif // _INCLUDE_IHOSTAGECARRIABLEPROP_H

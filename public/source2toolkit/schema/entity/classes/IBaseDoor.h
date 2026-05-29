@@ -50,24 +50,27 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseToggle.h"
 
 #include "../enums/FuncDoorSpawnPos_t.h"
 
+class CBaseDoor;
 class locksound_t;
 
 class IBaseDoor : public virtual IBaseToggle
 {
 public:
     virtual ~IBaseDoor() = default;
+    CBaseDoor* GetOriginal() { return reinterpret_cast<CBaseDoor*>(IEntityInstance::GetOriginal()); }
 
     virtual QAngle& MoveEntitySpace() = 0;
     virtual void MoveEntitySpaceUpdated() = 0;
     virtual Vector& MoveDirParentSpace() = 0;
     virtual void MoveDirParentSpaceUpdated() = 0;
-    virtual locksound_t& Ls() = 0;
+    virtual ::locksound_t& Ls() = 0;
     virtual void LsUpdated() = 0;
     virtual bool& ForceClosed() = 0;
     virtual void ForceClosedUpdated() = 0;
@@ -79,7 +82,7 @@ public:
     virtual void IgnoreDebrisUpdated() = 0;
     virtual bool& NoNPCs() = 0;
     virtual void NoNPCsUpdated() = 0;
-    virtual FuncDoorSpawnPos_t& SpawnPosition() = 0;
+    virtual ::FuncDoorSpawnPos_t& SpawnPosition() = 0;
     virtual void SpawnPositionUpdated() = 0;
     virtual float& BlockDamage() = 0;
     virtual void BlockDamageUpdated() = 0;
@@ -93,23 +96,23 @@ public:
     virtual void NoiseArrivedClosedUpdated() = 0;
     virtual CUtlSymbolLarge& ChainTarget() = 0;
     virtual void ChainTargetUpdated() = 0;
-    virtual CEntityIOOutput& OnBlockedClosing() = 0;
+    virtual ::CEntityIOOutput& OnBlockedClosing() = 0;
     virtual void OnBlockedClosingUpdated() = 0;
-    virtual CEntityIOOutput& OnBlockedOpening() = 0;
+    virtual ::CEntityIOOutput& OnBlockedOpening() = 0;
     virtual void OnBlockedOpeningUpdated() = 0;
-    virtual CEntityIOOutput& OnUnblockedClosing() = 0;
+    virtual ::CEntityIOOutput& OnUnblockedClosing() = 0;
     virtual void OnUnblockedClosingUpdated() = 0;
-    virtual CEntityIOOutput& OnUnblockedOpening() = 0;
+    virtual ::CEntityIOOutput& OnUnblockedOpening() = 0;
     virtual void OnUnblockedOpeningUpdated() = 0;
-    virtual CEntityIOOutput& OnFullyClosed() = 0;
+    virtual ::CEntityIOOutput& OnFullyClosed() = 0;
     virtual void OnFullyClosedUpdated() = 0;
-    virtual CEntityIOOutput& OnFullyOpen() = 0;
+    virtual ::CEntityIOOutput& OnFullyOpen() = 0;
     virtual void OnFullyOpenUpdated() = 0;
-    virtual CEntityIOOutput& OnClose() = 0;
+    virtual ::CEntityIOOutput& OnClose() = 0;
     virtual void OnCloseUpdated() = 0;
-    virtual CEntityIOOutput& OnOpen() = 0;
+    virtual ::CEntityIOOutput& OnOpen() = 0;
     virtual void OnOpenUpdated() = 0;
-    virtual CEntityIOOutput& OnLockedUse() = 0;
+    virtual ::CEntityIOOutput& OnLockedUse() = 0;
     virtual void OnLockedUseUpdated() = 0;
     virtual bool& LoopMoveSound() = 0;
     virtual void LoopMoveSoundUpdated() = 0;
@@ -119,6 +122,7 @@ public:
     virtual void IsChainingUpdated() = 0;
     virtual bool& IsUsable() = 0;
     virtual void IsUsableUpdated() = 0;
+    static IBaseDoor* FromOriginal(CBaseDoor* p);
 };
 
 #endif // _INCLUDE_IBASEDOOR_H

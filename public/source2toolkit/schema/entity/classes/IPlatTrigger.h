@@ -50,19 +50,23 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
 
 class CFuncPlat;
+class CPlatTrigger;
 
 class IPlatTrigger : public virtual IBaseModelEntity
 {
 public:
     virtual ~IPlatTrigger() = default;
+    CPlatTrigger* GetOriginal() { return reinterpret_cast<CPlatTrigger*>(IEntityInstance::GetOriginal()); }
 
     virtual CHandle<CFuncPlat>& Platform() = 0;
     virtual void PlatformUpdated() = 0;
+    static IPlatTrigger* FromOriginal(CPlatTrigger* p);
 };
 
 #endif // _INCLUDE_IPLATTRIGGER_H

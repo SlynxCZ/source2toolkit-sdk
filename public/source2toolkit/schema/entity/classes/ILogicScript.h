@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
+
+class CLogicScript;
 
 class ILogicScript : public virtual IPointEntity
 {
 public:
     virtual ~ILogicScript() = default;
+    CLogicScript* GetOriginal() { return reinterpret_cast<CLogicScript*>(IEntityInstance::GetOriginal()); }
 
+    static ILogicScript* FromOriginal(CLogicScript* p);
 };
 
 #endif // _INCLUDE_ILOGICSCRIPT_H

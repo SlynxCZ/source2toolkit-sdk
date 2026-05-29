@@ -50,10 +50,12 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayerControllerComponent.h"
 
+class CCSPlayerController_ActionTrackingServices;
 class CSMatchStats_t;
 class CSPerRoundStats_t;
 
@@ -61,10 +63,11 @@ class ICSPlayerController_ActionTrackingServices : public virtual IPlayerControl
 {
 public:
     virtual ~ICSPlayerController_ActionTrackingServices() = default;
+    CCSPlayerController_ActionTrackingServices* GetOriginal() { return reinterpret_cast<CCSPlayerController_ActionTrackingServices*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlVector<CSPerRoundStats_t>& PerRoundStats() = 0;
     virtual void PerRoundStatsUpdated() = 0;
-    virtual CSMatchStats_t& MatchStats() = 0;
+    virtual ::CSMatchStats_t& MatchStats() = 0;
     virtual void MatchStatsUpdated() = 0;
     virtual int32_t& NumRoundKills() = 0;
     virtual void NumRoundKillsUpdated() = 0;
@@ -72,6 +75,7 @@ public:
     virtual void NumRoundKillsHeadshotsUpdated() = 0;
     virtual float& TotalRoundDamageDealt() = 0;
     virtual void TotalRoundDamageDealtUpdated() = 0;
+    static ICSPlayerController_ActionTrackingServices* FromOriginal(CCSPlayerController_ActionTrackingServices* p);
 };
 
 #endif // _INCLUDE_ICSPLAYERCONTROLLER_ACTIONTRACKINGSERVICES_H

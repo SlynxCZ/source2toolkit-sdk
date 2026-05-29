@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IItem.h"
+
+class CScriptItem;
 
 class IScriptItem : public virtual IItem
 {
 public:
     virtual ~IScriptItem() = default;
+    CScriptItem* GetOriginal() { return reinterpret_cast<CScriptItem*>(IEntityInstance::GetOriginal()); }
 
-    virtual MoveType_t& MoveTypeOverride() = 0;
+    virtual ::MoveType_t& MoveTypeOverride() = 0;
     virtual void MoveTypeOverrideUpdated() = 0;
+    static IScriptItem* FromOriginal(CScriptItem* p);
 };
 
 #endif // _INCLUDE_ISCRIPTITEM_H

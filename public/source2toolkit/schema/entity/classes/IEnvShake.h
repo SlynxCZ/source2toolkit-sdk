@@ -50,10 +50,12 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
 
+class CEnvShake;
 class CPhysicsShake;
 class IPhysicsMotionController;
 
@@ -61,6 +63,7 @@ class IEnvShake : public virtual IPointEntity
 {
 public:
     virtual ~IEnvShake() = default;
+    CEnvShake* GetOriginal() { return reinterpret_cast<CEnvShake*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& LimitToEntity() = 0;
     virtual void LimitToEntityUpdated() = 0;
@@ -82,8 +85,9 @@ public:
     virtual void MaxForceUpdated() = 0;
     virtual IPhysicsMotionController*& ShakeController() = 0;
     virtual void ShakeControllerUpdated() = 0;
-    virtual CPhysicsShake& ShakeCallback() = 0;
+    virtual ::CPhysicsShake& ShakeCallback() = 0;
     virtual void ShakeCallbackUpdated() = 0;
+    static IEnvShake* FromOriginal(CEnvShake* p);
 };
 
 #endif // _INCLUDE_IENVSHAKE_H

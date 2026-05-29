@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPathKeyFrame.h"
 
+class CBaseMoveBehavior;
 class CPathKeyFrame;
 
 class IBaseMoveBehavior : public virtual IPathKeyFrame
 {
 public:
     virtual ~IBaseMoveBehavior() = default;
+    CBaseMoveBehavior* GetOriginal() { return reinterpret_cast<CBaseMoveBehavior*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& PositionInterpolator() = 0;
     virtual void PositionInterpolatorUpdated() = 0;
@@ -83,6 +86,7 @@ public:
     virtual void TimeIntoFrameUpdated() = 0;
     virtual int32_t& Direction() = 0;
     virtual void DirectionUpdated() = 0;
+    static IBaseMoveBehavior* FromOriginal(CBaseMoveBehavior* p);
 };
 
 #endif // _INCLUDE_IBASEMOVEBEHAVIOR_H

@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IDynamicProp.h"
+
+class CDynamicPropAlias_cable_dynamic;
 
 class IDynamicPropAlias_cable_dynamic : public virtual IDynamicProp
 {
 public:
     virtual ~IDynamicPropAlias_cable_dynamic() = default;
+    CDynamicPropAlias_cable_dynamic* GetOriginal() { return reinterpret_cast<CDynamicPropAlias_cable_dynamic*>(IEntityInstance::GetOriginal()); }
 
+    static IDynamicPropAlias_cable_dynamic* FromOriginal(CDynamicPropAlias_cable_dynamic* p);
 };
 
 #endif // _INCLUDE_IDYNAMICPROPALIAS_CABLE_DYNAMIC_H

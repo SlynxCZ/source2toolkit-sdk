@@ -50,18 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseToggle.h"
 
 #include "../enums/MoveLinearAuthoredPos_t.h"
 
+class CFuncMoveLinear;
+
 class IFuncMoveLinear : public virtual IBaseToggle
 {
 public:
     virtual ~IFuncMoveLinear() = default;
+    CFuncMoveLinear* GetOriginal() { return reinterpret_cast<CFuncMoveLinear*>(IEntityInstance::GetOriginal()); }
 
-    virtual MoveLinearAuthoredPos_t& AuthoredPosition() = 0;
+    virtual ::MoveLinearAuthoredPos_t& AuthoredPosition() = 0;
     virtual void AuthoredPositionUpdated() = 0;
     virtual QAngle& MoveEntitySpace() = 0;
     virtual void MoveEntitySpaceUpdated() = 0;
@@ -77,9 +81,9 @@ public:
     virtual void BlockDamageUpdated() = 0;
     virtual float& StartPosition() = 0;
     virtual void StartPositionUpdated() = 0;
-    virtual CEntityIOOutput& OnFullyOpen() = 0;
+    virtual ::CEntityIOOutput& OnFullyOpen() = 0;
     virtual void OnFullyOpenUpdated() = 0;
-    virtual CEntityIOOutput& OnFullyClosed() = 0;
+    virtual ::CEntityIOOutput& OnFullyClosed() = 0;
     virtual void OnFullyClosedUpdated() = 0;
     virtual bool& CreateMovableNavMesh() = 0;
     virtual void CreateMovableNavMeshUpdated() = 0;
@@ -87,6 +91,7 @@ public:
     virtual void AllowMovableNavMeshDockingOnEntireEntityUpdated() = 0;
     virtual bool& CreateNavObstacle() = 0;
     virtual void CreateNavObstacleUpdated() = 0;
+    static IFuncMoveLinear* FromOriginal(CFuncMoveLinear* p);
 };
 
 #endif // _INCLUDE_IFUNCMOVELINEAR_H

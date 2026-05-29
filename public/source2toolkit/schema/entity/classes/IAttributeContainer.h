@@ -50,19 +50,23 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IAttributeManager.h"
 
+class CAttributeContainer;
 class CEconItemView;
 
 class IAttributeContainer : public virtual IAttributeManager
 {
 public:
     virtual ~IAttributeContainer() = default;
+    CAttributeContainer* GetOriginal() { return reinterpret_cast<CAttributeContainer*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEconItemView& Item() = 0;
+    virtual ::CEconItemView& Item() = 0;
     virtual void ItemUpdated() = 0;
+    static IAttributeContainer* FromOriginal(CAttributeContainer* p);
 };
 
 #endif // _INCLUDE_IATTRIBUTECONTAINER_H

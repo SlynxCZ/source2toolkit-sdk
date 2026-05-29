@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CExampleSchemaVData_PolymorphicBase;
 
 class IExampleSchemaVData_PolymorphicBase
 {
 public:
     virtual ~IExampleSchemaVData_PolymorphicBase() = default;
+    CExampleSchemaVData_PolymorphicBase* GetOriginal() { return reinterpret_cast<CExampleSchemaVData_PolymorphicBase*>(IEntityInstance::GetOriginal()); }
 
     virtual int32_t& Base() = 0;
     virtual void BaseUpdated() = 0;
+    static IExampleSchemaVData_PolymorphicBase* FromOriginal(CExampleSchemaVData_PolymorphicBase* p);
 };
 
 #endif // _INCLUDE_IEXAMPLESCHEMAVDATA_POLYMORPHICBASE_H

@@ -50,19 +50,24 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CPulseGameBlackboard;
 
 class IPulseGameBlackboard : public virtual IBaseEntity
 {
 public:
     virtual ~IPulseGameBlackboard() = default;
+    CPulseGameBlackboard* GetOriginal() { return reinterpret_cast<CPulseGameBlackboard*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlString& StrGraphName() = 0;
     virtual void StrGraphNameUpdated() = 0;
     virtual CUtlString& StrStateBlob() = 0;
     virtual void StrStateBlobUpdated() = 0;
+    static IPulseGameBlackboard* FromOriginal(CPulseGameBlackboard* p);
 };
 
 #endif // _INCLUDE_IPULSEGAMEBLACKBOARD_H

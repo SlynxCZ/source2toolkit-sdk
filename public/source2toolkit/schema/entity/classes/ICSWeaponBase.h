@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBasePlayerWeapon.h"
@@ -58,12 +59,14 @@
 #include "../enums/WeaponGameplayAnimState.h"
 
 class CCSPlayerPawn;
+class CCSWeaponBase;
 class CIronSightController;
 
 class ICSWeaponBase : public virtual IBasePlayerWeapon
 {
 public:
     virtual ~ICSWeaponBase() = default;
+    CCSWeaponBase* GetOriginal() { return reinterpret_cast<CCSWeaponBase*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Removeable() = 0;
     virtual void RemoveableUpdated() = 0;
@@ -71,7 +74,7 @@ public:
     virtual void PlayerAmmoStockOnPickupUpdated() = 0;
     virtual bool& RequireUseToTouch() = 0;
     virtual void RequireUseToTouchUpdated() = 0;
-    virtual WeaponGameplayAnimState& WeaponGameplayAnimState() = 0;
+    virtual ::WeaponGameplayAnimState& WeaponGameplayAnimState() = 0;
     virtual void WeaponGameplayAnimStateUpdated() = 0;
     virtual float& WeaponGameplayAnimStateTimestamp() = 0;
     virtual void WeaponGameplayAnimStateTimestampUpdated() = 0;
@@ -85,9 +88,9 @@ public:
     virtual void LastEmptySoundCmdNumUpdated() = 0;
     virtual bool& FireOnEmpty() = 0;
     virtual void FireOnEmptyUpdated() = 0;
-    virtual CEntityIOOutput& OnPlayerPickup() = 0;
+    virtual ::CEntityIOOutput& OnPlayerPickup() = 0;
     virtual void OnPlayerPickupUpdated() = 0;
-    virtual CSWeaponMode& WeaponMode() = 0;
+    virtual ::CSWeaponMode& WeaponMode() = 0;
     virtual void WeaponModeUpdated() = 0;
     virtual float& TurningInaccuracyDelta() = 0;
     virtual void TurningInaccuracyDeltaUpdated() = 0;
@@ -159,7 +162,7 @@ public:
     virtual void WasOwnedByTerroristUpdated() = 0;
     virtual int32_t& NumRemoveUnownedWeaponThink() = 0;
     virtual void NumRemoveUnownedWeaponThinkUpdated() = 0;
-    virtual CIronSightController& IronSightController() = 0;
+    virtual ::CIronSightController& IronSightController() = 0;
     virtual void IronSightControllerUpdated() = 0;
     virtual int32_t& IronSightMode() = 0;
     virtual void IronSightModeUpdated() = 0;
@@ -169,6 +172,7 @@ public:
     virtual void WatTickOffsetUpdated() = 0;
     virtual float& LastShakeTime() = 0;
     virtual void LastShakeTimeUpdated() = 0;
+    static ICSWeaponBase* FromOriginal(CCSWeaponBase* p);
 };
 
 #endif // _INCLUDE_ICSWEAPONBASE_H

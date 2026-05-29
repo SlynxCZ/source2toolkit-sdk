@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ICSGameModeRules.h"
+
+class CCSGameModeRules_Noop;
 
 class ICSGameModeRules_Noop : public virtual ICSGameModeRules
 {
 public:
     virtual ~ICSGameModeRules_Noop() = default;
+    CCSGameModeRules_Noop* GetOriginal() { return reinterpret_cast<CCSGameModeRules_Noop*>(IEntityInstance::GetOriginal()); }
 
+    static ICSGameModeRules_Noop* FromOriginal(CCSGameModeRules_Noop* p);
 };
 
 #endif // _INCLUDE_ICSGAMEMODERULES_NOOP_H

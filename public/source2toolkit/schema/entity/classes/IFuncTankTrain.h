@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IFuncTrackTrain.h"
+
+class CFuncTankTrain;
 
 class IFuncTankTrain : public virtual IFuncTrackTrain
 {
 public:
     virtual ~IFuncTankTrain() = default;
+    CFuncTankTrain* GetOriginal() { return reinterpret_cast<CFuncTankTrain*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnDeath() = 0;
+    virtual ::CEntityIOOutput& OnDeath() = 0;
     virtual void OnDeathUpdated() = 0;
+    static IFuncTankTrain* FromOriginal(CFuncTankTrain* p);
 };
 
 #endif // _INCLUDE_IFUNCTANKTRAIN_H

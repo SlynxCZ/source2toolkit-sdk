@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayer_MovementServices_Humanoid.h"
@@ -57,13 +58,15 @@
 class CCSPlayerAnimationState;
 class CCSPlayerLegacyJump;
 class CCSPlayerModernJump;
+class CCSPlayer_MovementServices;
 
 class ICSPlayer_MovementServices : public virtual IPlayer_MovementServices_Humanoid
 {
 public:
     virtual ~ICSPlayer_MovementServices() = default;
+    CCSPlayer_MovementServices* GetOriginal() { return reinterpret_cast<CCSPlayer_MovementServices*>(IEntityInstance::GetOriginal()); }
 
-    virtual CCSPlayerAnimationState& AnimationState() = 0;
+    virtual ::CCSPlayerAnimationState& AnimationState() = 0;
     virtual void AnimationStateUpdated() = 0;
     virtual bool& UsingGroundTopologyOffset() = 0;
     virtual void UsingGroundTopologyOffsetUpdated() = 0;
@@ -147,9 +150,9 @@ public:
     virtual void VelMulAtJumpStartUpdated() = 0;
     virtual float& AccumulatedJumpError() = 0;
     virtual void AccumulatedJumpErrorUpdated() = 0;
-    virtual CCSPlayerLegacyJump& LegacyJump() = 0;
+    virtual ::CCSPlayerLegacyJump& LegacyJump() = 0;
     virtual void LegacyJumpUpdated() = 0;
-    virtual CCSPlayerModernJump& ModernJump() = 0;
+    virtual ::CCSPlayerModernJump& ModernJump() = 0;
     virtual void ModernJumpUpdated() = 0;
     virtual int32_t& LastJumpTick() = 0;
     virtual void LastJumpTickUpdated() = 0;
@@ -167,6 +170,7 @@ public:
     virtual void WalkWishVelUpdated() = 0;
     virtual bool& HasEverProcessedCommand() = 0;
     virtual void HasEverProcessedCommandUpdated() = 0;
+    static ICSPlayer_MovementServices* FromOriginal(CCSPlayer_MovementServices* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_MOVEMENTSERVICES_H

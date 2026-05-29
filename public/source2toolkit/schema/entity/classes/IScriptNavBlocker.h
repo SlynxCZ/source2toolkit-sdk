@@ -50,17 +50,22 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IFuncNavBlocker.h"
+
+class CScriptNavBlocker;
 
 class IScriptNavBlocker : public virtual IFuncNavBlocker
 {
 public:
     virtual ~IScriptNavBlocker() = default;
+    CScriptNavBlocker* GetOriginal() { return reinterpret_cast<CScriptNavBlocker*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& Extent() = 0;
     virtual void ExtentUpdated() = 0;
+    static IScriptNavBlocker* FromOriginal(CScriptNavBlocker* p);
 };
 
 #endif // _INCLUDE_ISCRIPTNAVBLOCKER_H

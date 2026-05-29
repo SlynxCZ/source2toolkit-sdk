@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
+
+class CInfoLadderDismount;
 
 class IInfoLadderDismount : public virtual IBaseEntity
 {
 public:
     virtual ~IInfoLadderDismount() = default;
+    CInfoLadderDismount* GetOriginal() { return reinterpret_cast<CInfoLadderDismount*>(IEntityInstance::GetOriginal()); }
 
+    static IInfoLadderDismount* FromOriginal(CInfoLadderDismount* p);
 };
 
 #endif // _INCLUDE_IINFOLADDERDISMOUNT_H

@@ -50,12 +50,16 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CConstantForceController;
 
 class IConstantForceController
 {
 public:
     virtual ~IConstantForceController() = default;
+    CConstantForceController* GetOriginal() { return reinterpret_cast<CConstantForceController*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& Linear() = 0;
     virtual void LinearUpdated() = 0;
@@ -65,6 +69,7 @@ public:
     virtual void LinearSaveUpdated() = 0;
     virtual RotationVector& AngularSave() = 0;
     virtual void AngularSaveUpdated() = 0;
+    static IConstantForceController* FromOriginal(CConstantForceController* p);
 };
 
 #endif // _INCLUDE_ICONSTANTFORCECONTROLLER_H

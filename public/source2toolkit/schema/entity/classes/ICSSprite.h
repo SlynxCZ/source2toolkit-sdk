@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ISprite.h"
+
+class CCSSprite;
 
 class ICSSprite : public virtual ISprite
 {
 public:
     virtual ~ICSSprite() = default;
+    CCSSprite* GetOriginal() { return reinterpret_cast<CCSSprite*>(IEntityInstance::GetOriginal()); }
 
+    static ICSSprite* FromOriginal(CCSSprite* p);
 };
 
 #endif // _INCLUDE_ICSSPRITE_H

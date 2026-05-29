@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPointEntity.h"
 
 class CBaseEntity;
+class CPointAngleSensor;
 
 class IPointAngleSensor : public virtual IPointEntity
 {
 public:
     virtual ~IPointAngleSensor() = default;
+    CPointAngleSensor* GetOriginal() { return reinterpret_cast<CPointAngleSensor*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Disabled() = 0;
     virtual void DisabledUpdated() = 0;
@@ -77,10 +80,11 @@ public:
     virtual void FacingTimeUpdated() = 0;
     virtual bool& Fired() = 0;
     virtual void FiredUpdated() = 0;
-    virtual CEntityIOOutput& OnFacingLookat() = 0;
+    virtual ::CEntityIOOutput& OnFacingLookat() = 0;
     virtual void OnFacingLookatUpdated() = 0;
-    virtual CEntityIOOutput& OnNotFacingLookat() = 0;
+    virtual ::CEntityIOOutput& OnNotFacingLookat() = 0;
     virtual void OnNotFacingLookatUpdated() = 0;
+    static IPointAngleSensor* FromOriginal(CPointAngleSensor* p);
 };
 
 #endif // _INCLUDE_IPOINTANGLESENSOR_H

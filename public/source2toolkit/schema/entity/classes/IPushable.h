@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBreakable.h"
+
+class CPushable;
 
 class IPushable : public virtual IBreakable
 {
 public:
     virtual ~IPushable() = default;
+    CPushable* GetOriginal() { return reinterpret_cast<CPushable*>(IEntityInstance::GetOriginal()); }
 
+    static IPushable* FromOriginal(CPushable* p);
 };
 
 #endif // _INCLUDE_IPUSHABLE_H

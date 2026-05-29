@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPhysConstraint.h"
+
+class CPhysPulley;
 
 class IPhysPulley : public virtual IPhysConstraint
 {
 public:
     virtual ~IPhysPulley() = default;
+    CPhysPulley* GetOriginal() { return reinterpret_cast<CPhysPulley*>(IEntityInstance::GetOriginal()); }
 
     virtual Vector& Position2() = 0;
     virtual void Position2Updated() = 0;
@@ -66,6 +70,7 @@ public:
     virtual void AddLengthUpdated() = 0;
     virtual float& GearRatio() = 0;
     virtual void GearRatioUpdated() = 0;
+    static IPhysPulley* FromOriginal(CPhysPulley* p);
 };
 
 #endif // _INCLUDE_IPHYSPULLEY_H

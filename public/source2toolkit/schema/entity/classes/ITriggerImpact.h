@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ITriggerMultiple.h"
+
+class CTriggerImpact;
 
 class ITriggerImpact : public virtual ITriggerMultiple
 {
 public:
     virtual ~ITriggerImpact() = default;
+    CTriggerImpact* GetOriginal() { return reinterpret_cast<CTriggerImpact*>(IEntityInstance::GetOriginal()); }
 
     virtual float& Magnitude() = 0;
     virtual void MagnitudeUpdated() = 0;
@@ -65,6 +69,7 @@ public:
     virtual void NoiseUpdated() = 0;
     virtual float& Viewkick() = 0;
     virtual void ViewkickUpdated() = 0;
+    static ITriggerImpact* FromOriginal(CTriggerImpact* p);
 };
 
 #endif // _INCLUDE_ITRIGGERIMPACT_H

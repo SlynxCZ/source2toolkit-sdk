@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayerPawnComponent.h"
@@ -57,20 +58,23 @@
 #include "../enums/ObserverMode_t.h"
 
 class CBaseEntity;
+class CPlayer_ObserverServices;
 
 class IPlayer_ObserverServices : public virtual IPlayerPawnComponent
 {
 public:
     virtual ~IPlayer_ObserverServices() = default;
+    CPlayer_ObserverServices* GetOriginal() { return reinterpret_cast<CPlayer_ObserverServices*>(IEntityInstance::GetOriginal()); }
 
     virtual uint8_t& ObserverMode() = 0;
     virtual void ObserverModeUpdated() = 0;
     virtual CHandle<CBaseEntity>& ObserverTarget() = 0;
     virtual void ObserverTargetUpdated() = 0;
-    virtual ObserverMode_t& ObserverLastMode() = 0;
+    virtual ::ObserverMode_t& ObserverLastMode() = 0;
     virtual void ObserverLastModeUpdated() = 0;
     virtual bool& ForcedObserverMode() = 0;
     virtual void ForcedObserverModeUpdated() = 0;
+    static IPlayer_ObserverServices* FromOriginal(CPlayer_ObserverServices* p);
 };
 
 #endif // _INCLUDE_IPLAYER_OBSERVERSERVICES_H

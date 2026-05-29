@@ -50,24 +50,28 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseEntity.h"
 
+class CSkyCamera;
 class sky3dparams_t;
 
 class ISkyCamera : public virtual IBaseEntity
 {
 public:
     virtual ~ISkyCamera() = default;
+    CSkyCamera* GetOriginal() { return reinterpret_cast<CSkyCamera*>(IEntityInstance::GetOriginal()); }
 
-    virtual sky3dparams_t& SkyboxData() = 0;
+    virtual ::sky3dparams_t& SkyboxData() = 0;
     virtual void SkyboxDataUpdated() = 0;
     virtual CUtlStringToken* SkyboxSlotToken() = 0;
     virtual bool& UseAngles() = 0;
     virtual void UseAnglesUpdated() = 0;
     virtual CSkyCamera*& Next() = 0;
     virtual void NextUpdated() = 0;
+    static ISkyCamera* FromOriginal(CSkyCamera* p);
 };
 
 #endif // _INCLUDE_ISKYCAMERA_H

@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
+
+class CServerRagdollTrigger;
 
 class IServerRagdollTrigger : public virtual IBaseTrigger
 {
 public:
     virtual ~IServerRagdollTrigger() = default;
+    CServerRagdollTrigger* GetOriginal() { return reinterpret_cast<CServerRagdollTrigger*>(IEntityInstance::GetOriginal()); }
 
+    static IServerRagdollTrigger* FromOriginal(CServerRagdollTrigger* p);
 };
 
 #endif // _INCLUDE_ISERVERRAGDOLLTRIGGER_H

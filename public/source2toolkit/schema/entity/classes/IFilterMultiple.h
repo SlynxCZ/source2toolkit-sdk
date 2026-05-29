@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseFilter.h"
@@ -57,16 +58,19 @@
 #include "../enums/filter_t.h"
 
 class CBaseEntity;
+class CFilterMultiple;
 
 class IFilterMultiple : public virtual IBaseFilter
 {
 public:
     virtual ~IFilterMultiple() = default;
+    CFilterMultiple* GetOriginal() { return reinterpret_cast<CFilterMultiple*>(IEntityInstance::GetOriginal()); }
 
-    virtual filter_t& FilterType() = 0;
+    virtual ::filter_t& FilterType() = 0;
     virtual void FilterTypeUpdated() = 0;
     virtual CUtlSymbolLarge* FilterName() = 0;
     virtual CHandle<CBaseEntity>* Filter() = 0;
+    static IFilterMultiple* FromOriginal(CFilterMultiple* p);
 };
 
 #endif // _INCLUDE_IFILTERMULTIPLE_H

@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
 
 class CBaseEntity;
+class CLogicMeasureMovement;
 
 class ILogicMeasureMovement : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicMeasureMovement() = default;
+    CLogicMeasureMovement* GetOriginal() { return reinterpret_cast<CLogicMeasureMovement*>(IEntityInstance::GetOriginal()); }
 
     virtual CUtlSymbolLarge& StrMeasureTarget() = 0;
     virtual void StrMeasureTargetUpdated() = 0;
@@ -79,6 +82,7 @@ public:
     virtual void ScaleUpdated() = 0;
     virtual int32_t& MeasureType() = 0;
     virtual void MeasureTypeUpdated() = 0;
+    static ILogicMeasureMovement* FromOriginal(CLogicMeasureMovement* p);
 };
 
 #endif // _INCLUDE_ILOGICMEASUREMOVEMENT_H

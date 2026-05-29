@@ -50,16 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IPlayer_WeaponServices.h"
 
 class CBasePlayerWeapon;
+class CCSPlayer_WeaponServices;
+class IBasePlayerWeapon;
 
 class ICSPlayer_WeaponServices : public virtual IPlayer_WeaponServices
 {
 public:
     virtual ~ICSPlayer_WeaponServices() = default;
+    CCSPlayer_WeaponServices* GetOriginal() { return reinterpret_cast<CCSPlayer_WeaponServices*>(IEntityInstance::GetOriginal()); }
 
     virtual float& NextAttack() = 0;
     virtual void NextAttackUpdated() = 0;
@@ -88,8 +92,11 @@ public:
     virtual bool& BlockInspectUntilNextGraphUpdate() = 0;
     virtual void BlockInspectUntilNextGraphUpdateUpdated() = 0;
 
-    virtual void DropWeapon(CBasePlayerWeapon *pWeapon, Vector *pVecTarget = nullptr, Vector *pVelocity = nullptr) = 0;
-    virtual void SelectWeapon(CBasePlayerWeapon *pWeapon, int unk1 = 0) = 0;
+    /// <summary>Drop weapon.</summary>
+    virtual void DropWeapon(IBasePlayerWeapon *pWeapon, Vector *pVecTarget = nullptr, Vector *pVelocity = nullptr) = 0;
+    /// <summary>Select weapon.</summary>
+    virtual void SelectWeapon(IBasePlayerWeapon *pWeapon, int unk1 = 0) = 0;
+    static ICSPlayer_WeaponServices* FromOriginal(CCSPlayer_WeaponServices* p);
 };
 
 #endif // _INCLUDE_ICSPLAYER_WEAPONSERVICES_H

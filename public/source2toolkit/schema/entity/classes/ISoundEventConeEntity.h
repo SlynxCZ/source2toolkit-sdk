@@ -50,14 +50,18 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ISoundEventEntity.h"
+
+class CSoundEventConeEntity;
 
 class ISoundEventConeEntity : public virtual ISoundEventEntity
 {
 public:
     virtual ~ISoundEventConeEntity() = default;
+    CSoundEventConeEntity* GetOriginal() { return reinterpret_cast<CSoundEventConeEntity*>(IEntityInstance::GetOriginal()); }
 
     virtual float& EmitterAngle() = 0;
     virtual void EmitterAngleUpdated() = 0;
@@ -69,6 +73,7 @@ public:
     virtual void AttenMaxUpdated() = 0;
     virtual CUtlSymbolLarge& ParameterName() = 0;
     virtual void ParameterNameUpdated() = 0;
+    static ISoundEventConeEntity* FromOriginal(CSoundEventConeEntity* p);
 };
 
 #endif // _INCLUDE_ISOUNDEVENTCONEENTITY_H

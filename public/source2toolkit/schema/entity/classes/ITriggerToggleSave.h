@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseTrigger.h"
+
+class CTriggerToggleSave;
 
 class ITriggerToggleSave : public virtual IBaseTrigger
 {
 public:
     virtual ~ITriggerToggleSave() = default;
+    CTriggerToggleSave* GetOriginal() { return reinterpret_cast<CTriggerToggleSave*>(IEntityInstance::GetOriginal()); }
 
+    static ITriggerToggleSave* FromOriginal(CTriggerToggleSave* p);
 };
 
 #endif // _INCLUDE_ITRIGGERTOGGLESAVE_H

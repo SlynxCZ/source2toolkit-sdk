@@ -50,16 +50,19 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ICSWeaponBase.h"
 
+class CBaseCSGrenade;
 class CCSWeaponBase;
 
 class IBaseCSGrenade : public virtual ICSWeaponBase
 {
 public:
     virtual ~IBaseCSGrenade() = default;
+    CBaseCSGrenade* GetOriginal() { return reinterpret_cast<CBaseCSGrenade*>(IEntityInstance::GetOriginal()); }
 
     virtual bool& Redraw() = 0;
     virtual void RedrawUpdated() = 0;
@@ -87,6 +90,7 @@ public:
     virtual void NextHoldFracUpdated() = 0;
     virtual CHandle<CCSWeaponBase>& SwitchToWeaponAfterThrow() = 0;
     virtual void SwitchToWeaponAfterThrowUpdated() = 0;
+    static IBaseCSGrenade* FromOriginal(CBaseCSGrenade* p);
 };
 
 #endif // _INCLUDE_IBASECSGRENADE_H

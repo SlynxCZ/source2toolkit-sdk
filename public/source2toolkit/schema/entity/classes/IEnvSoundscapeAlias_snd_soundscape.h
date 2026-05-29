@@ -50,15 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IEnvSoundscape.h"
+
+class CEnvSoundscapeAlias_snd_soundscape;
 
 class IEnvSoundscapeAlias_snd_soundscape : public virtual IEnvSoundscape
 {
 public:
     virtual ~IEnvSoundscapeAlias_snd_soundscape() = default;
+    CEnvSoundscapeAlias_snd_soundscape* GetOriginal() { return reinterpret_cast<CEnvSoundscapeAlias_snd_soundscape*>(IEntityInstance::GetOriginal()); }
 
+    static IEnvSoundscapeAlias_snd_soundscape* FromOriginal(CEnvSoundscapeAlias_snd_soundscape* p);
 };
 
 #endif // _INCLUDE_IENVSOUNDSCAPEALIAS_SND_SOUNDSCAPE_H

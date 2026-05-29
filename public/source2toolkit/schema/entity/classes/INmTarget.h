@@ -50,12 +50,16 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
+
+class CNmTarget;
 
 class INmTarget
 {
 public:
     virtual ~INmTarget() = default;
+    CNmTarget* GetOriginal() { return reinterpret_cast<CNmTarget*>(IEntityInstance::GetOriginal()); }
 
     virtual CTransform& Transform() = 0;
     virtual void TransformUpdated() = 0;
@@ -69,6 +73,7 @@ public:
     virtual void HasOffsetsUpdated() = 0;
     virtual bool& IsSet() = 0;
     virtual void IsSetUpdated() = 0;
+    static INmTarget* FromOriginal(CNmTarget* p);
 };
 
 #endif // _INCLUDE_INMTARGET_H

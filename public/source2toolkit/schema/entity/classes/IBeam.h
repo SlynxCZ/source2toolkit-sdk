@@ -50,6 +50,7 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "IBaseModelEntity.h"
@@ -58,12 +59,14 @@
 #include "../enums/BeamType_t.h"
 
 class CBaseEntity;
+class CBeam;
 class InfoForResourceTypeIMaterial2;
 
 class IBeam : public virtual IBaseModelEntity
 {
 public:
     virtual ~IBeam() = default;
+    CBeam* GetOriginal() { return reinterpret_cast<CBeam*>(IEntityInstance::GetOriginal()); }
 
     virtual float& FrameRate() = 0;
     virtual void FrameRateUpdated() = 0;
@@ -79,7 +82,7 @@ public:
     virtual void BaseMaterialUpdated() = 0;
     virtual CStrongHandle<InfoForResourceTypeIMaterial2>& HaloIndex() = 0;
     virtual void HaloIndexUpdated() = 0;
-    virtual BeamType_t& BeamType() = 0;
+    virtual ::BeamType_t& BeamType() = 0;
     virtual void BeamTypeUpdated() = 0;
     virtual uint32_t& BeamFlags() = 0;
     virtual void BeamFlagsUpdated() = 0;
@@ -100,7 +103,7 @@ public:
     virtual void SpeedUpdated() = 0;
     virtual float& Frame() = 0;
     virtual void FrameUpdated() = 0;
-    virtual BeamClipStyle_t& ClipStyle() = 0;
+    virtual ::BeamClipStyle_t& ClipStyle() = 0;
     virtual void ClipStyleUpdated() = 0;
     virtual bool& TurnedOff() = 0;
     virtual void TurnedOffUpdated() = 0;
@@ -110,6 +113,7 @@ public:
     virtual void EndEntityUpdated() = 0;
     virtual int32_t& DissolveType() = 0;
     virtual void DissolveTypeUpdated() = 0;
+    static IBeam* FromOriginal(CBeam* p);
 };
 
 #endif // _INCLUDE_IBEAM_H

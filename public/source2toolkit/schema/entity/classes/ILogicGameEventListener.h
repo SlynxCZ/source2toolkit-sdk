@@ -50,16 +50,20 @@
 #include "utlstringtoken.h"
 #include "source2toolkit/IToolkitTypes.h"
 #include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
 #include "ILogicalEntity.h"
+
+class CLogicGameEventListener;
 
 class ILogicGameEventListener : public virtual ILogicalEntity
 {
 public:
     virtual ~ILogicGameEventListener() = default;
+    CLogicGameEventListener* GetOriginal() { return reinterpret_cast<CLogicGameEventListener*>(IEntityInstance::GetOriginal()); }
 
-    virtual CEntityIOOutput& OnEventFired() = 0;
+    virtual ::CEntityIOOutput& OnEventFired() = 0;
     virtual void OnEventFiredUpdated() = 0;
     virtual CUtlSymbolLarge& GameEventName() = 0;
     virtual void GameEventNameUpdated() = 0;
@@ -69,6 +73,7 @@ public:
     virtual void EnabledUpdated() = 0;
     virtual bool& StartDisabled() = 0;
     virtual void StartDisabledUpdated() = 0;
+    static ILogicGameEventListener* FromOriginal(CLogicGameEventListener* p);
 };
 
 #endif // _INCLUDE_ILOGICGAMEEVENTLISTENER_H
