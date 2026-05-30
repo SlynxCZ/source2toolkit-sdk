@@ -36,8 +36,7 @@
  */
 
 #include "source2toolkit/schema/entityio.h"
-
-#include "core/entities.h"
+#include "source2toolkit/IToolkitEntities.h"
 
 #ifdef SOURCE2TOOLKIT_CORE
 #include "core/shared.h"
