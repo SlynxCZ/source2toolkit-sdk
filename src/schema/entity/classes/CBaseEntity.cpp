@@ -61,7 +61,7 @@ CBaseEntity* CBaseEntity::CreateEntityByName(const char* pszClassName)
 #ifdef SOURCE2TOOLKIT_CORE
     return entities::entitiesManager.CreateEntityByName(pszClassName);
 #else
-    return g_ToolkitAPI->Entities()->CreateEntityByName()(pszClassName);
+    return g_ToolkitAPI->Entities()->CreateEntityByName(pszClassName);
 #endif
 }
 
@@ -87,7 +87,7 @@ CEntityIOListenerHandle* CBaseEntity::AddSingleEntityIOListener(const char* pszO
 {
     auto* listener = new CSingleEntityIOListener(this, std::move(callback));
 
-    const char* classname = this->GetClassname();
+    const char* classname = GetClassname();
 
 #ifdef SOURCE2TOOLKIT_CORE
     entities::entitiesManager.AddEntityIOListener(listener, classname, pszOutput, mode);
