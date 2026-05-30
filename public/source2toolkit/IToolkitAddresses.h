@@ -63,6 +63,7 @@ class CBasePlayerWeapon;
 class CBaseModelEntity;
 class CBasePlayerPawn;
 class CBasePlayerController;
+class CCSPlayer_WeaponServices;
 class CCSPlayerController;
 class CEntityInstance;
 class CEntityIOOutput;
@@ -113,15 +114,15 @@ using CBasePlayerController_SetPawn_t = void (FASTCALL*)(CBasePlayerController*,
 
 /**
 
-* @brief Removes weapon from player pawn.
-  */
-using CBasePlayerPawn_RemovePlayerItem_t = void (FASTCALL*)(CBasePlayerPawn*, CBasePlayerWeapon*);
-
-/**
-
 * @brief Terminates current round.
   */
 using CGameRules_TerminateRound_t = void (FASTCALL*)(CGameRules*, float, unsigned int, int64, unsigned int);
+
+/**
+
+* @brief Destroys weapon from player pawn.
+  */
+using CCSPlayer_WeaponServices_Destroy_t = void (FASTCALL*)(CCSPlayer_WeaponServices*, CBasePlayerWeapon*);
 
 /**
 
@@ -207,8 +208,8 @@ public:
     virtual CBaseEntity_TakeDamageOld_t CBaseEntity_TakeDamageOld() = 0;
     virtual CBaseModelEntity_SetModel_t CBaseModelEntity_SetModel() = 0;
     virtual CBasePlayerController_SetPawn_t CBasePlayerController_SetPawn() = 0;
-    virtual CBasePlayerPawn_RemovePlayerItem_t CBasePlayerPawn_RemovePlayerItem() = 0;
     virtual CGameRules_TerminateRound_t CGameRules_TerminateRound() = 0;
+    virtual CCSPlayer_WeaponServices_Destroy_t CCSPlayer_WeaponServices_Destroy() = 0;
     virtual CCSPlayerController_LegacyGameEventListener_t CCSPlayerController_LegacyGameEventListener() = 0;
     virtual CCSPlayerController_SwitchTeam_t CCSPlayerController_SwitchTeam() = 0;
     virtual CEntityInstance_AcceptInput_t CEntityInstance_AcceptInput() = 0;

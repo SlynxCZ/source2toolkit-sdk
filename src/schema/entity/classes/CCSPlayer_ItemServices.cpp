@@ -60,14 +60,14 @@ void CCSPlayer_ItemServices::DropActivePlayerWeapon(CBasePlayerWeapon* pActiveWe
     CALL_VIRTUAL(void, offset, this, pActiveWeapon);
 }
 
-void CCSPlayer_ItemServices::RemoveWeapons()
+void CCSPlayer_ItemServices::RemoveWeapons(bool bRemoveSuit)
 {
 #ifdef SOURCE2TOOLKIT_CORE
     static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_ItemServices_RemoveWeapons");
 #else
     static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_ItemServices_RemoveWeapons");
 #endif
-    CALL_VIRTUAL(void, offset, this);
+    CALL_VIRTUAL(void, offset, this, bRemoveSuit);
 }
 
 CBasePlayerWeapon* CCSPlayer_ItemServices::GiveNamedItem(const char* pszItem)

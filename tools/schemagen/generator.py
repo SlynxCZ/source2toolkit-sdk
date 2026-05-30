@@ -520,8 +520,6 @@ MANUAL_METHODS: dict[str, list[str]] = {
     "CBasePlayerPawn": [
         "/// <summary>Force suicide.</summary>",
         "void CommitSuicide(bool bExplode, bool bForce);",
-        "/// <summary>Remove weapon from player.</summary>",
-        "void RemovePlayerItem(CBasePlayerWeapon* pWeapon);",
     ],
     "CBasePlayerWeapon": [
         "/// <summary>Get weapon VData.</summary>",
@@ -616,18 +614,24 @@ MANUAL_METHODS: dict[str, list[str]] = {
         "CCSPlayerController* GetOriginalController();",
     ],
     "CCSPlayer_ItemServices": [
-        "/// <summary>Drop active weapon, recommended to use DropWeapon instead (parameter is ignored here)</summary>",
+        "/// <summary>Drop active weapon, recommended to use DropWeapon instead (parameter is ignored here).</summary>",
         "void DropActivePlayerWeapon(CBasePlayerWeapon* pActiveWeapon);",
         "/// <summary>Remove all weapons.</summary>",
-        "void RemoveWeapons();",
+        "void RemoveWeapons(bool bRemoveSuit);",
         "/// <summary>Give item.</summary>",
         "CBasePlayerWeapon* GiveNamedItem(const char* pszItem);",
     ],
     "CCSPlayer_WeaponServices": [
+        "/// <summary>Checks if player can use weapon (fire and maybe acquire).</summary>",
+        "bool CanUse(CBasePlayerWeapon *pWeapon);",
         "/// <summary>Drop weapon.</summary>",
         "void DropWeapon(CBasePlayerWeapon *pWeapon, Vector *pVecTarget = nullptr, Vector *pVelocity = nullptr);",
-        "/// <summary>Select weapon.</summary>",
-        "void SelectWeapon(CBasePlayerWeapon *pWeapon, int unk1 = 0);"
+        "/// <summary>Probably checks weapon validity after CCSPlayer_ItemServices::GiveNamedItem invoke, may return 2 if CSGameRules()->IsPlayingGunGameDeathmatch, meaning that pWeapon will be deleted.</summary>",
+        "int BumpWeapon(CBasePlayerWeapon *pWeapon);",
+        "/// <summary>Select weapon, If unk1 is equal to 3 some code will be executed.</summary>",
+        "void SelectItem(CBasePlayerWeapon *pWeapon, int unk1 = 0);",
+        "/// <summary>Remove and destroy weapon from player.</summary>",
+        "void Destroy(CBasePlayerWeapon *pWeapon);",
     ],
     "CPlayerControllerComponent": [
         "/// <summary>Get player controller.</summary>",

@@ -50,6 +50,16 @@
 #include "source2toolkit/IToolkitPlugin.h"
 #endif
 
+bool CCSPlayer_WeaponServices::CanUse(CBasePlayerWeapon* pWeapon)
+{
+#ifdef SOURCE2TOOLKIT_CORE
+    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_WeaponServices_CanUse");
+#else
+    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_WeaponServices_CanUse");
+#endif
+    return CALL_VIRTUAL(bool, offset, this, pWeapon);
+}
+
 void CCSPlayer_WeaponServices::DropWeapon(CBasePlayerWeapon *pWeapon, Vector *pVecTarget, Vector *pVelocity)
 {
 #ifdef SOURCE2TOOLKIT_CORE
@@ -60,12 +70,36 @@ void CCSPlayer_WeaponServices::DropWeapon(CBasePlayerWeapon *pWeapon, Vector *pV
     CALL_VIRTUAL(void, offset, this, pWeapon, pVecTarget, pVelocity);
 }
 
-void CCSPlayer_WeaponServices::SelectWeapon(CBasePlayerWeapon* pWeapon, int unk1)
+int CCSPlayer_WeaponServices::BumpWeapon(CBasePlayerWeapon* pWeapon)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_WeaponServices_SelectWeapon");
+    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_WeaponServices_BumpWeapon");
 #else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_WeaponServices_SelectWeapon");
+    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_WeaponServices_BumpWeapon");
+#endif
+    return CALL_VIRTUAL(int, offset, this, pWeapon);
+}
+
+void CCSPlayer_WeaponServices::SelectItem(CBasePlayerWeapon* pWeapon, int unk1)
+{
+#ifdef SOURCE2TOOLKIT_CORE
+    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_WeaponServices_SelectItem");
+#else
+    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_WeaponServices_SelectItem");
 #endif
     CALL_VIRTUAL(void, offset, this, pWeapon, unk1);
+}
+
+void CCSPlayer_WeaponServices::Destroy(CBasePlayerWeapon* pWeapon)
+{
+#ifndef _WIN32
+    if(pWeapon)
+#endif
+    {
+#ifdef SOURCE2TOOLKIT_CORE
+        addresses::toolkitAddresses.Destroy(this, pWeapon);
+#else
+        g_ToolkitAPI->Addresses()->CCSPlayer_WeaponServices_Destroy()(this, pWeapon);
+#endif
+    }
 }

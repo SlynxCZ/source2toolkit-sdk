@@ -61,7 +61,6 @@
 
 class CAI_Expresser;
 class CBasePlayerController;
-class CBasePlayerWeapon;
 class CPlayer_AutoaimServices;
 class CPlayer_CameraServices;
 class CPlayer_FlashlightServices;
@@ -106,8 +105,6 @@ public:
 public:
     /// <summary>Force suicide.</summary>
     void CommitSuicide(bool bExplode, bool bForce);
-    /// <summary>Remove weapon from player.</summary>
-    void RemovePlayerItem(CBasePlayerWeapon* pWeapon);
 
 public:
     static CBasePlayerPawn* New(const char* className)

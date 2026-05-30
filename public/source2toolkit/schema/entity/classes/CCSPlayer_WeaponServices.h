@@ -56,6 +56,7 @@
 #include "CPlayer_WeaponServices.h"
 
 class CBasePlayerWeapon;
+class CCSPlayer_ItemServices;
 
 class CCSPlayer_WeaponServices : public CPlayer_WeaponServices
 {
@@ -77,10 +78,16 @@ public:
     SCHEMA_FIELD(bool, m_bBlockInspectUntilNextGraphUpdate);
 
 public:
+    /// <summary>Checks if player can use weapon (fire and maybe acquire).</summary>
+    bool CanUse(CBasePlayerWeapon *pWeapon);
     /// <summary>Drop weapon.</summary>
     void DropWeapon(CBasePlayerWeapon *pWeapon, Vector *pVecTarget = nullptr, Vector *pVelocity = nullptr);
-    /// <summary>Select weapon.</summary>
-    void SelectWeapon(CBasePlayerWeapon *pWeapon, int unk1 = 0);
+    /// <summary>Probably checks weapon validity after CCSPlayer_ItemServices::GiveNamedItem invoke, may return 2 if CSGameRules()->IsPlayingGunGameDeathmatch, meaning that pWeapon will be deleted.</summary>
+    int BumpWeapon(CBasePlayerWeapon *pWeapon);
+    /// <summary>Select weapon, If unk1 is equal to 3 some code will be executed.</summary>
+    void SelectItem(CBasePlayerWeapon *pWeapon, int unk1 = 0);
+    /// <summary>Remove and destroy weapon from player.</summary>
+    void Destroy(CBasePlayerWeapon *pWeapon);
 };
 
 #endif // _INCLUDE_CCSPLAYER_WEAPONSERVICES_H

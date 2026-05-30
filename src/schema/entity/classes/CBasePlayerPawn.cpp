@@ -58,13 +58,3 @@ void CBasePlayerPawn::CommitSuicide(bool bExplode, bool bForce) {
 #endif
     CALL_VIRTUAL(void, offset, this, bExplode, bForce);
 }
-
-void CBasePlayerPawn::RemovePlayerItem(CBasePlayerWeapon* pWeapon) {
-    if (!pWeapon) return;
-
-#ifdef SOURCE2TOOLKIT_CORE
-    addresses::toolkitAddresses.RemovePlayerItem(this, pWeapon);
-#else
-    g_ToolkitAPI->Addresses()->CBasePlayerPawn_RemovePlayerItem()(this, pWeapon);
-#endif
-}
