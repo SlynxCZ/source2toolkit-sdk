@@ -34,13 +34,16 @@ Project: Source2Toolkit
 
 import os
 import re
+import sys
 import yaml
 import shutil
 import cpp_parser
 import schema_generator
 
-SOURCE_DIR = "../../public"
-DEST_DIR = "../../docs"
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+SOURCE_DIR = sys.argv[1] if len(sys.argv) > 1 else os.path.join(script_dir, "../../public")
+DEST_DIR   = sys.argv[2] if len(sys.argv) > 2 else os.path.join(script_dir, "../../docs")
 
 os.makedirs(DEST_DIR, exist_ok=True)
 
@@ -325,7 +328,6 @@ def resolve_output_path(root, file):
         return os.path.join(
             DEST_DIR,
             "core-api",
-            "low-level",
             f"{slug}.mdx"
         )
 
@@ -333,7 +335,6 @@ def resolve_output_path(root, file):
         return os.path.join(
             DEST_DIR,
             "core-api",
-            "high-level",
             f"{slug}.mdx"
         )
 
@@ -341,7 +342,6 @@ def resolve_output_path(root, file):
         return os.path.join(
             DEST_DIR,
             "core-api",
-            "high-level",
             f"{slug}.mdx"
         )
 
@@ -409,13 +409,28 @@ if __name__ == "__main__":
             # ===== CLASSES =====
             if classes:
                 has_content = True
+                multi = len(classes) > 1
+                if multi and not title_written:
+                    page_title = file.replace(".h", "")
+                    body.append({"api1": page_title})
+                    title_written = True
                 for cls in classes:
                     yaml_data = schema_generator.schema_class_to_yaml(cls)
                     if not title_written:
-                        body.extend(yaml_data["body"])
-                        title_written = True
+                        if multi:
+                            title_written = True
+                            cls_items = [b for b in yaml_data["body"] if "api1" not in b and b != {"h2": "Methods"}]
+                            if cls_items:
+                                body.append({"h2": cls["name"]})
+                                body.extend(cls_items)
+                        else:
+                            body.extend(yaml_data["body"])
+                            title_written = True
                     else:
-                        body.extend([b for b in yaml_data["body"] if "api1" not in b])
+                        cls_items = [b for b in yaml_data["body"] if "api1" not in b and b != {"h2": "Methods"}]
+                        if cls_items:
+                            body.append({"h2": cls["name"]})
+                            body.extend(cls_items)
 
             # ===== ENUMS =====
             if enums:
@@ -480,7 +495,6 @@ if __name__ == "__main__":
                 with open(dest_file, "w", encoding="utf-8") as out:
                     out.write(md_content)
 
-    script_dir = os.path.dirname(os.path.abspath(__file__))
     index_source = os.path.join(script_dir, "index.mdx")
     index_dest = os.path.join(DEST_DIR, "index.mdx")
 

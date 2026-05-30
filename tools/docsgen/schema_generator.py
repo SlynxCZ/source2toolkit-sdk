@@ -76,7 +76,11 @@ def schema_class_to_yaml(cls):
         doc = m.get("doc", {})
 
         param_names = [p['name'] for p in params]
-        signature = f"{method_name}({', '.join(param_names)})"
+        ret_type = m.get("return", "")
+        if ret_type and ret_type not in ("void", "virtual", ""):
+            signature = f"{ret_type} {method_name}({', '.join(param_names)})"
+        else:
+            signature = f"{method_name}({', '.join(param_names)})"
         signature = signature.replace('<', '&lt;').replace('>', '&gt;')
 
         body.append({

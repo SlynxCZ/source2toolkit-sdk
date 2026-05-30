@@ -220,8 +220,50 @@ def parse_enums(content):
 
     return enums
 
+def parse_typedef_docs(content):
+    """Collect @brief docs from `using SomeName_t = ...` typedef declarations."""
+    docs = {}
+    lines = content.splitlines()
+    current_doc = None
+    in_block_comment = False
+
+    for line in lines:
+        line = line.strip()
+
+        if line.startswith("/**"):
+            current_doc = {"brief": "", "params": {}}
+            in_block_comment = True
+            continue
+
+        if in_block_comment:
+            if "*/" in line:
+                in_block_comment = False
+                continue
+            line_inner = line.strip("* ").strip()
+            if line_inner.startswith("@brief"):
+                current_doc["brief"] = line_inner.replace("@brief", "").strip()
+            elif line_inner.startswith("@param"):
+                parts = line_inner.split(" ", 2)
+                if len(parts) >= 3:
+                    current_doc["params"][parts[1]] = parts[2]
+            continue
+
+        m = re.match(r'using\s+(\w+_t)\s*=', line)
+        if m and current_doc:
+            typedef_name = m.group(1)
+            # Strip trailing _t to get base name: CBaseEntity_CreateEntityByName_t -> CBaseEntity_CreateEntityByName
+            base = typedef_name[:-2] if typedef_name.endswith("_t") else typedef_name
+            docs[base] = current_doc
+            current_doc = None
+        elif not line.startswith("//") and line and not line.startswith("/*"):
+            current_doc = None
+
+    return docs
+
+
 def parse_cpp_file(content):
     classes = []
+    typedef_docs = parse_typedef_docs(content)
 
     for class_name, parent, body in extract_classes(content):
 
@@ -318,11 +360,12 @@ def parse_cpp_file(content):
                             "type": type_token
                         })
 
+                doc = current_doc or typedef_docs.get(name, {})
                 methods.append({
                     "name": name,
                     "return": ret.strip(),
                     "params": params_list,
-                    "doc": current_doc or {}
+                    "doc": doc
                 })
 
                 current_doc = None
