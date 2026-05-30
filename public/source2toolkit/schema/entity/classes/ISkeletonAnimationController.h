@@ -53,21 +53,11 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
-#include "IEntityInstance.h"
-
-class CSkeletonAnimationController;
-class CSkeletonInstance;
-
 class ISkeletonAnimationController
 {
 public:
-    virtual ~ISkeletonAnimationController() = default;
-    virtual CSkeletonAnimationController* GetOriginal() const = 0;
+    DECLARE_SCHEMA_CLASS(ISkeletonAnimationController);
 
-    virtual CSkeletonInstance*& SkeletonInstance() = 0;
-    virtual void SkeletonInstanceUpdated() = 0;
-    static ISkeletonAnimationController* FromOriginal(CSkeletonAnimationController* p);
-    static ISkeletonAnimationController* FromRaw(CEntityInstance* p);
 };
 
 #endif // _INCLUDE_ISKELETONANIMATIONCONTROLLER_H

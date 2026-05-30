@@ -1,0 +1,113 @@
+/**
+* vim: set ts=4 sw=4 tw=99 noet:
+ * =============================================================================
+ * Source2Toolkit
+ * Copyright (C) 2025-2026 Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl,
+ * AlliedModders LLC. All rights reserved.
+ * =============================================================================
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, version 3.0, as published by the
+ * Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * As a special exception, Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl and
+ * AlliedModders LLC give you permission to link the code of this program
+ * (as well as its derivative works) to "Counter-Strike 2," "Source 2,"
+ * "Steam," and any Game MODs or server software running on software by
+ * Valve Corporation. You must obey the GNU General Public License in all
+ * respects for all other code used.
+ *
+ * Additionally, this exception applies to all derivative works unless
+ * otherwise stated in LICENSE.txt.
+ *
+ * Authors:
+ *   - Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl
+ *   - AlliedModders LLC
+ *
+ * Project: Source2Toolkit
+ */
+
+#ifndef _INCLUDE_CPLANTEDC4_H
+#define _INCLUDE_CPLANTEDC4_H
+
+#pragma once
+
+#include "CBaseEntity.h"
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
+#include <cstdint>
+
+#include "CAttributeContainer.h"
+#include "CBaseAnimGraph.h"
+#include "EntitySpottedState_t.h"
+
+class CCSPlayerPawn;
+
+class CPlantedC4 : public CBaseAnimGraph
+{
+public:
+    DECLARE_SCHEMA_CLASS(CPlantedC4);
+
+    SCHEMA_FIELD(bool, m_bBombTicking);
+    SCHEMA_FIELD(float, m_flC4Blow);
+    SCHEMA_FIELD(int32_t, m_nBombSite);
+    SCHEMA_FIELD(int32_t, m_nSourceSoundscapeHash);
+    SCHEMA_FIELD(bool, m_bAbortDetonationBecauseWorldIsFrozen);
+    SCHEMA_FIELD(CAttributeContainer, m_AttributeManager);
+    SCHEMA_FIELD(CEntityIOOutput, m_OnBombDefused);
+    SCHEMA_FIELD(CEntityIOOutput, m_OnBombBeginDefuse);
+    SCHEMA_FIELD(CEntityIOOutput, m_OnBombDefuseAborted);
+    SCHEMA_FIELD(bool, m_bCannotBeDefused);
+    SCHEMA_FIELD(EntitySpottedState_t, m_entitySpottedState);
+    SCHEMA_FIELD(int32_t, m_nSpotRules);
+    SCHEMA_FIELD(bool, m_bHasExploded);
+    SCHEMA_FIELD(bool, m_bBombDefused);
+    SCHEMA_FIELD(bool, m_bTrainingPlacedByPlayer);
+    SCHEMA_FIELD(float, m_flTimerLength);
+    SCHEMA_FIELD(bool, m_bBeingDefused);
+    SCHEMA_FIELD(float, m_fLastDefuseTime);
+    SCHEMA_FIELD(float, m_flDefuseLength);
+    SCHEMA_FIELD(float, m_flDefuseCountDown);
+    SCHEMA_FIELD(CHandle<CCSPlayerPawn>, m_hBombDefuser);
+    SCHEMA_FIELD(int32_t, m_iProgressBarTime);
+    SCHEMA_FIELD(bool, m_bVoiceAlertFired);
+    SCHEMA_FIELD_POINTER(bool, m_bVoiceAlertPlayed);
+    SCHEMA_FIELD(float, m_flNextBotBeepTime);
+    SCHEMA_FIELD(QAngle, m_angCatchUpToPlayerEye);
+    SCHEMA_FIELD(float, m_flLastSpinDetectionTime);
+
+public:
+    static CPlantedC4* New(const char* className)
+    {
+        return CBaseEntity::New<CPlantedC4>(className);
+    }
+
+    static CPlantedC4* FromIndex(int iIndex)
+    {
+        return CBaseEntity::FromIndex<CPlantedC4>(iIndex);
+    }
+
+    static CPlantedC4* FromIndex(CEntityIndex index)
+    {
+        return FromIndex(index.Get());
+    }
+};
+
+#endif // _INCLUDE_CPLANTEDC4_H

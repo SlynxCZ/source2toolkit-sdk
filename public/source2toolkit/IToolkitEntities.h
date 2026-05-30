@@ -62,11 +62,11 @@
 Forward declarations
 ========================= */
 
-class IBaseEntity;
-class IBasePlayerController;
-class ICSGameRules;
+class CBaseEntity;
+class CBasePlayerController;
+class CEntityInstance;
+class CCSGameRules;
 class IEntityFindFilter;
-class IEntityInstance;
 class IEntityIOListener;
 class IEntityListener;
 
@@ -83,32 +83,32 @@ public:
 
     * @brief Finds entity under player's crosshair.
       */
-    virtual IBaseEntity* FindPickerEntity(IBasePlayerController* pPlayer,
-                                          ICSGameRules* pGameRules = nullptr) = 0;
+    virtual CBaseEntity* FindPickerEntity(CBasePlayerController* pPlayer,
+                                          CCSGameRules* pGameRules = nullptr) = 0;
 
     /**
 
     * @brief Finds entity by classname.
       */
-    virtual IBaseEntity* FindEntityByClassname(IEntityInstance* pStart,
+    virtual CBaseEntity* FindEntityByClassname(CEntityInstance* pStart,
                                                const char* name) = 0;
 
     /**
 
     * @brief Finds entity by name.
       */
-    virtual IBaseEntity* FindEntityByName(IEntityInstance* pStartEntity,
+    virtual CBaseEntity* FindEntityByName(CEntityInstance* pStartEntity,
                                           const char* szName,
-                                          IEntityInstance* pSearchingEntity = nullptr,
-                                          IEntityInstance* pActivator = nullptr,
-                                          IEntityInstance* pCaller = nullptr,
+                                          CEntityInstance* pSearchingEntity = nullptr,
+                                          CEntityInstance* pActivator = nullptr,
+                                          CEntityInstance* pCaller = nullptr,
                                           IEntityFindFilter* pFilter = nullptr) = 0;
 
     /**
 
     * @brief Creates entity by classname.
       */
-    virtual IBaseEntity* CreateEntityByName(const char* pszClassName) = 0;
+    virtual CBaseEntity* CreateEntityByName(const char* pszClassName) = 0;
 
     /**
 
@@ -128,20 +128,20 @@ public:
     *
     * @note Equivalent to Source engine AcceptInput()
       */
-    virtual void AcceptInput(IEntityInstance* pTarget,
+    virtual void AcceptInput(CEntityInstance* pTarget,
                              const char* pszInput,
-                             IEntityInstance* pActivator,
-                             IEntityInstance* pCaller,
+                             CEntityInstance* pActivator,
+                             CEntityInstance* pCaller,
                              const char* pszValue = "") = 0;
 
     /**
 
     * @brief Queues an entity I/O event.
       */
-    virtual void AddEntityIOEvent(IEntityInstance* pTarget,
+    virtual void AddEntityIOEvent(CEntityInstance* pTarget,
                                   const char* pszInput,
-                                  IEntityInstance* pActivator = nullptr,
-                                  IEntityInstance* pCaller = nullptr,
+                                  CEntityInstance* pActivator = nullptr,
+                                  CEntityInstance* pCaller = nullptr,
                                   const char* pszValue = "",
                                   float flDelay = 0.0f) = 0;
 
