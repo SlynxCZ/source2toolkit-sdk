@@ -62,7 +62,7 @@
 Forward declarations
 ========================= */
 
-class ICSPlayerController;
+class CCSPlayerController;
 
 /* =========================
 Post select behavior
@@ -101,7 +101,7 @@ struct ChatMenuOption
     bool Disabled{false};
 
     /// Callback executed on select
-    std::function<void(ICSPlayerController *, ChatMenuOption &)> OnSelect;
+    std::function<void(CCSPlayerController *, ChatMenuOption &)> OnSelect;
 
     /// Optional dynamic disabled evaluator
     std::function<bool()> DisabledEvaluator;
@@ -223,7 +223,7 @@ public:
      */
     ChatMenuOption &AddMenuOption(
         std::string display,
-        std::function<void(ICSPlayerController *, ChatMenuOption &)> onSelect,
+        std::function<void(CCSPlayerController *, ChatMenuOption &)> onSelect,
         bool disabled = false)
     {
         options_.push_back(ChatMenuOption{
@@ -247,7 +247,7 @@ public:
      */
     virtual ChatMenuOption &AddMenuOptionWithCooldown(
         std::string optionText,
-        std::function<void(ICSPlayerController *, ChatMenuOption &)> action,
+        std::function<void(CCSPlayerController *, ChatMenuOption &)> action,
         bool disabled = false,
         bool close = true,
         std::function<bool()> disabledEvaluator = nullptr) = 0;
@@ -259,16 +259,16 @@ public:
      * @param onSelect Function called after selection
      */
     void SetCooldownHandlers(
-        std::function<bool(ICSPlayerController *)> canSelect,
-        std::function<void(ICSPlayerController *)> onSelect)
+        std::function<bool(CCSPlayerController *)> canSelect,
+        std::function<void(CCSPlayerController *)> onSelect)
     {
         if (canSelect) s_canSelect = std::move(canSelect);
         if (onSelect) s_onSelect = std::move(onSelect);
     }
 
 public:
-    std::function<bool(ICSPlayerController *)> s_canSelect;
-    std::function<void(ICSPlayerController *)> s_onSelect;
+    std::function<bool(CCSPlayerController *)> s_canSelect;
+    std::function<void(CCSPlayerController *)> s_onSelect;
 
 private:
     std::string title_;
@@ -301,7 +301,7 @@ public:
      * @param player Player who triggered input
      * @param key Pressed key (1-9)
      */
-    virtual void OnKeyPress(ICSPlayerController *player, int key) = 0;
+    virtual void OnKeyPress(CCSPlayerController *player, int key) = 0;
 
     /**
      * @brief Resets menu state.
@@ -330,7 +330,7 @@ public:
      *
      * @return Pointer to player
      */
-    ICSPlayerController *Player() { return player_; }
+    CCSPlayerController *Player() { return player_; }
 
 protected:
     /**
@@ -339,7 +339,7 @@ protected:
      * @param player Owning player
      * @param menu Menu definition
      */
-    IMenuInstance(ICSPlayerController *player, IMenu *menu)
+    IMenuInstance(CCSPlayerController *player, IMenu *menu)
         : player_(player), menu_(menu)
     {
     }
@@ -408,7 +408,7 @@ protected:
 
 protected:
     IMenu *menu_;
-    ICSPlayerController *player_;
+    CCSPlayerController *player_;
 
     int page_{0};
     int currentOffset_{0};
@@ -463,7 +463,7 @@ public:
      * @param player Target player
      * @param menu Menu to open
      */
-    virtual void OpenCenterHtmlMenu(ICSPlayerController *player, CenterHtmlMenu *menu) = 0;
+    virtual void OpenCenterHtmlMenu(CCSPlayerController *player, CenterHtmlMenu *menu) = 0;
 
     /**
      * @brief Gets active menu instance for player.
@@ -472,14 +472,14 @@ public:
      *
      * @return Pointer to active menu instance or nullptr
      */
-    virtual IMenuInstance *GetActiveMenu(ICSPlayerController *player) = 0;
+    virtual IMenuInstance *GetActiveMenu(CCSPlayerController *player) = 0;
 
     /**
      * @brief Closes active menu for player.
      *
      * @param player Target player
      */
-    virtual void CloseActiveMenu(ICSPlayerController *player) = 0;
+    virtual void CloseActiveMenu(CCSPlayerController *player) = 0;
 
     /**
      * @brief Handles key press input.
@@ -487,7 +487,7 @@ public:
      * @param player Player who pressed key
      * @param key Pressed key (1-9)
      */
-    virtual void OnKeyPress(ICSPlayerController *player, int key) = 0;
+    virtual void OnKeyPress(CCSPlayerController *player, int key) = 0;
 };
 
 #endif //_INCLUDE_ITOOLKIT_MENUS_H
