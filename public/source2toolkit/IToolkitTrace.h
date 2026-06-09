@@ -164,33 +164,33 @@ struct TraceResult
     CPhysSurfaceProperties* Surface() const { return const_cast<CPhysSurfaceProperties*>(m_pSurfaceProperties); }
 
 private:
-    const CPhysSurfaceProperties *m_pSurfaceProperties;
-    CEntityInstance *m_pEnt;
-    const CHitBox *m_pHitbox;
+    const CPhysSurfaceProperties* m_pSurfaceProperties;
+    CEntityInstance* m_pEnt;
+    const CHitBox* m_pHitbox;
 
     HPhysicsBody m_hBody;
     HPhysicsShape m_hShape;
 
-    uint64 m_nContents;					// contents on other side of surface hit
+    uint64 m_nContents; // contents on other side of surface hit
 
     CTransform m_BodyTransform;
     RnCollisionAttr_t m_ShapeAttributes;
 
-    Vector m_vStartPos; 				// start position
-    Vector m_vEndPos; 					// final position
-    Vector m_vHitNormal; 				// surface normal at impact
-    Vector m_vHitPoint;					// exact hit point if m_bExactHitPoint is true, otherwise equal to m_vEndPos
+    Vector m_vStartPos; // start position
+    Vector m_vEndPos; // final position
+    Vector m_vHitNormal; // surface normal at impact
+    Vector m_vHitPoint; // exact hit point if m_bExactHitPoint is true, otherwise equal to m_vEndPos
 
-    float m_flHitOffset;				// surface normal hit offset
-    float m_flFraction;					// time completed, 1.0 = didn't hit anything
+    float m_flHitOffset; // surface normal hit offset
+    float m_flFraction; // time completed, 1.0 = didn't hit anything
 
-    int32 m_nTriangle;					// the index of the triangle that was hit
-    int16 m_nHitboxBoneIndex; 			// the index of the hitbox bone that was hit
+    int32 m_nTriangle; // the index of the triangle that was hit
+    int16 m_nHitboxBoneIndex; // the index of the hitbox bone that was hit
 
     RayType_t m_eRayType;
 
-    bool m_bStartInSolid;				// if true, the initial point was in a solid area
-    bool m_bExactHitPoint;				// if true, then m_vHitPoint is the exact hit point of the query and the shape
+    bool m_bStartInSolid; // if true, the initial point was in a solid area
+    bool m_bExactHitPoint; // if true, then m_vHitPoint is the exact hit point of the query and the shape
 };
 
 /* =========================
@@ -267,5 +267,23 @@ public:
                                          Vector* pMinsOut,
                                          Vector* pMaxsOut) = 0;
 };
+
+#define TRACE_SHAPE(start, angles, ent, opts) \
+    g_ToolkitAPI->Trace()->TraceShape(start, angles, ent, opts)
+
+#define TRACE_END_SHAPE(start, end, ent, opts) \
+    g_ToolkitAPI->Trace()->TraceEndShape(start, end, ent, opts)
+
+#define TRACE_HULL_SHAPE(start, end, mins, maxs, ent, opts) \
+    g_ToolkitAPI->Trace()->TraceHullShape(start, end, mins, maxs, ent, opts)
+
+#define TRACE_SHAPE_EX(start, end, filter, ray) \
+    g_ToolkitAPI->Trace()->TraceShapeEx(start, end, filter, ray)
+
+#define POINT_CONTENTS(pos, mask) \
+    g_ToolkitAPI->Trace()->PointContents(pos, mask)
+
+#define ENTITY_WORLD_AABB(ent, mins, maxs) \
+    g_ToolkitAPI->Trace()->GetEntityWorldSpaceAABB(ent, mins, maxs)
 
 #endif //_INCLUDE_ITOOLKIT_TRACE_H

@@ -54,6 +54,7 @@
 
 #include "mathlib/vector.h"
 #include "Color.h"
+#include "eiface.h"
 
 #include <functional>
 #include <cstdint>
@@ -82,7 +83,7 @@ using NetMessageServerHook = std::function<Action(uint64_t* clients, int message
  *
  * @return Action::Ignore to allow, Action::Supersede to block.
  */
-using NetMessageClientHook = std::function<Action(int playerid, int messageid, void* msg)>;
+using NetMessageClientHook = std::function<Action(CPlayerSlot slot, int messageid, void* msg)>;
 
 /* =========================
 Core Toolkit Network Messages
@@ -295,7 +296,7 @@ public:
     Repeated field utilities
     ========================= */
 
-    virtual int  GetRepeatedFieldSize(void* msg, const char* fieldName) = 0;
+    virtual int GetRepeatedFieldSize(void* msg, const char* fieldName) = 0;
     virtual void ClearRepeatedField(void* msg, const char* fieldName) = 0;
 
     /**
@@ -314,7 +315,7 @@ public:
      * @param msgid    Message ID matching the allocation.
      * @param playerid Recipient slot index.
      */
-    virtual void SendMessage(void* msg, int msgid, int playerid) = 0;
+    virtual void SendMessage(void* msg, int msgid, CPlayerSlot slot) = 0;
 
     /**
      * @brief Sends a network message to a set of players.
@@ -335,7 +336,7 @@ public:
      * @return Opaque callback ID for later removal.
      */
     virtual uint64_t AddServerHook(NetMessageServerHook callback) = 0;
-    virtual void     RemoveServerHook(uint64_t callbackID) = 0;
+    virtual void RemoveServerHook(uint64_t callbackID) = 0;
 
     /**
      * @brief Registers a hook for incoming client-to-server messages.
@@ -343,7 +344,7 @@ public:
      * @return Opaque callback ID for later removal.
      */
     virtual uint64_t AddClientHook(NetMessageClientHook callback) = 0;
-    virtual void     RemoveClientHook(uint64_t callbackID) = 0;
+    virtual void RemoveClientHook(uint64_t callbackID) = 0;
 
     /**
      * @brief Registers a hook for internal server-side message sends (per-client).
@@ -351,15 +352,23 @@ public:
      * @return Opaque callback ID for later removal.
      */
     virtual uint64_t AddServerInternalHook(NetMessageClientHook callback) = 0;
-    virtual void     RemoveServerInternalHook(uint64_t callbackID) = 0;
+    virtual void RemoveServerInternalHook(uint64_t callbackID) = 0;
 };
 
 /**
  * @brief Shorthand accessors via g_ToolkitAPI.
  */
-#define NET_MSG_ALLOC_BY_ID(id)       g_ToolkitAPI->NetworkMessages()->AllocateNetMessageByID(id)
-#define NET_MSG_ALLOC_BY_NAME(name)   g_ToolkitAPI->NetworkMessages()->AllocateNetMessageByPartialName(name)
-#define NET_MSG_FREE(msg)             g_ToolkitAPI->NetworkMessages()->DeallocateNetMessage(msg)
-#define NET_MSG_SEND(msg, id, player) g_ToolkitAPI->NetworkMessages()->SendMessage(msg, id, player)
+#define NET_MSG_ALLOC_BY_ID(id)              g_ToolkitAPI->NetworkMessages()->AllocateNetMessageByID(id)
+#define NET_MSG_ALLOC_BY_NAME(name)          g_ToolkitAPI->NetworkMessages()->AllocateNetMessageByPartialName(name)
+#define NET_MSG_FREE(msg)                    g_ToolkitAPI->NetworkMessages()->DeallocateNetMessage(msg)
+#define NET_MSG_SEND(msg, id, slot)          g_ToolkitAPI->NetworkMessages()->SendMessage(msg, id, slot)
+#define NET_MSG_SEND_PLAYERS(msg, id, mask)  g_ToolkitAPI->NetworkMessages()->SendMessageToPlayers(msg, id, mask)
+
+#define NET_MSG_ADD_SERVER_HOOK(cb)                  g_ToolkitAPI->NetworkMessages()->AddServerHook(cb)
+#define NET_MSG_REMOVE_SERVER_HOOK(id)               g_ToolkitAPI->NetworkMessages()->RemoveServerHook(id)
+#define NET_MSG_ADD_CLIENT_HOOK(cb)                  g_ToolkitAPI->NetworkMessages()->AddClientHook(cb)
+#define NET_MSG_REMOVE_CLIENT_HOOK(id)               g_ToolkitAPI->NetworkMessages()->RemoveClientHook(id)
+#define NET_MSG_ADD_SERVER_INTERNAL_HOOK(cb)         g_ToolkitAPI->NetworkMessages()->AddServerInternalHook(cb)
+#define NET_MSG_REMOVE_SERVER_INTERNAL_HOOK(id)      g_ToolkitAPI->NetworkMessages()->RemoveServerInternalHook(id)
 
 #endif //_INCLUDE_ITOOLKIT_NETWORK_MESSAGES_H

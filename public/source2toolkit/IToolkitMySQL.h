@@ -348,7 +348,8 @@ public:
      * @param success Callback invoked on success.
      * @param failure Callback invoked on failure.
      */
-    virtual void ExecuteTransaction(ToolkitMySQLTransaction txn, ToolkitMySQLTransactionSuccessCallbackFunc success, ToolkitMySQLTransactionFailureCallbackFunc failure) = 0;
+    virtual void ExecuteTransaction(ToolkitMySQLTransaction txn, ToolkitMySQLTransactionSuccessCallbackFunc success,
+                                    ToolkitMySQLTransactionFailureCallbackFunc failure) = 0;
 
     /**
      * @brief Destroys and releases the connection instance.
@@ -389,5 +390,7 @@ public:
      */
     virtual IToolkitMySQLConnection* CreateConnection(ToolkitMySQLConnectionInfo info) = 0;
 };
+
+#define MYSQL_CREATE_CONNECTION(info)    g_ToolkitAPI->MySQL()->CreateConnection(info)
 
 #endif //_INCLUDE_ITOOLKIT_MYSQL_H

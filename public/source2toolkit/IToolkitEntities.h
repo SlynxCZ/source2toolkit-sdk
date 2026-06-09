@@ -164,4 +164,15 @@ public:
                                         Mode nMode = Mode::Pre) = 0;
 };
 
+#define FIND_PICKER_ENTITY(player, ...)           g_ToolkitAPI->Entities()->FindPickerEntity(player, ##__VA_ARGS__)
+#define FIND_ENTITY_BY_CLASSNAME(start, name)     g_ToolkitAPI->Entities()->FindEntityByClassname(start, name)
+#define FIND_ENTITY_BY_NAME(start, name, ...)     g_ToolkitAPI->Entities()->FindEntityByName(start, name, ##__VA_ARGS__)
+#define CREATE_ENTITY(classname)                  g_ToolkitAPI->Entities()->CreateEntityByName(classname)
+#define ADD_ENTITY_LISTENER(l)                    g_ToolkitAPI->Entities()->AddEntityListener(l)
+#define REMOVE_ENTITY_LISTENER(l)                 g_ToolkitAPI->Entities()->RemoveEntityListener(l)
+#define ACCEPT_INPUT(target, input, ...)          g_ToolkitAPI->Entities()->AcceptInput(target, input, ##__VA_ARGS__)
+#define ADD_ENTITY_IO_EVENT(target, input, ...)   g_ToolkitAPI->Entities()->AddEntityIOEvent(target, input, ##__VA_ARGS__)
+#define ADD_ENTITY_IO_LISTENER(l, cls, out, ...)  g_ToolkitAPI->Entities()->AddEntityIOListener(l, cls, out, ##__VA_ARGS__)
+#define REMOVE_ENTITY_IO_LISTENER(l, cls, out, ...) g_ToolkitAPI->Entities()->RemoveEntityIOListener(l, cls, out, ##__VA_ARGS__)
+
 #endif //_INCLUDE_ITOOLKIT_ENTITIES_H

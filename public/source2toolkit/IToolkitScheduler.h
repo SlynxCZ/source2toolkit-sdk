@@ -165,4 +165,8 @@ public:
     virtual void KillTimer(Timer* timer) = 0;
 };
 
+#define NEXT_FRAME(task)                g_ToolkitAPI->Scheduler()->NextFrame(task)
+#define ADD_TIMER(interval, cb, ...)    g_ToolkitAPI->Scheduler()->AddTimer(interval, cb, ##__VA_ARGS__)
+#define KILL_TIMER(timer)               g_ToolkitAPI->Scheduler()->KillTimer(timer)
+
 #endif //_INCLUDE_ITOOLKIT_SCHEDULER_H

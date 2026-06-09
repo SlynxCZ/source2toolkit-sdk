@@ -62,7 +62,7 @@ public:
     struct SectionInfo
     {
         uintptr_t base;
-        size_t    size;
+        size_t size;
 
         [[nodiscard]] inline bool IsValid() const noexcept { return base != 0; }
     };
@@ -103,7 +103,8 @@ public:
      * @param startAddress Optional address to start scanning from.
      * @return Address of the first match, or an invalid (null) IToolkitMemory.
      */
-    [[nodiscard]] virtual IToolkitMemory FindPattern(const char* pattern, IToolkitMemory startAddress = IToolkitMemory()) const = 0;
+    [[nodiscard]] virtual IToolkitMemory FindPattern(const char* pattern,
+                                                     IToolkitMemory startAddress = IToolkitMemory()) const = 0;
 
     /**
      * @brief Scans a named section for a byte-string pattern.
@@ -113,7 +114,8 @@ public:
      * @param startAddress Optional address to start scanning from.
      * @return Address of the first match, or an invalid (null) IToolkitMemory.
      */
-    [[nodiscard]] virtual IToolkitMemory FindPatternInSection(const char* pattern, const char* section, IToolkitMemory startAddress = IToolkitMemory()) const = 0;
+    [[nodiscard]] virtual IToolkitMemory FindPatternInSection(const char* pattern, const char* section,
+                                                              IToolkitMemory startAddress = IToolkitMemory()) const = 0;
 
     /* =========================
     Symbol / VTable
@@ -196,5 +198,9 @@ public:
      */
     static IToolkitModule* New(IToolkitMemory mem);
 };
+
+#define LOAD_MODULE(name)       g_ToolkitAPI->LoadModule(name)
+#define LOAD_MODULE_MEM(ptr)    g_ToolkitAPI->LoadModuleFromMemory(ptr)
+#define FREE_MODULE(mod)        g_ToolkitAPI->FreeModule(mod)
 
 #endif // _INCLUDE_ITOOLKIT_MODULE_H

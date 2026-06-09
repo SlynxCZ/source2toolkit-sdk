@@ -101,7 +101,7 @@ struct ChatMenuOption
     bool Disabled{false};
 
     /// Callback executed on select
-    std::function<void(CCSPlayerController *, ChatMenuOption &)> OnSelect;
+    std::function<void(CCSPlayerController*, ChatMenuOption&)> OnSelect;
 
     /// Optional dynamic disabled evaluator
     std::function<bool()> DisabledEvaluator;
@@ -124,21 +124,21 @@ public:
      *
      * @return Reference to menu title string
      */
-    virtual const std::string &Title() const = 0;
+    virtual const std::string& Title() const = 0;
 
     /**
      * @brief Gets menu options.
      *
      * @return Reference to options vector
      */
-    virtual std::vector<ChatMenuOption> &Options() = 0;
+    virtual std::vector<ChatMenuOption>& Options() = 0;
 
     /**
      * @brief Gets menu options (const).
      *
      * @return Const reference to options vector
      */
-    virtual const std::vector<ChatMenuOption> &Options() const = 0;
+    virtual const std::vector<ChatMenuOption>& Options() const = 0;
 
     /**
      * @brief Gets post-select behavior.
@@ -189,10 +189,10 @@ public:
     {
     }
 
-    const std::string &Title() const override { return title_; }
+    const std::string& Title() const override { return title_; }
 
-    std::vector<ChatMenuOption> &Options() override { return options_; }
-    const std::vector<ChatMenuOption> &Options() const override { return options_; }
+    std::vector<ChatMenuOption>& Options() override { return options_; }
+    const std::vector<ChatMenuOption>& Options() const override { return options_; }
 
     PostSelectAction GetPostSelectAction() const override { return postSelect_; }
 
@@ -221,9 +221,9 @@ public:
      *
      * @return Reference to created option
      */
-    ChatMenuOption &AddMenuOption(
+    ChatMenuOption& AddMenuOption(
         std::string display,
-        std::function<void(CCSPlayerController *, ChatMenuOption &)> onSelect,
+        std::function<void(CCSPlayerController*, ChatMenuOption&)> onSelect,
         bool disabled = false)
     {
         options_.push_back(ChatMenuOption{
@@ -245,9 +245,9 @@ public:
      *
      * @return Reference to created option
      */
-    virtual ChatMenuOption &AddMenuOptionWithCooldown(
+    virtual ChatMenuOption& AddMenuOptionWithCooldown(
         std::string optionText,
-        std::function<void(CCSPlayerController *, ChatMenuOption &)> action,
+        std::function<void(CCSPlayerController*, ChatMenuOption&)> action,
         bool disabled = false,
         bool close = true,
         std::function<bool()> disabledEvaluator = nullptr) = 0;
@@ -259,16 +259,16 @@ public:
      * @param onSelect Function called after selection
      */
     void SetCooldownHandlers(
-        std::function<bool(CCSPlayerController *)> canSelect,
-        std::function<void(CCSPlayerController *)> onSelect)
+        std::function<bool(CCSPlayerController*)> canSelect,
+        std::function<void(CCSPlayerController*)> onSelect)
     {
         if (canSelect) s_canSelect = std::move(canSelect);
         if (onSelect) s_onSelect = std::move(onSelect);
     }
 
 public:
-    std::function<bool(CCSPlayerController *)> s_canSelect;
-    std::function<void(CCSPlayerController *)> s_onSelect;
+    std::function<bool(CCSPlayerController*)> s_canSelect;
+    std::function<void(CCSPlayerController*)> s_onSelect;
 
 private:
     std::string title_;
@@ -301,7 +301,7 @@ public:
      * @param player Player who triggered input
      * @param key Pressed key (1-9)
      */
-    virtual void OnKeyPress(CCSPlayerController *player, int key) = 0;
+    virtual void OnKeyPress(CCSPlayerController* player, int key) = 0;
 
     /**
      * @brief Resets menu state.
@@ -323,14 +323,14 @@ public:
      *
      * @return Pointer to menu
      */
-    IMenu *Menu() const { return menu_; }
+    IMenu* Menu() const { return menu_; }
 
     /**
      * @brief Gets owning player.
      *
      * @return Pointer to player
      */
-    CCSPlayerController *Player() { return player_; }
+    CCSPlayerController* Player() { return player_; }
 
 protected:
     /**
@@ -339,7 +339,7 @@ protected:
      * @param player Owning player
      * @param menu Menu definition
      */
-    IMenuInstance(CCSPlayerController *player, IMenu *menu)
+    IMenuInstance(CCSPlayerController* player, IMenu* menu)
         : player_(player), menu_(menu)
     {
     }
@@ -372,8 +372,8 @@ protected:
      */
     bool HasNextButton() const
     {
-        const auto &opts = menu_->Options();
-        return (int) opts.size() > NumPerPage() && (currentOffset_ + NumPerPage()) < (int) opts.size();
+        const auto& opts = menu_->Options();
+        return (int)opts.size() > NumPerPage() && (currentOffset_ + NumPerPage()) < (int)opts.size();
     }
 
     /**
@@ -407,8 +407,8 @@ protected:
     }
 
 protected:
-    IMenu *menu_;
-    CCSPlayerController *player_;
+    IMenu* menu_;
+    CCSPlayerController* player_;
 
     int page_{0};
     int currentOffset_{0};
@@ -463,7 +463,7 @@ public:
      * @param player Target player
      * @param menu Menu to open
      */
-    virtual void OpenCenterHtmlMenu(CCSPlayerController *player, CenterHtmlMenu *menu) = 0;
+    virtual void OpenCenterHtmlMenu(CCSPlayerController* player, CenterHtmlMenu* menu) = 0;
 
     /**
      * @brief Gets active menu instance for player.
@@ -472,14 +472,14 @@ public:
      *
      * @return Pointer to active menu instance or nullptr
      */
-    virtual IMenuInstance *GetActiveMenu(CCSPlayerController *player) = 0;
+    virtual IMenuInstance* GetActiveMenu(CCSPlayerController* player) = 0;
 
     /**
      * @brief Closes active menu for player.
      *
      * @param player Target player
      */
-    virtual void CloseActiveMenu(CCSPlayerController *player) = 0;
+    virtual void CloseActiveMenu(CCSPlayerController* player) = 0;
 
     /**
      * @brief Handles key press input.
@@ -487,7 +487,11 @@ public:
      * @param player Player who pressed key
      * @param key Pressed key (1-9)
      */
-    virtual void OnKeyPress(CCSPlayerController *player, int key) = 0;
+    virtual void OnKeyPress(CCSPlayerController* player, int key) = 0;
 };
+
+#define OPEN_CENTER_HTML_MENU(player, menu)  g_ToolkitAPI->Menus()->OpenCenterHtmlMenu(player, menu)
+#define GET_ACTIVE_MENU(player)              g_ToolkitAPI->Menus()->GetActiveMenu(player)
+#define CLOSE_ACTIVE_MENU(player)            g_ToolkitAPI->Menus()->CloseActiveMenu(player)
 
 #endif //_INCLUDE_ITOOLKIT_MENUS_H
