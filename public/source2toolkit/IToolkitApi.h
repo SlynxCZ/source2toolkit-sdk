@@ -101,7 +101,7 @@ Core Toolkit API
 *
 * @code
 * api->Commands()->RegConCommand(...);
-* api->Events()->RegGameEvent(...);
+* api->Events()->HookGameEvent(...);
 * @endcode
   */
 class IToolkitAPI

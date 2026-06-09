@@ -103,7 +103,16 @@ public:
     * * Pre: called before engine processes the event
     * * Post: called after engine processes the event
         */
-    virtual void RegGameEvent(PluginId owner, const char* pchName, GameEventHandler handler, Mode mode) = 0;
+    virtual void HookGameEvent(PluginId owner, const char* pchName, GameEventHandler handler, Mode mode) = 0;
 };
+
+/**
+ * @brief Macro for hooking a game event.
+ *
+ * @param passname Event name.
+ * @param passfunc Callback function.
+ */
+#define HOOK_GAME_EVENT(passname, passfunc) \
+    g_ToolkitAPI->Events()->HookGameEvent(g_PluginID, passname, passfunc)
 
 #endif //_INCLUDE_ITOOLKIT_EVENTS_H

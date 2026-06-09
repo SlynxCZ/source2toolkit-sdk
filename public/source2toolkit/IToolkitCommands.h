@@ -143,4 +143,13 @@ public:
     virtual void RegConListener(PluginId owner, const char* pchName, CommandHandler handler, Mode mode) = 0;
 };
 
+#define REGISTER_CHAT_COMMAND(pchName, handler) \
+    g_ToolkitAPI->Commands()->RegChatListener(g_PluginID, pchName, handler)
+
+#define REGISTER_CON_COMMAND(pchName, handler) \
+    g_ToolkitAPI->Commands()->RegConCommand(g_PluginID, pchName, handler)
+
+#define REGISTER_CON_LISTENER(pchName, handler, mode) \
+    g_ToolkitAPI->Commands()->RegConListener(g_PluginID, pchName, handler, mode)
+
 #endif //_INCLUDE_ITOOLKIT_COMMANDS_H
