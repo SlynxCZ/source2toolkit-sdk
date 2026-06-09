@@ -83,6 +83,7 @@ class IToolkitListener;
 class IToolkitMenus;
 class IToolkitModule;
 class IToolkitMySQL;
+class IToolkitNetworkMessages;
 class IToolkitPlugin;
 class IToolkitScheduler;
 class IToolkitTrace;
@@ -245,6 +246,12 @@ public:
     * @brief Access mysql system.
       */
     virtual IToolkitMySQL* MySQL() = 0;
+
+    /**
+
+    * @brief Access network messages system.
+      */
+    virtual IToolkitNetworkMessages* NetworkMessages() = 0;
 
     /**
 
