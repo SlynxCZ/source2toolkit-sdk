@@ -1,6 +1,3 @@
-# Credit for this protobuf generation cmake file goes to Poggicek.
-# Based on their work at https://github.com/Poggicek/StickerInspect
-
 set(PROTO_TARGETS
         ${PROTOBUFS}/network_connection.proto
         ${PROTOBUFS}/networkbasetypes.proto
