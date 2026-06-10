@@ -101,12 +101,10 @@ struct SchemaOpaqueType
 };
 
 #ifdef _WIN32
-using BASEPTR = SchemaOpaqueType<8, 8>;
 using ENTITYFUNCPTR = SchemaOpaqueType<8, 8>;
 using USEPTR = SchemaOpaqueType<8, 8>;
 using CEntityNameString = SchemaOpaqueType<8, 8>;
 #else
-using BASEPTR = SchemaOpaqueType<16, 8>;
 using ENTITYFUNCPTR = SchemaOpaqueType<16, 8>;
 using USEPTR = SchemaOpaqueType<16, 8>;
 using CEntityNameString = SchemaOpaqueType<16, 8>;
