@@ -72,7 +72,7 @@ Forward declarations
 * * Override: modify event but still allow original execution (Pre only)
 * * Supersede: block original execution (Pre only)
     */
-    using GameEventHandler = std::function<Action(IGameEvent* event, Mode mode, bool& dontBroadcast)>;
+using GameEventHandler = std::function<Action(IGameEvent* event, Mode mode, bool& dontBroadcast)>;
 
 /* =========================
 Core Toolkit Events
@@ -87,6 +87,8 @@ Core Toolkit Events
 * * Modify event data
 * * Block event propagation
     */
+#define TOOLKIT_EVENTS_INTERFACE "IToolkitEvents001"
+
 class IToolkitEvents
 {
 public:
@@ -113,6 +115,6 @@ public:
  * @param passfunc Callback function.
  */
 #define HOOK_GAME_EVENT(passname, passfunc) \
-    g_ToolkitAPI->Events()->HookGameEvent(g_PluginID, passname, passfunc)
+    g_pToolkitEvents->HookGameEvent(g_PluginID, passname, passfunc)
 
 #endif //_INCLUDE_ITOOLKIT_EVENTS_H

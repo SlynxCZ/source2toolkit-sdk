@@ -96,6 +96,8 @@ Core Toolkit Network Messages
  * The @p msg pointer is an opaque handle to an allocated protobuf message;
  * always deallocate with DeallocateNetMessage() when done.
  */
+#define TOOLKIT_NETWORKMESSAGES_INTERFACE "IToolkitNetworkMessages001"
+
 class IToolkitNetworkMessages
 {
 public:
@@ -358,17 +360,17 @@ public:
 /**
  * @brief Shorthand accessors via g_ToolkitAPI.
  */
-#define NET_MSG_ALLOC_BY_ID(id)              g_ToolkitAPI->NetworkMessages()->AllocateNetMessageByID(id)
-#define NET_MSG_ALLOC_BY_NAME(name)          g_ToolkitAPI->NetworkMessages()->AllocateNetMessageByPartialName(name)
-#define NET_MSG_FREE(msg)                    g_ToolkitAPI->NetworkMessages()->DeallocateNetMessage(msg)
-#define NET_MSG_SEND(msg, id, slot)          g_ToolkitAPI->NetworkMessages()->SendMessage(msg, id, slot)
-#define NET_MSG_SEND_PLAYERS(msg, id, mask)  g_ToolkitAPI->NetworkMessages()->SendMessageToPlayers(msg, id, mask)
+#define NET_MSG_ALLOC_BY_ID(id)              g_pToolkitNetworkMessages->AllocateNetMessageByID(id)
+#define NET_MSG_ALLOC_BY_NAME(name)          g_pToolkitNetworkMessages->AllocateNetMessageByPartialName(name)
+#define NET_MSG_FREE(msg)                    g_pToolkitNetworkMessages->DeallocateNetMessage(msg)
+#define NET_MSG_SEND(msg, id, slot)          g_pToolkitNetworkMessages->SendMessage(msg, id, slot)
+#define NET_MSG_SEND_PLAYERS(msg, id, mask)  g_pToolkitNetworkMessages->SendMessageToPlayers(msg, id, mask)
 
-#define NET_MSG_ADD_SERVER_HOOK(cb)                  g_ToolkitAPI->NetworkMessages()->AddServerHook(cb)
-#define NET_MSG_REMOVE_SERVER_HOOK(id)               g_ToolkitAPI->NetworkMessages()->RemoveServerHook(id)
-#define NET_MSG_ADD_CLIENT_HOOK(cb)                  g_ToolkitAPI->NetworkMessages()->AddClientHook(cb)
-#define NET_MSG_REMOVE_CLIENT_HOOK(id)               g_ToolkitAPI->NetworkMessages()->RemoveClientHook(id)
-#define NET_MSG_ADD_SERVER_INTERNAL_HOOK(cb)         g_ToolkitAPI->NetworkMessages()->AddServerInternalHook(cb)
-#define NET_MSG_REMOVE_SERVER_INTERNAL_HOOK(id)      g_ToolkitAPI->NetworkMessages()->RemoveServerInternalHook(id)
+#define NET_MSG_ADD_SERVER_HOOK(cb)                  g_pToolkitNetworkMessages->AddServerHook(cb)
+#define NET_MSG_REMOVE_SERVER_HOOK(id)               g_pToolkitNetworkMessages->RemoveServerHook(id)
+#define NET_MSG_ADD_CLIENT_HOOK(cb)                  g_pToolkitNetworkMessages->AddClientHook(cb)
+#define NET_MSG_REMOVE_CLIENT_HOOK(id)               g_pToolkitNetworkMessages->RemoveClientHook(id)
+#define NET_MSG_ADD_SERVER_INTERNAL_HOOK(cb)         g_pToolkitNetworkMessages->AddServerInternalHook(cb)
+#define NET_MSG_REMOVE_SERVER_INTERNAL_HOOK(id)      g_pToolkitNetworkMessages->RemoveServerInternalHook(id)
 
 #endif //_INCLUDE_ITOOLKIT_NETWORK_MESSAGES_H

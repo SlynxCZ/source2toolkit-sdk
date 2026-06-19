@@ -452,6 +452,8 @@ Core Toolkit Menus
 /**
  * @brief Interface for menu system management.
  */
+#define TOOLKIT_MENUS_INTERFACE "IToolkitMenus001"
+
 class IToolkitMenus
 {
 public:
@@ -490,8 +492,8 @@ public:
     virtual void OnKeyPress(CCSPlayerController* player, int key) = 0;
 };
 
-#define OPEN_CENTER_HTML_MENU(player, menu)  g_ToolkitAPI->Menus()->OpenCenterHtmlMenu(player, menu)
-#define GET_ACTIVE_MENU(player)              g_ToolkitAPI->Menus()->GetActiveMenu(player)
-#define CLOSE_ACTIVE_MENU(player)            g_ToolkitAPI->Menus()->CloseActiveMenu(player)
+#define OPEN_CENTER_HTML_MENU(player, menu)  g_pToolkitMenus->OpenCenterHtmlMenu(player, menu)
+#define GET_ACTIVE_MENU(player)              g_pToolkitMenus->GetActiveMenu(player)
+#define CLOSE_ACTIVE_MENU(player)            g_pToolkitMenus->CloseActiveMenu(player)
 
 #endif //_INCLUDE_ITOOLKIT_MENUS_H

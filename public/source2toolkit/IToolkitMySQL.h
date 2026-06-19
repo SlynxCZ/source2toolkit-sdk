@@ -377,6 +377,8 @@ public:
 MySQL client
 ========================= */
 
+#define TOOLKIT_MYSQL_INTERFACE "IToolkitMySQL001"
+
 class IToolkitMySQL
 {
 public:
@@ -391,6 +393,6 @@ public:
     virtual IToolkitMySQLConnection* CreateConnection(ToolkitMySQLConnectionInfo info) = 0;
 };
 
-#define MYSQL_CREATE_CONNECTION(info)    g_ToolkitAPI->MySQL()->CreateConnection(info)
+#define MYSQL_CREATE_CONNECTION(info)    g_pToolkitMySQL->CreateConnection(info)
 
 #endif //_INCLUDE_ITOOLKIT_MYSQL_H

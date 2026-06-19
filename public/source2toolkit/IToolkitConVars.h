@@ -72,6 +72,8 @@ Core Toolkit ConVars
 
 * @brief Interface for interacting with engine ConVars.
   */
+#define TOOLKIT_CONVARS_INTERFACE "IToolkitConVars001"
+
 class IToolkitConVars
 {
 public:
@@ -212,20 +214,20 @@ public:
     virtual void DeleteConVar(uint16 accessIndex) = 0;
 };
 
-#define CVAR_IDX(name)                  g_ToolkitAPI->ConVars()->GetConvarAccessIndexByName(name)
-#define CVAR_REF(idx)                   g_ToolkitAPI->ConVars()->GetConvarRef(idx)
-#define CVAR_GET_STR(idx, ...)          g_ToolkitAPI->ConVars()->GetString(idx, ##__VA_ARGS__)
-#define CVAR_GET_BOOL(idx, ...)         g_ToolkitAPI->ConVars()->GetBool(idx, ##__VA_ARGS__)
-#define CVAR_GET_INT(idx, ...)          g_ToolkitAPI->ConVars()->GetInt(idx, ##__VA_ARGS__)
-#define CVAR_GET_FLOAT(idx, ...)        g_ToolkitAPI->ConVars()->GetFloat(idx, ##__VA_ARGS__)
-#define CVAR_GET_DOUBLE(idx, ...)       g_ToolkitAPI->ConVars()->GetDouble(idx, ##__VA_ARGS__)
-#define CVAR_SET_STR(idx, v, ...)       g_ToolkitAPI->ConVars()->SetString(idx, v, ##__VA_ARGS__)
-#define CVAR_SET_BOOL(idx, v, ...)      g_ToolkitAPI->ConVars()->SetBool(idx, v, ##__VA_ARGS__)
-#define CVAR_SET_INT(idx, v, ...)       g_ToolkitAPI->ConVars()->SetInt(idx, v, ##__VA_ARGS__)
-#define CVAR_SET_FLOAT(idx, v, ...)     g_ToolkitAPI->ConVars()->SetFloat(idx, v, ##__VA_ARGS__)
-#define CVAR_SET_DOUBLE(idx, v, ...)    g_ToolkitAPI->ConVars()->SetDouble(idx, v, ##__VA_ARGS__)
+#define CVAR_IDX(name)                  g_pToolkitConVars->GetConvarAccessIndexByName(name)
+#define CVAR_REF(idx)                   g_pToolkitConVars->GetConvarRef(idx)
+#define CVAR_GET_STR(idx, ...)          g_pToolkitConVars->GetString(idx, ##__VA_ARGS__)
+#define CVAR_GET_BOOL(idx, ...)         g_pToolkitConVars->GetBool(idx, ##__VA_ARGS__)
+#define CVAR_GET_INT(idx, ...)          g_pToolkitConVars->GetInt(idx, ##__VA_ARGS__)
+#define CVAR_GET_FLOAT(idx, ...)        g_pToolkitConVars->GetFloat(idx, ##__VA_ARGS__)
+#define CVAR_GET_DOUBLE(idx, ...)       g_pToolkitConVars->GetDouble(idx, ##__VA_ARGS__)
+#define CVAR_SET_STR(idx, v, ...)       g_pToolkitConVars->SetString(idx, v, ##__VA_ARGS__)
+#define CVAR_SET_BOOL(idx, v, ...)      g_pToolkitConVars->SetBool(idx, v, ##__VA_ARGS__)
+#define CVAR_SET_INT(idx, v, ...)       g_pToolkitConVars->SetInt(idx, v, ##__VA_ARGS__)
+#define CVAR_SET_FLOAT(idx, v, ...)     g_pToolkitConVars->SetFloat(idx, v, ##__VA_ARGS__)
+#define CVAR_SET_DOUBLE(idx, v, ...)    g_pToolkitConVars->SetDouble(idx, v, ##__VA_ARGS__)
 #define CVAR_CREATE(name, type, help, flags, hasMin, hasMax, def, minVal, maxVal) \
-    g_ToolkitAPI->ConVars()->CreateConVar(name, type, help, flags, hasMin, hasMax, def, minVal, maxVal)
-#define CVAR_DELETE(idx)                g_ToolkitAPI->ConVars()->DeleteConVar(idx)
+    g_pToolkitConVars->CreateConVar(name, type, help, flags, hasMin, hasMax, def, minVal, maxVal)
+#define CVAR_DELETE(idx)                g_pToolkitConVars->DeleteConVar(idx)
 
 #endif //_INCLUDE_ITOOLKIT_CONVARS_H

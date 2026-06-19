@@ -97,6 +97,8 @@ Core Toolkit Commands
 *
 * @note All commands are owned by a plugin via PluginId.
   */
+#define TOOLKIT_COMMANDS_INTERFACE "IToolkitCommands001"
+
 class IToolkitCommands
 {
 public:
@@ -144,12 +146,12 @@ public:
 };
 
 #define REG_CHAT_COMMAND(pchName, handler) \
-    g_ToolkitAPI->Commands()->RegChatListener(g_PluginID, pchName, handler)
+    g_pToolkitCommands->RegChatListener(g_PluginID, pchName, handler)
 
 #define REG_CON_COMMAND(pchName, handler) \
-    g_ToolkitAPI->Commands()->RegConCommand(g_PluginID, pchName, handler)
+    g_pToolkitCommands->RegConCommand(g_PluginID, pchName, handler)
 
 #define REG_CON_LISTENER(pchName, handler, mode) \
-    g_ToolkitAPI->Commands()->RegConListener(g_PluginID, pchName, handler, mode)
+    g_pToolkitCommands->RegConListener(g_PluginID, pchName, handler, mode)
 
 #endif //_INCLUDE_ITOOLKIT_COMMANDS_H

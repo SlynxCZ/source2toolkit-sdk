@@ -194,6 +194,8 @@ Core Toolkit Addresses
 * For module inspection, pattern scanning, and pointer arithmetic use
 * IToolkitModule and IToolkitMemory instead.
   */
+#define TOOLKIT_ADDRESSES_INTERFACE "IToolkitAddresses001"
+
 class IToolkitAddresses
 {
 public:
@@ -220,20 +222,20 @@ public:
     virtual CTakeDamageInfo_CTakeDamageInfo_t CTakeDamageInfo_CTakeDamageInfo() = 0;
 };
 
-#define ADDR_CREATE_ENTITY_BY_NAME()                g_ToolkitAPI->Addresses()->CBaseEntity_CreateEntityByName()
-#define ADDR_DISPATCH_SPAWN()                       g_ToolkitAPI->Addresses()->CBaseEntity_DispatchSpawn()
-#define ADDR_TAKE_DAMAGE_OLD()                      g_ToolkitAPI->Addresses()->CBaseEntity_TakeDamageOld()
-#define ADDR_SET_MODEL()                            g_ToolkitAPI->Addresses()->CBaseModelEntity_SetModel()
-#define ADDR_SET_PAWN()                             g_ToolkitAPI->Addresses()->CBasePlayerController_SetPawn()
-#define ADDR_TERMINATE_ROUND()                      g_ToolkitAPI->Addresses()->CGameRules_TerminateRound()
-#define ADDR_WEAPON_SERVICES_DESTROY()              g_ToolkitAPI->Addresses()->CCSPlayer_WeaponServices_Destroy()
-#define ADDR_LEGACY_GAME_EVENT_LISTENER()           g_ToolkitAPI->Addresses()->CCSPlayerController_LegacyGameEventListener()
-#define ADDR_SWITCH_TEAM()                          g_ToolkitAPI->Addresses()->CCSPlayerController_SwitchTeam()
-#define ADDR_ACCEPT_INPUT()                         g_ToolkitAPI->Addresses()->CEntityInstance_AcceptInput()
-#define ADDR_FIRE_OUTPUT_INTERNAL()                 g_ToolkitAPI->Addresses()->CEntityIOOutput_FireOutputInternal()
-#define ADDR_ADD_ENTITY_IO_EVENT()                  g_ToolkitAPI->Addresses()->CEntitySystem_AddEntityIOEvent()
-#define ADDR_FIND_ENTITY_BY_CLASSNAME()             g_ToolkitAPI->Addresses()->CGameEntitySystem_FindEntityByClassName()
-#define ADDR_FIND_ENTITY_BY_NAME()                  g_ToolkitAPI->Addresses()->CGameEntitySystem_FindEntityByName()
-#define ADDR_TAKE_DAMAGE_INFO()                     g_ToolkitAPI->Addresses()->CTakeDamageInfo_CTakeDamageInfo()
+#define ADDR_CREATE_ENTITY_BY_NAME()                g_pToolkitAddresses->CBaseEntity_CreateEntityByName()
+#define ADDR_DISPATCH_SPAWN()                       g_pToolkitAddresses->CBaseEntity_DispatchSpawn()
+#define ADDR_TAKE_DAMAGE_OLD()                      g_pToolkitAddresses->CBaseEntity_TakeDamageOld()
+#define ADDR_SET_MODEL()                            g_pToolkitAddresses->CBaseModelEntity_SetModel()
+#define ADDR_SET_PAWN()                             g_pToolkitAddresses->CBasePlayerController_SetPawn()
+#define ADDR_TERMINATE_ROUND()                      g_pToolkitAddresses->CGameRules_TerminateRound()
+#define ADDR_WEAPON_SERVICES_DESTROY()              g_pToolkitAddresses->CCSPlayer_WeaponServices_Destroy()
+#define ADDR_LEGACY_GAME_EVENT_LISTENER()           g_pToolkitAddresses->CCSPlayerController_LegacyGameEventListener()
+#define ADDR_SWITCH_TEAM()                          g_pToolkitAddresses->CCSPlayerController_SwitchTeam()
+#define ADDR_ACCEPT_INPUT()                         g_pToolkitAddresses->CEntityInstance_AcceptInput()
+#define ADDR_FIRE_OUTPUT_INTERNAL()                 g_pToolkitAddresses->CEntityIOOutput_FireOutputInternal()
+#define ADDR_ADD_ENTITY_IO_EVENT()                  g_pToolkitAddresses->CEntitySystem_AddEntityIOEvent()
+#define ADDR_FIND_ENTITY_BY_CLASSNAME()             g_pToolkitAddresses->CGameEntitySystem_FindEntityByClassName()
+#define ADDR_FIND_ENTITY_BY_NAME()                  g_pToolkitAddresses->CGameEntitySystem_FindEntityByName()
+#define ADDR_TAKE_DAMAGE_INFO()                     g_pToolkitAddresses->CTakeDamageInfo_CTakeDamageInfo()
 
 #endif //_INCLUDE_ITOOLKIT_ADDRESSES_H

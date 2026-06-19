@@ -55,6 +55,18 @@
 #pragma once
 #include "interfaces/interfaces.h"
 
+#include "IToolkitAddresses.h"
+#include "IToolkitCommands.h"
+#include "IToolkitConVars.h"
+#include "IToolkitEntities.h"
+#include "IToolkitEvents.h"
+#include "IToolkitGameConfig.h"
+#include "IToolkitMenus.h"
+#include "IToolkitMySQL.h"
+#include "IToolkitNetworkMessages.h"
+#include "IToolkitScheduler.h"
+#include "IToolkitTrace.h"
+
 #include <cstddef>
 #include <cstring>
 #include <cstdio>
@@ -256,9 +268,20 @@ Globals
 * * KHook interface
     */
 #define TOOLKIT_EXPOSE(name, var) \
-    IToolkitAPI* g_ToolkitAPI = nullptr; \
-    IToolkitPlugin* g_PluginAPI = nullptr; \
-    PluginId g_PluginID = 0; \
+    IToolkitAPI*             g_ToolkitAPI              = nullptr; \
+    IToolkitPlugin*          g_PluginAPI               = nullptr; \
+    PluginId                 g_PluginID                = 0; \
+    IToolkitAddresses*       g_pToolkitAddresses       = nullptr; \
+    IToolkitCommands*        g_pToolkitCommands        = nullptr; \
+    IToolkitConVars*         g_pToolkitConVars         = nullptr; \
+    IToolkitEntities*        g_pToolkitEntities        = nullptr; \
+    IToolkitEvents*          g_pToolkitEvents          = nullptr; \
+    IToolkitGameConfig*      g_pToolkitGameConfig      = nullptr; \
+    IToolkitMenus*           g_pToolkitMenus           = nullptr; \
+    IToolkitMySQL*           g_pToolkitMySQL           = nullptr; \
+    IToolkitNetworkMessages* g_pToolkitNetworkMessages = nullptr; \
+    IToolkitScheduler*       g_pToolkitScheduler       = nullptr; \
+    IToolkitTrace*           g_pToolkitTrace           = nullptr; \
     namespace KHook { IKHook* __exported__khook = nullptr; } \
     TOOLKIT_EXPOSURE_FUNC(name, var)
 
@@ -268,9 +291,20 @@ Globals
   */
 #define TOOLKIT_GLOBALVARS() \
     namespace KHook { extern IKHook* __exported__khook; } \
-    extern IToolkitAPI* g_ToolkitAPI; \
-    extern IToolkitPlugin* g_PluginAPI; \
-    extern PluginId g_PluginID;
+    extern IToolkitAPI*             g_ToolkitAPI; \
+    extern IToolkitPlugin*          g_PluginAPI; \
+    extern PluginId                 g_PluginID; \
+    extern IToolkitAddresses*       g_pToolkitAddresses; \
+    extern IToolkitCommands*        g_pToolkitCommands; \
+    extern IToolkitConVars*         g_pToolkitConVars; \
+    extern IToolkitEntities*        g_pToolkitEntities; \
+    extern IToolkitEvents*          g_pToolkitEvents; \
+    extern IToolkitGameConfig*      g_pToolkitGameConfig; \
+    extern IToolkitMenus*           g_pToolkitMenus; \
+    extern IToolkitMySQL*           g_pToolkitMySQL; \
+    extern IToolkitNetworkMessages* g_pToolkitNetworkMessages; \
+    extern IToolkitScheduler*       g_pToolkitScheduler; \
+    extern IToolkitTrace*           g_pToolkitTrace;
 
 /**
 
@@ -281,8 +315,19 @@ Globals
 #define TOOLKIT_SAVEVARS() \
     g_ToolkitAPI = api; \
     KHook::__exported__khook = static_cast<KHook::IKHook*>(api->MetaFactory(MMIFACE_KHOOK, nullptr, nullptr)); \
-    g_PluginAPI = static_cast<IToolkitPlugin*>(this); \
-    g_PluginID = id;
+    g_PluginAPI  = static_cast<IToolkitPlugin*>(this); \
+    g_PluginID   = id; \
+    g_pToolkitAddresses       = (IToolkitAddresses*)      api->ToolkitFactory(TOOLKIT_ADDRESSES_INTERFACE,       nullptr, nullptr); \
+    g_pToolkitCommands        = (IToolkitCommands*)       api->ToolkitFactory(TOOLKIT_COMMANDS_INTERFACE,        nullptr, nullptr); \
+    g_pToolkitConVars         = (IToolkitConVars*)        api->ToolkitFactory(TOOLKIT_CONVARS_INTERFACE,         nullptr, nullptr); \
+    g_pToolkitEntities        = (IToolkitEntities*)       api->ToolkitFactory(TOOLKIT_ENTITIES_INTERFACE,        nullptr, nullptr); \
+    g_pToolkitEvents          = (IToolkitEvents*)         api->ToolkitFactory(TOOLKIT_EVENTS_INTERFACE,          nullptr, nullptr); \
+    g_pToolkitGameConfig      = (IToolkitGameConfig*)     api->ToolkitFactory(TOOLKIT_GAMECONFIG_INTERFACE,      nullptr, nullptr); \
+    g_pToolkitMenus           = (IToolkitMenus*)          api->ToolkitFactory(TOOLKIT_MENUS_INTERFACE,           nullptr, nullptr); \
+    g_pToolkitMySQL           = (IToolkitMySQL*)          api->ToolkitFactory(TOOLKIT_MYSQL_INTERFACE,           nullptr, nullptr); \
+    g_pToolkitNetworkMessages = (IToolkitNetworkMessages*)api->ToolkitFactory(TOOLKIT_NETWORKMESSAGES_INTERFACE, nullptr, nullptr); \
+    g_pToolkitScheduler       = (IToolkitScheduler*)      api->ToolkitFactory(TOOLKIT_SCHEDULER_INTERFACE,       nullptr, nullptr); \
+    g_pToolkitTrace           = (IToolkitTrace*)          api->ToolkitFactory(TOOLKIT_TRACE_INTERFACE,           nullptr, nullptr);
 
 /* =========================
 Logging helpers

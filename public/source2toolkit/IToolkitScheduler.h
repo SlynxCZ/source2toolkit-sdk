@@ -129,6 +129,8 @@ Core Toolkit Scheduler
 
 * @brief Interface for scheduling tasks and timers.
   */
+#define TOOLKIT_SCHEDULER_INTERFACE "IToolkitScheduler001"
+
 class IToolkitScheduler
 {
 public:
@@ -165,8 +167,8 @@ public:
     virtual void KillTimer(Timer* timer) = 0;
 };
 
-#define NEXT_FRAME(task)                g_ToolkitAPI->Scheduler()->NextFrame(task)
-#define ADD_TIMER(interval, cb, ...)    g_ToolkitAPI->Scheduler()->AddTimer(interval, cb, ##__VA_ARGS__)
-#define KILL_TIMER(timer)               g_ToolkitAPI->Scheduler()->KillTimer(timer)
+#define NEXT_FRAME(task)                g_pToolkitScheduler->NextFrame(task)
+#define ADD_TIMER(interval, cb, ...)    g_pToolkitScheduler->AddTimer(interval, cb, ##__VA_ARGS__)
+#define KILL_TIMER(timer)               g_pToolkitScheduler->KillTimer(timer)
 
 #endif //_INCLUDE_ITOOLKIT_SCHEDULER_H

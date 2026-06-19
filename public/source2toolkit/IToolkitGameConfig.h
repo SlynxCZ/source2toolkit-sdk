@@ -61,6 +61,8 @@
 
 * @brief Interface for accessing game configuration entries.
   */
+#define TOOLKIT_GAMECONFIG_INTERFACE "IToolkitGameConfig001"
+
 class IToolkitGameConfig
 {
 public:
@@ -112,10 +114,10 @@ public:
     virtual int GetOffset(const char* pchName) = 0;
 };
 
-#define GAMECONFIG_LIBRARY(name)    g_ToolkitAPI->GameConfig()->GetLibrary(name)
-#define GAMECONFIG_SIGNATURE(name)  g_ToolkitAPI->GameConfig()->GetSignature(name)
-#define GAMECONFIG_SYMBOL(name)     g_ToolkitAPI->GameConfig()->GetSymbol(name)
-#define GAMECONFIG_PATCH(name)      g_ToolkitAPI->GameConfig()->GetPatch(name)
-#define GAMECONFIG_OFFSET(name)     g_ToolkitAPI->GameConfig()->GetOffset(name)
+#define GAMECONFIG_LIBRARY(name)    g_pToolkitGameConfig->GetLibrary(name)
+#define GAMECONFIG_SIGNATURE(name)  g_pToolkitGameConfig->GetSignature(name)
+#define GAMECONFIG_SYMBOL(name)     g_pToolkitGameConfig->GetSymbol(name)
+#define GAMECONFIG_PATCH(name)      g_pToolkitGameConfig->GetPatch(name)
+#define GAMECONFIG_OFFSET(name)     g_pToolkitGameConfig->GetOffset(name)
 
 #endif //_INCLUDE_ITOOLKIT_GAMECONFIG_H

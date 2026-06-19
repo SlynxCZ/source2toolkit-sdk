@@ -201,6 +201,8 @@ Core Toolkit Trace
 
 * @brief Interface for performing trace operations.
   */
+#define TOOLKIT_TRACE_INTERFACE "IToolkitTrace001"
+
 class IToolkitTrace
 {
 public:
@@ -269,21 +271,21 @@ public:
 };
 
 #define TRACE_SHAPE(start, angles, ent, opts) \
-    g_ToolkitAPI->Trace()->TraceShape(start, angles, ent, opts)
+    g_pToolkitTrace->TraceShape(start, angles, ent, opts)
 
 #define TRACE_END_SHAPE(start, end, ent, opts) \
-    g_ToolkitAPI->Trace()->TraceEndShape(start, end, ent, opts)
+    g_pToolkitTrace->TraceEndShape(start, end, ent, opts)
 
 #define TRACE_HULL_SHAPE(start, end, mins, maxs, ent, opts) \
-    g_ToolkitAPI->Trace()->TraceHullShape(start, end, mins, maxs, ent, opts)
+    g_pToolkitTrace->TraceHullShape(start, end, mins, maxs, ent, opts)
 
 #define TRACE_SHAPE_EX(start, end, filter, ray) \
-    g_ToolkitAPI->Trace()->TraceShapeEx(start, end, filter, ray)
+    g_pToolkitTrace->TraceShapeEx(start, end, filter, ray)
 
 #define POINT_CONTENTS(pos, mask) \
-    g_ToolkitAPI->Trace()->PointContents(pos, mask)
+    g_pToolkitTrace->PointContents(pos, mask)
 
 #define ENTITY_WORLD_AABB(ent, mins, maxs) \
-    g_ToolkitAPI->Trace()->GetEntityWorldSpaceAABB(ent, mins, maxs)
+    g_pToolkitTrace->GetEntityWorldSpaceAABB(ent, mins, maxs)
 
 #endif //_INCLUDE_ITOOLKIT_TRACE_H
