@@ -141,7 +141,7 @@ using CCSPlayerController_SwitchTeam_t = void (FASTCALL*)(CCSPlayerController*, 
 * @brief Accepts entity input.
   */
 using CEntityInstance_AcceptInput_t = void (FASTCALL*)(CEntityInstance*, const char*, CEntityInstance*,
-                                                       CEntityInstance*, const variant_t&, int, void*);
+                                                       CEntityInstance*, const variant_t&);
 
 /**
 
@@ -156,7 +156,7 @@ using CEntityIOOutput_FireOutputInternal_t = void (FASTCALL*)(CEntityIOOutput*, 
   */
 using CEntitySystem_AddEntityIOEvent_t = void (FASTCALL*)(CEntitySystem*, CEntityInstance*, const char*,
                                                           CEntityInstance*, CEntityInstance*, const variant_t&, float,
-                                                          int, void*, void*);
+                                                          void*, void*);
 
 /**
 
