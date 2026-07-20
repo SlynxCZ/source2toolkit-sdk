@@ -157,7 +157,6 @@ file(GLOB_RECURSE SOURCE_FILES
 
 list(APPEND SOURCE_FILES
         ${SOURCESDK}/public/tier0/memoverride.cpp
-        ${SOURCESDK}/tier1/generichash.cpp
         ${SOURCESDK}/tier1/keyvalues3.cpp
         ${SOURCESDK}/tier1/convar.cpp
         ${SOURCESDK}/entity2/entityidentity.cpp
@@ -207,7 +206,6 @@ endif()
 if (LINUX)
     target_link_libraries(source2toolkit-sdk PUBLIC
             ${SOURCESDK_LIB}/linux64/libtier0.so
-            ${SOURCESDK_LIB}/linux64/tier1.a
             ${SOURCESDK_LIB}/linux64/interfaces.a
             ${SOURCESDK_LIB}/linux64/mathlib.a
             ${SOURCESDK_LIB}/linux64/release/libprotobuf.a
@@ -219,7 +217,6 @@ endif()
 if (WIN32)
     target_link_libraries(source2toolkit-sdk PUBLIC
             ${SOURCESDK_LIB}/public/win64/tier0.lib
-            ${SOURCESDK_LIB}/public/win64/tier1.lib
             ${SOURCESDK_LIB}/public/win64/interfaces.lib
             ${SOURCESDK_LIB}/public/win64/mathlib.lib
             ${SOURCESDK_LIB}/public/win64/2015/libprotobuf.lib

@@ -19,6 +19,7 @@ set(PROTO_TARGETS
         ${PROTOBUFS}/gameevents.proto
         ${PROTOBUFS}/clientmessages.proto
         ${PROTOBUFS}/te.proto
+        ${PROTOBUFS}/valveextensions.proto
 )
 
 if(UNIX)
