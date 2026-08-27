@@ -72,6 +72,17 @@ class INetworkMessages;
 class INetworkServerService;
 class CGameEntitySystem;
 class CSchemaSystem;
+class IVEngineServer2;
+class ISource2ServerConfig;
+class ISource2GameClients;
+class ISource2GameEntities;
+class IGameResourceService;
+class INetworkSystem;
+class INetworkStringTableContainer;
+class IEngineServiceMgr;
+class IHostStateMgr;
+class ILocalize;
+class IFileSystem;
 
 class IToolkitAddresses;
 class IToolkitCommands;
@@ -301,16 +312,27 @@ public:
     Engine interfaces
     ========================= */
 
-    virtual IGameEventManager2* GetGameEventManager() = 0;
-    virtual CGlobalVars* GetGlobalVars() = 0;
-    virtual ICvar* GetCVar() = 0;
     virtual ISource2Server* GetSource2Server() = 0;
-    virtual IVEngineServer* GetEngineServer() = 0;
-    virtual IGameEventSystem* GetGameEventSystem() = 0;
-    virtual INetworkMessages* GetNetworkMessages() = 0;
-    virtual INetworkServerService* GetNetworkServerService() = 0;
-    virtual CGameEntitySystem* GetEntitySystem() = 0;
+    virtual ISource2ServerConfig* GetSource2ServerConfig() = 0;
+    virtual ISource2GameClients* GetSource2GameClients() = 0;
+    virtual ISource2GameEntities* GetSource2GameEntities() = 0;
+    virtual IVEngineServer2* GetEngineServer() = 0;
+    virtual ICvar* GetCVar() = 0;
     virtual CSchemaSystem* GetSchemaSystem() = 0;
+    virtual IGameResourceService* GetGameResourceService() = 0;
+    virtual INetworkServerService* GetNetworkServerService() = 0;
+    virtual INetworkSystem* GetNetworkSystem() = 0;
+    virtual INetworkMessages* GetNetworkMessages() = 0;
+    virtual INetworkStringTableContainer* GetNetworkStringTableServer() = 0;
+    virtual IEngineServiceMgr* GetEngineServiceMgr() = 0;
+    virtual IHostStateMgr* GetHostStateMgr() = 0;
+    virtual ILocalize* GetLocalize() = 0;
+    virtual IFileSystem* GetFileSystem() = 0;
+
+    virtual IGameEventSystem* GetGameEventSystem() = 0;
+    virtual IGameEventManager2* GetGameEventManager() = 0;
+    virtual CGameEntitySystem* GetEntitySystem() = 0;
+    virtual CGlobalVars* GetGlobalVars() = 0;
 
     /**
 

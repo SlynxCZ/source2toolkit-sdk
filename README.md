@@ -4,6 +4,12 @@
 [![Website](https://img.shields.io/badge/Website-source2toolkit.net-blue)](https://www.source2toolkit.net)
 [![Discord](https://img.shields.io/discord/1178027657594687608?color=7289da&logo=discord&logoColor=white)](https://source2toolkit.dev/discord)
 
+> **Branch: `khook`.** This is the KHook line, kept as the state of the SDK
+> before the SourceHook migration. It receives the same cleanup and fixes as
+> `main`, but keeps `KHook` as the hooking library and the `Action` / `Mode`
+> enums. If you want SourceHook — virtual, DVP, manual **and** inline hooks
+> through the stock `SH_` macros — use `main`.
+
 **Source2Toolkit SDK** is the core development kit required for building plugins for Source2Toolkit.
 
 It bundles everything you need — headers, SDK, hooking system and build helpers — so you can focus purely on writing your plugin.
@@ -84,6 +90,64 @@ my_plugin.stx
 - **Tier0 / Tier1 / Mathlib**  
 - **Schema system headers**  
 - **Preconfigured compiler flags & linking**  
+
+---
+
+## Hooking
+
+The SDK bundles **KHook**, a SafetyHook-based detouring library. Hooks are
+objects you construct with the member function you want and the callbacks that
+should run before and after it — pass `nullptr` for the side you do not need:
+
+```cpp
+// pre-hook only
+m_pClientCommand = new KHook::Virtual(&IServerGameClients::ClientCommand, this,
+                                      &Plugin::Hook_ClientCommand, nullptr);
+
+// post-hook only
+m_pGameFrame = new KHook::Virtual(&IServerGameDLL::GameFrame, this,
+                                  nullptr, &Plugin::Hook_GameFrame);
+```
+
+Attach to an instance with `Add`, or to a whole vtable with `AddGlobal`:
+
+```cpp
+m_pClientCommand->Add(g_pSource2GameClients);
+m_pOnServerGamePostSimulate->AddGlobal((IGameSystem*)&m_pVTable);
+```
+
+Handlers take the hooked object as their first parameter and return
+`KHook::Return<T>`:
+
+```cpp
+KHook::Return<void> Plugin::Hook_ClientCommand(IServerGameClients* pThis,
+                                               CPlayerSlot slot, const CCommand& args)
+{
+    if (ShouldBlock(args))
+        return { KHook::Action::Supercede };
+
+    return { KHook::Action::Ignore };
+}
+```
+
+### Return values
+
+The toolkit's own listener callbacks use its `Action` enum:
+
+| `Action` | meaning |
+|---|---|
+| `Action::Ignore` | did nothing |
+| `Action::Override` | original runs, your return value wins |
+| `Action::Supersede` | original is skipped entirely |
+
+`Mode` is `Mode::Pre` / `Mode::Post`.
+
+<sub>Note the spelling difference: the toolkit's enum is `Action::Supersede`,
+KHook's own is `KHook::Action::Supercede`.</sub>
+
+Every hook you construct must be removed (`Remove` / `RemoveGlobal`) and
+deleted before your plugin unloads — a live detour into an unmapped library
+crashes the server on the next call.
 
 ---
 

@@ -69,7 +69,7 @@ Vector CBaseModelEntity::GetEyePosition()
 
 void CBaseModelEntity::SetModel(const char* pszModel) {
 #ifdef SOURCE2TOOLKIT_CORE
-    addresses::toolkitAddresses.SetModel(this, pszModel);
+    addresses::toolkitAddresses.CBaseModelEntity_SetModel()(this, pszModel);
 #else
     g_ToolkitAPI->Addresses()->CBaseModelEntity_SetModel()(this, pszModel);
 #endif

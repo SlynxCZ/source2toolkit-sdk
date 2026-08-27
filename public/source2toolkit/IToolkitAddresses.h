@@ -53,6 +53,7 @@
 
 #include "igameevents.h"
 #include "eiface.h"
+#include "utils/plat.h"
 
 /* =========================
 Forward declarations
@@ -183,6 +184,10 @@ using CTakeDamageInfo_CTakeDamageInfo_t = void (FASTCALL*)(CTakeDamageInfo* pThi
                                                            const Vector* vecDamagePosition, float flDamage,
                                                            int bitsDamageType, int iCustomDamage, void* a10);
 
+using INetworkMessageProcessingPreFilter_FilterMessage_t = bool (THISCALL*)(INetworkMessageProcessingPreFilter* pThis,
+                                                                            const CNetMessage* pData,
+                                                                            INetChannel* pChannel);
+
 /* =========================
 Core Toolkit Addresses
 ========================= */
@@ -220,6 +225,7 @@ public:
     virtual CGameEntitySystem_FindEntityByClassName_t CGameEntitySystem_FindEntityByClassName() = 0;
     virtual CGameEntitySystem_FindEntityByName_t CGameEntitySystem_FindEntityByName() = 0;
     virtual CTakeDamageInfo_CTakeDamageInfo_t CTakeDamageInfo_CTakeDamageInfo() = 0;
+    virtual INetworkMessageProcessingPreFilter_FilterMessage_t INetworkMessageProcessingPreFilter_FilterMessage() = 0;
 };
 
 #define ADDR_CREATE_ENTITY_BY_NAME()                g_pToolkitAddresses->CBaseEntity_CreateEntityByName()
@@ -237,5 +243,6 @@ public:
 #define ADDR_FIND_ENTITY_BY_CLASSNAME()             g_pToolkitAddresses->CGameEntitySystem_FindEntityByClassName()
 #define ADDR_FIND_ENTITY_BY_NAME()                  g_pToolkitAddresses->CGameEntitySystem_FindEntityByName()
 #define ADDR_TAKE_DAMAGE_INFO()                     g_pToolkitAddresses->CTakeDamageInfo_CTakeDamageInfo()
+#define ADDR_FILTER_MESSAGE()                       g_pToolkitAddresses->INetworkMessageProcessingPreFilter_FilterMessage()
 
 #endif //_INCLUDE_ITOOLKIT_ADDRESSES_H

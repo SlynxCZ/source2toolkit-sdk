@@ -44,6 +44,7 @@
 #include "ehandle.h"
 #include "entityhandle.h"
 #include "vector.h"
+#include "utlbinaryblock.h"
 #include "utlsymbol.h"
 #include "utlsymbollarge.h"
 #include "utlstring.h"

@@ -50,7 +50,7 @@
 CTakeDamageInfo::CTakeDamageInfo()
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    addresses::toolkitAddresses.CTakeDamageInfo(this, nullptr, nullptr, nullptr, &vec3_origin, &vec3_origin, 0.f, 0, 0, nullptr);
+    addresses::toolkitAddresses.CTakeDamageInfo_CTakeDamageInfo()(this, nullptr, nullptr, nullptr, &vec3_origin, &vec3_origin, 0.f, 0, 0, nullptr);
 #else
     g_ToolkitAPI->Addresses()->CTakeDamageInfo_CTakeDamageInfo()(this, nullptr, nullptr, nullptr, &vec3_origin, &vec3_origin, 0.f, 0, 0, nullptr);
 #endif
@@ -59,7 +59,7 @@ CTakeDamageInfo::CTakeDamageInfo()
 CTakeDamageInfo::CTakeDamageInfo(CBaseEntity* pInflictor, CBaseEntity* pAttacker, CBaseEntity* pAbility, float flDamage, DamageTypes_t bitsDamageType)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    addresses::toolkitAddresses.CTakeDamageInfo(this, pInflictor, pAttacker, pAbility, &vec3_origin, &vec3_origin, flDamage, (int)bitsDamageType, 0, nullptr);
+    addresses::toolkitAddresses.CTakeDamageInfo_CTakeDamageInfo()(this, pInflictor, pAttacker, pAbility, &vec3_origin, &vec3_origin, flDamage, (int)bitsDamageType, 0, nullptr);
 #else
     g_ToolkitAPI->Addresses()->CTakeDamageInfo_CTakeDamageInfo()(this, pInflictor, pAttacker, pAbility, &vec3_origin, &vec3_origin, flDamage, (int)bitsDamageType, 0, nullptr);
 #endif

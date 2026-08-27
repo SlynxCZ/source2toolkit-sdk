@@ -55,6 +55,7 @@
 #pragma once
 #include "IToolkitTypes.h"
 
+#include "bspflags.h"
 #include "gametrace.h"
 #include "eiface.h"
 

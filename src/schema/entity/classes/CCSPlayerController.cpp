@@ -188,7 +188,7 @@ void CCSPlayerController::TakeDamage(CCSPlayerController* pAttacker, int iDamage
     info.m_nDamageFlags = static_cast<TakeDamageFlags_t>(static_cast<int>(info.m_nDamageFlags) | static_cast<int>(TakeDamageFlags_t::DFLAG_SUPPRESS_DAMAGE_MODIFICATION));
 
 #ifdef SOURCE2TOOLKIT_CORE
-    addresses::toolkitAddresses.TakeDamageOld(this, &info, nullptr);
+    addresses::toolkitAddresses.CBaseEntity_TakeDamageOld()(this, &info, nullptr);
 #else
     g_ToolkitAPI->Addresses()->CBaseEntity_TakeDamageOld()(this, &info, nullptr);
 #endif
@@ -211,7 +211,7 @@ void CCSPlayerController::Respawn()
 void CCSPlayerController::SwitchTeam(int nTeam)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    addresses::toolkitAddresses.SwitchTeam(this, static_cast<unsigned char>(nTeam));
+    addresses::toolkitAddresses.CCSPlayerController_SwitchTeam()(this, static_cast<unsigned char>(nTeam));
 #else
     g_ToolkitAPI->Addresses()->CCSPlayerController_SwitchTeam()(this, static_cast<unsigned char>(nTeam));
 #endif
@@ -368,7 +368,7 @@ void CCSPlayerController::FireEventToClient(IGameEvent* pEvent)
     if (!pEvent) return;
 
 #ifdef SOURCE2TOOLKIT_CORE
-    IGameEventListener2* pListener = addresses::toolkitAddresses.LegacyGameEventListener(GetPlayerSlot());
+    IGameEventListener2* pListener = addresses::toolkitAddresses.CCSPlayerController_LegacyGameEventListener()(GetPlayerSlot());
 #else
     IGameEventListener2* pListener = g_ToolkitAPI->Addresses()->CCSPlayerController_LegacyGameEventListener()(GetPlayerSlot());
 #endif

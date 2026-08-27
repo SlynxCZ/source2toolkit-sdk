@@ -56,7 +56,7 @@
 void CCSGameRules::TerminateRound(float flDelay, int32_t eRoundEndReason)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    addresses::toolkitAddresses.TerminateRound(this, flDelay, eRoundEndReason, 0, 0);
+    addresses::toolkitAddresses.CGameRules_TerminateRound()(this, flDelay, eRoundEndReason, 0, 0);
 #else
     g_ToolkitAPI->Addresses()->CGameRules_TerminateRound()(this, flDelay, eRoundEndReason, 0, 0);
 #endif

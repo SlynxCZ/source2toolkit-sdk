@@ -62,6 +62,7 @@
 #include "entity2/entityidentity.h"
 #include "entity2/entityinstance.h"
 #include "const.h"
+#include "utlmap.h"
 #include "tier0/dbg.h"
 
 #include <type_traits>
@@ -79,7 +80,7 @@ IGameEventManager2* GetGameEventManager();
 CGlobalVars* GetGlobalVars();
 ICvar* GetCVar();
 ISource2Server* GetSource2Server();
-IVEngineServer* GetEngineServer();
+IVEngineServer2* GetEngineServer();
 IGameEventSystem* GetGameEventSystem();
 INetworkMessages* GetNetworkMessages();
 INetworkServerService* GetNetworkServerService();
@@ -94,27 +95,8 @@ class GameSessionConfiguration_t
 {
 };
 
-template <size_t Size, size_t Align>
-struct SchemaOpaqueType
-{
-    alignas(Align) unsigned char data[Size];
-};
 
-#ifdef _WIN32
-using ENTITYFUNCPTR = SchemaOpaqueType<8, 8>;
-using USEPTR = SchemaOpaqueType<8, 8>;
-using CEntityNameString = SchemaOpaqueType<8, 8>;
-#else
-using ENTITYFUNCPTR = SchemaOpaqueType<16, 8>;
-using USEPTR = SchemaOpaqueType<16, 8>;
-using CEntityNameString = SchemaOpaqueType<16, 8>;
-#endif
-
-struct CUtlBinaryBlock
-{
-    CUtlMemory<unsigned char> m_Memory;
-    int m_nActualLength;
-};
+typedef void (*CEntityNameString)(void);
 
 struct CGlobalSymbol
 {

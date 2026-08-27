@@ -138,9 +138,9 @@ public:
     * @param mode Execution mode (Pre = before original, Post = after original)
     *
     * @return Action to control command execution:
-    * * Ignore: do nothing
-    * * Override: override return value but still call original (Pre only)
-    * * Supersede: block original execution (Pre only)
+    * * Action::Ignore: do nothing
+    * * Action::Override: override return value but still call original (Pre only)
+    * * Action::Supersede: block original execution (Pre only)
         */
     virtual void RegConListener(PluginId owner, const char* pchName, CommandHandler handler, Mode mode) = 0;
 };

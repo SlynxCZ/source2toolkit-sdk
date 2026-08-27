@@ -68,9 +68,9 @@ Forward declarations
 * @param dontBroadcast Set to true to prevent event from being sent to clients
 *
 * @return Action:
-* * Ignore: no changes
-* * Override: modify event but still allow original execution (Pre only)
-* * Supersede: block original execution (Pre only)
+* * Action::Ignore: no changes
+* * Action::Override: modify event but still allow original execution (Pre only)
+* * Action::Supersede: block original execution (Pre only)
     */
 using GameEventHandler = std::function<Action(IGameEvent* event, Mode mode, bool& dontBroadcast)>;
 
