@@ -17,7 +17,7 @@ It bundles everything you need — headers, SDK, hooking system and build helper
 Source2Toolkit SDK is a lightweight development layer that provides:
 
 - Preconfigured **HL2SDK (CS2)**  
-- Integrated **KHook** hooking library  
+- Integrated **SourceHook** hooking library (virtual, DVP, manual and inline)  
 - Ready-to-use **Source 2 headers & interfaces**  
 - Cross-platform build configuration  
 - Simple plugin build system  
@@ -79,11 +79,85 @@ my_plugin.stx
 ## What's Included
 
 - **HL2SDK-CS2** (as submodule)  
-- **KHook** (inline & virtual hooks)  
+- **SourceHook** (virtual, DVP, manual & inline hooks)  
 - **Protobuf definitions**  
 - **Tier0 / Tier1 / Mathlib**  
 - **Schema system headers**  
 - **Preconfigured compiler flags & linking**  
+
+---
+
+## Hooking
+
+The SDK bundles **SourceHook** and the toolkit core runs its own engine
+instance, separate from Metamod's. Your plugin does not create or include one —
+`TOOLKIT_EXPOSE` declares `g_SHPtr` and `g_PLID`, and `TOOLKIT_SAVEVARS` fills
+them from `ToolkitFactory(TOOLKIT_SOURCEHOOK_INTERFACE)`. From there the stock
+`SH_` macros work as they do under Metamod:
+
+```cpp
+TOOLKIT_EXPOSE(MyPlugin, g_MyPlugin);
+
+bool MyPlugin::Load(IToolkitAPI* api, PluginId id, char* error, size_t maxlen)
+{
+    TOOLKIT_SAVEVARS();   // g_SHPtr and g_PLID are live from here on
+    ...
+}
+```
+
+### Virtual hooks
+
+```cpp
+SH_DECL_HOOK2_void(IServerGameClients, ClientCommand, SH_NOATTRIB, 0,
+                   CPlayerSlot, const CCommand&);
+
+m_iHookID = SH_ADD_HOOK(IServerGameClients, ClientCommand, g_pSource2GameClients,
+                        SH_MEMBER(this, &MyPlugin::Hook_ClientCommand), false);
+```
+
+### DVP hooks
+
+When you only have a vtable pointer and no interface, `SH_ADD_DVPHOOK` takes
+that pointer *as* the vtable:
+
+```cpp
+m_iHookID = SH_ADD_DVPHOOK(CServerSideClient, SendNetMessage, pVTable,
+                           SH_MEMBER(this, &MyPlugin::Hook_SendNetMessage), false);
+```
+
+### Inline hooks
+
+Inline hooks patch a raw address, so anything a signature scan finds is
+hookable — no vtable involved. Declare with the argument count *excluding*
+`this`, and add `_void` when there is no return value:
+
+```cpp
+SH_DECL_INLINEHOOK2(FilterMessage, INetworkMessageProcessingPreFilterCustom,
+                    bool, const CNetMessage*, INetChannel*);
+
+m_iHookID = SH_ADD_INLINEHOOK(FilterMessage, pAddress,
+                              SH_MEMBER(this, &MyPlugin::Hook_FilterMessage), false);
+```
+
+`SH_ADD_INLINEHOOK` accepts a `void*`, a `uintptr_t` or a typed function
+pointer directly, so a `CMemory` from a signature scan can be passed as-is.
+
+Every id — virtual, DVP, manual or inline — is removed with
+`SH_REMOVE_HOOK_ID`; the two id ranges are disjoint.
+
+### Return values
+
+Handlers return `META_RES` and register with `META_MODE`:
+
+| `META_RES` | meaning |
+|---|---|
+| `MRES_IGNORED` | did nothing |
+| `MRES_HANDLED` | did something, original still runs |
+| `MRES_OVERRIDE` | original runs, your return value wins |
+| `MRES_SUPERCEDE` | original is skipped entirely |
+
+`META_MODE` is `MMODE_PRE` / `MMODE_POST`, also available as `SHMODE_PRE` /
+`SHMODE_POST`.
 
 ---
 
