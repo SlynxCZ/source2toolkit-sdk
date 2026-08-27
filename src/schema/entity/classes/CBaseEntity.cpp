@@ -83,7 +83,7 @@ void CBaseEntity::AddEntityIOEvent(const char* pszInput, CEntityInstance* pActiv
 #endif
 }
 
-CEntityIOListenerHandle* CBaseEntity::AddSingleEntityIOListener(const char* pszOutput, std::function<Action(const char*,CEntityInstance*, CEntityInstance*, float, Mode)> callback, Mode mode)
+CEntityIOListenerHandle* CBaseEntity::AddSingleEntityIOListener(const char* pszOutput, std::function<META_RES(const char*,CEntityInstance*, CEntityInstance*, float, META_MODE)> callback, META_MODE mode)
 {
     auto* listener = new CSingleEntityIOListener(this, std::move(callback));
 
@@ -157,7 +157,7 @@ CEntitySubclassVDataBase* CBaseEntity::GetVData()
 void CBaseEntity::DispatchSpawn(CEntityKeyValues* pEntityKeyValues)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    addresses::toolkitAddresses.DispatchSpawn(this, pEntityKeyValues);
+    addresses::toolkitAddresses.CBaseEntity_DispatchSpawn()(this, pEntityKeyValues);
 #else
     g_ToolkitAPI->Addresses()->CBaseEntity_DispatchSpawn()(this, pEntityKeyValues);
 #endif

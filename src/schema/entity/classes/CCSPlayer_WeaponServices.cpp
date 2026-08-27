@@ -97,7 +97,7 @@ void CCSPlayer_WeaponServices::Destroy(CBasePlayerWeapon* pWeapon)
 #endif
     {
 #ifdef SOURCE2TOOLKIT_CORE
-        addresses::toolkitAddresses.Destroy(this, pWeapon);
+        addresses::toolkitAddresses.CCSPlayer_WeaponServices_Destroy()(this, pWeapon);
 #else
         g_ToolkitAPI->Addresses()->CCSPlayer_WeaponServices_Destroy()(this, pWeapon);
 #endif

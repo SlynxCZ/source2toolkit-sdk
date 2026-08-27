@@ -53,7 +53,7 @@
 #define _INCLUDE_ITOOLKIT_ENTITIES_H
 
 #pragma once
-#include "IToolkitTypes.h"
+#include "IToolkitPlugin.h"
 
 #include "igameevents.h"
 #include "eiface.h"
@@ -154,7 +154,7 @@ public:
     virtual void AddEntityIOListener(IEntityIOListener* pListener,
                                      const char* pchClassName,
                                      const char* pchOutputName,
-                                     Mode nMode = Mode::Pre) = 0;
+                                     META_MODE nMode = MMODE_PRE) = 0;
 
     /**
 
@@ -163,7 +163,7 @@ public:
     virtual void RemoveEntityIOListener(IEntityIOListener* pListener,
                                         const char* pchClassName,
                                         const char* pchOutputName,
-                                        Mode nMode = Mode::Pre) = 0;
+                                        META_MODE nMode = MMODE_PRE) = 0;
 };
 
 #define FIND_PICKER_ENTITY(player, ...)           g_pToolkitEntities->FindPickerEntity(player, ##__VA_ARGS__)

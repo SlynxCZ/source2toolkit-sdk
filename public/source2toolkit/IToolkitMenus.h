@@ -49,7 +49,7 @@
 #define _INCLUDE_ITOOLKIT_MENUS_H
 
 #pragma once
-#include "IToolkitTypes.h"
+#include "IToolkitPlugin.h"
 
 #include "eiface.h"
 
@@ -69,7 +69,7 @@ Post select behavior
 ========================= */
 
 /**
- * @brief Action executed after selecting a menu option.
+ * @brief META_RES executed after selecting a menu option.
  */
 enum class PostSelectAction
 {

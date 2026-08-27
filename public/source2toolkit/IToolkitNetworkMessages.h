@@ -50,7 +50,7 @@
 #define _INCLUDE_ITOOLKIT_NETWORK_MESSAGES_H
 
 #pragma once
-#include "IToolkitTypes.h"
+#include "IToolkitPlugin.h"
 
 #include "mathlib/vector.h"
 #include "Color.h"
@@ -70,9 +70,9 @@ Callback types
  * @param messageid Network message ID.
  * @param msg       Opaque pointer to the protobuf message (cast to google::protobuf::Message*).
  *
- * @return Action::Ignore to allow, Action::Supersede to block.
+ * @return MRES_IGNORED to allow, MRES_SUPERCEDE to block.
  */
-using NetMessageServerHook = std::function<Action(uint64_t* clients, int messageid, void* msg)>;
+using NetMessageServerHook = std::function<META_RES(uint64_t* clients, int messageid, void* msg)>;
 
 /**
  * @brief Hook called when a client sends a message to the server, or for internal server sends.
@@ -81,9 +81,9 @@ using NetMessageServerHook = std::function<Action(uint64_t* clients, int message
  * @param messageid Network message ID.
  * @param msg       Opaque pointer to the protobuf message.
  *
- * @return Action::Ignore to allow, Action::Supersede to block.
+ * @return MRES_IGNORED to allow, MRES_SUPERCEDE to block.
  */
-using NetMessageClientHook = std::function<Action(CPlayerSlot slot, int messageid, void* msg)>;
+using NetMessageClientHook = std::function<META_RES(CPlayerSlot slot, int messageid, void* msg)>;
 
 /* =========================
 Core Toolkit Network Messages

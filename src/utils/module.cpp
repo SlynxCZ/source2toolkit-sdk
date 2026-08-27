@@ -41,7 +41,7 @@
 #include "core/module.h"
 #else
 #include "source2toolkit/IToolkitApi.h"
-#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/IToolkitPlugin.h"
 #endif
 
 IToolkitModule* IToolkitModule::New(const char* name)

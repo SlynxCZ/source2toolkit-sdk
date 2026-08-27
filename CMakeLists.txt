@@ -45,7 +45,13 @@ function(resolve_dep OUT_VAR ENV_NAME)
     endif()
 endfunction()
 
-resolve_dep(KHOOK KHOOK ${CMAKE_CURRENT_SOURCE_DIR}/vendor/khook)
+resolve_dep(SOURCEHOOK SOURCEHOOK ${CMAKE_CURRENT_SOURCE_DIR}/vendor/sourcehook)
+
+# The SDK carries the single SourceHook copy. Consumers that only need the
+# headers get them from ${SOURCEHOOK}/include; source2toolkit core, which owns
+# the engine instance, links the target this builds.
+set(SOURCEHOOK_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+add_subdirectory(${SOURCEHOOK} ${CMAKE_BINARY_DIR}/sourcehook)
 resolve_dep(SOURCESDK HL2SDKCS2)
 resolve_dep(PROTOBUFS CSGO_PROTO)
 
@@ -193,12 +199,6 @@ target_include_directories(source2toolkit-sdk PUBLIC
         ${SOURCESDK}/public/schemasystem
 )
 
-if (NOT SOURCE2TOOLKIT_CORE)
-    target_include_directories(source2toolkit-sdk PUBLIC
-            ${KHOOK}/include
-    )
-endif()
-
 # =========================
 # LINK SDK DEPENDENCIES
 # =========================
@@ -211,6 +211,7 @@ if (LINUX)
             ${SOURCESDK_LIB}/linux64/release/libprotobuf.a
             ${SOURCESDK_LIB}/linux64/libsteam_api.so
             Protobufs
+            sourcehook
     )
 endif()
 
@@ -221,8 +222,8 @@ if (WIN32)
             ${SOURCESDK_LIB}/public/win64/mathlib.lib
             ${SOURCESDK_LIB}/public/win64/2015/libprotobuf.lib
             ${SOURCESDK_LIB}/public/win64/steam_api64.lib
-						
             Protobufs
+            sourcehook
     )
 endif()
 

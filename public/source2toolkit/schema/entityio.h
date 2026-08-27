@@ -61,7 +61,7 @@
 #include "entityinstance.h"
 #include "entitysystem.h"
 #include "string_t.h"
-#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/IToolkitPlugin.h"
 
 /* =========================
 Connection descriptors
@@ -166,15 +166,15 @@ public:
     * @param flDelay Delay before execution
     * @param nMode Pre/Post hook
     *
-    * @return Action (Ignore / Override / Supersede)
+    * @return META_RES (Ignore / Override / Supersede)
       */
-    virtual Action OnEntityOutput(const char* pchOutputName,
+    virtual META_RES OnEntityOutput(const char* pchOutputName,
                                   CEntityInstance* pActivator,
                                   CEntityInstance* pCaller,
                                   float flDelay,
-                                  Mode nMode)
+                                  META_MODE nMode)
     {
-        return Action::Ignore;
+        return MRES_IGNORED;
     }
 };
 
@@ -188,22 +188,22 @@ public:
     CEntityInstance* m_pTarget;
 
     /// Callback handler
-    std::function<Action(const char*, CEntityInstance*, CEntityInstance*, float, Mode)> m_Callback;
+    std::function<META_RES(const char*, CEntityInstance*, CEntityInstance*, float, META_MODE)> m_Callback;
 
     CSingleEntityIOListener(CEntityInstance* target,
-                            std::function<Action(const char*, CEntityInstance*, CEntityInstance*, float, Mode)> cb)
+                            std::function<META_RES(const char*, CEntityInstance*, CEntityInstance*, float, META_MODE)> cb)
         : m_pTarget(target), m_Callback(std::move(cb))
     {
     }
 
-    Action OnEntityOutput(const char* outputName,
+    META_RES OnEntityOutput(const char* outputName,
                           CEntityInstance* pActivator,
                           CEntityInstance* pCaller,
                           float delay,
-                          Mode mode) override
+                          META_MODE mode) override
     {
         if (pCaller != m_pTarget)
-            return Action::Ignore;
+            return MRES_IGNORED;
 
         return m_Callback(outputName, pActivator, pCaller, delay, mode);
     }
@@ -221,7 +221,7 @@ public:
     CSingleEntityIOListener* m_pListener = nullptr;
     std::string m_szClassname;
     std::string m_szOutput;
-    Mode m_nMode = Mode::Pre;
+    META_MODE m_nMode = MMODE_PRE;
 
     /**
 

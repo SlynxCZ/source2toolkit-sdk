@@ -14,6 +14,7 @@
 #include "entity/enums/TakeDamageFlags_t.h"
 
 #include "ehandle.h"
+#include "gametrace.h"
 #include "tier1/mempool.h"
 
 class CCSPlayerPawn;

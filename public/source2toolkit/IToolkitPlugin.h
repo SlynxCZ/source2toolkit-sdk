@@ -55,6 +55,70 @@
 #pragma once
 #include "interfaces/interfaces.h"
 
+#include <cstddef>
+#include <cstdint>
+#include <cstring>
+#include <cstdio>
+
+// META_RES, and the SH_/RETURN_SH machinery plugins hook with.
+#include "sourcehook.h"
+
+/* =========================
+Execution mode
+========================= */
+
+// Good old metamod!
+
+// Flags returned by a plugin's api function.
+// NOTE: order is crucial, as greater/less comparisons are made.
+enum META_MODE
+{
+  MMODE_PRE=0,		// plugin does stuff before real function is called
+  MMODE_POST		// plugin does stuff after real function has been called
+};
+
+// Canonical SH_-branded names for the META_MODE values, same status as
+// SH_IFACEPTR/RETURN_SH/RETURN_SH_VALUE/SET_SH_RESULT -- MMODE_* is kept
+// working for existing plugin code, SHMODE_* is the preferred name for new
+// code (typed/manual *and* inline hooks alike, see sourcehook_inline.h).
+#define SHMODE_PRE      MMODE_PRE
+#define SHMODE_POST     MMODE_POST
+
+/* =========================
+Forward declarations
+========================= */
+
+using PluginId = int;
+class IToolkitAPI;
+
+// The TOOLKIT_EXPOSE/TOOLKIT_GLOBALVARS globals below are plain pointers, so
+// forward declarations are enough -- and they have to be here rather than rely
+// on the includes underneath. A TU that reaches this header *through* one of
+// those interface headers (e.g. IToolkitAddresses.h -> here) finds that
+// header's guard already set, so its include below is a no-op and the class
+// would otherwise still be unknown when the macros expand.
+class IToolkitAddresses;
+class IToolkitCommands;
+class IToolkitConVars;
+class IToolkitEntities;
+class IToolkitEvents;
+class IToolkitGameConfig;
+class IToolkitMenus;
+class IToolkitMySQL;
+class IToolkitNetworkMessages;
+class IToolkitScheduler;
+class IToolkitTrace;
+
+namespace SourceHook
+{
+    class ISourceHook;
+}
+
+// Everything below this line may use META_RES, META_MODE and the forward
+// declarations above. Nothing above it can: the interface headers include this
+// one back, and by then its guard is already set, so anything declared after
+// them would be invisible to them.
+
 #include "IToolkitAddresses.h"
 #include "IToolkitCommands.h"
 #include "IToolkitConVars.h"
@@ -66,22 +130,6 @@
 #include "IToolkitNetworkMessages.h"
 #include "IToolkitScheduler.h"
 #include "IToolkitTrace.h"
-
-#include <cstddef>
-#include <cstring>
-#include <cstdio>
-
-/* =========================
-Forward declarations
-========================= */
-
-using PluginId = int;
-class IToolkitAPI;
-
-namespace KHook
-{
-    class IKHook;
-}
 
 /* =========================
 Interface status
@@ -99,8 +147,14 @@ enum
 Export system
 ========================= */
 
-/// KHook interface name
-#define MMIFACE_KHOOK "IKHook"
+/// Source2Toolkit's own SourceHook engine, served through ToolkitFactory.
+///
+/// This is deliberately NOT metamod's shared SourceHook: the toolkit owns a
+/// private engine (sourcehook_metamod_override.h) so its hooks -- and every
+/// plugin's -- live on one instance that SH_CALL and SH_GET_INLINEHOOK_ORIGINAL
+/// can actually see through. Two independent engines patching the same address
+/// cannot bypass each other's handler chains.
+#define TOOLKIT_SOURCEHOOK_INTERFACE "S2ToolkitSourceHook001"
 
 /// Plugin interface name
 #define TOOLKIT_INTERFACE_NAME "S2ToolkitPlugin001"
@@ -255,8 +309,6 @@ Plugin exposure
 Globals
 ========================= */
 
-#include "khook.hpp"
-
 /**
 
 * @brief Defines global plugin variables.
@@ -265,7 +317,7 @@ Globals
 * * g_ToolkitAPI
 * * g_PluginAPI
 * * g_PluginID
-* * KHook interface
+* * g_SHPtr, repointed at the toolkit's engine
     */
 #define TOOLKIT_EXPOSE(name, var) \
     IToolkitAPI*             g_ToolkitAPI              = nullptr; \
@@ -282,7 +334,8 @@ Globals
     IToolkitNetworkMessages* g_pToolkitNetworkMessages = nullptr; \
     IToolkitScheduler*       g_pToolkitScheduler       = nullptr; \
     IToolkitTrace*           g_pToolkitTrace           = nullptr; \
-    namespace KHook { IKHook* __exported__khook = nullptr; } \
+    SourceHook::ISourceHook* g_SHPtr                   = nullptr; \
+    PluginId                 g_PLID                    = 0; \
     TOOLKIT_EXPOSURE_FUNC(name, var)
 
 /**
@@ -290,7 +343,6 @@ Globals
 * @brief Declares external globals.
   */
 #define TOOLKIT_GLOBALVARS() \
-    namespace KHook { extern IKHook* __exported__khook; } \
     extern IToolkitAPI*             g_ToolkitAPI; \
     extern IToolkitPlugin*          g_PluginAPI; \
     extern PluginId                 g_PluginID; \
@@ -304,7 +356,9 @@ Globals
     extern IToolkitMySQL*           g_pToolkitMySQL; \
     extern IToolkitNetworkMessages* g_pToolkitNetworkMessages; \
     extern IToolkitScheduler*       g_pToolkitScheduler; \
-    extern IToolkitTrace*           g_pToolkitTrace;
+    extern IToolkitTrace*           g_pToolkitTrace; \
+    extern SourceHook::ISourceHook* g_SHPtr; \
+    extern PluginId                 g_PLID;
 
 /**
 
@@ -314,9 +368,10 @@ Globals
   */
 #define TOOLKIT_SAVEVARS() \
     g_ToolkitAPI = api; \
-    KHook::__exported__khook = static_cast<KHook::IKHook*>(api->MetaFactory(MMIFACE_KHOOK, nullptr, nullptr)); \
     g_PluginAPI  = static_cast<IToolkitPlugin*>(this); \
     g_PluginID   = id; \
+    g_PLID       = id; \
+    g_SHPtr      = static_cast<SourceHook::ISourceHook*>(api->ToolkitFactory(TOOLKIT_SOURCEHOOK_INTERFACE, nullptr, nullptr)); \
     g_pToolkitAddresses       = (IToolkitAddresses*)      api->ToolkitFactory(TOOLKIT_ADDRESSES_INTERFACE,       nullptr, nullptr); \
     g_pToolkitCommands        = (IToolkitCommands*)       api->ToolkitFactory(TOOLKIT_COMMANDS_INTERFACE,        nullptr, nullptr); \
     g_pToolkitConVars         = (IToolkitConVars*)        api->ToolkitFactory(TOOLKIT_CONVARS_INTERFACE,         nullptr, nullptr); \
@@ -401,5 +456,19 @@ Interface helpers
         } \
         return false; \
     }
+
+/* =========================
+Plugin-side globals
+========================= */
+
+// Declared at the very bottom, below every macro definition: these headers
+// include each other in a cycle, so a TU entering through an interface header
+// re-enters this one with the guard already set. Anything expanded higher up
+// would hit a TOOLKIT_GLOBALVARS that is not defined yet.
+//
+// The toolkit core owns the definitions instead, so it opts out.
+#ifndef SOURCE2TOOLKIT_CORE
+TOOLKIT_GLOBALVARS();
+#endif
 
 #endif //_INCLUDE_ITOOLKIT_PLUGIN_H

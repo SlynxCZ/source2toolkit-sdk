@@ -53,7 +53,7 @@
 #define _INCLUDE_ITOOLKIT_CONVARS_H
 
 #pragma once
-#include "IToolkitTypes.h"
+#include "IToolkitPlugin.h"
 
 #include "convar.h"
 #include "eiface.h"

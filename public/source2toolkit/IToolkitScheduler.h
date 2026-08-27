@@ -50,7 +50,7 @@
 #define _INCLUDE_ITOOLKIT_SCHEDULER_H
 
 #pragma once
-#include "IToolkitTypes.h"
+#include "IToolkitPlugin.h"
 
 #include "eiface.h"
 

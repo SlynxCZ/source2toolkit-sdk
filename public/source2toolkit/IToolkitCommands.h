@@ -52,7 +52,7 @@
 #define _INCLUDE_ITOOLKIT_COMMANDS_H
 
 #pragma once
-#include "IToolkitTypes.h"
+#include "IToolkitPlugin.h"
 
 #include "convar.h"
 #include "eiface.h"
@@ -69,7 +69,7 @@ Forward declarations
 * @param cmd Parsed command arguments
 * @param mode Execution mode (Pre/Post)
   */
-using ChatHandler = std::function<void(const CCommandContext&, const CCommand&, Mode)>;
+using ChatHandler = std::function<void(const CCommandContext&, const CCommand&, META_MODE)>;
 
 /**
 
@@ -78,9 +78,9 @@ using ChatHandler = std::function<void(const CCommandContext&, const CCommand&, 
 * @param ctx Command execution context
 * @param cmd Parsed command arguments
 * @param mode Execution mode (Pre/Post)
-* @return Action describing how to handle execution (Ignore, Override, Supersede)
+* @return META_RES describing how to handle execution (Ignore, Override, Supersede)
   */
-using CommandHandler = std::function<Action(const CCommandContext&, const CCommand&, Mode)>;
+using CommandHandler = std::function<META_RES(const CCommandContext&, const CCommand&, META_MODE)>;
 
 /* =========================
 Core Toolkit Commands
@@ -137,12 +137,12 @@ public:
     * @param handler Callback executed on command execution
     * @param mode Execution mode (Pre = before original, Post = after original)
     *
-    * @return Action to control command execution:
+    * @return META_RES to control command execution:
     * * Ignore: do nothing
     * * Override: override return value but still call original (Pre only)
     * * Supersede: block original execution (Pre only)
         */
-    virtual void RegConListener(PluginId owner, const char* pchName, CommandHandler handler, Mode mode) = 0;
+    virtual void RegConListener(PluginId owner, const char* pchName, CommandHandler handler, META_MODE mode) = 0;
 };
 
 #define REG_CHAT_COMMAND(pchName, handler) \

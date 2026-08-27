@@ -53,8 +53,9 @@
 #define _INCLUDE_ITOOLKIT_TRACE_H
 
 #pragma once
-#include "IToolkitTypes.h"
+#include "IToolkitPlugin.h"
 
+#include "bspflags.h"
 #include "gametrace.h"
 #include "eiface.h"
 

@@ -39,13 +39,15 @@
 #include "source2toolkit/utils/virtual.h"
 
 #ifdef SOURCE2TOOLKIT_CORE
+// Most engine pointers are interfaces.h's own globals now; shared.h only still
+// carries what that header cannot express (see its comment).
+#include "interfaces/interfaces.h"
 #include "core/shared.h"
 #include "core/gameconfig.h"
 #else
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitGameConfig.h"
 #include "source2toolkit/IToolkitPlugin.h"
-#include "source2toolkit/IToolkitTypes.h"
 #endif
 
 #include "platform.h"
@@ -90,7 +92,7 @@ CGlobalVars* GetGlobalVars()
 ICvar* GetCVar()
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    return shared::g_pCVar;
+    return g_pCVar;
 #else
     return g_ToolkitAPI->GetCVar();
 #endif
@@ -99,16 +101,16 @@ ICvar* GetCVar()
 ISource2Server* GetSource2Server()
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    return shared::g_pServer;
+    return g_pSource2Server;
 #else
     return g_ToolkitAPI->GetSource2Server();
 #endif
 }
 
-IVEngineServer* GetEngineServer()
+IVEngineServer2* GetEngineServer()
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    return shared::g_pEngine;
+    return g_pEngineServer;
 #else
     return g_ToolkitAPI->GetEngineServer();
 #endif
@@ -125,7 +127,7 @@ IGameEventSystem* GetGameEventSystem()
 INetworkMessages* GetNetworkMessages()
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    return shared::g_pNetworkMessages;
+    return g_pNetworkMessages;
 #else
     return g_ToolkitAPI->GetNetworkMessages();
 #endif
@@ -134,7 +136,7 @@ INetworkMessages* GetNetworkMessages()
 INetworkServerService* GetNetworkServerService()
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    return shared::g_pNetworkServerService;
+    return g_pNetworkServerService;
 #else
     return g_ToolkitAPI->GetNetworkServerService();
 #endif

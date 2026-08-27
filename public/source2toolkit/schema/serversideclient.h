@@ -1,6 +1,10 @@
 ﻿//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose:
+// Purpose: Engine-side client reconstruction for CS2, self-contained.
+//
+// Everything this needs that hl2sdk-cs2 does not ship is reconstructed inline
+// below: the CNetMessagePB wrappers, CClientFrame/CClientFrameManager, and the
+// CUtlSlot/CUtlSignaller_Base base subobject.
 //
 //=============================================================================//
 #ifndef SERVERSIDECLIENT_H
@@ -10,49 +14,47 @@
 #pragma once
 #endif
 
+#include "clientframe.h"
+#include "netmessages.h"
+
+#include "bitvec.h"
+#include "checktransmitinfo.h"
+#include "circularbuffer.h"
+#include "const.h"
 #include "inetchannel.h"
 #include "playerslot.h"
-
-#include "entity2/entityidentity.h"
-#include "steam/steamclientpublic.h"
-#include "clientframe.h"
-#include "tier0/annotations.h"
-#include "tier1/netadr.h"
-#include "circularbuffer.h"
+#include "utlcommon.h"
+#include "utldict.h"
 #include "utlstring.h"
-#include "networksystem/inetworksystem.h"
 #include "threadtools.h"
 
-#include "netmessages.h"
-#include "utldict.h"
+#include "entity2/entityidentity.h"
+#include "networksystem/inetworksystem.h"
+#include "networksystem/netmessage.h"
+#include "steam/steamclientpublic.h"
+#include "tier0/annotations.h"
+#include "tier0/tslist.h"
+#include "tier1/mempool.h"
+#include "tier1/netadr.h"
 
-#include "network_connection.pb.h"
+#include "netmessages.pb.h"
 #include "networkbasetypes.pb.h"
+#include "network_connection.pb.h"
+#include "networksystem_protomessages.pb.h"
+
+#undef min
+#undef max
 
 class CHLTVServer;
 class INetMessage;
 class CNetworkGameServerBase;
 class CNetworkGameServer;
+class CCommand;
 
-class CMsg_CVars;
-class CNETMsg_StringCmd_t;
-class CNETMsg_Tick_t;
-class CNETMsg_SpawnGroup_LoadCompleted_t;
-class CCLCMsg_ClientInfo_t;
-class CCLCMsg_BaselineAck_t;
-class CCLCMsg_LoadingProgress_t;
-class CCLCMsg_SplitPlayerConnect_t;
-class CCLCMsg_SplitPlayerDisconnect_t;
-class CCLCMsg_CmdKeyValues_t;
-class CCLCMsg_Move_t;
-class CCLCMsg_VoiceData_t;
-class CCLCMsg_FileCRCCheck_t;
-class CCLCMsg_RespondCvarValue_t;
-class NetMessagePacketStart_t;
-class NetMessagePacketEnd_t;
-class NetMessageConnectionClosed_t;
-class NetMessageConnectionCrashed_t;
-class NetMessageSplitscreenUserChanged_t;
+//-----------------------------------------------------------------------------
+// Pad-based mirror, for reading a client out of a message pre-filter without
+// pulling in the full layout below.
+//-----------------------------------------------------------------------------
 
 class INetworkMessageProcessingPreFilterCustom
 {
@@ -68,32 +70,38 @@ public:
 	netadr_t* GetRemoteAddress() const { return (netadr_t*)&m_NetAdr; }
 
 private:
-	[[maybe_unused]] char pad1[0x40];
+	char pad1[0x40];
 #ifdef __linux__
-	[[maybe_unused]] char pad2[0x10];
+	char pad2[0x10];
 #endif
 	INetChannel* m_NetChannel;		// 80 | 96
-	[[maybe_unused]] char pad3[0x4];
+	char pad3[0x4];
 	int32 m_nSignonState;			// 92 | 108
-	[[maybe_unused]] char pad4[0x38];
+	char pad4[0x38];
 	bool m_bFakePlayer;				// 152 | 168
-	[[maybe_unused]] char pad5[0x7];
+	char pad5[0x7];
 	CPlayerUserId m_UserID;			// 160 | 176
-	[[maybe_unused]] char pad6[0x1];
+	char pad6[0x1];
 	CSteamID m_SteamID;				// 163 | 179
-	[[maybe_unused]] char pad7[0x25];
+	char pad7[0x25];
 	CPlayerSlot m_nClientSlot;		// 208 | 224
 	CEntityIndex m_nEntityIndex;	// 212 | 228
 	CUtlString m_Name;				// 216 | 232
-	[[maybe_unused]] char pad8[0x20];
+	char pad8[0x20];
 	netadr_t m_NetAdr;				// 256 | 272
-	[[maybe_unused]] char pad9[0x40];
+	char pad9[0x40];
 	int m_nDeltaTick;				// 332 | 348
 };
 
-struct HltvReplayStats_t {
-	enum FailEnum_t {
-		FAILURE_ALREADY_IN_REPLAY,
+//-----------------------------------------------------------------------------
+// HLTV replay bookkeeping
+//-----------------------------------------------------------------------------
+
+struct HltvReplayStats_t
+{
+	enum FailEnum_t
+	{
+		FAILURE_ALREADY_IN_REPLAY = 0,
 		FAILURE_TOO_FREQUENT,
 		FAILURE_NO_FRAME,
 		FAILURE_NO_FRAME2,
@@ -102,33 +110,41 @@ struct HltvReplayStats_t {
 		NUM_FAILURES
 	};
 
-	uint nClients;
-	uint nStartRequests;
-	uint nSuccessfulStarts;
-	uint nStopRequests;
-	uint nAbortStopRequests;
-	uint nUserCancels;
-	uint nFullReplays;
-	uint nNetAbortReplays;
-	uint nFailedReplays[NUM_FAILURES];
+	uint32 m_nClients;
+	uint32 m_nStartRequests;
+	uint32 m_nSuccessfulStarts;
+	uint32 m_nStopRequests;
+	uint32 m_nAbortStopRequests;
+	uint32 m_nUserCancels;
+	uint32 m_nFullReplays;
+	uint32 m_nNetAbortReplays;
+	uint32 m_nFailedReplays[NUM_FAILURES];
 }; // sizeof 56
-COMPILE_TIME_ASSERT(sizeof(HltvReplayStats_t) == 56);
+COMPILE_TIME_ASSERT( sizeof( HltvReplayStats_t ) == 56 );
 
-struct Spike_t {
+struct Spike_t
+{
 public:
 	CUtlString m_szDesc;
 	int m_nBits;
 };
-COMPILE_TIME_ASSERT(sizeof(Spike_t) == 16);
+COMPILE_TIME_ASSERT( sizeof( Spike_t ) == 16 );
 
-class CNetworkStatTrace {
+class CNetworkStatTrace
+{
 public:
 	CUtlVector<Spike_t> m_Records;
 	int m_nMinWarningBytes;
 	int m_nStartBit;
 	int m_nCurBit;
 };
-COMPILE_TIME_ASSERT(sizeof(CNetworkStatTrace) == 40);
+COMPILE_TIME_ASSERT( sizeof( CNetworkStatTrace ) == 40 );
+
+//-----------------------------------------------------------------------------
+// hl2sdk-cs2 only forward-declares CUtlSlot (engine/igameeventsystem.h) and has
+// no CUtlSignaller_Base at all, so the base subobject is reconstructed here.
+// Layout only -- none of this is meant to be instantiated.
+//-----------------------------------------------------------------------------
 
 class CUtlSignaller_Base
 {
@@ -148,7 +164,7 @@ public:
 private:
 	Delegate_t m_SlotDeletionDelegate;
 };
-COMPILE_TIME_ASSERT(sizeof(CUtlSignaller_Base) == 24);
+COMPILE_TIME_ASSERT( sizeof( CUtlSignaller_Base ) == 24 );
 
 enum CopiedLockState_t : int32
 {
@@ -180,11 +196,22 @@ private:
 	CCopyableLock<CThreadFastMutex> m_Mutex;
 	CUtlVector<MTElement_t> m_ConnectedSignallers;
 };
-COMPILE_TIME_ASSERT(sizeof(CUtlSlot) == 40);
+COMPILE_TIME_ASSERT( sizeof( CUtlSlot ) == 40 );
+
+//-----------------------------------------------------------------------------
+// The engine-side client
+//-----------------------------------------------------------------------------
 
 class CServerSideClientBase : public CUtlSlot, public INetworkChannelNotify, public INetworkMessageProcessingPreFilter
 {
 public:
+	enum ESlotState
+	{
+		SLOT_NONE = 0, // Slot is not held for reconnect: either an active connected client or a free slot
+		SLOT_HELD_FOR_RECONNECT = 1, // Disconnected client slot held for reconnect. This is transient and engine-managed
+		SLOT_RESERVED = 2, // Reserved placeholder that has not connected yet. This state is sticky
+	};
+
 	virtual ~CServerSideClientBase() = 0;
 
 public:
@@ -193,9 +220,10 @@ public:
 	CEntityIndex             GetEntityIndex() const { return m_nEntityIndex; }
 	CSteamID                 GetClientSteamID() const { return m_SteamID; }
 	const char              *GetClientName() const { return m_Name; }
-	INetChannel             *GetNetChannel() const { return m_NetChannel; }
-	const netadr_t          *GetRemoteAddress() const { return &m_nAddr.GetAddress(); }
-	CNetworkGameServerBase  *GetServer() const { return m_Server; }
+	INetChannel             *GetNetChannel() const { return m_pNetChannel; }
+	ESlotState               GetSlotState() const { return m_eSlotState; }
+	const netadr_t          *GetRemoteAddress() const { return &m_Addr.GetAddress(); }
+	CNetworkGameServerBase  *GetServer() const { return m_pGameServer; }
 
 	virtual void             Connect( int socket, const char* pszName, int nUserID, INetChannel* pNetChannel, uint8 nConnectionTypeFlags, uint32 uChallengeNumber ) = 0; // bool bFakePlayer = !nConnectionTypeFlags || (nConnectionTypeFlags & 8) != 0;
 	virtual void             Inactivate( const char *pszAddons ) = 0;
@@ -211,7 +239,7 @@ public:
 
 	virtual void             Clear() = 0;
 
-	virtual bool             ExecuteStringCommand( const CNETMsg_StringCmd_t& msg ) = 0; // "false" trigger an anti spam counter to kick a client.
+	virtual bool             ExecuteStringCommand( const CNETMsg_StringCmd_t &msg ) = 0; // "false" trigger an anti spam counter to kick a client.
 	virtual bool             SendNetMessage( const CNetMessage *pData, NetChannelBufType_t bufType = BUF_DEFAULT ) = 0;
 
 	// "Client %d(%s) tried to send a RebroadcastSourceId msg.\n"
@@ -236,8 +264,8 @@ public:
 	virtual bool             IsSplitScreenUser() const { return m_bSplitScreenUser; }
 
 public: // Message Handlers
-	virtual bool             ProcessTick( const CNETMsg_Tick_t& msg ) = 0;
-	virtual bool             ProcessStringCmd( const CNETMsg_StringCmd_t& msg ) = 0;
+	virtual bool             ProcessTick( const CNETMsg_Tick_t &msg ) = 0;
+	virtual bool             ProcessStringCmd( const CNETMsg_StringCmd_t &msg ) = 0;
 
 public:
 	virtual bool             ApplyConVars( const CMsg_CVars &list ) = 0;
@@ -281,7 +309,11 @@ public:
 	virtual void             PerformPrespawn() = 0;
 
 public:
-	virtual void             ExecuteDelayedCall( void * ) = 0;
+	// The engine dispatches this through a family of CDelayedCallBase payloads
+	// (spawn group activate/deactivate, deferred SendNetMessage, baseline ack,
+	// disconnect, ...). hl2sdk-cs2 has no delayedcall.h, so only the vtable
+	// slot is reproduced here.
+	virtual void             ExecuteDelayedCall( empty_t & ) = 0;
 
 	virtual bool             UpdateAcknowledgedFramecount( int tick ) = 0;
 	void                     ForceFullUpdate()
@@ -347,8 +379,8 @@ public:
 	CUtlString m_Name;
 	CPlayerSlot m_nClientSlot;
 	CEntityIndex m_nEntityIndex;
-	CNetworkGameServerBase* m_Server;
-	INetChannel* m_NetChannel;
+	CNetworkGameServerBase *m_pGameServer;
+	INetChannel *m_pNetChannel;
 	// CServerSideClientBase::Connect( name='%s', userid=%d, fake=%d, connectiontypeflags=%d, chan->addr=%s )
 	uint8 m_nConnectionTypeFlags;
 	uint8 m_nAsyncDisconnectFlags; // check in Disconnect function, 1 add to queue, 2 disconnect now
@@ -357,10 +389,11 @@ public:
 	bool m_bSplitScreenUser;
 	bool m_bSplitAllowFastDisconnect;
 	int m_nSplitScreenPlayerSlot;
-	CServerSideClientBase* m_SplitScreenUsers[4];
-	CServerSideClientBase* m_pAttachedTo;
+	CServerSideClientBase *m_SplitScreenUsers[4];
+	CServerSideClientBase *m_pAttachedTo;
 	bool m_bSplitPlayerDisconnecting;
-	int m_nDisconnectionTypeFlags;
+
+	ESlotState m_eSlotState;
 	bool m_bFakePlayer;
 	bool m_bInitialSpawnSent;	// init TRUE; controls whether initial spawn data was sent
 	int m_nDisconnectSequence;	// set from server counter in Disconnect(), zeroed in Clear()
@@ -371,10 +404,10 @@ public:
 	CSteamID m_DisconnectedSteamID;
 	CSteamID m_AuthTicketSteamID;
 	CSteamID m_nFriendsID;
-	ns_address m_nAddr;
-	ns_address m_nAddr2;
-	KeyValues* m_ConVars;
-	CUtlDict<empty_t, int, k_eDictCompareTypeCaseInsensitiveFast> m_UnrecognizedConVarDict;
+	ns_address m_Addr;
+	ns_address m_DisconnectedAddr;
+	KeyValues *m_pConVars;
+	CUtlDict< empty_t, int, k_eDictCompareTypeCaseInsensitiveFast > m_UnrecognizedConVarDict;
 
 	bool m_bConVarsChanged;
 	bool m_bConVarsInitialized;
@@ -388,12 +421,12 @@ public:
 	int m_nHltvReplayDeltaTick;		// init -1; delta tick used during HLTV replay mode
 	int m_nStringTableAckTick;
 	int m_nBaselineSequence;		// baseline sequence number for baseline ack processing
-	CFrameSnapshot* m_pLastSnapshot;	// last send snapshot
-	CUtlVector<void*> m_vecLoadedSpawnGroups;
+	CFrameSnapshot *m_pLastSnapshot;	// last send snapshot
+	CUtlVector< SpawnGroupHandle_t > m_vecLoadedSpawnGroups;
 	CMsgPlayerInfo m_playerInfo;
-	CFrameSnapshot* m_pBaseline;
+	CFrameSnapshot *m_pBaseline;
 	int m_nBaselineUpdateTick;
-	CBitVec<MAX_EDICTS>	m_BaselinesSent;
+	CBitVec< MAX_EDICTS > m_BaselinesSent;
 	int	m_nBaselineUsed;		// 0/1 toggling flag, singaling client what baseline to use
 	int	m_nLoadingProgress;	// 0..100 progress, only valid during loading
 
@@ -423,14 +456,14 @@ public:
 	float m_fUnkTime = 0.0f;
 
 	// CSVCMsg_PacketEntities_t (CNetMessagePB<55,...>), sizeof 216 bytes
-	CSVCMsg_PacketEntities m_PacketEntities;
+	CSVCMsg_PacketEntities_t m_PacketEntities;
 
 	// CDelayedCallBase<CDelayedCallBase<CServerSideClientBase>>* pointers.
-	CTSQueue<void*> m_DelayedCallQueue;
+	CTSQueue< void * > m_DelayedCallQueue;
 
 	// Queued message buffers
-	CUtlVector<void*> m_PendingReliableMessages;
-	CUtlVector<void*> m_PendingUnreliableMessages;
+	CUtlVector< void * > m_PendingReliableMessages;
+	CUtlVector< void * > m_PendingUnreliableMessages;
 
 	// Command rate limiter
 	int m_nMaxTicksWindow = 30;
@@ -447,7 +480,7 @@ public:
 	int m_nLastSpamCheckTick = 0;	// last tick at which the spam counter was evaluated/reset
 	double m_lastExecutedCommand = 0.0; // if command executed more than once per second, ++m_spamCommandCount
 	bool m_bPendingSignonStateMsg = false; // set when signon -> CONNECTED, consumed in ProcessSignonStateMsg
-	CCommand* m_pCommand;
+	CCommand *m_pLastCommand;
 }; // sizeof 3024 (Windows), 3016 (Linux)
 
 class CServerSideClient : public CServerSideClientBase
@@ -460,16 +493,16 @@ public:
 	CPlayerBitVec m_VoiceProximity;
 	CCheckTransmitInfo m_PackInfo;
 	CClientFrameManager m_FrameManager;
-	void* m_pUnk3800;
-	CClientFrame* m_pCurrentFrame;
+	void *m_pUnk0EC8;
+	CClientFrame *m_pCurrentFrame;
 	float m_flLastClientCommandQuotaStart = 0.0f;
 	float m_flTimeClientBecameFullyConnected = -1.0f;
 	bool m_bVoiceLoopback = false;
 	bool m_bHltvReplayFromStash = false;
-	bool m_bUnk10 = false;
-	char _padEF3;
+	bool m_bUnk0EE2 = false;
+	char m_Pad0EE3;
 	int m_nHltvReplayDelay = 0;
-	CHLTVServer* m_pHltvReplayServer;
+	CHLTVServer *m_pHltvReplayServer;
 	int m_nHltvReplayStopAt;
 	int m_nHltvReplayStartAt;
 	int m_nHltvReplaySlowdownBeginAt;
@@ -477,9 +510,10 @@ public:
 	float m_flHltvReplaySlowdownRate;
 	int m_nHltvLastSendTick;
 	double m_flHltvLastReplayRequestTime;
-	CUtlVector<INetMessage*> m_HltvQueuedMessages;
+	CUtlVector< INetMessage * > m_HltvQueuedMessages;
 	HltvReplayStats_t m_HltvReplayStats;
-	void* m_pSendJob;
+	// CThreadedJobWithDependencies* -- hl2sdk-cs2 has no threadedjob.h
+	void *m_pSendJob;
 }; // sizeof 3968
 
 class CHLTVClient : public CServerSideClientBase
@@ -488,21 +522,21 @@ public:
 	virtual ~CHLTVClient() = 0;
 
 public:
-	CNetworkGameServerBase* m_pHLTV;
+	CNetworkGameServerBase *m_pHLTV;
 	CUtlString m_szPassword;
 	CUtlString m_szChatGroup;
 	double m_fLastSendTime = 0.0;
 	double m_flLastChatTime = 0.0;
-	int m_nUnknown1 = 0;
+	int m_nLastSendTick = 0;
 	int m_nSpawnGroupsSent = 0;
 	int m_bNeedsFullFrame = 0;
 	int m_nFullFrameTick = 0;
-	int m_nLastSendTick = 0;
+	int m_nUnk0C00 = 0;
 	bool m_bNoChat = false;
-	bool m_bUnkBool = false;
-	bool m_bUnkBool2 = false;
-	void* m_pJob;
-	CUtlVector<INetMessage*> m_QueuedMessages;
+	bool m_bUnk0C05 = false;
+	bool m_bUnk0C06 = false;
+	void *m_pJob;
+	CUtlVector< INetMessage * > m_QueuedMessages;
 }; // sizeof 3120
 
 #endif // SERVERSIDECLIENT_H

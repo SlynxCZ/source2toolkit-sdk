@@ -50,7 +50,7 @@
 #define _INCLUDE_ITOOLKIT_EVENTS_H
 
 #pragma once
-#include "IToolkitTypes.h"
+#include "IToolkitPlugin.h"
 
 #include "igameevents.h"
 #include "eiface.h"
@@ -67,12 +67,12 @@ Forward declarations
 * @param mode Execution mode (Pre/Post)
 * @param dontBroadcast Set to true to prevent event from being sent to clients
 *
-* @return Action:
+* @return META_RES:
 * * Ignore: no changes
 * * Override: modify event but still allow original execution (Pre only)
 * * Supersede: block original execution (Pre only)
     */
-using GameEventHandler = std::function<Action(IGameEvent* event, Mode mode, bool& dontBroadcast)>;
+using GameEventHandler = std::function<META_RES(IGameEvent* event, META_MODE mode, bool& dontBroadcast)>;
 
 /* =========================
 Core Toolkit Events
@@ -105,7 +105,7 @@ public:
     * * Pre: called before engine processes the event
     * * Post: called after engine processes the event
         */
-    virtual void HookGameEvent(PluginId owner, const char* pchName, GameEventHandler handler, Mode mode) = 0;
+    virtual void HookGameEvent(PluginId owner, const char* pchName, GameEventHandler handler, META_MODE mode) = 0;
 };
 
 /**

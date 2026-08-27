@@ -44,11 +44,12 @@
 #include "ehandle.h"
 #include "entityhandle.h"
 #include "vector.h"
+#include "utlbinaryblock.h"
 #include "utlsymbol.h"
 #include "utlsymbollarge.h"
 #include "utlstring.h"
 #include "utlstringtoken.h"
-#include "source2toolkit/IToolkitTypes.h"
+#include "source2toolkit/IToolkitPlugin.h"
 #include "source2toolkit/schema/entityio.h"
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
@@ -187,7 +188,7 @@ public:
     /// <summary>Add delayed entity IO event.</summary>
     void AddEntityIOEvent(const char* pszInput, CEntityInstance* pActivator = nullptr, CEntityInstance* pCaller = nullptr, const char* pszValue = "", float flDelay = 0.0f);
     /// <summary>Add signle entity IO listener.</summary>
-    CEntityIOListenerHandle* AddSingleEntityIOListener(const char* pszOutput, std::function<Action(const char*,CEntityInstance*, CEntityInstance*, float, Mode)> callback, Mode mode);
+    CEntityIOListenerHandle* AddSingleEntityIOListener(const char* pszOutput, std::function<META_RES(const char*,CEntityInstance*, CEntityInstance*, float, META_MODE)> callback, META_MODE mode);
     /// <summary>Get absolute origin.</summary>
     Vector GetAbsOrigin();
     /// <summary>Get local rotation.</summary>

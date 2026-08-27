@@ -53,7 +53,7 @@
 #define _INCLUDE_ITOOLKIT_MYSQL_H
 
 #pragma once
-#include "IToolkitTypes.h"
+#include "IToolkitPlugin.h"
 
 #include <functional>
 #include <string>

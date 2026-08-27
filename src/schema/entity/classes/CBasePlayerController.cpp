@@ -47,7 +47,7 @@
 
 void CBasePlayerController::SetPawn(CBasePlayerPawn* pPawn){
 #ifdef SOURCE2TOOLKIT_CORE
-    addresses::toolkitAddresses.SetPawn(this, pPawn, true, false, false, false);
+    addresses::toolkitAddresses.CBasePlayerController_SetPawn()(this, pPawn, true, false, false, false);
 #else
     g_ToolkitAPI->Addresses()->CBasePlayerController_SetPawn()(this, pPawn, true, false, false, false);
 #endif
