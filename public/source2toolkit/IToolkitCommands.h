@@ -78,7 +78,7 @@ using ChatHandler = std::function<void(const CCommandContext&, const CCommand&, 
 * @param ctx Command execution context
 * @param cmd Parsed command arguments
 * @param mode Execution mode (Pre/Post)
-* @return META_RES describing how to handle execution (Ignore, Override, Supersede)
+* @return META_RES describing how to handle execution (MRES_IGNORED, MRES_HANDLED, MRES_OVERRIDE, MRES_SUPERCEDE)
   */
 using CommandHandler = std::function<META_RES(const CCommandContext&, const CCommand&, META_MODE)>;
 
@@ -138,9 +138,10 @@ public:
     * @param mode Execution mode (Pre = before original, Post = after original)
     *
     * @return META_RES to control command execution:
-    * * Ignore: do nothing
-    * * Override: override return value but still call original (Pre only)
-    * * Supersede: block original execution (Pre only)
+    * * MRES_IGNORED: do nothing
+    * * MRES_HANDLED: did something, original still runs
+    * * MRES_OVERRIDE: override return value but still call original (Pre only)
+    * * MRES_SUPERCEDE: block original execution (Pre only)
         */
     virtual void RegConListener(PluginId owner, const char* pchName, CommandHandler handler, META_MODE mode) = 0;
 };

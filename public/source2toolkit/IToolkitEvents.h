@@ -68,9 +68,10 @@ Forward declarations
 * @param dontBroadcast Set to true to prevent event from being sent to clients
 *
 * @return META_RES:
-* * Ignore: no changes
-* * Override: modify event but still allow original execution (Pre only)
-* * Supersede: block original execution (Pre only)
+* * MRES_IGNORED: no changes
+* * MRES_HANDLED: did something, original still runs
+* * MRES_OVERRIDE: modify event but still allow original execution (Pre only)
+* * MRES_SUPERCEDE: block original execution (Pre only)
     */
 using GameEventHandler = std::function<META_RES(IGameEvent* event, META_MODE mode, bool& dontBroadcast)>;
 

@@ -69,7 +69,7 @@ Post select behavior
 ========================= */
 
 /**
- * @brief META_RES executed after selecting a menu option.
+ * @brief Action executed after selecting a menu option.
  */
 enum class PostSelectAction
 {

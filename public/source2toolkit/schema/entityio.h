@@ -166,7 +166,7 @@ public:
     * @param flDelay Delay before execution
     * @param nMode Pre/Post hook
     *
-    * @return META_RES (Ignore / Override / Supersede)
+    * @return META_RES (MRES_IGNORED / MRES_HANDLED / MRES_OVERRIDE / MRES_SUPERCEDE)
       */
     virtual META_RES OnEntityOutput(const char* pchOutputName,
                                   CEntityInstance* pActivator,
