@@ -146,7 +146,7 @@ public:
     virtual void RegConListener(PluginId owner, const char* pchName, CommandHandler handler, bool post) = 0;
 };
 
-#define REG_CHAT_COMMAND(pchName, handler) \
+#define REG_CHAT_LISTENER(pchName, handler) \
     g_pToolkitCommands->RegChatListener(g_PluginID, pchName, handler)
 
 #define REG_CON_COMMAND(pchName, handler) \

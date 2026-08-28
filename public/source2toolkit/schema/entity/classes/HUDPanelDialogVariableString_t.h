@@ -63,6 +63,11 @@ public:
     SCHEMA_FIELD(uint16_t, m_nDialogVariableIndex);
     SCHEMA_FIELD(CUtlString, m_sValue);
     SCHEMA_FIELD(bool, m_bIsSet);
+
+public:
+    /// <summary>Constructs new object with correct vtable pointer.</summary>
+    HUDPanelDialogVariableString_t(uint16 nPanelIdIndex, uint16 nDialogVariableIndex, CUtlString sValue, bool bIsSet);
+    bool operator==(const HUDPanelDialogVariableString_t& other) const;
 };
 
 #endif // _INCLUDE_HUDPANELDIALOGVARIABLESTRING_T_H

@@ -64,6 +64,11 @@ public:
     SCHEMA_FIELD(uint16_t, m_nPanelIdIndex);
     SCHEMA_FIELD(uint16_t, m_nClassNameIndex);
     SCHEMA_FIELD(EHudPanelClassStatus_t, m_eClassStatus);
+
+public:
+    /// <summary>Constructs new object with correct vtable pointer.</summary>
+    HUDPanelHasClass_t(uint16 nPanelIdIndex, uint16 nClassNameIndex, bool bHasClass);
+    bool operator==(const HUDPanelHasClass_t& other) const;
 };
 
 #endif // _INCLUDE_HUDPANELHASCLASS_T_H

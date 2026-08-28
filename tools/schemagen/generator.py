@@ -654,6 +654,16 @@ MANUAL_METHODS: dict[str, list[str]] = {
         "/// <summary>Get player pawn.</summary>",
         "CCSPlayerPawn* GetPlayerPawn();",
     ],
+    "HUDPanelDialogVariableString_t": [
+        "/// <summary>Constructs new object with correct vtable pointer.</summary>",
+        "HUDPanelDialogVariableString_t(uint16 nPanelIdIndex, uint16 nDialogVariableIndex, CUtlString sValue, bool bIsSet);",
+        "bool operator==(const HUDPanelDialogVariableString_t& other) const;"
+    ],
+    "HUDPanelHasClass_t": [
+        "/// <summary>Constructs new object with correct vtable pointer.</summary>",
+        "HUDPanelHasClass_t(uint16 nPanelIdIndex, uint16 nClassNameIndex, bool bHasClass);",
+        "bool operator==(const HUDPanelHasClass_t& other) const;"
+    ],
 }
 
 # Classes manually whitelisted after BFS
