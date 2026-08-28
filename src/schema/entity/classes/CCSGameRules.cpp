@@ -51,6 +51,7 @@
 #include "source2toolkit/IToolkitGameConfig.h"
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitPlugin.h"
+TOOLKIT_GLOBALVARS();
 #endif
 
 void CCSGameRules::TerminateRound(float flDelay, int32_t eRoundEndReason)

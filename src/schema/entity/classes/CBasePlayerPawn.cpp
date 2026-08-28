@@ -48,6 +48,7 @@
 #include "source2toolkit/IToolkitGameConfig.h"
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitPlugin.h"
+TOOLKIT_GLOBALVARS();
 #endif
 
 void CBasePlayerPawn::CommitSuicide(bool bExplode, bool bForce) {

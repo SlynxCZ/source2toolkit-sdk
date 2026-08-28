@@ -57,9 +57,9 @@
 
 #include "CBasePlayerController.h"
 #include "../enums/DamageTypes_t.h"
-#include "../enums/ENetworkDisconnectionReason.h"
 #include "IntervalTimer.h"
 #include "../enums/QuestProgress__Reason.h"
+#include "source2toolkit/schema/serversideclient.h"
 
 class CCSObserverPawn;
 class CCSPlayerController_ActionTrackingServices;
@@ -207,6 +207,8 @@ public:
     void ExecuteClientCommand(const char* pszCommand);
     /// <summary>Execute command from server.</summary>
     void ExecuteClientCommandFromServer(const char* pszCommand);
+    /// <summary>Get server side engine client.</summary>
+    CServerSideClient* GetServerSideClient();
     /// <summary>Get pawn.</summary>
     CCSPlayerPawn* GetPawn();
     /// <summary>Get player pawn.</summary>

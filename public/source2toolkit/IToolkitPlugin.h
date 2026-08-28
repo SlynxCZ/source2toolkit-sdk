@@ -457,18 +457,4 @@ Interface helpers
         return false; \
     }
 
-/* =========================
-Plugin-side globals
-========================= */
-
-// Declared at the very bottom, below every macro definition: these headers
-// include each other in a cycle, so a TU entering through an interface header
-// re-enters this one with the guard already set. Anything expanded higher up
-// would hit a TOOLKIT_GLOBALVARS that is not defined yet.
-//
-// The toolkit core owns the definitions instead, so it opts out.
-#ifndef SOURCE2TOOLKIT_CORE
-TOOLKIT_GLOBALVARS();
-#endif
-
 #endif //_INCLUDE_ITOOLKIT_PLUGIN_H

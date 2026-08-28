@@ -42,6 +42,7 @@
 #else
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitPlugin.h"
+TOOLKIT_GLOBALVARS();
 #endif
 
 IToolkitModule* IToolkitModule::New(const char* name)

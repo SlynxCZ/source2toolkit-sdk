@@ -46,6 +46,7 @@
 #include "source2toolkit/IToolkitAddresses.h"
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitPlugin.h"
+TOOLKIT_GLOBALVARS();
 #endif
 
 CUtlSymbolLarge CBaseModelEntity::GetModelName()

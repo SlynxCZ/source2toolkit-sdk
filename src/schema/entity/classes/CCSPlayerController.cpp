@@ -39,6 +39,7 @@
 
 #include "source2toolkit/schema/entity/classes/CCSPlayerPawn.h"
 #include "source2toolkit/schema/entity/classes/CCSObserverPawn.h"
+#include "source2toolkit/schema/serversideclient.h"
 #include "source2toolkit/schema/takedamageinfo.h"
 #include "source2toolkit/utils/virtual.h"
 
@@ -52,8 +53,10 @@
 #include "source2toolkit/IToolkitGameConfig.h"
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitPlugin.h"
+TOOLKIT_GLOBALVARS();
 #endif
 
+#include "iserver.h"
 #include "networksystem/inetworkmessages.h"
 #include "usermessages.pb.h"
 
@@ -253,6 +256,27 @@ void CCSPlayerController::ExecuteClientCommandFromServer(const char* pszCommand)
     CCommandContext context(CommandTarget_t::CT_NO_TARGET, GetPlayerSlot());
 
     GetCVar()->DispatchConCommand(handle, context, args);
+}
+
+CServerSideClient* CCSPlayerController::GetServerSideClient()
+{
+    CNetworkGameServerBase* pServer = GetNetworkServerService()->GetIGameServer();
+    if (!pServer)
+        return nullptr;
+
+#ifdef SOURCE2TOOLKIT_CORE
+    static int offset = shared::g_pGameConfig->GetOffset("CNetworkGameServer_ClientList");
+#else
+    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CNetworkGameServer_ClientList");
+#endif
+
+    auto* pClients = reinterpret_cast<CUtlVector<CServerSideClient*>*>(reinterpret_cast<uint8_t*>(pServer) + offset);
+
+    const int index = GetSlot();
+    if (index < 0 || index >= pClients->Count())
+        return nullptr;
+
+    return pClients->Element(index);
 }
 
 CCSPlayerPawn* CCSPlayerController::GetPawn()

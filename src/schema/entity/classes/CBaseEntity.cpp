@@ -54,6 +54,7 @@
 #include "source2toolkit/IToolkitGameConfig.h"
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitPlugin.h"
+TOOLKIT_GLOBALVARS();
 #endif
 
 CBaseEntity* CBaseEntity::CreateEntityByName(const char* pszClassName)
@@ -106,17 +107,17 @@ CEntityIOListenerHandle* CBaseEntity::AddSingleEntityIOListener(const char* pszO
 
 Vector CBaseEntity::GetAbsOrigin()
 {
-    return m_CBodyComponent->m_pSceneNode->m_vecAbsOrigin;
+    return m_CBodyComponent->m_pSceneNode->m_vecAbsOrigin();
 }
 
 QAngle CBaseEntity::GetAngRotation()
 {
-    return m_CBodyComponent->m_pSceneNode->m_angRotation;
+    return m_CBodyComponent->m_pSceneNode->m_angRotation();
 }
 
 QAngle CBaseEntity::GetAbsRotation()
 {
-    return m_CBodyComponent->m_pSceneNode->m_angAbsRotation;
+    return m_CBodyComponent->m_pSceneNode->m_angAbsRotation();
 }
 
 Vector CBaseEntity::GetAbsVelocity()
@@ -126,17 +127,17 @@ Vector CBaseEntity::GetAbsVelocity()
 
 void CBaseEntity::SetAbsOrigin(Vector vecOrigin)
 {
-    m_CBodyComponent->m_pSceneNode->m_vecAbsOrigin(vecOrigin);
+    m_CBodyComponent->m_pSceneNode->m_vecAbsOrigin = vecOrigin;
 }
 
 void CBaseEntity::SetAbsRotation(QAngle angAbsRotation)
 {
-    m_CBodyComponent->m_pSceneNode->m_angAbsRotation(angAbsRotation);
+    m_CBodyComponent->m_pSceneNode->m_angAbsRotation = angAbsRotation;
 }
 
 void CBaseEntity::SetAngRotation(QAngle angRotation)
 {
-    m_CBodyComponent->m_pSceneNode->m_angRotation(angRotation);
+    m_CBodyComponent->m_pSceneNode->m_angRotation = angRotation;
 }
 
 void CBaseEntity::SetAbsVelocity(Vector vecVelocity)
@@ -151,7 +152,7 @@ void CBaseEntity::SetBaseVelocity(Vector vecVelocity)
 
 CEntitySubclassVDataBase* CBaseEntity::GetVData()
 {
-    return *(CEntitySubclassVDataBase**)((uint8*)(m_nSubclassID()) + 4);
+    return *reinterpret_cast<CEntitySubclassVDataBase**>(reinterpret_cast<uint8*>(m_nSubclassID()) + 4);
 }
 
 void CBaseEntity::DispatchSpawn(CEntityKeyValues* pEntityKeyValues)
@@ -175,8 +176,8 @@ void CBaseEntity::Teleport(const Vector* pPosition, const QAngle* pAngles, const
 
 void CBaseEntity::SetMoveType(MoveType_t nMoveType)
 {
-    m_MoveType() = nMoveType;
-    m_nActualMoveType() = nMoveType;
+    m_MoveType = nMoveType;
+    m_nActualMoveType = nMoveType;
 }
 
 uint8 CBaseEntity::GetCollisionGroup()
@@ -184,16 +185,16 @@ uint8 CBaseEntity::GetCollisionGroup()
     if (!m_pCollision())
         return 0;
 
-    return m_pCollision->m_collisionAttribute().m_nCollisionGroup;
+    return m_pCollision->m_collisionAttribute().m_nCollisionGroup();
 }
 
-void CBaseEntity::SetCollisionGroup(uint8 nCollisionGroup = COLLISION_GROUP_DEBRIS)
+void CBaseEntity::SetCollisionGroup(uint8 nCollisionGroup)
 {
     if (!m_pCollision())
         return;
 
     m_pCollision->m_collisionAttribute().m_nCollisionGroup = nCollisionGroup;
-    m_pCollision->m_CollisionGroup() = nCollisionGroup;
+    m_pCollision->m_CollisionGroup = nCollisionGroup;
     CollisionRulesChanged();
 }
 
@@ -212,6 +213,12 @@ int CBaseEntity::GetIndex()
     return GetEntityIndex().Get();
 }
 
-CHandle<CBaseEntity> CBaseEntity::GetHandle() { return GetRefEHandle(); }
+CHandle<CBaseEntity> CBaseEntity::GetHandle()
+{
+    return GetRefEHandle();
+}
 
-const char* CBaseEntity::GetName() const { return m_pEntity->m_name.String(); }
+const char* CBaseEntity::GetName() const
+{
+    return m_pEntity->m_name.String();
+}

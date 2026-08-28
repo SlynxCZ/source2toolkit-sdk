@@ -384,6 +384,7 @@ HARD_SKIP_CLASSES: frozenset[str] = frozenset({
 })
 
 HARD_SKIP_ENUMS: frozenset[str] = frozenset({
+    "ENetworkDisconnectionReason",
     "EntityDormancyType_t",
     "fieldtype_t",
     "Flags_t",
@@ -576,6 +577,8 @@ MANUAL_METHODS: dict[str, list[str]] = {
         "void ExecuteClientCommand(const char* pszCommand);",
         "/// <summary>Execute command from server.</summary>",
         "void ExecuteClientCommandFromServer(const char* pszCommand);",
+        "/// <summary>Get server side engine client.</summary>",
+        "CServerSideClient* GetServerSideClient();",
         "/// <summary>Get pawn.</summary>",
         "CCSPlayerPawn* GetPawn();",
         "/// <summary>Get player pawn.</summary>",
