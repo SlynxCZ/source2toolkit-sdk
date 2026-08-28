@@ -164,7 +164,7 @@ public:
     * @param pActivator Activator entity
     * @param pCaller Caller entity
     * @param flDelay Delay before execution
-    * @param nMode Hook timing (MMODE_PRE/MMODE_POST)
+    * @param post false when called before the output fires, true after
     *
     * @return META_RES (MRES_IGNORED / MRES_HANDLED / MRES_OVERRIDE / MRES_SUPERCEDE)
       */
@@ -172,7 +172,7 @@ public:
                                   CEntityInstance* pActivator,
                                   CEntityInstance* pCaller,
                                   float flDelay,
-                                  META_MODE nMode)
+                                  bool post)
     {
         return MRES_IGNORED;
     }
@@ -188,10 +188,10 @@ public:
     CEntityInstance* m_pTarget;
 
     /// Callback handler
-    std::function<META_RES(const char*, CEntityInstance*, CEntityInstance*, float, META_MODE)> m_Callback;
+    std::function<META_RES(const char*, CEntityInstance*, CEntityInstance*, float, bool)> m_Callback;
 
     CSingleEntityIOListener(CEntityInstance* target,
-                            std::function<META_RES(const char*, CEntityInstance*, CEntityInstance*, float, META_MODE)> cb)
+                            std::function<META_RES(const char*, CEntityInstance*, CEntityInstance*, float, bool)> cb)
         : m_pTarget(target), m_Callback(std::move(cb))
     {
     }
@@ -200,12 +200,12 @@ public:
                           CEntityInstance* pActivator,
                           CEntityInstance* pCaller,
                           float delay,
-                          META_MODE mode) override
+                          bool post) override
     {
         if (pCaller != m_pTarget)
             return MRES_IGNORED;
 
-        return m_Callback(outputName, pActivator, pCaller, delay, mode);
+        return m_Callback(outputName, pActivator, pCaller, delay, post);
     }
 };
 
@@ -221,7 +221,7 @@ public:
     CSingleEntityIOListener* m_pListener = nullptr;
     std::string m_szClassname;
     std::string m_szOutput;
-    META_MODE m_nMode = MMODE_PRE;
+    bool m_bPost = false;
 
     /**
 

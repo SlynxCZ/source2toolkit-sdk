@@ -451,6 +451,16 @@ NETWORK_CLASSES: list[str] = [
     "CWorld",
 ]
 
+# Types a class only mentions through its MANUAL_METHODS. The include collector
+# walks schema types only, so a hand-added declaration is silently dropped on
+# the next regeneration -- these survive it.
+#
+# Forward declarations, not includes: the headers only ever use these behind a
+# pointer. The .cpp that defines the method includes the real header.
+MANUAL_FORWARDS: dict[str, list[str]] = {
+    "CCSPlayerController": ["CServerSideClient"],
+}
+
 MANUAL_METHODS: dict[str, list[str]] = {
     "CBaseEntity": [
         "/// <summary>Creates entity by classname.</summary>",
@@ -466,7 +476,7 @@ MANUAL_METHODS: dict[str, list[str]] = {
         "/// <summary>Add delayed entity IO event.</summary>",
         'void AddEntityIOEvent(const char* pszInput, CEntityInstance* pActivator = nullptr, CEntityInstance* pCaller = nullptr, const char* pszValue = "", float flDelay = 0.0f);',
         "/// <summary>Add signle entity IO listener.</summary>",
-        "CEntityIOListenerHandle* AddSingleEntityIOListener(const char* pszOutput, std::function<META_RES(const char*,CEntityInstance*, CEntityInstance*, float, META_MODE)> callback, META_MODE mode);",
+        "CEntityIOListenerHandle* AddSingleEntityIOListener(const char* pszOutput, std::function<META_RES(const char*,CEntityInstance*, CEntityInstance*, float, bool)> callback, bool post);",
         "/// <summary>Get absolute origin.</summary>",
         "Vector GetAbsOrigin();",
         "/// <summary>Get local rotation.</summary>",
@@ -1006,7 +1016,7 @@ def write_class(
     if includes:
         lines.append("")
 
-    for fwd in sorted(forwards):
+    for fwd in sorted(set(forwards) | set(MANUAL_FORWARDS.get(class_name, []))):
         lines.append(f"class {fwd};")
 
     if forwards:

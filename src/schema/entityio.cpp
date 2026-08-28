@@ -56,9 +56,9 @@ void CEntityIOListenerHandle::Unhook()
         return;
 
 #ifdef SOURCE2TOOLKIT_CORE
-    entities::entitiesManager.RemoveEntityIOListener(m_pListener, m_szClassname.c_str(), m_szOutput.c_str(), m_nMode);
+    entities::entitiesManager.RemoveEntityIOListener(m_pListener, m_szClassname.c_str(), m_szOutput.c_str(), m_bPost);
 #else
-    g_ToolkitAPI->Entities()->RemoveEntityIOListener(m_pListener, m_szClassname.c_str(), m_szOutput.c_str(), m_nMode);
+    g_ToolkitAPI->Entities()->RemoveEntityIOListener(m_pListener, m_szClassname.c_str(), m_szOutput.c_str(), m_bPost);
 #endif
 
     delete m_pListener;

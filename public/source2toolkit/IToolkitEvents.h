@@ -64,16 +64,16 @@ Forward declarations
 * @brief Callback type for game events.
 *
 * @param event Pointer to the event data
-* @param mode Execution mode (MMODE_PRE/MMODE_POST)
+* @param post false when called before the engine processes the event, true after
 * @param dontBroadcast Set to true to prevent event from being sent to clients
 *
 * @return META_RES:
 * * MRES_IGNORED: no changes
 * * MRES_HANDLED: did something, original still runs
-* * MRES_OVERRIDE: modify event but still allow original execution (MMODE_PRE only)
-* * MRES_SUPERCEDE: block original execution (MMODE_PRE only)
+* * MRES_OVERRIDE: modify event but still allow original execution (pre only)
+* * MRES_SUPERCEDE: block original execution (pre only)
     */
-using GameEventHandler = std::function<META_RES(IGameEvent* event, META_MODE mode, bool& dontBroadcast)>;
+using GameEventHandler = std::function<META_RES(IGameEvent* event, bool post, bool& dontBroadcast)>;
 
 /* =========================
 Core Toolkit Events
@@ -102,11 +102,10 @@ public:
     * @param owner Plugin ID that owns the listener
     * @param pchName Event name (e.g. "player_death")
     * @param handler Callback function
-    * @param mode Execution mode:
-    * * Pre: called before engine processes the event
-    * * Post: called after engine processes the event
+    * @param post false to be called before the engine processes the event,
+    *             true to be called after
         */
-    virtual void HookGameEvent(PluginId owner, const char* pchName, GameEventHandler handler, META_MODE mode) = 0;
+    virtual void HookGameEvent(PluginId owner, const char* pchName, GameEventHandler handler, bool post) = 0;
 };
 
 /**
@@ -115,7 +114,7 @@ public:
  * @param passname Event name.
  * @param passfunc Callback function.
  */
-#define HOOK_GAME_EVENT(passname, passfunc) \
-    g_pToolkitEvents->HookGameEvent(g_PluginID, passname, passfunc)
+#define HOOK_GAME_EVENT(passname, passfunc, post) \
+    g_pToolkitEvents->HookGameEvent(g_PluginID, passname, passfunc, post)
 
 #endif //_INCLUDE_ITOOLKIT_EVENTS_H

@@ -64,27 +64,6 @@
 #include "sourcehook.h"
 
 /* =========================
-Execution mode
-========================= */
-
-// Good old metamod!
-
-// Flags returned by a plugin's api function.
-// NOTE: order is crucial, as greater/less comparisons are made.
-enum META_MODE
-{
-  MMODE_PRE=0,		// plugin does stuff before real function is called
-  MMODE_POST		// plugin does stuff after real function has been called
-};
-
-// Canonical SH_-branded names for the META_MODE values, same status as
-// SH_IFACEPTR/RETURN_SH/RETURN_SH_VALUE/SET_SH_RESULT -- MMODE_* is kept
-// working for existing plugin code, SHMODE_* is the preferred name for new
-// code (typed/manual *and* inline hooks alike, see sourcehook_inline.h).
-#define SHMODE_PRE      MMODE_PRE
-#define SHMODE_POST     MMODE_POST
-
-/* =========================
 Forward declarations
 ========================= */
 
@@ -114,8 +93,8 @@ namespace SourceHook
     class ISourceHook;
 }
 
-// Everything below this line may use META_RES, META_MODE and the forward
-// declarations above. Nothing above it can: the interface headers include this
+// Everything below this line may use META_RES and the forward declarations
+// above. Nothing above it can: the interface headers include this
 // one back, and by then its guard is already set, so anything declared after
 // them would be invisible to them.
 

@@ -59,7 +59,6 @@
 #include "../enums/DamageTypes_t.h"
 #include "IntervalTimer.h"
 #include "../enums/QuestProgress__Reason.h"
-#include "source2toolkit/schema/serversideclient.h"
 
 class CCSObserverPawn;
 class CCSPlayerController_ActionTrackingServices;
@@ -67,6 +66,7 @@ class CCSPlayerController_DamageServices;
 class CCSPlayerController_InGameMoneyServices;
 class CCSPlayerController_InventoryServices;
 class CCSPlayerPawn;
+class CServerSideClient;
 
 class CCSPlayerController : public CBasePlayerController
 {

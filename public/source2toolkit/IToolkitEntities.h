@@ -154,7 +154,7 @@ public:
     virtual void AddEntityIOListener(IEntityIOListener* pListener,
                                      const char* pchClassName,
                                      const char* pchOutputName,
-                                     META_MODE nMode = MMODE_PRE) = 0;
+                                     bool post = false) = 0;
 
     /**
 
@@ -163,7 +163,7 @@ public:
     virtual void RemoveEntityIOListener(IEntityIOListener* pListener,
                                         const char* pchClassName,
                                         const char* pchOutputName,
-                                        META_MODE nMode = MMODE_PRE) = 0;
+                                        bool post = false) = 0;
 };
 
 #define FIND_PICKER_ENTITY(player, ...)           g_pToolkitEntities->FindPickerEntity(player, ##__VA_ARGS__)

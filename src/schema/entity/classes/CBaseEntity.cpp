@@ -84,23 +84,23 @@ void CBaseEntity::AddEntityIOEvent(const char* pszInput, CEntityInstance* pActiv
 #endif
 }
 
-CEntityIOListenerHandle* CBaseEntity::AddSingleEntityIOListener(const char* pszOutput, std::function<META_RES(const char*,CEntityInstance*, CEntityInstance*, float, META_MODE)> callback, META_MODE mode)
+CEntityIOListenerHandle* CBaseEntity::AddSingleEntityIOListener(const char* pszOutput, std::function<META_RES(const char*,CEntityInstance*, CEntityInstance*, float, bool)> callback, bool post)
 {
     auto* listener = new CSingleEntityIOListener(this, std::move(callback));
 
     const char* classname = GetClassname();
 
 #ifdef SOURCE2TOOLKIT_CORE
-    entities::entitiesManager.AddEntityIOListener(listener, classname, pszOutput, mode);
+    entities::entitiesManager.AddEntityIOListener(listener, classname, pszOutput, post);
 #else
-    g_ToolkitAPI->Entities()->AddEntityIOListener(listener, classname, pszOutput, mode);
+    g_ToolkitAPI->Entities()->AddEntityIOListener(listener, classname, pszOutput, post);
 #endif
 
     auto* handle = new CEntityIOListenerHandle();
     handle->m_pListener = listener;
     handle->m_szClassname = classname ? classname : "*";
     handle->m_szOutput = pszOutput ? pszOutput : "*";
-    handle->m_nMode = mode;
+    handle->m_bPost = post;
 
     return handle;
 }

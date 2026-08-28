@@ -187,7 +187,7 @@ public:
     /// <summary>Add delayed entity IO event.</summary>
     void AddEntityIOEvent(const char* pszInput, CEntityInstance* pActivator = nullptr, CEntityInstance* pCaller = nullptr, const char* pszValue = "", float flDelay = 0.0f);
     /// <summary>Add signle entity IO listener.</summary>
-    CEntityIOListenerHandle* AddSingleEntityIOListener(const char* pszOutput, std::function<META_RES(const char*,CEntityInstance*, CEntityInstance*, float, META_MODE)> callback, META_MODE mode);
+    CEntityIOListenerHandle* AddSingleEntityIOListener(const char* pszOutput, std::function<META_RES(const char*,CEntityInstance*, CEntityInstance*, float, bool)> callback, bool post);
     /// <summary>Get absolute origin.</summary>
     Vector GetAbsOrigin();
     /// <summary>Get local rotation.</summary>

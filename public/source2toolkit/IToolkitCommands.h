@@ -67,9 +67,9 @@ Forward declarations
 *
 * @param ctx Command execution context (player, etc.)
 * @param cmd Parsed command arguments
-* @param mode Execution mode (MMODE_PRE/MMODE_POST)
+* @param post false when called before the original, true after
   */
-using ChatHandler = std::function<void(const CCommandContext&, const CCommand&, META_MODE)>;
+using ChatHandler = std::function<void(const CCommandContext&, const CCommand&, bool post)>;
 
 /**
 
@@ -77,10 +77,10 @@ using ChatHandler = std::function<void(const CCommandContext&, const CCommand&, 
 *
 * @param ctx Command execution context
 * @param cmd Parsed command arguments
-* @param mode Execution mode (MMODE_PRE/MMODE_POST)
+* @param post false when called before the original, true after
 * @return META_RES describing how to handle execution (MRES_IGNORED, MRES_HANDLED, MRES_OVERRIDE, MRES_SUPERCEDE)
   */
-using CommandHandler = std::function<META_RES(const CCommandContext&, const CCommand&, META_MODE)>;
+using CommandHandler = std::function<META_RES(const CCommandContext&, const CCommand&, bool post)>;
 
 /* =========================
 Core Toolkit Commands
@@ -135,15 +135,15 @@ public:
     * @param owner Plugin ID that owns the listener
     * @param pchName Existing command name to listen for
     * @param handler Callback executed on command execution
-    * @param mode Execution mode (MMODE_PRE = before original, MMODE_POST = after original)
+    * @param post false to run before the original, true to run after
     *
     * @return META_RES to control command execution:
     * * MRES_IGNORED: do nothing
     * * MRES_HANDLED: did something, original still runs
-    * * MRES_OVERRIDE: override return value but still call original (MMODE_PRE only)
-    * * MRES_SUPERCEDE: block original execution (MMODE_PRE only)
+    * * MRES_OVERRIDE: override return value but still call original (pre only)
+    * * MRES_SUPERCEDE: block original execution (pre only)
         */
-    virtual void RegConListener(PluginId owner, const char* pchName, CommandHandler handler, META_MODE mode) = 0;
+    virtual void RegConListener(PluginId owner, const char* pchName, CommandHandler handler, bool post) = 0;
 };
 
 #define REG_CHAT_COMMAND(pchName, handler) \
@@ -152,7 +152,7 @@ public:
 #define REG_CON_COMMAND(pchName, handler) \
     g_pToolkitCommands->RegConCommand(g_PluginID, pchName, handler)
 
-#define REG_CON_LISTENER(pchName, handler, mode) \
-    g_pToolkitCommands->RegConListener(g_PluginID, pchName, handler, mode)
+#define REG_CON_LISTENER(pchName, handler, post) \
+    g_pToolkitCommands->RegConListener(g_PluginID, pchName, handler, post)
 
 #endif //_INCLUDE_ITOOLKIT_COMMANDS_H

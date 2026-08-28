@@ -147,7 +147,7 @@ Every id — virtual, DVP, manual or inline — is removed with
 
 ### Return values
 
-Handlers return `META_RES` and register with `META_MODE`:
+Handlers return `META_RES`:
 
 | `META_RES` | meaning |
 |---|---|
@@ -156,8 +156,9 @@ Handlers return `META_RES` and register with `META_MODE`:
 | `MRES_OVERRIDE` | original runs, your return value wins |
 | `MRES_SUPERCEDE` | original is skipped entirely |
 
-`META_MODE` is `MMODE_PRE` / `MMODE_POST`, also available as `SHMODE_PRE` /
-`SHMODE_POST`.
+Timing is a plain `bool post` everywhere — the toolkit's listener APIs
+(`RegConListener`, `HookGameEvent`, `AddEntityIOListener`) take the same
+`false` = pre / `true` = post argument SourceHook's own `SH_ADD_HOOK` does.
 
 ---
 
