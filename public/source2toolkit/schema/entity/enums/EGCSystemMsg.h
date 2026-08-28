@@ -1,0 +1,141 @@
+/**
+* vim: set ts=4 sw=4 tw=99 noet:
+ * =============================================================================
+ * Source2Toolkit
+ * Copyright (C) 2025-2026 Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl,
+ * AlliedModders LLC. All rights reserved.
+ * =============================================================================
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, version 3.0, as published by the
+ * Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * As a special exception, Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl and
+ * AlliedModders LLC give you permission to link the code of this program
+ * (as well as its derivative works) to "Counter-Strike 2," "Source 2,"
+ * "Steam," and any Game MODs or server software running on software by
+ * Valve Corporation. You must obey the GNU General Public License in all
+ * respects for all other code used.
+ *
+ * Additionally, this exception applies to all derivative works unless
+ * otherwise stated in LICENSE.txt.
+ *
+ * Authors:
+ *   - Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl
+ *   - AlliedModders LLC
+ *
+ * Project: Source2Toolkit
+ */
+
+#ifndef _INCLUDE_EGCSYSTEMMSG_H
+#define _INCLUDE_EGCSYSTEMMSG_H
+
+#pragma once
+
+#include <cstdint>
+
+enum class EGCSystemMsg : uint32_t
+{
+    k_EGCMsgInvalid = 0,
+    k_EGCMsgMulti = 1,
+    k_EGCMsgGenericReply = 10,
+    k_EGCMsgSystemBase = 50,
+    k_EGCMsgAchievementAwarded = 51,
+    k_EGCMsgConCommand = 52,
+    k_EGCMsgStartPlaying = 53,
+    k_EGCMsgStopPlaying = 54,
+    k_EGCMsgStartGameserver = 55,
+    k_EGCMsgStopGameserver = 56,
+    k_EGCMsgWGRequest = 57,
+    k_EGCMsgWGResponse = 58,
+    k_EGCMsgGetUserGameStatsSchema = 59,
+    k_EGCMsgGetUserGameStatsSchemaResponse = 60,
+    k_EGCMsgGetUserStatsDEPRECATED = 61,
+    k_EGCMsgGetUserStatsResponse = 62,
+    k_EGCMsgAppInfoUpdated = 63,
+    k_EGCMsgValidateSession = 64,
+    k_EGCMsgValidateSessionResponse = 65,
+    k_EGCMsgLookupAccountFromInput = 66,
+    k_EGCMsgSendHTTPRequest = 67,
+    k_EGCMsgSendHTTPRequestResponse = 68,
+    k_EGCMsgPreTestSetup = 69,
+    k_EGCMsgRecordSupportAction = 70,
+    k_EGCMsgGetAccountDetails_DEPRECATED = 71,
+    k_EGCMsgReceiveInterAppMessage = 73,
+    k_EGCMsgFindAccounts = 74,
+    k_EGCMsgPostAlert = 75,
+    k_EGCMsgGetLicenses = 76,
+    k_EGCMsgGetUserStats = 77,
+    k_EGCMsgGetCommands = 78,
+    k_EGCMsgGetCommandsResponse = 79,
+    k_EGCMsgAddFreeLicense = 80,
+    k_EGCMsgAddFreeLicenseResponse = 81,
+    k_EGCMsgGetIPLocation = 82,
+    k_EGCMsgGetIPLocationResponse = 83,
+    k_EGCMsgSystemStatsSchema = 84,
+    k_EGCMsgGetSystemStats = 85,
+    k_EGCMsgGetSystemStatsResponse = 86,
+    k_EGCMsgSendEmail = 87,
+    k_EGCMsgSendEmailResponse = 88,
+    k_EGCMsgGetEmailTemplate = 89,
+    k_EGCMsgGetEmailTemplateResponse = 90,
+    k_EGCMsgGrantGuestPass = 91,
+    k_EGCMsgGrantGuestPassResponse = 92,
+    k_EGCMsgGetAccountDetails = 93,
+    k_EGCMsgGetAccountDetailsResponse = 94,
+    k_EGCMsgGetPersonaNames = 95,
+    k_EGCMsgGetPersonaNamesResponse = 96,
+    k_EGCMsgMultiplexMsg = 97,
+    k_EGCMsgMultiplexMsgResponse = 98,
+    k_EGCMsgWebAPIRegisterInterfaces = 101,
+    k_EGCMsgWebAPIJobRequest = 102,
+    k_EGCMsgWebAPIJobRequestHttpResponse = 104,
+    k_EGCMsgWebAPIJobRequestForwardResponse = 105,
+    k_EGCMsgMemCachedGet = 200,
+    k_EGCMsgMemCachedGetResponse = 201,
+    k_EGCMsgMemCachedSet = 202,
+    k_EGCMsgMemCachedDelete = 203,
+    k_EGCMsgMemCachedStats = 204,
+    k_EGCMsgMemCachedStatsResponse = 205,
+    k_EGCMsgMasterSetDirectory = 220,
+    k_EGCMsgMasterSetDirectoryResponse = 221,
+    k_EGCMsgMasterSetWebAPIRouting = 222,
+    k_EGCMsgMasterSetWebAPIRoutingResponse = 223,
+    k_EGCMsgMasterSetClientMsgRouting = 224,
+    k_EGCMsgMasterSetClientMsgRoutingResponse = 225,
+    k_EGCMsgSetOptions = 226,
+    k_EGCMsgSetOptionsResponse = 227,
+    k_EGCMsgSystemBase2 = 500,
+    k_EGCMsgGetPurchaseTrustStatus = 501,
+    k_EGCMsgGetPurchaseTrustStatusResponse = 502,
+    k_EGCMsgUpdateSession = 503,
+    k_EGCMsgGCAccountVacStatusChange = 504,
+    k_EGCMsgCheckFriendship = 505,
+    k_EGCMsgCheckFriendshipResponse = 506,
+    k_EGCMsgGetPartnerAccountLink = 507,
+    k_EGCMsgGetPartnerAccountLinkResponse = 508,
+    k_EGCMsgDPPartnerMicroTxns = 512,
+    k_EGCMsgDPPartnerMicroTxnsResponse = 513,
+    k_EGCMsgVacVerificationChange = 518,
+    k_EGCMsgAccountPhoneNumberChange = 519,
+    k_EGCMsgInviteUserToLobby = 523,
+    k_EGCMsgGetGamePersonalDataCategoriesRequest = 524,
+    k_EGCMsgGetGamePersonalDataCategoriesResponse = 525,
+    k_EGCMsgGetGamePersonalDataEntriesRequest = 526,
+    k_EGCMsgGetGamePersonalDataEntriesResponse = 527,
+    k_EGCMsgTerminateGamePersonalDataEntriesRequest = 528,
+    k_EGCMsgTerminateGamePersonalDataEntriesResponse = 529,
+    k_EGCMsgRecurringSubscriptionStatusChange = 530,
+    k_EGCMsgDirectServiceMethod = 531,
+    k_EGCMsgDirectServiceMethodResponse = 532,
+};
+
+#endif // _INCLUDE_EGCSYSTEMMSG_H

@@ -1,0 +1,182 @@
+/**
+* vim: set ts=4 sw=4 tw=99 noet:
+ * =============================================================================
+ * Source2Toolkit
+ * Copyright (C) 2025-2026 Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl,
+ * AlliedModders LLC. All rights reserved.
+ * =============================================================================
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, version 3.0, as published by the
+ * Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * As a special exception, Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl and
+ * AlliedModders LLC give you permission to link the code of this program
+ * (as well as its derivative works) to "Counter-Strike 2," "Source 2,"
+ * "Steam," and any Game MODs or server software running on software by
+ * Valve Corporation. You must obey the GNU General Public License in all
+ * respects for all other code used.
+ *
+ * Additionally, this exception applies to all derivative works unless
+ * otherwise stated in LICENSE.txt.
+ *
+ * Authors:
+ *   - Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl
+ *   - AlliedModders LLC
+ *
+ * Project: Source2Toolkit
+ */
+
+#ifndef _INCLUDE_EGCITEMMSG_H
+#define _INCLUDE_EGCITEMMSG_H
+
+#pragma once
+
+#include <cstdint>
+
+enum class EGCItemMsg : uint32_t
+{
+    k_EMsgGCBase = 1000,
+    k_EMsgGCSetItemPosition = 1001,
+    k_EMsgGCCraft = 1002,
+    k_EMsgGCCraftResponse = 1003,
+    k_EMsgGCDelete = 1004,
+    k_EMsgGCVerifyCacheSubscription = 1005,
+    k_EMsgGCNameItem = 1006,
+    k_EMsgGCUnlockCrate_DEPRECATED = 1007,
+    k_EMsgGCUnlockCrateResponse = 1008,
+    k_EMsgGCPaintItem = 1009,
+    k_EMsgGCPaintItemResponse = 1010,
+    k_EMsgGCGoldenWrenchBroadcast = 1011,
+    k_EMsgGCMOTDRequest = 1012,
+    k_EMsgGCMOTDRequestResponse = 1013,
+    k_EMsgGCAddItemToSocket_DEPRECATED = 1014,
+    k_EMsgGCAddItemToSocketResponse_DEPRECATED = 1015,
+    k_EMsgGCAddSocketToBaseItem_DEPRECATED = 1016,
+    k_EMsgGCAddSocketToItem_DEPRECATED = 1017,
+    k_EMsgGCAddSocketToItemResponse_DEPRECATED = 1018,
+    k_EMsgGCNameBaseItem = 1019,
+    k_EMsgGCNameBaseItemResponse = 1020,
+    k_EMsgGCRemoveSocketItem_DEPRECATED = 1021,
+    k_EMsgGCRemoveSocketItemResponse_DEPRECATED = 1022,
+    k_EMsgGCCustomizeItemTexture = 1023,
+    k_EMsgGCCustomizeItemTextureResponse = 1024,
+    k_EMsgGCUseItemRequest = 1025,
+    k_EMsgGCUseItemResponse = 1026,
+    k_EMsgGCGiftedItems_DEPRECATED = 1027,
+    k_EMsgGCRemoveItemName = 1030,
+    k_EMsgGCRemoveItemPaint = 1031,
+    k_EMsgGCGiftWrapItem = 1032,
+    k_EMsgGCGiftWrapItemResponse = 1033,
+    k_EMsgGCDeliverGift = 1034,
+    k_EMsgGCDeliverGiftResponseGiver = 1035,
+    k_EMsgGCDeliverGiftResponseReceiver = 1036,
+    k_EMsgGCUnwrapGiftRequest = 1037,
+    k_EMsgGCUnwrapGiftResponse = 1038,
+    k_EMsgGCSetItemStyle = 1039,
+    k_EMsgGCUsedClaimCodeItem = 1040,
+    k_EMsgGCSortItems = 1041,
+    k_EMsgGC_RevolvingLootList_DEPRECATED = 1042,
+    k_EMsgGCLookupAccount = 1043,
+    k_EMsgGCLookupAccountResponse = 1044,
+    k_EMsgGCLookupAccountName = 1045,
+    k_EMsgGCLookupAccountNameResponse = 1046,
+    k_EMsgGCUpdateItemSchema = 1049,
+    k_EMsgGCRemoveCustomTexture = 1051,
+    k_EMsgGCRemoveCustomTextureResponse = 1052,
+    k_EMsgGCRemoveMakersMark = 1053,
+    k_EMsgGCRemoveMakersMarkResponse = 1054,
+    k_EMsgGCRemoveUniqueCraftIndex = 1055,
+    k_EMsgGCRemoveUniqueCraftIndexResponse = 1056,
+    k_EMsgGCSaxxyBroadcast = 1057,
+    k_EMsgGCBackpackSortFinished = 1058,
+    k_EMsgGCCollectItem = 1061,
+    k_EMsgGCItemAcknowledged__DEPRECATED = 1062,
+    k_EMsgGC_ReportAbuse = 1065,
+    k_EMsgGC_ReportAbuseResponse = 1066,
+    k_EMsgGCNameItemNotification = 1068,
+    k_EMsgGCApplyConsumableEffects = 1069,
+    k_EMsgGCConsumableExhausted = 1070,
+    k_EMsgGCShowItemsPickedUp = 1071,
+    k_EMsgGCClientDisplayNotification = 1072,
+    k_EMsgGCApplyStrangePart = 1073,
+    k_EMsgGC_IncrementKillCountAttribute = 1074,
+    k_EMsgGC_IncrementKillCountResponse = 1075,
+    k_EMsgGCApplyPennantUpgrade = 1076,
+    k_EMsgGCSetItemPositions = 1077,
+    k_EMsgGCApplyEggEssence = 1078,
+    k_EMsgGCNameEggEssenceResponse = 1079,
+    k_EMsgGCPaintKitItem = 1080,
+    k_EMsgGCPaintKitBaseItem = 1081,
+    k_EMsgGCPaintKitItemResponse = 1082,
+    k_EMsgGCGiftedItems = 1083,
+    k_EMsgGCUnlockItemStyle = 1084,
+    k_EMsgGCUnlockItemStyleResponse = 1085,
+    k_EMsgGCApplySticker = 1086,
+    k_EMsgGCItemAcknowledged = 1087,
+    k_EMsgGCStatTrakSwap = 1088,
+    k_EMsgGCUserTrackTimePlayedConsecutively = 1089,
+    k_EMsgGCItemCustomizationNotification = 1090,
+    k_EMsgGCModifyItemAttribute = 1091,
+    k_EMsgGCCasketItemAdd = 1092,
+    k_EMsgGCCasketItemExtract = 1093,
+    k_EMsgGCCasketItemLoadContents = 1094,
+    k_EMsgGCServerBrowser_FavoriteServer = 1601,
+    k_EMsgGCServerBrowser_BlacklistServer = 1602,
+    k_EMsgGCServerRentalsBase = 1700,
+    k_EMsgGCItemPreviewCheckStatus = 1701,
+    k_EMsgGCItemPreviewStatusResponse = 1702,
+    k_EMsgGCItemPreviewRequest = 1703,
+    k_EMsgGCItemPreviewRequestResponse = 1704,
+    k_EMsgGCItemPreviewExpire = 1705,
+    k_EMsgGCItemPreviewExpireNotification = 1706,
+    k_EMsgGCItemPreviewItemBoughtNotification = 1707,
+    k_EMsgGCDev_NewItemRequest = 2001,
+    k_EMsgGCDev_NewItemRequestResponse = 2002,
+    k_EMsgGCDev_PaintKitDropItem = 2003,
+    k_EMsgGCDev_SchemaReservationRequest = 2004,
+    k_EMsgGCStoreGetUserData = 2500,
+    k_EMsgGCStoreGetUserDataResponse = 2501,
+    k_EMsgGCStorePurchaseInit_DEPRECATED = 2502,
+    k_EMsgGCStorePurchaseInitResponse_DEPRECATED = 2503,
+    k_EMsgGCStorePurchaseFinalize = 2504,
+    k_EMsgGCStorePurchaseFinalizeResponse = 2505,
+    k_EMsgGCStorePurchaseCancel = 2506,
+    k_EMsgGCStorePurchaseCancelResponse = 2507,
+    k_EMsgGCStorePurchaseQueryTxn = 2508,
+    k_EMsgGCStorePurchaseQueryTxnResponse = 2509,
+    k_EMsgGCStorePurchaseInit = 2510,
+    k_EMsgGCStorePurchaseInitResponse = 2511,
+    k_EMsgGCBannedWordListRequest = 2512,
+    k_EMsgGCBannedWordListResponse = 2513,
+    k_EMsgGCToGCBannedWordListBroadcast = 2514,
+    k_EMsgGCToGCBannedWordListUpdated = 2515,
+    k_EMsgGCToGCDirtySDOCache = 2516,
+    k_EMsgGCToGCDirtyMultipleSDOCache = 2517,
+    k_EMsgGCToGCUpdateSQLKeyValue = 2518,
+    k_EMsgGCToGCIsTrustedServer = 2519,
+    k_EMsgGCToGCIsTrustedServerResponse = 2520,
+    k_EMsgGCToGCBroadcastConsoleCommand = 2521,
+    k_EMsgGCServerVersionUpdated = 2522,
+    k_EMsgGCToGCWebAPIAccountChanged = 2524,
+    k_EMsgGCRequestAnnouncements = 2525,
+    k_EMsgGCRequestAnnouncementsResponse = 2526,
+    k_EMsgGCRequestPassportItemGrant = 2527,
+    k_EMsgGCClientVersionUpdated = 2528,
+    k_EMsgGCRecurringSubscriptionStatus = 2530,
+    k_EMsgGCAdjustEquipSlotsManual = 2531,
+    k_EMsgGCAdjustEquipSlotsShuffle = 2532,
+    k_EMsgGCOpenCrate = 2534,
+    k_EMsgGCAcknowledgeRentalExpiration = 2535,
+    k_EMsgGCVolatileItemLoadContents = 2536,
+};
+
+#endif // _INCLUDE_EGCITEMMSG_H
