@@ -374,7 +374,7 @@ Schema field macros
 
 #define SCHEMA_FIELD_OFFSET(type, varName, extra_offset)                                                                     \
 	class varName##_prop                                                                                                     \
-	{                                                                                                                        \
+	{                                                                                                                     \
 	public:                                                                                                                  \
 		/*The deleted copy ctor below is user-declared, which suppresses the*/                                               \
 		/*implicit default one -- without this a schema class that has a real*/                                              \
@@ -388,6 +388,18 @@ Schema field macros
 			uintptr_t pThisClass = ((uintptr_t)this - m_offset);                                                             \
                                                                                                                              \
 			return *reinterpret_cast<std::add_pointer_t<type>>(pThisClass + m_key.offset + extra_offset);                    \
+		}                                                                                                                    \
+		/*Const overload, so a const method of the owning class can read the*/                                               \
+		/*field. Reading only needs the wrapper's address, which const does*/                                                \
+		/*not get in the way of.*/                                                                                           \
+		std::add_lvalue_reference_t<const type> Get() const                                                                  \
+		{                                                                                                                    \
+			static const auto m_key = schema::GetOffset(m_className, m_classNameHash, #varName, m_varNameHash);                 \
+			static const auto m_offset = offsetof(ThisClass, varName);                                                          \
+                                                                                                                       \
+			uintptr_t pThisClass = ((uintptr_t)this - m_offset);                                                                \
+                                                                                                                       \
+			return *reinterpret_cast<std::add_pointer_t<const type>>(pThisClass + m_key.offset + extra_offset);                 \
 		}                                                                                                                    \
 		template <typename T = type>                                                                                         \
 		std::enable_if_t<std::is_pointer_v<T>, void>                                                                         \
@@ -404,7 +416,7 @@ Schema field macros
 		template <typename T = type>                                                                                         \
 		std::enable_if_t<!std::is_pointer_v<T> && std::is_trivially_copyable_v<T>, void>                                     \
 		Set(T val)                                                                                                           \
-	    {                                                                                                                    \
+	    {                                                                                                                 \
     		static const auto m_key = schema::GetOffset(m_className, m_classNameHash, #varName, m_varNameHash);              \
 			static const auto m_offset = offsetof(ThisClass, varName);                                                       \
 																															 \
@@ -461,6 +473,18 @@ Schema field macros
 		{                                                                                                                    \
 			return Get();                                                                                                    \
 		}                                                                                                                    \
+		operator std::add_lvalue_reference_t<const type>() const                                                             \
+		{                                                                                                                    \
+			return Get();                                                                                                          \
+		}                                                                                                                    \
+		std::add_lvalue_reference_t<const type> operator()() const                                                           \
+		{                                                                                                                    \
+			return Get();                                                                                                          \
+		}                                                                                                                    \
+		std::add_lvalue_reference_t<const type> operator->() const                                                           \
+		{                                                                                                                    \
+			return Get();                                                                                                          \
+		}                                                                                                                    \
 		template <typename T = type>                                                                                         \
 		std::enable_if_t<schema_writable_v<T>, void>                                                                         \
 		operator()(T val)                                                                                                    \
@@ -482,7 +506,7 @@ Schema field macros
 
 #define SCHEMA_FIELD_POINTER_OFFSET(type, varName, extra_offset)                                                             \
 	class varName##_prop                                                                                                     \
-	{                                                                                                                        \
+	{                                                                                                                     \
 	public:                                                                                                                  \
 		/*The deleted copy ctor below is user-declared, which suppresses the*/                                               \
 		/*implicit default one -- without this a schema class that has a real*/                                              \
@@ -496,6 +520,18 @@ Schema field macros
 			uintptr_t pThisClass = ((uintptr_t)this - m_offset);                                                             \
                                                                                                                              \
 			return reinterpret_cast<std::add_pointer_t<type>>(pThisClass + m_key.offset + extra_offset);                     \
+		}                                                                                                                    \
+		/*Const overload, so a const method of the owning class can read the*/                                               \
+		/*field. Reading only needs the wrapper's address, which const does*/                                                \
+		/*not get in the way of.*/                                                                                           \
+		const type* Get() const                                                                                              \
+		{                                                                                                                    \
+			static const auto m_key = schema::GetOffset(m_className, m_classNameHash, #varName, m_varNameHash);                 \
+			static const auto m_offset = offsetof(ThisClass, varName);                                                          \
+                                                                                                                       \
+			uintptr_t pThisClass = ((uintptr_t)this - m_offset);                                                                \
+                                                                                                                       \
+			return reinterpret_cast<std::add_pointer_t<const type>>(pThisClass + m_key.offset + extra_offset);                  \
 		}                                                                                                                    \
 		void NetworkStateChanged() /*Call this after editing the field*/                                                     \
 		{                                                                                                                    \
@@ -528,6 +564,18 @@ Schema field macros
 		type* operator->()                                                                                                   \
 		{                                                                                                                    \
 			return Get();                                                                                                    \
+		}                                                                                                                    \
+		operator const type*() const                                                                                         \
+		{                                                                                                                    \
+			return Get();                                                                                                          \
+		}                                                                                                                    \
+		const type* operator()() const                                                                                       \
+		{                                                                                                                    \
+			return Get();                                                                                                          \
+		}                                                                                                                    \
+		const type* operator->() const                                                                                       \
+		{                                                                                                                    \
+			return Get();                                                                                                          \
 		}                                                                                                                    \
 	private:                                                                                                                 \
 		/*Prevent accidentally copying this wrapper class instead of the underlying field*/                                  \
