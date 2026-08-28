@@ -376,6 +376,10 @@ Schema field macros
 	class varName##_prop                                                                                                     \
 	{                                                                                                                        \
 	public:                                                                                                                  \
+		/*The deleted copy ctor below is user-declared, which suppresses the*/                                               \
+		/*implicit default one -- without this a schema class that has a real*/                                              \
+		/*constructor cannot initialise its own fields.*/                                                                    \
+		varName##_prop() = default;                                                                                          \
 		std::add_lvalue_reference_t<type> Get()                                                                              \
 		{                                                                                                                    \
 			static const auto m_key = schema::GetOffset(m_className, m_classNameHash, #varName, m_varNameHash);              \
@@ -474,12 +478,16 @@ Schema field macros
 		/*Prevent accidentally copying this wrapper class instead of the underlying field*/                                  \
 		varName##_prop(const varName##_prop&) = delete;                                                                      \
 		static constexpr auto m_varNameHash = hash_32_fnv1a_const(#varName);                                                 \
-	} varName;
+	} varName{};
 
 #define SCHEMA_FIELD_POINTER_OFFSET(type, varName, extra_offset)                                                             \
 	class varName##_prop                                                                                                     \
 	{                                                                                                                        \
 	public:                                                                                                                  \
+		/*The deleted copy ctor below is user-declared, which suppresses the*/                                               \
+		/*implicit default one -- without this a schema class that has a real*/                                              \
+		/*constructor cannot initialise its own fields.*/                                                                    \
+		varName##_prop() = default;                                                                                          \
 		type* Get()                                                                                                          \
 		{                                                                                                                    \
 			static const auto m_key = schema::GetOffset(m_className, m_classNameHash, #varName, m_varNameHash);				 \
@@ -525,7 +533,7 @@ Schema field macros
 		/*Prevent accidentally copying this wrapper class instead of the underlying field*/                                  \
 		varName##_prop(const varName##_prop&) = delete;                                                                      \
 		static constexpr auto m_varNameHash = hash_32_fnv1a_const(#varName);                                                 \
-	} varName;
+	} varName{};
 
 /**
 
