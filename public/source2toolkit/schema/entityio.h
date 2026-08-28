@@ -164,7 +164,7 @@ public:
     * @param pActivator Activator entity
     * @param pCaller Caller entity
     * @param flDelay Delay before execution
-    * @param nMode Pre/Post hook
+    * @param nMode Hook timing (MMODE_PRE/MMODE_POST)
     *
     * @return META_RES (MRES_IGNORED / MRES_HANDLED / MRES_OVERRIDE / MRES_SUPERCEDE)
       */

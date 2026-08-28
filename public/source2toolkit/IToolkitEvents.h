@@ -64,14 +64,14 @@ Forward declarations
 * @brief Callback type for game events.
 *
 * @param event Pointer to the event data
-* @param mode Execution mode (Pre/Post)
+* @param mode Execution mode (MMODE_PRE/MMODE_POST)
 * @param dontBroadcast Set to true to prevent event from being sent to clients
 *
 * @return META_RES:
 * * MRES_IGNORED: no changes
 * * MRES_HANDLED: did something, original still runs
-* * MRES_OVERRIDE: modify event but still allow original execution (Pre only)
-* * MRES_SUPERCEDE: block original execution (Pre only)
+* * MRES_OVERRIDE: modify event but still allow original execution (MMODE_PRE only)
+* * MRES_SUPERCEDE: block original execution (MMODE_PRE only)
     */
 using GameEventHandler = std::function<META_RES(IGameEvent* event, META_MODE mode, bool& dontBroadcast)>;
 

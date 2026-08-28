@@ -67,7 +67,7 @@ Forward declarations
 *
 * @param ctx Command execution context (player, etc.)
 * @param cmd Parsed command arguments
-* @param mode Execution mode (Pre/Post)
+* @param mode Execution mode (MMODE_PRE/MMODE_POST)
   */
 using ChatHandler = std::function<void(const CCommandContext&, const CCommand&, META_MODE)>;
 
@@ -77,7 +77,7 @@ using ChatHandler = std::function<void(const CCommandContext&, const CCommand&, 
 *
 * @param ctx Command execution context
 * @param cmd Parsed command arguments
-* @param mode Execution mode (Pre/Post)
+* @param mode Execution mode (MMODE_PRE/MMODE_POST)
 * @return META_RES describing how to handle execution (MRES_IGNORED, MRES_HANDLED, MRES_OVERRIDE, MRES_SUPERCEDE)
   */
 using CommandHandler = std::function<META_RES(const CCommandContext&, const CCommand&, META_MODE)>;
@@ -135,13 +135,13 @@ public:
     * @param owner Plugin ID that owns the listener
     * @param pchName Existing command name to listen for
     * @param handler Callback executed on command execution
-    * @param mode Execution mode (Pre = before original, Post = after original)
+    * @param mode Execution mode (MMODE_PRE = before original, MMODE_POST = after original)
     *
     * @return META_RES to control command execution:
     * * MRES_IGNORED: do nothing
     * * MRES_HANDLED: did something, original still runs
-    * * MRES_OVERRIDE: override return value but still call original (Pre only)
-    * * MRES_SUPERCEDE: block original execution (Pre only)
+    * * MRES_OVERRIDE: override return value but still call original (MMODE_PRE only)
+    * * MRES_SUPERCEDE: block original execution (MMODE_PRE only)
         */
     virtual void RegConListener(PluginId owner, const char* pchName, CommandHandler handler, META_MODE mode) = 0;
 };
