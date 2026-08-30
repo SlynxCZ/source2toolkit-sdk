@@ -430,19 +430,41 @@ Interface helpers
 /**
  * @brief Macro for automatically getting a Source2Toolkit plugin exposed interface.
  *
+ * Unlike the GET_VALVE_IFACE_* macros this one never returns on its own, so it
+ * is usable outside Load() -- in OnAllToolkitPluginsLoaded(), say, where the
+ * interface belongs to another plugin and its absence is an ordinary outcome
+ * rather than a fatal one. Test v_ret against TOOLKIT_IFACE_OK and decide.
+ *
  * @param v_var		Variable name to store into.
  * @param v_type		Interface type (do not include the pointer/asterisk).
  * @param v_name		Interface name.
+ * @param v_ret		int receiving TOOLKIT_IFACE_OK or TOOLKIT_IFACE_FAILED.
  */
-#define GET_TOOLKIT_IFACE(v_var, v_type, v_name) \
-    v_var = (v_type*)g_ToolkitAPI->ToolkitFactory(v_name, nullptr, nullptr); \
-    if (!v_var) \
-    { \
-        if (error && maxlen) \
-        { \
-            g_ToolkitAPI->Format(error, maxlen, "Could not find toolkit interface: %s", v_name); \
-        } \
-        return false; \
-    }
+#define GET_TOOLKIT_IFACE(v_var, v_type, v_name, v_ret) \
+	v_var = (v_type *)g_ToolkitAPI->ToolkitFactory(v_name, &(v_ret), nullptr); \
+	if (!v_var) \
+	{ \
+		(v_ret) = TOOLKIT_IFACE_FAILED; \
+	}
+
+/**
+ * @brief Macro for automatically getting a Metamod:Source plugin exposed interface.
+ *
+ * Same contract as GET_TOOLKIT_IFACE: it never returns on its own, it only
+ * reports through v_ret. Metamod fills v_ret with META_IFACE_OK/META_IFACE_FAILED,
+ * which are binary-compatible with the TOOLKIT_IFACE_* values, so compare
+ * against those rather than pulling a metamod header in here.
+ *
+ * @param v_var		Variable name to store into.
+ * @param v_type		Interface type (do not include the pointer/asterisk).
+ * @param v_name		Interface name.
+ * @param v_ret		int receiving TOOLKIT_IFACE_OK or TOOLKIT_IFACE_FAILED.
+ */
+#define GET_METAMOD_IFACE(v_var, v_type, v_name, v_ret) \
+	v_var = (v_type *)g_ToolkitAPI->MetaFactory(v_name, &(v_ret), nullptr); \
+	if (!v_var) \
+	{ \
+		(v_ret) = TOOLKIT_IFACE_FAILED; \
+	}
 
 #endif //_INCLUDE_ITOOLKIT_PLUGIN_H
