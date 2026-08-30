@@ -1,0 +1,106 @@
+# vim: set sts=2 ts=8 sw=2 tw=99 et ft=python:
+#
+# Helper for building a Source2Toolkit plugin with AMBuild.
+#
+# The SDK normally lives outside a plugin's own source tree (SOURCE2TOOLKIT_SDK),
+# and AMBuild's builder.Build() only reaches scripts inside the tree, so a plugin
+# pulls this in the way metamod's own SdkHelpers.ambuild is pulled in -- by
+# absolute path through builder.Eval():
+#
+#   ToolkitSdk = builder.Eval(os.path.join(os.environ['SOURCE2TOOLKIT_SDK'],
+#                                          'SdkPlugin.ambuild'), {})
+#   ...
+#   ToolkitSdk.AddToBinary(binary, sdk)
+#
+# AddToBinary() adds the SDK's include paths, its sources and the hl2sdk
+# translation units it owns. The objects end up inside the plugin binary, which
+# is what the CMake path produces too -- there the SDK is a static library, and
+# a static library is just those same objects.
+import os
+
+class ToolkitSdkPlugin(object):
+  def __init__(self):
+    self.sourcePath = os.environ.get('SOURCE2TOOLKIT_SDK')
+    if not self.sourcePath or not os.path.isdir(self.sourcePath):
+      raise Exception('SOURCE2TOOLKIT_SDK is not set to a valid directory')
+
+  def AddPublicIncludes(self, binary):
+    # The one call a consumer of "source2toolkit/IToolkitPlugin.h" needs.
+    # sourcehook is in there because IToolkitPlugin.h includes "sourcehook.h".
+    binary.compiler.cxxincludes += [
+      os.path.join(self.sourcePath, 'public'),
+      os.path.join(self.sourcePath, 'src'),
+      os.path.join(self.sourcePath, 'vendor', 'sourcehook', 'include'),
+      os.path.join(self.sourcePath, 'vendor', 'sourcehook', 'vendor'),
+      os.path.join(self.sourcePath, 'vendor', 'sourcehook', 'vendor', 'safetyhook'),
+      os.path.join(self.sourcePath, 'vendor', 'sourcehook', 'vendor', 'tl'),
+      os.path.join(self.sourcePath, 'vendor', 'sourcehook', 'vendor', 'zydis'),
+    ]
+
+  def AddSdkIncludes(self, binary, sdk):
+    # Folders the toolkit headers reach into by bare name that are not in the
+    # manifests' own include list. Kept in step with CMakeLists.txt.
+    binary.compiler.cxxincludes += [
+      os.path.join(sdk['path'], 'public', 'schemasystem'),
+      os.path.join(sdk['path'], 'public', 'entity2'),
+      os.path.join(sdk['path'], 'public', 'mathlib'),
+      os.path.join(sdk['path'], 'public', 'tier0'),
+      os.path.join(sdk['path'], 'public', 'tier1'),
+      os.path.join(sdk['path'], 'game', 'server'),
+      os.path.join(sdk['path'], 'thirdparty', 'protobuf-3.21.8', 'src'),
+    ]
+
+  def Sources(self, sdk):
+    sources = []
+
+    for root, _, files in os.walk(os.path.join(self.sourcePath, 'src')):
+      for f in files:
+        if f.endswith('.cpp'):
+          sources += [os.path.join(root, f)]
+
+    # The hl2sdk translation units the toolkit owns; a plugin must not add
+    # these itself as well.
+    sources += [
+      os.path.join(sdk['path'], 'public', 'tier0', 'memoverride.cpp'),
+      os.path.join(sdk['path'], 'tier1', 'keyvalues3.cpp'),
+      os.path.join(sdk['path'], 'tier1', 'convar.cpp'),
+      os.path.join(sdk['path'], 'entity2', 'entityidentity.cpp'),
+      os.path.join(sdk['path'], 'entity2', 'entitysystem.cpp'),
+      os.path.join(sdk['path'], 'entity2', 'entitykeyvalues.cpp'),
+    ]
+
+    return sources
+
+  def ProtoSources(self):
+    proto_dir = os.environ.get('CSGO_PROTO')
+    if not proto_dir:
+      raise Exception('CSGO_PROTO is not set')
+
+    names = [
+      'network_connection', 'networkbasetypes', 'cs_gameevents', 'cs_usercmd',
+      'base_gcmessages', 'econ_gcmessages', 'engine_gcmessages', 'gcsdk_gcmessages',
+      'gcsystemmsgs', 'cstrike15_gcmessages', 'cstrike15_usermessages',
+      'source2_steam_stats', 'netmessages', 'networksystem_protomessages',
+      'steammessages', 'usercmd', 'usermessages', 'gameevents', 'clientmessages',
+      'te', 'valveextensions',
+    ]
+    return [os.path.join(proto_dir, '{}.proto'.format(n)) for n in names]
+
+  def Defines(self, binary):
+    binary.compiler.defines += [
+      'META_IS_SOURCE2',
+      '_ITERATOR_DEBUG_LEVEL=0',
+    ]
+    if binary.compiler.target.platform == 'linux':
+      # Every consumer has to agree with the SDK here, or std::string crosses
+      # the plugin boundary with two different layouts.
+      binary.compiler.defines += ['_GLIBCXX_USE_CXX11_ABI=0']
+
+  def AddToBinary(self, binary, sdk):
+    self.AddPublicIncludes(binary)
+    self.AddSdkIncludes(binary, sdk)
+    self.Defines(binary)
+    binary.sources += self.Sources(sdk)
+
+
+rvalue = ToolkitSdkPlugin()

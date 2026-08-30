@@ -1,3 +1,6 @@
 [submodule "vendor/sourcehook"]
 	path = vendor/sourcehook
 	url = https://github.com/SlynxCZ/SourceHook.git
+[submodule "vendor/hl2sdk-manifests"]
+	path = vendor/hl2sdk-manifests
+	url = https://github.com/alliedmodders/hl2sdk-manifests.git
