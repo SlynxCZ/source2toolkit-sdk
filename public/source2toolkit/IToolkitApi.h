@@ -90,6 +90,7 @@ class IToolkitConVars;
 class IToolkitCustomHud;
 class IToolkitGameConfig;
 class IToolkitGameSystems;
+class IToolkitHTTP;
 class IToolkitEntities;
 class IToolkitEvents;
 class IToolkitListener;
@@ -259,6 +260,12 @@ public:
     * @brief Access game system registry.
       */
     virtual IToolkitGameSystems* GameSystems() = 0;
+
+    /**
+
+    * @brief Access HTTP system.
+      */
+    virtual IToolkitHTTP* HTTP() = 0;
 
     /**
 
