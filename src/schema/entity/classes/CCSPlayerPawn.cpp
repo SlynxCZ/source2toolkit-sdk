@@ -59,3 +59,10 @@ CCSPlayerController* CCSPlayerPawn::GetOriginalController()
         return handle.Get();
     return nullptr;
 }
+
+QAngle CCSPlayerPawn::GetEyeAngles()
+{
+    // m_angEyeAngles is the networked value the client sends up; the field
+    // is generated, this is the read.
+    return m_angEyeAngles();
+}

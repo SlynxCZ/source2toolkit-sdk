@@ -644,6 +644,8 @@ MANUAL_METHODS: dict[str, list[str]] = {
         "CCSPlayerController* GetDefaultController();",
         "/// <summary>Get original controller.</summary>",
         "CCSPlayerController* GetOriginalController();",
+        "/// <summary>Get the angles the pawn is actually looking along.</summary>",
+        "QAngle GetEyeAngles();",
     ],
     "CCSPlayer_ItemServices": [
         "/// <summary>Drop active weapon, recommended to use DropWeapon instead (parameter is ignored here).</summary>",

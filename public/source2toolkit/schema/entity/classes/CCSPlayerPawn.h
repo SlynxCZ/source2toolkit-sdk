@@ -190,6 +190,8 @@ public:
     CCSPlayerController* GetDefaultController();
     /// <summary>Get original controller.</summary>
     CCSPlayerController* GetOriginalController();
+    /// <summary>Get the angles the pawn is actually looking along.</summary>
+    QAngle GetEyeAngles();
 
 public:
     static CCSPlayerPawn* New(const char* className)
