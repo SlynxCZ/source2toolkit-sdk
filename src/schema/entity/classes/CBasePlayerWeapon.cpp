@@ -50,7 +50,7 @@ const char* CBasePlayerWeapon::GetWeaponClassname()
     if (V_StringHasPrefixCaseSensitive(pszClassname, "item_"))
         return pszClassname;
 
-    switch (m_AttributeManager().m_Item().m_iItemDefinitionIndex)
+    switch (m_AttributeManager().m_Item().m_iItemDefinitionIndex())
     {
     case 23:
         return "weapon_mp5sd";
