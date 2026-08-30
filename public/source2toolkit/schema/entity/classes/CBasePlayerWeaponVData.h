@@ -54,8 +54,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "shareddefs.h"
 #include "CEntitySubclassVDataBase.h"
-#include "../enums/ItemFlagTypes_t.h"
 #include "../enums/RumbleEffect_t.h"
 
 class CBasePlayerWeaponVData : public CEntitySubclassVDataBase

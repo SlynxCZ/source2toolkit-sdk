@@ -10,7 +10,9 @@
 
 #include "attackerinfo.h"
 
-#include "entity/enums/DamageTypes_t.h"
+// DamageTypes_t comes from the game headers; the SDK no longer emits a scoped
+// copy of it (see HARD_SKIP_ENUMS in tools/schemagen/generator.py).
+#include "shareddefs.h"
 #include "entity/enums/TakeDamageFlags_t.h"
 
 #include "ehandle.h"

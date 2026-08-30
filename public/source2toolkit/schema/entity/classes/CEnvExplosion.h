@@ -55,9 +55,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "shareddefs.h"
 #include "CModelPointEntity.h"
-#include "../enums/Class_T.h"
-#include "../enums/DamageTypes_t.h"
 
 class CBaseEntity;
 

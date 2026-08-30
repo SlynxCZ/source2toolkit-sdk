@@ -47,11 +47,13 @@
 #include "core/addresses.h"
 #include "core/entities.h"
 #include "core/gameconfig.h"
+#include "core/menus.h"
 #include "core/shared.h"
 #else
 #include "source2toolkit/IToolkitAddresses.h"
-#include "source2toolkit/IToolkitGameConfig.h"
 #include "source2toolkit/IToolkitApi.h"
+#include "source2toolkit/IToolkitGameConfig.h"
+#include "source2toolkit/IToolkitMenus.h"
 #include "source2toolkit/IToolkitPlugin.h"
 TOOLKIT_GLOBALVARS();
 #endif
@@ -165,12 +167,22 @@ void CCSPlayerController::PrintToCenterAlert(const char* pszMessage)
     ClientPrint(GetSlot(), (int)HudDestination::Alert, pszMessage);
 }
 
-void CCSPlayerController::PrintToCenterHtml(const char* pszMessage, int iDuration)
+void CCSPlayerController::PrintToCenterHtml(const char* pszMessage, int iDuration, bool bMenu)
 {
+#ifdef SOURCE2TOOLKIT_CORE
+    if (!bMenu && menus::menuManager.GetActiveMenu(this))
+#else
+    if (!bMenu && g_ToolkitAPI->Menus()->GetActiveMenu(this))
+#endif
+        return;
+
     IGameEvent *event = GetGameEventManager()->CreateEvent("show_survival_respawn_status", true);
+    if (!event) return;
+
     event->SetString("loc_token", pszMessage);
     event->SetInt("duration", iDuration);
     event->SetPlayer("userid", GetPlayerSlot());
+
     FireEventToClient(event);
 }
 
@@ -392,9 +404,9 @@ void CCSPlayerController::FireEventToClient(IGameEvent* pEvent)
     if (!pEvent) return;
 
 #ifdef SOURCE2TOOLKIT_CORE
-    IGameEventListener2* pListener = addresses::toolkitAddresses.CCSPlayerController_LegacyGameEventListener()(GetPlayerSlot());
+    IGameEventListener2* pListener = addresses::toolkitAddresses.LegacyGameEventListener()(GetPlayerSlot());
 #else
-    IGameEventListener2* pListener = g_ToolkitAPI->Addresses()->CCSPlayerController_LegacyGameEventListener()(GetPlayerSlot());
+    IGameEventListener2* pListener = g_ToolkitAPI->Addresses()->LegacyGameEventListener()(GetPlayerSlot());
 #endif
     if (!pListener) return;
 

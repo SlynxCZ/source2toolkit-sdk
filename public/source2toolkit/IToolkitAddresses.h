@@ -115,6 +115,15 @@ using CBasePlayerController_SetPawn_t = void (FASTCALL*)(CBasePlayerController*,
 
 /**
 
+* @brief Snaps a pawn's view angles, as the engine does on teleport.
+*
+* Unresolved on Windows -- no published signature -- so the getter can
+* return null and callers must check.
+  */
+using CBasePlayerPawn_SnapViewAngles_t = void (FASTCALL*)(CBasePlayerPawn*, QAngle*);
+
+/**
+
 * @brief Terminates current round.
   */
 using CGameRules_TerminateRound_t = void (FASTCALL*)(CGameRules*, float, unsigned int, int64, unsigned int);
@@ -129,7 +138,7 @@ using CCSPlayer_WeaponServices_Destroy_t = void (FASTCALL*)(CCSPlayer_WeaponServ
 
 * @brief Retrieves legacy game event listener.
   */
-using CCSPlayerController_LegacyGameEventListener_t = IGameEventListener2* (FASTCALL*)(CPlayerSlot);
+using LegacyGameEventListener_t = IGameEventListener2* (FASTCALL*)(CPlayerSlot);
 
 /**
 
@@ -215,9 +224,10 @@ public:
     virtual CBaseEntity_TakeDamageOld_t CBaseEntity_TakeDamageOld() = 0;
     virtual CBaseModelEntity_SetModel_t CBaseModelEntity_SetModel() = 0;
     virtual CBasePlayerController_SetPawn_t CBasePlayerController_SetPawn() = 0;
+    virtual CBasePlayerPawn_SnapViewAngles_t CBasePlayerPawn_SnapViewAngles() = 0;
     virtual CGameRules_TerminateRound_t CGameRules_TerminateRound() = 0;
     virtual CCSPlayer_WeaponServices_Destroy_t CCSPlayer_WeaponServices_Destroy() = 0;
-    virtual CCSPlayerController_LegacyGameEventListener_t CCSPlayerController_LegacyGameEventListener() = 0;
+    virtual LegacyGameEventListener_t LegacyGameEventListener() = 0;
     virtual CCSPlayerController_SwitchTeam_t CCSPlayerController_SwitchTeam() = 0;
     virtual CEntityInstance_AcceptInput_t CEntityInstance_AcceptInput() = 0;
     virtual CEntityIOOutput_FireOutputInternal_t CEntityIOOutput_FireOutputInternal() = 0;
@@ -233,9 +243,10 @@ public:
 #define ADDR_TAKE_DAMAGE_OLD()                      g_pToolkitAddresses->CBaseEntity_TakeDamageOld()
 #define ADDR_SET_MODEL()                            g_pToolkitAddresses->CBaseModelEntity_SetModel()
 #define ADDR_SET_PAWN()                             g_pToolkitAddresses->CBasePlayerController_SetPawn()
+#define ADDR_SNAP_VIEW_ANGLES()                     g_pToolkitAddresses->CBasePlayerPawn_SnapViewAngles()
 #define ADDR_TERMINATE_ROUND()                      g_pToolkitAddresses->CGameRules_TerminateRound()
 #define ADDR_WEAPON_SERVICES_DESTROY()              g_pToolkitAddresses->CCSPlayer_WeaponServices_Destroy()
-#define ADDR_LEGACY_GAME_EVENT_LISTENER()           g_pToolkitAddresses->CCSPlayerController_LegacyGameEventListener()
+#define ADDR_LEGACY_GAME_EVENT_LISTENER()           g_pToolkitAddresses->LegacyGameEventListener()
 #define ADDR_SWITCH_TEAM()                          g_pToolkitAddresses->CCSPlayerController_SwitchTeam()
 #define ADDR_ACCEPT_INPUT()                         g_pToolkitAddresses->CEntityInstance_AcceptInput()
 #define ADDR_FIRE_OUTPUT_INTERNAL()                 g_pToolkitAddresses->CEntityIOOutput_FireOutputInternal()

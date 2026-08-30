@@ -54,7 +54,7 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
-#include "../enums/DamageTypes_t.h"
+#include "shareddefs.h"
 #include "../enums/EDestructibleParts_DestroyParameterFlags.h"
 
 class CBaseEntity;

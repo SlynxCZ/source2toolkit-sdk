@@ -117,6 +117,8 @@ public:
     Vector GetEyePosition();
     /// <summary>Set entity model.</summary>
     void SetModel(const char* pszModel);
+    /// <summary>Switch a bodygroup on the model.</summary>
+    void SetBodyGroup(const char* pszName, int nValue);
 
 public:
     static CBaseModelEntity* New(const char* className)

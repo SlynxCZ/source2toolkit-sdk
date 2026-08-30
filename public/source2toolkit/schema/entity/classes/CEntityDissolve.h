@@ -55,8 +55,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "shareddefs.h"
 #include "CBaseModelEntity.h"
-#include "../enums/EntityDissolveType_t.h"
 
 class CEntityDissolve : public CBaseModelEntity
 {

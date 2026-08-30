@@ -384,6 +384,15 @@ HARD_SKIP_CLASSES: frozenset[str] = frozenset({
 })
 
 HARD_SKIP_ENUMS: frozenset[str] = frozenset({
+    # hl2sdk declares these unscoped (shareddefs.h / const.h). Emitting scoped
+    # versions here makes any translation unit that reaches both fail to compile,
+    # so the game's own definitions are used instead -- see SKIPPED_ENUM_HEADERS.
+    "Class_T",
+    "DamageTypes_t",
+    "EntityDissolveType_t",
+    "EntityEffects_t",
+    "ItemFlagTypes_t",
+    "ObserverMode_t",
     "ENetworkDisconnectionReason",
     "EntityDormancyType_t",
     "fieldtype_t",
@@ -399,6 +408,18 @@ HARD_SKIP_ENUMS: frozenset[str] = frozenset({
     "soundlevel_t",
     "ThreeState_t"
 })
+
+# A hard-skipped enum still has to be declared for the fields that use it.
+# Most arrive through headers the generated files already include; these do not,
+# so the header that declares them is emitted alongside.
+SKIPPED_ENUM_HEADERS: dict[str, str] = {
+    "Class_T": "shareddefs.h",
+    "DamageTypes_t": "shareddefs.h",
+    "EntityDissolveType_t": "shareddefs.h",
+    "EntityEffects_t": "const.h",
+    "ItemFlagTypes_t": "shareddefs.h",
+    "ObserverMode_t": "shareddefs.h",
+}
 
 NETWORK_CLASSES: list[str] = [
     "CAK47", "CBarnLight", "CBaseAnimGraph", "CBaseButton", "CBaseClientUIEntity",
@@ -458,6 +479,11 @@ NETWORK_CLASSES: list[str] = [
 # Forward declarations, not includes: the headers only ever use these behind a
 # pointer. The .cpp that defines the method includes the real header.
 MANUAL_FORWARDS: dict[str, list[str]] = {
+    "CCSPlayerController": ["CServerSideClient"],
+    "CCSCustomHudLayout": ["CCSPlayerController"],
+}
+
+MANUAL_METHODS: dict[str, list[str]] = {
     "CCSCustomHudLayout": [
         "/// <summary>Creates and spawns a custom_hud_layout for a panorama layout, e.g. \"my_panel\" for panorama/layout/custom_game/my_panel.vxml_c.</summary>",
         "static CCSCustomHudLayout* Create(const char* pszLayout, const char* pszTargetName = nullptr);",
@@ -476,11 +502,6 @@ MANUAL_FORWARDS: dict[str, list[str]] = {
         "/// <summary>Drops every click callback registered for this layout.</summary>",
         "void RemoveClickCallbacks();",
     ],
-    "CCSPlayerController": ["CServerSideClient"],
-    "CCSCustomHudLayout": ["CCSPlayerController"],
-}
-
-MANUAL_METHODS: dict[str, list[str]] = {
     "CBaseEntity": [
         "/// <summary>Creates entity by classname.</summary>",
         "static CBaseEntity* CreateEntityByName(const char* pszClassName);",
@@ -542,6 +563,8 @@ MANUAL_METHODS: dict[str, list[str]] = {
         "Vector GetEyePosition();",
         "/// <summary>Set entity model.</summary>",
         "void SetModel(const char* pszModel);",
+        "/// <summary>Switch a bodygroup on the model.</summary>",
+        "void SetBodyGroup(const char* pszName, int nValue);",
     ],
     "CBasePlayerController": [
         "/// <summary>Set pawn for controller.</summary>",
@@ -550,6 +573,8 @@ MANUAL_METHODS: dict[str, list[str]] = {
     "CBasePlayerPawn": [
         "/// <summary>Force suicide.</summary>",
         "void CommitSuicide(bool bExplode, bool bForce);",
+        "/// <summary>Snaps the pawn's view angles. No-op where the engine function could not be resolved.</summary>",
+        "void SnapViewAngles(const QAngle& angEyeAngles);",
     ],
     "CBasePlayerWeapon": [
         "/// <summary>Get weapon VData.</summary>",
@@ -589,7 +614,7 @@ MANUAL_METHODS: dict[str, list[str]] = {
         "/// <summary>Print alert.</summary>",
         "void PrintToCenterAlert(const char* pszMessage);",
         "/// <summary>Print to center in HTML.</summary>",
-        "void PrintToCenterHtml(const char* pszMessage, int iDuration = 5);",
+        "void PrintToCenterHtml(const char* pszMessage, int iDuration = 5, bool bMenu = false);",
         "/// <summary>Take damage from player</summary>",
         "void TakeDamage(CCSPlayerController* pAttacker, int iDamage, DamageTypes_t bitsDamageType);",
         "/// <summary>Respawn player.</summary>",
@@ -933,6 +958,10 @@ def collect_referenced_types(
         is_pointer_context: bool,
 ) -> None:
     if t.category == SchemaTypeCategory.DeclaredEnum and t.name in HARD_SKIP_ENUMS:
+        header = SKIPPED_ENUM_HEADERS.get(t.name)
+        if header:
+            # "#" marks a raw header rather than a schema type name.
+            includes.add("#" + header)
         return
 
     is_handle_template = t.atomic == SchemaAtomicCategory.T
@@ -961,7 +990,10 @@ def collect_types_from_methods(
                     forwards.add(cls_name)
         for enum_name in all_enums:
             if enum_name in method:
-                includes.add(enum_name)
+                # Same treatment as collect_referenced_types: a hard-skipped enum
+                # needs the header that really declares it, not "../enums/X.h".
+                header = SKIPPED_ENUM_HEADERS.get(enum_name) if enum_name in HARD_SKIP_ENUMS else None
+                includes.add("#" + header if header else enum_name)
 
 def inherits_from_base_entity(
         class_name: str,
@@ -1042,7 +1074,9 @@ def write_class(
     ]
 
     for inc in sorted(includes):
-        if inc in all_enums and inc not in HARD_SKIP_ENUMS:
+        if inc.startswith("#"):
+            lines.append(f'#include "{inc[1:]}"')
+        elif inc in all_enums and inc not in HARD_SKIP_ENUMS:
             lines.append(f'#include "../enums/{sanitise_type_name(inc)}.h"')
         elif inc in all_classes:
             lines.append(f'#include "{sanitise_type_name(inc)}.h"')

@@ -59,3 +59,17 @@ void CBasePlayerPawn::CommitSuicide(bool bExplode, bool bForce) {
 #endif
     CALL_VIRTUAL(void, offset, this, bExplode, bForce);
 }
+
+void CBasePlayerPawn::SnapViewAngles(const QAngle& angEyeAngles) {
+#ifdef SOURCE2TOOLKIT_CORE
+    const auto fn = addresses::toolkitAddresses.CBasePlayerPawn_SnapViewAngles();
+#else
+    const auto fn = g_ToolkitAPI->Addresses()->CBasePlayerPawn_SnapViewAngles();
+#endif
+    // Only resolved where a signature exists for the platform -- currently Linux.
+    if (!fn) return;
+
+    // The engine takes the angles by pointer and does not modify them.
+    QAngle ang = angEyeAngles;
+    fn(this, &ang);
+}

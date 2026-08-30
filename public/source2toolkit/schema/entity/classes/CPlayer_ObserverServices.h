@@ -54,8 +54,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "shareddefs.h"
 #include "CPlayerPawnComponent.h"
-#include "../enums/ObserverMode_t.h"
 
 class CBaseEntity;
 

@@ -55,8 +55,8 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "shareddefs.h"
 #include "CBasePlayerController.h"
-#include "../enums/DamageTypes_t.h"
 #include "IntervalTimer.h"
 #include "../enums/QuestProgress__Reason.h"
 
@@ -190,7 +190,7 @@ public:
     /// <summary>Print alert.</summary>
     void PrintToCenterAlert(const char* pszMessage);
     /// <summary>Print to center in HTML.</summary>
-    void PrintToCenterHtml(const char* pszMessage, int iDuration = 5);
+    void PrintToCenterHtml(const char* pszMessage, int iDuration = 5, bool bMenu = false);
     /// <summary>Take damage from player</summary>
     void TakeDamage(CCSPlayerController* pAttacker, int iDamage, DamageTypes_t bitsDamageType);
     /// <summary>Respawn player.</summary>

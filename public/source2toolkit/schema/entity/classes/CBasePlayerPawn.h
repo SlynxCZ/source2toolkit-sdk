@@ -106,6 +106,8 @@ public:
 public:
     /// <summary>Force suicide.</summary>
     void CommitSuicide(bool bExplode, bool bForce);
+    /// <summary>Snaps the pawn's view angles. No-op where the engine function could not be resolved.</summary>
+    void SnapViewAngles(const QAngle& angEyeAngles);
 
 public:
     static CBasePlayerPawn* New(const char* className)

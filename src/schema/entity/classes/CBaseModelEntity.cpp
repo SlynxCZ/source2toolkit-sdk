@@ -75,3 +75,13 @@ void CBaseModelEntity::SetModel(const char* pszModel) {
     g_ToolkitAPI->Addresses()->CBaseModelEntity_SetModel()(this, pszModel);
 #endif
 }
+
+void CBaseModelEntity::SetBodyGroup(const char* pszName, int nValue)
+{
+    // The engine exposes no direct setter -- only an entity input taking
+    // "name,value".
+    char szValue[128];
+    V_snprintf(szValue, sizeof(szValue), "%s,%d", pszName, nValue);
+
+    AcceptInput("SetBodyGroup", this, this, szValue);
+}
