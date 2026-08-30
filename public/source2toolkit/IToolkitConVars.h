@@ -72,6 +72,17 @@ Core Toolkit ConVars
 
 * @brief Interface for interacting with engine ConVars.
   */
+/**
+ * @brief Callback type for ConVar value changes.
+ *
+ * @param ref The ConVar that changed
+ * @param slot Split-screen slot the change applies to
+ * @param pszNewValue Value being set
+ * @param pszOldValue Value being replaced
+ */
+using ConVarChangeHandler = std::function<void(ConVarRefAbstract* ref, CSplitScreenSlot slot,
+                                               const char* pszNewValue, const char* pszOldValue)>;
+
 #define TOOLKIT_CONVARS_INTERFACE "IToolkitConVars001"
 
 class IToolkitConVars
@@ -178,6 +189,33 @@ public:
       */
     virtual void GetValue(uint16 accessIndex, void* outValue, CSplitScreenSlot slot = -1) = 0;
 
+    /* =========================
+    Change callbacks
+    ========================= */
+
+    /**
+     * @brief Registers a listener for every ConVar value change.
+     *
+     * The engine only takes plain function pointers here, and only keeps one
+     * list of them for the whole process. The toolkit installs a single one of
+     * those and fans out to the handlers registered through this, so a plugin
+     * can use a capturing lambda and does not have to unregister on unload.
+     *
+     * @param owner Plugin ID that owns the listener
+     * @param handler Callback function
+     */
+    virtual void HookConVarChange(PluginId owner, ConVarChangeHandler handler) = 0;
+
+    /**
+     * @brief Drops every change listener a plugin registered.
+     *
+     * Done for you when the plugin unloads; call it only to stop listening
+     * earlier than that.
+     *
+     * @param owner Plugin ID whose listeners to drop
+     */
+    virtual void UnhookConVarChange(PluginId owner) = 0;
+
     /**
 
     * @brief Sets value from user-provided buffer.
@@ -229,5 +267,13 @@ public:
 #define CVAR_CREATE(name, type, help, flags, hasMin, hasMax, def, minVal, maxVal) \
     g_pToolkitConVars->CreateConVar(name, type, help, flags, hasMin, hasMax, def, minVal, maxVal)
 #define CVAR_DELETE(idx)                g_pToolkitConVars->DeleteConVar(idx)
+
+/**
+ * @brief Macro for listening to ConVar value changes.
+ *
+ * @param passfunc Callback function.
+ */
+#define HOOK_CONVAR_CHANGE(passfunc) \
+    g_pToolkitConVars->HookConVarChange(g_PluginID, passfunc)
 
 #endif //_INCLUDE_ITOOLKIT_CONVARS_H
