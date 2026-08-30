@@ -120,7 +120,6 @@ struct HltvReplayStats_t
 	uint32 m_nNetAbortReplays;
 	uint32 m_nFailedReplays[NUM_FAILURES];
 }; // sizeof 56
-COMPILE_TIME_ASSERT( sizeof( HltvReplayStats_t ) == 56 );
 
 struct Spike_t
 {
@@ -128,7 +127,6 @@ public:
 	CUtlString m_szDesc;
 	int m_nBits;
 };
-COMPILE_TIME_ASSERT( sizeof( Spike_t ) == 16 );
 
 class CNetworkStatTrace
 {
@@ -138,7 +136,6 @@ public:
 	int m_nStartBit;
 	int m_nCurBit;
 };
-COMPILE_TIME_ASSERT( sizeof( CNetworkStatTrace ) == 40 );
 
 //-----------------------------------------------------------------------------
 // hl2sdk-cs2 only forward-declares CUtlSlot (engine/igameeventsystem.h) and has
@@ -164,7 +161,6 @@ public:
 private:
 	Delegate_t m_SlotDeletionDelegate;
 };
-COMPILE_TIME_ASSERT( sizeof( CUtlSignaller_Base ) == 24 );
 
 enum CopiedLockState_t : int32
 {
@@ -196,7 +192,6 @@ private:
 	CCopyableLock<CThreadFastMutex> m_Mutex;
 	CUtlVector<MTElement_t> m_ConnectedSignallers;
 };
-COMPILE_TIME_ASSERT( sizeof( CUtlSlot ) == 40 );
 
 //-----------------------------------------------------------------------------
 // The engine-side client

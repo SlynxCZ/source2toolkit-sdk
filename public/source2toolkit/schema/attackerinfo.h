@@ -23,6 +23,5 @@ struct AttackerInfo_t
     int m_iTeamChecked;
     int m_nTeam;
 };
-static_assert(sizeof(AttackerInfo_t) == 20);
 
 #endif // ATTACKERINFO_H

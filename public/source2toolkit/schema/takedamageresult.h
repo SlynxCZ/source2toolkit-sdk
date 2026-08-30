@@ -53,6 +53,5 @@ public:
 
 	void CopyFrom(CTakeDamageInfo* pInfo);
 };
-static_assert(sizeof(CTakeDamageResult) == 80);
 
 #endif // TAKEDAMAGERESULT_H

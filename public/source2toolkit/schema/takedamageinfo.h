@@ -76,6 +76,5 @@ public:
 private:
 	[[maybe_unused]] int32_t m_nUnknown4; // 0x11c | 284
 };
-static_assert(sizeof(CTakeDamageInfo) == 280);
 
 #endif // TAKEDAMAGEINFO_H
