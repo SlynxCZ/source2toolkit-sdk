@@ -195,7 +195,10 @@ Automatically:
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0.
+This project is licensed under the GNU General Public License v3.0, with a
+linking exception for Valve's engines and games and a dual-licensing exception
+for derivative works. See [LICENSE_INFO.txt](LICENSE_INFO.txt) for the terms
+and [LICENSE](LICENSE) for the full GPLv3 text.
 
 ---
 
