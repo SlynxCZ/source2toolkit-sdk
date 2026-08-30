@@ -305,6 +305,7 @@ Globals
     IToolkitAddresses*       g_pToolkitAddresses       = nullptr; \
     IToolkitCommands*        g_pToolkitCommands        = nullptr; \
     IToolkitConVars*         g_pToolkitConVars         = nullptr; \
+    IToolkitCustomHud*       g_pToolkitCustomHud       = nullptr; \
     IToolkitEntities*        g_pToolkitEntities        = nullptr; \
     IToolkitEvents*          g_pToolkitEvents          = nullptr; \
     IToolkitGameConfig*      g_pToolkitGameConfig      = nullptr; \
@@ -328,6 +329,7 @@ Globals
     extern IToolkitAddresses*       g_pToolkitAddresses; \
     extern IToolkitCommands*        g_pToolkitCommands; \
     extern IToolkitConVars*         g_pToolkitConVars; \
+    extern IToolkitCustomHud*       g_pToolkitCustomHud; \
     extern IToolkitEntities*        g_pToolkitEntities; \
     extern IToolkitEvents*          g_pToolkitEvents; \
     extern IToolkitGameConfig*      g_pToolkitGameConfig; \
@@ -354,6 +356,7 @@ Globals
     g_pToolkitAddresses       = (IToolkitAddresses*)      api->ToolkitFactory(TOOLKIT_ADDRESSES_INTERFACE,       nullptr, nullptr); \
     g_pToolkitCommands        = (IToolkitCommands*)       api->ToolkitFactory(TOOLKIT_COMMANDS_INTERFACE,        nullptr, nullptr); \
     g_pToolkitConVars         = (IToolkitConVars*)        api->ToolkitFactory(TOOLKIT_CONVARS_INTERFACE,         nullptr, nullptr); \
+    g_pToolkitCustomHud       = (IToolkitCustomHud*)      api->ToolkitFactory(TOOLKIT_CUSTOMHUD_INTERFACE,       nullptr, nullptr); \
     g_pToolkitEntities        = (IToolkitEntities*)       api->ToolkitFactory(TOOLKIT_ENTITIES_INTERFACE,        nullptr, nullptr); \
     g_pToolkitEvents          = (IToolkitEvents*)         api->ToolkitFactory(TOOLKIT_EVENTS_INTERFACE,          nullptr, nullptr); \
     g_pToolkitGameConfig      = (IToolkitGameConfig*)     api->ToolkitFactory(TOOLKIT_GAMECONFIG_INTERFACE,      nullptr, nullptr); \

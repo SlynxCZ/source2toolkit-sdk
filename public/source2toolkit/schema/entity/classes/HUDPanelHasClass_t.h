@@ -1,8 +1,8 @@
-/**
+﻿/**
 * vim: set ts=4 sw=4 tw=99 noet:
  * =============================================================================
  * Source2Toolkit
- * Copyright (C) 2025-2026 Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl,
+ * Copyright (C) 2025-2026 Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl,
  * AlliedModders LLC. All rights reserved.
  * =============================================================================
  *
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * As a special exception, Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl and
+ * As a special exception, Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl and
  * AlliedModders LLC give you permission to link the code of this program
  * (as well as its derivative works) to "Counter-Strike 2," "Source 2,"
  * "Steam," and any Game MODs or server software running on software by
@@ -29,7 +29,7 @@
  * otherwise stated in LICENSE.txt.
  *
  * Authors:
- *   - Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl
+ *   - Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl
  *   - AlliedModders LLC
  *
  * Project: Source2Toolkit
@@ -40,35 +40,39 @@
 
 #pragma once
 
-#include "igameevents.h"
-#include "ehandle.h"
-#include "entityhandle.h"
-#include "vector.h"
-#include "utlbinaryblock.h"
-#include "utlsymbol.h"
-#include "utlsymbollarge.h"
-#include "utlstring.h"
-#include "utlstringtoken.h"
-#include "source2toolkit/IToolkitPlugin.h"
-#include "source2toolkit/schema/entityio.h"
-#include "source2toolkit/schema/schema.h"
-#include <cstdint>
+#include "platform.h"
 
 #include "../enums/EHudPanelClassStatus_t.h"
 
-class HUDPanelHasClass_t
+/**
+ * @brief One "panel has CSS class" entry of a custom HUD layout state.
+ *
+ * Hand-written, not schema-generated: these are value types that we construct
+ * ourselves and hand to an engine-owned CUtlVector, so the C++ layout has to be
+ * the engine's real one. A SCHEMA_FIELD wrapper carries no storage -- the class
+ * would be 3 bytes wide against the engine's 8, and both the stack instance and
+ * every AddToTail()/Element() stride would be wrong.
+ *
+ * @note Panel and class names are not stored here; the two indices point into
+ *       CCSCustomHudLayout's m_vecPanelIds / m_vecClassNames string tables.
+ */
+struct HUDPanelHasClass_t
 {
-public:
-    DECLARE_SCHEMA_CLASS(HUDPanelHasClass_t);
+    HUDPanelHasClass_t(uint16 nPanelIdIndex, uint16 nClassNameIndex, bool bHasClass) :
+        m_nPanelIdIndex(nPanelIdIndex), m_nClassNameIndex(nClassNameIndex),
+        m_eClassStatus(static_cast<EHudPanelClassStatus_t>(bHasClass))
+    {
+    }
 
-    SCHEMA_FIELD(uint16_t, m_nPanelIdIndex);
-    SCHEMA_FIELD(uint16_t, m_nClassNameIndex);
-    SCHEMA_FIELD(EHudPanelClassStatus_t, m_eClassStatus);
+    /// Identity is the panel/class pair -- the status is the value being set.
+    bool operator==(const HUDPanelHasClass_t& other) const
+    {
+        return m_nPanelIdIndex == other.m_nPanelIdIndex && m_nClassNameIndex == other.m_nClassNameIndex;
+    }
 
-public:
-    /// <summary>Constructs new object with correct vtable pointer.</summary>
-    HUDPanelHasClass_t(uint16 nPanelIdIndex, uint16 nClassNameIndex, bool bHasClass);
-    bool operator==(const HUDPanelHasClass_t& other) const;
+    uint16 m_nPanelIdIndex;
+    uint16 m_nClassNameIndex;
+    EHudPanelClassStatus_t m_eClassStatus;
 };
 
 #endif // _INCLUDE_HUDPANELHASCLASS_T_H

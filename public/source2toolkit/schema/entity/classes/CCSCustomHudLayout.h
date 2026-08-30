@@ -58,6 +58,8 @@
 #include "CBaseEntity.h"
 #include "CCSCustomHudLayoutState.h"
 
+class CCSPlayerController;
+
 class CCSCustomHudLayout : public CBaseEntity
 {
 public:
@@ -69,6 +71,24 @@ public:
     SCHEMA_FIELD(CUtlVector<CUtlString>, m_vecPanelIds);
     SCHEMA_FIELD(CUtlVector<CUtlString>, m_vecClassNames);
     SCHEMA_FIELD(CUtlVector<CUtlString>, m_vecDialogVariableNames);
+
+public:
+    /// <summary>Creates and spawns a custom_hud_layout for a panorama layout, e.g. "my_panel" for panorama/layout/custom_game/my_panel.vxml_c.</summary>
+    static CCSCustomHudLayout* Create(const char* pszLayout, const char* pszTargetName = nullptr);
+    /// <summary>Gets the layout state of one player, or the global state when no controller is given.</summary>
+    CCSCustomHudLayoutState& GetLayoutState(CCSPlayerController* pController = nullptr);
+    /// <summary>Adds or removes a CSS class on a panel of the layout.</summary>
+    void SetHasClass(const char* pszPanelId, const char* pszClassName, bool bHasClass, CCSPlayerController* pController = nullptr);
+    /// <summary>Sets a dialog variable string on a panel of the layout.</summary>
+    void SetDialogVariableString(const char* pszPanelId, const char* pszVariableName, const char* pszValue, CCSPlayerController* pController = nullptr);
+    /// <summary>Enables or disables mouse input capture, without which the player cannot click the layout.</summary>
+    void SetInputCaptureEnabled(bool bEnable, CCSPlayerController* pController = nullptr);
+    /// <summary>Whether mouse input capture is enabled.</summary>
+    bool IsInputCaptureEnabled(CCSPlayerController* pController = nullptr);
+    /// <summary>Registers a callback fired when a player clicks a panel of this layout, keyed by the panel's id attribute.</summary>
+    void AddClickCallback(std::function<void(CCSPlayerController*, CCSCustomHudLayout*, const char*)> callback);
+    /// <summary>Drops every click callback registered for this layout.</summary>
+    void RemoveClickCallbacks();
 
 public:
     static CCSCustomHudLayout* New(const char* className)

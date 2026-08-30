@@ -458,7 +458,26 @@ NETWORK_CLASSES: list[str] = [
 # Forward declarations, not includes: the headers only ever use these behind a
 # pointer. The .cpp that defines the method includes the real header.
 MANUAL_FORWARDS: dict[str, list[str]] = {
+    "CCSCustomHudLayout": [
+        "/// <summary>Creates and spawns a custom_hud_layout for a panorama layout, e.g. \"my_panel\" for panorama/layout/custom_game/my_panel.vxml_c.</summary>",
+        "static CCSCustomHudLayout* Create(const char* pszLayout, const char* pszTargetName = nullptr);",
+        "/// <summary>Gets the layout state of one player, or the global state when no controller is given.</summary>",
+        "CCSCustomHudLayoutState& GetLayoutState(CCSPlayerController* pController = nullptr);",
+        "/// <summary>Adds or removes a CSS class on a panel of the layout.</summary>",
+        "void SetHasClass(const char* pszPanelId, const char* pszClassName, bool bHasClass, CCSPlayerController* pController = nullptr);",
+        "/// <summary>Sets a dialog variable string on a panel of the layout.</summary>",
+        "void SetDialogVariableString(const char* pszPanelId, const char* pszVariableName, const char* pszValue, CCSPlayerController* pController = nullptr);",
+        "/// <summary>Enables or disables mouse input capture, without which the player cannot click the layout.</summary>",
+        "void SetInputCaptureEnabled(bool bEnable, CCSPlayerController* pController = nullptr);",
+        "/// <summary>Whether mouse input capture is enabled.</summary>",
+        "bool IsInputCaptureEnabled(CCSPlayerController* pController = nullptr);",
+        "/// <summary>Registers a callback fired when a player clicks a panel of this layout, keyed by the panel\'s id attribute.</summary>",
+        "void AddClickCallback(std::function<void(CCSPlayerController*, CCSCustomHudLayout*, const char*)> callback);",
+        "/// <summary>Drops every click callback registered for this layout.</summary>",
+        "void RemoveClickCallbacks();",
+    ],
     "CCSPlayerController": ["CServerSideClient"],
+    "CCSCustomHudLayout": ["CCSPlayerController"],
 }
 
 MANUAL_METHODS: dict[str, list[str]] = {
@@ -654,17 +673,20 @@ MANUAL_METHODS: dict[str, list[str]] = {
         "/// <summary>Get player pawn.</summary>",
         "CCSPlayerPawn* GetPlayerPawn();",
     ],
-    "HUDPanelDialogVariableString_t": [
-        "/// <summary>Constructs new object with correct vtable pointer.</summary>",
-        "HUDPanelDialogVariableString_t(uint16 nPanelIdIndex, uint16 nDialogVariableIndex, CUtlString sValue, bool bIsSet);",
-        "bool operator==(const HUDPanelDialogVariableString_t& other) const;"
-    ],
-    "HUDPanelHasClass_t": [
-        "/// <summary>Constructs new object with correct vtable pointer.</summary>",
-        "HUDPanelHasClass_t(uint16 nPanelIdIndex, uint16 nClassNameIndex, bool bHasClass);",
-        "bool operator==(const HUDPanelHasClass_t& other) const;"
-    ],
 }
+
+# Classes whose headers are written by hand, not generated. They stay part of
+# the type graph -- referenced, forward-declared and included like any other --
+# the generator just neither deletes nor rewrites their files.
+#
+# This is for engine value types we construct ourselves and hand to engine-owned
+# CUtlVectors: a SCHEMA_FIELD wrapper carries no storage, so the generated class
+# would be a few bytes wide against the engine's real size, and every stack
+# instance, AddToTail() and Element() stride would be wrong.
+HANDWRITTEN_CLASSES: frozenset[str] = frozenset({
+    "HUDPanelDialogVariableString_t",
+    "HUDPanelHasClass_t",
+})
 
 # Classes manually whitelisted after BFS
 EXTRA_WHITELIST: frozenset[str] = frozenset({
@@ -1117,11 +1139,12 @@ def main() -> None:
     visited = build_graph_and_bfs(all_classes)
     visited |= EXTRA_WHITELIST
 
-    # Clear existing .h files
+    # Clear existing .h files, leaving the hand-written ones in place
+    handwritten_files = {f"{sanitise_type_name(n)}.h" for n in HANDWRITTEN_CLASSES}
     if os.path.isdir(output_path):
         for root, _, files in os.walk(output_path):
             for fname in files:
-                if fname.endswith(".h"):
+                if fname.endswith(".h") and fname not in handwritten_files:
                     os.remove(os.path.join(root, fname))
 
     enums_dir = os.path.join(output_path, "enums")
@@ -1139,6 +1162,8 @@ def main() -> None:
 
     for class_name, schema_class in all_classes.items():
         if class_name in HARD_SKIP_CLASSES:
+            continue
+        if class_name in HANDWRITTEN_CLASSES:
             continue
         if class_name not in visited and "VData" not in class_name:
             continue

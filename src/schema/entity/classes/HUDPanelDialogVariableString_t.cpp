@@ -1,4 +1,4 @@
-/**
+﻿/**
 * vim: set ts=4 sw=4 tw=99 noet:
  * =============================================================================
  * Source2Toolkit
@@ -39,15 +39,6 @@
 
 #include "source2toolkit/IToolkitModule.h"
 
-#ifdef SOURCE2TOOLKIT_CORE
-#include "core/addresses.h"
-#include "core/shared.h"
-#else
-#include "source2toolkit/IToolkitApi.h"
-#include "source2toolkit/IToolkitPlugin.h"
-TOOLKIT_GLOBALVARS();
-#endif
-
 HUDPanelDialogVariableString_t::HUDPanelDialogVariableString_t(uint16 nPanelIdIndex, uint16 nDialogVariableIndex, CUtlString sValue, bool bIsSet)
 {
     // We construct this ourselves, so slot 0 holds whatever the compiler put
@@ -65,13 +56,8 @@ HUDPanelDialogVariableString_t::HUDPanelDialogVariableString_t(uint16 nPanelIdIn
 
     if (pVTable) *reinterpret_cast<void**>(this) = pVTable;
 
-    m_nPanelIdIndex() = nPanelIdIndex;
-    m_nDialogVariableIndex() = nDialogVariableIndex;
-    m_sValue() = sValue;
-    m_bIsSet() = bIsSet;
-}
-
-bool HUDPanelDialogVariableString_t::operator==(const HUDPanelDialogVariableString_t& other) const
-{
-    return m_nPanelIdIndex() == other.m_nPanelIdIndex() && m_nDialogVariableIndex() == other.m_nDialogVariableIndex();
+    m_nPanelIdIndex = nPanelIdIndex;
+    m_nDialogVariableIndex = nDialogVariableIndex;
+    m_sValue = sValue;
+    m_bIsSet = bIsSet;
 }

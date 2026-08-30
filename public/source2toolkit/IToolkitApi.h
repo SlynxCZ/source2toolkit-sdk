@@ -87,6 +87,7 @@ class IFileSystem;
 class IToolkitAddresses;
 class IToolkitCommands;
 class IToolkitConVars;
+class IToolkitCustomHud;
 class IToolkitGameConfig;
 class IToolkitEntities;
 class IToolkitEvents;
@@ -227,6 +228,12 @@ public:
     * @brief Access ConVar system.
       */
     virtual IToolkitConVars* ConVars() = 0;
+
+    /**
+
+    * @brief Access custom HUD layout system.
+      */
+    virtual IToolkitCustomHud* CustomHud() = 0;
 
     /**
 
