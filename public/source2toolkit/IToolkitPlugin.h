@@ -309,6 +309,7 @@ Globals
     IToolkitEntities*        g_pToolkitEntities        = nullptr; \
     IToolkitEvents*          g_pToolkitEvents          = nullptr; \
     IToolkitGameConfig*      g_pToolkitGameConfig      = nullptr; \
+    IToolkitGameSystems*     g_pToolkitGameSystems     = nullptr; \
     IToolkitMenus*           g_pToolkitMenus           = nullptr; \
     IToolkitMySQL*           g_pToolkitMySQL           = nullptr; \
     IToolkitNetworkMessages* g_pToolkitNetworkMessages = nullptr; \
@@ -333,6 +334,7 @@ Globals
     extern IToolkitEntities*        g_pToolkitEntities; \
     extern IToolkitEvents*          g_pToolkitEvents; \
     extern IToolkitGameConfig*      g_pToolkitGameConfig; \
+    extern IToolkitGameSystems*     g_pToolkitGameSystems; \
     extern IToolkitMenus*           g_pToolkitMenus; \
     extern IToolkitMySQL*           g_pToolkitMySQL; \
     extern IToolkitNetworkMessages* g_pToolkitNetworkMessages; \
@@ -360,6 +362,7 @@ Globals
     g_pToolkitEntities        = (IToolkitEntities*)       api->ToolkitFactory(TOOLKIT_ENTITIES_INTERFACE,        nullptr, nullptr); \
     g_pToolkitEvents          = (IToolkitEvents*)         api->ToolkitFactory(TOOLKIT_EVENTS_INTERFACE,          nullptr, nullptr); \
     g_pToolkitGameConfig      = (IToolkitGameConfig*)     api->ToolkitFactory(TOOLKIT_GAMECONFIG_INTERFACE,      nullptr, nullptr); \
+    g_pToolkitGameSystems     = (IToolkitGameSystems*)    api->ToolkitFactory(TOOLKIT_GAMESYSTEMS_INTERFACE,     nullptr, nullptr); \
     g_pToolkitMenus           = (IToolkitMenus*)          api->ToolkitFactory(TOOLKIT_MENUS_INTERFACE,           nullptr, nullptr); \
     g_pToolkitMySQL           = (IToolkitMySQL*)          api->ToolkitFactory(TOOLKIT_MYSQL_INTERFACE,           nullptr, nullptr); \
     g_pToolkitNetworkMessages = (IToolkitNetworkMessages*)api->ToolkitFactory(TOOLKIT_NETWORKMESSAGES_INTERFACE, nullptr, nullptr); \

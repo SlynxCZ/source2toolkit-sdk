@@ -89,6 +89,7 @@ class IToolkitCommands;
 class IToolkitConVars;
 class IToolkitCustomHud;
 class IToolkitGameConfig;
+class IToolkitGameSystems;
 class IToolkitEntities;
 class IToolkitEvents;
 class IToolkitListener;
@@ -252,6 +253,12 @@ public:
     * @brief Access game configuration system.
       */
     virtual IToolkitGameConfig* GameConfig() = 0;
+
+    /**
+
+    * @brief Access game system registry.
+      */
+    virtual IToolkitGameSystems* GameSystems() = 0;
 
     /**
 
