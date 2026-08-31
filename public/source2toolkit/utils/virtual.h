@@ -73,6 +73,26 @@
 #define CALL_VIRTUAL(retType, idx, ...) \
 vmt::CallVirtual<retType>(idx, __VA_ARGS__)
 
+/**
+
+* @brief Calls a virtual function through a vtable the caller supplies.
+*
+* For objects whose vtable is not the one stored in the instance -- a filter
+* whose table was looked up in the server module by name, say -- where
+* CALL_VIRTUAL would dispatch through the wrong table.
+*
+* @param retType Return type
+* @param idx Virtual table index
+* @param vtable The vtable to dispatch through
+* @param ... Arguments (must include the class pointer as the first one)
+*
+* @code
+* CALL_VIRTUAL_OVERRIDE_VTBL(bool, offset, pVTable, this, pEntity);
+* @endcode
+  */
+#define CALL_VIRTUAL_OVERRIDE_VTBL(retType, idx, vtable, ...) \
+vmt::CallVirtualOverrideVTable<retType>(idx, vtable, __VA_ARGS__)
+
 namespace vmt
 {
     /**
@@ -142,6 +162,51 @@ auto pFunc = GetVMethod<T(__thiscall*)(void*, Args...)>(uIndex, pClass);
         {
 #ifdef SOURCE2TOOLKIT_CORE
 FP_WARN("Tried calling a null virtual function.");
+#endif
+            return T();
+        }
+
+        return pFunc(pClass, args...);
+    }
+
+    /**
+    * @brief Calls a virtual function through a caller-supplied vtable.
+    *
+    * Same as CallVirtual, except the table is passed in rather than read out of
+    * the object. Needed when the instance does not carry the vtable you want to
+    * dispatch through -- e.g. a trace filter whose table was resolved from the
+    * server module by name.
+    *
+    * @tparam T Return type
+    * @tparam Args Argument types
+    * @param uIndex Virtual table index
+    * @param pVTable The vtable to dispatch through
+    * @param pClass Pointer passed as the implicit this
+    * @param args Arguments passed to the function
+    *
+    * @return Function result, or a default-constructed T if the table or entry
+    *         is null.
+    */
+    template <typename T = void, typename... Args>
+    inline T CallVirtualOverrideVTable(uint32 uIndex, void** pVTable, void* pClass, Args... args)
+    {
+        if (!pVTable)
+        {
+#ifdef SOURCE2TOOLKIT_CORE
+            FP_WARN("Tried calling a virtual function through a null vtable.");
+#endif
+            return T();
+        }
+
+#ifdef _WIN32
+        auto pFunc = reinterpret_cast<T(__thiscall*)(void*, Args...)>(pVTable[uIndex]);
+#else
+        auto pFunc = reinterpret_cast<T(__cdecl*)(void*, Args...)>(pVTable[uIndex]);
+#endif
+        if (!pFunc)
+        {
+#ifdef SOURCE2TOOLKIT_CORE
+            FP_WARN("Tried calling a null virtual function.");
 #endif
             return T();
         }

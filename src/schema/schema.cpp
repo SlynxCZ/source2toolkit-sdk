@@ -203,6 +203,15 @@ static void InitChainOffset(SchemaClassInfoData_t* pClassInfo, SchemaKeyValueMap
         keyValuePair.second.offset = field.m_nSingleInheritanceOffset;
         keyValuePair.second.networked = IsFieldNetworked(pClassInfo->m_pszName, field);
 
+        // Atomic collections publish their own element accessor; without it a
+        // CUtlVectorEmbeddedNetworkVar cannot be indexed correctly.
+        if (field.m_pType->m_eTypeCategory == SCHEMA_TYPE_ATOMIC
+            && field.m_pType->m_eAtomicCategory == SCHEMA_ATOMIC_COLLECTION_OF_T)
+        {
+            keyValuePair.second.manipulator =
+                static_cast<CSchemaType_Atomic_CollectionOfT*>(field.m_pType)->m_pfnManipulator;
+        }
+
         keyValueMap.insert(keyValuePair);
         return;
     }

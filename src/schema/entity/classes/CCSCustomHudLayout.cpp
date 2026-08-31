@@ -100,19 +100,21 @@ CCSCustomHudLayoutState& CCSCustomHudLayout::GetLayoutState(CCSPlayerController*
     if (!pController)
         return m_globalLayoutState();
 
-    // CUtlVector::Element() would stride by sizeof(CCSCustomHudLayoutState),
-    // which is the size of its SCHEMA_FIELD wrappers -- a handful of bytes --
-    // and not the engine's. Walk the buffer by the real class size instead.
-    static const int32_t nStateSize = schema::GetClassSize("CCSCustomHudLayoutState");
-
-    auto& vecStates = m_vecPlayerLayoutStates();
-    const int nSlot = pController->GetPlayerSlot().Get();
-
-    if (nStateSize <= 0 || nSlot < 0 || nSlot >= vecStates.Count())
+    // m_vecPlayerLayoutStates is a CUtlVectorEmbeddedNetworkVar, not the plain
+    // CUtlVector its declaration suggests, so indexing it directly walks the
+    // wrong memory. The schema system publishes an element accessor for exactly
+    // this case; go through it.
+    const SchemaCollectionManipulatorFn_t pfnManipulator = m_vecPlayerLayoutStates.GetManipulator();
+    if (!pfnManipulator)
         return m_globalLayoutState();
 
-    auto* pBase = reinterpret_cast<uint8*>(vecStates.Base());
-    return *reinterpret_cast<CCSCustomHudLayoutState*>(pBase + static_cast<size_t>(nSlot) * nStateSize);
+    void* pElement = pfnManipulator(SCHEMA_COLLECTION_MANIPULATOR_ACTION_GET_ELEMENT,
+                                    &m_vecPlayerLayoutStates(),
+                                    pController->GetPlayerSlot().Get(), 0);
+    if (!pElement)
+        return m_globalLayoutState();
+
+    return *static_cast<CCSCustomHudLayoutState*>(pElement);
 }
 
 void CCSCustomHudLayout::SetHasClass(const char* pszPanelId, const char* pszClassName, bool bHasClass, CCSPlayerController* pController)

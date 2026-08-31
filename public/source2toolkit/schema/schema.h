@@ -57,6 +57,7 @@
 #include "igameevents.h"
 #include "igameeventsystem.h"
 #include "schemasystem.h"
+#include "schemasystem/schematypes.h"
 #include "entity2/entityclass.h"
 #include "entity2/entitysystem.h"
 #include "entity2/entityidentity.h"
@@ -97,6 +98,7 @@ class GameSessionConfiguration_t
 
 
 typedef void (*CEntityNameString)(void);
+
 
 struct CGlobalSymbol
 {
@@ -189,6 +191,17 @@ public:
     }
 };
 
+// Referenced as a field type by locksound_t, CFuncMoveLinear, CFuncRotating and
+// CMessage, but absent from the schema dump, so the generator never emits it and
+// hl2sdk does not declare it either -- those four classes did not compile at all.
+//
+// It is a pooled sound-event name, i.e. the same shape as the symbol type above,
+// and SCHEMA_FIELD needs a complete type (it takes sizeof of the field), so a
+// forward declaration will not do. Aliasing CGlobalSymbol keeps the size right
+// at 8 bytes; if a caller ever needs to read one of these fields for real, verify
+// the layout against the engine first.
+using CGameSoundEventName = CGlobalSymbol;
+
 static_assert(sizeof(CGlobalSymbol) == 8);
 
 using RotationVector = void*;
@@ -204,6 +217,15 @@ struct SchemaKey
 
     /// True if field is networked
     bool networked;
+
+    /// For an atomic collection field, the engine's own element accessor.
+    ///
+    /// Some networked collections are not laid out like a plain CUtlVector --
+    /// CUtlVectorEmbeddedNetworkVar, for one -- so indexing them directly reads
+    /// the wrong memory. The schema system publishes a manipulator per such
+    /// field; going through it is the only correct way to reach an element.
+    /// Null for every other field.
+    SchemaCollectionManipulatorFn_t manipulator = nullptr;
 };
 
 /**
@@ -461,6 +483,14 @@ Schema field macros
 					NetworkVarStateChanged(pThisClass, m_key.offset + extra_offset, m_networkStateChangedOffset);			 \
 			}                                                                                                                \
 		}                                                                                                                    \
+				/*The engine's element accessor for this field, when it has one. See*/                                               \
+		/*SchemaKey::manipulator -- needed for collections whose layout is not*/                                             \
+		/*a plain CUtlVector.*/                                                                                             \
+		SchemaCollectionManipulatorFn_t GetManipulator()                                                                    \
+		{                                                                                                                   \
+			static const auto m_key = schema::GetOffset(m_className, m_classNameHash, #varName, m_varNameHash);              \
+			return m_key.manipulator;                                                                                       \
+		}                                                                                                                   \
 		operator std::add_lvalue_reference_t<type>()                                                                         \
 		{                                                                                                                    \
 			return Get();                                                                                                    \
