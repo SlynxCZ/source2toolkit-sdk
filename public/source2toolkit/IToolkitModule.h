@@ -53,6 +53,19 @@
 #include <cstddef>
 #include <cstdint>
 
+/* =========================
+Windows macro collisions
+========================= */
+
+/*
+ * windows.h defines GetModuleHandle as GetModuleHandleA/GetModuleHandleW,
+ * which silently renames the method below -- see IToolkitNetworkMessages.h for
+ * why the quiet rename is the dangerous one.
+ */
+#ifdef GetModuleHandle
+#undef GetModuleHandle
+#endif
+
 class IToolkitModule
 {
 public:

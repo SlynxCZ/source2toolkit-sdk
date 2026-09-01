@@ -60,6 +60,20 @@
 #include <cstdint>
 
 /* =========================
+Windows macro collisions
+========================= */
+
+/*
+ * windows.h defines SendMessage as SendMessageA/SendMessageW. It does not
+ * error out the way FreeModule does -- it quietly renames the method below and
+ * every call through NET_MSG_SEND -- which is worse, because a translation
+ * unit that did not pull windows.h in then sees a different class. Drop it.
+ */
+#ifdef SendMessage
+#undef SendMessage
+#endif
+
+/* =========================
 Callback types
 ========================= */
 

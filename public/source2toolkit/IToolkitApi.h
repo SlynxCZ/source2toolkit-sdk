@@ -59,6 +59,22 @@
 #include "IToolkitPaths.h"
 
 /* =========================
+Windows macro collisions
+========================= */
+
+/*
+ * windows.h, dragged in by the engine headers above, defines FreeModule as a
+ * function-like macro aliasing FreeLibrary. Left alone it rewrites the
+ * declaration below into FreeLibrary((IToolkitModule* module)) and every call
+ * site with it. Nothing here wants the Win32 original, so drop it -- and drop
+ * it at the point of use rather than in a shared header, so it happens after
+ * whatever pulled windows.h in.
+ */
+#ifdef FreeModule
+#undef FreeModule
+#endif
+
+/* =========================
 Forward declarations
 ========================= */
 
