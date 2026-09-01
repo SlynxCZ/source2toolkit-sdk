@@ -101,9 +101,12 @@ namespace SourceHook
 #include "IToolkitAddresses.h"
 #include "IToolkitCommands.h"
 #include "IToolkitConVars.h"
+#include "IToolkitCustomHud.h"
 #include "IToolkitEntities.h"
 #include "IToolkitEvents.h"
 #include "IToolkitGameConfig.h"
+#include "IToolkitGameSystems.h"
+#include "IToolkitHTTP.h"
 #include "IToolkitJSON.h"
 #include "IToolkitMenus.h"
 #include "IToolkitMySQL.h"
@@ -221,13 +224,27 @@ class IToolkitListener
 public:
     virtual ~IToolkitListener() = default;
 
-    /// Called when a plugin is loaded
+    /// Called when another toolkit plugin (.stx) is loaded.
+    /// The id is a toolkit plugin id -- the one "toolkit list" shows.
     virtual void OnPluginLoad(PluginId id)
     {
     }
 
-    /// Called when a plugin is unloaded
+    /// Called when another toolkit plugin (.stx) is unloaded.
     virtual void OnPluginUnload(PluginId id)
+    {
+    }
+
+    /// Called when a Metamod:Source plugin is loaded.
+    ///
+    /// The id is Metamod's, from a different numbering than the toolkit's --
+    /// which is why this is not the same callback as OnPluginLoad().
+    virtual void OnMetamodPluginLoad(PluginId id)
+    {
+    }
+
+    /// Called when a Metamod:Source plugin is unloaded.
+    virtual void OnMetamodPluginUnload(PluginId id)
     {
     }
 
@@ -273,6 +290,28 @@ public:
         }
 
         return nullptr;
+    }
+
+    /**
+
+    * @brief Called when a Metamod:Source plugin asks for an interface.
+    *
+    * A Metamod plugin reaching for something through g_SMAPI->MetaFactory()
+    * ends up here, so a toolkit plugin can hand its own interfaces to code
+    * that did not load through the toolkit.
+    *
+    * By default this answers exactly like OnToolkitQuery(), which is what a
+    * plugin usually wants -- an interface worth exposing is worth exposing to
+    * either caller. Override it to answer a Metamod plugin differently, or
+    * return nullptr to keep an interface for toolkit plugins only. The two are
+    * separate callbacks precisely so that choice exists: OnToolkitQuery()
+    * cannot tell who is asking.
+    *
+    * @return Pointer to interface or nullptr
+      */
+    virtual void* OnMetamodQuery(const char* iface, int* ret)
+    {
+        return OnToolkitQuery(iface, ret);
     }
 };
 
