@@ -85,11 +85,20 @@ Core Toolkit Game Systems
 *     }
 *     bool DoesGameSystemReallocate() override { return sm_Factory->ShouldAutoAdd(); }
 *
-*     static IGameSystemFactory* sm_Factory;
+*     // Not IGameSystemFactory*: that is abstract and has no virtual
+*     // destructor, so deleting your factory through it is undefined. Hold a
+*     // final type of your own instead.
+*     static MyGameSystemFactory* sm_Factory;
+* };
+*
+* class MyGameSystemFactory final : public CGameSystemStaticFactory<MyGameSystem>
+* {
+* public:
+*     using CGameSystemStaticFactory<MyGameSystem>::CGameSystemStaticFactory;
 * };
 *
 * MyGameSystem g_MyGameSystem;
-* IGameSystemFactory* MyGameSystem::sm_Factory = nullptr;
+* MyGameSystemFactory* MyGameSystem::sm_Factory = nullptr;
 * CBaseGameSystemFactory** CBaseGameSystemFactory::sm_pFirst = nullptr;
 *
 * // 2. Point this binary's copy of sm_pFirst at the engine's list, in Load().
@@ -97,7 +106,7 @@ Core Toolkit Game Systems
 *
 * // 3. Register. The factory adds itself to the list its constructor sees.
 * MyGameSystem::sm_Factory =
-*     new CGameSystemStaticFactory<MyGameSystem>("MyPlugin_GameSystem", &g_MyGameSystem);
+*     new MyGameSystemFactory("MyPlugin_GameSystem", &g_MyGameSystem);
 * @endcode
 *
 * @note Registration only takes effect for sessions started afterwards; the
