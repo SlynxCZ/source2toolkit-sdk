@@ -112,6 +112,28 @@ public:
     * @return Offset value
       */
     virtual int GetOffset(const char* pchName) = 0;
+
+    /**
+
+    * @brief Whether the entry is a symbol name rather than a byte pattern.
+    *
+    * Symbol entries are written into the signature field with a leading "@".
+      */
+    virtual bool IsSymbol(const char* pchName) = 0;
+
+    /**
+
+    * @brief Resolves a gamedata entry to an address.
+    *
+    * Looks the entry's "library" up among the loaded modules -- engine2,
+    * server, vscript, tier0 -- then finds it by exported symbol when the entry
+    * is "@"-prefixed, or by pattern scan otherwise. Saves a plugin repeating
+    * the module lookup and the symbol/pattern branch for every signature.
+    *
+    * @param pchName Gamedata entry name.
+    * @return The address, or null when the module, symbol or pattern is missing.
+      */
+    virtual void* ResolveSignature(const char* pchName) = 0;
 };
 
 #define GAMECONFIG_LIBRARY(name)    g_pToolkitGameConfig->GetLibrary(name)
@@ -119,5 +141,6 @@ public:
 #define GAMECONFIG_SYMBOL(name)     g_pToolkitGameConfig->GetSymbol(name)
 #define GAMECONFIG_PATCH(name)      g_pToolkitGameConfig->GetPatch(name)
 #define GAMECONFIG_OFFSET(name)     g_pToolkitGameConfig->GetOffset(name)
+#define GAMECONFIG_RESOLVE(name)    g_pToolkitGameConfig->ResolveSignature(name)
 
 #endif //_INCLUDE_ITOOLKIT_GAMECONFIG_H

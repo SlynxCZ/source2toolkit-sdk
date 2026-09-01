@@ -53,6 +53,9 @@
 #define _INCLUDE_ITOOLKIT_ENTITIES_H
 
 #pragma once
+#include "source2toolkit/schema/schema.h"
+#include <vector>
+#include <cstring>
 #include "IToolkitPlugin.h"
 
 #include "igameevents.h"
@@ -80,6 +83,16 @@ class IToolkitEntities
 {
 public:
     virtual ~IToolkitEntities() = default;
+
+    /**
+
+    * @brief The active CCSGameRules, or null before the entity exists.
+    *
+    * The toolkit captures this from cs_gamerules as the entity is created, so
+    * it is live for the whole map and a plugin does not have to scan for the
+    * proxy itself.
+      */
+    virtual CCSGameRules* GetGameRules() = 0;
 
     /**
 
@@ -166,6 +179,7 @@ public:
                                         bool post = false) = 0;
 };
 
+#define GET_GAME_RULES()                          g_pToolkitEntities->GetGameRules()
 #define FIND_PICKER_ENTITY(player, ...)           g_pToolkitEntities->FindPickerEntity(player, ##__VA_ARGS__)
 #define FIND_ENTITY_BY_CLASSNAME(start, name)     g_pToolkitEntities->FindEntityByClassname(start, name)
 #define FIND_ENTITY_BY_NAME(start, name, ...)     g_pToolkitEntities->FindEntityByName(start, name, ##__VA_ARGS__)
@@ -176,5 +190,52 @@ public:
 #define ADD_ENTITY_IO_EVENT(target, input, ...)   g_pToolkitEntities->AddEntityIOEvent(target, input, ##__VA_ARGS__)
 #define ADD_ENTITY_IO_LISTENER(l, cls, out, ...)  g_pToolkitEntities->AddEntityIOListener(l, cls, out, ##__VA_ARGS__)
 #define REMOVE_ENTITY_IO_LISTENER(l, cls, out, ...) g_pToolkitEntities->RemoveEntityIOListener(l, cls, out, ##__VA_ARGS__)
+
+
+/**
+
+* @brief Every entity whose designer name matches, cast to T.
+*
+* Walks the entity system's active list directly rather than going through the
+* engine's finder, so it sees exactly the entities that are live right now and
+* matches on m_designerName -- the name the map gave the entity, which is not
+* always the classname the engine reports.
+*
+* @tparam T Type to cast each match to. No check is performed that the entity
+*           really is a T, so pass the designer name and type consistently.
+* @param pszDesignerName Designer name to match, exactly.
+*
+* @return Matches in list order; empty if the entity system is not up yet.
+*
+* @code
+* for (auto* pProp : UTIL_FindAllEntitiesByDesignerName<CDynamicProp>("prop_dynamic"))
+*     pProp->AcceptInput("Kill");
+* @endcode
+  */
+template <typename T = CBaseEntity>
+inline std::vector<T*> UTIL_FindAllEntitiesByDesignerName(const char* pszDesignerName)
+{
+    std::vector<T*> results;
+
+    CGameEntitySystem* pEntitySystem = GetEntitySystem();
+    if (!pszDesignerName || !pEntitySystem)
+        return results;
+
+    for (CEntityIdentity* pIdentity = pEntitySystem->m_EntityList.m_pFirstActiveEntity;
+         pIdentity; pIdentity = pIdentity->m_pNext)
+    {
+        if (!pIdentity->m_pInstance)
+            continue;
+
+        const char* pszDesigner = pIdentity->m_designerName.String();
+        if (!pszDesigner)
+            continue;
+
+        if (std::strcmp(pszDesigner, pszDesignerName) == 0)
+            results.push_back(reinterpret_cast<T*>(pIdentity->m_pInstance));
+    }
+
+    return results;
+}
 
 #endif //_INCLUDE_ITOOLKIT_ENTITIES_H
