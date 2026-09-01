@@ -12,7 +12,7 @@ set(PROTO_TARGETS
         ${PROTOBUFS}/cstrike15_usermessages.proto
         ${PROTOBUFS}/source2_steam_stats.proto
         ${PROTOBUFS}/netmessages.proto
-        ${PROTOBUFS}/networksystem_protomessages
+        ${PROTOBUFS}/networksystem_protomessages.proto
         ${PROTOBUFS}/steammessages.proto
         ${PROTOBUFS}/usercmd.proto
         ${PROTOBUFS}/usermessages.proto
