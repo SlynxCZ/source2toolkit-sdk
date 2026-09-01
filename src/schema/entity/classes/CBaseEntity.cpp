@@ -193,9 +193,10 @@ void CBaseEntity::SetCollisionGroup(uint8 nCollisionGroup)
     if (!m_pCollision())
         return;
 
-    m_pCollision->m_collisionAttribute().m_nCollisionGroup = nCollisionGroup;
-    m_pCollision->m_CollisionGroup = nCollisionGroup;
+    m_pCollision->m_collisionAttribute().m_nCollisionGroup() = nCollisionGroup;
+    m_pCollision->m_CollisionGroup() = nCollisionGroup;
     CollisionRulesChanged();
+    schema::SetStateChanged(this, "CCollisionProperty", "m_collisionAttribute");
 }
 
 void CBaseEntity::CollisionRulesChanged()

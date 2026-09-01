@@ -37,10 +37,17 @@
 
 #include "source2toolkit/schema/entity/classes/CCSPlayerController.h"
 
+// TEMPORARY: set to 0 (or delete the blocks it guards) once the TakeDamage
+// question is answered.
+#define S2TK_DEBUG_TAKEDAMAGE 1
+
+#include "tier0/dbg.h"
+
 #include "source2toolkit/schema/entity/classes/CCSPlayerPawn.h"
 #include "source2toolkit/schema/entity/classes/CCSObserverPawn.h"
 #include "source2toolkit/schema/serversideclient.h"
 #include "source2toolkit/schema/takedamageinfo.h"
+#include "source2toolkit/schema/takedamageresult.h"
 #include "source2toolkit/utils/virtual.h"
 
 #ifdef SOURCE2TOOLKIT_CORE
@@ -202,10 +209,40 @@ void CCSPlayerController::TakeDamage(CCSPlayerController* pAttacker, int iDamage
     CTakeDamageInfo info(pVictimPawn, pAttackerPawn, nullptr, flDamage, bitsDamageType);
     info.m_nDamageFlags = static_cast<TakeDamageFlags_t>(static_cast<int>(info.m_nDamageFlags) | static_cast<int>(TakeDamageFlags_t::DFLAG_SUPPRESS_DAMAGE_MODIFICATION));
 
+    CTakeDamageResult result(0);
+    result.CopyFrom(&info);
+
 #ifdef SOURCE2TOOLKIT_CORE
-    addresses::toolkitAddresses.CBaseEntity_TakeDamageOld()(this, &info, nullptr);
+    auto pfn = addresses::toolkitAddresses.CBaseEntity_TakeDamageOld();
 #else
-    g_ToolkitAPI->Addresses()->CBaseEntity_TakeDamageOld()(this, &info, nullptr);
+    auto pfn = g_ToolkitAPI->Addresses()->CBaseEntity_TakeDamageOld();
+#endif
+
+    // TEMPORARY -- tracing why TakeDamage lands but no health is lost.
+    // Remove this block once that is settled.
+#if S2TK_DEBUG_TAKEDAMAGE
+    const int iHealthBefore = pVictimPawn->m_iHealth();
+
+    Msg("[s2tk] TakeDamage fn=%p controller=%p victimPawn=%p attackerPawn=%p\n",
+        reinterpret_cast<void*>(pfn), static_cast<void*>(this),
+        static_cast<void*>(pVictimPawn), static_cast<void*>(pAttackerPawn));
+
+    // If the CTakeDamageInfo constructor did not run, these are whatever was
+    // on the stack -- damage will not match what was asked for.
+    Msg("[s2tk] info: damage=%.2f (asked %.2f) type=%d flags=%d inflictor=%p attacker=%p\n",
+        info.m_flDamage, flDamage, static_cast<int>(info.m_bitsDamageType),
+        static_cast<int>(info.m_nDamageFlags),
+        static_cast<void*>(info.m_hInflictor.Get()),
+        static_cast<void*>(info.m_hAttacker.Get()));
+
+    Msg("[s2tk] pawn health before=%d alive=%d\n", iHealthBefore, (int)m_bPawnIsAlive());
+#endif
+
+    pfn(this, &info, &result);
+
+#if S2TK_DEBUG_TAKEDAMAGE
+    Msg("[s2tk] pawn health after=%d (controller m_iHealth=%d)\n",
+        pVictimPawn->m_iHealth(), m_iHealth());
 #endif
 }
 
