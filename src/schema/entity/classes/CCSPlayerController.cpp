@@ -37,10 +37,6 @@
 
 #include "source2toolkit/schema/entity/classes/CCSPlayerController.h"
 
-// TEMPORARY: set to 0 (or delete the blocks it guards) once the TakeDamage
-// question is answered.
-#define S2TK_DEBUG_TAKEDAMAGE 1
-
 #include "tier0/dbg.h"
 
 #include "source2toolkit/schema/entity/classes/CCSPlayerPawn.h"
@@ -51,9 +47,9 @@
 #include "source2toolkit/utils/virtual.h"
 
 #ifdef SOURCE2TOOLKIT_CORE
-// Points SH_GLOB_SHPTR at the toolkit's own engine, the one every .stx plugin
-// is handed. In a plugin build TOOLKIT_GLOBALVARS() already provides g_SHPtr,
-// which is the same engine.
+// TOOLKIT_ORIGINAL below needs SH_GLOB_SHPTR. This points it at the toolkit's
+// own engine, the one every .stx plugin is handed; in a plugin build
+// TOOLKIT_GLOBALVARS() already provides g_SHPtr, which is that same engine.
 #include "sourcehook/sourcehook_metamod_override.h"
 #endif
 
@@ -213,12 +209,10 @@ void CCSPlayerController::TakeDamage(CCSPlayerController* pAttacker, int iDamage
 
     auto flDamage = static_cast<float>(iDamage);
 
-    // Inflictor and attacker are both the attacker's pawn -- the inflictor is
-    // what dealt the damage, not who received it.
-    CTakeDamageInfo info(pAttackerPawn, pAttackerPawn, nullptr, flDamage, bitsDamageType);
+    CTakeDamageInfo info(pVictimPawn, pAttackerPawn, nullptr, flDamage, bitsDamageType);
     info.m_nDamageFlags = static_cast<TakeDamageFlags_t>(static_cast<int>(info.m_nDamageFlags) | static_cast<int>(TakeDamageFlags_t::DFLAG_SUPPRESS_DAMAGE_MODIFICATION));
 
-    CTakeDamageResult result(0);
+    CTakeDamageResult result(iDamage);
     result.CopyFrom(&info);
 
 #ifdef SOURCE2TOOLKIT_CORE
@@ -227,47 +221,15 @@ void CCSPlayerController::TakeDamage(CCSPlayerController* pAttacker, int iDamage
     auto pfn = g_ToolkitAPI->Addresses()->CBaseEntity_TakeDamageOld();
 #endif
 
-    // TEMPORARY -- tracing why TakeDamage lands but no health is lost.
-    // Remove this block once that is settled.
-#if S2TK_DEBUG_TAKEDAMAGE
-    const int iHealthBefore = pVictimPawn->m_iHealth();
-
-    Msg("[s2tk] TakeDamage fn=%p controller=%p victimPawn=%p attackerPawn=%p\n",
-        reinterpret_cast<void*>(pfn), static_cast<void*>(this),
-        static_cast<void*>(pVictimPawn), static_cast<void*>(pAttackerPawn));
-
-    // If the CTakeDamageInfo constructor did not run, these are whatever was
-    // on the stack -- damage will not match what was asked for.
-    Msg("[s2tk] info: damage=%.2f (asked %.2f) type=%d flags=%d inflictor=%p attacker=%p\n",
-        info.m_flDamage, flDamage, static_cast<int>(info.m_bitsDamageType),
-        static_cast<int>(info.m_nDamageFlags),
-        static_cast<void*>(info.m_hInflictor.Get()),
-        static_cast<void*>(info.m_hAttacker.Get()));
-
-    Msg("[s2tk] pawn health before=%d alive=%d\n", iHealthBefore, (int)m_bPawnIsAlive());
-#endif
-
-    // Straight to the original, past every plugin's Pre/Post handler. Damage
-    // the toolkit was asked to deal is not the game dealing damage, so a
-    // plugin hooking TakeDamage to police the game's own hits should not have
-    // to tell the two apart -- and a handler that supercedes would otherwise
-    // silently swallow this.
+    // Past every plugin's Pre/Post handler. Damage the toolkit was asked to
+    // deal is not the game dealing damage, so a plugin hooking TakeDamage to
+    // police the game's own hits should not have to tell the two apart -- and
+    // a handler that supercedes would otherwise silently swallow this.
     //
     // On the pawn, not the controller: the tracing showed a real hit arriving
     // on classname 'player' while this call arrived on 'cs_player_controller',
     // whose m_iHealth is 0.
-    // By signature, not by hookname: what a plugin's hook installs is keyed by
-    // the mangled signature types, so this finds it whatever that plugin chose
-    // to call its hook -- and the SDK is not left declaring a hook it never
-    // adds, named after a spelling no plugin is obliged to use. With nothing
-    // hooked at the address it calls straight through the untouched bytes, so
-    // this is equally correct when nobody has touched TakeDamage at all.
-    SH_CALL_INLINE_SIG(pfn, pVictimPawn, CBaseEntity, int64_t, CTakeDamageInfo*, CTakeDamageResult*)(&info, &result);
-
-#if S2TK_DEBUG_TAKEDAMAGE
-    Msg("[s2tk] pawn health after=%d (controller m_iHealth=%d)\n",
-        pVictimPawn->m_iHealth(), m_iHealth());
-#endif
+    TOOLKIT_ORIGINAL(pfn)(pVictimPawn, &info, &result);
 }
 
 void CCSPlayerController::Respawn()

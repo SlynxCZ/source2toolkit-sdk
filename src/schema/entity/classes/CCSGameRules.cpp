@@ -42,6 +42,13 @@
 #include "source2toolkit/utils/virtual.h"
 
 #ifdef SOURCE2TOOLKIT_CORE
+// TOOLKIT_ORIGINAL below needs SH_GLOB_SHPTR. This points it at the toolkit's
+// own engine, the one every .stx plugin is handed; in a plugin build
+// TOOLKIT_GLOBALVARS() already provides g_SHPtr, which is that same engine.
+#include "sourcehook/sourcehook_metamod_override.h"
+#endif
+
+#ifdef SOURCE2TOOLKIT_CORE
 #include "core/addresses.h"
 #include "core/entities.h"
 #include "core/gameconfig.h"
@@ -70,12 +77,21 @@ void CCSGameRules::TerminateRound(float flDelay, int32_t eRoundEndReason, uint32
     uint32 nTeam = nTeamId;
     uint32* pnTeamId = nTeamId > 0 ? &nTeam : nullptr;
 
+    // Past every plugin's Pre/Post handler, for the same reason as
+    // CCSPlayerController::TakeDamage: ending the round because the server was
+    // told to is not the game ending the round, and a gamemode's TerminateRound
+    // hook exists to police the latter. This is also where a typed bypass could
+    // not help -- those hooks declare (CCSGameRules, RoundEndReason, float,
+    // void*, uint8_t) against this interface's (CGameRules*, uint32, uint32*,
+    // float), so nothing here matches the shape they were declared with.
+    //
     // See the note on CGameRules_TerminateRound_t: the argument order is not
     // the same on both platforms.
+    auto pfnOriginal = TOOLKIT_ORIGINAL(pfnTerminateRound);
 #ifdef _WIN32
-    pfnTerminateRound(this, flDelay, static_cast<uint32>(eRoundEndReason), pnTeamId);
+    pfnOriginal(this, flDelay, static_cast<uint32>(eRoundEndReason), pnTeamId);
 #else
-    pfnTerminateRound(this, static_cast<uint32>(eRoundEndReason), pnTeamId, flDelay);
+    pfnOriginal(this, static_cast<uint32>(eRoundEndReason), pnTeamId, flDelay);
 #endif
 }
 

@@ -428,6 +428,38 @@ public:
     virtual CSmokeGrenadeProjectile_EmitGrenade_t CSmokeGrenadeProjectile_EmitGrenade() = 0;
 };
 
+/**
+ * @brief Calls a function from this interface, bypassing any inline hooks on it.
+ *
+ * The ADDR_* macros below hand back the address the signature scan found, which
+ * is what you want to hook. It is not always what you want to *call*: once any
+ * plugin inline-hooks one of these functions, its first bytes are a jump into
+ * the detour, so calling it runs the whole Pre/Post chain. That is right when
+ * you are standing in for the game -- a plugin dealing damage as if a weapon
+ * fired wants the chain -- and wrong when you are asking for the function
+ * itself, e.g. an admin command, where another plugin's rules have no business
+ * vetoing what the server was told to do.
+ *
+ * Wrap the call in this when you mean the latter:
+ *
+ * @code
+ * TOOLKIT_ORIGINAL(ADDR_TAKE_DAMAGE_OLD())(pPawn, &info, &result);
+ * @endcode
+ *
+ * Signature-blind, so it works whatever prototype you hold and however the
+ * plugin that hooked it declared its hook -- the two routinely disagree, and
+ * TerminateRound is the standing example: the hook declares (CCSGameRules,
+ * RoundEndReason, float, void*, uint8_t) where this interface's typedef says
+ * (CGameRules*, uint32, uint32*, float). Unhooked functions come back
+ * unchanged, so this is always safe to apply.
+ *
+ * @note Resolve it at the call, do not cache it in a global. The address is
+ *       only the original from the moment the hook exists, and hooks are
+ *       installed long after these addresses are scanned.
+ */
+#define TOOLKIT_ORIGINAL(fn) \
+    reinterpret_cast<decltype(fn)>(SH_GET_ORIGINAL_ADDR(reinterpret_cast<void*>(fn)))
+
 #define ADDR_CREATE_ENTITY_BY_NAME()                g_pToolkitAddresses->CBaseEntity_CreateEntityByName()
 #define ADDR_DISPATCH_SPAWN()                       g_pToolkitAddresses->CBaseEntity_DispatchSpawn()
 #define ADDR_TAKE_DAMAGE_OLD()                      g_pToolkitAddresses->CBaseEntity_TakeDamageOld()
