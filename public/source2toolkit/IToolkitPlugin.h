@@ -108,6 +108,7 @@ namespace SourceHook
 #include "IToolkitMenus.h"
 #include "IToolkitMySQL.h"
 #include "IToolkitNetworkMessages.h"
+#include "IToolkitPaths.h"
 #include "IToolkitScheduler.h"
 #include "IToolkitTrace.h"
 
@@ -316,6 +317,7 @@ Globals
     IToolkitMenus*           g_pToolkitMenus           = nullptr; \
     IToolkitMySQL*           g_pToolkitMySQL           = nullptr; \
     IToolkitNetworkMessages* g_pToolkitNetworkMessages = nullptr; \
+    IToolkitPaths*           g_pToolkitPaths           = nullptr; \
     IToolkitScheduler*       g_pToolkitScheduler       = nullptr; \
     IToolkitTrace*           g_pToolkitTrace           = nullptr; \
     SourceHook::ISourceHook* g_SHPtr                   = nullptr; \
@@ -343,6 +345,7 @@ Globals
     extern IToolkitMenus*           g_pToolkitMenus; \
     extern IToolkitMySQL*           g_pToolkitMySQL; \
     extern IToolkitNetworkMessages* g_pToolkitNetworkMessages; \
+    extern IToolkitPaths*           g_pToolkitPaths; \
     extern IToolkitScheduler*       g_pToolkitScheduler; \
     extern IToolkitTrace*           g_pToolkitTrace; \
     extern SourceHook::ISourceHook* g_SHPtr; \
@@ -372,6 +375,7 @@ Globals
     g_pToolkitMenus           = (IToolkitMenus*)          api->ToolkitFactory(TOOLKIT_MENUS_INTERFACE,           nullptr, nullptr); \
     g_pToolkitMySQL           = (IToolkitMySQL*)          api->ToolkitFactory(TOOLKIT_MYSQL_INTERFACE,           nullptr, nullptr); \
     g_pToolkitNetworkMessages = (IToolkitNetworkMessages*)api->ToolkitFactory(TOOLKIT_NETWORKMESSAGES_INTERFACE, nullptr, nullptr); \
+    g_pToolkitPaths           = (IToolkitPaths*)          api->ToolkitFactory(TOOLKIT_PATHS_INTERFACE,           nullptr, nullptr); \
     g_pToolkitJSON            = (IToolkitJSON*)           api->ToolkitFactory(TOOLKIT_JSON_INTERFACE,            nullptr, nullptr); \
     g_pToolkitScheduler       = (IToolkitScheduler*)      api->ToolkitFactory(TOOLKIT_SCHEDULER_INTERFACE,       nullptr, nullptr); \
     g_pToolkitTrace           = (IToolkitTrace*)          api->ToolkitFactory(TOOLKIT_TRACE_INTERFACE,           nullptr, nullptr);

@@ -56,6 +56,7 @@
 #include "IToolkitPlugin.h"
 
 #include "eiface.h"
+#include "IToolkitPaths.h"
 
 /* =========================
 Forward declarations
@@ -284,6 +285,12 @@ public:
     * @brief Access network messages system.
       */
     virtual IToolkitNetworkMessages* NetworkMessages() = 0;
+
+    /**
+
+    * @brief Where the toolkit keeps things on disk.
+      */
+    virtual IToolkitPaths* Paths() = 0;
 
     /**
 
