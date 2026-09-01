@@ -12,10 +12,11 @@
 #   ...
 #   ToolkitSdk.AddToBinary(binary, sdk)
 #
-# AddToBinary() adds the SDK's include paths, its sources and the hl2sdk
-# translation units it owns. The objects end up inside the plugin binary, which
-# is what the CMake path produces too -- there the SDK is a static library, and
-# a static library is just those same objects.
+# AddToBinary() adds the SDK's include paths, its sources, the hl2sdk
+# translation units it owns and SourceHook. The objects end up inside the plugin
+# binary, which is what the CMake path produces too -- there the SDK and
+# SourceHook are static libraries, and a static library is just those same
+# objects.
 import os
 
 class ToolkitSdkPlugin(object):
@@ -71,6 +72,37 @@ class ToolkitSdkPlugin(object):
 
     return sources
 
+  def SourceHookSources(self, binary):
+    # The CMake path links the sourcehook static library, and a static library
+    # only gives the linker the objects something actually references. AMBuild
+    # compiles the SDK into the plugin instead of linking it, so the same
+    # sources are listed here -- kept in step with vendor/sourcehook/
+    # CMakeLists.txt's SOURCEHOOK_SOURCES.
+    root = os.path.join(self.sourcePath, 'vendor', 'sourcehook')
+
+    sources = [
+      os.path.join(root, 'src', 'core', 'sourcehook.cpp'),
+      os.path.join(root, 'src', 'core', 'sourcehook_impl_chookidman.cpp'),
+      os.path.join(root, 'src', 'core', 'sourcehook_impl_chookmaninfo.cpp'),
+      os.path.join(root, 'src', 'core', 'sourcehook_impl_cinline.cpp'),
+      os.path.join(root, 'src', 'core', 'sourcehook_impl_cproto.cpp'),
+      os.path.join(root, 'src', 'core', 'sourcehook_impl_cvfnptr.cpp'),
+      os.path.join(root, 'src', 'hookmangen', 'sourcehook_hookmangen.cpp'),
+      os.path.join(root, 'vendor', 'safetyhook', 'safetyhook.cpp'),
+      os.path.join(root, 'vendor', 'zydis', 'Zydis.c'),
+    ]
+
+    # sourcehook_hookmangen_x86_64.cpp is Windows-only: its GCC/Linux paths are
+    # static_assert(false) stubs and it uses `xor` as an identifier, which GCC
+    # and Clang reject. Upstream metamod-source excludes it the same way, and
+    # inline hooks do not use it. See the note in the CMakeLists.
+    if binary.compiler.target.platform == 'windows':
+      sources += [
+        os.path.join(root, 'src', 'hookmangen', 'sourcehook_hookmangen_x86_64.cpp'),
+      ]
+
+    return sources
+
   def ProtoSources(self):
     proto_dir = os.environ.get('CSGO_PROTO')
     if not proto_dir:
@@ -101,6 +133,7 @@ class ToolkitSdkPlugin(object):
     self.AddSdkIncludes(binary, sdk)
     self.Defines(binary)
     binary.sources += self.Sources(sdk)
+    binary.sources += self.SourceHookSources(binary)
 
 
 rvalue = ToolkitSdkPlugin()

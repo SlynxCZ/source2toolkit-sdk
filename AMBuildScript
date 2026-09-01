@@ -12,7 +12,10 @@
 #      })
 #      ...
 #      ToolkitSdk['config'].AddPublicIncludes(binary)
-#      binary.compiler.linkflags += [ToolkitSdk['binaries_by_arch'][cxx.target.arch]]
+#      binary.compiler.linkflags += [
+#        ToolkitSdk['binaries_by_arch'][cxx.target.arch],
+#        ToolkitSdk['sourcehook_binaries_by_arch'][cxx.target.arch],
+#      ]
 #
 #    AddPublicIncludes() is the point: it adds every include path a consumer of
 #    "source2toolkit/IToolkitPlugin.h" needs -- public/, the hl2sdk tree and
@@ -315,6 +318,12 @@ ToolkitSdk.detectSDKs()
 ToolkitSdk.configure()
 ToolkitSdk.build()
 
+# Built here so a consumer that links the SDK library links SourceHook with it
+# and never has to know it exists. This script lives inside the SDK tree, so
+# builder.Build() can reach it -- SdkPlugin.ambuild, which is Eval'd from
+# outside, compiles the same sources into the plugin instead.
+SourceHookLib = builder.Build(os.path.join('vendor', 'sourcehook', 'AMBuildScript'), {})
+
 # What a parent build gets back: the compiled-library paths (same {arch: path}
 # convention as vendor/sourcehook/AMBuildScript), plus the config object so the
 # caller can call ToolkitSdk['config'].AddPublicIncludes(binary) instead of
@@ -322,4 +331,8 @@ ToolkitSdk.build()
 rvalue = {
   'binaries_by_arch': ToolkitSdk.binaries_by_arch,
   'config': ToolkitSdk,
+  # Link this alongside 'binaries_by_arch': the SDK is a static library and a
+  # static library cannot carry its own dependencies.
+  'sourcehook_binaries_by_arch': SourceHookLib['binaries_by_arch'],
+  'sourcehook_config': SourceHookLib['config'],
 }

@@ -47,12 +47,16 @@ endfunction()
 
 resolve_dep(SOURCEHOOK SOURCEHOOK ${CMAKE_CURRENT_SOURCE_DIR}/vendor/sourcehook)
 
-# The SDK carries the SourceHook checkout but does not build it -- consumers
-# that only hook need the headers, which are exported below. The one target
-# that needs the library is source2toolkit core, since it owns the private
-# engine instance (sourcehook_metamod_override.h), and it builds it itself.
-# Hand the path up so it can find the sources when the SDK is a subdirectory.
+# SourceHook is built here and linked into everything that uses the SDK, so a
+# plugin never has to think about it. Guarded because the SDK is pulled in as a
+# subdirectory by core, the sample and the plugin repos alike -- whoever gets
+# here first builds it, and it is built once per build tree either way.
 set(SOURCEHOOK "${SOURCEHOOK}" CACHE INTERNAL "Path to the SourceHook sources")
+set(SOURCEHOOK_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+
+if (NOT TARGET sourcehook)
+    add_subdirectory(${SOURCEHOOK} ${CMAKE_BINARY_DIR}/sourcehook)
+endif ()
 resolve_dep(SOURCESDK HL2SDKCS2)
 resolve_dep(PROTOBUFS CSGO_PROTO)
 
@@ -182,6 +186,7 @@ endif()
 
 target_link_libraries(source2toolkit-sdk PUBLIC
         source2toolkit-config
+        sourcehook
 )
 
 target_include_directories(source2toolkit-sdk PUBLIC
