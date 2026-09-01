@@ -55,6 +55,8 @@
 #pragma once
 #include "IToolkitPlugin.h"
 
+#include "schema/navarea.h"
+
 #include "bspflags.h"
 #include "gametrace.h"
 #include "eiface.h"
@@ -272,7 +274,7 @@ public:
 
     * @brief Checks whether a nav area overlaps with an entity.
       */
-    virtual bool CheckAreaOverlappingEntity(const void* const rArea,
+    virtual bool CheckAreaOverlappingEntity(const CCSNavArea* const rArea,
                                             const CBaseEntity* const rEntity,
                                             bool bExtrudeHullHeight) = 0;
 
@@ -302,5 +304,8 @@ public:
 
 #define ENTITY_WORLD_AABB(ent, mins, maxs) \
     g_pToolkitTrace->GetEntityWorldSpaceAABB(ent, mins, maxs)
+
+#define CHECK_AREA_OVERLAPPING_ENTITY(area, ent, extrudeHull) \
+    g_pToolkitTrace->CheckAreaOverlappingEntity(area, ent, extrudeHull)
 
 #endif //_INCLUDE_ITOOLKIT_TRACE_H
