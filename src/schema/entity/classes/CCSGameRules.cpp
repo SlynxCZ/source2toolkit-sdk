@@ -55,12 +55,27 @@
 TOOLKIT_GLOBALVARS();
 #endif
 
-void CCSGameRules::TerminateRound(float flDelay, int32_t eRoundEndReason)
+void CCSGameRules::TerminateRound(float flDelay, int32_t eRoundEndReason, uint32 nTeamId)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    addresses::toolkitAddresses.CGameRules_TerminateRound()(this, flDelay, eRoundEndReason, 0, 0);
+    auto pfnTerminateRound = addresses::toolkitAddresses.CGameRules_TerminateRound();
 #else
-    g_ToolkitAPI->Addresses()->CGameRules_TerminateRound()(this, flDelay, eRoundEndReason, 0, 0);
+    auto pfnTerminateRound = g_ToolkitAPI->Addresses()->CGameRules_TerminateRound();
+#endif
+    if (!pfnTerminateRound)
+        return;
+
+    // The team is taken by pointer, and null is what "no winning team" looks
+    // like -- passing a pointer to zero is not the same thing.
+    uint32 nTeam = nTeamId;
+    uint32* pnTeamId = nTeamId > 0 ? &nTeam : nullptr;
+
+    // See the note on CGameRules_TerminateRound_t: the argument order is not
+    // the same on both platforms.
+#ifdef _WIN32
+    pfnTerminateRound(this, flDelay, static_cast<uint32>(eRoundEndReason), pnTeamId);
+#else
+    pfnTerminateRound(this, static_cast<uint32>(eRoundEndReason), pnTeamId, flDelay);
 #endif
 }
 

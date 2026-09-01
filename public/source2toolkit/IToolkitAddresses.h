@@ -142,7 +142,21 @@ using CBasePlayerPawn_SnapViewAngles_t = void (FASTCALL*)(CBasePlayerPawn*, QAng
 
 * @brief Terminates current round.
   */
-using CGameRules_TerminateRound_t = void (FASTCALL*)(CGameRules*, float, unsigned int, int64, unsigned int);
+/**
+ * @brief CGameRules::TerminateRound
+ *
+ * The delay and the reason swap places between platforms, and the winning team
+ * goes in as a pointer -- null when there is none, which is the ordinary case.
+ * SwiftlyS2 splits it the same way; getting this wrong on Linux means the game
+ * reads the reason as the delay.
+ */
+#ifdef _WIN32
+using CGameRules_TerminateRound_t = void (FASTCALL*)(CGameRules* pThis, float flDelay,
+                                                     uint32 nReason, uint32* pnTeamId);
+#else
+using CGameRules_TerminateRound_t = void (FASTCALL*)(CGameRules* pThis, uint32 nReason,
+                                                     uint32* pnTeamId, float flDelay);
+#endif
 
 /**
 

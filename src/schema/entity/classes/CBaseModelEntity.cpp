@@ -51,10 +51,13 @@ TOOLKIT_GLOBALVARS();
 
 CUtlSymbolLarge CBaseModelEntity::GetModelName()
 {
-    if(m_CBodyComponent == nullptr) return CUtlSymbolLarge();
-    if(m_CBodyComponent->m_pSceneNode == nullptr) return CUtlSymbolLarge();
-    if(((CSkeletonInstance*)m_CBodyComponent->m_pSceneNode.Get()) == nullptr) return CUtlSymbolLarge();
-    return ((CSkeletonInstance*)m_CBodyComponent->m_pSceneNode.Get())->m_modelState().m_ModelName.Get();
+    CBodyComponent* bodyComponent = m_CBodyComponent();
+    if (bodyComponent && bodyComponent->m_pSceneNode() && bodyComponent->m_pSceneNode()->GetSkeletonInstance())
+    {
+        return bodyComponent->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_ModelName();
+    }
+
+    return CUtlSymbolLarge();
 }
 
 Vector CBaseModelEntity::GetEyePosition()
