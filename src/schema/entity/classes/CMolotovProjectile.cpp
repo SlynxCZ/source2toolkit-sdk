@@ -35,58 +35,35 @@
  * Project: Source2Toolkit
  */
 
-#include "source2toolkit/schema/entity/classes/CCSGameRules.h"
+#include "source2toolkit/schema/entity/classes/CMolotovProjectile.h"
 
-#include "source2toolkit/schema/entity/classes/CCSPlayerController.h"
-#include "source2toolkit/schema/entity/classes/CCSPlayerPawn.h"
-#include "source2toolkit/utils/virtual.h"
+#include "source2toolkit/schema/entity/classes/CBaseEntity.h"
 
 #ifdef SOURCE2TOOLKIT_CORE
 #include "core/addresses.h"
-#include "core/entities.h"
 #include "core/gameconfig.h"
 #include "core/shared.h"
 #else
 #include "source2toolkit/IToolkitAddresses.h"
-#include "source2toolkit/IToolkitEntities.h"
 #include "source2toolkit/IToolkitGameConfig.h"
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitPlugin.h"
 TOOLKIT_GLOBALVARS();
 #endif
 
-void CCSGameRules::TerminateRound(float flDelay, int32_t eRoundEndReason)
+CMolotovProjectile* CMolotovProjectile::EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity,
+                              CBaseEntity* pOwner, uint32_t nItemDefIndex)
 {
+    // The game takes non-const pointers and reads the velocity twice, once as
+    // the linear one and once as the angular one; SwiftlyS2 passes the same
+    // vector for both and so do we.
+    Vector vecPos = vecPosition;
+    QAngle angAng = angAngle;
+    Vector vecVel = vecVelocity;
+
 #ifdef SOURCE2TOOLKIT_CORE
-    addresses::toolkitAddresses.CGameRules_TerminateRound()(this, flDelay, eRoundEndReason, 0, 0);
+    return addresses::toolkitAddresses.CMolotovProjectile_EmitGrenade()(&vecPos, &angAng, &vecVel, &vecVel, pOwner, nItemDefIndex);
 #else
-    g_ToolkitAPI->Addresses()->CGameRules_TerminateRound()(this, flDelay, eRoundEndReason, 0, 0);
+    return g_ToolkitAPI->Addresses()->CMolotovProjectile_EmitGrenade()(&vecPos, &angAng, &vecVel, &vecVel, pOwner, nItemDefIndex);
 #endif
-}
-
-CBaseEntity* CCSGameRules::FindPickerEntity(CBasePlayerController* pPlayer)
-{
-#ifdef SOURCE2TOOLKIT_CORE
-    return entities::entitiesManager.FindPickerEntity(pPlayer, this);
-#else
-    return g_ToolkitAPI->Entities()->FindPickerEntity(pPlayer, this);
-#endif
-}
-
-CCSPlayerController* CCSGameRules::GetClientAimTarget(CCSPlayerController* pPlayer)
-{
-    auto* pPawn = static_cast<CCSPlayerPawn*>(FindPickerEntity(pPlayer));
-    if (!pPawn) return nullptr;
-
-    return V_strcmp(pPawn->GetClassname(), "player") == 0 ? pPawn->m_hOriginalController().Get() : nullptr;
-}
-
-void CCSGameRules::GoToIntermission(bool bAbortedMatch)
-{
-#ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CGameRules::GoToIntermission");
-#else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CGameRules::GoToIntermission");
-#endif
-    CALL_VIRTUAL(void, offset, this, bAbortedMatch);
 }

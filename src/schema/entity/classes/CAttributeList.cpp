@@ -1,8 +1,8 @@
-/**
+﻿/**
 * vim: set ts=4 sw=4 tw=99 noet:
  * =============================================================================
  * Source2Toolkit
- * Copyright (C) 2025-2026 Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl,
+ * Copyright (C) 2025-2026 Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl,
  * AlliedModders LLC. All rights reserved.
  * =============================================================================
  *
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * As a special exception, Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl and
+ * As a special exception, Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl and
  * AlliedModders LLC give you permission to link the code of this program
  * (as well as its derivative works) to "Counter-Strike 2," "Source 2,"
  * "Steam," and any Game MODs or server software running on software by
@@ -29,45 +29,31 @@
  * otherwise stated in LICENSE.txt.
  *
  * Authors:
- *   - Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl
+ *   - Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl
  *   - AlliedModders LLC
  *
  * Project: Source2Toolkit
  */
 
-#ifndef _INCLUDE_CATTRIBUTELIST_H
-#define _INCLUDE_CATTRIBUTELIST_H
+#include "source2toolkit/schema/entity/classes/CAttributeList.h"
 
-#pragma once
-
-#include "igameevents.h"
-#include "ehandle.h"
-#include "entityhandle.h"
-#include "vector.h"
-#include "utlbinaryblock.h"
-#include "utlsymbol.h"
-#include "utlsymbollarge.h"
-#include "utlstring.h"
-#include "utlstringtoken.h"
+#ifdef SOURCE2TOOLKIT_CORE
+#include "core/addresses.h"
+#include "core/gameconfig.h"
+#include "core/shared.h"
+#else
+#include "source2toolkit/IToolkitAddresses.h"
+#include "source2toolkit/IToolkitGameConfig.h"
+#include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitPlugin.h"
-#include "source2toolkit/schema/entityio.h"
-#include "source2toolkit/schema/schema.h"
-#include <cstdint>
+TOOLKIT_GLOBALVARS();
+#endif
 
-#include "CEconItemAttribute.h"
-
-class CAttributeManager;
-
-class CAttributeList
+void CAttributeList::SetOrAddAttribute(const char* pszAttributeName, float flValue)
 {
-public:
-    DECLARE_SCHEMA_CLASS(CAttributeList);
-
-    SCHEMA_FIELD(CUtlVector<CEconItemAttribute>, m_Attributes);
-    SCHEMA_FIELD(CAttributeManager*, m_pManager);
-
-    /// <summary>Sets an attribute by name, adding it to the list when it is not there yet.</summary>
-    void SetOrAddAttribute(const char* pszAttributeName, float flValue);
-};
-
-#endif // _INCLUDE_CATTRIBUTELIST_H
+#ifdef SOURCE2TOOLKIT_CORE
+    addresses::toolkitAddresses.CAttributeList_SetOrAddAttributeValueByName()(this, pszAttributeName, flValue);
+#else
+    g_ToolkitAPI->Addresses()->CAttributeList_SetOrAddAttributeValueByName()(this, pszAttributeName, flValue);
+#endif
+}

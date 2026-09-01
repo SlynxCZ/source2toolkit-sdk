@@ -481,9 +481,43 @@ NETWORK_CLASSES: list[str] = [
 MANUAL_FORWARDS: dict[str, list[str]] = {
     "CCSPlayerController": ["CServerSideClient"],
     "CCSCustomHudLayout": ["CCSPlayerController"],
+    "CGameSceneNode": ["CSkeletonInstance"],
+    "CDecoyProjectile": ["CBaseEntity"],
+    "CFlashbangProjectile": ["CBaseEntity"],
+    "CHEGrenadeProjectile": ["CBaseEntity"],
+    "CMolotovProjectile": ["CBaseEntity"],
+    "CSmokeGrenadeProjectile": ["CBaseEntity"],
 }
 
 MANUAL_METHODS: dict[str, list[str]] = {
+    "CAttributeList": [
+        "/// <summary>Sets an attribute by name, adding it to the list when it is not there yet.</summary>",
+        "void SetOrAddAttribute(const char* pszAttributeName, float flValue);",
+    ],
+    "CGameSceneNode": [
+        "/// <summary>Gets the skeleton instance of this scene node, or null when it has none.</summary>",
+        "CSkeletonInstance* GetSkeletonInstance();",
+    ],
+    "CDecoyProjectile": [
+        "/// <summary>Spawns a live grenade of this type. Ported from SwiftlyS2.</summary>",
+        "static CDecoyProjectile* EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity, CBaseEntity* pOwner, uint32_t nItemDefIndex);",
+    ],
+    "CFlashbangProjectile": [
+        "/// <summary>Spawns a live grenade of this type. Ported from SwiftlyS2.</summary>",
+        "static CFlashbangProjectile* EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity, CBaseEntity* pOwner, uint32_t nItemDefIndex);",
+    ],
+    "CHEGrenadeProjectile": [
+        "/// <summary>Spawns a live grenade of this type. Ported from SwiftlyS2.</summary>",
+        "static CHEGrenadeProjectile* EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity, CBaseEntity* pOwner, uint32_t nItemDefIndex);",
+    ],
+    "CMolotovProjectile": [
+        "/// <summary>Spawns a live grenade of this type. Ported from SwiftlyS2.</summary>",
+        "static CMolotovProjectile* EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity, CBaseEntity* pOwner, uint32_t nItemDefIndex);",
+    ],
+    "CSmokeGrenadeProjectile": [
+        "/// <summary>Spawns a live grenade of this type. Ported from SwiftlyS2.</summary>",
+        "static CSmokeGrenadeProjectile* EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity, int nTeam, CBaseEntity* pOwner, uint32_t nItemDefIndex);",
+    ],
     "CCSCustomHudLayout": [
         "/// <summary>Creates and spawns a custom_hud_layout for a panorama layout, e.g. \"my_panel\" for panorama/layout/custom_game/my_panel.vxml_c.</summary>",
         "static CCSCustomHudLayout* Create(const char* pszLayout, const char* pszTargetName = nullptr);",
@@ -583,6 +617,8 @@ MANUAL_METHODS: dict[str, list[str]] = {
         "const char* GetWeaponClassname();",
     ],
     "CCSGameRules": [
+        "/// <summary>Ends the match and moves everyone to the intermission screen.</summary>",
+        "void GoToIntermission(bool bAbortedMatch = false);",
         "/// <summary>Terminate round.</summary>",
         "void TerminateRound(float flDelay, int32_t eRoundEndReason);",
         "/// <summary>Find entity player is aiming at.</summary>",

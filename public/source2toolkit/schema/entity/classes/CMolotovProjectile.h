@@ -58,6 +58,7 @@
 #include "CBaseCSGrenadeProjectile.h"
 #include "IntervalTimer.h"
 
+class CBaseEntity;
 class CMolotovProjectile : public CBaseCSGrenadeProjectile
 {
 public:
@@ -82,6 +83,10 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    /// <summary>Spawns a live grenade of this type. Ported from SwiftlyS2.</summary>
+    static CMolotovProjectile* EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity,
+                              CBaseEntity* pOwner, uint32_t nItemDefIndex);
 };
 
 #endif // _INCLUDE_CMOLOTOVPROJECTILE_H

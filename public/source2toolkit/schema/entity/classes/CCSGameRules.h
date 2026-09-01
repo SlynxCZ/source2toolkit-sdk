@@ -264,6 +264,9 @@ public:
     CBaseEntity* FindPickerEntity(CBasePlayerController* pPlayer);
     /// <summary>Get aim target.</summary>
     CCSPlayerController* GetClientAimTarget(CCSPlayerController* pPlayer);
+
+    /// <summary>Ends the match and moves everyone to the intermission screen.</summary>
+    void GoToIntermission(bool bAbortedMatch = false);
 };
 
 #endif // _INCLUDE_CCSGAMERULES_H
