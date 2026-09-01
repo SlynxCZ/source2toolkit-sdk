@@ -256,20 +256,6 @@ using CCSPlayerController_ProcessUserCmd_t = void* (FASTCALL*)(CCSPlayerControll
 /** @brief CBasePlayerController::OnSimulateUserCommands */
 using CBasePlayerController_OnSimulateUserCommands_t = void (FASTCALL*)(CBasePlayerController* pThis);
 
-/**
- * @brief CCSPlayer_WeaponServices::DropWeapon
- *
- * Windows returns the byte the game sets, Linux returns a pointer-sized value;
- * the parameters are the same on both.
- */
-#ifdef _WIN32
-using CCSPlayer_WeaponServices_DropWeapon_t = bool (FASTCALL*)(CCSPlayer_WeaponServices* pThis,
-                                                               CBasePlayerWeapon* pWeapon, bool bSwapping);
-#else
-using CCSPlayer_WeaponServices_DropWeapon_t = void* (FASTCALL*)(CCSPlayer_WeaponServices* pThis,
-                                                                CBasePlayerWeapon* pWeapon, bool bSwapping);
-#endif
-
 /* --- CCSPlayer_MovementServices --- */
 
 using CCSPlayer_MovementServices_AirAccelerate_t = void (FASTCALL*)(CCSPlayer_MovementServices* pThis,
@@ -410,7 +396,6 @@ public:
     virtual CCSPlayerPawn_CanMove_t CCSPlayerPawn_CanMove() = 0;
     virtual CCSPlayerController_ProcessUserCmd_t CCSPlayerController_ProcessUserCmd() = 0;
     virtual CBasePlayerController_OnSimulateUserCommands_t CBasePlayerController_OnSimulateUserCommands() = 0;
-    virtual CCSPlayer_WeaponServices_DropWeapon_t CCSPlayer_WeaponServices_DropWeapon() = 0;
     virtual CCSPlayer_MovementServices_AirAccelerate_t CCSPlayer_MovementServices_AirAccelerate() = 0;
     virtual CCSPlayer_MovementServices_AirMove_t CCSPlayer_MovementServices_AirMove() = 0;
     virtual CCSPlayer_MovementServices_CanUnduck_t CCSPlayer_MovementServices_CanUnduck() = 0;
@@ -466,7 +451,6 @@ public:
 #define ADDR_CAN_MOVE()                             g_pToolkitAddresses->CCSPlayerPawn_CanMove()
 #define ADDR_PROCESS_USER_CMD()                     g_pToolkitAddresses->CCSPlayerController_ProcessUserCmd()
 #define ADDR_ON_SIMULATE_USER_COMMANDS()            g_pToolkitAddresses->CBasePlayerController_OnSimulateUserCommands()
-#define ADDR_DROP_WEAPON()                          g_pToolkitAddresses->CCSPlayer_WeaponServices_DropWeapon()
 #define ADDR_AIR_ACCELERATE()                       g_pToolkitAddresses->CCSPlayer_MovementServices_AirAccelerate()
 #define ADDR_AIR_MOVE()                             g_pToolkitAddresses->CCSPlayer_MovementServices_AirMove()
 #define ADDR_CAN_UNDUCK()                           g_pToolkitAddresses->CCSPlayer_MovementServices_CanUnduck()
