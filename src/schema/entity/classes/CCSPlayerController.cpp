@@ -206,7 +206,9 @@ void CCSPlayerController::TakeDamage(CCSPlayerController* pAttacker, int iDamage
 
     auto flDamage = static_cast<float>(iDamage);
 
-    CTakeDamageInfo info(pVictimPawn, pAttackerPawn, nullptr, flDamage, bitsDamageType);
+    // Inflictor and attacker are both the attacker's pawn -- the inflictor is
+    // what dealt the damage, not who received it.
+    CTakeDamageInfo info(pAttackerPawn, pAttackerPawn, nullptr, flDamage, bitsDamageType);
     info.m_nDamageFlags = static_cast<TakeDamageFlags_t>(static_cast<int>(info.m_nDamageFlags) | static_cast<int>(TakeDamageFlags_t::DFLAG_SUPPRESS_DAMAGE_MODIFICATION));
 
     CTakeDamageResult result(0);
@@ -238,7 +240,11 @@ void CCSPlayerController::TakeDamage(CCSPlayerController* pAttacker, int iDamage
     Msg("[s2tk] pawn health before=%d alive=%d\n", iHealthBefore, (int)m_bPawnIsAlive());
 #endif
 
-    pfn(this, &info, &result);
+    // On the pawn. The game's own damage arrives on the pawn -- the tracing
+    // above showed a real hit coming in on classname 'player' while this call
+    // arrived on 'cs_player_controller', whose m_iHealth is 0. So it went
+    // through, hooks and all, and there was simply nothing there to hurt.
+    pfn(pVictimPawn, &info, &result);
 
 #if S2TK_DEBUG_TAKEDAMAGE
     Msg("[s2tk] pawn health after=%d (controller m_iHealth=%d)\n",
