@@ -57,14 +57,6 @@
 #include "sourcehook/sourcehook_metamod_override.h"
 #endif
 
-// Declared, never added: SH_GET_INLINEHOOK_ORIGINAL only needs the declaration
-// to name the signature, and its contract allows this with no SH_ADD_INLINEHOOK
-// for the address ever running. The signature is spelled exactly as every
-// plugin spells it -- the inline dispatcher registry is keyed by the mangled
-// types, so a different spelling here would read as a second, incompatible
-// hook on the same address and be rejected.
-SH_DECL_INLINEHOOK2(TakeDamageOldHook, CBaseEntity, int64_t, CTakeDamageInfo*, CTakeDamageResult*);
-
 #ifdef SOURCE2TOOLKIT_CORE
 #include "core/addresses.h"
 #include "core/entities.h"
@@ -264,14 +256,13 @@ void CCSPlayerController::TakeDamage(CCSPlayerController* pAttacker, int iDamage
     // On the pawn, not the controller: the tracing showed a real hit arriving
     // on classname 'player' while this call arrived on 'cs_player_controller',
     // whose m_iHealth is 0.
-    // Never null, and with nothing hooked at the address it calls straight
-    // through the untouched bytes -- so this stays correct when no plugin has
-    // touched TakeDamage at all. Fetched and called in one go on purpose: the
-    // trampoline remembers its target in storage keyed by the hook name, so
-    // holding one of these across a fetch for another address would retarget
-    // it underneath.
-    const auto pfnOriginal = SH_GET_INLINEHOOK_ORIGINAL(TakeDamageOldHook, reinterpret_cast<void*>(pfn));
-    pfnOriginal(pVictimPawn, &info, &result);
+    // By signature, not by hookname: what a plugin's hook installs is keyed by
+    // the mangled signature types, so this finds it whatever that plugin chose
+    // to call its hook -- and the SDK is not left declaring a hook it never
+    // adds, named after a spelling no plugin is obliged to use. With nothing
+    // hooked at the address it calls straight through the untouched bytes, so
+    // this is equally correct when nobody has touched TakeDamage at all.
+    SH_CALL_INLINE_SIG(pfn, pVictimPawn, CBaseEntity, int64_t, CTakeDamageInfo*, CTakeDamageResult*)(&info, &result);
 
 #if S2TK_DEBUG_TAKEDAMAGE
     Msg("[s2tk] pawn health after=%d (controller m_iHealth=%d)\n",
