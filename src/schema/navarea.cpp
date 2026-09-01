@@ -19,6 +19,13 @@
 TOOLKIT_GLOBALVARS();
 #endif
 
+// The includes above drag in windows.h, whose min/max macros would eat every
+// std::min/std::max and numeric_limits<>::max() below.
+#ifdef _WIN32
+#undef min
+#undef max
+#endif
+
 namespace
 {
 	// Field offsets, from the note in the header.
