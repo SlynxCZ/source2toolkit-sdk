@@ -53,6 +53,7 @@
 #define _INCLUDE_ITOOLKIT_HTTP_H
 
 #pragma once
+#include "IToolkitJSON.h"
 #include "IToolkitPlugin.h"
 
 #include <string>
@@ -105,6 +106,11 @@ struct ToolkitHTTPResponse
     bool m_bSuccess = false;
     int m_nStatusCode = 0;
     std::string m_sBody;
+
+    /// The body parsed as JSON, when it was JSON. Owned by the toolkit and
+    /// valid only for the duration of the callback -- copy anything you keep.
+    /// Null when the body was empty or did not parse.
+    const IToolkitJSONValue* m_pJson = nullptr;
 };
 
 /**

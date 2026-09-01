@@ -63,7 +63,21 @@
 Forward declarations
 ========================= */
 
-class CTraceFilterEx;
+/**
+ * @brief The filter TraceShapeEx expects when you have an entity to ignore.
+ *
+ * The toolkit uses this one internally; it is here because a plugin calling
+ * TraceShapeEx needs a CTraceFilter of its own and this covers the ordinary
+ * case -- ignore an entity, its owner and everything sharing its hierarchy.
+ */
+class CTraceFilterEx : public CTraceFilter
+{
+public:
+    // Defined out of line: CBaseEntity.h includes IToolkitPlugin.h, which
+    // includes this header, so CBaseEntity is still incomplete here.
+    explicit CTraceFilterEx(CBaseEntity* pEntityToIgnore);
+    CTraceFilterEx();
+};
 class CBaseEntity;
 class CEntityInstance;
 

@@ -333,28 +333,42 @@ public:
     ========================= */
 
     /**
-     * @brief Registers a hook for outgoing server-to-client messages.
+     * @brief Hooks outgoing server-to-client messages.
      *
-     * @return Opaque callback ID for later removal.
+     * One hook per plugin, as everywhere else in the toolkit: hooking again
+     * replaces the previous handler. The toolkit drops it when the plugin
+     * unloads, so a plugin that forgets to unhook does not leave the engine
+     * calling into a closed library.
+     *
+     * @param owner   Plugin ID that owns the hook
+     * @param handler Callback, or nullptr to unhook
      */
-    virtual uint64_t AddServerHook(NetMessageServerHook callback) = 0;
-    virtual void RemoveServerHook(uint64_t callbackID) = 0;
+    virtual void HookServerMessage(PluginId owner, NetMessageServerHook handler) = 0;
 
     /**
-     * @brief Registers a hook for incoming client-to-server messages.
-     *
-     * @return Opaque callback ID for later removal.
+     * @brief Drops this plugin's outgoing-message hook.
      */
-    virtual uint64_t AddClientHook(NetMessageClientHook callback) = 0;
-    virtual void RemoveClientHook(uint64_t callbackID) = 0;
+    virtual void UnhookServerMessage(PluginId owner) = 0;
 
     /**
-     * @brief Registers a hook for internal server-side message sends (per-client).
-     *
-     * @return Opaque callback ID for later removal.
+     * @brief Hooks incoming client-to-server messages.
      */
-    virtual uint64_t AddServerInternalHook(NetMessageClientHook callback) = 0;
-    virtual void RemoveServerInternalHook(uint64_t callbackID) = 0;
+    virtual void HookClientMessage(PluginId owner, NetMessageClientHook handler) = 0;
+
+    /**
+     * @brief Drops this plugin's incoming-message hook.
+     */
+    virtual void UnhookClientMessage(PluginId owner) = 0;
+
+    /**
+     * @brief Hooks internal server-side message sends (per-client).
+     */
+    virtual void HookServerInternalMessage(PluginId owner, NetMessageClientHook handler) = 0;
+
+    /**
+     * @brief Drops this plugin's internal-send hook.
+     */
+    virtual void UnhookServerInternalMessage(PluginId owner) = 0;
 };
 
 /**
@@ -366,11 +380,23 @@ public:
 #define NET_MSG_SEND(msg, id, slot)          g_pToolkitNetworkMessages->SendMessage(msg, id, slot)
 #define NET_MSG_SEND_PLAYERS(msg, id, mask)  g_pToolkitNetworkMessages->SendMessageToPlayers(msg, id, mask)
 
-#define NET_MSG_ADD_SERVER_HOOK(cb)                  g_pToolkitNetworkMessages->AddServerHook(cb)
-#define NET_MSG_REMOVE_SERVER_HOOK(id)               g_pToolkitNetworkMessages->RemoveServerHook(id)
-#define NET_MSG_ADD_CLIENT_HOOK(cb)                  g_pToolkitNetworkMessages->AddClientHook(cb)
-#define NET_MSG_REMOVE_CLIENT_HOOK(id)               g_pToolkitNetworkMessages->RemoveClientHook(id)
-#define NET_MSG_ADD_SERVER_INTERNAL_HOOK(cb)         g_pToolkitNetworkMessages->AddServerInternalHook(cb)
-#define NET_MSG_REMOVE_SERVER_INTERNAL_HOOK(id)      g_pToolkitNetworkMessages->RemoveServerInternalHook(id)
+/**
+ * @brief Hook macros, matching HOOK_GAME_EVENT and HOOK_CONVAR_CHANGE: the
+ *        plugin ID is filled in for you.
+ */
+#define HOOK_SERVER_MESSAGE(handler) \
+    g_pToolkitNetworkMessages->HookServerMessage(g_PluginID, handler)
+#define UNHOOK_SERVER_MESSAGE() \
+    g_pToolkitNetworkMessages->UnhookServerMessage(g_PluginID)
+
+#define HOOK_CLIENT_MESSAGE(handler) \
+    g_pToolkitNetworkMessages->HookClientMessage(g_PluginID, handler)
+#define UNHOOK_CLIENT_MESSAGE() \
+    g_pToolkitNetworkMessages->UnhookClientMessage(g_PluginID)
+
+#define HOOK_SERVER_INTERNAL_MESSAGE(handler) \
+    g_pToolkitNetworkMessages->HookServerInternalMessage(g_PluginID, handler)
+#define UNHOOK_SERVER_INTERNAL_MESSAGE() \
+    g_pToolkitNetworkMessages->UnhookServerInternalMessage(g_PluginID)
 
 #endif //_INCLUDE_ITOOLKIT_NETWORK_MESSAGES_H

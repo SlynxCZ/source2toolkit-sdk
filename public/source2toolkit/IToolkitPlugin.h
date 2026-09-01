@@ -104,6 +104,7 @@ namespace SourceHook
 #include "IToolkitEntities.h"
 #include "IToolkitEvents.h"
 #include "IToolkitGameConfig.h"
+#include "IToolkitJSON.h"
 #include "IToolkitMenus.h"
 #include "IToolkitMySQL.h"
 #include "IToolkitNetworkMessages.h"
@@ -311,6 +312,7 @@ Globals
     IToolkitGameConfig*      g_pToolkitGameConfig      = nullptr; \
     IToolkitGameSystems*     g_pToolkitGameSystems     = nullptr; \
     IToolkitHTTP*            g_pToolkitHTTP            = nullptr; \
+    IToolkitJSON*            g_pToolkitJSON            = nullptr; \
     IToolkitMenus*           g_pToolkitMenus           = nullptr; \
     IToolkitMySQL*           g_pToolkitMySQL           = nullptr; \
     IToolkitNetworkMessages* g_pToolkitNetworkMessages = nullptr; \
@@ -337,6 +339,7 @@ Globals
     extern IToolkitGameConfig*      g_pToolkitGameConfig; \
     extern IToolkitGameSystems*     g_pToolkitGameSystems; \
     extern IToolkitHTTP*            g_pToolkitHTTP; \
+    extern IToolkitJSON*            g_pToolkitJSON; \
     extern IToolkitMenus*           g_pToolkitMenus; \
     extern IToolkitMySQL*           g_pToolkitMySQL; \
     extern IToolkitNetworkMessages* g_pToolkitNetworkMessages; \
@@ -369,6 +372,7 @@ Globals
     g_pToolkitMenus           = (IToolkitMenus*)          api->ToolkitFactory(TOOLKIT_MENUS_INTERFACE,           nullptr, nullptr); \
     g_pToolkitMySQL           = (IToolkitMySQL*)          api->ToolkitFactory(TOOLKIT_MYSQL_INTERFACE,           nullptr, nullptr); \
     g_pToolkitNetworkMessages = (IToolkitNetworkMessages*)api->ToolkitFactory(TOOLKIT_NETWORKMESSAGES_INTERFACE, nullptr, nullptr); \
+    g_pToolkitJSON            = (IToolkitJSON*)           api->ToolkitFactory(TOOLKIT_JSON_INTERFACE,            nullptr, nullptr); \
     g_pToolkitScheduler       = (IToolkitScheduler*)      api->ToolkitFactory(TOOLKIT_SCHEDULER_INTERFACE,       nullptr, nullptr); \
     g_pToolkitTrace           = (IToolkitTrace*)          api->ToolkitFactory(TOOLKIT_TRACE_INTERFACE,           nullptr, nullptr);
 

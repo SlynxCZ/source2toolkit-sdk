@@ -55,6 +55,11 @@
 #pragma once
 #include "IToolkitPlugin.h"
 
+#include <convar.h>
+
+#include <string>
+#include <type_traits>
+
 #include "convar.h"
 #include "eiface.h"
 
@@ -275,5 +280,96 @@ public:
  */
 #define HOOK_CONVAR_CHANGE(passfunc) \
     g_pToolkitConVars->HookConVarChange(g_PluginID, passfunc)
+
+/**
+ * @brief Macro for dropping the ConVar change hook.
+ */
+#define UNHOOK_CONVAR_CHANGE() \
+    g_pToolkitConVars->UnhookConVarChange(g_PluginID)
+
+
+/* =========================
+Name-addressed helpers
+
+The interface above is index-addressed, which is the right shape when a plugin
+holds on to a ConVar. These are for the one-off case -- flip a cvar by name and
+move on -- and do the lookup themselves. They go through hl2sdk's ConVarRef
+directly rather than the interface, so they work before the toolkit's ConVar
+manager is up.
+========================= */
+
+/**
+ * @brief Clears flags on a ConVar found by name, e.g. FCVAR_CHEAT.
+ *
+ * @return false when there is no such ConVar, or its data is not available.
+ */
+inline bool UTIL_RemoveConVarFlags(const char* pszName, uint64 nFlags)
+{
+    if (!pszName) return false;
+
+    ConVarRef ref(pszName);
+    if (!ref.IsValidRef()) return false;
+
+    ConVarRefAbstract var(ref);
+    if (!var.IsConVarDataAvailable()) return false;
+
+    if (!var.IsFlagSet(nFlags)) return true;
+
+    var.RemoveFlags(nFlags);
+    return true;
+}
+
+/**
+ * @brief Sets flags on a ConVar found by name.
+ */
+inline bool UTIL_AddConVarFlags(const char* pszName, uint64 nFlags)
+{
+    if (!pszName) return false;
+
+    ConVarRef ref(pszName);
+    if (!ref.IsValidRef()) return false;
+
+    ConVarRefAbstract var(ref);
+    if (!var.IsConVarDataAvailable()) return false;
+
+    var.AddFlags(nFlags);
+    return true;
+}
+
+/**
+ * @brief Sets a ConVar by name.
+ *
+ * The type is what decides how the value is written, so call it as
+ * UTIL_SetConVar<int>("mp_freezetime", 5) when the literal would deduce to
+ * something else.
+ *
+ * @return false when there is no such ConVar, or its data is not available.
+ */
+template <typename T>
+inline bool UTIL_SetConVar(const char* pszName, const T& value, CSplitScreenSlot slot = -1)
+{
+    if (!pszName) return false;
+
+    ConVarRef ref(pszName);
+    if (!ref.IsValidRef()) return false;
+
+    ConVarRefAbstract var(ref, TranslateConVarType<T>());
+    if (!var.IsConVarDataAvailable()) return false;
+
+    if constexpr (std::is_same_v<T, const char*> || std::is_same_v<T, char*>)
+        return var.SetString(CUtlString{value ? value : ""}, slot);
+    else if constexpr (std::is_same_v<T, std::string>)
+        return var.SetString(CUtlString{value.c_str()}, slot);
+    else
+    {
+        var.SetAs<T>(value, slot);
+        return true;
+    }
+}
+
+inline bool UTIL_SetConVar(const char* pszName, double v, CSplitScreenSlot slot = -1) { return UTIL_SetConVar<float64>(pszName, static_cast<float64>(v), slot); }
+inline bool UTIL_SetConVar(const char* pszName, float v, CSplitScreenSlot slot = -1)  { return UTIL_SetConVar<float32>(pszName, static_cast<float32>(v), slot); }
+inline bool UTIL_SetConVar(const char* pszName, int v, CSplitScreenSlot slot = -1)    { return UTIL_SetConVar<int32>(pszName, static_cast<int32>(v), slot); }
+inline bool UTIL_SetConVar(const char* pszName, unsigned v, CSplitScreenSlot slot = -1) { return UTIL_SetConVar<uint32>(pszName, static_cast<uint32>(v), slot); }
 
 #endif //_INCLUDE_ITOOLKIT_CONVARS_H

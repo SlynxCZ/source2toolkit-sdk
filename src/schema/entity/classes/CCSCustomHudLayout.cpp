@@ -171,20 +171,20 @@ bool CCSCustomHudLayout::IsInputCaptureEnabled(CCSPlayerController* pController)
     return GetLayoutState(pController).m_bInputCaptureEnabled();
 }
 
-void CCSCustomHudLayout::AddClickCallback(std::function<void(CCSPlayerController*, CCSCustomHudLayout*, const char*)> callback)
+void CCSCustomHudLayout::HookClick(std::function<void(CCSPlayerController*, CCSCustomHudLayout*, const char*)> callback)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    customhud::customHudManager.AddClickCallback(0, this, std::move(callback));
+    customhud::customHudManager.HookCustomHudClick(0, this, std::move(callback));
 #else
-    g_ToolkitAPI->CustomHud()->AddClickCallback(g_PluginID, this, std::move(callback));
+    g_ToolkitAPI->CustomHud()->HookCustomHudClick(g_PluginID, this, std::move(callback));
 #endif
 }
 
-void CCSCustomHudLayout::RemoveClickCallbacks()
+void CCSCustomHudLayout::UnhookClicks()
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    customhud::customHudManager.RemoveClickCallbacks(this);
+    customhud::customHudManager.UnhookCustomHudClick(this);
 #else
-    g_ToolkitAPI->CustomHud()->RemoveClickCallbacks(this);
+    g_ToolkitAPI->CustomHud()->UnhookCustomHudClick(this);
 #endif
 }

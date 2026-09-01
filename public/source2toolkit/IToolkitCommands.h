@@ -114,7 +114,13 @@ public:
     *
     * @note Triggered when a player sends a matching chat message.
       */
-    virtual void RegChatListener(PluginId owner, const char* pchName, ChatHandler handler) = 0;
+    virtual void RegisterChatListener(PluginId owner, const char* pchName, ChatHandler handler) = 0;
+
+    /**
+
+    * @brief Drops one of this plugin's chat listeners.
+      */
+    virtual void UnregisterChatListener(PluginId owner, const char* pchName) = 0;
 
     /**
 
@@ -126,7 +132,13 @@ public:
     *
     * @note This creates a new console command accessible via server/client console.
       */
-    virtual void RegConCommand(PluginId owner, const char* pchName, ChatHandler handler) = 0;
+    virtual void RegisterConCommand(PluginId owner, const char* pchName, ChatHandler handler) = 0;
+
+    /**
+
+    * @brief Removes a console command this plugin created.
+      */
+    virtual void UnregisterConCommand(PluginId owner, const char* pchName) = 0;
 
     /**
 
@@ -143,16 +155,28 @@ public:
     * * MRES_OVERRIDE: override return value but still call original (pre only)
     * * MRES_SUPERCEDE: block original execution (pre only)
         */
-    virtual void RegConListener(PluginId owner, const char* pchName, CommandHandler handler, bool post) = 0;
+    virtual void RegisterConListener(PluginId owner, const char* pchName, CommandHandler handler, bool post) = 0;
+
+    /**
+
+    * @brief Drops one of this plugin's console listeners.
+      */
+    virtual void UnregisterConListener(PluginId owner, const char* pchName, bool post) = 0;
 };
 
-#define REG_CHAT_LISTENER(pchName, handler) \
-    g_pToolkitCommands->RegChatListener(g_PluginID, pchName, handler)
+#define REGISTER_CHAT_LISTENER(pchName, handler) \
+    g_pToolkitCommands->RegisterChatListener(g_PluginID, pchName, handler)
+#define UNREGISTER_CHAT_LISTENER(pchName) \
+    g_pToolkitCommands->UnregisterChatListener(g_PluginID, pchName)
 
-#define REG_CON_COMMAND(pchName, handler) \
-    g_pToolkitCommands->RegConCommand(g_PluginID, pchName, handler)
+#define REGISTER_CON_COMMAND(pchName, handler) \
+    g_pToolkitCommands->RegisterConCommand(g_PluginID, pchName, handler)
+#define UNREGISTER_CON_COMMAND(pchName) \
+    g_pToolkitCommands->UnregisterConCommand(g_PluginID, pchName)
 
-#define REG_CON_LISTENER(pchName, handler, post) \
-    g_pToolkitCommands->RegConListener(g_PluginID, pchName, handler, post)
+#define REGISTER_CON_LISTENER(pchName, handler, post) \
+    g_pToolkitCommands->RegisterConListener(g_PluginID, pchName, handler, post)
+#define UNREGISTER_CON_LISTENER(pchName, post) \
+    g_pToolkitCommands->UnregisterConListener(g_PluginID, pchName, post)
 
 #endif //_INCLUDE_ITOOLKIT_COMMANDS_H

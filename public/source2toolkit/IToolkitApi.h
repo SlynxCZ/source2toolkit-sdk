@@ -115,7 +115,7 @@ Core Toolkit API
 * Provides access to all toolkit subsystems and engine interfaces.
 *
 * @code
-* api->Commands()->RegConCommand(...);
+* api->Commands()->RegisterConCommand(...);
 * api->Events()->HookGameEvent(...);
 * @endcode
   */

@@ -86,9 +86,9 @@ public:
     /// <summary>Whether mouse input capture is enabled.</summary>
     bool IsInputCaptureEnabled(CCSPlayerController* pController = nullptr);
     /// <summary>Registers a callback fired when a player clicks a panel of this layout, keyed by the panel's id attribute.</summary>
-    void AddClickCallback(std::function<void(CCSPlayerController*, CCSCustomHudLayout*, const char*)> callback);
+    void HookClick(std::function<void(CCSPlayerController*, CCSCustomHudLayout*, const char*)> callback);
     /// <summary>Drops every click callback registered for this layout.</summary>
-    void RemoveClickCallbacks();
+    void UnhookClicks();
 
 public:
     static CCSCustomHudLayout* New(const char* className)

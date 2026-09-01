@@ -106,6 +106,16 @@ public:
     *             true to be called after
         */
     virtual void HookGameEvent(PluginId owner, const char* pchName, GameEventHandler handler, bool post) = 0;
+
+    /**
+
+    * @brief Drops one of this plugin's event hooks.
+    *
+    * @param owner   Plugin ID that owns the listener
+    * @param pchName Event name the hook was registered under
+    * @param post    Which of the two hooks to drop
+      */
+    virtual void UnhookGameEvent(PluginId owner, const char* pchName, bool post) = 0;
 };
 
 /**
@@ -116,5 +126,11 @@ public:
  */
 #define HOOK_GAME_EVENT(passname, passfunc, post) \
     g_pToolkitEvents->HookGameEvent(g_PluginID, passname, passfunc, post)
+
+/**
+ * @brief Macro for dropping a game event hook.
+ */
+#define UNHOOK_GAME_EVENT(passname, post) \
+    g_pToolkitEvents->UnhookGameEvent(g_PluginID, passname, post)
 
 #endif //_INCLUDE_ITOOLKIT_EVENTS_H

@@ -47,7 +47,7 @@
 * the layout.
 *
 * @note Plugins do not normally touch this interface -- CCSCustomHudLayout's
-*       AddClickCallback() forwards here for them.
+*       HookClick() forwards here for them.
   */
 
 #ifndef _INCLUDE_ITOOLKIT_CUSTOMHUD_H
@@ -101,7 +101,7 @@ public:
     * @param pLayout Layout to listen on
     * @param handler Callback function
       */
-    virtual void AddClickCallback(PluginId owner, CCSCustomHudLayout* pLayout, CustomHudClickHandler handler) = 0;
+    virtual void HookCustomHudClick(PluginId owner, CCSCustomHudLayout* pLayout, CustomHudClickHandler handler) = 0;
 
     /**
 
@@ -109,7 +109,16 @@ public:
     *
     * @param pLayout Layout to stop listening on
       */
-    virtual void RemoveClickCallbacks(CCSCustomHudLayout* pLayout) = 0;
+    virtual void UnhookCustomHudClick(CCSCustomHudLayout* pLayout) = 0;
 };
+
+/**
+ * @brief Hook macros, matching HOOK_GAME_EVENT: the plugin ID is filled in.
+ */
+#define HOOK_CUSTOM_HUD_CLICK(pLayout, handler) \
+    g_pToolkitCustomHud->HookCustomHudClick(g_PluginID, pLayout, handler)
+
+#define UNHOOK_CUSTOM_HUD_CLICK(pLayout) \
+    g_pToolkitCustomHud->UnhookCustomHudClick(pLayout)
 
 #endif //_INCLUDE_ITOOLKIT_CUSTOMHUD_H
