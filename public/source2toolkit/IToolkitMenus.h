@@ -127,6 +127,13 @@ public:
     virtual const std::string& Title() const = 0;
 
     /**
+     * @brief Sets the menu title.
+     *
+     * @param t New title
+     */
+    virtual void SetTitle(std::string t) = 0;
+
+    /**
      * @brief Gets menu options.
      *
      * @return Reference to options vector
@@ -191,8 +198,15 @@ public:
 
     const std::string& Title() const override { return title_; }
 
+    void SetTitle(std::string t) override { title_ = std::move(t); }
+
     std::vector<ChatMenuOption>& Options() override { return options_; }
     const std::vector<ChatMenuOption>& Options() const override { return options_; }
+
+    /**
+     * @brief Drops every option, for a menu that is rebuilt in place.
+     */
+    void ClearOptions() { options_.clear(); }
 
     PostSelectAction GetPostSelectAction() const override { return postSelect_; }
 
@@ -245,12 +259,12 @@ public:
      *
      * @return Reference to created option
      */
-    virtual ChatMenuOption& AddMenuOptionWithCooldown(
+    ChatMenuOption& AddMenuOptionWithCooldown(
         std::string optionText,
         std::function<void(CCSPlayerController*, ChatMenuOption&)> action,
         bool disabled = false,
         bool close = true,
-        std::function<bool()> disabledEvaluator = nullptr) = 0;
+        std::function<bool()> disabledEvaluator = nullptr);
 
     /**
      * @brief Sets global cooldown handlers.
@@ -258,7 +272,7 @@ public:
      * @param canSelect Function that checks if player can select
      * @param onSelect Function called after selection
      */
-    void SetCooldownHandlers(
+    static void SetCooldownHandlers(
         std::function<bool(CCSPlayerController*)> canSelect,
         std::function<void(CCSPlayerController*)> onSelect)
     {
@@ -267,8 +281,10 @@ public:
     }
 
 public:
-    std::function<bool(CCSPlayerController*)> s_canSelect;
-    std::function<void(CCSPlayerController*)> s_onSelect;
+    // Global, as the name and the doc above say: set them once and every menu
+    // built afterwards goes through them.
+    static std::function<bool(CCSPlayerController*)> s_canSelect;
+    static std::function<void(CCSPlayerController*)> s_onSelect;
 
 private:
     std::string title_;
@@ -495,5 +511,6 @@ public:
 #define OPEN_CENTER_HTML_MENU(player, menu)  g_pToolkitMenus->OpenCenterHtmlMenu(player, menu)
 #define GET_ACTIVE_MENU(player)              g_pToolkitMenus->GetActiveMenu(player)
 #define CLOSE_ACTIVE_MENU(player)            g_pToolkitMenus->CloseActiveMenu(player)
+#define MENU_ON_KEY_PRESS(player, key)       g_pToolkitMenus->OnKeyPress(player, key)
 
 #endif //_INCLUDE_ITOOLKIT_MENUS_H
