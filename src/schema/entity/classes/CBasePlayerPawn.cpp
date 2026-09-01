@@ -53,9 +53,9 @@ TOOLKIT_GLOBALVARS();
 
 void CBasePlayerPawn::CommitSuicide(bool bExplode, bool bForce) {
 #ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CBasePlayerPawn_CommitSuicide");
+    static int offset = shared::g_pGameConfig->GetOffset("CBasePlayerPawn::CommitSuicide");
 #else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CBasePlayerPawn_CommitSuicide");
+    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CBasePlayerPawn::CommitSuicide");
 #endif
     CALL_VIRTUAL(void, offset, this, bExplode, bForce);
 }

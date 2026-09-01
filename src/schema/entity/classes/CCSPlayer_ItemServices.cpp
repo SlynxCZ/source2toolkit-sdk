@@ -54,9 +54,9 @@ TOOLKIT_GLOBALVARS();
 void CCSPlayer_ItemServices::DropActivePlayerWeapon(CBasePlayerWeapon* pActiveWeapon)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_ItemServices_DropActivePlayerWeapon");
+    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_ItemServices::DropActivePlayerWeapon");
 #else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_ItemServices_DropActivePlayerWeapon");
+    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_ItemServices::DropActivePlayerWeapon");
 #endif
     CALL_VIRTUAL(void, offset, this, pActiveWeapon);
 }
@@ -64,9 +64,9 @@ void CCSPlayer_ItemServices::DropActivePlayerWeapon(CBasePlayerWeapon* pActiveWe
 void CCSPlayer_ItemServices::RemoveWeapons(bool bRemoveSuit)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_ItemServices_RemoveWeapons");
+    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_ItemServices::RemoveWeapons");
 #else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_ItemServices_RemoveWeapons");
+    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_ItemServices::RemoveWeapons");
 #endif
     CALL_VIRTUAL(void, offset, this, bRemoveSuit);
 }
@@ -74,9 +74,9 @@ void CCSPlayer_ItemServices::RemoveWeapons(bool bRemoveSuit)
 CBasePlayerWeapon* CCSPlayer_ItemServices::GiveNamedItem(const char* pszItem)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_ItemServices_GiveNamedItem");
+    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_ItemServices::GiveNamedItem");
 #else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_ItemServices_GiveNamedItem");
+    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_ItemServices::GiveNamedItem");
 #endif
     return CALL_VIRTUAL(CBasePlayerWeapon*, offset, this, pszItem);
 }

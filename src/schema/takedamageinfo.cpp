@@ -69,9 +69,9 @@ CTakeDamageInfo::CTakeDamageInfo(CBaseEntity* pInflictor, CBaseEntity* pAttacker
 HitGroup_t CTakeDamageInfo::GetHitGroup() const
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CTakeDamageInfo_HitGroup");
+    static int offset = shared::g_pGameConfig->GetOffset("CTakeDamageInfo::HitGroup");
 #else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CTakeDamageInfo_HitGroup");
+    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CTakeDamageInfo::HitGroup");
 #endif
 
     if (offset <= 0)

@@ -216,9 +216,9 @@ void CCSPlayerController::Respawn()
     // The Call To Arms update appears to have invalidated the need for CCSPlayerPawn_Respawn.
     SetPawn(m_hPlayerPawn());
 #ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayerController_Respawn");
+    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayerController::Respawn");
 #else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayerController_Respawn");
+    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayerController::Respawn");
 #endif
     CALL_VIRTUAL(void, offset, this);
 }
@@ -235,9 +235,9 @@ void CCSPlayerController::SwitchTeam(int nTeam)
 void CCSPlayerController::ChangeTeam(int nTeam)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayerController_ChangeTeam");
+    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayerController::ChangeTeam");
 #else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayerController_ChangeTeam");
+    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayerController::ChangeTeam");
 #endif
     CALL_VIRTUAL(void, offset, this, nTeam);
 }
@@ -277,9 +277,9 @@ CServerSideClient* CCSPlayerController::GetServerSideClient()
         return nullptr;
 
 #ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CNetworkGameServer_ClientList");
+    static int offset = shared::g_pGameConfig->GetOffset("CNetworkGameServer::ClientList");
 #else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CNetworkGameServer_ClientList");
+    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CNetworkGameServer::ClientList");
 #endif
 
     auto* pClients = reinterpret_cast<CUtlVector<CServerSideClient*>*>(reinterpret_cast<uint8_t*>(pServer) + offset);

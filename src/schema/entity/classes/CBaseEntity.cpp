@@ -167,9 +167,9 @@ void CBaseEntity::DispatchSpawn(CEntityKeyValues* pEntityKeyValues)
 void CBaseEntity::Teleport(const Vector* pPosition, const QAngle* pAngles, const Vector* pVelocity)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CBaseEntity_Teleport");
+    static int offset = shared::g_pGameConfig->GetOffset("CBaseEntity::Teleport");
 #else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CBaseEntity_Teleport");
+    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CBaseEntity::Teleport");
 #endif
     CALL_VIRTUAL(void, offset, this, pPosition, pAngles, pVelocity);
 }
@@ -201,9 +201,9 @@ void CBaseEntity::SetCollisionGroup(uint8 nCollisionGroup)
 void CBaseEntity::CollisionRulesChanged()
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CBaseEntity_CollisionRulesChanged");
+    static int offset = shared::g_pGameConfig->GetOffset("CBaseEntity::CollisionRulesChanged");
 #else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CBaseEntity_CollisionRulesChanged");
+    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CBaseEntity::CollisionRulesChanged");
 #endif
     CALL_VIRTUAL(void, offset, this);
 }

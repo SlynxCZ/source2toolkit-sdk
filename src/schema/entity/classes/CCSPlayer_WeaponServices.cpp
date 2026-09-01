@@ -54,9 +54,9 @@ TOOLKIT_GLOBALVARS();
 bool CCSPlayer_WeaponServices::CanUse(CBasePlayerWeapon* pWeapon)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_WeaponServices_CanUse");
+    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_WeaponServices::CanUse");
 #else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_WeaponServices_CanUse");
+    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_WeaponServices::CanUse");
 #endif
     return CALL_VIRTUAL(bool, offset, this, pWeapon);
 }
@@ -64,9 +64,9 @@ bool CCSPlayer_WeaponServices::CanUse(CBasePlayerWeapon* pWeapon)
 void CCSPlayer_WeaponServices::DropWeapon(CBasePlayerWeapon *pWeapon, Vector *pVecTarget, Vector *pVelocity)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_WeaponServices_DropWeapon");
+    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_WeaponServices::DropWeapon");
 #else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_WeaponServices_DropWeapon");
+    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_WeaponServices::DropWeapon");
 #endif
     CALL_VIRTUAL(void, offset, this, pWeapon, pVecTarget, pVelocity);
 }
@@ -74,9 +74,9 @@ void CCSPlayer_WeaponServices::DropWeapon(CBasePlayerWeapon *pWeapon, Vector *pV
 int CCSPlayer_WeaponServices::BumpWeapon(CBasePlayerWeapon* pWeapon)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_WeaponServices_BumpWeapon");
+    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_WeaponServices::BumpWeapon");
 #else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_WeaponServices_BumpWeapon");
+    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_WeaponServices::BumpWeapon");
 #endif
     return CALL_VIRTUAL(int, offset, this, pWeapon);
 }
@@ -84,9 +84,9 @@ int CCSPlayer_WeaponServices::BumpWeapon(CBasePlayerWeapon* pWeapon)
 void CCSPlayer_WeaponServices::SelectItem(CBasePlayerWeapon* pWeapon, int unk1)
 {
 #ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_WeaponServices_SelectItem");
+    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_WeaponServices::SelectItem");
 #else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_WeaponServices_SelectItem");
+    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_WeaponServices::SelectItem");
 #endif
     CALL_VIRTUAL(void, offset, this, pWeapon, unk1);
 }
