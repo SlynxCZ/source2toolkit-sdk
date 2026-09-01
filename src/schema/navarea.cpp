@@ -10,8 +10,8 @@
 #include <limits>
 
 #ifdef SOURCE2TOOLKIT_CORE
-#include "../../../source2toolkit/src/core/gameconfig.h"
-#include "../../../source2toolkit/src/core/shared.h"
+#include "core/gameconfig.h"
+#include "core/shared.h"
 #else
 #include "source2toolkit/IToolkitGameConfig.h"
 #include "source2toolkit/IToolkitApi.h"
