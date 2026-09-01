@@ -51,6 +51,21 @@
 #include "source2toolkit/utils/virtual.h"
 
 #ifdef SOURCE2TOOLKIT_CORE
+// Points SH_GLOB_SHPTR at the toolkit's own engine, the one every .stx plugin
+// is handed. In a plugin build TOOLKIT_GLOBALVARS() already provides g_SHPtr,
+// which is the same engine.
+#include "sourcehook/sourcehook_metamod_override.h"
+#endif
+
+// Declared, never added: SH_GET_INLINEHOOK_ORIGINAL only needs the declaration
+// to name the signature, and its contract allows this with no SH_ADD_INLINEHOOK
+// for the address ever running. The signature is spelled exactly as every
+// plugin spells it -- the inline dispatcher registry is keyed by the mangled
+// types, so a different spelling here would read as a second, incompatible
+// hook on the same address and be rejected.
+SH_DECL_INLINEHOOK2(TakeDamageOldHook, CBaseEntity, int64_t, CTakeDamageInfo*, CTakeDamageResult*);
+
+#ifdef SOURCE2TOOLKIT_CORE
 #include "core/addresses.h"
 #include "core/entities.h"
 #include "core/gameconfig.h"
@@ -240,11 +255,23 @@ void CCSPlayerController::TakeDamage(CCSPlayerController* pAttacker, int iDamage
     Msg("[s2tk] pawn health before=%d alive=%d\n", iHealthBefore, (int)m_bPawnIsAlive());
 #endif
 
-    // On the pawn. The game's own damage arrives on the pawn -- the tracing
-    // above showed a real hit coming in on classname 'player' while this call
-    // arrived on 'cs_player_controller', whose m_iHealth is 0. So it went
-    // through, hooks and all, and there was simply nothing there to hurt.
-    pfn(pVictimPawn, &info, &result);
+    // Straight to the original, past every plugin's Pre/Post handler. Damage
+    // the toolkit was asked to deal is not the game dealing damage, so a
+    // plugin hooking TakeDamage to police the game's own hits should not have
+    // to tell the two apart -- and a handler that supercedes would otherwise
+    // silently swallow this.
+    //
+    // On the pawn, not the controller: the tracing showed a real hit arriving
+    // on classname 'player' while this call arrived on 'cs_player_controller',
+    // whose m_iHealth is 0.
+    // Never null, and with nothing hooked at the address it calls straight
+    // through the untouched bytes -- so this stays correct when no plugin has
+    // touched TakeDamage at all. Fetched and called in one go on purpose: the
+    // trampoline remembers its target in storage keyed by the hook name, so
+    // holding one of these across a fetch for another address would retarget
+    // it underneath.
+    const auto pfnOriginal = SH_GET_INLINEHOOK_ORIGINAL(TakeDamageOldHook, reinterpret_cast<void*>(pfn));
+    pfnOriginal(pVictimPawn, &info, &result);
 
 #if S2TK_DEBUG_TAKEDAMAGE
     Msg("[s2tk] pawn health after=%d (controller m_iHealth=%d)\n",
