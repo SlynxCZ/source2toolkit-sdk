@@ -59,7 +59,7 @@
 class CMultiplayer_Expresser : public CAI_ExpresserWithFollowup
 {
 public:
-    DECLARE_SCHEMA_CLASS(CMultiplayer_Expresser);
+    DECLARE_SCHEMA_CLASS_INLINE(CMultiplayer_Expresser);
 
     SCHEMA_FIELD(bool, m_bAllowMultipleScenes);
 };

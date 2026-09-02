@@ -57,7 +57,7 @@
 class CNetworkTransmitComponent
 {
 public:
-    DECLARE_SCHEMA_CLASS(CNetworkTransmitComponent);
+    DECLARE_SCHEMA_CLASS_INLINE(CNetworkTransmitComponent);
 
     SCHEMA_FIELD(uint8_t, m_nTransmitStateOwnedCounter);
 };

@@ -60,7 +60,7 @@
 class CCSPlayer_BuyServices : public CPlayerPawnComponent
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCSPlayer_BuyServices);
+    DECLARE_SCHEMA_CLASS_INLINE(CCSPlayer_BuyServices);
 
     SCHEMA_FIELD(CUtlVector<SellbackPurchaseEntry_t>, m_vecSellbackPurchaseEntries);
 };

@@ -62,7 +62,7 @@ class CBaseEntity;
 class RelationshipOverride_t : public Relationship_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(RelationshipOverride_t);
+    DECLARE_SCHEMA_CLASS_INLINE(RelationshipOverride_t);
 
     SCHEMA_FIELD(CHandle<CBaseEntity>, entity);
     SCHEMA_FIELD(Class_T, classType);

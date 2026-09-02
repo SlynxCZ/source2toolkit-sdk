@@ -59,7 +59,7 @@
 class CCSGameModeRules_ArmsRace : public CCSGameModeRules
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCSGameModeRules_ArmsRace);
+    DECLARE_SCHEMA_CLASS_INLINE(CCSGameModeRules_ArmsRace);
 
     SCHEMA_FIELD(CUtlVector<CUtlString>, m_WeaponSequence);
 };

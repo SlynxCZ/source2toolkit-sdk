@@ -60,7 +60,7 @@
 class CCollisionProperty
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCollisionProperty);
+    DECLARE_SCHEMA_CLASS_INLINE(CCollisionProperty);
 
     SCHEMA_FIELD(VPhysicsCollisionAttribute_t, m_collisionAttribute);
     SCHEMA_FIELD(Vector, m_vecMins);

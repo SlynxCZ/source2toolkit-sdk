@@ -57,7 +57,7 @@
 class EntityRenderAttribute_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(EntityRenderAttribute_t);
+    DECLARE_SCHEMA_CLASS_INLINE(EntityRenderAttribute_t);
 
     SCHEMA_FIELD_POINTER(CUtlStringToken, m_ID);
     SCHEMA_FIELD(Vector4D, m_Values);

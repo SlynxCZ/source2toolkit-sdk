@@ -57,10 +57,11 @@
 #include "CNetworkOriginCellCoordQuantizedVector.h"
 
 class CSkeletonInstance;
+
 class CGameSceneNode
 {
 public:
-    DECLARE_SCHEMA_CLASS(CGameSceneNode);
+    DECLARE_SCHEMA_CLASS_INLINE(CGameSceneNode);
 
     SCHEMA_FIELD(CTransform, m_nodeToWorld);
     SCHEMA_FIELD(CEntityInstance*, m_pOwner);
@@ -84,6 +85,7 @@ public:
     SCHEMA_FIELD_POINTER(CUtlStringToken, m_hierarchyAttachName);
     SCHEMA_FIELD(float, m_flClientLocalScale);
 
+public:
     /// <summary>Gets the skeleton instance of this scene node, or null when it has none.</summary>
     CSkeletonInstance* GetSkeletonInstance();
 };

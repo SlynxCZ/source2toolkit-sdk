@@ -59,7 +59,7 @@
 class CMoodVData
 {
 public:
-    DECLARE_SCHEMA_CLASS(CMoodVData);
+    DECLARE_SCHEMA_CLASS_INLINE(CMoodVData);
 
     SCHEMA_FIELD(MoodType_t, m_nMoodType);
 };

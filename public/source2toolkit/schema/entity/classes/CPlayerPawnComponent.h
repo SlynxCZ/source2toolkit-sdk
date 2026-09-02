@@ -61,7 +61,7 @@ class CCSPlayerPawn;
 class CPlayerPawnComponent
 {
 public:
-    DECLARE_SCHEMA_CLASS(CPlayerPawnComponent);
+    DECLARE_SCHEMA_CLASS_INLINE(CPlayerPawnComponent);
 
     SCHEMA_FIELD(CEntityInstance*, __m_pChainEntity);
     SCHEMA_FIELD(CAnimGraphControllerPtr, m_pComponentGraphController);

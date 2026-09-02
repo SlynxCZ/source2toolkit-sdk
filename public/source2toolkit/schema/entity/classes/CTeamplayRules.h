@@ -59,7 +59,7 @@
 class CTeamplayRules : public CMultiplayRules
 {
 public:
-    DECLARE_SCHEMA_CLASS(CTeamplayRules);
+    DECLARE_SCHEMA_CLASS_INLINE(CTeamplayRules);
 
 };
 

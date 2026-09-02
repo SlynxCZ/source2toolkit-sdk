@@ -57,7 +57,7 @@
 class SimpleConstraintSoundProfile
 {
 public:
-    DECLARE_SCHEMA_CLASS(SimpleConstraintSoundProfile);
+    DECLARE_SCHEMA_CLASS_INLINE(SimpleConstraintSoundProfile);
 
     SCHEMA_FIELD(float, m_flKeyPointMinSoundThreshold);
     SCHEMA_FIELD(float, m_flKeyPointMaxSoundThreshold);

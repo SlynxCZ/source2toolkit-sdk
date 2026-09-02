@@ -57,7 +57,7 @@
 class CSPerRoundStats_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(CSPerRoundStats_t);
+    DECLARE_SCHEMA_CLASS_INLINE(CSPerRoundStats_t);
 
     SCHEMA_FIELD(int32_t, m_iKills);
     SCHEMA_FIELD(int32_t, m_iDeaths);

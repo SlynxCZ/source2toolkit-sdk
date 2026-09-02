@@ -62,7 +62,7 @@ class CBasePlayerWeapon;
 class CCSPlayer_ActionTrackingServices : public CPlayerPawnComponent
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCSPlayer_ActionTrackingServices);
+    DECLARE_SCHEMA_CLASS_INLINE(CCSPlayer_ActionTrackingServices);
 
     SCHEMA_FIELD(CHandle<CBasePlayerWeapon>, m_hLastWeaponBeforeC4AutoSwitch);
     SCHEMA_FIELD(bool, m_bIsRescuing);

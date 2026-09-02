@@ -57,7 +57,7 @@
 class IEconItemInterface
 {
 public:
-    DECLARE_SCHEMA_CLASS(IEconItemInterface);
+    DECLARE_SCHEMA_CLASS_INLINE(IEconItemInterface);
 
 };
 

@@ -60,7 +60,7 @@
 class CEconItemView : public IEconItemInterface
 {
 public:
-    DECLARE_SCHEMA_CLASS(CEconItemView);
+    DECLARE_SCHEMA_CLASS_INLINE(CEconItemView);
 
     SCHEMA_FIELD(uint16_t, m_iItemDefinitionIndex);
     SCHEMA_FIELD(int32_t, m_iEntityQuality);

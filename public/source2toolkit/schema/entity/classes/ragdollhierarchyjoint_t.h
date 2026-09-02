@@ -57,7 +57,7 @@
 class ragdollhierarchyjoint_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(ragdollhierarchyjoint_t);
+    DECLARE_SCHEMA_CLASS_INLINE(ragdollhierarchyjoint_t);
 
     SCHEMA_FIELD(int32_t, parentIndex);
     SCHEMA_FIELD(int32_t, childIndex);

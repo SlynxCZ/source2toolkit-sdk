@@ -67,7 +67,7 @@ class CTonemapController2;
 class CPlayer_CameraServices : public CPlayerPawnComponent
 {
 public:
-    DECLARE_SCHEMA_CLASS(CPlayer_CameraServices);
+    DECLARE_SCHEMA_CLASS_INLINE(CPlayer_CameraServices);
 
     SCHEMA_FIELD(QAngle, m_vecCsViewPunchAngle);
     SCHEMA_FIELD(int32_t, m_nCsViewPunchAngleTick);

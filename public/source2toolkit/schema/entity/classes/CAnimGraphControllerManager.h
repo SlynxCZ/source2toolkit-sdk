@@ -59,7 +59,7 @@ class CAnimGraphControllerBase;
 class CAnimGraphControllerManager
 {
 public:
-    DECLARE_SCHEMA_CLASS(CAnimGraphControllerManager);
+    DECLARE_SCHEMA_CLASS_INLINE(CAnimGraphControllerManager);
 
     SCHEMA_FIELD(CUtlVector<CAnimGraphControllerBase*>, m_controllers);
     SCHEMA_FIELD(bool, m_bGraphBindingsCreated);

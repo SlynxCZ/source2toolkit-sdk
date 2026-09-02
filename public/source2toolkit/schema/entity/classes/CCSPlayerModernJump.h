@@ -57,7 +57,7 @@
 class CCSPlayerModernJump
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCSPlayerModernJump);
+    DECLARE_SCHEMA_CLASS_INLINE(CCSPlayerModernJump);
 
     SCHEMA_FIELD(int32_t, m_nLastActualJumpPressTick);
     SCHEMA_FIELD(float, m_flLastActualJumpPressFrac);

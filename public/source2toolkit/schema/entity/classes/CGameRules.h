@@ -58,7 +58,7 @@
 class CGameRules
 {
 public:
-    DECLARE_SCHEMA_CLASS(CGameRules);
+    DECLARE_SCHEMA_CLASS_INLINE(CGameRules);
 
     SCHEMA_FIELD(CEntityInstance*, __m_pChainEntity);
     SCHEMA_FIELD_POINTER(char, m_szQuestName);

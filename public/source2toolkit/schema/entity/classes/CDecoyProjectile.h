@@ -58,6 +58,7 @@
 #include "CBaseCSGrenadeProjectile.h"
 
 class CBaseEntity;
+
 class CDecoyProjectile : public CBaseCSGrenadeProjectile
 {
 public:
@@ -67,6 +68,10 @@ public:
     SCHEMA_FIELD(int32_t, m_shotsRemaining);
     SCHEMA_FIELD(float, m_fExpireTime);
     SCHEMA_FIELD(uint16_t, m_decoyWeaponDefIndex);
+
+public:
+    /// <summary>Spawns a live grenade of this type. Ported from SwiftlyS2.</summary>
+    static CDecoyProjectile* EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity, CBaseEntity* pOwner, uint32_t nItemDefIndex);
 
 public:
     static CDecoyProjectile* New(const char* className)
@@ -83,10 +88,6 @@ public:
     {
         return FromIndex(index.Get());
     }
-
-    /// <summary>Spawns a live grenade of this type. Ported from SwiftlyS2.</summary>
-    static CDecoyProjectile* EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity,
-                              CBaseEntity* pOwner, uint32_t nItemDefIndex);
 };
 
 #endif // _INCLUDE_CDECOYPROJECTILE_H

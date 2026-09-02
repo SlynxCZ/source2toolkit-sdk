@@ -58,11 +58,17 @@
 #include "CBaseCSGrenadeProjectile.h"
 
 class CBaseEntity;
+class CHEGrenade;
+
 class CHEGrenadeProjectile : public CBaseCSGrenadeProjectile
 {
 public:
     DECLARE_SCHEMA_CLASS(CHEGrenadeProjectile);
 
+
+public:
+    /// <summary>Spawns a live grenade of this type. Ported from SwiftlyS2.</summary>
+    static CHEGrenadeProjectile* EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity, CBaseEntity* pOwner, uint32_t nItemDefIndex);
 
 public:
     static CHEGrenadeProjectile* New(const char* className)
@@ -79,10 +85,6 @@ public:
     {
         return FromIndex(index.Get());
     }
-
-    /// <summary>Spawns a live grenade of this type. Ported from SwiftlyS2.</summary>
-    static CHEGrenadeProjectile* EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity,
-                              CBaseEntity* pOwner, uint32_t nItemDefIndex);
 };
 
 #endif // _INCLUDE_CHEGRENADEPROJECTILE_H

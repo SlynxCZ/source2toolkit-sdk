@@ -64,7 +64,7 @@ class CScriptedSequence;
 class CGameChoreoServices : public IChoreoServices
 {
 public:
-    DECLARE_SCHEMA_CLASS(CGameChoreoServices);
+    DECLARE_SCHEMA_CLASS_INLINE(CGameChoreoServices);
 
     SCHEMA_FIELD(CHandle<CBaseModelEntity>, m_hOwner);
     SCHEMA_FIELD(CHandle<CScriptedSequence>, m_hScriptedSequence);

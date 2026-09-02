@@ -57,7 +57,7 @@
 class ragdollelement_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(ragdollelement_t);
+    DECLARE_SCHEMA_CLASS_INLINE(ragdollelement_t);
 
     SCHEMA_FIELD(Vector, originParentSpace);
     SCHEMA_FIELD(int32_t, parentIndex);

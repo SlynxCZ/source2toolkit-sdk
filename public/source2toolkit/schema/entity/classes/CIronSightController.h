@@ -57,7 +57,7 @@
 class CIronSightController
 {
 public:
-    DECLARE_SCHEMA_CLASS(CIronSightController);
+    DECLARE_SCHEMA_CLASS_INLINE(CIronSightController);
 
     SCHEMA_FIELD(bool, m_bIronSightAvailable);
     SCHEMA_FIELD(float, m_flIronSightAmount);

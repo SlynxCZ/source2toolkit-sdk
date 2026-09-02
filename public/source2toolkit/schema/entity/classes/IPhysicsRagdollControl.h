@@ -57,7 +57,7 @@
 class IPhysicsRagdollControl
 {
 public:
-    DECLARE_SCHEMA_CLASS(IPhysicsRagdollControl);
+    DECLARE_SCHEMA_CLASS_INLINE(IPhysicsRagdollControl);
 
 };
 

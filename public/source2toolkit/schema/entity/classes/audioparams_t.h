@@ -57,7 +57,7 @@
 class audioparams_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(audioparams_t);
+    DECLARE_SCHEMA_CLASS_INLINE(audioparams_t);
 
     SCHEMA_FIELD_POINTER(Vector, localSound);
     SCHEMA_FIELD(int32_t, soundscapeIndex);

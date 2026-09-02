@@ -57,7 +57,7 @@
 class ResourceId_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(ResourceId_t);
+    DECLARE_SCHEMA_CLASS_INLINE(ResourceId_t);
 
     SCHEMA_FIELD(uint64_t, m_Value);
 };

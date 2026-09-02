@@ -57,7 +57,7 @@
 class CMotorController
 {
 public:
-    DECLARE_SCHEMA_CLASS(CMotorController);
+    DECLARE_SCHEMA_CLASS_INLINE(CMotorController);
 
     SCHEMA_FIELD(float, m_speed);
     SCHEMA_FIELD(float, m_maxTorque);

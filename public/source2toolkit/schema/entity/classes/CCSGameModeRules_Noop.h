@@ -59,7 +59,7 @@
 class CCSGameModeRules_Noop : public CCSGameModeRules
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCSGameModeRules_Noop);
+    DECLARE_SCHEMA_CLASS_INLINE(CCSGameModeRules_Noop);
 
 };
 

@@ -60,7 +60,7 @@
 class CSkeletonInstance : public CGameSceneNode
 {
 public:
-    DECLARE_SCHEMA_CLASS(CSkeletonInstance);
+    DECLARE_SCHEMA_CLASS_INLINE(CSkeletonInstance);
 
     SCHEMA_FIELD(CModelState, m_modelState);
     SCHEMA_FIELD(bool, m_bUseParentRenderBounds);

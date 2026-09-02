@@ -57,7 +57,7 @@
 class SoundOpvarTraceResult_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(SoundOpvarTraceResult_t);
+    DECLARE_SCHEMA_CLASS_INLINE(SoundOpvarTraceResult_t);
 
     SCHEMA_FIELD(Vector, vPos);
     SCHEMA_FIELD(bool, bDidHit);

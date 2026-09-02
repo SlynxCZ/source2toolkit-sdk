@@ -59,7 +59,7 @@
 class CPlayer_UseServices : public CPlayerPawnComponent
 {
 public:
-    DECLARE_SCHEMA_CLASS(CPlayer_UseServices);
+    DECLARE_SCHEMA_CLASS_INLINE(CPlayer_UseServices);
 
 };
 

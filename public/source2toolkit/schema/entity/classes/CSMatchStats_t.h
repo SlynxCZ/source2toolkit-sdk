@@ -59,7 +59,7 @@
 class CSMatchStats_t : public CSPerRoundStats_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(CSMatchStats_t);
+    DECLARE_SCHEMA_CLASS_INLINE(CSMatchStats_t);
 
     SCHEMA_FIELD(int32_t, m_iEnemy5Ks);
     SCHEMA_FIELD(int32_t, m_iEnemy4Ks);

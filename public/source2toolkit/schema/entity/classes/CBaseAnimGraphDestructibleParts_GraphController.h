@@ -59,7 +59,7 @@
 class CBaseAnimGraphDestructibleParts_GraphController : public CAnimGraphControllerBase
 {
 public:
-    DECLARE_SCHEMA_CLASS(CBaseAnimGraphDestructibleParts_GraphController);
+    DECLARE_SCHEMA_CLASS_INLINE(CBaseAnimGraphDestructibleParts_GraphController);
 
 };
 

@@ -59,7 +59,7 @@ class CBaseEntity;
 class ActorMapping_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(ActorMapping_t);
+    DECLARE_SCHEMA_CLASS_INLINE(ActorMapping_t);
 
     SCHEMA_FIELD(CUtlString, m_sActorName);
     SCHEMA_FIELD(CHandle<CBaseEntity>, m_hEntity);

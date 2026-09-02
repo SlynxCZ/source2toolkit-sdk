@@ -57,7 +57,7 @@
 class CExampleSchemaVData_PolymorphicBase
 {
 public:
-    DECLARE_SCHEMA_CLASS(CExampleSchemaVData_PolymorphicBase);
+    DECLARE_SCHEMA_CLASS_INLINE(CExampleSchemaVData_PolymorphicBase);
 
     SCHEMA_FIELD(int32_t, m_nBase);
 };

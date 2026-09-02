@@ -59,7 +59,7 @@
 class CPlayer_MovementServices_Humanoid : public CPlayer_MovementServices
 {
 public:
-    DECLARE_SCHEMA_CLASS(CPlayer_MovementServices_Humanoid);
+    DECLARE_SCHEMA_CLASS_INLINE(CPlayer_MovementServices_Humanoid);
 
     SCHEMA_FIELD(float, m_flStepSoundTime);
     SCHEMA_FIELD(float, m_flFallVelocity);

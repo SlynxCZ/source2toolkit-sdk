@@ -62,7 +62,7 @@ class CBaseEntity;
 class CPlayer_ObserverServices : public CPlayerPawnComponent
 {
 public:
-    DECLARE_SCHEMA_CLASS(CPlayer_ObserverServices);
+    DECLARE_SCHEMA_CLASS_INLINE(CPlayer_ObserverServices);
 
     SCHEMA_FIELD(uint8_t, m_iObserverMode);
     SCHEMA_FIELD(CHandle<CBaseEntity>, m_hObserverTarget);

@@ -59,7 +59,7 @@
 class CPlayer_FlashlightServices : public CPlayerPawnComponent
 {
 public:
-    DECLARE_SCHEMA_CLASS(CPlayer_FlashlightServices);
+    DECLARE_SCHEMA_CLASS_INLINE(CPlayer_FlashlightServices);
 
 };
 

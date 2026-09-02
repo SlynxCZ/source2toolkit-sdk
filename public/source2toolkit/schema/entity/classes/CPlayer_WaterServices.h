@@ -59,7 +59,7 @@
 class CPlayer_WaterServices : public CPlayerPawnComponent
 {
 public:
-    DECLARE_SCHEMA_CLASS(CPlayer_WaterServices);
+    DECLARE_SCHEMA_CLASS_INLINE(CPlayer_WaterServices);
 
 };
 

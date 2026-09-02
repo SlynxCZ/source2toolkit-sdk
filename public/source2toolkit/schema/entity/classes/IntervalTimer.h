@@ -57,7 +57,7 @@
 class IntervalTimer
 {
 public:
-    DECLARE_SCHEMA_CLASS(IntervalTimer);
+    DECLARE_SCHEMA_CLASS_INLINE(IntervalTimer);
 
     SCHEMA_FIELD(float, m_timestamp);
     SCHEMA_FIELD(WorldGroupId_t, m_nWorldGroupId);

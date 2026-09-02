@@ -58,7 +58,7 @@
 class CCSGameModeRules
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCSGameModeRules);
+    DECLARE_SCHEMA_CLASS_INLINE(CCSGameModeRules);
 
     SCHEMA_FIELD(CEntityInstance*, __m_pChainEntity);
 };

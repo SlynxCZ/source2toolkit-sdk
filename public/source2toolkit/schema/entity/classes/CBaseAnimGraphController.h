@@ -70,7 +70,7 @@ class InfoForResourceTypeCNmGraphDefinition;
 class CBaseAnimGraphController : public CSkeletonAnimationController
 {
 public:
-    DECLARE_SCHEMA_CLASS(CBaseAnimGraphController);
+    DECLARE_SCHEMA_CLASS_INLINE(CBaseAnimGraphController);
 
     SCHEMA_FIELD(AnimationAlgorithm_t, m_nAnimationAlgorithm);
     SCHEMA_FIELD(ExternalAnimGraphHandle_t, m_nNextExternalGraphHandle);

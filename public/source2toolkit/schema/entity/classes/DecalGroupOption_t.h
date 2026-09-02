@@ -59,7 +59,7 @@ class InfoForResourceTypeIMaterial2;
 class DecalGroupOption_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(DecalGroupOption_t);
+    DECLARE_SCHEMA_CLASS_INLINE(DecalGroupOption_t);
 
     SCHEMA_FIELD(CStrongHandleCopyable<InfoForResourceTypeIMaterial2>, m_hMaterial);
     SCHEMA_FIELD(CGlobalSymbol, m_sSequenceName);

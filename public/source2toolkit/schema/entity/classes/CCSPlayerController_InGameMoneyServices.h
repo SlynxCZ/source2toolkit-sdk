@@ -59,7 +59,7 @@
 class CCSPlayerController_InGameMoneyServices : public CPlayerControllerComponent
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCSPlayerController_InGameMoneyServices);
+    DECLARE_SCHEMA_CLASS_INLINE(CCSPlayerController_InGameMoneyServices);
 
     SCHEMA_FIELD(bool, m_bReceivesMoneyNextRound);
     SCHEMA_FIELD(int32_t, m_iMoneyEarnedForNextRound);

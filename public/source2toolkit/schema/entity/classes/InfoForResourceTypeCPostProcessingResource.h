@@ -57,7 +57,7 @@
 class InfoForResourceTypeCPostProcessingResource
 {
 public:
-    DECLARE_SCHEMA_CLASS(InfoForResourceTypeCPostProcessingResource);
+    DECLARE_SCHEMA_CLASS_INLINE(InfoForResourceTypeCPostProcessingResource);
 
 };
 

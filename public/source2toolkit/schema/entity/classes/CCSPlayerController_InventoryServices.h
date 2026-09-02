@@ -61,7 +61,7 @@
 class CCSPlayerController_InventoryServices : public CPlayerControllerComponent
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCSPlayerController_InventoryServices);
+    DECLARE_SCHEMA_CLASS_INLINE(CCSPlayerController_InventoryServices);
 
     SCHEMA_FIELD(uint16_t, m_unMusicID);
     SCHEMA_FIELD_POINTER(MedalRank_t, m_rank);

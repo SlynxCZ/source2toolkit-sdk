@@ -57,7 +57,7 @@
 class constraint_axislimit_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(constraint_axislimit_t);
+    DECLARE_SCHEMA_CLASS_INLINE(constraint_axislimit_t);
 
     SCHEMA_FIELD(float, flMinRotation);
     SCHEMA_FIELD(float, flMaxRotation);

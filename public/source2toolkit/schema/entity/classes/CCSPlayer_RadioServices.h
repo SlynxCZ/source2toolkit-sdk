@@ -59,7 +59,7 @@
 class CCSPlayer_RadioServices : public CPlayerPawnComponent
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCSPlayer_RadioServices);
+    DECLARE_SCHEMA_CLASS_INLINE(CCSPlayer_RadioServices);
 
     SCHEMA_FIELD(float, m_flGotHostageTalkTimer);
     SCHEMA_FIELD(float, m_flDefusingTalkTimer);

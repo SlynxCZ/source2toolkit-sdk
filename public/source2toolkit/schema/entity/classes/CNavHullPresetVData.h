@@ -57,7 +57,7 @@
 class CNavHullPresetVData
 {
 public:
-    DECLARE_SCHEMA_CLASS(CNavHullPresetVData);
+    DECLARE_SCHEMA_CLASS_INLINE(CNavHullPresetVData);
 
     SCHEMA_FIELD(CUtlVector<CUtlString>, m_vecNavHulls);
 };

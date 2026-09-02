@@ -57,7 +57,7 @@
 class EntitySpottedState_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(EntitySpottedState_t);
+    DECLARE_SCHEMA_CLASS_INLINE(EntitySpottedState_t);
 
     SCHEMA_FIELD(bool, m_bSpotted);
     SCHEMA_FIELD_POINTER(uint32_t, m_bSpottedByMask);

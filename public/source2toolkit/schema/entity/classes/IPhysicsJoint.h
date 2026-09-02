@@ -57,7 +57,7 @@
 class IPhysicsJoint
 {
 public:
-    DECLARE_SCHEMA_CLASS(IPhysicsJoint);
+    DECLARE_SCHEMA_CLASS_INLINE(IPhysicsJoint);
 
 };
 

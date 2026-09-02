@@ -62,7 +62,7 @@ class CBaseEntity;
 class DestructiblePartDamageRequest_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(DestructiblePartDamageRequest_t);
+    DECLARE_SCHEMA_CLASS_INLINE(DestructiblePartDamageRequest_t);
 
     SCHEMA_FIELD(HitGroup_t, m_nHitGroup);
     SCHEMA_FIELD(int32_t, m_nDamageLevel);

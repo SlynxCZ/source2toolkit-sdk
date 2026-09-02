@@ -61,7 +61,7 @@
 class CCSPlayerController_ActionTrackingServices : public CPlayerControllerComponent
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCSPlayerController_ActionTrackingServices);
+    DECLARE_SCHEMA_CLASS_INLINE(CCSPlayerController_ActionTrackingServices);
 
     SCHEMA_FIELD(CUtlVector<CSPerRoundStats_t>, m_perRoundStats);
     SCHEMA_FIELD(CSMatchStats_t, m_matchStats);

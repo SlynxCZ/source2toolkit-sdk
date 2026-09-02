@@ -57,7 +57,7 @@
 class ISkeletonAnimationController
 {
 public:
-    DECLARE_SCHEMA_CLASS(ISkeletonAnimationController);
+    DECLARE_SCHEMA_CLASS_INLINE(ISkeletonAnimationController);
 
 };
 

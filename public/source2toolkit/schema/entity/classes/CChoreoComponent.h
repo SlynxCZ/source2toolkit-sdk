@@ -61,7 +61,7 @@ class CBaseModelEntity;
 class CChoreoComponent
 {
 public:
-    DECLARE_SCHEMA_CLASS(CChoreoComponent);
+    DECLARE_SCHEMA_CLASS_INLINE(CChoreoComponent);
 
     SCHEMA_FIELD(CEntityInstance*, __m_pChainEntity);
     SCHEMA_FIELD(CHandle<CBaseModelEntity>, m_hOwner);

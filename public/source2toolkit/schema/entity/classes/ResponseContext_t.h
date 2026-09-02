@@ -57,7 +57,7 @@
 class ResponseContext_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(ResponseContext_t);
+    DECLARE_SCHEMA_CLASS_INLINE(ResponseContext_t);
 
     SCHEMA_FIELD(CUtlSymbolLarge, m_iszName);
     SCHEMA_FIELD(CUtlSymbolLarge, m_iszValue);

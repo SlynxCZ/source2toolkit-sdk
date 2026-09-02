@@ -57,7 +57,7 @@
 class ParticleIndex_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(ParticleIndex_t);
+    DECLARE_SCHEMA_CLASS_INLINE(ParticleIndex_t);
 
     SCHEMA_FIELD(int32_t, m_Value);
 };

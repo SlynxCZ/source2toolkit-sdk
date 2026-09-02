@@ -59,7 +59,7 @@
 class CCS2PawnGraphController : public CCS2WeaponGraphController
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCS2PawnGraphController);
+    DECLARE_SCHEMA_CLASS_INLINE(CCS2PawnGraphController);
 
 };
 

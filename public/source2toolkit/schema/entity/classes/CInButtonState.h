@@ -57,7 +57,7 @@
 class CInButtonState
 {
 public:
-    DECLARE_SCHEMA_CLASS(CInButtonState);
+    DECLARE_SCHEMA_CLASS_INLINE(CInButtonState);
 
     SCHEMA_FIELD_POINTER(uint64_t, m_pButtonStates);
 };

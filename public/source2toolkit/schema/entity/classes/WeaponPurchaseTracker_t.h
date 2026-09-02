@@ -59,7 +59,7 @@
 class WeaponPurchaseTracker_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(WeaponPurchaseTracker_t);
+    DECLARE_SCHEMA_CLASS_INLINE(WeaponPurchaseTracker_t);
 
     SCHEMA_FIELD(CUtlVector<WeaponPurchaseCount_t>, m_weaponPurchases);
 };

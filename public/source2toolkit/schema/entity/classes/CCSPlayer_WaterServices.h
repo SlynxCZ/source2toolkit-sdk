@@ -59,7 +59,7 @@
 class CCSPlayer_WaterServices : public CPlayer_WaterServices
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCSPlayer_WaterServices);
+    DECLARE_SCHEMA_CLASS_INLINE(CCSPlayer_WaterServices);
 
     SCHEMA_FIELD(float, m_NextDrownDamageTime);
     SCHEMA_FIELD(int32_t, m_nDrownDmgRate);

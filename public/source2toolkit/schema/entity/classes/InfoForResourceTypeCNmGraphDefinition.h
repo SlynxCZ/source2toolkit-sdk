@@ -57,7 +57,7 @@
 class InfoForResourceTypeCNmGraphDefinition
 {
 public:
-    DECLARE_SCHEMA_CLASS(InfoForResourceTypeCNmGraphDefinition);
+    DECLARE_SCHEMA_CLASS_INLINE(InfoForResourceTypeCNmGraphDefinition);
 
 };
 

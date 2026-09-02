@@ -61,7 +61,7 @@ class CBaseEntity;
 class CCSPlayerBase_CameraServices : public CPlayer_CameraServices
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCSPlayerBase_CameraServices);
+    DECLARE_SCHEMA_CLASS_INLINE(CCSPlayerBase_CameraServices);
 
     SCHEMA_FIELD(uint32_t, m_iFOV);
     SCHEMA_FIELD(uint32_t, m_iFOVStart);

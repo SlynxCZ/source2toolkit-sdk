@@ -60,7 +60,7 @@
 class CBodyComponentPoint : public CBodyComponent
 {
 public:
-    DECLARE_SCHEMA_CLASS(CBodyComponentPoint);
+    DECLARE_SCHEMA_CLASS_INLINE(CBodyComponentPoint);
 
     SCHEMA_FIELD(CGameSceneNode, m_sceneNode);
 };

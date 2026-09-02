@@ -64,7 +64,7 @@ class CCSPlayerPawn;
 class CCSBot : public CBot
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCSBot);
+    DECLARE_SCHEMA_CLASS_INLINE(CCSBot);
 
     SCHEMA_FIELD(Vector, m_eyePosition);
     SCHEMA_FIELD_POINTER(char, m_name);

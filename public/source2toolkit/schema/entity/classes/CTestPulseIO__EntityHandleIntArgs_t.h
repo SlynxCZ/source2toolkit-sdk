@@ -57,7 +57,7 @@
 class CTestPulseIO__EntityHandleIntArgs_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(CTestPulseIO__EntityHandleIntArgs_t);
+    DECLARE_SCHEMA_CLASS_INLINE(CTestPulseIO__EntityHandleIntArgs_t);
 
     SCHEMA_FIELD(CEntityHandle, handleA);
     SCHEMA_FIELD(int32_t, valueB);

@@ -57,7 +57,7 @@
 class hudtextparms_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(hudtextparms_t);
+    DECLARE_SCHEMA_CLASS_INLINE(hudtextparms_t);
 
     SCHEMA_FIELD(Color, color1);
     SCHEMA_FIELD(Color, color2);

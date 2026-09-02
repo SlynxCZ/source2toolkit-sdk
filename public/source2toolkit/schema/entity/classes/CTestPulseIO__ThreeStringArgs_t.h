@@ -57,7 +57,7 @@
 class CTestPulseIO__ThreeStringArgs_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(CTestPulseIO__ThreeStringArgs_t);
+    DECLARE_SCHEMA_CLASS_INLINE(CTestPulseIO__ThreeStringArgs_t);
 
     SCHEMA_FIELD(CUtlString, strArg1);
     SCHEMA_FIELD(CUtlString, strArg2);

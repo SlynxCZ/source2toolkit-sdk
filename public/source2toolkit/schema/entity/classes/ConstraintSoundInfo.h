@@ -60,7 +60,7 @@
 class ConstraintSoundInfo
 {
 public:
-    DECLARE_SCHEMA_CLASS(ConstraintSoundInfo);
+    DECLARE_SCHEMA_CLASS_INLINE(ConstraintSoundInfo);
 
     SCHEMA_FIELD(VelocitySampler, m_vSampler);
     SCHEMA_FIELD(SimpleConstraintSoundProfile, m_soundProfile);

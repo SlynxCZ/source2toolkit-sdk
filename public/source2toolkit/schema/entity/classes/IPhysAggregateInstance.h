@@ -59,7 +59,7 @@
 class IPhysAggregateInstance : public IPhysicsBodyList
 {
 public:
-    DECLARE_SCHEMA_CLASS(IPhysAggregateInstance);
+    DECLARE_SCHEMA_CLASS_INLINE(IPhysAggregateInstance);
 
     SCHEMA_FIELD(void*, m_pSkeleton);
     SCHEMA_FIELD(bool, m_bIsAxisAligned);

@@ -57,7 +57,7 @@
 class InfoForResourceTypeCVDataResource
 {
 public:
-    DECLARE_SCHEMA_CLASS(InfoForResourceTypeCVDataResource);
+    DECLARE_SCHEMA_CLASS_INLINE(InfoForResourceTypeCVDataResource);
 
 };
 

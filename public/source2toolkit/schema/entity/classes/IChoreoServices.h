@@ -57,7 +57,7 @@
 class IChoreoServices
 {
 public:
-    DECLARE_SCHEMA_CLASS(IChoreoServices);
+    DECLARE_SCHEMA_CLASS_INLINE(IChoreoServices);
 
 };
 

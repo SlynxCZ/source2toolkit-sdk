@@ -57,7 +57,7 @@
 class CountdownTimer
 {
 public:
-    DECLARE_SCHEMA_CLASS(CountdownTimer);
+    DECLARE_SCHEMA_CLASS_INLINE(CountdownTimer);
 
     SCHEMA_FIELD(float, m_duration);
     SCHEMA_FIELD(float, m_timestamp);

@@ -59,7 +59,7 @@
 class sky3dparams_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(sky3dparams_t);
+    DECLARE_SCHEMA_CLASS_INLINE(sky3dparams_t);
 
     SCHEMA_FIELD(int16_t, scale);
     SCHEMA_FIELD(Vector, origin);

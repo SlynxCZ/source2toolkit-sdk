@@ -57,7 +57,7 @@
 class SceneEventId_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(SceneEventId_t);
+    DECLARE_SCHEMA_CLASS_INLINE(SceneEventId_t);
 
     SCHEMA_FIELD(uint32_t, m_Value);
 };

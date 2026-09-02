@@ -58,7 +58,7 @@
 class CRenderComponent : public CEntityComponent
 {
 public:
-    DECLARE_SCHEMA_CLASS(CRenderComponent);
+    DECLARE_SCHEMA_CLASS_INLINE(CRenderComponent);
 
     SCHEMA_FIELD(CEntityInstance*, __m_pChainEntity);
     SCHEMA_FIELD(bool, m_bIsRenderingWithViewModels);

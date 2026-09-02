@@ -59,7 +59,7 @@
 class CTestPulseIOComponent_Derived : public CTestPulseIOComponent
 {
 public:
-    DECLARE_SCHEMA_CLASS(CTestPulseIOComponent_Derived);
+    DECLARE_SCHEMA_CLASS_INLINE(CTestPulseIOComponent_Derived);
 
 };
 

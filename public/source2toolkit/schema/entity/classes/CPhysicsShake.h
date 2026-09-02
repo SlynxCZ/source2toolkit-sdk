@@ -57,7 +57,7 @@
 class CPhysicsShake
 {
 public:
-    DECLARE_SCHEMA_CLASS(CPhysicsShake);
+    DECLARE_SCHEMA_CLASS_INLINE(CPhysicsShake);
 
     SCHEMA_FIELD(Vector, m_force);
 };

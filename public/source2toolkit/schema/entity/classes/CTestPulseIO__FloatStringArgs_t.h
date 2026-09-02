@@ -57,7 +57,7 @@
 class CTestPulseIO__FloatStringArgs_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(CTestPulseIO__FloatStringArgs_t);
+    DECLARE_SCHEMA_CLASS_INLINE(CTestPulseIO__FloatStringArgs_t);
 
     SCHEMA_FIELD(float, flOutFloat);
     SCHEMA_FIELD(CUtlSymbolLarge, strOutString);

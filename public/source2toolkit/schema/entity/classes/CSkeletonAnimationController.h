@@ -61,7 +61,7 @@ class CSkeletonInstance;
 class CSkeletonAnimationController : public ISkeletonAnimationController
 {
 public:
-    DECLARE_SCHEMA_CLASS(CSkeletonAnimationController);
+    DECLARE_SCHEMA_CLASS_INLINE(CSkeletonAnimationController);
 
     SCHEMA_FIELD(CSkeletonInstance*, m_pSkeletonInstance);
 };

@@ -57,7 +57,7 @@
 class CSkillInt
 {
 public:
-    DECLARE_SCHEMA_CLASS(CSkillInt);
+    DECLARE_SCHEMA_CLASS_INLINE(CSkillInt);
 
     SCHEMA_FIELD_POINTER(int32_t, m_pValue);
 };

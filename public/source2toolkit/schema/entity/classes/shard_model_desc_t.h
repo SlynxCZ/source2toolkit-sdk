@@ -61,7 +61,7 @@ class InfoForResourceTypeIMaterial2;
 class shard_model_desc_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(shard_model_desc_t);
+    DECLARE_SCHEMA_CLASS_INLINE(shard_model_desc_t);
 
     SCHEMA_FIELD(int32_t, m_nModelID);
     SCHEMA_FIELD(CStrongHandle<InfoForResourceTypeIMaterial2>, m_hMaterialBase);

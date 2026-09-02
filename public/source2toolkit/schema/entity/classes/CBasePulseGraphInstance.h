@@ -57,7 +57,7 @@
 class CBasePulseGraphInstance
 {
 public:
-    DECLARE_SCHEMA_CLASS(CBasePulseGraphInstance);
+    DECLARE_SCHEMA_CLASS_INLINE(CBasePulseGraphInstance);
 
 };
 

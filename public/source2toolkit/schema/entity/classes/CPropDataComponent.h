@@ -57,7 +57,7 @@
 class CPropDataComponent : public CEntityComponent
 {
 public:
-    DECLARE_SCHEMA_CLASS(CPropDataComponent);
+    DECLARE_SCHEMA_CLASS_INLINE(CPropDataComponent);
 
     SCHEMA_FIELD(float, m_flDmgModBullet);
     SCHEMA_FIELD(float, m_flDmgModClub);

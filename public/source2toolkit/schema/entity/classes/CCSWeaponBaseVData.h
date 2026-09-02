@@ -66,7 +66,7 @@
 class CCSWeaponBaseVData : public CBasePlayerWeaponVData
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCSWeaponBaseVData);
+    DECLARE_SCHEMA_CLASS_INLINE(CCSWeaponBaseVData);
 
     SCHEMA_FIELD(CSWeaponType, m_WeaponType);
     SCHEMA_FIELD(CSWeaponCategory, m_WeaponCategory);

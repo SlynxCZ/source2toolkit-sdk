@@ -59,7 +59,7 @@ class CCSPlayerPawn;
 class CRetakeGameRules
 {
 public:
-    DECLARE_SCHEMA_CLASS(CRetakeGameRules);
+    DECLARE_SCHEMA_CLASS_INLINE(CRetakeGameRules);
 
     SCHEMA_FIELD(int32_t, m_nMatchSeed);
     SCHEMA_FIELD(bool, m_bBlockersPresent);

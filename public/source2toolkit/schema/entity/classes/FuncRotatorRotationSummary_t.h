@@ -59,7 +59,7 @@
 class FuncRotatorRotationSummary_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(FuncRotatorRotationSummary_t);
+    DECLARE_SCHEMA_CLASS_INLINE(FuncRotatorRotationSummary_t);
 
     SCHEMA_FIELD(int32_t, nTick);
     SCHEMA_FIELD(FuncRotatorRotationSummaryFlags_t, nFlags);

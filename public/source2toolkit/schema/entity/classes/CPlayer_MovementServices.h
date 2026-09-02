@@ -60,7 +60,7 @@
 class CPlayer_MovementServices : public CPlayerPawnComponent
 {
 public:
-    DECLARE_SCHEMA_CLASS(CPlayer_MovementServices);
+    DECLARE_SCHEMA_CLASS_INLINE(CPlayer_MovementServices);
 
     SCHEMA_FIELD(int32_t, m_nImpulse);
     SCHEMA_FIELD(CInButtonState, m_nButtons);

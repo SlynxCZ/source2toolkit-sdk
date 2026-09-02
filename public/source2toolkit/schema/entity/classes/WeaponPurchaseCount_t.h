@@ -57,7 +57,7 @@
 class WeaponPurchaseCount_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(WeaponPurchaseCount_t);
+    DECLARE_SCHEMA_CLASS_INLINE(WeaponPurchaseCount_t);
 
     SCHEMA_FIELD(uint16_t, m_nItemDefIndex);
     SCHEMA_FIELD(uint16_t, m_nCount);

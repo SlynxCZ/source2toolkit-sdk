@@ -57,7 +57,7 @@
 class ExternalAnimGraphHandle_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(ExternalAnimGraphHandle_t);
+    DECLARE_SCHEMA_CLASS_INLINE(ExternalAnimGraphHandle_t);
 
     SCHEMA_FIELD(uint32_t, m_Value);
 };

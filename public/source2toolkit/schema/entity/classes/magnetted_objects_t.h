@@ -59,7 +59,7 @@ class CBaseEntity;
 class magnetted_objects_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(magnetted_objects_t);
+    DECLARE_SCHEMA_CLASS_INLINE(magnetted_objects_t);
 
     SCHEMA_FIELD(CHandle<CBaseEntity>, hEntity);
 };

@@ -59,7 +59,7 @@ class CVoteController;
 class CBaseIssue
 {
 public:
-    DECLARE_SCHEMA_CLASS(CBaseIssue);
+    DECLARE_SCHEMA_CLASS_INLINE(CBaseIssue);
 
     SCHEMA_FIELD_POINTER(char, m_szTypeString);
     SCHEMA_FIELD_POINTER(char, m_szDetailsString);

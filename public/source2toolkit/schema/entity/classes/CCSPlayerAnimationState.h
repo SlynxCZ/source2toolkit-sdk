@@ -62,7 +62,7 @@
 class CCSPlayerAnimationState
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCSPlayerAnimationState);
+    DECLARE_SCHEMA_CLASS_INLINE(CCSPlayerAnimationState);
 
     SCHEMA_FIELD(CCSPlayerAnimationState__MoveType_t, m_currentMoveType);
     SCHEMA_FIELD(CCSPlayerAnimationState__GroundMoveState_t, m_groundMoveState);

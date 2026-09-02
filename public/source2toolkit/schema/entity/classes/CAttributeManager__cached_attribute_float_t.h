@@ -57,7 +57,7 @@
 class CAttributeManager__cached_attribute_float_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(CAttributeManager__cached_attribute_float_t);
+    DECLARE_SCHEMA_CLASS_INLINE(CAttributeManager__cached_attribute_float_t);
 
     SCHEMA_FIELD(float, flIn);
     SCHEMA_FIELD(CUtlSymbolLarge, iAttribHook);

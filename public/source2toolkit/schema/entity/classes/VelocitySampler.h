@@ -57,7 +57,7 @@
 class VelocitySampler
 {
 public:
-    DECLARE_SCHEMA_CLASS(VelocitySampler);
+    DECLARE_SCHEMA_CLASS_INLINE(VelocitySampler);
 
     SCHEMA_FIELD(Vector, m_prevSample);
     SCHEMA_FIELD(float, m_fPrevSampleTime);

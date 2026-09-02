@@ -57,7 +57,7 @@
 class CSkillFloat
 {
 public:
-    DECLARE_SCHEMA_CLASS(CSkillFloat);
+    DECLARE_SCHEMA_CLASS_INLINE(CSkillFloat);
 
     SCHEMA_FIELD_POINTER(float, m_pValue);
 };

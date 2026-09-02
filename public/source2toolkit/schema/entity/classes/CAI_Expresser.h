@@ -59,7 +59,7 @@ class CBaseModelEntity;
 class CAI_Expresser
 {
 public:
-    DECLARE_SCHEMA_CLASS(CAI_Expresser);
+    DECLARE_SCHEMA_CLASS_INLINE(CAI_Expresser);
 
     SCHEMA_FIELD(CUtlDict, m_conceptCooldowns);
     SCHEMA_FIELD(CUtlDict, m_ruleCooldowns);

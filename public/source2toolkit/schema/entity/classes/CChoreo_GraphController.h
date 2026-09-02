@@ -59,7 +59,7 @@
 class CChoreo_GraphController : public CAnimGraphControllerBase
 {
 public:
-    DECLARE_SCHEMA_CLASS(CChoreo_GraphController);
+    DECLARE_SCHEMA_CLASS_INLINE(CChoreo_GraphController);
 
 };
 

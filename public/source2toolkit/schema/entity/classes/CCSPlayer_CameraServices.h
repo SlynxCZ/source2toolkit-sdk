@@ -59,7 +59,7 @@
 class CCSPlayer_CameraServices : public CCSPlayerBase_CameraServices
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCSPlayer_CameraServices);
+    DECLARE_SCHEMA_CLASS_INLINE(CCSPlayer_CameraServices);
 
 };
 

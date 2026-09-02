@@ -57,7 +57,7 @@
 class CBaseModelEntity__OnDamageLevelChangedArgs_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(CBaseModelEntity__OnDamageLevelChangedArgs_t);
+    DECLARE_SCHEMA_CLASS_INLINE(CBaseModelEntity__OnDamageLevelChangedArgs_t);
 
     SCHEMA_FIELD(HitGroup_t, nHitGroup);
     SCHEMA_FIELD(int32_t, nDamageLevel);

@@ -57,7 +57,7 @@
 class VPhysicsCollisionAttribute_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(VPhysicsCollisionAttribute_t);
+    DECLARE_SCHEMA_CLASS_INLINE(VPhysicsCollisionAttribute_t);
 
     SCHEMA_FIELD(uint64_t, m_nInteractsAs);
     SCHEMA_FIELD(uint64_t, m_nInteractsWith);

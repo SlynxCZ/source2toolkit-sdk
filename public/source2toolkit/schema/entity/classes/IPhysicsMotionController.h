@@ -57,7 +57,7 @@
 class IPhysicsMotionController
 {
 public:
-    DECLARE_SCHEMA_CLASS(IPhysicsMotionController);
+    DECLARE_SCHEMA_CLASS_INLINE(IPhysicsMotionController);
 
 };
 

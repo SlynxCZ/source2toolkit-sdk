@@ -57,7 +57,7 @@
 class constraint_breakableparams_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(constraint_breakableparams_t);
+    DECLARE_SCHEMA_CLASS_INLINE(constraint_breakableparams_t);
 
     SCHEMA_FIELD(float, strength);
     SCHEMA_FIELD(float, forceLimit);

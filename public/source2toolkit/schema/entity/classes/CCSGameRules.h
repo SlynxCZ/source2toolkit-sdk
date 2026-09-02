@@ -66,7 +66,7 @@ class SpawnPoint;
 class CCSGameRules : public CTeamplayRules
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCSGameRules);
+    DECLARE_SCHEMA_CLASS_INLINE(CCSGameRules);
 
     SCHEMA_FIELD(bool, m_bFreezePeriod);
     SCHEMA_FIELD(bool, m_bWarmupPeriod);
@@ -258,15 +258,14 @@ public:
     SCHEMA_FIELD(double, m_flLastPerfSampleTime);
 
 public:
+    /// <summary>Ends the match and moves everyone to the intermission screen.</summary>
+    void GoToIntermission(bool bAbortedMatch = false);
     /// <summary>Terminate round.</summary>
     void TerminateRound(float flDelay, int32_t eRoundEndReason, uint32 nTeamId = 0);
     /// <summary>Find entity player is aiming at.</summary>
     CBaseEntity* FindPickerEntity(CBasePlayerController* pPlayer);
     /// <summary>Get aim target.</summary>
     CCSPlayerController* GetClientAimTarget(CCSPlayerController* pPlayer);
-
-    /// <summary>Ends the match and moves everyone to the intermission screen.</summary>
-    void GoToIntermission(bool bAbortedMatch = false);
 };
 
 #endif // _INCLUDE_CCSGAMERULES_H

@@ -59,7 +59,7 @@
 class CDecalGroupVData
 {
 public:
-    DECLARE_SCHEMA_CLASS(CDecalGroupVData);
+    DECLARE_SCHEMA_CLASS_INLINE(CDecalGroupVData);
 
     SCHEMA_FIELD(CUtlVector<DecalGroupOption_t>, m_vecOptions);
     SCHEMA_FIELD(float, m_flTotalProbability);

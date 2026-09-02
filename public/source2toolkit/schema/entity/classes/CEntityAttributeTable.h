@@ -57,7 +57,7 @@
 class CEntityAttributeTable
 {
 public:
-    DECLARE_SCHEMA_CLASS(CEntityAttributeTable);
+    DECLARE_SCHEMA_CLASS_INLINE(CEntityAttributeTable);
 
 };
 

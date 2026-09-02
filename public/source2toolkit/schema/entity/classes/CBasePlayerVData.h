@@ -60,7 +60,7 @@
 class CBasePlayerVData : public CEntitySubclassVDataBase
 {
 public:
-    DECLARE_SCHEMA_CLASS(CBasePlayerVData);
+    DECLARE_SCHEMA_CLASS_INLINE(CBasePlayerVData);
 
     SCHEMA_FIELD(CSkillFloat, m_flHeadDamageMultiplier);
     SCHEMA_FIELD(CSkillFloat, m_flChestDamageMultiplier);

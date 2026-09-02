@@ -60,7 +60,7 @@
 class ragdoll_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(ragdoll_t);
+    DECLARE_SCHEMA_CLASS_INLINE(ragdoll_t);
 
     SCHEMA_FIELD(CUtlVector<ragdollelement_t>, list);
     SCHEMA_FIELD(CUtlVector<ragdollhierarchyjoint_t>, hierarchyJoints);

@@ -61,7 +61,7 @@ class CBaseEntity;
 class lerpdata_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(lerpdata_t);
+    DECLARE_SCHEMA_CLASS_INLINE(lerpdata_t);
 
     SCHEMA_FIELD(CHandle<CBaseEntity>, m_hEnt);
     SCHEMA_FIELD(MoveType_t, m_MoveType);

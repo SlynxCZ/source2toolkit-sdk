@@ -59,7 +59,7 @@
 class CEmptyGraphController : public CAnimGraphControllerBase
 {
 public:
-    DECLARE_SCHEMA_CLASS(CEmptyGraphController);
+    DECLARE_SCHEMA_CLASS_INLINE(CEmptyGraphController);
 
 };
 

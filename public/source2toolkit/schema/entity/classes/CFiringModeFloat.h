@@ -57,7 +57,7 @@
 class CFiringModeFloat
 {
 public:
-    DECLARE_SCHEMA_CLASS(CFiringModeFloat);
+    DECLARE_SCHEMA_CLASS_INLINE(CFiringModeFloat);
 
     SCHEMA_FIELD_POINTER(float, m_flValues);
 };

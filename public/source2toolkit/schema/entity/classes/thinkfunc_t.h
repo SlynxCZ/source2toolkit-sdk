@@ -57,7 +57,7 @@
 class thinkfunc_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(thinkfunc_t);
+    DECLARE_SCHEMA_CLASS_INLINE(thinkfunc_t);
 
     SCHEMA_FIELD(BASEPTR, m_think);
     SCHEMA_FIELD_POINTER(CUtlStringToken, m_nContext);

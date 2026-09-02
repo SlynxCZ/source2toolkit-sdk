@@ -57,7 +57,7 @@
 class CEntitySubclassVDataBase
 {
 public:
-    DECLARE_SCHEMA_CLASS(CEntitySubclassVDataBase);
+    DECLARE_SCHEMA_CLASS_INLINE(CEntitySubclassVDataBase);
 
 };
 

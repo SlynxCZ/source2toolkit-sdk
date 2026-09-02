@@ -60,7 +60,7 @@
 class CCSPlayerController_DamageServices : public CPlayerControllerComponent
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCSPlayerController_DamageServices);
+    DECLARE_SCHEMA_CLASS_INLINE(CCSPlayerController_DamageServices);
 
     SCHEMA_FIELD(int32_t, m_nSendUpdate);
     SCHEMA_FIELD(CUtlVector<CDamageRecord>, m_DamageList);

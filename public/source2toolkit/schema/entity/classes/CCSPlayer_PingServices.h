@@ -61,7 +61,7 @@ class CPlayerPing;
 class CCSPlayer_PingServices : public CPlayerPawnComponent
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCSPlayer_PingServices);
+    DECLARE_SCHEMA_CLASS_INLINE(CCSPlayer_PingServices);
 
     SCHEMA_FIELD_POINTER(float, m_flPlayerPingTokens);
     SCHEMA_FIELD(CHandle<CPlayerPing>, m_hPlayerPing);

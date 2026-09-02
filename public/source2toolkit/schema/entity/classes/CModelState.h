@@ -60,7 +60,7 @@ class InfoForResourceTypeCModel;
 class CModelState
 {
 public:
-    DECLARE_SCHEMA_CLASS(CModelState);
+    DECLARE_SCHEMA_CLASS_INLINE(CModelState);
 
     SCHEMA_FIELD(CStrongHandle<InfoForResourceTypeCModel>, m_hModel);
     SCHEMA_FIELD(CUtlSymbolLarge, m_ModelName);

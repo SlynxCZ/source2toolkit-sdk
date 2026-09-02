@@ -61,7 +61,7 @@ class CBaseEntity;
 class CPulseGraphInstance_ServerEntity : public CBasePulseGraphInstance
 {
 public:
-    DECLARE_SCHEMA_CLASS(CPulseGraphInstance_ServerEntity);
+    DECLARE_SCHEMA_CLASS_INLINE(CPulseGraphInstance_ServerEntity);
 
     SCHEMA_FIELD(CHandle<CBaseEntity>, m_hOwner);
     SCHEMA_FIELD(bool, m_bActivated);

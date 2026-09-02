@@ -58,6 +58,8 @@
 #include "CBaseCSGrenadeProjectile.h"
 
 class CBaseEntity;
+class CSmokeGrenade;
+
 class CSmokeGrenadeProjectile : public CBaseCSGrenadeProjectile
 {
 public:
@@ -77,6 +79,10 @@ public:
     SCHEMA_FIELD(bool, m_bDidGroundScorch);
 
 public:
+    /// <summary>Spawns a live grenade of this type. Ported from SwiftlyS2.</summary>
+    static CSmokeGrenadeProjectile* EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity, int nTeam, CBaseEntity* pOwner, uint32_t nItemDefIndex);
+
+public:
     static CSmokeGrenadeProjectile* New(const char* className)
     {
         return CBaseEntity::New<CSmokeGrenadeProjectile>(className);
@@ -91,10 +97,6 @@ public:
     {
         return FromIndex(index.Get());
     }
-
-    /// <summary>Spawns a live grenade of this type. Ported from SwiftlyS2.</summary>
-    static CSmokeGrenadeProjectile* EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity,
-                              int nTeam, CBaseEntity* pOwner, uint32_t nItemDefIndex);
 };
 
 #endif // _INCLUDE_CSMOKEGRENADEPROJECTILE_H

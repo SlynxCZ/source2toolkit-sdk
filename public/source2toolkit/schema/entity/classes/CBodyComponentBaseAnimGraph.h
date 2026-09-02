@@ -60,7 +60,7 @@
 class CBodyComponentBaseAnimGraph : public CBodyComponentSkeletonInstance
 {
 public:
-    DECLARE_SCHEMA_CLASS(CBodyComponentBaseAnimGraph);
+    DECLARE_SCHEMA_CLASS_INLINE(CBodyComponentBaseAnimGraph);
 
     SCHEMA_FIELD(CBaseAnimGraphController, m_animationController);
 };

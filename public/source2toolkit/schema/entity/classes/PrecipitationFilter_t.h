@@ -57,7 +57,7 @@
 class PrecipitationFilter_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(PrecipitationFilter_t);
+    DECLARE_SCHEMA_CLASS_INLINE(PrecipitationFilter_t);
 
     SCHEMA_FIELD(float, m_flMaxRadius);
 };

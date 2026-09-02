@@ -59,7 +59,7 @@ class CFogController;
 class fogplayerparams_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(fogplayerparams_t);
+    DECLARE_SCHEMA_CLASS_INLINE(fogplayerparams_t);
 
     SCHEMA_FIELD(CHandle<CFogController>, m_hCtrl);
     SCHEMA_FIELD(float, m_flTransitionTime);

@@ -1138,7 +1138,17 @@ def write_class(
         else:
             lines.append(f"class {class_name}")
 
-    lines += ["{", "public:", f"    DECLARE_SCHEMA_CLASS({class_name});", ""]
+    # DECLARE_SCHEMA_CLASS makes the field setters reach NetworkStateChanged
+    # through CEntityInstance, which is only valid when `this` really is an
+    # entity. A non-entity schema class has a vtable of its own, with its
+    # NetworkStateChanged at index 1, and calling CEntityInstance's slot on it
+    # reads past the end of that vtable -- a near-null jump on the first
+    # networked write, not a wrong value. Non-entity classes without a vtable
+    # at all have no networked fields, so neither form ever fires for them.
+    is_entity_class = inherits or class_name == "CEntityInstance"
+    schema_macro = "DECLARE_SCHEMA_CLASS" if is_entity_class else "DECLARE_SCHEMA_CLASS_INLINE"
+
+    lines += ["{", "public:", f"    {schema_macro}({class_name});", ""]
 
     for f in schema_class.fields:
         if f.type.category == SchemaTypeCategory.Bitfield:

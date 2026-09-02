@@ -59,7 +59,7 @@
 class CMovementStatsProperty
 {
 public:
-    DECLARE_SCHEMA_CLASS(CMovementStatsProperty);
+    DECLARE_SCHEMA_CLASS_INLINE(CMovementStatsProperty);
 
     SCHEMA_FIELD(int32_t, m_nUseCounter);
     SCHEMA_FIELD(CVectorExponentialMovingAverage, m_emaMovementDirection);

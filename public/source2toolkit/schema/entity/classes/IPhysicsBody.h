@@ -57,7 +57,7 @@
 class IPhysicsBody
 {
 public:
-    DECLARE_SCHEMA_CLASS(IPhysicsBody);
+    DECLARE_SCHEMA_CLASS_INLINE(IPhysicsBody);
 
 };
 

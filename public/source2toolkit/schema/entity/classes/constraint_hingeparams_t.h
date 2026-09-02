@@ -60,7 +60,7 @@
 class constraint_hingeparams_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(constraint_hingeparams_t);
+    DECLARE_SCHEMA_CLASS_INLINE(constraint_hingeparams_t);
 
     SCHEMA_FIELD(Vector, worldPosition);
     SCHEMA_FIELD(Vector, worldAxisDirection);

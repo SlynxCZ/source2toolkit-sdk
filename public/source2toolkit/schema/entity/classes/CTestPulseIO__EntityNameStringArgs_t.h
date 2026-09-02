@@ -57,7 +57,7 @@
 class CTestPulseIO__EntityNameStringArgs_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(CTestPulseIO__EntityNameStringArgs_t);
+    DECLARE_SCHEMA_CLASS_INLINE(CTestPulseIO__EntityNameStringArgs_t);
 
     SCHEMA_FIELD(CEntityNameString, nameA);
     SCHEMA_FIELD(CUtlSymbolLarge, strValueB);

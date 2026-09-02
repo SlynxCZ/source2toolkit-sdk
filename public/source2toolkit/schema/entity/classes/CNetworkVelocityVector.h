@@ -57,7 +57,7 @@
 class CNetworkVelocityVector
 {
 public:
-    DECLARE_SCHEMA_CLASS(CNetworkVelocityVector);
+    DECLARE_SCHEMA_CLASS_INLINE(CNetworkVelocityVector);
 
     SCHEMA_FIELD(float, m_vecX);
     SCHEMA_FIELD(float, m_vecY);

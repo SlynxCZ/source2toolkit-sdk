@@ -59,7 +59,7 @@ class IPhysicsMotionController;
 class CBuoyancyHelper
 {
 public:
-    DECLARE_SCHEMA_CLASS(CBuoyancyHelper);
+    DECLARE_SCHEMA_CLASS_INLINE(CBuoyancyHelper);
 
     SCHEMA_FIELD(IPhysicsMotionController*, m_pController);
     SCHEMA_FIELD_POINTER(CUtlStringToken, m_nFluidType);

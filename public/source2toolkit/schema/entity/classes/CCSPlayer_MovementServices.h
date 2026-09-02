@@ -62,7 +62,7 @@
 class CCSPlayer_MovementServices : public CPlayer_MovementServices_Humanoid
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCSPlayer_MovementServices);
+    DECLARE_SCHEMA_CLASS_INLINE(CCSPlayer_MovementServices);
 
     SCHEMA_FIELD(CCSPlayerAnimationState, m_AnimationState);
     SCHEMA_FIELD(bool, m_bUsingGroundTopologyOffset);

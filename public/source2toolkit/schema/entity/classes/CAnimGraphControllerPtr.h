@@ -59,7 +59,7 @@ class CAnimGraphControllerBase;
 class CAnimGraphControllerPtr
 {
 public:
-    DECLARE_SCHEMA_CLASS(CAnimGraphControllerPtr);
+    DECLARE_SCHEMA_CLASS_INLINE(CAnimGraphControllerPtr);
 
     SCHEMA_FIELD(CAnimGraphControllerBase*, m_pController);
 };

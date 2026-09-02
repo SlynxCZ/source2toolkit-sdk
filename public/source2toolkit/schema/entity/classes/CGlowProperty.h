@@ -57,7 +57,7 @@
 class CGlowProperty
 {
 public:
-    DECLARE_SCHEMA_CLASS(CGlowProperty);
+    DECLARE_SCHEMA_CLASS_INLINE(CGlowProperty);
 
     SCHEMA_FIELD(Vector, m_fGlowColor);
     SCHEMA_FIELD(int32_t, m_iGlowType);

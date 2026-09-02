@@ -57,7 +57,7 @@
 class ServerAuthoritativeWeaponSlot_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(ServerAuthoritativeWeaponSlot_t);
+    DECLARE_SCHEMA_CLASS_INLINE(ServerAuthoritativeWeaponSlot_t);
 
     SCHEMA_FIELD(uint16_t, unClass);
     SCHEMA_FIELD(uint16_t, unSlot);

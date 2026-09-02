@@ -60,7 +60,7 @@ class CCSPlayerController;
 class CPlayerControllerComponent
 {
 public:
-    DECLARE_SCHEMA_CLASS(CPlayerControllerComponent);
+    DECLARE_SCHEMA_CLASS_INLINE(CPlayerControllerComponent);
 
     SCHEMA_FIELD(CEntityInstance*, __m_pChainEntity);
 

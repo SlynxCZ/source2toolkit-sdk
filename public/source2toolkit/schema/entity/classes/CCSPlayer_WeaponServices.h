@@ -62,7 +62,7 @@ class CCSPlayer_ItemServices;
 class CCSPlayer_WeaponServices : public CPlayer_WeaponServices
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCSPlayer_WeaponServices);
+    DECLARE_SCHEMA_CLASS_INLINE(CCSPlayer_WeaponServices);
 
     SCHEMA_FIELD(float, m_flNextAttack);
     SCHEMA_FIELD(CHandle<CBasePlayerWeapon>, m_hSavedWeapon);

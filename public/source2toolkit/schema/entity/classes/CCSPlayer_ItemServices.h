@@ -61,7 +61,7 @@ class CBasePlayerWeapon;
 class CCSPlayer_ItemServices : public CPlayer_ItemServices
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCSPlayer_ItemServices);
+    DECLARE_SCHEMA_CLASS_INLINE(CCSPlayer_ItemServices);
 
     SCHEMA_FIELD(bool, m_bHasDefuser);
     SCHEMA_FIELD(bool, m_bHasHelmet);

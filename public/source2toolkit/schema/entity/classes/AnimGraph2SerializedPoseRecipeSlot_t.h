@@ -57,7 +57,7 @@
 class AnimGraph2SerializedPoseRecipeSlot_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(AnimGraph2SerializedPoseRecipeSlot_t);
+    DECLARE_SCHEMA_CLASS_INLINE(AnimGraph2SerializedPoseRecipeSlot_t);
 
     SCHEMA_FIELD(CUtlBinaryBlock, m_topology);
 };

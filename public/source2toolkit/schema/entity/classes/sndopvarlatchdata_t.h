@@ -57,7 +57,7 @@
 class sndopvarlatchdata_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(sndopvarlatchdata_t);
+    DECLARE_SCHEMA_CLASS_INLINE(sndopvarlatchdata_t);
 
     SCHEMA_FIELD(CUtlSymbolLarge, m_iszStack);
     SCHEMA_FIELD(CUtlSymbolLarge, m_iszOperator);

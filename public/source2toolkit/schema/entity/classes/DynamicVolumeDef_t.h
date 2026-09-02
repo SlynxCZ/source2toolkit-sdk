@@ -59,7 +59,7 @@ class CBaseEntity;
 class DynamicVolumeDef_t
 {
 public:
-    DECLARE_SCHEMA_CLASS(DynamicVolumeDef_t);
+    DECLARE_SCHEMA_CLASS_INLINE(DynamicVolumeDef_t);
 
     SCHEMA_FIELD(CHandle<CBaseEntity>, m_source);
     SCHEMA_FIELD(CHandle<CBaseEntity>, m_target);

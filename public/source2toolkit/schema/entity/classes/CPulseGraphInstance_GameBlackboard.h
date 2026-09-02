@@ -59,7 +59,7 @@
 class CPulseGraphInstance_GameBlackboard : public CPulseGraphInstance_ServerEntity
 {
 public:
-    DECLARE_SCHEMA_CLASS(CPulseGraphInstance_GameBlackboard);
+    DECLARE_SCHEMA_CLASS_INLINE(CPulseGraphInstance_GameBlackboard);
 
 };
 

@@ -59,7 +59,7 @@
 class CCSGameModeRules_Deathmatch : public CCSGameModeRules
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCSGameModeRules_Deathmatch);
+    DECLARE_SCHEMA_CLASS_INLINE(CCSGameModeRules_Deathmatch);
 
     SCHEMA_FIELD(float, m_flDMBonusStartTime);
     SCHEMA_FIELD(float, m_flDMBonusTimeLength);
