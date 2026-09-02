@@ -377,7 +377,7 @@ public:
 MySQL client
 ========================= */
 
-#define TOOLKIT_MYSQL_INTERFACE "IToolkitMySQL001"
+#define TOOLKIT_MYSQL_INTERFACE "IToolkitMySQL002"
 
 class IToolkitMySQL
 {
@@ -387,12 +387,17 @@ public:
     /**
      * @brief Creates a new MySQL connection instance.
      *
+     * @param owner Plugin the connection belongs to.
      * @param info Connection configuration data.
      * @return Newly created MySQL connection.
+     *
+     * @note Destroyed for you if the owning plugin unloads without calling
+     *       Destroy(): the worker thread runs code, and the query callbacks
+     *       are std::functions holding code, inside that plugin's library.
      */
-    virtual IToolkitMySQLConnection* CreateConnection(ToolkitMySQLConnectionInfo info) = 0;
+    virtual IToolkitMySQLConnection* CreateConnection(PluginId owner, ToolkitMySQLConnectionInfo info) = 0;
 };
 
-#define MYSQL_CREATE_CONNECTION(info)    g_pToolkitMySQL->CreateConnection(info)
+#define MYSQL_CREATE_CONNECTION(info)    g_pToolkitMySQL->CreateConnection(g_PluginID, info)
 
 #endif //_INCLUDE_ITOOLKIT_MYSQL_H

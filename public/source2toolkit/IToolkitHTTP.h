@@ -128,7 +128,7 @@ Core Toolkit HTTP
 * @brief Issues HTTP requests through Steam's HTTP client.
 *
 * @code
-* g_pToolkitHTTP->Get("https://example.com/api", [](const ToolkitHTTPResponse& r)
+* HTTP_GET("https://example.com/api", [](const ToolkitHTTPResponse& r)
 * {
 *     if (!r.m_bSuccess || r.m_nStatusCode != 200)
 *         return;
@@ -137,7 +137,7 @@ Core Toolkit HTTP
 * });
 * @endcode
   */
-#define TOOLKIT_HTTP_INTERFACE "IToolkitHTTP001"
+#define TOOLKIT_HTTP_INTERFACE "IToolkitHTTP002"
 
 class IToolkitHTTP
 {
@@ -163,13 +163,18 @@ public:
 
     * @brief Issues a request.
     *
+    * @param owner Plugin the request belongs to
     * @param method HTTP method
     * @param pszUrl Absolute URL
     * @param pszBody Request body, or nullptr for methods that take none
     * @param callback Called once the request completes; may be null
     * @param pHeaders Extra request headers, or nullptr
+    *
+    * @note Cancelled, callback and all, if the owning plugin unloads first --
+    *       the callback holds code inside that plugin's library.
       */
-    virtual void Request(EToolkitHTTPMethod method,
+    virtual void Request(PluginId owner,
+                         EToolkitHTTPMethod method,
                          const char* pszUrl,
                          const char* pszBody,
                          ToolkitHTTPCallback callback,
@@ -179,20 +184,34 @@ public:
     Shorthands
     ========================= */
 
-    virtual void Get(const char* pszUrl, ToolkitHTTPCallback callback,
+    virtual void Get(PluginId owner, const char* pszUrl, ToolkitHTTPCallback callback,
                      const std::vector<ToolkitHTTPHeader>* pHeaders = nullptr) = 0;
 
-    virtual void Post(const char* pszUrl, const char* pszBody, ToolkitHTTPCallback callback,
+    virtual void Post(PluginId owner, const char* pszUrl, const char* pszBody, ToolkitHTTPCallback callback,
                       const std::vector<ToolkitHTTPHeader>* pHeaders = nullptr) = 0;
 
-    virtual void Put(const char* pszUrl, const char* pszBody, ToolkitHTTPCallback callback,
+    virtual void Put(PluginId owner, const char* pszUrl, const char* pszBody, ToolkitHTTPCallback callback,
                      const std::vector<ToolkitHTTPHeader>* pHeaders = nullptr) = 0;
 
-    virtual void Patch(const char* pszUrl, const char* pszBody, ToolkitHTTPCallback callback,
+    virtual void Patch(PluginId owner, const char* pszUrl, const char* pszBody, ToolkitHTTPCallback callback,
                        const std::vector<ToolkitHTTPHeader>* pHeaders = nullptr) = 0;
 
-    virtual void Delete(const char* pszUrl, const char* pszBody, ToolkitHTTPCallback callback,
+    virtual void Delete(PluginId owner, const char* pszUrl, const char* pszBody, ToolkitHTTPCallback callback,
                         const std::vector<ToolkitHTTPHeader>* pHeaders = nullptr) = 0;
 };
+
+#define HTTP_REQUEST(method, pszUrl, pszBody, cb, ...) \
+    g_pToolkitHTTP->Request(g_PluginID, method, pszUrl, pszBody, cb, ##__VA_ARGS__)
+
+#define HTTP_GET(pszUrl, cb, ...) \
+    g_pToolkitHTTP->Get(g_PluginID, pszUrl, cb, ##__VA_ARGS__)
+#define HTTP_POST(pszUrl, pszBody, cb, ...) \
+    g_pToolkitHTTP->Post(g_PluginID, pszUrl, pszBody, cb, ##__VA_ARGS__)
+#define HTTP_PUT(pszUrl, pszBody, cb, ...) \
+    g_pToolkitHTTP->Put(g_PluginID, pszUrl, pszBody, cb, ##__VA_ARGS__)
+#define HTTP_PATCH(pszUrl, pszBody, cb, ...) \
+    g_pToolkitHTTP->Patch(g_PluginID, pszUrl, pszBody, cb, ##__VA_ARGS__)
+#define HTTP_DELETE(pszUrl, pszBody, cb, ...) \
+    g_pToolkitHTTP->Delete(g_PluginID, pszUrl, pszBody, cb, ##__VA_ARGS__)
 
 #endif //_INCLUDE_ITOOLKIT_HTTP_H

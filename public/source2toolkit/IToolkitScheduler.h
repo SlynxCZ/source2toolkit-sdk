@@ -95,12 +95,18 @@ public:
 
     * @brief Constructs a timer.
       */
-    Timer(float interval, double execTime, TimerCallback callback, int flags)
-        : Interval(interval), ExecTime(execTime), Callback(std::move(callback)), Flags(flags)
+    Timer(PluginId owner, float interval, double execTime, TimerCallback callback, int flags)
+        : Owner(owner), Interval(interval), ExecTime(execTime), Callback(std::move(callback)), Flags(flags)
     {
     }
 
     ~Timer() = default;
+
+    /// Plugin that created the timer, 0 for the toolkit itself. The callback
+    /// holds code inside that plugin's library, so the scheduler has to drop
+    /// the timer before the library is closed -- destroying the std::function
+    /// afterwards calls into unmapped memory.
+    PluginId Owner;
 
     /// Interval between executions (seconds)
     float Interval;
@@ -129,7 +135,7 @@ Core Toolkit Scheduler
 
 * @brief Interface for scheduling tasks and timers.
   */
-#define TOOLKIT_SCHEDULER_INTERFACE "IToolkitScheduler001"
+#define TOOLKIT_SCHEDULER_INTERFACE "IToolkitScheduler002"
 
 class IToolkitScheduler
 {
@@ -140,23 +146,28 @@ public:
 
     * @brief Executes a task on the next frame.
     *
+    * @param owner Plugin the task belongs to
     * @param task Callback function
     *
     * @note Runs once on the next game frame
+    * @note Dropped if the owning plugin unloads before the frame arrives
       */
-    virtual void NextFrame(std::function<void()>&& task) = 0;
+    virtual void NextFrame(PluginId owner, std::function<void()>&& task) = 0;
 
     /**
 
     * @brief Adds a timer.
     *
+    * @param owner Plugin the timer belongs to
     * @param interval Time in seconds between executions
     * @param callback Function to execute
     * @param flags Timer behavior flags
     *
     * @return Pointer to created Timer
+    *
+    * @note Killed automatically when the owning plugin unloads
       */
-    virtual Timer* AddTimer(float interval, TimerCallback callback, int flags = 0) = 0;
+    virtual Timer* AddTimer(PluginId owner, float interval, TimerCallback callback, int flags = 0) = 0;
 
     /**
 
@@ -167,8 +178,8 @@ public:
     virtual void KillTimer(Timer* timer) = 0;
 };
 
-#define NEXT_FRAME(task)                g_pToolkitScheduler->NextFrame(task)
-#define ADD_TIMER(interval, cb, ...)    g_pToolkitScheduler->AddTimer(interval, cb, ##__VA_ARGS__)
+#define NEXT_FRAME(task)                g_pToolkitScheduler->NextFrame(g_PluginID, task)
+#define ADD_TIMER(interval, cb, ...)    g_pToolkitScheduler->AddTimer(g_PluginID, interval, cb, ##__VA_ARGS__)
 #define KILL_TIMER(timer)               g_pToolkitScheduler->KillTimer(timer)
 
 #endif //_INCLUDE_ITOOLKIT_SCHEDULER_H

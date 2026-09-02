@@ -468,7 +468,7 @@ Core Toolkit Menus
 /**
  * @brief Interface for menu system management.
  */
-#define TOOLKIT_MENUS_INTERFACE "IToolkitMenus001"
+#define TOOLKIT_MENUS_INTERFACE "IToolkitMenus002"
 
 class IToolkitMenus
 {
@@ -478,10 +478,15 @@ public:
     /**
      * @brief Opens a CenterHtmlMenu for a player.
      *
+     * @param owner Plugin the menu belongs to
      * @param player Target player
      * @param menu Menu to open
+     *
+     * @note Closed for you if the owning plugin unloads while it is open. The
+     *       menu object and its option handlers live inside that plugin's
+     *       library, and the next key press would go looking for them there.
      */
-    virtual void OpenCenterHtmlMenu(CCSPlayerController* player, CenterHtmlMenu* menu) = 0;
+    virtual void OpenCenterHtmlMenu(PluginId owner, CCSPlayerController* player, CenterHtmlMenu* menu) = 0;
 
     /**
      * @brief Gets active menu instance for player.
@@ -508,7 +513,7 @@ public:
     virtual void OnKeyPress(CCSPlayerController* player, int key) = 0;
 };
 
-#define OPEN_CENTER_HTML_MENU(player, menu)  g_pToolkitMenus->OpenCenterHtmlMenu(player, menu)
+#define OPEN_CENTER_HTML_MENU(player, menu)  g_pToolkitMenus->OpenCenterHtmlMenu(g_PluginID, player, menu)
 #define GET_ACTIVE_MENU(player)              g_pToolkitMenus->GetActiveMenu(player)
 #define CLOSE_ACTIVE_MENU(player)            g_pToolkitMenus->CloseActiveMenu(player)
 #define MENU_ON_KEY_PRESS(player, key)       g_pToolkitMenus->OnKeyPress(player, key)

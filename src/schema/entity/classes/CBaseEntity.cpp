@@ -91,9 +91,11 @@ CEntityIOListenerHandle* CBaseEntity::AddSingleEntityIOListener(const char* pszO
     const char* classname = GetClassname();
 
 #ifdef SOURCE2TOOLKIT_CORE
-    entities::entitiesManager.AddEntityIOListener(listener, classname, pszOutput, post);
+    entities::entitiesManager.AddEntityIOListener(0, listener, classname, pszOutput, post);
 #else
-    g_ToolkitAPI->Entities()->AddEntityIOListener(listener, classname, pszOutput, post);
+    // The listener and the callback it holds are in whichever plugin called
+    // this, so that plugin has to be the one the toolkit drops it with.
+    g_ToolkitAPI->Entities()->AddEntityIOListener(g_PluginID, listener, classname, pszOutput, post);
 #endif
 
     auto* handle = new CEntityIOListenerHandle();
