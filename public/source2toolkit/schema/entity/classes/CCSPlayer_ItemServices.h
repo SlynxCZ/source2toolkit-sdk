@@ -56,8 +56,6 @@
 
 #include "CPlayer_ItemServices.h"
 
-class CBasePlayerWeapon;
-
 class CCSPlayer_ItemServices : public CPlayer_ItemServices
 {
 public:
@@ -65,14 +63,6 @@ public:
 
     SCHEMA_FIELD(bool, m_bHasDefuser);
     SCHEMA_FIELD(bool, m_bHasHelmet);
-
-public:
-    /// <summary>Drop active weapon, recommended to use DropWeapon instead (parameter is ignored here).</summary>
-    void DropActivePlayerWeapon(CBasePlayerWeapon* pActiveWeapon);
-    /// <summary>Remove all weapons.</summary>
-    void RemoveWeapons(bool bRemoveSuit);
-    /// <summary>Give item.</summary>
-    CBasePlayerWeapon* GiveNamedItem(const char* pszItem);
 };
 
 #endif // _INCLUDE_CCSPLAYER_ITEMSERVICES_H

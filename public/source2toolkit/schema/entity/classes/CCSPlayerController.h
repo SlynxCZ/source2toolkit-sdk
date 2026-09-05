@@ -66,7 +66,6 @@ class CCSPlayerController_DamageServices;
 class CCSPlayerController_InGameMoneyServices;
 class CCSPlayerController_InventoryServices;
 class CCSPlayerPawn;
-class CServerSideClient;
 
 class CCSPlayerController : public CBasePlayerController
 {
@@ -181,14 +180,6 @@ public:
     static CCSPlayerController* FromSteamId(uint64 uSteamId);
     /// <summary>Get controller from steam id.</summary>
     static CCSPlayerController* FromSteamId(CSteamID steamId);
-    /// <summary>Print to console.</summary>
-    void PrintToConsole(const char* pszMessage);
-    /// <summary>Print to chat.</summary>
-    void PrintToChat(const char* pszMessage);
-    /// <summary>Print to center.</summary>
-    void PrintToCenter(const char* pszMessage);
-    /// <summary>Print alert.</summary>
-    void PrintToCenterAlert(const char* pszMessage);
     /// <summary>Print to center in HTML.</summary>
     void PrintToCenterHtml(const char* pszMessage, int iDuration = 5, bool bMenu = false);
     /// <summary>Take damage from player</summary>
@@ -199,44 +190,10 @@ public:
     void SwitchTeam(int nTeam);
     /// <summary>Change team like jointeam.</summary>
     void ChangeTeam(int nTeam);
-    /// <summary>Is bot.</summary>
-    bool IsBot();
-    /// <summary>Disconnect player.</summary>
-    void Disconnect(ENetworkDisconnectionReason eReason);
-    /// <summary>Execute client command.</summary>
-    void ExecuteClientCommand(const char* pszCommand);
-    /// <summary>Execute command from server.</summary>
-    void ExecuteClientCommandFromServer(const char* pszCommand);
-    /// <summary>Get server side engine client.</summary>
-    CServerSideClient* GetServerSideClient();
-    /// <summary>Get pawn.</summary>
-    CCSPlayerPawn* GetPawn();
     /// <summary>Get player pawn.</summary>
     CCSPlayerPawn* GetPlayerPawn();
     /// <summary>Get observer pawn.</summary>
     CCSObserverPawn* GetObserverPawn();
-    /// <summary>Get player index.</summary>
-    CEntityIndex GetPlayerIndex();
-    /// <summary>Get slot.</summary>
-    int GetSlot();
-    /// <summary>Get player slot.</summary>
-    CPlayerSlot GetPlayerSlot();
-    /// <summary>Get steamid.</summary>
-    int GetUserID();
-    /// <summary>Get player userid.</summary>
-    CPlayerUserId GetPlayerUserID();
-    /// <summary>Get steamid.</summary>
-    uint64 GetSteamID();
-    /// <summary>Get player steamid.</summary>
-    CSteamID GetPlayerSteamID();
-    /// <summary>Get player name.</summary>
-    const char* GetPlayerName();
-    /// <summary>Get IP address.</summary>
-    CUtlString GetIpAddress();
-    /// <summary>Replicate convar.</summary>
-    void ReplicateConVar(const char* pszConVar, const char* pszValue);
-    /// <summary>Fires gameEvent to client's legacy listener.</summary>
-    void FireEventToClient(IGameEvent* pEvent);
 
 public:
     static CCSPlayerController* New(const char* className)

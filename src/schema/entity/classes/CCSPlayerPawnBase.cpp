@@ -36,11 +36,13 @@
  */
 
 
-#include "source2toolkit/schema/entity/classes/CCSPlayerPawn.h"
+#include "source2toolkit/schema/entity/classes/CCSPlayerPawnBase.h"
 
-QAngle CCSPlayerPawn::GetEyeAngles()
+#include "source2toolkit/schema/entity/classes/CCSPlayerController.h"
+
+CCSPlayerController* CCSPlayerPawnBase::GetOriginalController()
 {
-    // m_angEyeAngles is the networked value the client sends up; the field
-    // is generated, this is the read.
-    return m_angEyeAngles();
+    if (auto handle = m_hOriginalController(); handle.IsValid())
+        return handle.Get();
+    return nullptr;
 }

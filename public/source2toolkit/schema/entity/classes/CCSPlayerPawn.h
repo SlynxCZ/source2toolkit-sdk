@@ -63,7 +63,6 @@
 
 class CBaseEntity;
 class CCSBot;
-class CCSPlayerController;
 class CCSPlayer_ActionTrackingServices;
 class CCSPlayer_AimPunchServices;
 class CCSPlayer_BulletServices;
@@ -184,12 +183,6 @@ public:
     SCHEMA_FIELD(QAngle, m_angEyeAngles);
 
 public:
-    /// <summary>Get controller.</summary>
-    CCSPlayerController* GetController();
-    /// <summary>Get default controller.</summary>
-    CCSPlayerController* GetDefaultController();
-    /// <summary>Get original controller.</summary>
-    CCSPlayerController* GetOriginalController();
     /// <summary>Get the angles the pawn is actually looking along.</summary>
     QAngle GetEyeAngles();
 

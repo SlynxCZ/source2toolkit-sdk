@@ -35,8 +35,10 @@
  * Project: Source2Toolkit
  */
 
+
 #include "source2toolkit/schema/entity/classes/CBasePlayerPawn.h"
 
+#include "source2toolkit/schema/entity/classes/CCSPlayerController.h"
 #include "source2toolkit/utils/virtual.h"
 
 #ifdef SOURCE2TOOLKIT_CORE
@@ -72,4 +74,21 @@ void CBasePlayerPawn::SnapViewAngles(const QAngle& angEyeAngles) {
     // The engine takes the angles by pointer and does not modify them.
     QAngle ang = angEyeAngles;
     fn(this, &ang);
+}
+
+// m_hController is typed CHandle<CBasePlayerController>, but every controller
+// this game creates is a CCSPlayerController -- the downcast is what callers
+// would otherwise have to write at each use.
+CCSPlayerController* CBasePlayerPawn::GetController()
+{
+    if (auto handle = m_hController(); handle.IsValid())
+        return static_cast<CCSPlayerController*>(handle.Get());
+    return nullptr;
+}
+
+CCSPlayerController* CBasePlayerPawn::GetDefaultController()
+{
+    if (auto handle = m_hDefaultController(); handle.IsValid())
+        return static_cast<CCSPlayerController*>(handle.Get());
+    return nullptr;
 }

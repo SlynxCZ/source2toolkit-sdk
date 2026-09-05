@@ -56,11 +56,21 @@
 
 #include "CPlayerPawnComponent.h"
 
+class CBasePlayerWeapon;
+
 class CPlayer_ItemServices : public CPlayerPawnComponent
 {
 public:
     DECLARE_SCHEMA_CLASS_INLINE(CPlayer_ItemServices);
 
+
+public:
+    /// <summary>Drop active weapon, recommended to use DropWeapon instead (parameter is ignored here).</summary>
+    void DropActivePlayerWeapon(CBasePlayerWeapon* pActiveWeapon);
+    /// <summary>Remove all weapons.</summary>
+    void RemoveWeapons(bool bRemoveSuit);
+    /// <summary>Give item.</summary>
+    CBasePlayerWeapon* GiveNamedItem(const char* pszItem);
 };
 
 #endif // _INCLUDE_CPLAYER_ITEMSERVICES_H

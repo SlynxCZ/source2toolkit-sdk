@@ -35,13 +35,13 @@
  * Project: Source2Toolkit
  */
 
+
 #include "source2toolkit/schema/entity/classes/CCSPlayerController.h"
 
 #include "tier0/dbg.h"
 
 #include "source2toolkit/schema/entity/classes/CCSPlayerPawn.h"
 #include "source2toolkit/schema/entity/classes/CCSObserverPawn.h"
-#include "source2toolkit/schema/serversideclient.h"
 #include "source2toolkit/schema/takedamageinfo.h"
 #include "source2toolkit/schema/takedamageresult.h"
 #include "source2toolkit/utils/virtual.h"
@@ -69,35 +69,6 @@ TOOLKIT_GLOBALVARS();
 #endif
 
 #include "iserver.h"
-#include "networksystem/inetworkmessages.h"
-#include "usermessages.pb.h"
-
-enum class HudDestination
-{
-    Notify = 1,
-    Console = 2,
-    Chat = 3,
-    Center = 4,
-    Alert = 6
-};
-
-static void ClientPrint(int slot, int hudDestination, const char* message)
-{
-    INetworkMessageInternal* pNetMsg = GetNetworkMessages()->FindNetworkMessagePartial("TextMsg");
-    auto data = pNetMsg->AllocateMessage()->ToPB<CUserMessageTextMsg>();
-
-    data->set_dest(hudDestination);
-    data->add_param(message);
-
-    CPlayerBitVec recipients;
-    recipients.Set(slot);
-
-    GetGameEventSystem()->PostEventAbstract(CSplitScreenSlot(-1), false, ABSOLUTE_PLAYER_LIMIT,
-                                                reinterpret_cast<const uint64*>(recipients.Base()), pNetMsg, data, 0,
-                                                NetChannelBufType_t::BUF_RELIABLE);
-
-    delete data;
-}
 
 CCSPlayerController *CCSPlayerController::FromPawn(CCSPlayerPawn* pPawn)
 {
@@ -151,30 +122,6 @@ CCSPlayerController *CCSPlayerController::FromSteamId(uint64 uSteamId)
 CCSPlayerController *CCSPlayerController::FromSteamId(CSteamID steamId)
 {
     return FromSteamId(steamId.ConvertToUint64());
-}
-
-void CCSPlayerController::PrintToConsole(const char* pszMessage)
-{
-    std::string pszSanitizedMessage;
-    pszSanitizedMessage.reserve(strlen(pszMessage) + 2);
-    pszSanitizedMessage = pszMessage;
-    pszSanitizedMessage += '\n';
-    ClientPrint(GetSlot(), (int)HudDestination::Console, pszSanitizedMessage.c_str());
-}
-
-void CCSPlayerController::PrintToChat(const char* pszMessage)
-{
-    ClientPrint(GetSlot(), (int)HudDestination::Chat, pszMessage);
-}
-
-void CCSPlayerController::PrintToCenter(const char* pszMessage)
-{
-    ClientPrint(GetSlot(), (int)HudDestination::Center, pszMessage);
-}
-
-void CCSPlayerController::PrintToCenterAlert(const char* pszMessage)
-{
-    ClientPrint(GetSlot(), (int)HudDestination::Alert, pszMessage);
 }
 
 void CCSPlayerController::PrintToCenterHtml(const char* pszMessage, int iDuration, bool bMenu)
@@ -265,62 +212,6 @@ void CCSPlayerController::ChangeTeam(int nTeam)
     CALL_VIRTUAL(void, offset, this, nTeam);
 }
 
-bool CCSPlayerController::IsBot()
-{
-    return (m_fFlags & FL_FAKECLIENT) != 0;
-}
-
-void CCSPlayerController::Disconnect(ENetworkDisconnectionReason eReason)
-{
-    GetEngineServer()->DisconnectClient(GetSlot(), eReason);
-}
-
-void CCSPlayerController::ExecuteClientCommand(const char* pszCommand)
-{
-    GetEngineServer()->ClientCommand(GetPlayerSlot(), "%s", pszCommand);
-}
-
-void CCSPlayerController::ExecuteClientCommandFromServer(const char* pszCommand)
-{
-    CCommand args;
-    args.Tokenize(pszCommand);
-
-    auto handle = GetCVar()->FindConCommand(args.Arg(0));
-    if (!handle.IsValidRef()) return;
-
-    CCommandContext context(CommandTarget_t::CT_NO_TARGET, GetPlayerSlot());
-
-    GetCVar()->DispatchConCommand(handle, context, args);
-}
-
-CServerSideClient* CCSPlayerController::GetServerSideClient()
-{
-    CNetworkGameServerBase* pServer = GetNetworkServerService()->GetIGameServer();
-    if (!pServer)
-        return nullptr;
-
-#ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CNetworkGameServer::ClientList");
-#else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CNetworkGameServer::ClientList");
-#endif
-
-    auto* pClients = reinterpret_cast<CUtlVector<CServerSideClient*>*>(reinterpret_cast<uint8_t*>(pServer) + offset);
-
-    const int index = GetSlot();
-    if (index < 0 || index >= pClients->Count())
-        return nullptr;
-
-    return pClients->Element(index);
-}
-
-CCSPlayerPawn* CCSPlayerController::GetPawn()
-{
-    if (auto handle = m_hPawn(); handle.IsValid())
-        return static_cast<CCSPlayerPawn*>(handle.Get());
-    return nullptr;
-}
-
 CCSPlayerPawn* CCSPlayerController::GetPlayerPawn()
 {
     if (auto handle = m_hPlayerPawn(); handle.IsValid())
@@ -333,105 +224,4 @@ CCSObserverPawn* CCSPlayerController::GetObserverPawn()
     if (auto handle = m_hObserverPawn(); handle.IsValid())
         return handle.Get();
     return nullptr;
-}
-
-CEntityIndex CCSPlayerController::GetPlayerIndex()
-{
-    return GetEntityIndex();
-}
-
-int CCSPlayerController::GetSlot()
-{
-    return GetIndex() - 1;
-}
-
-CPlayerSlot CCSPlayerController::GetPlayerSlot()
-{
-    return CPlayerSlot(GetSlot());
-}
-
-int CCSPlayerController::GetUserID()
-{
-    return GetEngineServer()->GetPlayerUserId(GetPlayerSlot()).Get();
-}
-
-CPlayerUserId CCSPlayerController::GetPlayerUserID()
-{
-    return GetEngineServer()->GetPlayerUserId(GetPlayerSlot());
-}
-
-uint64 CCSPlayerController::GetSteamID()
-{
-    return m_steamID();
-}
-
-CSteamID CCSPlayerController::GetPlayerSteamID()
-{
-    return CSteamID(static_cast<uint64>(m_steamID()));
-}
-
-const char* CCSPlayerController::GetPlayerName()
-{
-    return m_iszPlayerName();
-}
-
-CUtlString CCSPlayerController::GetIpAddress()
-{
-    if (const auto* netInfo = GetEngineServer()->GetPlayerNetInfo(GetPlayerSlot()))
-    {
-        uint32_t ip = netInfo->GetRemoteAddress().GetIP();
-
-        ip = ((ip & 0x000000FF) << 24) |
-             ((ip & 0x0000FF00) << 8)  |
-             ((ip & 0x00FF0000) >> 8)  |
-             ((ip & 0xFF000000) >> 24);
-
-        char buffer[64];
-
-        std::snprintf(
-            buffer,
-            sizeof(buffer),
-            "%u.%u.%u.%u",
-            (ip >> 24) & 0xFF,
-            (ip >> 16) & 0xFF,
-            (ip >> 8) & 0xFF,
-            ip & 0xFF
-        );
-
-        return CUtlString(buffer);
-    }
-
-    return CUtlString();
-}
-
-void CCSPlayerController::ReplicateConVar(const char* pszConVar, const char* pszValue)
-{
-    INetChannel* pNetChannel = reinterpret_cast<INetChannel*>(GetEngineServer()->GetPlayerNetInfo(GetPlayerSlot()));
-    if (pNetChannel)
-    {
-        static INetworkMessageInternal* pMsg = GetNetworkMessages()->FindNetworkMessagePartial("CNETMsg_SetConVar");
-
-        CNetMessagePB<CNETMsg_SetConVar>* msg = pMsg->AllocateMessage()->ToPB<CNETMsg_SetConVar>();
-        auto cvar = msg->mutable_convars()->add_cvars();
-        cvar->set_name(pszConVar);
-        cvar->set_value(pszValue);
-
-        pNetChannel->SendNetMessage(msg, BUF_DEFAULT);
-
-        delete msg;
-    }
-}
-
-void CCSPlayerController::FireEventToClient(IGameEvent* pEvent)
-{
-    if (!pEvent) return;
-
-#ifdef SOURCE2TOOLKIT_CORE
-    IGameEventListener2* pListener = addresses::toolkitAddresses.LegacyGameEventListener()(GetPlayerSlot());
-#else
-    IGameEventListener2* pListener = g_ToolkitAPI->Addresses()->LegacyGameEventListener()(GetPlayerSlot());
-#endif
-    if (!pListener) return;
-
-    pListener->FireGameEvent(pEvent);
 }

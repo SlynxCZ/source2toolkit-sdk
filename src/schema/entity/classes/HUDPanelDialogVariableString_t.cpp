@@ -45,12 +45,12 @@ HUDPanelDialogVariableString_t::HUDPanelDialogVariableString_t(uint16 nPanelIdIn
     // there. Point it at the engine's table.
     static void* const pVTable = []() -> void*
     {
-        IToolkitModule* pServer = IToolkitModule::New("server");
-        if (!pServer)
+        IToolkitModule* libserver = IToolkitModule::New("server");
+        if (!libserver)
             return nullptr;
 
-        void* pTable = pServer->GetVirtualTableByName("HUDPanelDialogVariableString_t").RCast<void*>();
-        delete pServer;
+        void* pTable = libserver->GetVirtualTableByName("HUDPanelDialogVariableString_t").RCast<void*>();
+        delete libserver;
         return pTable;
     }();
 

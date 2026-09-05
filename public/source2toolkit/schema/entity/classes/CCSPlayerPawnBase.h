@@ -84,6 +84,10 @@ public:
     SCHEMA_FIELD(CHandle<CCSPlayerController>, m_hOriginalController);
 
 public:
+    /// <summary>Get original controller.</summary>
+    CCSPlayerController* GetOriginalController();
+
+public:
     static CCSPlayerPawnBase* New(const char* className)
     {
         return CBaseEntity::New<CCSPlayerPawnBase>(className);

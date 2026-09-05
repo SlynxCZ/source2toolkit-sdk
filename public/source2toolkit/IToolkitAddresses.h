@@ -64,7 +64,7 @@ class CBasePlayerWeapon;
 class CBaseModelEntity;
 class CBasePlayerPawn;
 class CBasePlayerController;
-class CCSPlayer_WeaponServices;
+class CPlayer_WeaponServices;
 class CCSPlayerController;
 class CEntityInstance;
 class CEntityIOOutput;
@@ -162,7 +162,7 @@ using CGameRules_TerminateRound_t = void (FASTCALL*)(CGameRules* pThis, uint32 n
 
 * @brief Destroys weapon from player pawn.
   */
-using CCSPlayer_WeaponServices_Destroy_t = void (FASTCALL*)(CCSPlayer_WeaponServices*, CBasePlayerWeapon*);
+using CPlayer_WeaponServices_Destroy_t = void (FASTCALL*)(CPlayer_WeaponServices*, CBasePlayerWeapon*);
 
 /**
 
@@ -379,7 +379,7 @@ public:
     virtual CBasePlayerController_SetPawn_t CBasePlayerController_SetPawn() = 0;
     virtual CBasePlayerPawn_SnapViewAngles_t CBasePlayerPawn_SnapViewAngles() = 0;
     virtual CGameRules_TerminateRound_t CGameRules_TerminateRound() = 0;
-    virtual CCSPlayer_WeaponServices_Destroy_t CCSPlayer_WeaponServices_Destroy() = 0;
+    virtual CPlayer_WeaponServices_Destroy_t CPlayer_WeaponServices_Destroy() = 0;
     virtual LegacyGameEventListener_t LegacyGameEventListener() = 0;
     virtual CCSPlayerController_SwitchTeam_t CCSPlayerController_SwitchTeam() = 0;
     virtual CEntityInstance_AcceptInput_t CEntityInstance_AcceptInput() = 0;
@@ -467,7 +467,7 @@ public:
 #define ADDR_SET_PAWN()                             g_pToolkitAddresses->CBasePlayerController_SetPawn()
 #define ADDR_SNAP_VIEW_ANGLES()                     g_pToolkitAddresses->CBasePlayerPawn_SnapViewAngles()
 #define ADDR_TERMINATE_ROUND()                      g_pToolkitAddresses->CGameRules_TerminateRound()
-#define ADDR_WEAPON_SERVICES_DESTROY()              g_pToolkitAddresses->CCSPlayer_WeaponServices_Destroy()
+#define ADDR_WEAPON_SERVICES_DESTROY()              g_pToolkitAddresses->CPlayer_WeaponServices_Destroy()
 #define ADDR_LEGACY_GAME_EVENT_LISTENER()           g_pToolkitAddresses->LegacyGameEventListener()
 #define ADDR_SWITCH_TEAM()                          g_pToolkitAddresses->CCSPlayerController_SwitchTeam()
 #define ADDR_ACCEPT_INPUT()                         g_pToolkitAddresses->CEntityInstance_AcceptInput()

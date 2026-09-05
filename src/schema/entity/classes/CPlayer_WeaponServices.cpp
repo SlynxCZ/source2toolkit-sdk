@@ -35,7 +35,7 @@
  * Project: Source2Toolkit
  */
 
-#include "source2toolkit/schema/entity/classes/CCSPlayer_WeaponServices.h"
+#include "source2toolkit/schema/entity/classes/CPlayer_WeaponServices.h"
 
 #include "source2toolkit/utils/virtual.h"
 
@@ -51,7 +51,12 @@
 TOOLKIT_GLOBALVARS();
 #endif
 
-bool CCSPlayer_WeaponServices::CanUse(CBasePlayerWeapon* pWeapon)
+// The gamedata keys still name CCSPlayer_WeaponServices: that is the class the
+// vtable indices and the Destroy signature were read off. Every weapon services
+// object the game hands out is one, so the calls are valid through the base
+// pointer CBasePlayerPawn stores.
+
+bool CPlayer_WeaponServices::CanUse(CBasePlayerWeapon* pWeapon)
 {
 #ifdef SOURCE2TOOLKIT_CORE
     static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_WeaponServices::CanUse");
@@ -61,7 +66,7 @@ bool CCSPlayer_WeaponServices::CanUse(CBasePlayerWeapon* pWeapon)
     return CALL_VIRTUAL(bool, offset, this, pWeapon);
 }
 
-void CCSPlayer_WeaponServices::DropWeapon(CBasePlayerWeapon *pWeapon, Vector *pVecTarget, Vector *pVelocity)
+void CPlayer_WeaponServices::DropWeapon(CBasePlayerWeapon *pWeapon, Vector *pVecTarget, Vector *pVelocity)
 {
 #ifdef SOURCE2TOOLKIT_CORE
     static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_WeaponServices::DropWeapon");
@@ -71,7 +76,7 @@ void CCSPlayer_WeaponServices::DropWeapon(CBasePlayerWeapon *pWeapon, Vector *pV
     CALL_VIRTUAL(void, offset, this, pWeapon, pVecTarget, pVelocity);
 }
 
-int CCSPlayer_WeaponServices::BumpWeapon(CBasePlayerWeapon* pWeapon)
+int CPlayer_WeaponServices::BumpWeapon(CBasePlayerWeapon* pWeapon)
 {
 #ifdef SOURCE2TOOLKIT_CORE
     static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_WeaponServices::BumpWeapon");
@@ -81,7 +86,7 @@ int CCSPlayer_WeaponServices::BumpWeapon(CBasePlayerWeapon* pWeapon)
     return CALL_VIRTUAL(int, offset, this, pWeapon);
 }
 
-void CCSPlayer_WeaponServices::SelectItem(CBasePlayerWeapon* pWeapon, int unk1)
+void CPlayer_WeaponServices::SelectItem(CBasePlayerWeapon* pWeapon, int unk1)
 {
 #ifdef SOURCE2TOOLKIT_CORE
     static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_WeaponServices::SelectItem");
@@ -91,16 +96,16 @@ void CCSPlayer_WeaponServices::SelectItem(CBasePlayerWeapon* pWeapon, int unk1)
     CALL_VIRTUAL(void, offset, this, pWeapon, unk1);
 }
 
-void CCSPlayer_WeaponServices::Destroy(CBasePlayerWeapon* pWeapon)
+void CPlayer_WeaponServices::Destroy(CBasePlayerWeapon* pWeapon)
 {
 #ifndef _WIN32
     if(pWeapon)
 #endif
     {
 #ifdef SOURCE2TOOLKIT_CORE
-        addresses::toolkitAddresses.CCSPlayer_WeaponServices_Destroy()(this, pWeapon);
+        addresses::toolkitAddresses.CPlayer_WeaponServices_Destroy()(this, pWeapon);
 #else
-        g_ToolkitAPI->Addresses()->CCSPlayer_WeaponServices_Destroy()(this, pWeapon);
+        g_ToolkitAPI->Addresses()->CPlayer_WeaponServices_Destroy()(this, pWeapon);
 #endif
     }
 }

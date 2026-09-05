@@ -57,6 +57,7 @@
 #include "CPlayerPawnComponent.h"
 
 class CBasePlayerWeapon;
+class CPlayer_ItemServices;
 
 class CPlayer_WeaponServices : public CPlayerPawnComponent
 {
@@ -68,6 +69,18 @@ public:
     SCHEMA_FIELD(CHandle<CBasePlayerWeapon>, m_hLastWeapon);
     SCHEMA_FIELD_POINTER(uint16_t, m_iAmmo);
     SCHEMA_FIELD(bool, m_bPreventWeaponPickup);
+
+public:
+    /// <summary>Checks if player can use weapon (fire and maybe acquire).</summary>
+    bool CanUse(CBasePlayerWeapon *pWeapon);
+    /// <summary>Drop weapon.</summary>
+    void DropWeapon(CBasePlayerWeapon *pWeapon, Vector *pVecTarget = nullptr, Vector *pVelocity = nullptr);
+    /// <summary>Probably checks weapon validity after CPlayer_ItemServices::GiveNamedItem invoke, may return 2 if CSGameRules()->IsPlayingGunGameDeathmatch, meaning that pWeapon will be deleted.</summary>
+    int BumpWeapon(CBasePlayerWeapon *pWeapon);
+    /// <summary>Select weapon, If unk1 is equal to 3 some code will be executed.</summary>
+    void SelectItem(CBasePlayerWeapon *pWeapon, int unk1 = 0);
+    /// <summary>Remove and destroy weapon from player.</summary>
+    void Destroy(CBasePlayerWeapon *pWeapon);
 };
 
 #endif // _INCLUDE_CPLAYER_WEAPONSERVICES_H

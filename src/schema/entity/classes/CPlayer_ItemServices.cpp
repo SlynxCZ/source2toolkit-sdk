@@ -35,7 +35,7 @@
  * Project: Source2Toolkit
  */
 
-#include "source2toolkit/schema/entity/classes/CCSPlayer_ItemServices.h"
+#include "source2toolkit/schema/entity/classes/CPlayer_ItemServices.h"
 
 #include "source2toolkit/utils/virtual.h"
 
@@ -51,7 +51,11 @@
 TOOLKIT_GLOBALVARS();
 #endif
 
-void CCSPlayer_ItemServices::DropActivePlayerWeapon(CBasePlayerWeapon* pActiveWeapon)
+// The gamedata keys still name CCSPlayer_ItemServices: that is the class the
+// vtable index was read off. Every item services object the game hands out is
+// one, so the call is valid through the base pointer CBasePlayerPawn stores.
+
+void CPlayer_ItemServices::DropActivePlayerWeapon(CBasePlayerWeapon* pActiveWeapon)
 {
 #ifdef SOURCE2TOOLKIT_CORE
     static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_ItemServices::DropActivePlayerWeapon");
@@ -61,7 +65,7 @@ void CCSPlayer_ItemServices::DropActivePlayerWeapon(CBasePlayerWeapon* pActiveWe
     CALL_VIRTUAL(void, offset, this, pActiveWeapon);
 }
 
-void CCSPlayer_ItemServices::RemoveWeapons(bool bRemoveSuit)
+void CPlayer_ItemServices::RemoveWeapons(bool bRemoveSuit)
 {
 #ifdef SOURCE2TOOLKIT_CORE
     static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_ItemServices::RemoveWeapons");
@@ -71,7 +75,7 @@ void CCSPlayer_ItemServices::RemoveWeapons(bool bRemoveSuit)
     CALL_VIRTUAL(void, offset, this, bRemoveSuit);
 }
 
-CBasePlayerWeapon* CCSPlayer_ItemServices::GiveNamedItem(const char* pszItem)
+CBasePlayerWeapon* CPlayer_ItemServices::GiveNamedItem(const char* pszItem)
 {
 #ifdef SOURCE2TOOLKIT_CORE
     static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_ItemServices::GiveNamedItem");

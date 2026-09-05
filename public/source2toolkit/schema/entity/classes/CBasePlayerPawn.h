@@ -62,6 +62,7 @@
 
 class CAI_Expresser;
 class CBasePlayerController;
+class CCSPlayerController;
 class CPlayer_AutoaimServices;
 class CPlayer_CameraServices;
 class CPlayer_FlashlightServices;
@@ -108,6 +109,10 @@ public:
     void CommitSuicide(bool bExplode, bool bForce);
     /// <summary>Snaps the pawn's view angles. No-op where the engine function could not be resolved.</summary>
     void SnapViewAngles(const QAngle& angEyeAngles);
+    /// <summary>Get controller.</summary>
+    CCSPlayerController* GetController();
+    /// <summary>Get default controller.</summary>
+    CCSPlayerController* GetDefaultController();
 
 public:
     static CBasePlayerPawn* New(const char* className)
