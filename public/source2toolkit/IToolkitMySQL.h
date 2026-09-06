@@ -374,10 +374,111 @@ public:
 };
 
 /* =========================
+Serverless queries
+========================= */
+
+/**
+ * @brief What one serverless query came back with.
+ *
+ * @note m_bSuccess is about the query, not about rows -- a SELECT that matched
+ *       nothing is a success with an empty result set. A query that failed has
+ *       m_bSuccess false, m_sError filled in and m_pQuery null.
+ */
+struct ToolkitMySQLServerlessResult
+{
+    bool m_bSuccess = false;
+
+    /// MySQL's own error number, or 0 when the query never reached the server.
+    unsigned int m_nErrorCode = 0;
+    std::string m_sError;
+
+    /// Rows, insert id and affected rows, read off the connection before it
+    /// was closed again. Owned by the toolkit and valid only for the duration
+    /// of the callback -- copy anything you keep. Null when the query failed.
+    IToolkitMySQLQuery* m_pQuery = nullptr;
+};
+
+/**
+ * @brief Callback for a completed serverless query. Runs on the main thread.
+ */
+typedef std::function<void(const ToolkitMySQLServerlessResult&)> ToolkitMySQLServerlessCallbackFunc;
+
+/**
+ * @brief A set of connection details that queries are run against one at a time.
+ *
+ * Every query opens its own connection, runs, reads its rows out and closes
+ * again -- there is nothing to keep alive, nothing to reconnect, and nothing
+ * that can go stale over a map change. None of it happens on the main thread:
+ * queries go through the toolkit's shared MySQL worker, one thread for all of
+ * them however many plugins are using it, and land back in a callback on the
+ * main thread.
+ *
+ * Meant for the occasional query -- loading a player on connect, writing their
+ * stats on disconnect. A connection costs a handshake and a login every single
+ * time, so for anything that runs per tick or per shot, keep an
+ * IToolkitMySQLConnection open instead.
+ *
+ * @code
+ * // once, when your plugin loads
+ * m_pDb = api->MySQL()->CreateServerless(g_PLID, { "127.0.0.1", "user", "pass", "db" });
+ *
+ * // wherever you need it
+ * m_pDb->Query("SELECT name, kills FROM players WHERE steamid = ?", { steamid },
+ *     [](const ToolkitMySQLServerlessResult& r)
+ * {
+ *     if (!r.m_bSuccess)
+ *         return; // r.m_sError says what went wrong
+ *
+ *     IToolkitMySQLResult* pSet = r.m_pQuery->GetResultSet();
+ *     while (pSet && pSet->MoreRows() && pSet->FetchRow())
+ *     {
+ *         // pSet->GetString(0), pSet->GetInt(1) -- copy anything you keep.
+ *     }
+ * });
+ * @endcode
+ */
+class IToolkitMySQLServerless
+{
+public:
+    virtual ~IToolkitMySQLServerless() = default;
+
+    /**
+     * @brief Runs one query on a connection of its own.
+     *
+     * @param query SQL to run.
+     * @param callback Callback invoked with the result, on the main thread.
+     */
+    virtual void Query(const char* query, ToolkitMySQLServerlessCallbackFunc callback) = 0;
+
+    /**
+     * @brief Runs one parameterised query on a connection of its own.
+     *
+     * Placeholders are filled in on the worker against the live connection:
+     * `?` becomes the escaped value in quotes, `??` becomes a quoted
+     * identifier -- a table or column name, which cannot be a `?`. A `?`
+     * inside a string literal is left alone, and a placeholder count that does
+     * not match @p params fails the query instead of running it.
+     *
+     * @param query SQL to run, with `?` / `??` placeholders.
+     * @param params Values for the placeholders, in order.
+     * @param callback Callback invoked with the result, on the main thread.
+     */
+    virtual void Query(const char* query, std::vector<std::string> params,
+                       ToolkitMySQLServerlessCallbackFunc callback) = 0;
+
+    /**
+     * @brief Drops these details and cancels what they still have queued. A
+     *        query already on the wire is left to finish and its result thrown
+     *        away -- its callback does not run.
+     */
+    virtual void Destroy() = 0;
+};
+
+/* =========================
 MySQL client
 ========================= */
 
-#define TOOLKIT_MYSQL_INTERFACE "IToolkitMySQL002"
+#define TOOLKIT_MYSQL_INTERFACE "IToolkitMySQL003"
 
 class IToolkitMySQL
 {
@@ -396,6 +497,22 @@ public:
      *       are std::functions holding code, inside that plugin's library.
      */
     virtual IToolkitMySQLConnection* CreateConnection(PluginId owner, ToolkitMySQLConnectionInfo info) = 0;
+
+    /**
+     * @brief Creates a handle that runs each of its queries on a connection of
+     *        its own, opened and closed around that one query.
+     *
+     * @param owner Plugin the handle belongs to.
+     * @param info Connection configuration data. Copied, strings included --
+     *             it does not have to outlive this call.
+     * @return Newly created serverless handle.
+     *
+     * @note Destroyed for you if the owning plugin unloads without calling
+     *       Destroy(), together with every query of its still in the air: a
+     *       pending callback is a std::function holding code inside that
+     *       plugin's library.
+     */
+    virtual IToolkitMySQLServerless* CreateServerless(PluginId owner, ToolkitMySQLConnectionInfo info) = 0;
 };
 
 #define MYSQL_CREATE_CONNECTION(info)    g_pToolkitMySQL->CreateConnection(g_PluginID, info)
