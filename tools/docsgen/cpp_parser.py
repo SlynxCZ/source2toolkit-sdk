@@ -89,15 +89,81 @@ def split_params(params):
 
     return result
 
+def brace_depths(lines):
+    """Brace depth at the start of each line, ignoring braces in comments and literals.
+
+    A class body is depth 0, so a method body -- and every statement in it that
+    happens to look like a declaration -- sits above that.
+    """
+    depths = []
+    depth = 0
+    in_block_comment = False
+
+    for line in lines:
+        depths.append(depth)
+
+        i = 0
+        while i < len(line):
+            c = line[i]
+
+            if in_block_comment:
+                if line.startswith("*/", i):
+                    in_block_comment = False
+                    i += 2
+                    continue
+                i += 1
+                continue
+
+            if line.startswith("/*", i):
+                in_block_comment = True
+                i += 2
+                continue
+
+            if line.startswith("//", i):
+                break
+
+            if c in ('"', "'"):
+                quote = c
+                i += 1
+                while i < len(line):
+                    if line[i] == "\\":
+                        i += 2
+                        continue
+                    if line[i] == quote:
+                        i += 1
+                        break
+                    i += 1
+                continue
+
+            if c == '{':
+                depth += 1
+            elif c == '}':
+                depth -= 1
+
+            i += 1
+
+    return depths
+
 def parse_free_functions(content):
     functions = []
 
     lines = content.splitlines()
     current_doc = None
     in_block_comment = False
+    in_plain_comment = False
 
     for line in lines:
         line = line.strip()
+
+        if in_plain_comment:
+            if "*/" in line:
+                in_plain_comment = False
+            continue
+
+        if line.startswith("/*") and not line.startswith("/**"):
+            if "*/" not in line:
+                in_plain_comment = True
+            continue
 
         if line.startswith("///"):
             text = re.sub(r'<.*?>', '', line.replace("///", "").strip())
@@ -130,14 +196,29 @@ def parse_free_functions(content):
 
             continue
 
-        m = re.match(r'(.+?)\s+(UTIL_\w+)\((.*?)\)\s*;', line)
+        # Declarations (`... UTIL_Foo(args);`) as well as inline definitions,
+        # whose body starts on the same line (`... { return ...; }`) or on the
+        # next one. A leading `template <...>` belongs to the signature.
+        m = re.match(
+            r'^(?:\[\[[^\]]*\]\]\s*)*'
+            r'(?:template\s*<[^>]*>\s*)?'
+            r'(?:inline\s+|static\s+|constexpr\s+|extern\s+)*'
+            r'([A-Za-z_~][\w:<>,\s\*&]*?)\s+(UTIL_\w+)\s*\(([^)]*)\)\s*'
+            r'(?:const\s*)?(?:noexcept\s*)?(?:;|\{|$)',
+            line
+        )
+
+        # A call inside a function body looks close enough to a signature to
+        # match, so drop anything whose "return type" is a statement keyword.
+        if m and re.match(r'^(return|else|if|while|for|do|switch)\b', m.group(1).strip()):
+            m = None
 
         if m:
             ret, name, params = m.groups()
 
             param_list = []
 
-            if params and params.strip():
+            if params.strip() and params.strip() != "void":
                 for p in split_params(params):
                     p = p.split("=")[0].strip()
                     match = re.match(r'(.+?[\*&]?)\s*(\w+)$', p)
@@ -153,11 +234,19 @@ def parse_free_functions(content):
                         "type": type_token
                     })
 
+            # Overloads are usually documented once, on the first of them.
+            doc = current_doc
+            if doc is None:
+                doc = next(
+                    (f["doc"] for f in functions if f["name"] == name and f["doc"].get("brief")),
+                    None
+                )
+
             functions.append({
                 "name": name,
                 "return": ret.strip(),
                 "params": param_list,
-                "doc": current_doc or {}
+                "doc": doc or {"brief": "", "params": {}}
             })
 
             current_doc = None
@@ -282,11 +371,23 @@ def parse_cpp_file(content):
             })
 
         lines = body.splitlines()
+        depths = brace_depths(lines)
         current_doc = None
         in_block_comment = False
+        in_plain_comment = False
 
-        for line in lines:
+        for line_no, line in enumerate(lines):
             line = line.strip()
+
+            if in_plain_comment:
+                if "*/" in line:
+                    in_plain_comment = False
+                continue
+
+            if line.startswith("/*") and not line.startswith("/**"):
+                if "*/" not in line:
+                    in_plain_comment = True
+                continue
 
             if line.startswith("///"):
                 text = line.replace("///", "").strip()
@@ -333,8 +434,19 @@ def parse_cpp_file(content):
 
                 continue
 
+            # Anything nested deeper than the class body itself is a method
+            # body; statements in there look enough like declarations to match.
+            if depths[line_no] > 0:
+                continue
+
+            # Pure virtuals and plain declarations, but also inline definitions
+            # whose body opens on this line or the next.
             m = re.match(
-                r'(?:virtual\s+|static\s+)?(.+?)\s+(\w+)\((.*?)\)\s*(?:const)?\s*(?:=\s*0)?\s*;',
+                r'^(?:\[\[[^\]]*\]\]\s*)*'
+                r'(?:virtual\s+|static\s+|inline\s+|constexpr\s+)*'
+                r'([A-Za-z_~][\w:<>,\s\*&]*?)\s+(\w+)\s*\((.*?)\)\s*'
+                r'(?:const\s*)?(?:noexcept\s*)?(?:override\s*)?(?:=\s*0\s*)?'
+                r'(?:;|\{|$)',
                 line
             )
 
@@ -343,7 +455,7 @@ def parse_cpp_file(content):
 
                 params_list = []
 
-                if params.strip():
+                if params.strip() and params.strip() != "void":
                     for p in split_params(params):
                         p = p.split("=")[0].strip()
 
@@ -360,7 +472,7 @@ def parse_cpp_file(content):
                             "type": type_token
                         })
 
-                doc = current_doc or typedef_docs.get(name, {})
+                doc = current_doc or typedef_docs.get(name) or {"brief": "", "params": {}}
                 methods.append({
                     "name": name,
                     "return": ret.strip(),

@@ -171,20 +171,27 @@ def schema_functions_to_yaml(functions, filename):
     })
 
     for f in functions:
-        param_names = [p["name"] for p in f["params"]]
+        params = f.get("params", [])
+        doc = f.get("doc") or {}
+        if not isinstance(doc, dict):
+            doc = {}
+
+        param_names = [p.get("name", "") for p in params]
         signature = f"{f['name']}({', '.join(param_names)})"
 
         body.append({
             "api3": signature
         })
 
-        brief = f["doc"].get("brief", "")
+        brief = doc.get("brief", "")
         if brief:
             body.append({
                 "markdown": brief
             })
 
-        if f["params"]:
+        param_docs = doc.get("params") or {}
+
+        if params:
             body.append({
                 "h4": "Parameters"
             })
@@ -192,11 +199,11 @@ def schema_functions_to_yaml(functions, filename):
             body.append({
                 "parameters": [
                     {
-                        "name": p["name"],
-                        "type": p["type"],
-                        "description": f["doc"]["params"].get(p["name"], "")
+                        "name": p.get("name", ""),
+                        "type": p.get("type", ""),
+                        "description": param_docs.get(p.get("name", ""), "")
                     }
-                    for p in f["params"]
+                    for p in params
                 ]
             })
 
