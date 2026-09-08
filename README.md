@@ -165,7 +165,7 @@ KHook::Return<bool> MyPlugin::Hook_ClientConnect(ISource2GameClients* pThis, CPl
 ```
 
 `CallOriginal(pThis, args...)` runs the original from inside a handler,
-bypassing the chain; return `Supercede` afterwards so it does not run twice.
+bypassing the chain; return `Supersede` afterwards so it does not run twice.
 
 ### Return values
 
@@ -173,7 +173,7 @@ bypassing the chain; return `Supercede` afterwards so it does not run twice.
 |---|---|
 | `Ignore` | did nothing |
 | `Override` | original runs, your return value wins |
-| `Supercede` | original is skipped entirely |
+| `Supersede` | original is skipped entirely |
 
 The toolkit's own listener callbacks (`RegisterConListener`, `HookGameEvent`,
 net message hooks, entity output listeners) return the toolkit's `Action`
@@ -182,7 +182,7 @@ KHook handler can pass one through with a `static_cast`. Timing there is a
 plain `bool post`: `false` runs before the original, `true` after.
 
 <sub>Spelling: the toolkit's enum is `Action::Supersede`, KHook's is
-`KHook::Action::Supercede`.</sub>
+`KHook::Action::Supersede`.</sub>
 
 ---
 
