@@ -51,6 +51,7 @@
 
 #pragma once
 #include "IToolkitPlugin.h"
+#include "IToolkitTypes.h"
 
 #include "igameevents.h"
 #include "eiface.h"
@@ -67,13 +68,12 @@ Forward declarations
 * @param post false when called before the engine processes the event, true after
 * @param dontBroadcast Set to true to prevent event from being sent to clients
 *
-* @return META_RES:
-* * MRES_IGNORED: no changes
-* * MRES_HANDLED: did something, original still runs
-* * MRES_OVERRIDE: modify event but still allow original execution (pre only)
-* * MRES_SUPERCEDE: block original execution (pre only)
+* @return Action:
+* * Action::Ignore: no changes
+* * Action::Override: modify event but still allow original execution (pre only)
+* * Action::Supersede: block original execution (pre only)
     */
-using GameEventHandler = std::function<META_RES(IGameEvent* event, bool post, bool& dontBroadcast)>;
+using GameEventHandler = std::function<Action(IGameEvent* event, bool post, bool& dontBroadcast)>;
 
 /* =========================
 Core Toolkit Events

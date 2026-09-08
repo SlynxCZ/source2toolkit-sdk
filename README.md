@@ -17,7 +17,7 @@ It bundles everything you need — headers, SDK, hooking system and build helper
 Source2Toolkit SDK is a lightweight development layer that provides:
 
 - Preconfigured **HL2SDK (CS2)**  
-- Integrated **SourceHook** hooking library (virtual, DVP, manual and inline)  
+- Integrated **KHook** hooking (virtual, vtable and function detours), shared with Metamod  
 - Ready-to-use **Source 2 headers & interfaces**  
 - Cross-platform build configuration  
 - Simple plugin build system  
@@ -79,7 +79,7 @@ my_plugin.stx
 ## What's Included
 
 - **HL2SDK-CS2** (as submodule)  
-- **SourceHook** (virtual, DVP, manual & inline hooks)  
+- **KHook** (virtual, vtable & function hooks)  
 - **Protobuf definitions**  
 - **Tier0 / Tier1 / Mathlib**  
 - **Schema system headers**  
@@ -89,76 +89,100 @@ my_plugin.stx
 
 ## Hooking
 
-The SDK bundles **SourceHook** and the toolkit core runs its own engine
-instance, separate from Metamod's. Your plugin does not create or include one —
-`TOOLKIT_EXPOSE` declares `g_SHPtr` and `g_PLID`, and `TOOLKIT_SAVEVARS` fills
-them from `ToolkitFactory(TOOLKIT_SOURCEHOOK_INTERFACE)`. From there the stock
-`SH_` macros work as they do under Metamod:
+Hooks go through **KHook**, Metamod:Source's own detour library. The toolkit is
+a Metamod plugin and gets the engine handed to it at load; `TOOLKIT_SAVEVARS()`
+fetches that same engine for your plugin (`ToolkitFactory(TOOLKIT_KHOOK_INTERFACE)`),
+so every hook on the server -- Metamod's, the toolkit's, every plugin's -- runs
+on one instance. Nothing to set up on your side:
 
 ```cpp
 TOOLKIT_EXPOSE(MyPlugin, g_MyPlugin);
 
-bool MyPlugin::Load(IToolkitAPI* api, PluginId id, char* error, size_t maxlen)
+bool MyPlugin::Load(PluginId id, IToolkitAPI* api, char* error, size_t maxlen, bool late)
 {
-    TOOLKIT_SAVEVARS();   // g_SHPtr and g_PLID are live from here on
+    TOOLKIT_SAVEVARS();   // KHook is live from here on
     ...
 }
 ```
 
+A hook is an object: the member function you want, the context (`this`) and
+the callbacks that run before and after it -- `nullptr` for the side you do
+not need. Keep it behind a plain pointer: KHook only takes a detour down in the
+hook's destructor, so `new` it in your constructor and `delete` it in
+`Unload()`.
+
 ### Virtual hooks
 
 ```cpp
-SH_DECL_HOOK2_void(IServerGameClients, ClientCommand, SH_NOATTRIB, 0,
-                   CPlayerSlot, const CCommand&);
+KHook::Virtual<ISource2GameClients, void, CPlayerSlot, const CCommand&>* m_hClientCommand = nullptr;
 
-m_iHookID = SH_ADD_HOOK(IServerGameClients, ClientCommand, g_pSource2GameClients,
-                        SH_MEMBER(this, &MyPlugin::Hook_ClientCommand), false);
+m_hClientCommand = new KHook::Virtual(&ISource2GameClients::ClientCommand, this,
+                                      &MyPlugin::Hook_ClientCommand, nullptr);
+m_hClientCommand->Add(g_pSource2GameClients);
 ```
 
-### DVP hooks
-
-When you only have a vtable pointer and no interface, `SH_ADD_DVPHOOK` takes
-that pointer *as* the vtable:
+When you only have a vtable and no instance (an engine class found by RTTI
+name), hand the hook something whose first pointer is that vtable and use
+`AddGlobal` -- it then covers every object sharing it:
 
 ```cpp
-m_iHookID = SH_ADD_DVPHOOK(CServerSideClient, SendNetMessage, pVTable,
-                           SH_MEMBER(this, &MyPlugin::Hook_SendNetMessage), false);
+void* m_pVTable = libengine.GetVirtualTableByName("CServerSideClient").GetPtr();
+m_hSendNetMessage->AddGlobal(reinterpret_cast<CServerSideClientBase*>(&m_pVTable));
 ```
 
-### Inline hooks
+A vtable index instead of a member function pointer makes it a manual hook:
+`new KHook::Virtual<CCSGameRules, void>(52u, this, &MyPlugin::Pre, &MyPlugin::Post)`.
 
-Inline hooks patch a raw address, so anything a signature scan finds is
-hookable — no vtable involved. Declare with the argument count *excluding*
-`this`, and add `_void` when there is no return value:
+### Function hooks
+
+Anything a signature scan finds is hookable -- `KHook::Member` when the
+function has a `this`, `KHook::Function` when it does not:
 
 ```cpp
-SH_DECL_INLINEHOOK2(FilterMessage, INetworkMessageProcessingPreFilterCustom,
-                    bool, const CNetMessage*, INetChannel*);
+KHook::Member<CBaseEntity, int64_t, CTakeDamageInfo*, CTakeDamageResult*>* m_hTakeDamageOld = nullptr;
 
-m_iHookID = SH_ADD_INLINEHOOK(FilterMessage, pAddress,
-                              SH_MEMBER(this, &MyPlugin::Hook_FilterMessage), false);
+m_hTakeDamageOld = new KHook::Member(this, &MyPlugin::Hook_TakeDamageOld, nullptr);
+m_hTakeDamageOld->Configure(ADDR_TAKE_DAMAGE_OLD());
 ```
 
-`SH_ADD_INLINEHOOK` accepts a `void*`, a `uintptr_t` or a typed function
-pointer directly, so a `CMemory` from a signature scan can be passed as-is.
+### Handlers
 
-Every id — virtual, DVP, manual or inline — is removed with
-`SH_REMOVE_HOOK_ID`; the two id ranges are disjoint.
+A handler takes the hooked object first, then the function's own parameters,
+and returns `KHook::Return<T>` -- the action, plus the return value when the
+function has one:
+
+```cpp
+KHook::Return<bool> MyPlugin::Hook_ClientConnect(ISource2GameClients* pThis, CPlayerSlot slot,
+                                                 const char* pszName, uint64 xuid,
+                                                 const char* pszNetworkID, bool unk1,
+                                                 CBufferString* pRejectReason)
+{
+    if (!V_strcmp(pszName, "rejected"))
+        return { KHook::Action::Override, false };
+
+    return { KHook::Action::Ignore, true };
+}
+```
+
+`CallOriginal(pThis, args...)` runs the original from inside a handler,
+bypassing the chain; return `Supercede` afterwards so it does not run twice.
 
 ### Return values
 
-Handlers return `META_RES`:
-
-| `META_RES` | meaning |
+| `KHook::Action` | meaning |
 |---|---|
-| `MRES_IGNORED` | did nothing |
-| `MRES_HANDLED` | did something, original still runs |
-| `MRES_OVERRIDE` | original runs, your return value wins |
-| `MRES_SUPERCEDE` | original is skipped entirely |
+| `Ignore` | did nothing |
+| `Override` | original runs, your return value wins |
+| `Supercede` | original is skipped entirely |
 
-Timing is a plain `bool post` everywhere — the toolkit's listener APIs
-(`RegConListener`, `HookGameEvent`, `AddEntityIOListener`) take the same
-`false` = pre / `true` = post argument SourceHook's own `SH_ADD_HOOK` does.
+The toolkit's own listener callbacks (`RegisterConListener`, `HookGameEvent`,
+net message hooks, entity output listeners) return the toolkit's `Action`
+(`IToolkitTypes.h`) -- `Ignore` / `Override` / `Supersede`, same values, so a
+KHook handler can pass one through with a `static_cast`. Timing there is a
+plain `bool post`: `false` runs before the original, `true` after.
+
+<sub>Spelling: the toolkit's enum is `Action::Supersede`, KHook's is
+`KHook::Action::Supercede`.</sub>
 
 ---
 

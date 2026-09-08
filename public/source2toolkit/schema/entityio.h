@@ -166,15 +166,15 @@ public:
     * @param flDelay Delay before execution
     * @param post false when called before the output fires, true after
     *
-    * @return META_RES (MRES_IGNORED / MRES_HANDLED / MRES_OVERRIDE / MRES_SUPERCEDE)
+    * @return Action (Action::Ignore / Action::Override / Action::Supersede)
       */
-    virtual META_RES OnEntityOutput(const char* pchOutputName,
+    virtual Action OnEntityOutput(const char* pchOutputName,
                                   CEntityInstance* pActivator,
                                   CEntityInstance* pCaller,
                                   float flDelay,
                                   bool post)
     {
-        return MRES_IGNORED;
+        return Action::Ignore;
     }
 };
 
@@ -188,22 +188,22 @@ public:
     CEntityInstance* m_pTarget;
 
     /// Callback handler
-    std::function<META_RES(const char*, CEntityInstance*, CEntityInstance*, float, bool)> m_Callback;
+    std::function<Action(const char*, CEntityInstance*, CEntityInstance*, float, bool)> m_Callback;
 
     CSingleEntityIOListener(CEntityInstance* target,
-                            std::function<META_RES(const char*, CEntityInstance*, CEntityInstance*, float, bool)> cb)
+                            std::function<Action(const char*, CEntityInstance*, CEntityInstance*, float, bool)> cb)
         : m_pTarget(target), m_Callback(std::move(cb))
     {
     }
 
-    META_RES OnEntityOutput(const char* outputName,
+    Action OnEntityOutput(const char* outputName,
                           CEntityInstance* pActivator,
                           CEntityInstance* pCaller,
                           float delay,
                           bool post) override
     {
         if (pCaller != m_pTarget)
-            return MRES_IGNORED;
+            return Action::Ignore;
 
         return m_Callback(outputName, pActivator, pCaller, delay, post);
     }

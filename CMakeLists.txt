@@ -45,18 +45,11 @@ function(resolve_dep OUT_VAR ENV_NAME)
     endif()
 endfunction()
 
-resolve_dep(SOURCEHOOK SOURCEHOOK ${CMAKE_CURRENT_SOURCE_DIR}/vendor/sourcehook)
-
-# SourceHook is built here and linked into everything that uses the SDK, so a
-# plugin never has to think about it. Guarded because the SDK is pulled in as a
-# subdirectory by core, the sample and the plugin repos alike -- whoever gets
-# here first builds it, and it is built once per build tree either way.
-set(SOURCEHOOK "${SOURCEHOOK}" CACHE INTERNAL "Path to the SourceHook sources")
-set(SOURCEHOOK_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-
-if (NOT TARGET sourcehook)
-    add_subdirectory(${SOURCEHOOK} ${CMAKE_BINARY_DIR}/sourcehook)
-endif ()
+# KHook, metamod's detour library, is what the toolkit and its plugins hook
+# with. Header-only on this side: the engine lives in metamod.so and reaches a
+# plugin through TOOLKIT_SAVEVARS() (see IToolkitPlugin.h), so all the SDK
+# needs is the include path out of the metamod-source checkout.
+resolve_dep(METAMOD MMSOURCE_DEV)
 resolve_dep(SOURCESDK HL2SDKCS2)
 resolve_dep(PROTOBUFS CSGO_PROTO)
 
@@ -186,7 +179,6 @@ endif()
 
 target_link_libraries(source2toolkit-sdk PUBLIC
         source2toolkit-config
-        sourcehook
 )
 
 target_include_directories(source2toolkit-sdk PUBLIC
@@ -204,11 +196,7 @@ target_include_directories(source2toolkit-sdk PUBLIC
         ${SOURCESDK}/public/entity2
         ${SOURCESDK}/public/game/server
         ${SOURCESDK}/public/schemasystem
-        ${SOURCEHOOK}/include
-        ${SOURCEHOOK}/vendor
-        ${SOURCEHOOK}/vendor/safetyhook
-        ${SOURCEHOOK}/vendor/tl
-        ${SOURCEHOOK}/vendor/zydis
+        ${METAMOD}/third_party/khook/include
 )
 
 # =========================

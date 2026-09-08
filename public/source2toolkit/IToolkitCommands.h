@@ -53,6 +53,7 @@
 
 #pragma once
 #include "IToolkitPlugin.h"
+#include "IToolkitTypes.h"
 
 #include "convar.h"
 #include "eiface.h"
@@ -78,9 +79,9 @@ using ChatHandler = std::function<void(const CCommandContext&, const CCommand&, 
 * @param ctx Command execution context
 * @param cmd Parsed command arguments
 * @param post false when called before the original, true after
-* @return META_RES describing how to handle execution (MRES_IGNORED, MRES_HANDLED, MRES_OVERRIDE, MRES_SUPERCEDE)
+* @return Action describing how to handle execution (Action::Ignore, Action::Override, Action::Supersede)
   */
-using CommandHandler = std::function<META_RES(const CCommandContext&, const CCommand&, bool post)>;
+using CommandHandler = std::function<Action(const CCommandContext&, const CCommand&, bool post)>;
 
 /* =========================
 Core Toolkit Commands
@@ -149,11 +150,10 @@ public:
     * @param handler Callback executed on command execution
     * @param post false to run before the original, true to run after
     *
-    * @return META_RES to control command execution:
-    * * MRES_IGNORED: do nothing
-    * * MRES_HANDLED: did something, original still runs
-    * * MRES_OVERRIDE: override return value but still call original (pre only)
-    * * MRES_SUPERCEDE: block original execution (pre only)
+    * @return Action to control command execution:
+    * * Action::Ignore: do nothing
+    * * Action::Override: override return value but still call original (pre only)
+    * * Action::Supersede: block original execution (pre only)
         */
     virtual void RegisterConListener(PluginId owner, const char* pchName, CommandHandler handler, bool post) = 0;
 

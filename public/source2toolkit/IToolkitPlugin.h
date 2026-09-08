@@ -60,8 +60,10 @@
 #include <cstring>
 #include <cstdio>
 
-// META_RES, and the SH_/RETURN_SH machinery plugins hook with.
-#include "sourcehook.h"
+// Action, the result every toolkit callback hands back, and KHook -- the
+// detour library (metamod's) plugins hook with.
+#include "IToolkitTypes.h"
+#include "khook.hpp"
 
 /* =========================
 Forward declarations
@@ -88,12 +90,7 @@ class IToolkitNetworkMessages;
 class IToolkitScheduler;
 class IToolkitTrace;
 
-namespace SourceHook
-{
-    class ISourceHook;
-}
-
-// Everything below this line may use META_RES and the forward declarations
+// Everything below this line may use Action and the forward declarations
 // above. Nothing above it can: the interface headers include this
 // one back, and by then its guard is already set, so anything declared after
 // them would be invisible to them.
@@ -131,14 +128,13 @@ enum
 Export system
 ========================= */
 
-/// Source2Toolkit's own SourceHook engine, served through ToolkitFactory.
+/// KHook, served through ToolkitFactory.
 ///
-/// This is deliberately NOT metamod's shared SourceHook: the toolkit owns a
-/// private engine (sourcehook_metamod_override.h) so its hooks -- and every
-/// plugin's -- live on one instance that SH_CALL and SH_GET_INLINEHOOK_ORIGINAL
-/// can actually see through. Two independent engines patching the same address
-/// cannot bypass each other's handler chains.
-#define TOOLKIT_SOURCEHOOK_INTERFACE "S2ToolkitSourceHook001"
+/// The toolkit is a metamod plugin and gets metamod's detour engine handed
+/// to it at load; this is how that same engine reaches a toolkit plugin, so
+/// every hook on the server -- metamod's, the toolkit's, every plugin's --
+/// runs on one instance. TOOLKIT_SAVEVARS() does the fetch.
+#define TOOLKIT_KHOOK_INTERFACE "S2ToolkitKHook001"
 
 /// Plugin interface name
 #define TOOLKIT_INTERFACE_NAME "S2ToolkitPlugin001"
@@ -337,7 +333,7 @@ Globals
 * * g_ToolkitAPI
 * * g_PluginAPI
 * * g_PluginID
-* * g_SHPtr, repointed at the toolkit's engine
+* * KHook::__exported__khook, the detour engine (see TOOLKIT_KHOOK_INTERFACE)
     */
 #define TOOLKIT_EXPOSE(name, var) \
     IToolkitAPI*             g_ToolkitAPI              = nullptr; \
@@ -359,8 +355,7 @@ Globals
     IToolkitPaths*           g_pToolkitPaths           = nullptr; \
     IToolkitScheduler*       g_pToolkitScheduler       = nullptr; \
     IToolkitTrace*           g_pToolkitTrace           = nullptr; \
-    SourceHook::ISourceHook* g_SHPtr                   = nullptr; \
-    PluginId                 g_PLID                    = 0; \
+    namespace KHook { KHook::IKHook* __exported__khook = nullptr; } \
     TOOLKIT_EXPOSURE_FUNC(name, var)
 
 /**
@@ -387,8 +382,7 @@ Globals
     extern IToolkitPaths*           g_pToolkitPaths; \
     extern IToolkitScheduler*       g_pToolkitScheduler; \
     extern IToolkitTrace*           g_pToolkitTrace; \
-    extern SourceHook::ISourceHook* g_SHPtr; \
-    extern PluginId                 g_PLID;
+    namespace KHook { extern KHook::IKHook* __exported__khook; }
 
 /**
 
@@ -400,8 +394,7 @@ Globals
     g_ToolkitAPI = api; \
     g_PluginAPI  = static_cast<IToolkitPlugin*>(this); \
     g_PluginID   = id; \
-    g_PLID       = id; \
-    g_SHPtr      = static_cast<SourceHook::ISourceHook*>(api->ToolkitFactory(TOOLKIT_SOURCEHOOK_INTERFACE, nullptr, nullptr)); \
+    KHook::__exported__khook = static_cast<KHook::IKHook*>(api->ToolkitFactory(TOOLKIT_KHOOK_INTERFACE, nullptr, nullptr)); \
     g_pToolkitAddresses       = (IToolkitAddresses*)      api->ToolkitFactory(TOOLKIT_ADDRESSES_INTERFACE,       nullptr, nullptr); \
     g_pToolkitCommands        = (IToolkitCommands*)       api->ToolkitFactory(TOOLKIT_COMMANDS_INTERFACE,        nullptr, nullptr); \
     g_pToolkitConVars         = (IToolkitConVars*)        api->ToolkitFactory(TOOLKIT_CONVARS_INTERFACE,         nullptr, nullptr); \

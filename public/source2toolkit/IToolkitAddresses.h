@@ -451,14 +451,15 @@ public:
  * TerminateRound is the standing example: the hook declares (CCSGameRules,
  * RoundEndReason, float, void*, uint8_t) where this interface's typedef says
  * (CGameRules*, uint32, uint32*, float). Unhooked functions come back
- * unchanged, so this is always safe to apply.
+ * unchanged (KHook::FindOriginal hands the address back as is), so this is
+ * always safe to apply.
  *
  * @note Resolve it at the call, do not cache it in a global. The address is
  *       only the original from the moment the hook exists, and hooks are
  *       installed long after these addresses are scanned.
  */
 #define TOOLKIT_ORIGINAL(fn) \
-    reinterpret_cast<decltype(fn)>(SH_GET_ORIGINAL_ADDR(reinterpret_cast<void*>(fn)))
+    reinterpret_cast<decltype(fn)>(KHook::FindOriginal(reinterpret_cast<void*>(fn)))
 
 #define ADDR_CREATE_ENTITY_BY_NAME()                g_pToolkitAddresses->CBaseEntity_CreateEntityByName()
 #define ADDR_DISPATCH_SPAWN()                       g_pToolkitAddresses->CBaseEntity_DispatchSpawn()
