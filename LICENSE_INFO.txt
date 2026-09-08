@@ -25,7 +25,7 @@ A copy of the GNU General Public License 3.0 is available in LICENSE.
 Source2Toolkit SDK is Copyright (C) 2025-2026 Michal "Slynx" Prikryl.
 All rights reserved.
 Portions are Copyright (C) AlliedModders LLC. All rights reserved.
-SourceHook is Copyright (C) AlliedModders LLC. All rights reserved.
+KHook is Copyright (C) Benoist "Kenzzer" André.
 Source and Source 2 are Copyright (C) Valve Corporation.
 All trademarks are property of their respective owners in the US and other
 countries.

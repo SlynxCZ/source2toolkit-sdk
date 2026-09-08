@@ -3,8 +3,7 @@
 # Buildable two ways:
 #  - Standalone (configure.py + ambuild): detects an SDK itself and builds the
 #    static library on its own.
-#  - As a sub-build from a plugin's own AMBuildScript, the way this repo's
-#    vendor/sourcehook/AMBuildScript is pulled in:
+#  - As a sub-build from a plugin's own AMBuildScript:
 #
 #      ToolkitSdk = builder.Build('<sdk path>/AMBuildScript', {
 #        'ToolkitSdkTarget': sdk_target,     # the caller's own sdk_target,
@@ -12,16 +11,18 @@
 #      })
 #      ...
 #      ToolkitSdk['config'].AddPublicIncludes(binary)
-#      binary.compiler.linkflags += [
-#        ToolkitSdk['binaries_by_arch'][cxx.target.arch],
-#        ToolkitSdk['sourcehook_binaries_by_arch'][cxx.target.arch],
-#      ]
+#      binary.compiler.linkflags += [ToolkitSdk['binaries_by_arch'][cxx.target.arch]]
 #
 #    AddPublicIncludes() is the point: it adds every include path a consumer of
-#    "source2toolkit/IToolkitPlugin.h" needs -- public/, the hl2sdk tree and
-#    sourcehook -- in one call, computed from *this* repo's own directory, so a
-#    caller never hand-lists the SDK's folder layout and re-breaks every time it
-#    changes.
+#    "source2toolkit/IToolkitPlugin.h" needs -- public/ and KHook -- in one
+#    call, computed from *this* repo's own directory and the metamod checkout,
+#    so a caller never hand-lists the SDK's folder layout and re-breaks every
+#    time it changes.
+#
+#    Hooks are KHook, which ships inside metamod-source (third_party/khook) and
+#    is header-only for a plugin: the engine comes from metamod at load time.
+#    The metamod checkout is found the same way CMakeLists.txt finds it --
+#    --mms_path first, then the MMSOURCE_DEV environment variable.
 import os, sys
 
 # Injected by a parent build; None when standalone.
@@ -46,14 +47,26 @@ def ResolveEnvPath(env, folder):
   return None
 
 
+def FindMetamodPath():
+  path = getattr(builder.options, 'mms_path', None)
+  if path and os.path.isdir(path):
+    return path
+  path = ResolveEnvPath('MMSOURCE_DEV', 'metamod-source')
+  if path:
+    return path
+  raise Exception('Could not find metamod-source -- pass --mms_path or set '
+                  'MMSOURCE_DEV; KHook (third_party/khook) comes from there.')
+
+
 class ToolkitSdkConfig(object):
   def __init__(self):
     # Snapshot now, while this repo's own AMBuildScript is the currently
     # executing context -- builder.currentSourcePath is a live attribute that
     # ambuild2 mutates as it walks in and out of each BuildScript, so reading it
     # lazily from inside AddPublicIncludes() would point at whichever project
-    # happens to be calling. Same reasoning as vendor/sourcehook/AMBuildScript.
+    # happens to be calling.
     self.sourcePath = builder.currentSourcePath
+    self.metamodPath = FindMetamodPath()
 
     self.all_targets = []
     self.binaries = []
@@ -225,16 +238,12 @@ class ToolkitSdkConfig(object):
 
   def AddPublicIncludes(self, binary):
     # The one call a consumer of "source2toolkit/IToolkitPlugin.h" needs:
-    # public/ for the toolkit headers, and sourcehook because IToolkitPlugin.h
-    # includes "sourcehook.h" itself. The hl2sdk include paths come from
+    # public/ for the toolkit headers, and KHook because IToolkitPlugin.h
+    # includes "khook.hpp" itself. The hl2sdk include paths come from
     # SdkHelpers.configureCxx() on the consumer's own binary.
     binary.compiler.cxxincludes += [
       os.path.join(self.sourcePath, 'public'),
-      os.path.join(self.sourcePath, 'vendor', 'sourcehook', 'include'),
-      os.path.join(self.sourcePath, 'vendor', 'sourcehook', 'vendor'),
-      os.path.join(self.sourcePath, 'vendor', 'sourcehook', 'vendor', 'safetyhook'),
-      os.path.join(self.sourcePath, 'vendor', 'sourcehook', 'vendor', 'tl'),
-      os.path.join(self.sourcePath, 'vendor', 'sourcehook', 'vendor', 'zydis'),
+      os.path.join(self.metamodPath, 'third_party', 'khook', 'include'),
     ]
 
   def AddSdkIncludes(self, binary, sdk):
@@ -318,21 +327,11 @@ ToolkitSdk.detectSDKs()
 ToolkitSdk.configure()
 ToolkitSdk.build()
 
-# Built here so a consumer that links the SDK library links SourceHook with it
-# and never has to know it exists. This script lives inside the SDK tree, so
-# builder.Build() can reach it -- SdkPlugin.ambuild, which is Eval'd from
-# outside, compiles the same sources into the plugin instead.
-SourceHookLib = builder.Build(os.path.join('vendor', 'sourcehook', 'AMBuildScript'), {})
-
-# What a parent build gets back: the compiled-library paths (same {arch: path}
-# convention as vendor/sourcehook/AMBuildScript), plus the config object so the
-# caller can call ToolkitSdk['config'].AddPublicIncludes(binary) instead of
-# re-declaring the SDK's folder layout by hand.
+# What a parent build gets back: the compiled-library paths ({arch: path}),
+# plus the config object so the caller can call
+# ToolkitSdk['config'].AddPublicIncludes(binary) instead of re-declaring the
+# SDK's folder layout by hand.
 rvalue = {
   'binaries_by_arch': ToolkitSdk.binaries_by_arch,
   'config': ToolkitSdk,
-  # Link this alongside 'binaries_by_arch': the SDK is a static library and a
-  # static library cannot carry its own dependencies.
-  'sourcehook_binaries_by_arch': SourceHookLib['binaries_by_arch'],
-  'sourcehook_config': SourceHookLib['config'],
 }

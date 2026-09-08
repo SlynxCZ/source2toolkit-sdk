@@ -23,6 +23,9 @@ parser.options.add_argument('--hl2sdk-root', type=str, dest='hl2sdk_root', defau
                             help='Root search folder for HL2SDKs')
 parser.options.add_argument('--hl2sdk-manifests', type=str, dest='hl2sdk_manifests', default=None,
                             help='HL2SDK manifests source tree folder (default: vendor/hl2sdk-manifests)')
+parser.options.add_argument('--mms_path', type=str, dest='mms_path', default=None,
+                            help='Path to metamod-source; KHook (third_party/khook) comes from there '
+                                 '(default: the MMSOURCE_DEV environment variable)')
 parser.options.add_argument('--enable-debug', action='store_const', const='1', dest='debug',
                             help='Enable debugging symbols')
 parser.options.add_argument('--enable-optimize', action='store_const', const='1', dest='opt',
