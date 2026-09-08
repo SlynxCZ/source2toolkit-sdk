@@ -47,13 +47,6 @@
 #include "source2toolkit/utils/virtual.h"
 
 #ifdef SOURCE2TOOLKIT_CORE
-// TOOLKIT_ORIGINAL below needs SH_GLOB_SHPTR. This points it at the toolkit's
-// own engine, the one every .stx plugin is handed; in a plugin build
-// TOOLKIT_GLOBALVARS() already provides g_SHPtr, which is that same engine.
-#include "sourcehook/sourcehook_metamod_override.h"
-#endif
-
-#ifdef SOURCE2TOOLKIT_CORE
 #include "core/addresses.h"
 #include "core/entities.h"
 #include "core/gameconfig.h"
