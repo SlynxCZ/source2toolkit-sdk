@@ -84,7 +84,7 @@ void CBaseEntity::AddEntityIOEvent(const char* pszInput, CEntityInstance* pActiv
 #endif
 }
 
-CEntityIOListenerHandle* CBaseEntity::AddSingleEntityIOListener(const char* pszOutput, std::function<META_RES(const char*,CEntityInstance*, CEntityInstance*, float, bool)> callback, bool post)
+CEntityIOListenerHandle* CBaseEntity::AddSingleEntityIOListener(const char* pszOutput, std::function<Action(const char*, CEntityInstance*, CEntityInstance*, float, bool)> callback, bool post)
 {
     auto* listener = new CSingleEntityIOListener(this, std::move(callback));
 
