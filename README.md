@@ -176,13 +176,10 @@ bypassing the chain; return `Supersede` afterwards so it does not run twice.
 | `Supersede` | original is skipped entirely |
 
 The toolkit's own listener callbacks (`RegisterConListener`, `HookGameEvent`,
-net message hooks, entity output listeners) return the toolkit's `Action`
-(`IToolkitTypes.h`) -- `Ignore` / `Override` / `Supersede`, same values, so a
-KHook handler can pass one through with a `static_cast`. Timing there is a
-plain `bool post`: `false` runs before the original, `true` after.
-
-<sub>Spelling: the toolkit's enum is `Action::Supersede`, KHook's is
-`KHook::Action::Supersede`.</sub>
+net message hooks, entity output listeners) return the same type: `Action`
+(`IToolkitTypes.h`) is an alias of `KHook::Action`, so a KHook handler hands a
+listener's answer straight through. Timing there is a plain `bool post`:
+`false` runs before the original, `true` after.
 
 ---
 

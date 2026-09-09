@@ -41,7 +41,7 @@
 * @brief Types shared by every toolkit callback.
 *
 * Defines:
-* * Action -- what a callback tells the toolkit to do with the original
+* * Action -- what a callback tells the toolkit to do with the original (KHook::Action)
   */
 
 #ifndef _INCLUDE_ITOOLKIT_TYPES_H
@@ -51,30 +51,25 @@
 #include <cstdint>
 #include <type_traits>
 
+#include "khook.hpp"
+
 /* =========================
 Hook control
 ========================= */
 
 /**
-
-* @brief What a toolkit callback (command listener, game event hook, net
-* message hook, entity output listener) did about the original.
-*
-* The values line up with KHook::Action, so a KHook handler can hand a
-* toolkit Action straight through with a static_cast.
-  */
-enum class Action : std::uint8_t
-{
-    /// Did nothing; the original runs as it would have.
-    Ignore = 0,
-
-    /// Changed something (the event, the return value) but the original still
-    /// runs. Pre only.
-    Override,
-
-    /// Block the original entirely. Pre only.
-    Supersede
-};
+ * @brief What a toolkit callback (command listener, game event hook, net
+ * message hook, entity output listener) did about the original.
+ *
+ * KHook's own result type, so a KHook handler hands a listener's answer straight
+ * through and a listener returns what a hook would:
+ *
+ * * Ignore    -- did nothing; the original runs as it would have.
+ * * Override  -- changed something (the event, the return value) but the
+ *                original still runs. Pre only.
+ * * Supersede -- block the original entirely. Pre only.
+ */
+using Action = KHook::Action;
 
 
 // A KHook hook carries the hooked member function and the callbacks in its
