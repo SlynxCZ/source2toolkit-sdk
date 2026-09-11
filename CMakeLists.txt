@@ -45,13 +45,78 @@ function(resolve_dep OUT_VAR ENV_NAME)
     endif()
 endfunction()
 
-# KHook, metamod's detour library, is what the toolkit and its plugins hook
-# with. Header-only on this side: the engine lives in metamod.so and reaches a
-# plugin through TOOLKIT_SAVEVARS() (see IToolkitPlugin.h), so all the SDK
-# needs is the include path out of the metamod-source checkout.
-resolve_dep(METAMOD MMSOURCE_DEV)
 resolve_dep(SOURCESDK HL2SDKCS2)
 resolve_dep(PROTOBUFS CSGO_PROTO)
+
+# =========================
+# KHOOK
+# =========================
+#
+# KHook, metamod's detour library, is what the toolkit and its plugins hook
+# with. Header-only on this side: the engine lives in metamod.so and reaches a
+# plugin through TOOLKIT_SAVEVARS() (see IToolkitPlugin.h), so nothing here is
+# built -- the headers are all the SDK needs.
+#
+# They come from vendor/khook, a submodule of this repo, so a toolkit plugin
+# depends on the SDK alone and not on a metamod-source checkout. The one
+# exception is the toolkit core itself (SOURCE2TOOLKIT_CORE): it is a metamod
+# plugin, its engine is the KHook compiled into metamod, and it has to use
+# that copy's headers so what it compiles against is what it runs on.
+#
+# TOOLKIT_KHOOK_COMMIT is the commit of whichever copy was used. The core
+# answers TOOLKIT_KHOOK_VERSION_INTERFACE with its own, and TOOLKIT_SAVEVARS()
+# compares the two at plugin load, so a plugin built against one KHook can
+# never silently hook through another (see IToolkitPlugin.h).
+
+if (SOURCE2TOOLKIT_CORE AND DEFINED ENV{MMSOURCE_DEV} AND NOT "$ENV{MMSOURCE_DEV}" STREQUAL "")
+    file(TO_CMAKE_PATH "$ENV{MMSOURCE_DEV}" _metamod)
+    set(KHOOK_DIR "${_metamod}/third_party/khook")
+    message(STATUS "KHook (core build) -> ${KHOOK_DIR}")
+else ()
+    set(KHOOK_DIR "${CMAKE_CURRENT_SOURCE_DIR}/vendor/khook")
+endif ()
+
+if (NOT EXISTS "${KHOOK_DIR}/include/khook.hpp")
+    message(FATAL_ERROR
+            "KHook headers not found at ${KHOOK_DIR}/include. "
+            "Initialise the submodule: git submodule update --init --recursive")
+endif ()
+
+find_package(Git QUIET)
+set(TOOLKIT_KHOOK_COMMIT "unknown")
+if (GIT_FOUND)
+    execute_process(
+            COMMAND ${GIT_EXECUTABLE} rev-parse HEAD
+            WORKING_DIRECTORY ${KHOOK_DIR}
+            OUTPUT_VARIABLE _khook_commit
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+            ERROR_QUIET
+            RESULT_VARIABLE _khook_rc
+    )
+    if (_khook_rc EQUAL 0 AND NOT "${_khook_commit}" STREQUAL "")
+        set(TOOLKIT_KHOOK_COMMIT "${_khook_commit}")
+    endif ()
+endif ()
+message(STATUS "KHook commit: ${TOOLKIT_KHOOK_COMMIT}")
+
+if (SOURCE2TOOLKIT_CORE AND GIT_FOUND AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vendor/khook/include/khook.hpp")
+    # The core compiles against metamod's copy, plugins against the submodule.
+    # They have to be the same commit, or every plugin fails its load check.
+    execute_process(
+            COMMAND ${GIT_EXECUTABLE} rev-parse HEAD
+            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/vendor/khook
+            OUTPUT_VARIABLE _sdk_khook_commit
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+            ERROR_QUIET
+    )
+    if (NOT "${_sdk_khook_commit}" STREQUAL "${TOOLKIT_KHOOK_COMMIT}")
+        message(WARNING
+                "KHook pin drift: metamod-source has ${TOOLKIT_KHOOK_COMMIT}, "
+                "the SDK submodule vendor/khook has ${_sdk_khook_commit}. "
+                "Plugins built from this SDK will refuse to load on this core "
+                "until both point at the same commit.")
+    endif ()
+endif ()
 
 set(SOURCESDK_LIB ${SOURCESDK}/lib)
 
@@ -196,7 +261,13 @@ target_include_directories(source2toolkit-sdk PUBLIC
         ${SOURCESDK}/public/entity2
         ${SOURCESDK}/public/game/server
         ${SOURCESDK}/public/schemasystem
-        ${METAMOD}/third_party/khook/include
+        ${KHOOK_DIR}/include
+)
+
+# Which KHook this binary -- and everything linking it -- was compiled
+# against. Read back by TOOLKIT_SAVEVARS() and by the core's ToolkitFactory.
+target_compile_definitions(source2toolkit-sdk PUBLIC
+        TOOLKIT_KHOOK_COMMIT="${TOOLKIT_KHOOK_COMMIT}"
 )
 
 # =========================

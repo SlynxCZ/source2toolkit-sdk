@@ -79,7 +79,7 @@ my_plugin.stx
 ## What's Included
 
 - **HL2SDK-CS2** (as submodule)  
-- **KHook** (virtual, vtable & function hooks)  
+- **KHook** (virtual, vtable & function hooks) -- as the `vendor/khook` submodule, headers only    
 - **Protobuf definitions**  
 - **Tier0 / Tier1 / Mathlib**  
 - **Schema system headers**  
@@ -93,7 +93,15 @@ Hooks go through **KHook**, Metamod:Source's own detour library. The toolkit is
 a Metamod plugin and gets the engine handed to it at load; `TOOLKIT_SAVEVARS()`
 fetches that same engine for your plugin (`ToolkitFactory(TOOLKIT_KHOOK_INTERFACE)`),
 so every hook on the server -- Metamod's, the toolkit's, every plugin's -- runs
-on one instance. Nothing to set up on your side:
+on one instance.
+
+The headers are the SDK's own `vendor/khook` submodule (`git submodule update
+--init --recursive`); nothing of KHook is built and no metamod-source checkout
+is needed. The SDK stamps the submodule's commit into your binary as
+`TOOLKIT_KHOOK_COMMIT`, the core reports the commit it was built with
+(`ToolkitFactory(TOOLKIT_KHOOK_VERSION_INTERFACE)`), and `TOOLKIT_SAVEVARS()`
+refuses the load if the two differ -- a plugin built against one KHook never
+hooks through another. Nothing to set up on your side:
 
 ```cpp
 TOOLKIT_EXPOSE(MyPlugin, g_MyPlugin);

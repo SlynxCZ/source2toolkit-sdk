@@ -1,3 +1,6 @@
 [submodule "vendor/hl2sdk-manifests"]
 	path = vendor/hl2sdk-manifests
 	url = https://github.com/alliedmodders/hl2sdk-manifests.git
+[submodule "vendor/khook"]
+	path = vendor/khook
+	url = https://github.com/Kenzzer/KHook.git

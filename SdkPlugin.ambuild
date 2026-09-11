@@ -17,11 +17,12 @@
 # is what the CMake path produces too -- there the SDK is a static library, and
 # a static library is just those same objects.
 #
-# Hooks are KHook, which ships inside metamod-source (third_party/khook) and is
-# header-only for a plugin: the engine comes from metamod at load time. The
-# metamod checkout is found the same way CMakeLists.txt finds it -- --mms_path
-# first, then the MMSOURCE_DEV environment variable.
-import os
+# Hooks are KHook, header-only for a plugin: the engine comes from metamod at
+# load time. The headers are the SDK's own vendor/khook submodule (nothing of
+# it is built), so a plugin needs no metamod-source checkout.
+# TOOLKIT_KHOOK_COMMIT, defined from that submodule, is what TOOLKIT_SAVEVARS()
+# compares with the core's own KHook at plugin load.
+import os, subprocess
 
 class ToolkitSdkPlugin(object):
   def __init__(self):
@@ -29,12 +30,19 @@ class ToolkitSdkPlugin(object):
     if not self.sourcePath or not os.path.isdir(self.sourcePath):
       raise Exception('SOURCE2TOOLKIT_SDK is not set to a valid directory')
 
-    self.metamodPath = getattr(builder.options, 'mms_path', None)
-    if not self.metamodPath or not os.path.isdir(self.metamodPath):
-      self.metamodPath = os.environ.get('MMSOURCE_DEV')
-    if not self.metamodPath or not os.path.isdir(self.metamodPath):
-      raise Exception('Could not find metamod-source -- pass --mms_path or set '
-                      'MMSOURCE_DEV; KHook (third_party/khook) comes from there.')
+    self.khookPath = os.path.join(self.sourcePath, 'vendor', 'khook')
+    if not os.path.isfile(os.path.join(self.khookPath, 'include', 'khook.hpp')):
+      raise Exception('KHook headers not found at {} -- initialise the submodule: '
+                      'git submodule update --init --recursive'.format(self.khookPath))
+
+    # Mirrors CMakeLists.txt: "unknown" when git cannot say, which the
+    # load-time check reports but lets through.
+    try:
+      out = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=self.khookPath,
+                                    stderr=subprocess.DEVNULL)
+      self.khookCommit = out.decode('ascii', 'ignore').strip() or 'unknown'
+    except Exception:
+      self.khookCommit = 'unknown'
 
   def AddPublicIncludes(self, binary):
     # The one call a consumer of "source2toolkit/IToolkitPlugin.h" needs.
@@ -42,7 +50,7 @@ class ToolkitSdkPlugin(object):
     binary.compiler.cxxincludes += [
       os.path.join(self.sourcePath, 'public'),
       os.path.join(self.sourcePath, 'src'),
-      os.path.join(self.metamodPath, 'third_party', 'khook', 'include'),
+      os.path.join(self.khookPath, 'include'),
     ]
 
   def AddSdkIncludes(self, binary, sdk):
@@ -98,6 +106,8 @@ class ToolkitSdkPlugin(object):
     binary.compiler.defines += [
       'META_IS_SOURCE2',
       '_ITERATOR_DEBUG_LEVEL=0',
+      # Read back by TOOLKIT_SAVEVARS() and compared with the core's KHook.
+      'TOOLKIT_KHOOK_COMMIT="{}"'.format(self.khookCommit),
     ]
     if binary.compiler.target.platform == 'linux':
       # Every consumer has to agree with the SDK here, or std::string crosses

@@ -136,6 +136,57 @@ Export system
 /// runs on one instance. TOOLKIT_SAVEVARS() does the fetch.
 #define TOOLKIT_KHOOK_INTERFACE "S2ToolkitKHook001"
 
+/// The commit of the KHook the core was compiled against, as a const char*
+/// (nullptr from a core that predates the check). TOOLKIT_SAVEVARS() compares
+/// it with TOOLKIT_KHOOK_COMMIT, the commit this plugin was compiled against,
+/// and refuses the load on a mismatch: the header and the engine are one
+/// library, and a plugin that hooks through a different KHook than the one
+/// running is undefined behaviour with a delay on it.
+#define TOOLKIT_KHOOK_VERSION_INTERFACE "S2ToolkitKHookVersion001"
+
+#ifndef TOOLKIT_KHOOK_COMMIT
+/// Set by the SDK's CMakeLists.txt / AMBuildScript from vendor/khook (the
+/// core: from metamod's copy). A build that bypassed both gets "unknown",
+/// which the check reports and lets through.
+#define TOOLKIT_KHOOK_COMMIT "unknown"
+#endif
+
+/// The load-time half of the KHook check; TOOLKIT_SAVEVARS() calls it.
+///
+/// Returns false and fills `error` only when both commits are known and
+/// differ. A side that cannot say -- a core too old to answer, a plugin built
+/// without git -- makes the check impossible, not failed: that goes out
+/// through `note` and the load goes on.
+inline bool ToolkitKHookVersionMatches(const char* coreCommit, char* error, size_t maxlen, const char** note)
+{
+    if (note)
+        *note = nullptr;
+
+    if (!coreCommit || !coreCommit[0])
+    {
+        if (note)
+            *note = "the toolkit core does not report its KHook commit (older core), KHook version check skipped";
+        return true;
+    }
+
+    if (strcmp(TOOLKIT_KHOOK_COMMIT, "unknown") == 0)
+    {
+        if (note)
+            *note = "this plugin carries no KHook commit (built without git), KHook version check skipped";
+        return true;
+    }
+
+    if (strcmp(coreCommit, TOOLKIT_KHOOK_COMMIT) == 0)
+        return true;
+
+    if (error && maxlen)
+        snprintf(error, maxlen,
+                 "KHook mismatch: plugin built against %.12s, toolkit core runs %.12s -- "
+                 "rebuild the plugin with the SDK's vendor/khook at the core's commit, or update the core",
+                 TOOLKIT_KHOOK_COMMIT, coreCommit);
+    return false;
+}
+
 /// Plugin interface name
 #define TOOLKIT_INTERFACE_NAME "S2ToolkitPlugin001"
 
@@ -388,13 +439,24 @@ Globals
 
 * @brief Initializes global variables inside Load().
 *
-* @note Must be called in plugin Load().
+* @note Must be called in plugin Load(), with its parameters under their
+*       declared names (id, api, error, maxlen): the KHook version check in
+*       here writes `error` and returns false out of Load() when the KHook
+*       this plugin was compiled against is not the one the core runs
+*       (see TOOLKIT_KHOOK_VERSION_INTERFACE).
   */
 #define TOOLKIT_SAVEVARS() \
     g_ToolkitAPI = api; \
     g_PluginAPI  = static_cast<IToolkitPlugin*>(this); \
     g_PluginID   = id; \
     KHook::__exported__khook = static_cast<KHook::IKHook*>(api->ToolkitFactory(TOOLKIT_KHOOK_INTERFACE, nullptr, nullptr)); \
+    { \
+        const char* toolkitKHookNote = nullptr; \
+        if (!ToolkitKHookVersionMatches(static_cast<const char*>(api->ToolkitFactory(TOOLKIT_KHOOK_VERSION_INTERFACE, nullptr, nullptr)), error, maxlen, &toolkitKHookNote)) \
+            return false; \
+        if (toolkitKHookNote) \
+            api->ConPrintf("[%s] %s\n", GetName(), toolkitKHookNote); \
+    } \
     g_pToolkitAddresses       = (IToolkitAddresses*)      api->ToolkitFactory(TOOLKIT_ADDRESSES_INTERFACE,       nullptr, nullptr); \
     g_pToolkitCommands        = (IToolkitCommands*)       api->ToolkitFactory(TOOLKIT_COMMANDS_INTERFACE,        nullptr, nullptr); \
     g_pToolkitConVars         = (IToolkitConVars*)        api->ToolkitFactory(TOOLKIT_CONVARS_INTERFACE,         nullptr, nullptr); \
