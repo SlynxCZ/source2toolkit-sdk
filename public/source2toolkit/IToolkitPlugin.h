@@ -454,8 +454,10 @@ Globals
         const char* toolkitKHookNote = nullptr; \
         if (!ToolkitKHookVersionMatches(static_cast<const char*>(api->ToolkitFactory(TOOLKIT_KHOOK_VERSION_INTERFACE, nullptr, nullptr)), error, maxlen, &toolkitKHookNote)) \
             return false; \
-        if (toolkitKHookNote) \
-            api->ConPrintf("[%s] %s\n", GetName(), toolkitKHookNote); \
+        if (toolkitKHookNote && error && maxlen) \
+        { \
+            g_ToolkitAPI->Format(error, maxlen, "%s", toolkitKHookNote); \
+        } \
     } \
     g_pToolkitAddresses       = (IToolkitAddresses*)      api->ToolkitFactory(TOOLKIT_ADDRESSES_INTERFACE,       nullptr, nullptr); \
     g_pToolkitCommands        = (IToolkitCommands*)       api->ToolkitFactory(TOOLKIT_COMMANDS_INTERFACE,        nullptr, nullptr); \
