@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvSplash> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvSplash>();
+    }
 };
 
 #endif // _INCLUDE_CENVSPLASH_H

@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncVehicleClip> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncVehicleClip>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCVEHICLECLIP_H

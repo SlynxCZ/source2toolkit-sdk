@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvSoundscapeProxyAlias_snd_soundscape_proxy> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvSoundscapeProxyAlias_snd_soundscape_proxy>();
+    }
 };
 
 #endif // _INCLUDE_CENVSOUNDSCAPEPROXYALIAS_SND_SOUNDSCAPE_PROXY_H

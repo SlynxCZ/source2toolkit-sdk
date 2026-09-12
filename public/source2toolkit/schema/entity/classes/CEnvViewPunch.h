@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvViewPunch> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvViewPunch>();
+    }
 };
 
 #endif // _INCLUDE_CENVVIEWPUNCH_H

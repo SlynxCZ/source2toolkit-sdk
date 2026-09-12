@@ -81,6 +81,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<SpawnPoint> GetHandle()
+    {
+        return CBaseEntity::GetHandle<SpawnPoint>();
+    }
 };
 
 #endif // _INCLUDE_SPAWNPOINT_H

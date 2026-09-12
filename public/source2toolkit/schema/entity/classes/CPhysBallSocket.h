@@ -84,6 +84,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysBallSocket> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysBallSocket>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSBALLSOCKET_H

@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<FilterDamageType> GetHandle()
+    {
+        return CBaseEntity::GetHandle<FilterDamageType>();
+    }
 };
 
 #endif // _INCLUDE_FILTERDAMAGETYPE_H

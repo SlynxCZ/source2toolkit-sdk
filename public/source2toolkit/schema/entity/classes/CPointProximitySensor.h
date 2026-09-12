@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPointProximitySensor> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPointProximitySensor>();
+    }
 };
 
 #endif // _INCLUDE_CPOINTPROXIMITYSENSOR_H

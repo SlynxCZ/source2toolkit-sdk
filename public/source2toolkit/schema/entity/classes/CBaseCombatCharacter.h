@@ -93,6 +93,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CBaseCombatCharacter> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CBaseCombatCharacter>();
+    }
 };
 
 #endif // _INCLUDE_CBASECOMBATCHARACTER_H

@@ -93,6 +93,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncMoveLinear> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncMoveLinear>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCMOVELINEAR_H

@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CWaterBullet> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CWaterBullet>();
+    }
 };
 
 #endif // _INCLUDE_CWATERBULLET_H

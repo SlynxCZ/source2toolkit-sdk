@@ -92,6 +92,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPostProcessingVolume> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPostProcessingVolume>();
+    }
 };
 
 #endif // _INCLUDE_CPOSTPROCESSINGVOLUME_H

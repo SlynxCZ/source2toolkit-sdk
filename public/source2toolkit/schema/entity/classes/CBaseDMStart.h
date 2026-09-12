@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CBaseDMStart> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CBaseDMStart>();
+    }
 };
 
 #endif // _INCLUDE_CBASEDMSTART_H

@@ -105,6 +105,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CInferno> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CInferno>();
+    }
 };
 
 #endif // _INCLUDE_CINFERNO_H

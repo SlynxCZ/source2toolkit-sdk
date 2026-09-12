@@ -86,6 +86,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysFixed> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysFixed>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSFIXED_H

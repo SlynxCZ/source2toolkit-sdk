@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncWallToggle> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncWallToggle>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCWALLTOGGLE_H

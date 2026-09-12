@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSoundOpvarSetAABBEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSoundOpvarSetAABBEntity>();
+    }
 };
 
 #endif // _INCLUDE_CSOUNDOPVARSETAABBENTITY_H

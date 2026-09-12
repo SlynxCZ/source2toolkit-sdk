@@ -84,6 +84,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CShatterGlassShardPhysics> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CShatterGlassShardPhysics>();
+    }
 };
 
 #endif // _INCLUDE_CSHATTERGLASSSHARDPHYSICS_H

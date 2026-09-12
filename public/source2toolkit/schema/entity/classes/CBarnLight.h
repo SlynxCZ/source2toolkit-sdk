@@ -157,6 +157,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CBarnLight> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CBarnLight>();
+    }
 };
 
 #endif // _INCLUDE_CBARNLIGHT_H

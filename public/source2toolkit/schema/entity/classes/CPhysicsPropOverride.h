@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysicsPropOverride> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysicsPropOverride>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSICSPROPOVERRIDE_H

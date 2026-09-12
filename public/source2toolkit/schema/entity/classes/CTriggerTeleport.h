@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTriggerTeleport> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTriggerTeleport>();
+    }
 };
 
 #endif // _INCLUDE_CTRIGGERTELEPORT_H

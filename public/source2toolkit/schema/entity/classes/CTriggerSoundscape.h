@@ -84,6 +84,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTriggerSoundscape> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTriggerSoundscape>();
+    }
 };
 
 #endif // _INCLUDE_CTRIGGERSOUNDSCAPE_H

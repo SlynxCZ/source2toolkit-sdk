@@ -87,6 +87,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CRagdollConstraint> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CRagdollConstraint>();
+    }
 };
 
 #endif // _INCLUDE_CRAGDOLLCONSTRAINT_H

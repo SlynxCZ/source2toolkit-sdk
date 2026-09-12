@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSceneEntityAlias_logic_choreographed_scene> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSceneEntityAlias_logic_choreographed_scene>();
+    }
 };
 
 #endif // _INCLUDE_CSCENEENTITYALIAS_LOGIC_CHOREOGRAPHED_SCENE_H

@@ -85,6 +85,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPointVelocitySensor> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPointVelocitySensor>();
+    }
 };
 
 #endif // _INCLUDE_CPOINTVELOCITYSENSOR_H

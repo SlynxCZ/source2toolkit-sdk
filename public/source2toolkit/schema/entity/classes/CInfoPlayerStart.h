@@ -81,6 +81,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CInfoPlayerStart> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CInfoPlayerStart>();
+    }
 };
 
 #endif // _INCLUDE_CINFOPLAYERSTART_H

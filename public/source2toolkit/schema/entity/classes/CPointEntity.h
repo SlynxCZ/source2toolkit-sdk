@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPointEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPointEntity>();
+    }
 };
 
 #endif // _INCLUDE_CPOINTENTITY_H

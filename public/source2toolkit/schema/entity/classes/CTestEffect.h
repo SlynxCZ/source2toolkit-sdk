@@ -85,6 +85,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTestEffect> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTestEffect>();
+    }
 };
 
 #endif // _INCLUDE_CTESTEFFECT_H

@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFilterTeam> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFilterTeam>();
+    }
 };
 
 #endif // _INCLUDE_CFILTERTEAM_H

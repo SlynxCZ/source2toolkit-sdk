@@ -81,6 +81,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CCommentaryAuto> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CCommentaryAuto>();
+    }
 };
 
 #endif // _INCLUDE_CCOMMENTARYAUTO_H

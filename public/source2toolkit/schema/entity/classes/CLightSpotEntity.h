@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CLightSpotEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CLightSpotEntity>();
+    }
 };
 
 #endif // _INCLUDE_CLIGHTSPOTENTITY_H

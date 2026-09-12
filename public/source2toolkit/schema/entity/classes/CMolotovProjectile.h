@@ -88,6 +88,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CMolotovProjectile> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CMolotovProjectile>();
+    }
 };
 
 #endif // _INCLUDE_CMOLOTOVPROJECTILE_H

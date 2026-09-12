@@ -110,6 +110,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPointCommentaryNode> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPointCommentaryNode>();
+    }
 };
 
 #endif // _INCLUDE_CPOINTCOMMENTARYNODE_H

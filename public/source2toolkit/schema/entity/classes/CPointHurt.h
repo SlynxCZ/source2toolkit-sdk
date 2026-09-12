@@ -87,6 +87,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPointHurt> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPointHurt>();
+    }
 };
 
 #endif // _INCLUDE_CPOINTHURT_H

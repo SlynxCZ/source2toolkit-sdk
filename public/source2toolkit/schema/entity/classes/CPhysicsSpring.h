@@ -89,6 +89,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysicsSpring> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysicsSpring>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSICSSPRING_H

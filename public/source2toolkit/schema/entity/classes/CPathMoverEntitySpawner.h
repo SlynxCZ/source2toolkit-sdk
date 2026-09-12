@@ -96,6 +96,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPathMoverEntitySpawner> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPathMoverEntitySpawner>();
+    }
 };
 
 #endif // _INCLUDE_CPATHMOVERENTITYSPAWNER_H

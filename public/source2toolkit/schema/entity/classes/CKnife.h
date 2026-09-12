@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CKnife> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CKnife>();
+    }
 };
 
 #endif // _INCLUDE_CKNIFE_H

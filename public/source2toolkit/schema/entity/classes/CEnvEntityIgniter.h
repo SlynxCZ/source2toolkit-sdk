@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvEntityIgniter> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvEntityIgniter>();
+    }
 };
 
 #endif // _INCLUDE_CENVENTITYIGNITER_H

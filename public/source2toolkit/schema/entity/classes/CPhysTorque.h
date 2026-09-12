@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysTorque> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysTorque>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSTORQUE_H

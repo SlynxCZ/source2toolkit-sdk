@@ -83,6 +83,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CLogicCase> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CLogicCase>();
+    }
 };
 
 #endif // _INCLUDE_CLOGICCASE_H

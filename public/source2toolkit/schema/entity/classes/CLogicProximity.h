@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CLogicProximity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CLogicProximity>();
+    }
 };
 
 #endif // _INCLUDE_CLOGICPROXIMITY_H

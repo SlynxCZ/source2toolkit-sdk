@@ -95,6 +95,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysConstraint> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysConstraint>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSCONSTRAINT_H

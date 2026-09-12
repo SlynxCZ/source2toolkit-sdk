@@ -95,6 +95,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CVoteController> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CVoteController>();
+    }
 };
 
 #endif // _INCLUDE_CVOTECONTROLLER_H

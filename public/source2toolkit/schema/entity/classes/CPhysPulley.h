@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysPulley> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysPulley>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSPULLEY_H

@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncPlatRot> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncPlatRot>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCPLATROT_H

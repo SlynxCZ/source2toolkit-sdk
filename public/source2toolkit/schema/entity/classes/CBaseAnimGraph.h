@@ -98,6 +98,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CBaseAnimGraph> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CBaseAnimGraph>();
+    }
 };
 
 #endif // _INCLUDE_CBASEANIMGRAPH_H

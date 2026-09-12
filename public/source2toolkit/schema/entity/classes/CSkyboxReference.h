@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSkyboxReference> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSkyboxReference>();
+    }
 };
 
 #endif // _INCLUDE_CSKYBOXREFERENCE_H

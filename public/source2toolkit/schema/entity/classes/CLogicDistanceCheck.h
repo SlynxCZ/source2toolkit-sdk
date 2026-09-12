@@ -85,6 +85,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CLogicDistanceCheck> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CLogicDistanceCheck>();
+    }
 };
 
 #endif // _INCLUDE_CLOGICDISTANCECHECK_H

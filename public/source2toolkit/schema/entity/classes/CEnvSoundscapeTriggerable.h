@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvSoundscapeTriggerable> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvSoundscapeTriggerable>();
+    }
 };
 
 #endif // _INCLUDE_CENVSOUNDSCAPETRIGGERABLE_H

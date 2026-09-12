@@ -87,6 +87,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPointOrient> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPointOrient>();
+    }
 };
 
 #endif // _INCLUDE_CPOINTORIENT_H

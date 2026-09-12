@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CWeaponGalilAR> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CWeaponGalilAR>();
+    }
 };
 
 #endif // _INCLUDE_CWEAPONGALILAR_H

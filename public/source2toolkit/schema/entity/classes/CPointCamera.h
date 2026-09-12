@@ -104,6 +104,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPointCamera> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPointCamera>();
+    }
 };
 
 #endif // _INCLUDE_CPOINTCAMERA_H

@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CRectLight> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CRectLight>();
+    }
 };
 
 #endif // _INCLUDE_CRECTLIGHT_H

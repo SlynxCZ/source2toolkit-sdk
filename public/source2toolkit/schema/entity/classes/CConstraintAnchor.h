@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CConstraintAnchor> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CConstraintAnchor>();
+    }
 };
 
 #endif // _INCLUDE_CCONSTRAINTANCHOR_H

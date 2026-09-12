@@ -81,6 +81,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTriggerGameEvent> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTriggerGameEvent>();
+    }
 };
 
 #endif // _INCLUDE_CTRIGGERGAMEEVENT_H

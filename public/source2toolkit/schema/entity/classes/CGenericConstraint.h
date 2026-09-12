@@ -128,6 +128,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CGenericConstraint> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CGenericConstraint>();
+    }
 };
 
 #endif // _INCLUDE_CGENERICCONSTRAINT_H

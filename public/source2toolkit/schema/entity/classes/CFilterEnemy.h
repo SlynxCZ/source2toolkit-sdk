@@ -83,6 +83,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFilterEnemy> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFilterEnemy>();
+    }
 };
 
 #endif // _INCLUDE_CFILTERENEMY_H

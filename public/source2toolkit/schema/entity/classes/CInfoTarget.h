@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CInfoTarget> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CInfoTarget>();
+    }
 };
 
 #endif // _INCLUDE_CINFOTARGET_H

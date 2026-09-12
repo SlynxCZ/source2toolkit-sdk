@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CInfoPlayerTerrorist> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CInfoPlayerTerrorist>();
+    }
 };
 
 #endif // _INCLUDE_CINFOPLAYERTERRORIST_H

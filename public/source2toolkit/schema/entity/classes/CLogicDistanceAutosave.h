@@ -84,6 +84,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CLogicDistanceAutosave> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CLogicDistanceAutosave>();
+    }
 };
 
 #endif // _INCLUDE_CLOGICDISTANCEAUTOSAVE_H

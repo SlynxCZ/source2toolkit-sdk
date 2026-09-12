@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CScriptNavBlocker> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CScriptNavBlocker>();
+    }
 };
 
 #endif // _INCLUDE_CSCRIPTNAVBLOCKER_H

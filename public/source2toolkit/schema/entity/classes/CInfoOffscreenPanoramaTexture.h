@@ -91,6 +91,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CInfoOffscreenPanoramaTexture> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CInfoOffscreenPanoramaTexture>();
+    }
 };
 
 #endif // _INCLUDE_CINFOOFFSCREENPANORAMATEXTURE_H

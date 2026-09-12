@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPointClientUIDialog> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPointClientUIDialog>();
+    }
 };
 
 #endif // _INCLUDE_CPOINTCLIENTUIDIALOG_H

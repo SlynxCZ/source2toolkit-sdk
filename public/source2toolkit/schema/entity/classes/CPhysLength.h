@@ -83,6 +83,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysLength> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysLength>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSLENGTH_H

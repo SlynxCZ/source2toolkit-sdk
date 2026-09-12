@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncTrainControls> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncTrainControls>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCTRAINCONTROLS_H

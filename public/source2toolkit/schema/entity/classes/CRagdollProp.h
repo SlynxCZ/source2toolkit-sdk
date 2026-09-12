@@ -119,6 +119,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CRagdollProp> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CRagdollProp>();
+    }
 };
 
 #endif // _INCLUDE_CRAGDOLLPROP_H

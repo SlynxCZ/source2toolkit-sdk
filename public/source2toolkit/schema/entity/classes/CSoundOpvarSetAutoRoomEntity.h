@@ -85,6 +85,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSoundOpvarSetAutoRoomEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSoundOpvarSetAutoRoomEntity>();
+    }
 };
 
 #endif // _INCLUDE_CSOUNDOPVARSETAUTOROOMENTITY_H

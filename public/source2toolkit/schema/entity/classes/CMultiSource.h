@@ -85,6 +85,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CMultiSource> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CMultiSource>();
+    }
 };
 
 #endif // _INCLUDE_CMULTISOURCE_H

@@ -81,6 +81,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTriggerBuoyancy> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTriggerBuoyancy>();
+    }
 };
 
 #endif // _INCLUDE_CTRIGGERBUOYANCY_H

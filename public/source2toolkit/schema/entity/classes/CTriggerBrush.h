@@ -83,6 +83,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTriggerBrush> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTriggerBrush>();
+    }
 };
 
 #endif // _INCLUDE_CTRIGGERBRUSH_H

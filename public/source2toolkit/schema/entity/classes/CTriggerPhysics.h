@@ -94,6 +94,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTriggerPhysics> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTriggerPhysics>();
+    }
 };
 
 #endif // _INCLUDE_CTRIGGERPHYSICS_H

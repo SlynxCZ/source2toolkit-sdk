@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSoundEventOBBEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSoundEventOBBEntity>();
+    }
 };
 
 #endif // _INCLUDE_CSOUNDEVENTOBBENTITY_H

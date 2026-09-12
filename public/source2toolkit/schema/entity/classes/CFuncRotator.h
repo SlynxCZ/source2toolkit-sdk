@@ -121,6 +121,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncRotator> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncRotator>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCROTATOR_H

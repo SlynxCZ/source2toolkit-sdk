@@ -92,6 +92,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncLadder> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncLadder>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCLADDER_H

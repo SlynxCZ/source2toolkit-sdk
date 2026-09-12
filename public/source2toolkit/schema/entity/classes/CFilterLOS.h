@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFilterLOS> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFilterLOS>();
+    }
 };
 
 #endif // _INCLUDE_CFILTERLOS_H

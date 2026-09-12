@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSpriteOriented> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSpriteOriented>();
+    }
 };
 
 #endif // _INCLUDE_CSPRITEORIENTED_H

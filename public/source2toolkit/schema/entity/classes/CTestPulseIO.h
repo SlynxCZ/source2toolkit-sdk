@@ -83,6 +83,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTestPulseIO> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTestPulseIO>();
+    }
 };
 
 #endif // _INCLUDE_CTESTPULSEIO_H

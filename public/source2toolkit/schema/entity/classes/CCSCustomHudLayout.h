@@ -105,6 +105,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CCSCustomHudLayout> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CCSCustomHudLayout>();
+    }
 };
 
 #endif // _INCLUDE_CCSCUSTOMHUDLAYOUT_H

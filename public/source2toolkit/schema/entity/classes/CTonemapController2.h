@@ -83,6 +83,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTonemapController2> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTonemapController2>();
+    }
 };
 
 #endif // _INCLUDE_CTONEMAPCONTROLLER2_H

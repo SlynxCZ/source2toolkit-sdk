@@ -86,6 +86,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CCitadelSoundOpvarSetOBB> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CCitadelSoundOpvarSetOBB>();
+    }
 };
 
 #endif // _INCLUDE_CCITADELSOUNDOPVARSETOBB_H

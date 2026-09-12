@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CBaseProp> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CBaseProp>();
+    }
 };
 
 #endif // _INCLUDE_CBASEPROP_H

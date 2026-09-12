@@ -186,6 +186,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncMover> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncMover>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCMOVER_H

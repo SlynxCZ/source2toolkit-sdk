@@ -222,8 +222,14 @@ public:
     void CollisionRulesChanged();
     /// <summary>Get entity index.</summary>
     int GetIndex();
-    /// <summary>Get entity handle.</summary>
-    CHandle<CBaseEntity> GetHandle();
+    /// <summary>Get entity handle. Templated the same way New() is: every generated
+    /// entity class shadows it with a plain GetHandle() returning CHandle of its own
+    /// type, so player->GetHandle() on a CCSPlayerController* is a CHandle<CCSPlayerController>.</summary>
+    template<typename T = CBaseEntity>
+    CHandle<T> GetHandle()
+    {    
+        return CHandle<T>(GetRefEHandle());
+    }
     /// <summary>Get entity name.</summary>
     const char* GetName() const;
 };

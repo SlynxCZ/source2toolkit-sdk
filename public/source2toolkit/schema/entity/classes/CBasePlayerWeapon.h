@@ -95,6 +95,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CBasePlayerWeapon> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CBasePlayerWeapon>();
+    }
 };
 
 #endif // _INCLUDE_CBASEPLAYERWEAPON_H

@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSoundAreaEntitySphere> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSoundAreaEntitySphere>();
+    }
 };
 
 #endif // _INCLUDE_CSOUNDAREAENTITYSPHERE_H

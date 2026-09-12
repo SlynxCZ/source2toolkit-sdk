@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPointTeleport> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPointTeleport>();
+    }
 };
 
 #endif // _INCLUDE_CPOINTTELEPORT_H

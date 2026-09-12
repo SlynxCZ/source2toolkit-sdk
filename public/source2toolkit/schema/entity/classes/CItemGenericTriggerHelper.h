@@ -81,6 +81,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CItemGenericTriggerHelper> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CItemGenericTriggerHelper>();
+    }
 };
 
 #endif // _INCLUDE_CITEMGENERICTRIGGERHELPER_H

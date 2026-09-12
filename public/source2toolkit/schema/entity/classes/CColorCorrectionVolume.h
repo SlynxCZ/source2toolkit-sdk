@@ -86,6 +86,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CColorCorrectionVolume> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CColorCorrectionVolume>();
+    }
 };
 
 #endif // _INCLUDE_CCOLORCORRECTIONVOLUME_H

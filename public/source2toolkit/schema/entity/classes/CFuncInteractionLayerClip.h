@@ -81,6 +81,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncInteractionLayerClip> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncInteractionLayerClip>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCINTERACTIONLAYERCLIP_H

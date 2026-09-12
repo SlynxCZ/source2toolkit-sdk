@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CWorld> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CWorld>();
+    }
 };
 
 #endif // _INCLUDE_CWORLD_H

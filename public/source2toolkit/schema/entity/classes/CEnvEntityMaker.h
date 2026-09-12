@@ -92,6 +92,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvEntityMaker> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvEntityMaker>();
+    }
 };
 
 #endif // _INCLUDE_CENVENTITYMAKER_H

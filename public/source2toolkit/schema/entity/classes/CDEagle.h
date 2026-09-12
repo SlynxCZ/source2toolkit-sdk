@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CDEagle> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CDEagle>();
+    }
 };
 
 #endif // _INCLUDE_CDEAGLE_H

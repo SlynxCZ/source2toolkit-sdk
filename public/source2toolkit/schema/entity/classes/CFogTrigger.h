@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFogTrigger> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFogTrigger>();
+    }
 };
 
 #endif // _INCLUDE_CFOGTRIGGER_H

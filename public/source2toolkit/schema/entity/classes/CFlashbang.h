@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFlashbang> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFlashbang>();
+    }
 };
 
 #endif // _INCLUDE_CFLASHBANG_H

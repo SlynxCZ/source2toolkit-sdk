@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncNavObstruction> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncNavObstruction>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCNAVOBSTRUCTION_H

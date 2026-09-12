@@ -83,6 +83,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CCSPlayerCamera> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CCSPlayerCamera>();
+    }
 };
 
 #endif // _INCLUDE_CCSPLAYERCAMERA_H

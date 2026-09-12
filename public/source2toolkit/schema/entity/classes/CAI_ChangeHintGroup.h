@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CAI_ChangeHintGroup> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CAI_ChangeHintGroup>();
+    }
 };
 
 #endif // _INCLUDE_CAI_CHANGEHINTGROUP_H

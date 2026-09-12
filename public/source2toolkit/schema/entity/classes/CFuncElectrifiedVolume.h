@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncElectrifiedVolume> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncElectrifiedVolume>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCELECTRIFIEDVOLUME_H

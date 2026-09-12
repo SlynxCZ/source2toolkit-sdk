@@ -94,6 +94,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTriggerSndSosOpvar> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTriggerSndSosOpvar>();
+    }
 };
 
 #endif // _INCLUDE_CTRIGGERSNDSOSOPVAR_H

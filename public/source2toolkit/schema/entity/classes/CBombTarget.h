@@ -89,6 +89,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CBombTarget> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CBombTarget>();
+    }
 };
 
 #endif // _INCLUDE_CBOMBTARGET_H

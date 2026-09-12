@@ -163,6 +163,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CScriptedSequence> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CScriptedSequence>();
+    }
 };
 
 #endif // _INCLUDE_CSCRIPTEDSEQUENCE_H

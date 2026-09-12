@@ -87,6 +87,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPointPush> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPointPush>();
+    }
 };
 
 #endif // _INCLUDE_CPOINTPUSH_H

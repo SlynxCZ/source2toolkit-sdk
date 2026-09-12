@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvMuzzleFlash> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvMuzzleFlash>();
+    }
 };
 
 #endif // _INCLUDE_CENVMUZZLEFLASH_H

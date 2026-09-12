@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CLogicScript> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CLogicScript>();
+    }
 };
 
 #endif // _INCLUDE_CLOGICSCRIPT_H

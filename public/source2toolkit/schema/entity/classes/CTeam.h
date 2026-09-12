@@ -85,6 +85,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTeam> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTeam>();
+    }
 };
 
 #endif // _INCLUDE_CTEAM_H

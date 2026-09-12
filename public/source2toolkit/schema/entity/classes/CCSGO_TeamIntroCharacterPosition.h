@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CCSGO_TeamIntroCharacterPosition> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CCSGO_TeamIntroCharacterPosition>();
+    }
 };
 
 #endif // _INCLUDE_CCSGO_TEAMINTROCHARACTERPOSITION_H

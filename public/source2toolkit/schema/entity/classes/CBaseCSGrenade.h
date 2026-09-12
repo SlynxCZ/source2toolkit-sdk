@@ -91,6 +91,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CBaseCSGrenade> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CBaseCSGrenade>();
+    }
 };
 
 #endif // _INCLUDE_CBASECSGRENADE_H

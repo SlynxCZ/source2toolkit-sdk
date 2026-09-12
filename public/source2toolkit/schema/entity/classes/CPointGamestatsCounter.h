@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPointGamestatsCounter> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPointGamestatsCounter>();
+    }
 };
 
 #endif // _INCLUDE_CPOINTGAMESTATSCOUNTER_H

@@ -210,6 +210,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CCSPlayerController> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CCSPlayerController>();
+    }
 };
 
 #endif // _INCLUDE_CCSPLAYERCONTROLLER_H

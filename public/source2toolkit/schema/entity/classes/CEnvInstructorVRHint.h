@@ -87,6 +87,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvInstructorVRHint> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvInstructorVRHint>();
+    }
 };
 
 #endif // _INCLUDE_CENVINSTRUCTORVRHINT_H

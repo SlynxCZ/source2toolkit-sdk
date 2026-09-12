@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTriggerVolume> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTriggerVolume>();
+    }
 };
 
 #endif // _INCLUDE_CTRIGGERVOLUME_H

@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CCSPlace> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CCSPlace>();
+    }
 };
 
 #endif // _INCLUDE_CCSPLACE_H

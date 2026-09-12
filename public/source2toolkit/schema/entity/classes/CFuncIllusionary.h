@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncIllusionary> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncIllusionary>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCILLUSIONARY_H

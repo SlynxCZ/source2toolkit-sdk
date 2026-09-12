@@ -85,6 +85,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvLaser> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvLaser>();
+    }
 };
 
 #endif // _INCLUDE_CENVLASER_H

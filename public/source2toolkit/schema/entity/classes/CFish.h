@@ -105,6 +105,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFish> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFish>();
+    }
 };
 
 #endif // _INCLUDE_CFISH_H

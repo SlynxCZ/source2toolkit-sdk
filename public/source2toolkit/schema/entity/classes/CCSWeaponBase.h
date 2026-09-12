@@ -135,6 +135,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CCSWeaponBase> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CCSWeaponBase>();
+    }
 };
 
 #endif // _INCLUDE_CCSWEAPONBASE_H

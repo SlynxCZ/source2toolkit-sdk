@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CRotDoor> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CRotDoor>();
+    }
 };
 
 #endif // _INCLUDE_CROTDOOR_H

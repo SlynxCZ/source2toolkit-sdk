@@ -201,6 +201,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CCSPlayerPawn> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CCSPlayerPawn>();
+    }
 };
 
 #endif // _INCLUDE_CCSPLAYERPAWN_H

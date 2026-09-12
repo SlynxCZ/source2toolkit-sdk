@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTriggerRemove> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTriggerRemove>();
+    }
 };
 
 #endif // _INCLUDE_CTRIGGERREMOVE_H

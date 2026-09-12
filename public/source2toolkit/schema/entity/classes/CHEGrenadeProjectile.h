@@ -85,6 +85,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CHEGrenadeProjectile> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CHEGrenadeProjectile>();
+    }
 };
 
 #endif // _INCLUDE_CHEGRENADEPROJECTILE_H

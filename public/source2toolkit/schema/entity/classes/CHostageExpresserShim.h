@@ -81,6 +81,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CHostageExpresserShim> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CHostageExpresserShim>();
+    }
 };
 
 #endif // _INCLUDE_CHOSTAGEEXPRESSERSHIM_H

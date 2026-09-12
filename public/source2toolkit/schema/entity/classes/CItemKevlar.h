@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CItemKevlar> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CItemKevlar>();
+    }
 };
 
 #endif // _INCLUDE_CITEMKEVLAR_H

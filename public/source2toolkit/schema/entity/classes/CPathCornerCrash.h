@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPathCornerCrash> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPathCornerCrash>();
+    }
 };
 
 #endif // _INCLUDE_CPATHCORNERCRASH_H

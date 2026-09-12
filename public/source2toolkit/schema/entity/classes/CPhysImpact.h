@@ -81,6 +81,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysImpact> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysImpact>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSIMPACT_H

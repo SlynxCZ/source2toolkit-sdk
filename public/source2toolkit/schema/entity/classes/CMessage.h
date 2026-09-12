@@ -84,6 +84,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CMessage> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CMessage>();
+    }
 };
 
 #endif // _INCLUDE_CMESSAGE_H

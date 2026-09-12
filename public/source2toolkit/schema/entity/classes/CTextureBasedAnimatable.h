@@ -88,6 +88,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTextureBasedAnimatable> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTextureBasedAnimatable>();
+    }
 };
 
 #endif // _INCLUDE_CTEXTUREBASEDANIMATABLE_H

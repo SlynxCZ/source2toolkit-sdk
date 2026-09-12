@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPointPulse> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPointPulse>();
+    }
 };
 
 #endif // _INCLUDE_CPOINTPULSE_H

@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CInfoTeleportDestination> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CInfoTeleportDestination>();
+    }
 };
 
 #endif // _INCLUDE_CINFOTELEPORTDESTINATION_H

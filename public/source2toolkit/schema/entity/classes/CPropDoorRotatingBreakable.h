@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPropDoorRotatingBreakable> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPropDoorRotatingBreakable>();
+    }
 };
 
 #endif // _INCLUDE_CPROPDOORROTATINGBREAKABLE_H

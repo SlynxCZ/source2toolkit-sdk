@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CCSPointScriptEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CCSPointScriptEntity>();
+    }
 };
 
 #endif // _INCLUDE_CCSPOINTSCRIPTENTITY_H

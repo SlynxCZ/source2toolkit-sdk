@@ -100,6 +100,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CRopeKeyframe> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CRopeKeyframe>();
+    }
 };
 
 #endif // _INCLUDE_CROPEKEYFRAME_H

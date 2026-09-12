@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncWater> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncWater>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCWATER_H

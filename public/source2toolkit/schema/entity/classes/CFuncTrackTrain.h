@@ -120,6 +120,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncTrackTrain> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncTrackTrain>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCTRACKTRAIN_H

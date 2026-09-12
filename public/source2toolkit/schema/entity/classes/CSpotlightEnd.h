@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSpotlightEnd> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSpotlightEnd>();
+    }
 };
 
 #endif // _INCLUDE_CSPOTLIGHTEND_H

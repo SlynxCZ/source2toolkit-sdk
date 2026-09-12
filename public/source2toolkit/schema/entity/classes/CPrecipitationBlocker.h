@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPrecipitationBlocker> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPrecipitationBlocker>();
+    }
 };
 
 #endif // _INCLUDE_CPRECIPITATIONBLOCKER_H

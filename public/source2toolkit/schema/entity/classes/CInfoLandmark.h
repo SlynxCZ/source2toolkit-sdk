@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CInfoLandmark> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CInfoLandmark>();
+    }
 };
 
 #endif // _INCLUDE_CINFOLANDMARK_H

@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CMarkupVolumeTagged_NavGame> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CMarkupVolumeTagged_NavGame>();
+    }
 };
 
 #endif // _INCLUDE_CMARKUPVOLUMETAGGED_NAVGAME_H

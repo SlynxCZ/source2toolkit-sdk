@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPathWithDynamicNodes> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPathWithDynamicNodes>();
+    }
 };
 
 #endif // _INCLUDE_CPATHWITHDYNAMICNODES_H

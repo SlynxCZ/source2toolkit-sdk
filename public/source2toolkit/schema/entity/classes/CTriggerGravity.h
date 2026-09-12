@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTriggerGravity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTriggerGravity>();
+    }
 };
 
 #endif // _INCLUDE_CTRIGGERGRAVITY_H

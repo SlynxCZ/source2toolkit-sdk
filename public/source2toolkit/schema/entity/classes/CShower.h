@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CShower> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CShower>();
+    }
 };
 
 #endif // _INCLUDE_CSHOWER_H

@@ -103,6 +103,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPointClientUIWorldPanel> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPointClientUIWorldPanel>();
+    }
 };
 
 #endif // _INCLUDE_CPOINTCLIENTUIWORLDPANEL_H

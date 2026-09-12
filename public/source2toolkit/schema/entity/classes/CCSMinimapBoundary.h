@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CCSMinimapBoundary> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CCSMinimapBoundary>();
+    }
 };
 
 #endif // _INCLUDE_CCSMINIMAPBOUNDARY_H

@@ -83,6 +83,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CInstructorEventEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CInstructorEventEntity>();
+    }
 };
 
 #endif // _INCLUDE_CINSTRUCTOREVENTENTITY_H

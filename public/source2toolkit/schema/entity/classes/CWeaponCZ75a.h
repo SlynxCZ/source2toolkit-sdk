@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CWeaponCZ75a> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CWeaponCZ75a>();
+    }
 };
 
 #endif // _INCLUDE_CWEAPONCZ75A_H

@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CMoverPathNode> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CMoverPathNode>();
+    }
 };
 
 #endif // _INCLUDE_CMOVERPATHNODE_H

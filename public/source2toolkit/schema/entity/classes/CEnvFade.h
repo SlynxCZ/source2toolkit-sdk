@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvFade> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvFade>();
+    }
 };
 
 #endif // _INCLUDE_CENVFADE_H

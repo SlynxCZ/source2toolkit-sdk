@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CBuyZone> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CBuyZone>();
+    }
 };
 
 #endif // _INCLUDE_CBUYZONE_H

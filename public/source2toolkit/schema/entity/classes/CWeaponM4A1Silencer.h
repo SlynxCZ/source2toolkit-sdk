@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CWeaponM4A1Silencer> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CWeaponM4A1Silencer>();
+    }
 };
 
 #endif // _INCLUDE_CWEAPONM4A1SILENCER_H

@@ -106,6 +106,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTriggerFan> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTriggerFan>();
+    }
 };
 
 #endif // _INCLUDE_CTRIGGERFAN_H

@@ -87,6 +87,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSoundOpvarSetBoxEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSoundOpvarSetBoxEntity>();
+    }
 };
 
 #endif // _INCLUDE_CSOUNDOPVARSETBOXENTITY_H

@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CWeaponMP9> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CWeaponMP9>();
+    }
 };
 
 #endif // _INCLUDE_CWEAPONMP9_H

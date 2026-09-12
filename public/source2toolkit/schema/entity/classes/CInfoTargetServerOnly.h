@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CInfoTargetServerOnly> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CInfoTargetServerOnly>();
+    }
 };
 
 #endif // _INCLUDE_CINFOTARGETSERVERONLY_H

@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CServerOnlyModelEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CServerOnlyModelEntity>();
+    }
 };
 
 #endif // _INCLUDE_CSERVERONLYMODELENTITY_H

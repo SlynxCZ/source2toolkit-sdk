@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CCSSprite> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CCSSprite>();
+    }
 };
 
 #endif // _INCLUDE_CCSSPRITE_H

@@ -89,6 +89,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CLogicAuto> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CLogicAuto>();
+    }
 };
 
 #endif // _INCLUDE_CLOGICAUTO_H

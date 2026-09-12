@@ -85,6 +85,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvParticleGlow> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvParticleGlow>();
+    }
 };
 
 #endif // _INCLUDE_CENVPARTICLEGLOW_H

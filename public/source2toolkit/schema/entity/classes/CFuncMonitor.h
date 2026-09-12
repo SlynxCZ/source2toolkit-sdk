@@ -89,6 +89,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncMonitor> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncMonitor>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCMONITOR_H

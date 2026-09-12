@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTriggerBombReset> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTriggerBombReset>();
+    }
 };
 
 #endif // _INCLUDE_CTRIGGERBOMBRESET_H

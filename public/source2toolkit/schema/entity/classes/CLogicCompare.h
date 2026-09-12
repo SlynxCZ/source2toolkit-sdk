@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CLogicCompare> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CLogicCompare>();
+    }
 };
 
 #endif // _INCLUDE_CLOGICCOMPARE_H

@@ -87,6 +87,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPointPrefab> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPointPrefab>();
+    }
 };
 
 #endif // _INCLUDE_CPOINTPREFAB_H

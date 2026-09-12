@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnableMotionFixup> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnableMotionFixup>();
+    }
 };
 
 #endif // _INCLUDE_CENABLEMOTIONFIXUP_H

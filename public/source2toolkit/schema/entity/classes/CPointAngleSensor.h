@@ -90,6 +90,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPointAngleSensor> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPointAngleSensor>();
+    }
 };
 
 #endif // _INCLUDE_CPOINTANGLESENSOR_H

@@ -84,6 +84,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysicsEntitySolver> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysicsEntitySolver>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSICSENTITYSOLVER_H

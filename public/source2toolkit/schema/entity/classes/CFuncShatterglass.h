@@ -106,6 +106,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncShatterglass> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncShatterglass>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCSHATTERGLASS_H

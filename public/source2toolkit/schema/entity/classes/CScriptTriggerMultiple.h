@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CScriptTriggerMultiple> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CScriptTriggerMultiple>();
+    }
 };
 
 #endif // _INCLUDE_CSCRIPTTRIGGERMULTIPLE_H

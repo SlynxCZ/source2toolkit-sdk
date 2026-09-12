@@ -92,6 +92,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CCSTeam> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CCSTeam>();
+    }
 };
 
 #endif // _INCLUDE_CCSTEAM_H

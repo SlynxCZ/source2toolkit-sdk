@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFootstepControl> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFootstepControl>();
+    }
 };
 
 #endif // _INCLUDE_CFOOTSTEPCONTROL_H

@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CInfoDynamicShadowHintBox> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CInfoDynamicShadowHintBox>();
+    }
 };
 
 #endif // _INCLUDE_CINFODYNAMICSHADOWHINTBOX_H

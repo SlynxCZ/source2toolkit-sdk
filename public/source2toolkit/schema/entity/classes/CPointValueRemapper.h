@@ -127,6 +127,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPointValueRemapper> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPointValueRemapper>();
+    }
 };
 
 #endif // _INCLUDE_CPOINTVALUEREMAPPER_H

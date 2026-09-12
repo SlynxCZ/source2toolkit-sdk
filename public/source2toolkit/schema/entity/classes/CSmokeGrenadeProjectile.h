@@ -97,6 +97,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSmokeGrenadeProjectile> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSmokeGrenadeProjectile>();
+    }
 };
 
 #endif // _INCLUDE_CSMOKEGRENADEPROJECTILE_H

@@ -92,6 +92,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvSky> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvSky>();
+    }
 };
 
 #endif // _INCLUDE_CENVSKY_H

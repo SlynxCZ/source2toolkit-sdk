@@ -105,6 +105,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CParticleSystem> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CParticleSystem>();
+    }
 };
 
 #endif // _INCLUDE_CPARTICLESYSTEM_H

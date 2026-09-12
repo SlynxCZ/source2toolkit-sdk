@@ -91,6 +91,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CInfoSpawnGroupLoadUnload> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CInfoSpawnGroupLoadUnload>();
+    }
 };
 
 #endif // _INCLUDE_CINFOSPAWNGROUPLOADUNLOAD_H

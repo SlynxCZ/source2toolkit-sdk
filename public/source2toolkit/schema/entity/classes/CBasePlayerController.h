@@ -155,6 +155,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CBasePlayerController> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CBasePlayerController>();
+    }
 };
 
 #endif // _INCLUDE_CBASEPLAYERCONTROLLER_H

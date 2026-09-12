@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CGameMoney> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CGameMoney>();
+    }
 };
 
 #endif // _INCLUDE_CGAMEMONEY_H

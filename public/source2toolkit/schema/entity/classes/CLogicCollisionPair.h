@@ -85,6 +85,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CLogicCollisionPair> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CLogicCollisionPair>();
+    }
 };
 
 #endif // _INCLUDE_CLOGICCOLLISIONPAIR_H

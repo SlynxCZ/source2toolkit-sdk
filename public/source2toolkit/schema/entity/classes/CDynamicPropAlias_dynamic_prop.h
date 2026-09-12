@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CDynamicPropAlias_dynamic_prop> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CDynamicPropAlias_dynamic_prop>();
+    }
 };
 
 #endif // _INCLUDE_CDYNAMICPROPALIAS_DYNAMIC_PROP_H

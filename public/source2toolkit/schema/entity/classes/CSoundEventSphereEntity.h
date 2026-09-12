@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSoundEventSphereEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSoundEventSphereEntity>();
+    }
 };
 
 #endif // _INCLUDE_CSOUNDEVENTSPHEREENTITY_H

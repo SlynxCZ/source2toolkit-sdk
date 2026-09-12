@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CHostageCarriableProp> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CHostageCarriableProp>();
+    }
 };
 
 #endif // _INCLUDE_CHOSTAGECARRIABLEPROP_H

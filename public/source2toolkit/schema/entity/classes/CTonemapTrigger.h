@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTonemapTrigger> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTonemapTrigger>();
+    }
 };
 
 #endif // _INCLUDE_CTONEMAPTRIGGER_H

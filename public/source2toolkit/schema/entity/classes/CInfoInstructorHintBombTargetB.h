@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CInfoInstructorHintBombTargetB> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CInfoInstructorHintBombTargetB>();
+    }
 };
 
 #endif // _INCLUDE_CINFOINSTRUCTORHINTBOMBTARGETB_H

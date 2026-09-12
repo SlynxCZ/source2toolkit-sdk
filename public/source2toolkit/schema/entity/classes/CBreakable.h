@@ -101,6 +101,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CBreakable> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CBreakable>();
+    }
 };
 
 #endif // _INCLUDE_CBREAKABLE_H

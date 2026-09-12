@@ -88,6 +88,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFishPool> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFishPool>();
+    }
 };
 
 #endif // _INCLUDE_CFISHPOOL_H

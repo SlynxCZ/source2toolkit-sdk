@@ -81,6 +81,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CItemDefuser> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CItemDefuser>();
+    }
 };
 
 #endif // _INCLUDE_CITEMDEFUSER_H

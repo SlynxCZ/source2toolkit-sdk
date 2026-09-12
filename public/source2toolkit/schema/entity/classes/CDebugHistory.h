@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CDebugHistory> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CDebugHistory>();
+    }
 };
 
 #endif // _INCLUDE_CDEBUGHISTORY_H

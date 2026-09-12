@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CInfoDeathmatchSpawn> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CInfoDeathmatchSpawn>();
+    }
 };
 
 #endif // _INCLUDE_CINFODEATHMATCHSPAWN_H

@@ -97,6 +97,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CMapVetoPickController> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CMapVetoPickController>();
+    }
 };
 
 #endif // _INCLUDE_CMAPVETOPICKCONTROLLER_H

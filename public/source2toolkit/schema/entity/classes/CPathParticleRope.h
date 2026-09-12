@@ -96,6 +96,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPathParticleRope> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPathParticleRope>();
+    }
 };
 
 #endif // _INCLUDE_CPATHPARTICLEROPE_H

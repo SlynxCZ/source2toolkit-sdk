@@ -90,6 +90,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvWindController> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvWindController>();
+    }
 };
 
 #endif // _INCLUDE_CENVWINDCONTROLLER_H

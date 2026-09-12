@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CMapSharedEnvironment> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CMapSharedEnvironment>();
+    }
 };
 
 #endif // _INCLUDE_CMAPSHAREDENVIRONMENT_H

@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CScriptItem> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CScriptItem>();
+    }
 };
 
 #endif // _INCLUDE_CSCRIPTITEM_H

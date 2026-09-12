@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPushable> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPushable>();
+    }
 };
 
 #endif // _INCLUDE_CPUSHABLE_H

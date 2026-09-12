@@ -85,6 +85,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CMarkupVolumeTagged> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CMarkupVolumeTagged>();
+    }
 };
 
 #endif // _INCLUDE_CMARKUPVOLUMETAGGED_H

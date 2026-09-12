@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTriggerActiveWeaponDetect> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTriggerActiveWeaponDetect>();
+    }
 };
 
 #endif // _INCLUDE_CTRIGGERACTIVEWEAPONDETECT_H

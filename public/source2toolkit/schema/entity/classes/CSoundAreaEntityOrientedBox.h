@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSoundAreaEntityOrientedBox> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSoundAreaEntityOrientedBox>();
+    }
 };
 
 #endif // _INCLUDE_CSOUNDAREAENTITYORIENTEDBOX_H

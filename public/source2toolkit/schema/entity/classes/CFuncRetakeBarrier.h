@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncRetakeBarrier> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncRetakeBarrier>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCRETAKEBARRIER_H

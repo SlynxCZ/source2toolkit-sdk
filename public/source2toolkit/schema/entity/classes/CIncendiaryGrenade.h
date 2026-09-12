@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CIncendiaryGrenade> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CIncendiaryGrenade>();
+    }
 };
 
 #endif // _INCLUDE_CINCENDIARYGRENADE_H

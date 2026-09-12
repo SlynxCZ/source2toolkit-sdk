@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvCombinedLightProbeVolumeAlias_func_combined_light_probe_volume> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvCombinedLightProbeVolumeAlias_func_combined_light_probe_volume>();
+    }
 };
 
 #endif // _INCLUDE_CENVCOMBINEDLIGHTPROBEVOLUMEALIAS_FUNC_COMBINED_LIGHT_PROBE_VOLUME_H

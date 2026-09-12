@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPointClientUIWorldTextPanel> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPointClientUIWorldTextPanel>();
+    }
 };
 
 #endif // _INCLUDE_CPOINTCLIENTUIWORLDTEXTPANEL_H

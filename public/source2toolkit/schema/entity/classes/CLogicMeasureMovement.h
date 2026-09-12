@@ -89,6 +89,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CLogicMeasureMovement> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CLogicMeasureMovement>();
+    }
 };
 
 #endif // _INCLUDE_CLOGICMEASUREMOVEMENT_H

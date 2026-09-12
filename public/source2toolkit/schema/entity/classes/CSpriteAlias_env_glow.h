@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSpriteAlias_env_glow> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSpriteAlias_env_glow>();
+    }
 };
 
 #endif // _INCLUDE_CSPRITEALIAS_ENV_GLOW_H

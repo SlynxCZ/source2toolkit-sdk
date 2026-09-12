@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CItemAssaultSuit> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CItemAssaultSuit>();
+    }
 };
 
 #endif // _INCLUDE_CITEMASSAULTSUIT_H

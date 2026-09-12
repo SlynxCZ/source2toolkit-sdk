@@ -83,6 +83,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CBasePlatTrain> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CBasePlatTrain>();
+    }
 };
 
 #endif // _INCLUDE_CBASEPLATTRAIN_H

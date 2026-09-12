@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPulseGameBlackboard> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPulseGameBlackboard>();
+    }
 };
 
 #endif // _INCLUDE_CPULSEGAMEBLACKBOARD_H

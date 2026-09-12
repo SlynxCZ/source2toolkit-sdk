@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CRagdollPropAlias_physics_prop_ragdoll> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CRagdollPropAlias_physics_prop_ragdoll>();
+    }
 };
 
 #endif // _INCLUDE_CRAGDOLLPROPALIAS_PHYSICS_PROP_RAGDOLL_H

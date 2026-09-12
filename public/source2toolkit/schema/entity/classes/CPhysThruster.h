@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysThruster> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysThruster>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSTHRUSTER_H

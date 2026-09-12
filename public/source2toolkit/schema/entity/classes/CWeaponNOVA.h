@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CWeaponNOVA> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CWeaponNOVA>();
+    }
 };
 
 #endif // _INCLUDE_CWEAPONNOVA_H

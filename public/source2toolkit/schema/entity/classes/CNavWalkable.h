@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CNavWalkable> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CNavWalkable>();
+    }
 };
 
 #endif // _INCLUDE_CNAVWALKABLE_H

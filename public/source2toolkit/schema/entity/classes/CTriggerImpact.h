@@ -81,6 +81,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTriggerImpact> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTriggerImpact>();
+    }
 };
 
 #endif // _INCLUDE_CTRIGGERIMPACT_H

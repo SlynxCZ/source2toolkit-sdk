@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTriggerHostageReset> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTriggerHostageReset>();
+    }
 };
 
 #endif // _INCLUDE_CTRIGGERHOSTAGERESET_H

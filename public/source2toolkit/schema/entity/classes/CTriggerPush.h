@@ -88,6 +88,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTriggerPush> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTriggerPush>();
+    }
 };
 
 #endif // _INCLUDE_CTRIGGERPUSH_H

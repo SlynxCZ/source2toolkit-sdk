@@ -107,6 +107,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CBaseButton> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CBaseButton>();
+    }
 };
 
 #endif // _INCLUDE_CBASEBUTTON_H

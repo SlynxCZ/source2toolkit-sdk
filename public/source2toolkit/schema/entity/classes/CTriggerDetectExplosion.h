@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTriggerDetectExplosion> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTriggerDetectExplosion>();
+    }
 };
 
 #endif // _INCLUDE_CTRIGGERDETECTEXPLOSION_H

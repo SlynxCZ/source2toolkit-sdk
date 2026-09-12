@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEntityBlocker> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEntityBlocker>();
+    }
 };
 
 #endif // _INCLUDE_CENTITYBLOCKER_H

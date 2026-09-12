@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvWind> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvWind>();
+    }
 };
 
 #endif // _INCLUDE_CENVWIND_H

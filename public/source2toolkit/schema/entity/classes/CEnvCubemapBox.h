@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvCubemapBox> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvCubemapBox>();
+    }
 };
 
 #endif // _INCLUDE_CENVCUBEMAPBOX_H

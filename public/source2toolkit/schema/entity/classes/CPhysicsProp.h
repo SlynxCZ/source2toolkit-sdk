@@ -123,6 +123,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysicsProp> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysicsProp>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSICSPROP_H

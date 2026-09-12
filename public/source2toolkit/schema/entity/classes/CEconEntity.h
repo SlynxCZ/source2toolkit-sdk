@@ -90,6 +90,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEconEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEconEntity>();
+    }
 };
 
 #endif // _INCLUDE_CECONENTITY_H

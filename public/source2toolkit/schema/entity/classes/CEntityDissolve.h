@@ -89,6 +89,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEntityDissolve> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEntityDissolve>();
+    }
 };
 
 #endif // _INCLUDE_CENTITYDISSOLVE_H

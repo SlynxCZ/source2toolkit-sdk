@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPathParticleRopeAlias_path_particle_rope_clientside> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPathParticleRopeAlias_path_particle_rope_clientside>();
+    }
 };
 
 #endif // _INCLUDE_CPATHPARTICLEROPEALIAS_PATH_PARTICLE_ROPE_CLIENTSIDE_H

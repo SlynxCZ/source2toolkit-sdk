@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvGlobal> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvGlobal>();
+    }
 };
 
 #endif // _INCLUDE_CENVGLOBAL_H

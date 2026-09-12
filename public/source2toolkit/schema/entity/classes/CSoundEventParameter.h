@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSoundEventParameter> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSoundEventParameter>();
+    }
 };
 
 #endif // _INCLUDE_CSOUNDEVENTPARAMETER_H

@@ -84,6 +84,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncMoverRouter> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncMoverRouter>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCMOVERROUTER_H

@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncWall> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncWall>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCWALL_H

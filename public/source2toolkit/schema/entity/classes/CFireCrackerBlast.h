@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFireCrackerBlast> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFireCrackerBlast>();
+    }
 };
 
 #endif // _INCLUDE_CFIRECRACKERBLAST_H

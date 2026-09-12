@@ -91,6 +91,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncTrackChange> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncTrackChange>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCTRACKCHANGE_H

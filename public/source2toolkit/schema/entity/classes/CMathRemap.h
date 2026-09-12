@@ -88,6 +88,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CMathRemap> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CMathRemap>();
+    }
 };
 
 #endif // _INCLUDE_CMATHREMAP_H

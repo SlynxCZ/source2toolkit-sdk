@@ -89,6 +89,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvDecal> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvDecal>();
+    }
 };
 
 #endif // _INCLUDE_CENVDECAL_H

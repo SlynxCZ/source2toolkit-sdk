@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CCashStack> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CCashStack>();
+    }
 };
 
 #endif // _INCLUDE_CCASHSTACK_H

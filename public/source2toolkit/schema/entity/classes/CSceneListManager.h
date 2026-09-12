@@ -83,6 +83,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSceneListManager> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSceneListManager>();
+    }
 };
 
 #endif // _INCLUDE_CSCENELISTMANAGER_H

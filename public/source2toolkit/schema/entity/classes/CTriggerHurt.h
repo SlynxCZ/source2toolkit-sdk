@@ -95,6 +95,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTriggerHurt> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTriggerHurt>();
+    }
 };
 
 #endif // _INCLUDE_CTRIGGERHURT_H

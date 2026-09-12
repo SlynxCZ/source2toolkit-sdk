@@ -84,6 +84,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTriggerProximity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTriggerProximity>();
+    }
 };
 
 #endif // _INCLUDE_CTRIGGERPROXIMITY_H

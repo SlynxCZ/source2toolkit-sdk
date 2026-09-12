@@ -88,6 +88,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPointEntityFinder> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPointEntityFinder>();
+    }
 };
 
 #endif // _INCLUDE_CPOINTENTITYFINDER_H

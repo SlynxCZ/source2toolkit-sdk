@@ -216,11 +216,6 @@ int CBaseEntity::GetIndex()
     return GetEntityIndex().Get();
 }
 
-CHandle<CBaseEntity> CBaseEntity::GetHandle()
-{
-    return GetRefEHandle();
-}
-
 const char* CBaseEntity::GetName() const
 {
     return m_pEntity->m_name.String();

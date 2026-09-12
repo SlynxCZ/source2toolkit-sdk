@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncNavBlocker> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncNavBlocker>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCNAVBLOCKER_H

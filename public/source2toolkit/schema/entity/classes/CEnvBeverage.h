@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvBeverage> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvBeverage>();
+    }
 };
 
 #endif // _INCLUDE_CENVBEVERAGE_H

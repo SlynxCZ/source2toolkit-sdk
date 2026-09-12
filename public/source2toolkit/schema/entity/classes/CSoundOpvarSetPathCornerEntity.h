@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSoundOpvarSetPathCornerEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSoundOpvarSetPathCornerEntity>();
+    }
 };
 
 #endif // _INCLUDE_CSOUNDOPVARSETPATHCORNERENTITY_H

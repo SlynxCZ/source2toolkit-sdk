@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFilterAttributeInt> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFilterAttributeInt>();
+    }
 };
 
 #endif // _INCLUDE_CFILTERATTRIBUTEINT_H

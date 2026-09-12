@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvTilt> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvTilt>();
+    }
 };
 
 #endif // _INCLUDE_CENVTILT_H

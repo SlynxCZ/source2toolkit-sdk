@@ -86,6 +86,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPathKeyFrame> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPathKeyFrame>();
+    }
 };
 
 #endif // _INCLUDE_CPATHKEYFRAME_H

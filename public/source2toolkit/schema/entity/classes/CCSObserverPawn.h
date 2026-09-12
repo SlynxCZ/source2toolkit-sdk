@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CCSObserverPawn> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CCSObserverPawn>();
+    }
 };
 
 #endif // _INCLUDE_CCSOBSERVERPAWN_H

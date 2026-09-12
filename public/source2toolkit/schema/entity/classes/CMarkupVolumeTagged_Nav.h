@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CMarkupVolumeTagged_Nav> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CMarkupVolumeTagged_Nav>();
+    }
 };
 
 #endif // _INCLUDE_CMARKUPVOLUMETAGGED_NAV_H

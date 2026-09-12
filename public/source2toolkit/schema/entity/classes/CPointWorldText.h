@@ -97,6 +97,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPointWorldText> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPointWorldText>();
+    }
 };
 
 #endif // _INCLUDE_CPOINTWORLDTEXT_H

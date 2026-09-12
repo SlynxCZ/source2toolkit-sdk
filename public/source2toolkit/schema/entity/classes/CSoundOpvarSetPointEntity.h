@@ -102,6 +102,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSoundOpvarSetPointEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSoundOpvarSetPointEntity>();
+    }
 };
 
 #endif // _INCLUDE_CSOUNDOPVARSETPOINTENTITY_H

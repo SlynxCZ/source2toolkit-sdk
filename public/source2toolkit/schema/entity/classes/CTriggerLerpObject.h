@@ -96,6 +96,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTriggerLerpObject> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTriggerLerpObject>();
+    }
 };
 
 #endif // _INCLUDE_CTRIGGERLERPOBJECT_H

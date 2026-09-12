@@ -109,6 +109,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPlantedC4> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPlantedC4>();
+    }
 };
 
 #endif // _INCLUDE_CPLANTEDC4_H

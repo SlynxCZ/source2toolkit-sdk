@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CLightDirectionalEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CLightDirectionalEntity>();
+    }
 };
 
 #endif // _INCLUDE_CLIGHTDIRECTIONALENTITY_H

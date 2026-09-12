@@ -81,6 +81,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CInfoChoreoAnchor> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CInfoChoreoAnchor>();
+    }
 };
 
 #endif // _INCLUDE_CINFOCHOREOANCHOR_H

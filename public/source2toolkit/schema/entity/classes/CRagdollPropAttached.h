@@ -84,6 +84,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CRagdollPropAttached> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CRagdollPropAttached>();
+    }
 };
 
 #endif // _INCLUDE_CRAGDOLLPROPATTACHED_H

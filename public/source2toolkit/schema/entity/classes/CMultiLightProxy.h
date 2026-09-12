@@ -88,6 +88,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CMultiLightProxy> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CMultiLightProxy>();
+    }
 };
 
 #endif // _INCLUDE_CMULTILIGHTPROXY_H

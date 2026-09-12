@@ -96,6 +96,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvVolumetricFogVolume> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvVolumetricFogVolume>();
+    }
 };
 
 #endif // _INCLUDE_CENVVOLUMETRICFOGVOLUME_H

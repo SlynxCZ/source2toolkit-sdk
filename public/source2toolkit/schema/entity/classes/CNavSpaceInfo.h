@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CNavSpaceInfo> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CNavSpaceInfo>();
+    }
 };
 
 #endif // _INCLUDE_CNAVSPACEINFO_H

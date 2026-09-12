@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTriggerMultiple> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTriggerMultiple>();
+    }
 };
 
 #endif // _INCLUDE_CTRIGGERMULTIPLE_H

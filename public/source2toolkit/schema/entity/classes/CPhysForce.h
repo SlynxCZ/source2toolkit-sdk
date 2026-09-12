@@ -89,6 +89,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysForce> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysForce>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSFORCE_H

@@ -81,6 +81,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<COmniLight> GetHandle()
+    {
+        return CBaseEntity::GetHandle<COmniLight>();
+    }
 };
 
 #endif // _INCLUDE_COMNILIGHT_H

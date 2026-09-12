@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CDecoyGrenade> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CDecoyGrenade>();
+    }
 };
 
 #endif // _INCLUDE_CDECOYGRENADE_H

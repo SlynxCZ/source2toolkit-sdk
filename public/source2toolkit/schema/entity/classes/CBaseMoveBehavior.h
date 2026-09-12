@@ -89,6 +89,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CBaseMoveBehavior> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CBaseMoveBehavior>();
+    }
 };
 
 #endif // _INCLUDE_CBASEMOVEBEHAVIOR_H

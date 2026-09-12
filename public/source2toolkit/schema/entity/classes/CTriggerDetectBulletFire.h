@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTriggerDetectBulletFire> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTriggerDetectBulletFire>();
+    }
 };
 
 #endif // _INCLUDE_CTRIGGERDETECTBULLETFIRE_H

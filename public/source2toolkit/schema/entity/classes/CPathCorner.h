@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPathCorner> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPathCorner>();
+    }
 };
 
 #endif // _INCLUDE_CPATHCORNER_H

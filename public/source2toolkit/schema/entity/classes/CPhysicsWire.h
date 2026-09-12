@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysicsWire> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysicsWire>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSICSWIRE_H

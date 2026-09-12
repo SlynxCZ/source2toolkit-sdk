@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CNullEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CNullEntity>();
+    }
 };
 
 #endif // _INCLUDE_CNULLENTITY_H

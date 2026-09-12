@@ -84,6 +84,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPlayerVisibility> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPlayerVisibility>();
+    }
 };
 
 #endif // _INCLUDE_CPLAYERVISIBILITY_H

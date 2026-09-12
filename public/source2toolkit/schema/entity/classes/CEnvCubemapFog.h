@@ -105,6 +105,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvCubemapFog> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvCubemapFog>();
+    }
 };
 
 #endif // _INCLUDE_CENVCUBEMAPFOG_H

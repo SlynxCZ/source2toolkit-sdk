@@ -89,6 +89,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysExplosion> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysExplosion>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSEXPLOSION_H

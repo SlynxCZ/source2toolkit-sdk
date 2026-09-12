@@ -88,6 +88,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEntityFlame> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEntityFlame>();
+    }
 };
 
 #endif // _INCLUDE_CENTITYFLAME_H

@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncVPhysicsClip> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncVPhysicsClip>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCVPHYSICSCLIP_H

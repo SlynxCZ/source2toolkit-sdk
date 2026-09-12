@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CCSPetPlacement> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CCSPetPlacement>();
+    }
 };
 
 #endif // _INCLUDE_CCSPETPLACEMENT_H

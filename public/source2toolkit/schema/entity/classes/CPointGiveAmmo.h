@@ -81,6 +81,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPointGiveAmmo> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPointGiveAmmo>();
+    }
 };
 
 #endif // _INCLUDE_CPOINTGIVEAMMO_H

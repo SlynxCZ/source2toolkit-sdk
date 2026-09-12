@@ -149,6 +149,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSceneEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSceneEntity>();
+    }
 };
 
 #endif // _INCLUDE_CSCENEENTITY_H

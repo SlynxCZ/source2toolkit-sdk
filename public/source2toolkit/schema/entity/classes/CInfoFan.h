@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CInfoFan> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CInfoFan>();
+    }
 };
 
 #endif // _INCLUDE_CINFOFAN_H

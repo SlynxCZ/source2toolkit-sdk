@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CRopeKeyframeAlias_move_rope> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CRopeKeyframeAlias_move_rope>();
+    }
 };
 
 #endif // _INCLUDE_CROPEKEYFRAMEALIAS_MOVE_ROPE_H

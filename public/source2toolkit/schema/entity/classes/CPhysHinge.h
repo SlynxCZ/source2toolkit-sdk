@@ -99,6 +99,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysHinge> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysHinge>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSHINGE_H

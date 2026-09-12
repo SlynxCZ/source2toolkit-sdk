@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTriggerSave> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTriggerSave>();
+    }
 };
 
 #endif // _INCLUDE_CTRIGGERSAVE_H

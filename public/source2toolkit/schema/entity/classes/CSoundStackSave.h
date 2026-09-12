@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSoundStackSave> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSoundStackSave>();
+    }
 };
 
 #endif // _INCLUDE_CSOUNDSTACKSAVE_H

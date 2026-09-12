@@ -86,6 +86,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSoundOpvarSetOBBWindEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSoundOpvarSetOBBWindEntity>();
+    }
 };
 
 #endif // _INCLUDE_CSOUNDOPVARSETOBBWINDENTITY_H

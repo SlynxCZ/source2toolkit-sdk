@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CGameRulesProxy> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CGameRulesProxy>();
+    }
 };
 
 #endif // _INCLUDE_CGAMERULESPROXY_H

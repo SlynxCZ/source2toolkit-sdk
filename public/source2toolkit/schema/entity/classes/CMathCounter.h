@@ -87,6 +87,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CMathCounter> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CMathCounter>();
+    }
 };
 
 #endif // _INCLUDE_CMATHCOUNTER_H

@@ -86,6 +86,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CItem> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CItem>();
+    }
 };
 
 #endif // _INCLUDE_CITEM_H

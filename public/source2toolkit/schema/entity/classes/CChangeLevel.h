@@ -85,6 +85,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CChangeLevel> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CChangeLevel>();
+    }
 };
 
 #endif // _INCLUDE_CCHANGELEVEL_H

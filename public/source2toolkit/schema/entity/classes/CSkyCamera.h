@@ -83,6 +83,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSkyCamera> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSkyCamera>();
+    }
 };
 
 #endif // _INCLUDE_CSKYCAMERA_H

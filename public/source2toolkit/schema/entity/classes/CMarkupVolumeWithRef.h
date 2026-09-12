@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CMarkupVolumeWithRef> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CMarkupVolumeWithRef>();
+    }
 };
 
 #endif // _INCLUDE_CMARKUPVOLUMEWITHREF_H

@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CRuleEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CRuleEntity>();
+    }
 };
 
 #endif // _INCLUDE_CRULEENTITY_H

@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CGameGibManager> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CGameGibManager>();
+    }
 };
 
 #endif // _INCLUDE_CGAMEGIBMANAGER_H

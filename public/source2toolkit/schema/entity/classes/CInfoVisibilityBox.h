@@ -81,6 +81,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CInfoVisibilityBox> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CInfoVisibilityBox>();
+    }
 };
 
 #endif // _INCLUDE_CINFOVISIBILITYBOX_H

@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CItemDefuserAlias_item_defuser> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CItemDefuserAlias_item_defuser>();
+    }
 };
 
 #endif // _INCLUDE_CITEMDEFUSERALIAS_ITEM_DEFUSER_H

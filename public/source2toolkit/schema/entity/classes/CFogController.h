@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFogController> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFogController>();
+    }
 };
 
 #endif // _INCLUDE_CFOGCONTROLLER_H

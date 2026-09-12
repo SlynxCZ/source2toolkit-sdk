@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CLogicNPCCounterAABB> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CLogicNPCCounterAABB>();
+    }
 };
 
 #endif // _INCLUDE_CLOGICNPCCOUNTERAABB_H

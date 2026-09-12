@@ -83,6 +83,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFogVolume> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFogVolume>();
+    }
 };
 
 #endif // _INCLUDE_CFOGVOLUME_H

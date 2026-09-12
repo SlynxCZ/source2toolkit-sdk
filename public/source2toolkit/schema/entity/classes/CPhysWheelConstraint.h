@@ -92,6 +92,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysWheelConstraint> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysWheelConstraint>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSWHEELCONSTRAINT_H

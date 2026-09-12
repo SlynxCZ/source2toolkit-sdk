@@ -91,6 +91,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTimerEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTimerEntity>();
+    }
 };
 
 #endif // _INCLUDE_CTIMERENTITY_H

@@ -88,6 +88,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CCSPlayerResource> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CCSPlayerResource>();
+    }
 };
 
 #endif // _INCLUDE_CCSPLAYERRESOURCE_H

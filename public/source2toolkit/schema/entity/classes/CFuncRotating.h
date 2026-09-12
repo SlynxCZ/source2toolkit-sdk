@@ -97,6 +97,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncRotating> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncRotating>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCROTATING_H

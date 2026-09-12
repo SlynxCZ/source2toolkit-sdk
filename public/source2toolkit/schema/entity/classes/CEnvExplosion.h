@@ -96,6 +96,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvExplosion> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvExplosion>();
+    }
 };
 
 #endif // _INCLUDE_CENVEXPLOSION_H

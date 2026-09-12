@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncMoveLinearAlias_momentary_door> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncMoveLinearAlias_momentary_door>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCMOVELINEARALIAS_MOMENTARY_DOOR_H

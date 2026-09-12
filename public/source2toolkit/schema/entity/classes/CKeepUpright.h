@@ -89,6 +89,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CKeepUpright> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CKeepUpright>();
+    }
 };
 
 #endif // _INCLUDE_CKEEPUPRIGHT_H

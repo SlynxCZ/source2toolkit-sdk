@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CCSGO_TeamIntroTerroristPosition> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CCSGO_TeamIntroTerroristPosition>();
+    }
 };
 
 #endif // _INCLUDE_CCSGO_TEAMINTROTERRORISTPOSITION_H

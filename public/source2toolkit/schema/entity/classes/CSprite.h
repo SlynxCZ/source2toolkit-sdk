@@ -104,6 +104,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSprite> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSprite>();
+    }
 };
 
 #endif // _INCLUDE_CSPRITE_H

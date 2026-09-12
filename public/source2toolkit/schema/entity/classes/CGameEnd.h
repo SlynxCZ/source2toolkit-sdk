@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CGameEnd> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CGameEnd>();
+    }
 };
 
 #endif // _INCLUDE_CGAMEEND_H

@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysicalButton> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysicalButton>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSICALBUTTON_H

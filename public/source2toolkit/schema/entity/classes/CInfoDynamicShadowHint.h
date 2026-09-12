@@ -85,6 +85,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CInfoDynamicShadowHint> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CInfoDynamicShadowHint>();
+    }
 };
 
 #endif // _INCLUDE_CINFODYNAMICSHADOWHINT_H

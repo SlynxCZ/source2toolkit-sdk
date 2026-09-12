@@ -101,6 +101,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPropDoorRotating> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPropDoorRotating>();
+    }
 };
 
 #endif // _INCLUDE_CPROPDOORROTATING_H

@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CItemSoda> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CItemSoda>();
+    }
 };
 
 #endif // _INCLUDE_CITEMSODA_H

@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CServerRagdollTrigger> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CServerRagdollTrigger>();
+    }
 };
 
 #endif // _INCLUDE_CSERVERRAGDOLLTRIGGER_H

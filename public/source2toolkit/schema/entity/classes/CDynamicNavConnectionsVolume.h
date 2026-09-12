@@ -86,6 +86,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CDynamicNavConnectionsVolume> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CDynamicNavConnectionsVolume>();
+    }
 };
 
 #endif // _INCLUDE_CDYNAMICNAVCONNECTIONSVOLUME_H

@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CHEGrenade> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CHEGrenade>();
+    }
 };
 
 #endif // _INCLUDE_CHEGRENADE_H

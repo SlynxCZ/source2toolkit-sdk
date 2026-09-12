@@ -93,6 +93,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CMapInfo> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CMapInfo>();
+    }
 };
 
 #endif // _INCLUDE_CMAPINFO_H

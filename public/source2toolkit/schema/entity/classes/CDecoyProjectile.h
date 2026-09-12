@@ -88,6 +88,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CDecoyProjectile> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CDecoyProjectile>();
+    }
 };
 
 #endif // _INCLUDE_CDECOYPROJECTILE_H

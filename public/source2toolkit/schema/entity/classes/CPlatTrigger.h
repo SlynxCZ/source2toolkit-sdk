@@ -81,6 +81,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPlatTrigger> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPlatTrigger>();
+    }
 };
 
 #endif // _INCLUDE_CPLATTRIGGER_H

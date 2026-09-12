@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CChoreoInfoTarget> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CChoreoInfoTarget>();
+    }
 };
 
 #endif // _INCLUDE_CCHOREOINFOTARGET_H

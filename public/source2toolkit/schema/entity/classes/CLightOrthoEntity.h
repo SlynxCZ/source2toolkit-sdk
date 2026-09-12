@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CLightOrthoEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CLightOrthoEntity>();
+    }
 };
 
 #endif // _INCLUDE_CLIGHTORTHOENTITY_H

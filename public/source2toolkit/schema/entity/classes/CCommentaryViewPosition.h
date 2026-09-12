@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CCommentaryViewPosition> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CCommentaryViewPosition>();
+    }
 };
 
 #endif // _INCLUDE_CCOMMENTARYVIEWPOSITION_H

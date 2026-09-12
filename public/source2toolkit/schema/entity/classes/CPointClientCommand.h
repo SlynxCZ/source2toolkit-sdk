@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPointClientCommand> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPointClientCommand>();
+    }
 };
 
 #endif // _INCLUDE_CPOINTCLIENTCOMMAND_H

@@ -102,6 +102,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CDynamicProp> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CDynamicProp>();
+    }
 };
 
 #endif // _INCLUDE_CDYNAMICPROP_H

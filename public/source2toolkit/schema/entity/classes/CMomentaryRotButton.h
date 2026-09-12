@@ -91,6 +91,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CMomentaryRotButton> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CMomentaryRotButton>();
+    }
 };
 
 #endif // _INCLUDE_CMOMENTARYROTBUTTON_H

@@ -86,6 +86,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPathNode> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPathNode>();
+    }
 };
 
 #endif // _INCLUDE_CPATHNODE_H

@@ -87,6 +87,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CCSGO_TeamPreviewCharacterPosition> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CCSGO_TeamPreviewCharacterPosition>();
+    }
 };
 
 #endif // _INCLUDE_CCSGO_TEAMPREVIEWCHARACTERPOSITION_H

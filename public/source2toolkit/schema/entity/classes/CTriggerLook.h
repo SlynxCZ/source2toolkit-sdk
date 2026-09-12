@@ -95,6 +95,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTriggerLook> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTriggerLook>();
+    }
 };
 
 #endif // _INCLUDE_CTRIGGERLOOK_H

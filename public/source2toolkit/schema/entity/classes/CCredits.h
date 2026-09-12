@@ -81,6 +81,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CCredits> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CCredits>();
+    }
 };
 
 #endif // _INCLUDE_CCREDITS_H

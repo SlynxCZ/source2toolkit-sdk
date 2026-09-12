@@ -109,6 +109,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CBaseDoor> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CBaseDoor>();
+    }
 };
 
 #endif // _INCLUDE_CBASEDOOR_H

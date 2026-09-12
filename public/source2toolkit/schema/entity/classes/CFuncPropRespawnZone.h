@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncPropRespawnZone> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncPropRespawnZone>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCPROPRESPAWNZONE_H

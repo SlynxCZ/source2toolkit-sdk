@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CDynamicPropAlias_prop_dynamic_override> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CDynamicPropAlias_prop_dynamic_override>();
+    }
 };
 
 #endif // _INCLUDE_CDYNAMICPROPALIAS_PROP_DYNAMIC_OVERRIDE_H

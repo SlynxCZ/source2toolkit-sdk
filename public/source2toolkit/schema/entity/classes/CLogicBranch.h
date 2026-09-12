@@ -84,6 +84,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CLogicBranch> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CLogicBranch>();
+    }
 };
 
 #endif // _INCLUDE_CLOGICBRANCH_H

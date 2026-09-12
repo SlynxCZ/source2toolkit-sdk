@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPointChildModifier> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPointChildModifier>();
+    }
 };
 
 #endif // _INCLUDE_CPOINTCHILDMODIFIER_H

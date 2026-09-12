@@ -87,6 +87,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CInstancedSceneEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CInstancedSceneEntity>();
+    }
 };
 
 #endif // _INCLUDE_CINSTANCEDSCENEENTITY_H

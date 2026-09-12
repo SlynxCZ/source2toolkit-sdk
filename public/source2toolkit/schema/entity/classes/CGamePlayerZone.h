@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CGamePlayerZone> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CGamePlayerZone>();
+    }
 };
 
 #endif // _INCLUDE_CGAMEPLAYERZONE_H

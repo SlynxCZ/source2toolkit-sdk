@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CHandleTest> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CHandleTest>();
+    }
 };
 
 #endif // _INCLUDE_CHANDLETEST_H

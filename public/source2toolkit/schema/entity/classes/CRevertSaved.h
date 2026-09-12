@@ -81,6 +81,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CRevertSaved> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CRevertSaved>();
+    }
 };
 
 #endif // _INCLUDE_CREVERTSAVED_H

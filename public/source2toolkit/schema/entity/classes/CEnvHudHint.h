@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvHudHint> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvHudHint>();
+    }
 };
 
 #endif // _INCLUDE_CENVHUDHINT_H

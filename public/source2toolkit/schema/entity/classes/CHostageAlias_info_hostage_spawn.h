@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CHostageAlias_info_hostage_spawn> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CHostageAlias_info_hostage_spawn>();
+    }
 };
 
 #endif // _INCLUDE_CHOSTAGEALIAS_INFO_HOSTAGE_SPAWN_H

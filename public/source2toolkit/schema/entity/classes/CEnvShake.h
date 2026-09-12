@@ -92,6 +92,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvShake> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvShake>();
+    }
 };
 
 #endif // _INCLUDE_CENVSHAKE_H

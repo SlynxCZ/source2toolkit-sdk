@@ -91,6 +91,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CAmbientGeneric> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CAmbientGeneric>();
+    }
 };
 
 #endif // _INCLUDE_CAMBIENTGENERIC_H

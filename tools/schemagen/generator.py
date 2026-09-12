@@ -586,8 +586,8 @@ MANUAL_METHODS: dict[str, list[str]] = {
         "void CollisionRulesChanged();",
         "/// <summary>Get entity index.</summary>",
         "int GetIndex();",
-        "/// <summary>Get entity handle.</summary>",
-        "CHandle<CBaseEntity> GetHandle();",
+        "/// <summary>Get entity handle. Templated the same way New() is: every generated\n    /// entity class shadows it with a plain GetHandle() returning CHandle of its own\n    /// type, so player->GetHandle() on a CCSPlayerController* is a CHandle<CCSPlayerController>.</summary>",
+        "template<typename T = CBaseEntity>\n    CHandle<T> GetHandle()\n    {    \n        return CHandle<T>(GetRefEHandle());\n    }",
         "/// <summary>Get entity name.</summary>",
         "const char* GetName() const;",
     ],
@@ -1188,6 +1188,11 @@ def write_class(
             f"    static {class_name}* FromIndex(CEntityIndex index)",
             "    {",
             "        return FromIndex(index.Get());",
+            "    }",
+            "",
+            f"    CHandle<{class_name}> GetHandle()",
+            "    {",
+            f"        return CBaseEntity::GetHandle<{class_name}>();",
             "    }",
         ]
 

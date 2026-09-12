@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPointCameraVFOV> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPointCameraVFOV>();
+    }
 };
 
 #endif // _INCLUDE_CPOINTCAMERAVFOV_H

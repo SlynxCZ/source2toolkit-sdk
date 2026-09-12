@@ -81,6 +81,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CLogicAchievement> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CLogicAchievement>();
+    }
 };
 
 #endif // _INCLUDE_CLOGICACHIEVEMENT_H

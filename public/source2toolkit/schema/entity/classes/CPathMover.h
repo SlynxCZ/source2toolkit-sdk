@@ -88,6 +88,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPathMover> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPathMover>();
+    }
 };
 
 #endif // _INCLUDE_CPATHMOVER_H

@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CBaseAnimGraphAlias_baseanimating> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CBaseAnimGraphAlias_baseanimating>();
+    }
 };
 
 #endif // _INCLUDE_CBASEANIMGRAPHALIAS_BASEANIMATING_H

@@ -94,6 +94,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CBaseTrigger> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CBaseTrigger>();
+    }
 };
 
 #endif // _INCLUDE_CBASETRIGGER_H

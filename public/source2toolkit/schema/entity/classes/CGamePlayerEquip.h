@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CGamePlayerEquip> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CGamePlayerEquip>();
+    }
 };
 
 #endif // _INCLUDE_CGAMEPLAYEREQUIP_H

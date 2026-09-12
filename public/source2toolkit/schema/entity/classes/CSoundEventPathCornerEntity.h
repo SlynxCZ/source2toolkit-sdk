@@ -84,6 +84,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSoundEventPathCornerEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSoundEventPathCornerEntity>();
+    }
 };
 
 #endif // _INCLUDE_CSOUNDEVENTPATHCORNERENTITY_H

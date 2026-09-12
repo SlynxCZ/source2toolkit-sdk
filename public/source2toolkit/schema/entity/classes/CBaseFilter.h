@@ -81,6 +81,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CBaseFilter> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CBaseFilter>();
+    }
 };
 
 #endif // _INCLUDE_CBASEFILTER_H

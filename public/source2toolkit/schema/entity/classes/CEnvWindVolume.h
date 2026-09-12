@@ -87,6 +87,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvWindVolume> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvWindVolume>();
+    }
 };
 
 #endif // _INCLUDE_CENVWINDVOLUME_H

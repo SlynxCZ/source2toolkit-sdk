@@ -83,6 +83,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvSpark> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvSpark>();
+    }
 };
 
 #endif // _INCLUDE_CENVSPARK_H

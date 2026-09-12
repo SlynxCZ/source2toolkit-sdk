@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncLadderAlias_func_useableladder> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncLadderAlias_func_useableladder>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCLADDERALIAS_FUNC_USEABLELADDER_H

@@ -97,6 +97,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysBox> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysBox>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSBOX_H

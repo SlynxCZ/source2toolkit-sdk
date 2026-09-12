@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSmokeGrenade> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSmokeGrenade>();
+    }
 };
 
 #endif // _INCLUDE_CSMOKEGRENADE_H

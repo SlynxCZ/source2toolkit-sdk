@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CItem_Healthshot> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CItem_Healthshot>();
+    }
 };
 
 #endif // _INCLUDE_CITEM_HEALTHSHOT_H

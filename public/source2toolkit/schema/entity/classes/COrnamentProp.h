@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<COrnamentProp> GetHandle()
+    {
+        return CBaseEntity::GetHandle<COrnamentProp>();
+    }
 };
 
 #endif // _INCLUDE_CORNAMENTPROP_H

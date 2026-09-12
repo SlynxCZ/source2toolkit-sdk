@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CCSGO_EndOfMatchLineupStart> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CCSGO_EndOfMatchLineupStart>();
+    }
 };
 
 #endif // _INCLUDE_CCSGO_ENDOFMATCHLINEUPSTART_H

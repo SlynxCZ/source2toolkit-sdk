@@ -85,6 +85,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CLogicRelay> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CLogicRelay>();
+    }
 };
 
 #endif // _INCLUDE_CLOGICRELAY_H

@@ -89,6 +89,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysSlideConstraint> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysSlideConstraint>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSSLIDECONSTRAINT_H

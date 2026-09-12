@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CAK47> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CAK47>();
+    }
 };
 
 #endif // _INCLUDE_CAK47_H

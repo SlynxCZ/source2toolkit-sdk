@@ -101,6 +101,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvBeam> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvBeam>();
+    }
 };
 
 #endif // _INCLUDE_CENVBEAM_H

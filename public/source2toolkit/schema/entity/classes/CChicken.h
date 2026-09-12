@@ -107,6 +107,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CChicken> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CChicken>();
+    }
 };
 
 #endif // _INCLUDE_CCHICKEN_H

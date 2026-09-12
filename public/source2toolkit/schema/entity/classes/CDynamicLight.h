@@ -87,6 +87,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CDynamicLight> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CDynamicLight>();
+    }
 };
 
 #endif // _INCLUDE_CDYNAMICLIGHT_H

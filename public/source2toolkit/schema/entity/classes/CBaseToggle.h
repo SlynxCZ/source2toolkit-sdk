@@ -97,6 +97,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CBaseToggle> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CBaseToggle>();
+    }
 };
 
 #endif // _INCLUDE_CBASETOGGLE_H

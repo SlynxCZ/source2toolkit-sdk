@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEconWearable> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEconWearable>();
+    }
 };
 
 #endif // _INCLUDE_CECONWEARABLE_H

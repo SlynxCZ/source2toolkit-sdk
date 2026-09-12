@@ -96,6 +96,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CGradientFog> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CGradientFog>();
+    }
 };
 
 #endif // _INCLUDE_CGRADIENTFOG_H

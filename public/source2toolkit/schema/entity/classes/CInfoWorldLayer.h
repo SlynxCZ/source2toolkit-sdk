@@ -85,6 +85,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CInfoWorldLayer> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CInfoWorldLayer>();
+    }
 };
 
 #endif // _INCLUDE_CINFOWORLDLAYER_H

@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CHostageRescueZone> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CHostageRescueZone>();
+    }
 };
 
 #endif // _INCLUDE_CHOSTAGERESCUEZONE_H

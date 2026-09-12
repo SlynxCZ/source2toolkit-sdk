@@ -80,6 +80,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CInfoGameEventProxy> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CInfoGameEventProxy>();
+    }
 };
 
 #endif // _INCLUDE_CINFOGAMEEVENTPROXY_H

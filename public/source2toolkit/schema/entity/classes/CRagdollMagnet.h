@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CRagdollMagnet> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CRagdollMagnet>();
+    }
 };
 
 #endif // _INCLUDE_CRAGDOLLMAGNET_H

@@ -83,6 +83,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncTimescale> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncTimescale>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCTIMESCALE_H

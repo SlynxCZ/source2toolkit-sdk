@@ -88,6 +88,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTankTrainAI> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTankTrainAI>();
+    }
 };
 
 #endif // _INCLUDE_CTANKTRAINAI_H

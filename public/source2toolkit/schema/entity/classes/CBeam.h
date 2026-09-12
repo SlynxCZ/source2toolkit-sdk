@@ -104,6 +104,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CBeam> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CBeam>();
+    }
 };
 
 #endif // _INCLUDE_CBEAM_H

@@ -91,6 +91,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysMagnet> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysMagnet>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSMAGNET_H

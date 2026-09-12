@@ -83,6 +83,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CBlood> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CBlood>();
+    }
 };
 
 #endif // _INCLUDE_CBLOOD_H

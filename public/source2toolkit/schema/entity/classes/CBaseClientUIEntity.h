@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CBaseClientUIEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CBaseClientUIEntity>();
+    }
 };
 
 #endif // _INCLUDE_CBASECLIENTUIENTITY_H

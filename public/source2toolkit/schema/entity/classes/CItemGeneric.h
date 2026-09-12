@@ -114,6 +114,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CItemGeneric> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CItemGeneric>();
+    }
 };
 
 #endif // _INCLUDE_CITEMGENERIC_H

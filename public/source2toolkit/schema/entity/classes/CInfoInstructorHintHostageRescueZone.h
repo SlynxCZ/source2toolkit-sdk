@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CInfoInstructorHintHostageRescueZone> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CInfoInstructorHintHostageRescueZone>();
+    }
 };
 
 #endif // _INCLUDE_CINFOINSTRUCTORHINTHOSTAGERESCUEZONE_H

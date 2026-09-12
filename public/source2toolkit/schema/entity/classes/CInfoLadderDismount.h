@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CInfoLadderDismount> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CInfoLadderDismount>();
+    }
 };
 
 #endif // _INCLUDE_CINFOLADDERDISMOUNT_H

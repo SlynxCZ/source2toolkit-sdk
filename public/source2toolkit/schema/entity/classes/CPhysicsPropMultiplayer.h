@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysicsPropMultiplayer> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysicsPropMultiplayer>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSICSPROPMULTIPLAYER_H

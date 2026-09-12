@@ -81,6 +81,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CRotatorTarget> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CRotatorTarget>();
+    }
 };
 
 #endif // _INCLUDE_CROTATORTARGET_H

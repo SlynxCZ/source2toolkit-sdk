@@ -83,6 +83,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CLogicGameEventListener> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CLogicGameEventListener>();
+    }
 };
 
 #endif // _INCLUDE_CLOGICGAMEEVENTLISTENER_H

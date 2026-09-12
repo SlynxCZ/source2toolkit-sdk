@@ -135,6 +135,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CBaseModelEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CBaseModelEntity>();
+    }
 };
 
 #endif // _INCLUDE_CBASEMODELENTITY_H

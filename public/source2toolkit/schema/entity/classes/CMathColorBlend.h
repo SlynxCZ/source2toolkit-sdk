@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CMathColorBlend> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CMathColorBlend>();
+    }
 };
 
 #endif // _INCLUDE_CMATHCOLORBLEND_H

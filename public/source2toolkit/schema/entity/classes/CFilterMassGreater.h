@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFilterMassGreater> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFilterMassGreater>();
+    }
 };
 
 #endif // _INCLUDE_CFILTERMASSGREATER_H

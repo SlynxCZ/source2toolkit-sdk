@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CRotButton> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CRotButton>();
+    }
 };
 
 #endif // _INCLUDE_CROTBUTTON_H

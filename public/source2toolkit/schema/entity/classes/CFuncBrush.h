@@ -85,6 +85,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncBrush> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncBrush>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCBRUSH_H

@@ -84,6 +84,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFilterMultiple> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFilterMultiple>();
+    }
 };
 
 #endif // _INCLUDE_CFILTERMULTIPLE_H

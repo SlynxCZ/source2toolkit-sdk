@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFilterProximity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFilterProximity>();
+    }
 };
 
 #endif // _INCLUDE_CFILTERPROXIMITY_H

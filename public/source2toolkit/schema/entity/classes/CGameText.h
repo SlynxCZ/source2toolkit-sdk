@@ -81,6 +81,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CGameText> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CGameText>();
+    }
 };
 
 #endif // _INCLUDE_CGAMETEXT_H

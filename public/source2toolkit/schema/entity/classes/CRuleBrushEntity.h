@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CRuleBrushEntity> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CRuleBrushEntity>();
+    }
 };
 
 #endif // _INCLUDE_CRULEBRUSHENTITY_H

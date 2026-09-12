@@ -90,6 +90,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CC4> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CC4>();
+    }
 };
 
 #endif // _INCLUDE_CC4_H

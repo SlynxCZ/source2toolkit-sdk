@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CHandleDummy> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CHandleDummy>();
+    }
 };
 
 #endif // _INCLUDE_CHANDLEDUMMY_H

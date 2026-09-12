@@ -123,6 +123,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CHostage> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CHostage>();
+    }
 };
 
 #endif // _INCLUDE_CHOSTAGE_H

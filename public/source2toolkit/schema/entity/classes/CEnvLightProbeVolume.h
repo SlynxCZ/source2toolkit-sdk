@@ -102,6 +102,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CEnvLightProbeVolume> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CEnvLightProbeVolume>();
+    }
 };
 
 #endif // _INCLUDE_CENVLIGHTPROBEVOLUME_H

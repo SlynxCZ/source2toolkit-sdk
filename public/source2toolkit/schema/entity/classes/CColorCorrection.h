@@ -95,6 +95,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CColorCorrection> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CColorCorrection>();
+    }
 };
 
 #endif // _INCLUDE_CCOLORCORRECTION_H

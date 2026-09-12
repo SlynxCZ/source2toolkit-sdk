@@ -93,6 +93,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPlayerSprayDecal> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPlayerSprayDecal>();
+    }
 };
 
 #endif // _INCLUDE_CPLAYERSPRAYDECAL_H

@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncTankTrain> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncTankTrain>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCTANKTRAIN_H

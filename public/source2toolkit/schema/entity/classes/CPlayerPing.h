@@ -85,6 +85,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPlayerPing> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPlayerPing>();
+    }
 };
 
 #endif // _INCLUDE_CPLAYERPING_H

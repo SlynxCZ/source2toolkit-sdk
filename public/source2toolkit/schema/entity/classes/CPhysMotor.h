@@ -98,6 +98,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysMotor> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysMotor>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSMOTOR_H

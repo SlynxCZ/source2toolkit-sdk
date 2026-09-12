@@ -90,6 +90,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncConveyor> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncConveyor>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCCONVEYOR_H

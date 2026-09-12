@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CFuncTrackAuto> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CFuncTrackAuto>();
+    }
 };
 
 #endif // _INCLUDE_CFUNCTRACKAUTO_H

@@ -96,6 +96,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSplineConstraint> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSplineConstraint>();
+    }
 };
 
 #endif // _INCLUDE_CSPLINECONSTRAINT_H

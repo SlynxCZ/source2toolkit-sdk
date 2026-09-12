@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CSoundEventEntityAlias_snd_event_point> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CSoundEventEntityAlias_snd_event_point>();
+    }
 };
 
 #endif // _INCLUDE_CSOUNDEVENTENTITYALIAS_SND_EVENT_POINT_H

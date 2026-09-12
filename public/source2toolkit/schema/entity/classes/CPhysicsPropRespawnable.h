@@ -83,6 +83,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysicsPropRespawnable> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysicsPropRespawnable>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSICSPROPRESPAWNABLE_H

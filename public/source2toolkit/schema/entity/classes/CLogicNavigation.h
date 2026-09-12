@@ -81,6 +81,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CLogicNavigation> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CLogicNavigation>();
+    }
 };
 
 #endif // _INCLUDE_CLOGICNAVIGATION_H

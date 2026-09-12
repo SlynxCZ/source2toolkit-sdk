@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CPhysHingeAlias_phys_hinge_local> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CPhysHingeAlias_phys_hinge_local>();
+    }
 };
 
 #endif // _INCLUDE_CPHYSHINGEALIAS_PHYS_HINGE_LOCAL_H

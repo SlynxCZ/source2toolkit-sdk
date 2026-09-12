@@ -78,6 +78,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTonemapController2Alias_env_tonemap_controller2> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTonemapController2Alias_env_tonemap_controller2>();
+    }
 };
 
 #endif // _INCLUDE_CTONEMAPCONTROLLER2ALIAS_ENV_TONEMAP_CONTROLLER2_H

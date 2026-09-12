@@ -79,6 +79,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CTankTargetChange> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CTankTargetChange>();
+    }
 };
 
 #endif // _INCLUDE_CTANKTARGETCHANGE_H

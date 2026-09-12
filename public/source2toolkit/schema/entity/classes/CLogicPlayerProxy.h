@@ -84,6 +84,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CLogicPlayerProxy> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CLogicPlayerProxy>();
+    }
 };
 
 #endif // _INCLUDE_CLOGICPLAYERPROXY_H

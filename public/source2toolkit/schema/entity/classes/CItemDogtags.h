@@ -82,6 +82,11 @@ public:
     {
         return FromIndex(index.Get());
     }
+
+    CHandle<CItemDogtags> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CItemDogtags>();
+    }
 };
 
 #endif // _INCLUDE_CITEMDOGTAGS_H
