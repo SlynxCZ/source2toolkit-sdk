@@ -571,4 +571,8 @@ Interface helpers
 		(v_ret) = TOOLKIT_IFACE_FAILED; \
 	}
 
+// Last, on purpose: the hook macros need the globals TOOLKIT_GLOBALVARS() above
+// declares, and are meant to be there wherever this header is.
+#include "IToolkitHooks.h"
+
 #endif //_INCLUDE_ITOOLKIT_PLUGIN_H

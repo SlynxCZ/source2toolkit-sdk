@@ -49,7 +49,7 @@ HUDPanelDialogVariableString_t::HUDPanelDialogVariableString_t(uint16 nPanelIdIn
         if (!libserver)
             return nullptr;
 
-        void* pTable = libserver->GetVirtualTableByName("HUDPanelDialogVariableString_t").RCast<void*>();
+        void* pTable = libserver->GetVirtualTableByName("HUDPanelDialogVariableString_t").GetPtr();
         delete libserver;
         return pTable;
     }();

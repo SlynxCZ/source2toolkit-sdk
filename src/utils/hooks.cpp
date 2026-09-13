@@ -35,40 +35,39 @@
  * Project: Source2Toolkit
  */
 
-#include "source2toolkit/IToolkitModule.h"
+// The IToolkitHook helpers that talk to IToolkitAPI and IToolkitGameConfig.
+// They live here rather than in IToolkitHooks.h because that header is pulled
+// in from the end of IToolkitPlugin.h, where both are only forward-declared.
 
-#ifdef SOURCE2TOOLKIT_CORE
-#include "core/module.h"
-#else
+#ifndef SOURCE2TOOLKIT_CORE
+
 #include "source2toolkit/IToolkitApi.h"
+#include "source2toolkit/IToolkitGameConfig.h"
 #include "source2toolkit/IToolkitPlugin.h"
+#include "source2toolkit/IToolkitHooks.h"
+
 TOOLKIT_GLOBALVARS();
-#endif
 
-IToolkitModule* IToolkitModule::New(const char* name)
+void IToolkitHook::Warn(const char* pszFormat, const char* pszName)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return new ToolkitModule(name);
-#else
-    return g_ToolkitAPI->LoadModule(name);
-#endif
+    if (g_ToolkitAPI)
+        g_ToolkitAPI->Log(g_PluginAPI, pszFormat, pszName ? pszName : "(null)");
 }
 
-IToolkitModule* IToolkitModule::New(uintptr_t ptr)
+void IToolkitHook::FreeModule(IToolkitModule* pModule)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return new ToolkitModule(ptr);
-#else
-    return g_ToolkitAPI->LoadModuleFromMemory(ptr);
-#endif
+    if (g_ToolkitAPI && pModule)
+        g_ToolkitAPI->FreeModule(pModule);
 }
 
-IToolkitModule* IToolkitModule::New(void* ptr)
+int IToolkitHook::GetOffset(const char* pszName)
 {
-    return New(reinterpret_cast<uintptr_t>(ptr));
+    return g_pToolkitGameConfig ? g_pToolkitGameConfig->GetOffset(pszName) : -1;
 }
 
-IToolkitModule* IToolkitModule::New(IToolkitMemory mem)
+IToolkitMemory IToolkitHook::ResolveSignature(const char* pszName)
 {
-    return New(mem.GetAddr());
+    return g_pToolkitGameConfig ? g_pToolkitGameConfig->ResolveSignature(pszName) : IToolkitMemory();
 }
+
+#endif // SOURCE2TOOLKIT_CORE

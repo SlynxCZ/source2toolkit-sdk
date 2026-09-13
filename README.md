@@ -113,45 +113,63 @@ bool MyPlugin::Load(PluginId id, IToolkitAPI* api, char* error, size_t maxlen, b
 }
 ```
 
-A hook is an object: the member function you want, the context (`this`) and
-the callbacks that run before and after it -- `nullptr` for the side you do
-not need. Keep it behind a plain pointer: KHook only takes a detour down in the
-hook's destructor, so `new` it in your constructor and `delete` it in
-`Unload()`.
+A hook is one line in your class, written with a `KHOOK_*` macro from
+`IToolkitHooks.h`. The macro takes the hook's type from the handler it names
+(so the handler is declared above it), the context is the enclosing object,
+and the last two arguments are the Pre and Post callbacks -- `nullptr` for the
+side you do not need. `KHOOK_INIT()` in `Load()` resolves and installs every
+hook the plugin declared, `KHOOK_DESTRUCT()` in `Unload()` takes them down; a
+hook that cannot be resolved is logged and skipped.
+
+```cpp
+class MyPlugin final : public IToolkitPlugin
+{
+    KHook::Return<void> Hook_ClientCommand(ISource2GameClients* pThis, CPlayerSlot slot, const CCommand& args);
+    KHook::Return<int64_t> Hook_TakeDamageOld(CBaseEntity* pThis, CTakeDamageInfo* pInfo, CTakeDamageResult* pResult);
+
+    KHOOK_VIRTUAL(m_hClientCommand, &ISource2GameClients::ClientCommand, &g_pSource2GameClients, &MyPlugin::Hook_ClientCommand, nullptr);
+    KHOOK_MEMBER(m_hTakeDamageOld, [] { return ADDR_TAKE_DAMAGE_OLD(); }, &MyPlugin::Hook_TakeDamageOld, nullptr);
+};
+
+bool MyPlugin::Load(...)  { TOOLKIT_SAVEVARS(); ...; KHOOK_INIT(); return true; }
+bool MyPlugin::Unload(...) { KHOOK_DESTRUCT(); return true; }
+```
 
 ### Virtual hooks
 
-```cpp
-KHook::Virtual<ISource2GameClients, void, CPlayerSlot, const CCommand&>* m_hClientCommand = nullptr;
-
-m_hClientCommand = new KHook::Virtual(&ISource2GameClients::ClientCommand, this,
-                                      &MyPlugin::Hook_ClientCommand, nullptr);
-m_hClientCommand->Add(g_pSource2GameClients);
-```
-
-When you only have a vtable and no instance (an engine class found by RTTI
-name), hand the hook something whose first pointer is that vtable and use
-`AddGlobal` -- it then covers every object sharing it:
+`KHOOK_VIRTUAL(member, function, target, pre, post)`. The function is
+`&Class::Method` (index read from the pointer), an integer index, or a
+gamedata offset name; the target is `&pInstance` (read at `KHOOK_INIT()`, so
+the global may still be null now), `KHOOK_VTABLE(module, class)` for a whole
+vtable by RTTI name (module as a name or as `&pModule`), or `nullptr` to
+attach it yourself with `m_hX.Init(pInstance)` / `m_hX.InitGlobal(vtable)`:
 
 ```cpp
-void* m_pVTable = libengine.GetVirtualTableByName("CServerSideClient").GetPtr();
-m_hSendNetMessage->AddGlobal(reinterpret_cast<CServerSideClientBase*>(&m_pVTable));
+KHOOK_VIRTUAL(m_hSendNetMessage, &CServerSideClientBase::SendNetMessage, KHOOK_VTABLE("engine2", "CServerSideClient"), &MyPlugin::Hook_SendNetMessage, nullptr);
+KHOOK_VIRTUAL(m_hRespawn, "CCSPlayerController::Respawn", KHOOK_VTABLE("server", "CCSPlayerController"), &MyPlugin::Hook_Respawn, nullptr);
 ```
 
-A vtable index instead of a member function pointer makes it a manual hook:
-`new KHook::Virtual<CCSGameRules, void>(52u, this, &MyPlugin::Pre, &MyPlugin::Post)`.
+A missing gamedata offset (-1) is refused rather than installed one slot before
+the vtable.
 
 ### Function hooks
 
-Anything a signature scan finds is hookable -- `KHook::Member` when the
-function has a `this`, `KHook::Function` when it does not:
+Anything a signature scan finds is hookable -- `KHOOK_MEMBER` when the
+function has a `this`, `KHOOK_FUNCTION` when it does not. The target is a
+gamedata entry name (resolved through `IToolkitGameConfig::ResolveSignature`,
+by symbol or by pattern), an `IToolkitMemory`, a capture-less lambda returning
+the address (what the toolkit already resolved, no second scan), or `nullptr`
+for `m_hX.Init(address)` later:
 
 ```cpp
-KHook::Member<CBaseEntity, int64_t, CTakeDamageInfo*, CTakeDamageResult*>* m_hTakeDamageOld = nullptr;
-
-m_hTakeDamageOld = new KHook::Member(this, &MyPlugin::Hook_TakeDamageOld, nullptr);
-m_hTakeDamageOld->Configure(ADDR_TAKE_DAMAGE_OLD());
+KHOOK_MEMBER(m_hPostThink, "CCSPlayerPawn::PostThink", &MyPlugin::Hook_PostThink, nullptr);
+KHOOK_MEMBER(m_hTakeDamageOld, [] { return ADDR_TAKE_DAMAGE_OLD(); }, &MyPlugin::Hook_TakeDamageOld, nullptr);
 ```
+
+The member forwards `->` to the KHook object underneath, so
+`m_hX->CallOriginal(pThis, ...)` and the rest of KHook are there as before. A
+raw KHook object is still an option (`KHOOK_NEW` in `IToolkitTypes.h`), with
+the attaching, detaching and deleting left to you.
 
 ### Handlers
 

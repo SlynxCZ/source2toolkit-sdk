@@ -92,7 +92,14 @@ public:
         return m_ptr == addr;
     }
 
-    [[nodiscard]] inline uintptr_t GetPtr() const noexcept
+    /// The address as a pointer.
+    [[nodiscard]] inline void* GetPtr() const noexcept
+    {
+        return reinterpret_cast<void*>(m_ptr);
+    }
+
+    /// The same address as an integer.
+    [[nodiscard]] inline uintptr_t GetAddr() const noexcept
     {
         return m_ptr;
     }

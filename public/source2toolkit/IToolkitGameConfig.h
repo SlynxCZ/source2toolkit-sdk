@@ -54,6 +54,7 @@
 
 #pragma once
 #include "IToolkitPlugin.h"
+#include "IToolkitMemory.h"
 
 #include "eiface.h"
 
@@ -61,7 +62,7 @@
 
 * @brief Interface for accessing game configuration entries.
   */
-#define TOOLKIT_GAMECONFIG_INTERFACE "IToolkitGameConfig001"
+#define TOOLKIT_GAMECONFIG_INTERFACE "IToolkitGameConfig002"
 
 class IToolkitGameConfig
 {
@@ -131,9 +132,11 @@ public:
     * the module lookup and the symbol/pattern branch for every signature.
     *
     * @param pchName Gamedata entry name.
-    * @return The address, or null when the module, symbol or pattern is missing.
+    * @return The address, or a null IToolkitMemory when the module, symbol or
+    *         pattern is missing. Converts to void* on its own; use RCast<T>()
+    *         for a typed function pointer.
       */
-    virtual void* ResolveSignature(const char* pchName) = 0;
+    virtual IToolkitMemory ResolveSignature(const char* pchName) = 0;
 };
 
 #define GAMECONFIG_LIBRARY(name)    g_pToolkitGameConfig->GetLibrary(name)

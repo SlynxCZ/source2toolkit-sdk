@@ -72,13 +72,16 @@ Hook control
 using Action = KHook::Action;
 
 
-// A KHook hook carries the hooked member function and the callbacks in its
+// A raw KHook hook carries the hooked member function and the callbacks in its
 // type. CTAD would derive that from the constructor arguments, but MSVC cannot,
 // so this takes it from the member the hook is stored in instead -- for a
 // constructor's initialiser list:
 //
 //     KHOOK_NEW(m_hGameFrame, &ISource2Server::GameFrame, this, nullptr, &Plugin::Hook_GameFrame)
 //
+// The address lookup, Add/Configure and Remove/delete stay yours. The
+// KHOOK_VIRTUAL / KHOOK_MEMBER / KHOOK_FUNCTION macros in IToolkitHooks.h do all
+// of that in one line, which is what a plugin normally wants.
 #define KHOOK_NEW(member, ...) member(new std::remove_pointer_t<decltype(member)>(__VA_ARGS__))
 
 #endif //_INCLUDE_ITOOLKIT_TYPES_H
