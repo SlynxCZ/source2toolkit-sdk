@@ -74,10 +74,9 @@
 *
 * Targets:
 * * KHOOK_MEMBER / KHOOK_FUNCTION -- a gamedata entry name (resolved through
-*   IToolkitGameConfig::ResolveSignature), an IToolkitMemory address, a
-*   capture-less lambda returning the address when called at KHOOK_INIT()
-*   (`[] { return ADDR_TAKE_DAMAGE_OLD(); }` -- for what the toolkit already
-*   resolved), or `nullptr`.
+*   IToolkitGameConfig::ResolveSignature), an IToolkitMemory / void* / typed
+*   function pointer (`ADDR_TAKE_DAMAGE_OLD()` -- what the toolkit already
+*   resolved, evaluated at KHOOK_INIT()), or `nullptr`.
 * * KHOOK_VIRTUAL -- the function is a member function pointer (index read
 *   from the vtable), an integer index, or a gamedata offset name; the
 *   target is a pointer to the instance pointer (`&g_pSource2Server`, read
@@ -249,7 +248,7 @@ struct CToolkitVTableName
 
 namespace toolkithook
 {
-    // What a lambda target may hand back: an IToolkitMemory, anything that
+    // What a deferred target evaluates to: an IToolkitMemory, anything that
     // converts to one (void*, uintptr_t), or a typed function pointer such as
     // the ADDR_* getters return.
     inline IToolkitMemory ToMemory(IToolkitMemory address)
@@ -262,6 +261,25 @@ namespace toolkithook
     {
         return IToolkitMemory(reinterpret_cast<const void*>(pfnFunction));
     }
+
+    // KHOOK_MEMBER / KHOOK_FUNCTION wrap their target in a capture-less lambda
+    // so it is evaluated at KHOOK_INIT(), not when the (usually global) owner
+    // is constructed -- that is what lets ADDR_TAKE_DAMAGE_OLD() sit in the
+    // macro although g_pToolkitAddresses is still null at that point. A target
+    // that is itself a lambda is unwrapped the same way.
+    // Only class types (lambdas) are unwrapped: a plain function pointer with
+    // no arguments is a hook target, not something to call.
+    template <typename T>
+    inline decltype(auto) Evaluate(T&& value)
+    {
+        if constexpr (std::is_class_v<std::decay_t<T>> && std::is_invocable_v<T>)
+            return Evaluate(value());
+        else
+            return std::forward<T>(value);
+    }
+
+    template <typename RESOLVER>
+    using ResolvedType = std::decay_t<decltype(Evaluate(RESOLVER{}()))>;
 } // namespace toolkithook
 
 /* =========================
@@ -547,8 +565,10 @@ public:
 
     /**
 
-    * @param target   A gamedata entry name, an IToolkitMemory address, a
-    *                 capture-less lambda returning the address, or nullptr.
+    * @param target   A gamedata entry name, an IToolkitMemory address (or a
+    *                 typed function pointer), nullptr, or a capture-less lambda
+    *                 returning one of those -- the macro always passes a lambda
+    *                 so the target is evaluated at KHOOK_INIT().
     * @param pContext The object the callbacks are members of.
     * @param pre      Callback before the original, or nullptr.
     * @param post     Callback after the original, or nullptr.
@@ -573,6 +593,9 @@ public:
         if (m_bInstalled)
             return true;
 
+        if (m_pfnName)
+            m_pszName = m_pfnName();
+
         if (m_Address)
             return Init(m_Address);
 
@@ -581,7 +604,7 @@ public:
             const IToolkitMemory address = m_pfnResolve();
             if (!address)
             {
-                Warn("KHook: %s; hook not installed\n", "the address resolver returned null");
+                Warn("KHook: %s; hook not installed\n", "the address given for a hook is null at init");
                 return false;
             }
 
@@ -662,15 +685,31 @@ private:
         m_Address = address;
     }
 
-    // Called at Init through a plain function pointer, hence capture-less.
+    // A deferred target: called at Init through a plain function pointer,
+    // hence capture-less. What it evaluates to picks the path above.
     template <typename RESOLVER, std::enable_if_t<std::is_invocable_v<RESOLVER>, int> = 0>
     void SetTarget(RESOLVER)
     {
-        static_assert(std::is_default_constructible_v<RESOLVER>, "a hook's address resolver must capture nothing");
-        m_pfnResolve = []() -> IToolkitMemory
+        static_assert(std::is_default_constructible_v<RESOLVER>, "a hook's target must capture nothing");
+        using RESOLVED = toolkithook::ResolvedType<RESOLVER>;
+
+        if constexpr (std::is_same_v<RESOLVED, std::nullptr_t>)
         {
-            return toolkithook::ToMemory(RESOLVER{}());
-        };
+        }
+        else if constexpr (std::is_convertible_v<RESOLVED, const char*>)
+        {
+            m_pfnName = []() -> const char*
+            {
+                return toolkithook::Evaluate(RESOLVER{}());
+            };
+        }
+        else
+        {
+            m_pfnResolve = []() -> IToolkitMemory
+            {
+                return toolkithook::ToMemory(toolkithook::Evaluate(RESOLVER{}()));
+            };
+        }
     }
 
     void SetTarget(std::nullptr_t)
@@ -679,6 +718,7 @@ private:
 
     HookType* m_pHook = nullptr;
     const char* m_pszName = nullptr;
+    const char* (*m_pfnName)() = nullptr;
     IToolkitMemory m_Address;
     IToolkitMemory (*m_pfnResolve)() = nullptr;
     bool m_bInstalled = false;
@@ -719,6 +759,9 @@ public:
         if (m_bInstalled)
             return true;
 
+        if (m_pfnName)
+            m_pszName = m_pfnName();
+
         if (m_Address)
             return Init(m_Address);
 
@@ -727,7 +770,7 @@ public:
             const IToolkitMemory address = m_pfnResolve();
             if (!address)
             {
-                Warn("KHook: %s; hook not installed\n", "the address resolver returned null");
+                Warn("KHook: %s; hook not installed\n", "the address given for a hook is null at init");
                 return false;
             }
 
@@ -806,11 +849,26 @@ private:
     template <typename RESOLVER, std::enable_if_t<std::is_invocable_v<RESOLVER>, int> = 0>
     void SetTarget(RESOLVER)
     {
-        static_assert(std::is_default_constructible_v<RESOLVER>, "a hook's address resolver must capture nothing");
-        m_pfnResolve = []() -> IToolkitMemory
+        static_assert(std::is_default_constructible_v<RESOLVER>, "a hook's target must capture nothing");
+        using RESOLVED = toolkithook::ResolvedType<RESOLVER>;
+
+        if constexpr (std::is_same_v<RESOLVED, std::nullptr_t>)
         {
-            return toolkithook::ToMemory(RESOLVER{}());
-        };
+        }
+        else if constexpr (std::is_convertible_v<RESOLVED, const char*>)
+        {
+            m_pfnName = []() -> const char*
+            {
+                return toolkithook::Evaluate(RESOLVER{}());
+            };
+        }
+        else
+        {
+            m_pfnResolve = []() -> IToolkitMemory
+            {
+                return toolkithook::ToMemory(toolkithook::Evaluate(RESOLVER{}()));
+            };
+        }
     }
 
     void SetTarget(std::nullptr_t)
@@ -819,6 +877,7 @@ private:
 
     HookType* m_pHook = nullptr;
     const char* m_pszName = nullptr;
+    const char* (*m_pfnName)() = nullptr;
     IToolkitMemory m_Address;
     IToolkitMemory (*m_pfnResolve)() = nullptr;
     bool m_bInstalled = false;
@@ -911,19 +970,24 @@ Macros
 
 * @brief Declares a hook on a member function found by address.
 *
+* The target is evaluated at KHOOK_INIT(), not here, so an expression that
+* needs the toolkit -- ADDR_TAKE_DAMAGE_OLD(), a GAMECONFIG_RESOLVE() -- is
+* fine even though the owner is usually a global constructed long before Load().
+*
 * @param member Member name.
-* @param target A gamedata entry name, an IToolkitMemory, a capture-less
-*               lambda returning the address, or nullptr.
+* @param target A gamedata entry name, an IToolkitMemory / void* / typed
+*               function pointer (an ADDR_* getter), or nullptr for a manual
+*               Init(address) later.
 * @param pre    `&Self::Handler` or nullptr.
 * @param post   `&Self::Handler` or nullptr.
 *
 * @code
 * KHOOK_MEMBER(m_hPostThink, "CCSPlayerPawn::PostThink", &Plugin::Hook_PostThink, nullptr);
-* KHOOK_MEMBER(m_hTakeDamageOld, [] { return ADDR_TAKE_DAMAGE_OLD(); }, &Plugin::Hook_TakeDamageOld, nullptr);
+* KHOOK_MEMBER(m_hTakeDamageOld, ADDR_TAKE_DAMAGE_OLD(), &Plugin::Hook_TakeDamageOld, nullptr);
 * @endcode
   */
 #define KHOOK_MEMBER(member, target, pre, post) \
-    ::toolkithook::MemberHookFor<decltype(pre), decltype(post)> member { target, this, pre, post }
+    ::toolkithook::MemberHookFor<decltype(pre), decltype(post)> member { [] { return (target); }, this, pre, post }
 
 /**
 
@@ -931,7 +995,7 @@ Macros
 * parameters as KHOOK_MEMBER; the handler takes no hooked object.
   */
 #define KHOOK_FUNCTION(member, target, pre, post) \
-    ::toolkithook::FunctionHookFor<decltype(pre), decltype(post)> member { target, this, pre, post }
+    ::toolkithook::FunctionHookFor<decltype(pre), decltype(post)> member { [] { return (target); }, this, pre, post }
 
 /**
 

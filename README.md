@@ -128,7 +128,7 @@ class MyPlugin final : public IToolkitPlugin
     KHook::Return<int64_t> Hook_TakeDamageOld(CBaseEntity* pThis, CTakeDamageInfo* pInfo, CTakeDamageResult* pResult);
 
     KHOOK_VIRTUAL(m_hClientCommand, &ISource2GameClients::ClientCommand, &g_pSource2GameClients, &MyPlugin::Hook_ClientCommand, nullptr);
-    KHOOK_MEMBER(m_hTakeDamageOld, [] { return ADDR_TAKE_DAMAGE_OLD(); }, &MyPlugin::Hook_TakeDamageOld, nullptr);
+    KHOOK_MEMBER(m_hTakeDamageOld, ADDR_TAKE_DAMAGE_OLD(), &MyPlugin::Hook_TakeDamageOld, nullptr);
 };
 
 bool MyPlugin::Load(...)  { TOOLKIT_SAVEVARS(); ...; KHOOK_INIT(); return true; }
@@ -157,13 +157,13 @@ the vtable.
 Anything a signature scan finds is hookable -- `KHOOK_MEMBER` when the
 function has a `this`, `KHOOK_FUNCTION` when it does not. The target is a
 gamedata entry name (resolved through `IToolkitGameConfig::ResolveSignature`,
-by symbol or by pattern), an `IToolkitMemory`, a capture-less lambda returning
-the address (what the toolkit already resolved, no second scan), or `nullptr`
-for `m_hX.Init(address)` later:
+by symbol or by pattern), an `IToolkitMemory`, an `ADDR_*` getter (what the toolkit already
+resolved, no second scan -- the target is evaluated at `KHOOK_INIT()`, not when
+the object is constructed), or `nullptr` for `m_hX.Init(address)` later:
 
 ```cpp
 KHOOK_MEMBER(m_hPostThink, "CCSPlayerPawn::PostThink", &MyPlugin::Hook_PostThink, nullptr);
-KHOOK_MEMBER(m_hTakeDamageOld, [] { return ADDR_TAKE_DAMAGE_OLD(); }, &MyPlugin::Hook_TakeDamageOld, nullptr);
+KHOOK_MEMBER(m_hTakeDamageOld, ADDR_TAKE_DAMAGE_OLD(), &MyPlugin::Hook_TakeDamageOld, nullptr);
 ```
 
 The member forwards `->` to the KHook object underneath, so
