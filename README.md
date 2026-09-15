@@ -144,11 +144,14 @@ bool MyPlugin::Unload(...) { KHOOK_DESTRUCT(); return true; }
 `&Class::Method` (index read from the pointer), an integer index, or a
 gamedata offset name; the target is `&pInstance` (read at `KHOOK_INIT()`, so
 the global may still be null now), `KHOOK_VTABLE(module, class)` for a whole
-vtable by RTTI name (module as a name or as `&pModule`), or `nullptr` to
-attach it yourself with `m_hX.Init(pInstance)` / `m_hX.InitGlobal(vtable)`:
+vtable by RTTI name (module as a name or as `&pModule`),
+`KHOOK_VTABLE_BASE(module, class, base)` for the table of a base that is not
+the class's first one, or `nullptr` to attach it yourself with
+`m_hX.Init(pInstance)` / `m_hX.InitGlobal(vtable)`:
 
 ```cpp
 KHOOK_VIRTUAL(m_hSendNetMessage, &CServerSideClientBase::SendNetMessage, KHOOK_VTABLE("engine2", "CServerSideClient"), &MyPlugin::Hook_SendNetMessage, nullptr);
+KHOOK_VIRTUAL(m_hRecordingStarted, &IHLTVDirector::OnRecordingStarted, KHOOK_VTABLE_BASE("server", "CCSHLTVDirector", "IHLTVDirector"), nullptr, &MyPlugin::Hook_RecordingStarted);
 KHOOK_VIRTUAL(m_hRespawn, "CCSPlayerController::Respawn", KHOOK_VTABLE("server", "CCSPlayerController"), &MyPlugin::Hook_Respawn, nullptr);
 ```
 

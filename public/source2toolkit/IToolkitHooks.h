@@ -257,9 +257,22 @@ struct CToolkitVTableName
     {
     }
 
+    /// The table of a base class sub-object inside the class -- for an
+    /// interface that is not its first base (IToolkitModule::GetVirtualTableByBase).
+    CToolkitVTableName(const char* module, const char* name, const char* base) :
+        pszModule(module), pszClass(name), pszBase(base)
+    {
+    }
+
+    CToolkitVTableName(IToolkitModule** module, const char* name, const char* base) :
+        ppModule(module), pszClass(name), pszBase(base)
+    {
+    }
+
     const char* pszModule = nullptr;
     IToolkitModule** ppModule = nullptr;
     const char* pszClass = nullptr;
+    const char* pszBase = nullptr;
 };
 
 namespace toolkithook
@@ -361,9 +374,9 @@ public:
         if (m_VTable.pszClass)
         {
             if (m_VTable.ppModule)
-                return InitGlobal(*m_VTable.ppModule, m_VTable.pszClass);
+                return InitGlobal(*m_VTable.ppModule, m_VTable.pszClass, m_VTable.pszBase);
 
-            return InitGlobal(m_VTable.pszModule, m_VTable.pszClass);
+            return InitGlobal(m_VTable.pszModule, m_VTable.pszClass, m_VTable.pszBase);
         }
 
         return true;
@@ -403,9 +416,9 @@ public:
 
     /**
 
-    * @brief Installs the hook on the vtable of an RTTI class name in a module.
+    * @brief Installs the hook on the vtable of an RTTI class name in a module, or of its base pszBase.
       */
-    bool InitGlobal(IToolkitModule* pModule, const char* pszClass)
+    bool InitGlobal(IToolkitModule* pModule, const char* pszClass, const char* pszBase = nullptr)
     {
         if (!pModule)
         {
@@ -413,10 +426,13 @@ public:
             return false;
         }
 
-        const IToolkitMemory vtable = pModule->GetVirtualTableByName(pszClass);
+        const IToolkitMemory vtable = pszBase ? pModule->GetVirtualTableByBase(pszClass, pszBase) : pModule->GetVirtualTableByName(pszClass);
         if (!vtable)
         {
-            Warn("KHook: vtable '%s' was not found; hook not installed\n", pszClass);
+            if (pszBase)
+                Warn("KHook: vtable of base '%s' was not found; hook not installed\n", pszBase);
+            else
+                Warn("KHook: vtable '%s' was not found; hook not installed\n", pszClass);
             return false;
         }
 
@@ -427,7 +443,7 @@ public:
 
     * @brief Same, with the module loaded by name for the lookup.
       */
-    bool InitGlobal(const char* pszModule, const char* pszClass)
+    bool InitGlobal(const char* pszModule, const char* pszClass, const char* pszBase = nullptr)
     {
         IToolkitModule* pModule = IToolkitModule::New(pszModule);
         if (!pModule)
@@ -436,7 +452,7 @@ public:
             return false;
         }
 
-        const bool bInstalled = InitGlobal(pModule, pszClass);
+        const bool bInstalled = InitGlobal(pModule, pszClass, pszBase);
         FreeModule(pModule);
         return bInstalled;
     }
@@ -967,11 +983,20 @@ Macros
 
 /**
 
+* @brief The vtable of a base class sub-object inside an RTTI class: for an
+* interface that is not the class's first base, whose table KHOOK_VTABLE cannot
+* reach. The base's position comes from the RTTI. Needs a core with
+* IToolkitModule::GetVirtualTableByBase.
+  */
+#define KHOOK_VTABLE_BASE(module, name, base) ::CToolkitVTableName{ module, name, base }
+
+/**
+
 * @brief Declares a virtual hook as a class member.
 *
 * @param member   Member name.
 * @param function `&Class::Method`, a vtable index, or a gamedata offset name.
-* @param target   `&pInstance`, KHOOK_VTABLE(module, class), or nullptr.
+* @param target   `&pInstance`, KHOOK_VTABLE(module, class), KHOOK_VTABLE_BASE(module, class, base), or nullptr.
 * @param pre      `&Self::Handler` or nullptr.
 * @param post     `&Self::Handler` or nullptr.
 *

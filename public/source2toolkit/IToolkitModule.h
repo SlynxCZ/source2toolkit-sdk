@@ -181,6 +181,38 @@ public:
     [[nodiscard]] virtual const char* GetModuleName() const = 0;
 
     /* =========================
+    Secondary virtual tables
+    ========================= */
+
+    // Appended after everything above, so a plugin built against an older SDK
+    // keeps its slots. A plugin calling these needs a core that has them.
+
+    /**
+     * @brief Returns the virtual table of the sub-object at an offset inside a class.
+     *
+     * A class with several bases has one table per base that is not at offset 0;
+     * offset 0 is the primary table, the one GetVirtualTableByName returns. The
+     * offset moves whenever the class is laid out anew -- prefer GetVirtualTableByBase.
+     *
+     * @param name      Class name (undecorated unless decorated is true).
+     * @param offset    Offset of the sub-object in bytes.
+     * @param decorated Pass true when name is already a decorated symbol.
+     */
+    [[nodiscard]] virtual IToolkitMemory GetVirtualTableByOffset(const char* name, std::ptrdiff_t offset, bool decorated = false) const = 0;
+
+    /**
+     * @brief Returns the virtual table of a base class sub-object, located through the RTTI.
+     *
+     * For an interface that is not a class's first base, whose table
+     * GetVirtualTableByName cannot reach. Non-virtual bases only.
+     *
+     * @param name      Class name (undecorated unless decorated is true).
+     * @param baseName  Base class name.
+     * @param decorated Pass true when both names are already decorated symbols.
+     */
+    [[nodiscard]] virtual IToolkitMemory GetVirtualTableByBase(const char* name, const char* baseName, bool decorated = false) const = 0;
+
+    /* =========================
     Virtual constructor (New)
     ========================= */
 
