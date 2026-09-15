@@ -210,10 +210,7 @@ and returns `KHook::Return<T>` -- the action, plus the return value when the
 function has one:
 
 ```cpp
-KHook::Return<bool> MyPlugin::Hook_ClientConnect(ISource2GameClients* pThis, CPlayerSlot slot,
-                                                 const char* pszName, uint64 xuid,
-                                                 const char* pszNetworkID, bool unk1,
-                                                 CBufferString* pRejectReason)
+KHook::Return<bool> MyPlugin::Hook_ClientConnect(ISource2GameClients* pThis, CPlayerSlot slot, const char* pszName, uint64 xuid, const char* pszNetworkID, bool unk1, CBufferString* pRejectReason)
 {
     if (!V_strcmp(pszName, "rejected"))
         return { KHook::Action::Override, false };
