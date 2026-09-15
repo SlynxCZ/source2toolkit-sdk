@@ -72,6 +72,14 @@
 * all down. A hook whose target is `nullptr` is left to the caller:
 * `m_hX.Init(address)`, `m_hX.Init(pInstance)` or `m_hX.InitGlobal(vtable)`.
 *
+* KHOOK_INIT() only sees the hooks that exist when it runs. A hook that is a
+* member of an object created later (`new CFeature()` after Load()) registers
+* itself but stays uninstalled until `m_hX.Init()` -- in that object's
+* constructor, say -- resolves the target the macro was given.
+* `m_hX.Destruct()` takes one hook down for good; destroying the owner does
+* the same and unregisters it, so KHOOK_DESTRUCT() never touches a hook that
+* is already gone.
+*
 * Targets:
 * * KHOOK_MEMBER / KHOOK_FUNCTION -- a gamedata entry name (resolved through
 *   IToolkitGameConfig::ResolveSignature), an IToolkitMemory / void* / typed
@@ -146,6 +154,11 @@ public:
 
     * @brief Resolves the target given at construction and installs the hook.
     *
+    * KHOOK_INIT() calls this on every hook that exists at that point; a hook
+    * constructed later is installed by calling it directly. Once installed
+    * it does nothing, and after a failure (an instance still null, say) it
+    * can simply be called again.
+    *
     * @return false when the target could not be resolved. A hook with no
     *         target (nullptr) is left alone and counts as success.
       */
@@ -155,7 +168,10 @@ public:
 
     * @brief Detaches and deletes the underlying KHook object.
     *
-    * Deleting is what takes the detour down. Safe to call more than once.
+    * Deleting is what takes the detour down. Safe to call more than once,
+    * and final: the hook cannot be installed again afterwards. The wrapper's
+    * destructor calls it too, so destroying the owning object takes its
+    * hooks down.
       */
     virtual void Destruct() = 0;
 

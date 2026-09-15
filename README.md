@@ -95,6 +95,9 @@ fetches that same engine for your plugin (`ToolkitFactory(TOOLKIT_KHOOK_INTERFAC
 so every hook on the server -- Metamod's, the toolkit's, every plugin's -- runs
 on one instance.
 
+The full guide, with examples, is at
+[source2toolkit.net/docs/hooking](https://www.source2toolkit.net/docs/hooking).
+
 The headers are the SDK's own `vendor/khook` submodule (`git submodule update
 --init --recursive`); nothing of KHook is built and no metamod-source checkout
 is needed. The SDK stamps the submodule's commit into your binary as
@@ -170,6 +173,35 @@ The member forwards `->` to the KHook object underneath, so
 `m_hX->CallOriginal(pThis, ...)` and the rest of KHook are there as before. A
 raw KHook object is still an option (`KHOOK_NEW` in `IToolkitTypes.h`), with
 the attaching, detaching and deleting left to you.
+
+### Installing and removing hooks later
+
+`KHOOK_INIT()` installs the hooks that exist when it runs. A hook that is a
+member of an object you create afterwards registers itself but is not
+installed -- call `m_hX.Init()`, in that object's constructor for instance. It
+resolves the target the macro was given, returns `false` (and logs) when it
+cannot, and can simply be called again once the instance exists.
+`m_hX.Destruct()` takes one hook down for good, and so does destroying the
+owner: the wrapper's destructor removes the hook and unregisters it, so
+`KHOOK_DESTRUCT()` never touches a hook that is already gone.
+
+```cpp
+class CChatFilter
+{
+public:
+    CChatFilter() { m_hClientCommand.Init(); }   // KHOOK_INIT() ran long ago
+
+    KHook::Return<void> Hook_ClientCommand(ISource2GameClients* pThis, CPlayerSlot slot, const CCommand& args);
+
+    KHOOK_VIRTUAL(m_hClientCommand, &ISource2GameClients::ClientCommand, &g_pSource2GameClients, &CChatFilter::Hook_ClientCommand, nullptr);
+};
+
+auto* pFilter = new CChatFilter();   // hook installed here
+delete pFilter;                       // and removed here
+```
+
+Install and remove hooks on the game thread, and never destroy an owner from
+inside one of its own handlers.
 
 ### Handlers
 
