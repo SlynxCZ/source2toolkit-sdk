@@ -117,6 +117,7 @@ class IToolkitMySQL;
 class IToolkitNetworkMessages;
 class IToolkitPlugin;
 class IToolkitScheduler;
+class IToolkitSounds;
 class IToolkitTrace;
 
 typedef void* (*CreateInterfaceFn)(const char* pName, int* pReturnCode);
@@ -313,6 +314,12 @@ public:
     * @brief Access scheduler system.
       */
     virtual IToolkitScheduler* Scheduler() = 0;
+
+    /**
+
+    * @brief Access sound system.
+      */
+    virtual IToolkitSounds* Sounds() = 0;
 
     /**
 

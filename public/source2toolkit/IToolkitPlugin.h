@@ -88,6 +88,7 @@ class IToolkitMenus;
 class IToolkitMySQL;
 class IToolkitNetworkMessages;
 class IToolkitScheduler;
+class IToolkitSounds;
 class IToolkitTrace;
 
 // Everything below this line may use Action and the forward declarations
@@ -110,6 +111,7 @@ class IToolkitTrace;
 #include "IToolkitNetworkMessages.h"
 #include "IToolkitPaths.h"
 #include "IToolkitScheduler.h"
+#include "IToolkitSounds.h"
 #include "IToolkitTrace.h"
 
 /* =========================
@@ -405,6 +407,7 @@ Globals
     IToolkitNetworkMessages* g_pToolkitNetworkMessages = nullptr; \
     IToolkitPaths*           g_pToolkitPaths           = nullptr; \
     IToolkitScheduler*       g_pToolkitScheduler       = nullptr; \
+    IToolkitSounds*          g_pToolkitSounds          = nullptr; \
     IToolkitTrace*           g_pToolkitTrace           = nullptr; \
     namespace KHook { KHook::IKHook* __exported__khook = nullptr; } \
     TOOLKIT_EXPOSURE_FUNC(name, var)
@@ -432,6 +435,7 @@ Globals
     extern IToolkitNetworkMessages* g_pToolkitNetworkMessages; \
     extern IToolkitPaths*           g_pToolkitPaths; \
     extern IToolkitScheduler*       g_pToolkitScheduler; \
+    extern IToolkitSounds*          g_pToolkitSounds; \
     extern IToolkitTrace*           g_pToolkitTrace; \
     namespace KHook { extern KHook::IKHook* __exported__khook; }
 
@@ -474,6 +478,7 @@ Globals
     g_pToolkitPaths           = (IToolkitPaths*)          api->ToolkitFactory(TOOLKIT_PATHS_INTERFACE,           nullptr, nullptr); \
     g_pToolkitJSON            = (IToolkitJSON*)           api->ToolkitFactory(TOOLKIT_JSON_INTERFACE,            nullptr, nullptr); \
     g_pToolkitScheduler       = (IToolkitScheduler*)      api->ToolkitFactory(TOOLKIT_SCHEDULER_INTERFACE,       nullptr, nullptr); \
+    g_pToolkitSounds          = (IToolkitSounds*)         api->ToolkitFactory(TOOLKIT_SOUNDS_INTERFACE,          nullptr, nullptr); \
     g_pToolkitTrace           = (IToolkitTrace*)          api->ToolkitFactory(TOOLKIT_TRACE_INTERFACE,           nullptr, nullptr);
 
 /* =========================
