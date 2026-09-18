@@ -110,7 +110,7 @@ public:
     /// <summary>Is bot.</summary>
     bool IsBot();
     /// <summary>Disconnect player.</summary>
-    void Disconnect(ENetworkDisconnectionReason eReason);
+    void Disconnect(ENetworkDisconnectionReason eReason, const char* pszInternalReason = nullptr);
     /// <summary>Execute client command.</summary>
     void ExecuteClientCommand(const char* pszCommand);
     /// <summary>Execute command from server.</summary>

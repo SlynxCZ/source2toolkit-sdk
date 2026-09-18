@@ -47,6 +47,8 @@
 #include "core/addresses.h"
 #include "core/entities.h"
 #include "core/gameconfig.h"
+#include "core/menus.h"
+#include "core/scheduler.h"
 #include "core/shared.h"
 #else
 #include "source2toolkit/IToolkitAddresses.h"
@@ -124,9 +126,29 @@ bool CBasePlayerController::IsBot()
     return (m_fFlags & FL_FAKECLIENT) != 0;
 }
 
-void CBasePlayerController::Disconnect(ENetworkDisconnectionReason eReason)
+void CBasePlayerController::Disconnect(ENetworkDisconnectionReason eReason, const char* pszInternalReason)
 {
-    GetEngineServer()->DisconnectClient(GetSlot(), eReason);
+    if (m_iConnected() != PlayerConnectedState::Connected)
+        return;
+
+    // The disconnect happens next frame, by which time a reason built on the
+    // spot -- fmt::format(...).c_str() -- is gone. The lambda keeps its own copy.
+    const bool bHasReason = pszInternalReason != nullptr;
+    std::string sInternalReason = bHasReason ? pszInternalReason : "";
+
+#ifdef SOURCE2TOOLKIT_CORE
+    menus::menuManager.CloseActiveMenu(reinterpret_cast<CCSPlayerController*>(this));
+    scheduler::schedulerManager.NextFrame(0, [hPlayer = this->GetHandle(), eReason, bHasReason, sInternalReason = std::move(sInternalReason)]
+#else
+    CLOSE_ACTIVE_MENU(reinterpret_cast<CCSPlayerController*>(this));
+    g_pToolkitScheduler->NextFrame(g_PluginID, [hPlayer = this->GetHandle(), eReason, bHasReason, sInternalReason = std::move(sInternalReason)]
+#endif
+    {
+        if (!hPlayer || hPlayer->m_iConnected() != PlayerConnectedState::Connected)
+            return;
+
+        GetEngineServer()->DisconnectClient(hPlayer->GetSlot(), eReason, bHasReason ? sInternalReason.c_str() : nullptr);
+    });
 }
 
 void CBasePlayerController::ExecuteClientCommand(const char* pszCommand)
