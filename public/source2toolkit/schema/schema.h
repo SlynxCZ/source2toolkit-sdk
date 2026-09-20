@@ -390,6 +390,43 @@ inline constexpr bool schema_writable_v =
     std::is_same_v<T, QAngle> ||
     std::is_same_v<T, Color>;
 
+/**
+
+* @brief Puts a parameter in a non-deduced context.
+* * The field setters are templates only so enable_if can pick an overload; T
+* * must stay the field's own type. Deduced from the argument, `m_nByte = 1`
+* * made T an int and wrote four bytes over a one-byte field.
+  */
+template <typename T>
+struct schema_identity { using type = T; };
+template <typename T>
+using schema_identity_t = typename schema_identity<T>::type;
+
+/**
+
+* @brief Types the read-modify-write operators (++, +=, ...) are generated for.
+  */
+template <typename T>
+inline constexpr bool schema_arithmetic_v = std::is_arithmetic_v<T> && !std::is_same_v<T, bool>;
+
+/**
+
+* @brief Types the bitwise operators (|=, &=, ...) are generated for.
+  */
+template <typename T>
+inline constexpr bool schema_bitwise_v = (std::is_integral_v<T> && !std::is_same_v<T, bool>) || std::is_enum_v<T>;
+
+/**
+
+* @brief The integer type a bitwise operator computes in: the underlying type of an enum, otherwise T.
+  */
+template <typename T, bool = std::is_enum_v<T>>
+struct schema_bits { using type = T; };
+template <typename T>
+struct schema_bits<T, true> { using type = std::underlying_type_t<T>; };
+template <typename T>
+using schema_bits_t = typename schema_bits<T>::type;
+
 /* =========================
 Schema field macros
 ========================= */
@@ -425,7 +462,7 @@ Schema field macros
 		}                                                                                                                    \
 		template <typename T = type>                                                                                         \
 		std::enable_if_t<std::is_pointer_v<T>, void>                                                                         \
-		Set(T val)                                                                                                           \
+		Set(schema_identity_t<T> val)                                                                                       \
 		{                                                                                                                    \
 			static const auto m_key = schema::GetOffset(m_className, m_classNameHash, #varName, m_varNameHash);              \
 			static const auto m_offset = offsetof(ThisClass, varName);                                                       \
@@ -437,7 +474,7 @@ Schema field macros
 		}																													 \
 		template <typename T = type>                                                                                         \
 		std::enable_if_t<!std::is_pointer_v<T> && std::is_trivially_copyable_v<T>, void>                                     \
-		Set(T val)                                                                                                           \
+		Set(schema_identity_t<T> val)                                                                                       \
 	    {                                                                                                                 \
     		static const auto m_key = schema::GetOffset(m_className, m_classNameHash, #varName, m_varNameHash);              \
 			static const auto m_offset = offsetof(ThisClass, varName);                                                       \
@@ -449,7 +486,7 @@ Schema field macros
 		}																													 \
 		template <typename T = type>                                                                                         \
 		std::enable_if_t<!std::is_pointer_v<T> && !std::is_trivially_copyable_v<T>, void>                                    \
-		Set(const T& val)                                                                                                    \
+		Set(const schema_identity_t<T>& val)                                                                                \
 		{                                                                                                                    \
 			static const auto m_key = schema::GetOffset(m_className, m_classNameHash, #varName, m_varNameHash);              \
 			static const auto m_offset = offsetof(ThisClass, varName);                                                       \
@@ -517,17 +554,102 @@ Schema field macros
 		}                                                                                                                    \
 		template <typename T = type>                                                                                         \
 		std::enable_if_t<schema_writable_v<T>, void>                                                                         \
-		operator()(T val)                                                                                                    \
+		operator()(schema_identity_t<T> val)                                                                                \
 		{                                                                                                                    \
 			Set(val);                                                                                                        \
 		}																													 \
 		template <typename T = type>                                                                                         \
 		std::enable_if_t<schema_writable_v<T>, varName##_prop&>                                                              \
-		operator=(T val)                                                                                                     \
+		operator=(schema_identity_t<T> val)                                                                                 \
 		{                                                                                                                    \
 			Set(val);                                                                                                        \
 			return *this;                                                                                                    \
 		}																													 \
+		/*Read-modify-write operators. Without them `m_x++` and `m_x |= F` still*/                                           \
+		/*compile -- through the implicit conversion to type& above -- but they*/                                            \
+		/*write past Set(), so NetworkStateChanged() never runs. These go*/                                                  \
+		/*through Set(). `m_x()++` stays the raw, unannounced write.*/                                                       \
+		template <typename T = type>                                                                                         \
+		std::enable_if_t<schema_arithmetic_v<T>, varName##_prop&>                                                            \
+		operator++()                                                                                                         \
+		{                                                                                                                    \
+			Set(static_cast<T>(static_cast<T>(Get()) + 1));                                                                         \
+			return *this;                                                                                                    \
+		}                                                                                                                    \
+		template <typename T = type>                                                                                         \
+		std::enable_if_t<schema_arithmetic_v<T>, T>                                                                          \
+		operator++(int)                                                                                                      \
+		{                                                                                                                    \
+			T old = Get();                                                                                                   \
+			Set(static_cast<T>(old + 1));                                                                                    \
+			return old;                                                                                                      \
+		}                                                                                                                    \
+		template <typename T = type>                                                                                         \
+		std::enable_if_t<schema_arithmetic_v<T>, varName##_prop&>                                                            \
+		operator--()                                                                                                         \
+		{                                                                                                                    \
+			Set(static_cast<T>(static_cast<T>(Get()) - 1));                                                                         \
+			return *this;                                                                                                    \
+		}                                                                                                                    \
+		template <typename T = type>                                                                                         \
+		std::enable_if_t<schema_arithmetic_v<T>, T>                                                                          \
+		operator--(int)                                                                                                      \
+		{                                                                                                                    \
+			T old = Get();                                                                                                   \
+			Set(static_cast<T>(old - 1));                                                                                    \
+			return old;                                                                                                      \
+		}                                                                                                                    \
+		template <typename U, typename T = type>                                                                             \
+		std::enable_if_t<schema_arithmetic_v<T>, varName##_prop&>                                                            \
+		operator+=(U val)                                                                                                    \
+		{                                                                                                                    \
+			Set(static_cast<T>(Get() + val));                                                                                \
+			return *this;                                                                                                    \
+		}                                                                                                                    \
+		template <typename U, typename T = type>                                                                             \
+		std::enable_if_t<schema_arithmetic_v<T>, varName##_prop&>                                                            \
+		operator-=(U val)                                                                                                    \
+		{                                                                                                                    \
+			Set(static_cast<T>(Get() - val));                                                                                \
+			return *this;                                                                                                    \
+		}                                                                                                                    \
+		template <typename U, typename T = type>                                                                             \
+		std::enable_if_t<schema_arithmetic_v<T>, varName##_prop&>                                                            \
+		operator*=(U val)                                                                                                    \
+		{                                                                                                                    \
+			Set(static_cast<T>(Get() * val));                                                                                \
+			return *this;                                                                                                    \
+		}                                                                                                                    \
+		template <typename U, typename T = type>                                                                             \
+		std::enable_if_t<schema_arithmetic_v<T>, varName##_prop&>                                                            \
+		operator/=(U val)                                                                                                    \
+		{                                                                                                                    \
+			Set(static_cast<T>(Get() / val));                                                                                \
+			return *this;                                                                                                    \
+		}                                                                                                                    \
+		/*Bitwise ones also cover enum fields: computed in the underlying type,*/                                            \
+		/*so a scoped enum of flags needs no operators of its own.*/                                                         \
+		template <typename U, typename T = type>                                                                             \
+		std::enable_if_t<schema_bitwise_v<T>, varName##_prop&>                                                               \
+		operator|=(U val)                                                                                                    \
+		{                                                                                                                    \
+			Set(static_cast<T>(static_cast<schema_bits_t<T>>(Get()) | static_cast<schema_bits_t<T>>(val)));                  \
+			return *this;                                                                                                    \
+		}                                                                                                                    \
+		template <typename U, typename T = type>                                                                             \
+		std::enable_if_t<schema_bitwise_v<T>, varName##_prop&>                                                               \
+		operator&=(U val)                                                                                                    \
+		{                                                                                                                    \
+			Set(static_cast<T>(static_cast<schema_bits_t<T>>(Get()) & static_cast<schema_bits_t<T>>(val)));                  \
+			return *this;                                                                                                    \
+		}                                                                                                                    \
+		template <typename U, typename T = type>                                                                             \
+		std::enable_if_t<schema_bitwise_v<T>, varName##_prop&>                                                               \
+		operator^=(U val)                                                                                                    \
+		{                                                                                                                    \
+			Set(static_cast<T>(static_cast<schema_bits_t<T>>(Get()) ^ static_cast<schema_bits_t<T>>(val)));                  \
+			return *this;                                                                                                    \
+		}                                                                                                                    \
 	private:                                                                                                                 \
 		/*Prevent accidentally copying this wrapper class instead of the underlying field*/                                  \
 		varName##_prop(const varName##_prop&) = delete;                                                                      \
