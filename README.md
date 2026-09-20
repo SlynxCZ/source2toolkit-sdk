@@ -85,6 +85,8 @@ my_plugin.stx
 - **Schema system headers**  
 - **Preconfigured compiler flags & linking**  
 
+---
+
 ## Helper API
 
 ### add_s2toolkit_plugin
