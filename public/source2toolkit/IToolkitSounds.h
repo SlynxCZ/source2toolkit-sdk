@@ -70,7 +70,6 @@
 
 #include <cstdint>
 #include <functional>
-#include <memory>
 
 /* =========================
 Forward declarations
@@ -133,8 +132,9 @@ Sound
 /**
  * @brief One sound event: what to play, from where, how, and for whom.
  *
- * Obtained from IToolkitSounds::CreateSound() and reusable -- Emit() may be
- * called any number of times, each call is a new sound with a new guid. The
+ * Made with IToolkitSound::New(), released with `delete`, and reusable in
+ * between -- Emit() may be called any number of times, each call is a new
+ * sound with a new guid. The
  * same type is what a HookSound() handler receives for a sound the game is
  * about to send.
  *
@@ -283,6 +283,26 @@ public:
      *       already on its way; change it and return Action::Override.
      */
     virtual SoundGuid Emit() = 0;
+
+    /* =========================
+    Virtual constructor (New)
+    ========================= */
+
+    /**
+     * @brief Creates a sound: listener-sourced, volume and pitch 1, no recipients.
+     *
+     * Equivalent to `g_pToolkitSounds->CreateSound(g_PluginID, name)`. Release
+     * with `delete` or `g_pToolkitSounds->DestroySound()`.
+     *
+     *     IToolkitSound* music = IToolkitSound::New("jb.duel");
+     *     music->SetChannel("music");
+     *     music->AddAllRecipients();
+     *     SoundGuid guid = music->Emit();
+     *     delete music;
+     *
+     * @param name Sound event name, may be set later with SetName().
+     */
+    static IToolkitSound* New(const char* name = nullptr);
 };
 
 /* =========================
@@ -325,8 +345,8 @@ public:
     /**
      * @brief Creates a sound: listener-sourced, volume and pitch 1, no recipients.
      *
-     * Release with DestroySound(). Whatever a plugin leaves behind is released
-     * when it unloads.
+     * IToolkitSound::New() is the usual way in. Release with `delete` or
+     * DestroySound(); whatever a plugin leaves behind goes when it unloads.
      *
      * @param owner Plugin ID that owns the sound
      * @param name  Sound event name, may be set later
@@ -468,27 +488,6 @@ Helpers
 ========================= */
 
 /**
- * @brief Owns a sound from CreateSound() and releases it with DestroySound().
- *
- *     ToolkitSoundPtr music = SOUND_CREATE("jb.duel");
- *     music->SetChannel("music");
- *     music->AddAllRecipients();
- *     SoundGuid guid = music->Emit();
- */
-struct ToolkitSoundDeleter
-{
-    IToolkitSounds* sounds = nullptr;
-
-    void operator()(IToolkitSound* sound) const
-    {
-        if (sounds && sound)
-            sounds->DestroySound(sound);
-    }
-};
-
-using ToolkitSoundPtr = std::unique_ptr<IToolkitSound, ToolkitSoundDeleter>;
-
-/**
  * @brief Recipient mask of one slot.
  */
 inline SoundRecipients SoundRecipientOf(CPlayerSlot slot)
@@ -498,11 +497,8 @@ inline SoundRecipients SoundRecipientOf(CPlayerSlot slot)
 }
 
 /**
- * @brief Shorthand accessors via g_pToolkitSounds; the plugin ID is filled in.
+ * @brief Shorthand accessors via g_pToolkitSounds.
  */
-#define SOUND_CREATE(name) \
-    ToolkitSoundPtr(g_pToolkitSounds->CreateSound(g_PluginID, name), ToolkitSoundDeleter{ g_pToolkitSounds })
-
 #define SOUND_EMIT_TO_PLAYER(slot, ...)     g_pToolkitSounds->EmitSoundToPlayer(slot, __VA_ARGS__)
 #define SOUND_EMIT_TO_PLAYERS(mask, ...)    g_pToolkitSounds->EmitSoundToPlayers(mask, __VA_ARGS__)
 #define SOUND_EMIT_TO_ALL(...)              g_pToolkitSounds->EmitSoundToAll(__VA_ARGS__)
