@@ -198,7 +198,6 @@ void CBaseEntity::SetCollisionGroup(uint8 nCollisionGroup)
     m_pCollision->m_collisionAttribute().m_nCollisionGroup = nCollisionGroup;
     m_pCollision->m_CollisionGroup = nCollisionGroup;
     CollisionRulesChanged();
-    m_pCollision->m_collisionAttribute.NetworkStateChanged();
 }
 
 void CBaseEntity::CollisionRulesChanged()
