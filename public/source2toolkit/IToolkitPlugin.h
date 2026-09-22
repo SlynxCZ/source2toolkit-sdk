@@ -90,6 +90,7 @@ class IToolkitNetworkMessages;
 class IToolkitScheduler;
 class IToolkitSounds;
 class IToolkitTrace;
+class IToolkitTransmit;
 
 // Everything below this line may use Action and the forward declarations
 // above. Nothing above it can: the interface headers include this
@@ -113,6 +114,7 @@ class IToolkitTrace;
 #include "IToolkitScheduler.h"
 #include "IToolkitSounds.h"
 #include "IToolkitTrace.h"
+#include "IToolkitTransmit.h"
 
 /* =========================
 Interface status
@@ -409,6 +411,7 @@ Globals
     IToolkitScheduler*       g_pToolkitScheduler       = nullptr; \
     IToolkitSounds*          g_pToolkitSounds          = nullptr; \
     IToolkitTrace*           g_pToolkitTrace           = nullptr; \
+    IToolkitTransmit*        g_pToolkitTransmit        = nullptr; \
     namespace KHook { KHook::IKHook* __exported__khook = nullptr; } \
     TOOLKIT_EXPOSURE_FUNC(name, var)
 
@@ -437,6 +440,7 @@ Globals
     extern IToolkitScheduler*       g_pToolkitScheduler; \
     extern IToolkitSounds*          g_pToolkitSounds; \
     extern IToolkitTrace*           g_pToolkitTrace; \
+    extern IToolkitTransmit*        g_pToolkitTransmit; \
     namespace KHook { extern KHook::IKHook* __exported__khook; }
 
 /**
@@ -479,7 +483,8 @@ Globals
     g_pToolkitJSON            = (IToolkitJSON*)           api->ToolkitFactory(TOOLKIT_JSON_INTERFACE,            nullptr, nullptr); \
     g_pToolkitScheduler       = (IToolkitScheduler*)      api->ToolkitFactory(TOOLKIT_SCHEDULER_INTERFACE,       nullptr, nullptr); \
     g_pToolkitSounds          = (IToolkitSounds*)         api->ToolkitFactory(TOOLKIT_SOUNDS_INTERFACE,          nullptr, nullptr); \
-    g_pToolkitTrace           = (IToolkitTrace*)          api->ToolkitFactory(TOOLKIT_TRACE_INTERFACE,           nullptr, nullptr);
+    g_pToolkitTrace           = (IToolkitTrace*)          api->ToolkitFactory(TOOLKIT_TRACE_INTERFACE,           nullptr, nullptr); \
+    g_pToolkitTransmit        = (IToolkitTransmit*)       api->ToolkitFactory(TOOLKIT_TRANSMIT_INTERFACE,        nullptr, nullptr);
 
 /* =========================
 Logging helpers

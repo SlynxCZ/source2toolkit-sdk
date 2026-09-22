@@ -555,3 +555,9 @@ _NCrunch*
 docfx/_site/
 docfx/api/
 docfx/_exported_templates/
+
+# tools/deps.py: the saved dependency choice and the clones it makes
+deps.json
+deps.cmake
+vendor/hl2sdk-cs2/
+vendor/Protobufs/

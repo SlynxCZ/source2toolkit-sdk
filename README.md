@@ -47,9 +47,29 @@ git submodule add https://github.com/SlynxCZ/source2toolkit-sdk.git
 git submodule update --init --recursive
 ```
 
+### 2. Get the dependencies
+
+```bash
+python source2toolkit-sdk/tools/deps.py init
+```
+
+Asks, once, whether **hl2sdk-cs2** and the **Protobufs** come from a checkout
+you already have (`HL2SDKCS2` / `CSGO_PROTO`) or should be downloaded into
+`vendor/`, and remembers the answer in `deps.json`. From then on
+
+```bash
+python source2toolkit-sdk/tools/deps.py update
+```
+
+pulls both, moves `vendor/khook` to the KHook commit metamod-source pins
+(anything else refuses to load on the toolkit core) and moves
+`vendor/hl2sdk-manifests` to its latest. `deps.py status` shows what is
+checked out. Answer up front with `--hl2sdk download --protobufs env` and the
+like when there is no terminal.
+
 ---
 
-### 2. Minimal plugin setup (4 lines)
+### 3. Minimal plugin setup (4 lines)
 
 ```cmake
 cmake_minimum_required(VERSION 3.18)
@@ -78,9 +98,8 @@ my_plugin.stx
 
 ## What's Included
 
-- **HL2SDK-CS2** (as submodule)  
+- **HL2SDK-CS2** and **Protobufs** -- yours or downloaded, `tools/deps.py`  
 - **KHook** (virtual, vtable & function hooks) -- as the `vendor/khook` submodule, headers only    
-- **Protobuf definitions**  
 - **Tier0 / Tier1 / Mathlib**  
 - **Schema system headers**  
 - **Preconfigured compiler flags & linking**  
@@ -106,6 +125,7 @@ Automatically:
 
 - CMake 3.18+  
 - C++20 compiler  
+- Python 3 and git (for `tools/deps.py`)  
 - Source2Toolkit installed on server  
 
 ---

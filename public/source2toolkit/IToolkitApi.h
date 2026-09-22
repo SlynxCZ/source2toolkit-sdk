@@ -119,6 +119,7 @@ class IToolkitPlugin;
 class IToolkitScheduler;
 class IToolkitSounds;
 class IToolkitTrace;
+class IToolkitTransmit;
 
 typedef void* (*CreateInterfaceFn)(const char* pName, int* pReturnCode);
 
@@ -326,6 +327,12 @@ public:
     * @brief Access tracing system.
       */
     virtual IToolkitTrace* Trace() = 0;
+
+    /**
+
+    * @brief Access transmit system (per-viewer entity visibility).
+      */
+    virtual IToolkitTransmit* Transmit() = 0;
 
     /* =========================
     Module factory

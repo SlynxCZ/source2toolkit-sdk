@@ -32,6 +32,12 @@ endif ()
 # =========================
 
 function(resolve_dep OUT_VAR ENV_NAME)
+    # Already set -- by deps.cmake, which tools/deps.py writes when a
+    # dependency was downloaded into vendor/ rather than pointed at.
+    if (DEFINED ${OUT_VAR} AND NOT "${${OUT_VAR}}" STREQUAL "")
+        message(STATUS "${ENV_NAME} -> ${${OUT_VAR}} (deps.cmake)")
+        return()
+    endif()
     if (DEFINED ENV{${ENV_NAME}} AND NOT "$ENV{${ENV_NAME}}" STREQUAL "")
         file(TO_CMAKE_PATH "$ENV{${ENV_NAME}}" _resolved)
         set(${OUT_VAR} "${_resolved}" PARENT_SCOPE)
@@ -45,8 +51,26 @@ function(resolve_dep OUT_VAR ENV_NAME)
     endif()
 endfunction()
 
-resolve_dep(SOURCESDK HL2SDKCS2)
-resolve_dep(PROTOBUFS CSGO_PROTO)
+# tools/deps.py: `init` picks, once, whether hl2sdk-cs2 and the Protobufs come
+# from a checkout you already have (HL2SDKCS2 / CSGO_PROTO) or from a clone it
+# makes under vendor/, and `update` keeps whichever it is current -- together
+# with vendor/khook, moved to the commit metamod-source pins. A downloaded
+# choice lands in deps.cmake and wins over the environment.
+include("${CMAKE_CURRENT_SOURCE_DIR}/deps.cmake" OPTIONAL)
+
+resolve_dep(SOURCESDK HL2SDKCS2 "${CMAKE_CURRENT_SOURCE_DIR}/vendor/hl2sdk-cs2")
+resolve_dep(PROTOBUFS CSGO_PROTO "${CMAKE_CURRENT_SOURCE_DIR}/vendor/Protobufs/csgo")
+
+if (NOT EXISTS "${SOURCESDK}/public/eiface.h")
+    message(FATAL_ERROR
+            "hl2sdk-cs2 not found at ${SOURCESDK}. Set HL2SDKCS2 to your checkout, "
+            "or run `python tools/deps.py init` to point at one or download it.")
+endif()
+if (NOT EXISTS "${PROTOBUFS}/netmessages.proto")
+    message(FATAL_ERROR
+            "Protobufs (csgo/) not found at ${PROTOBUFS}. Set CSGO_PROTO to the csgo/ folder "
+            "of a SteamDatabase/Protobufs checkout, or run `python tools/deps.py init`.")
+endif()
 
 # =========================
 # KHOOK

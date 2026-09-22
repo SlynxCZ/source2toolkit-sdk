@@ -23,7 +23,7 @@
 #    (nothing of it is built), so a plugin needs no metamod-source checkout.
 #    TOOLKIT_KHOOK_COMMIT, defined here from that submodule, is what
 #    TOOLKIT_SAVEVARS() compares with the core's own KHook at plugin load.
-import os, sys, subprocess
+import json, os, sys, subprocess
 
 # Injected by a parent build; None when standalone.
 ToolkitSdkTarget = globals().get('ToolkitSdkTarget', None)
@@ -45,6 +45,19 @@ def ResolveEnvPath(env, folder):
       oldhead = head
       head, tail = os.path.split(head)
   return None
+
+
+def DepsPath(sourcePath, dep):
+  """Where tools/deps.py put or pointed a dependency (deps.json), or None when
+  it was never run or the dependency follows the environment variable."""
+  config_path = os.path.join(sourcePath, "deps.json")
+  if not os.path.isfile(config_path):
+    return None
+  with open(config_path, "r") as f:
+    entry = json.load(f).get(dep) or {}
+  if entry.get("mode") == "download":
+    return os.path.join(sourcePath, "vendor", {"hl2sdk": "hl2sdk-cs2", "protobufs": os.path.join("Protobufs", "csgo")}[dep])
+  return entry.get("path")
 
 
 def KHookPath(sourcePath):
@@ -116,6 +129,12 @@ class ToolkitSdkConfig(object):
       sdk_path = os.path.join(builder.options.hl2sdk_root, dir_name)
       if os.path.exists(sdk_path):
         return sdk_path
+    deps = DepsPath(self.sourcePath, "hl2sdk") if sdk_name == "cs2" else None
+    if deps and os.path.isdir(deps):
+      return deps
+    vendored = os.path.join(self.sourcePath, "vendor", dir_name)
+    if os.path.isdir(vendored):
+      return vendored
     return ResolveEnvPath('HL2SDK{}'.format(sdk_name.upper()), dir_name)
 
   def detectSDKs(self):
@@ -280,9 +299,13 @@ class ToolkitSdkConfig(object):
     ]
 
   def ProtoSources(self, sdk_target):
-    proto_dir = os.environ.get('CSGO_PROTO')
+    proto_dir = DepsPath(self.sourcePath, "protobufs") or os.environ.get("CSGO_PROTO")
     if not proto_dir:
-      raise Exception('CSGO_PROTO is not set')
+      vendored = os.path.join(self.sourcePath, "vendor", "Protobufs", "csgo")
+      proto_dir = vendored if os.path.isdir(vendored) else None
+    if not proto_dir:
+      raise Exception("CSGO_PROTO is not set -- point it at the csgo/ folder of a "
+                      "SteamDatabase/Protobufs checkout, or run python tools/deps.py init")
 
     names = [
       'network_connection', 'networkbasetypes', 'cs_gameevents', 'cs_usercmd',
