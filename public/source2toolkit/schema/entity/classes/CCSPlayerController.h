@@ -94,6 +94,7 @@ public:
     SCHEMA_FIELD(bool, m_bRemoveAllItemsOnNextRoundReset);
     SCHEMA_FIELD(float, m_flLastJoinTeamTime);
     SCHEMA_FIELD(CUtlSymbolLarge, m_szClan);
+    SCHEMA_FIELD(uint32_t, m_unClanId32bit);
     SCHEMA_FIELD(int32_t, m_iCoachingTeam);
     SCHEMA_FIELD(uint64_t, m_nPlayerDominated);
     SCHEMA_FIELD(uint64_t, m_nPlayerDominatingMe);

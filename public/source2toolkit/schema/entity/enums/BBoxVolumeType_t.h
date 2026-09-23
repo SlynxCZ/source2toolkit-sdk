@@ -48,6 +48,7 @@ enum class BBoxVolumeType_t : uint32_t
     BBOX_DIMENSIONS = 1,
     BBOX_MINS_MAXS = 2,
     BBOX_RADIUS = 3,
+    BBOX_SURFACE_AREA = 4,
 };
 
 #endif // _INCLUDE_BBOXVOLUMETYPE_T_H

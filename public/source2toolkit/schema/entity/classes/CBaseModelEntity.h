@@ -56,6 +56,7 @@
 #include <cstdint>
 
 #include "CBaseEntity.h"
+#include "CBaseModelEntity__BodyGroupRequest_t.h"
 #include "CCollisionProperty.h"
 #include "CGlowProperty.h"
 #include "CHitboxComponent.h"
@@ -98,6 +99,7 @@ public:
     SCHEMA_FIELD(Color, m_clrRender);
     SCHEMA_FIELD(CUtlVector<EntityRenderAttribute_t>, m_vecRenderAttributes);
     SCHEMA_FIELD(bool, m_bRenderToCubemaps);
+    SCHEMA_FIELD(bool, m_bExpandRenderBoundsToIncludeCloth);
     SCHEMA_FIELD(bool, m_bNoInterpolate);
     SCHEMA_FIELD(CCollisionProperty, m_Collision);
     SCHEMA_FIELD(CGlowProperty, m_Glow);
@@ -107,6 +109,8 @@ public:
     SCHEMA_FIELD(float, m_flFadeScale);
     SCHEMA_FIELD(float, m_flShadowStrength);
     SCHEMA_FIELD(uint8_t, m_nObjectCulling);
+    SCHEMA_FIELD(uint32_t, m_bodyGroupTotalRequestCount);
+    SCHEMA_FIELD(CUtlVector<CBaseModelEntity__BodyGroupRequest_t>, m_bodyGroupRequests);
     SCHEMA_FIELD(CNetworkViewOffsetVector, m_vecViewOffset);
     SCHEMA_FIELD_POINTER(uint32_t, m_bvDisabledHitGroups);
 

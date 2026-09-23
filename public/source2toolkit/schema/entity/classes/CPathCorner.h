@@ -62,9 +62,15 @@ class CPathCorner : public CPointEntity
 public:
     DECLARE_SCHEMA_CLASS(CPathCorner);
 
-    SCHEMA_FIELD(float, m_flSpeed);
+    SCHEMA_FIELD(bool, m_bTriggerLocomotionStop);
+    SCHEMA_FIELD(bool, m_bSmoothArrival);
+    SCHEMA_FIELD(bool, m_bExactPositioning);
     SCHEMA_FIELD(float, m_flWait);
     SCHEMA_FIELD(float, m_flRadius);
+    SCHEMA_FIELD(float, m_flWaypointSuccessRadiusWhenBlocked);
+    SCHEMA_FIELD(float, m_flWaypointSuccessRadius);
+    SCHEMA_FIELD(float, m_flPathEndDistanceFromGoal);
+    SCHEMA_FIELD(float, m_flSpeed);
     SCHEMA_FIELD(CEntityIOOutput, m_OnPass);
 
 public:

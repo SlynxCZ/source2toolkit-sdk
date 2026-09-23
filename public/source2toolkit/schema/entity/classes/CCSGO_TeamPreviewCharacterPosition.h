@@ -71,6 +71,7 @@ public:
     SCHEMA_FIELD(CEconItemView, m_agentItem);
     SCHEMA_FIELD(CEconItemView, m_glovesItem);
     SCHEMA_FIELD(CEconItemView, m_weaponItem);
+    SCHEMA_FIELD(CEconItemView, m_petItem);
 
 public:
     static CCSGO_TeamPreviewCharacterPosition* New(const char* className)

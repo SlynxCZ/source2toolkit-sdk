@@ -80,7 +80,6 @@ public:
     SCHEMA_FIELD(int32_t, m_damageType);
     SCHEMA_FIELD(int32_t, m_damageToEnableMotion);
     SCHEMA_FIELD(float, m_flForceToEnableMotion);
-    SCHEMA_FIELD(bool, m_bThrownByPlayer);
     SCHEMA_FIELD(bool, m_bDroppedByPlayer);
     SCHEMA_FIELD(bool, m_bTouchedByPlayer);
     SCHEMA_FIELD(bool, m_bFirstCollisionAfterLaunch);
@@ -98,7 +97,6 @@ public:
     SCHEMA_FIELD(INavObstacle__NavObstacleType_t, m_nNavObstacleType);
     SCHEMA_FIELD(bool, m_bUpdateNavWhenMoving);
     SCHEMA_FIELD(bool, m_bForceNavObstacleCut);
-    SCHEMA_FIELD(bool, m_bAllowObstacleConvexHullMerging);
     SCHEMA_FIELD(bool, m_bAcceptDamageFromHeldObjects);
     SCHEMA_FIELD(bool, m_bEnableUseOutput);
     SCHEMA_FIELD(CPhysicsProp__CrateType_t, m_CrateType);

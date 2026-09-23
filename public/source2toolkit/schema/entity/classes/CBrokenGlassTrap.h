@@ -35,8 +35,8 @@
  * Project: Source2Toolkit
  */
 
-#ifndef _INCLUDE_CCSPLAYERCAMERA_H
-#define _INCLUDE_CCSPLAYERCAMERA_H
+#ifndef _INCLUDE_CBROKENGLASSTRAP_H
+#define _INCLUDE_CBROKENGLASSTRAP_H
 
 #pragma once
 
@@ -55,39 +55,34 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
-#include "CBaseEntity.h"
+#include "CBaseModelEntity.h"
 
-class CCSPlayerPawnBase;
-
-class CCSPlayerCamera : public CBaseEntity
+class CBrokenGlassTrap : public CBaseModelEntity
 {
 public:
-    DECLARE_SCHEMA_CLASS(CCSPlayerCamera);
+    DECLARE_SCHEMA_CLASS(CBrokenGlassTrap);
 
-    SCHEMA_FIELD(CHandle<CCSPlayerPawnBase>, m_hPawn);
-    SCHEMA_FIELD(bool, m_bEnabled);
-    SCHEMA_FIELD(bool, m_bIsControllingAngles);
 
 public:
-    static CCSPlayerCamera* New(const char* className)
+    static CBrokenGlassTrap* New(const char* className)
     {
-        return CBaseEntity::New<CCSPlayerCamera>(className);
+        return CBaseEntity::New<CBrokenGlassTrap>(className);
     }
 
-    static CCSPlayerCamera* FromIndex(int iIndex)
+    static CBrokenGlassTrap* FromIndex(int iIndex)
     {
-        return CBaseEntity::FromIndex<CCSPlayerCamera>(iIndex);
+        return CBaseEntity::FromIndex<CBrokenGlassTrap>(iIndex);
     }
 
-    static CCSPlayerCamera* FromIndex(CEntityIndex index)
+    static CBrokenGlassTrap* FromIndex(CEntityIndex index)
     {
         return FromIndex(index.Get());
     }
 
-    CHandle<CCSPlayerCamera> GetHandle()
+    CHandle<CBrokenGlassTrap> GetHandle()
     {
-        return CBaseEntity::GetHandle<CCSPlayerCamera>();
+        return CBaseEntity::GetHandle<CBrokenGlassTrap>();
     }
 };
 
-#endif // _INCLUDE_CCSPLAYERCAMERA_H
+#endif // _INCLUDE_CBROKENGLASSTRAP_H

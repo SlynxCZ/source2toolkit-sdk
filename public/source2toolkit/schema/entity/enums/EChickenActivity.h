@@ -51,6 +51,12 @@ enum class EChickenActivity : uint32_t
     Glide = 4,
     Land = 5,
     Panic = 6,
+    Trick = 7,
+    TurnInPlace = 8,
+    Feed = 9,
+    Sleep = 10,
+    Shoulder = 11,
+    LowOnFood = 12,
 };
 
 #endif // _INCLUDE_ECHICKENACTIVITY_H

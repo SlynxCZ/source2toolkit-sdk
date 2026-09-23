@@ -67,6 +67,7 @@ public:
     SCHEMA_FIELD(float, m_flDamage);
     SCHEMA_FIELD(float, m_radius);
     SCHEMA_FIELD(CUtlSymbolLarge, m_targetEntityName);
+    SCHEMA_FIELD(CUtlSymbolLarge, m_ignoreEntityName);
     SCHEMA_FIELD(float, m_flInnerRadius);
     SCHEMA_FIELD(float, m_flPushScale);
     SCHEMA_FIELD(bool, m_bConvertToDebrisWhenPossible);

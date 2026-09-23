@@ -94,6 +94,8 @@ enum class EBaseUserMessages : uint32_t
     UM_PlayResponseConditional = 166,
     UM_UserSentBugBug = 167,
     UM_UsageReport = 168,
+    UM_RemoteServerCommand = 169,
+    UM_RemoteServerResponse = 170,
     UM_MAX_BASE = 200,
 };
 

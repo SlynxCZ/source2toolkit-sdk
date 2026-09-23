@@ -55,6 +55,7 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
+#include "ActorClipEntry_t.h"
 #include "ActorMapping_t.h"
 #include "CPointEntity.h"
 #include "../enums/SceneOnPlayerDeath_t.h"
@@ -95,6 +96,7 @@ public:
     SCHEMA_FIELD(float, m_flCurrentTime);
     SCHEMA_FIELD(float, m_flFrameTime);
     SCHEMA_FIELD(bool, m_bCancelAtNextInterrupt);
+    SCHEMA_FIELD(bool, m_bRemoveOnCompletion);
     SCHEMA_FIELD(float, m_fPitch);
     SCHEMA_FIELD(bool, m_bAutomated);
     SCHEMA_FIELD(int32_t, m_nAutomatedAction);
@@ -117,9 +119,15 @@ public:
     SCHEMA_FIELD(CEntityIOOutput, m_OnPaused);
     SCHEMA_FIELD(CEntityIOOutput, m_OnResumed);
     SCHEMA_FIELD(CEntityIOOutput, m_OnPulseRequirement);
+    SCHEMA_FIELD(CUtlDict, m_TargetNameMap);
+    SCHEMA_FIELD(CUtlDict, m_AnchorNameMap);
+    SCHEMA_FIELD(CUtlDict, m_ActorGraphMap);
+    SCHEMA_FIELD(CUtlDict, m_ActorClipMap);
     SCHEMA_FIELD(CUtlVector<ActorMapping_t>, m_ActorMap);
     SCHEMA_FIELD(CHandle<CSceneEntity>, m_hInterruptScene);
     SCHEMA_FIELD(int32_t, m_nInterruptCount);
+    SCHEMA_FIELD(CUtlString, m_responseConcept);
+    SCHEMA_FIELD(CUtlString, m_responseCriteria);
     SCHEMA_FIELD(bool, m_bSceneMissing);
     SCHEMA_FIELD(bool, m_bInterrupted);
     SCHEMA_FIELD(bool, m_bCompletedEarly);

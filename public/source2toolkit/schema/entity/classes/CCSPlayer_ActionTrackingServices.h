@@ -68,6 +68,7 @@ public:
     SCHEMA_FIELD(bool, m_bIsRescuing);
     SCHEMA_FIELD(WeaponPurchaseTracker_t, m_weaponPurchasesThisMatch);
     SCHEMA_FIELD(WeaponPurchaseTracker_t, m_weaponPurchasesThisRound);
+    SCHEMA_FIELD(WeaponPurchaseTracker_t, m_weaponCarryOverIntoThisRound);
 };
 
 #endif // _INCLUDE_CCSPLAYER_ACTIONTRACKINGSERVICES_H

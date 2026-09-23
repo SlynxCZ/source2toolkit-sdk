@@ -35,8 +35,8 @@
  * Project: Source2Toolkit
  */
 
-#ifndef _INCLUDE_CENVWINDCONTROLLER_H
-#define _INCLUDE_CENVWINDCONTROLLER_H
+#ifndef _INCLUDE_CCSGO_RUSHINTROTERRORISTPOSITION_H
+#define _INCLUDE_CCSGO_RUSHINTROTERRORISTPOSITION_H
 
 #pragma once
 
@@ -55,46 +55,34 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
-#include "CBaseEntity.h"
-#include "CEnvWindShared.h"
+#include "CCSGO_RushIntroCharacterPosition.h"
 
-class CEnvWindController : public CBaseEntity
+class CCSGO_RushIntroTerroristPosition : public CCSGO_RushIntroCharacterPosition
 {
 public:
-    DECLARE_SCHEMA_CLASS(CEnvWindController);
+    DECLARE_SCHEMA_CLASS(CCSGO_RushIntroTerroristPosition);
 
-    SCHEMA_FIELD(CEnvWindShared, m_EnvWindShared);
-    SCHEMA_FIELD(float, m_fDirectionVariation);
-    SCHEMA_FIELD(float, m_fSpeedVariation);
-    SCHEMA_FIELD(float, m_fTurbulence);
-    SCHEMA_FIELD(float, m_fVolumeHalfExtentXY);
-    SCHEMA_FIELD(float, m_fVolumeHalfExtentZ);
-    SCHEMA_FIELD(int32_t, m_nVolumeResolutionXY);
-    SCHEMA_FIELD(int32_t, m_nVolumeResolutionZ);
-    SCHEMA_FIELD(int32_t, m_nClipmapLevels);
-    SCHEMA_FIELD(bool, m_bIsMaster);
-    SCHEMA_FIELD(bool, m_bFirstTime);
 
 public:
-    static CEnvWindController* New(const char* className)
+    static CCSGO_RushIntroTerroristPosition* New(const char* className)
     {
-        return CBaseEntity::New<CEnvWindController>(className);
+        return CBaseEntity::New<CCSGO_RushIntroTerroristPosition>(className);
     }
 
-    static CEnvWindController* FromIndex(int iIndex)
+    static CCSGO_RushIntroTerroristPosition* FromIndex(int iIndex)
     {
-        return CBaseEntity::FromIndex<CEnvWindController>(iIndex);
+        return CBaseEntity::FromIndex<CCSGO_RushIntroTerroristPosition>(iIndex);
     }
 
-    static CEnvWindController* FromIndex(CEntityIndex index)
+    static CCSGO_RushIntroTerroristPosition* FromIndex(CEntityIndex index)
     {
         return FromIndex(index.Get());
     }
 
-    CHandle<CEnvWindController> GetHandle()
+    CHandle<CCSGO_RushIntroTerroristPosition> GetHandle()
     {
-        return CBaseEntity::GetHandle<CEnvWindController>();
+        return CBaseEntity::GetHandle<CCSGO_RushIntroTerroristPosition>();
     }
 };
 
-#endif // _INCLUDE_CENVWINDCONTROLLER_H
+#endif // _INCLUDE_CCSGO_RUSHINTROTERRORISTPOSITION_H

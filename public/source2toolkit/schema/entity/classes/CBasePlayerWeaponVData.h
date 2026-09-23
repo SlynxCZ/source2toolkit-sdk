@@ -70,6 +70,7 @@ public:
     SCHEMA_FIELD(float, m_flMuzzleSmokeTimeout);
     SCHEMA_FIELD(float, m_flMuzzleSmokeDecrementRate);
     SCHEMA_FIELD(bool, m_bGenerateMuzzleLight);
+    SCHEMA_FIELD(bool, m_bShouldAnimateInWorld);
     SCHEMA_FIELD(bool, m_bLinkedCooldowns);
     SCHEMA_FIELD(ItemFlagTypes_t, m_iFlags);
     SCHEMA_FIELD(int32_t, m_iWeight);

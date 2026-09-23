@@ -85,8 +85,7 @@ public:
     SCHEMA_FIELD(bool, m_bCannotShootUnderwater);
     SCHEMA_FIELD(CGlobalSymbol, m_szName);
     SCHEMA_FIELD(CSWeaponSilencerType, m_eSilencerType);
-    SCHEMA_FIELD(int32_t, m_nCrosshairMinDistance);
-    SCHEMA_FIELD(int32_t, m_nCrosshairDeltaDistance);
+    SCHEMA_FIELD(bool, m_bShowCrosshair);
     SCHEMA_FIELD(bool, m_bIsFullAuto);
     SCHEMA_FIELD(int32_t, m_nNumBullets);
     SCHEMA_FIELD(bool, m_bReloadsSingleShells);

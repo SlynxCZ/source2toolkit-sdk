@@ -77,6 +77,7 @@ public:
     SCHEMA_FIELD(bool, m_bCollapseToForcePoint);
     SCHEMA_FIELD(Vector, m_vecLinearForcePointAtWorld);
     SCHEMA_FIELD(Vector, m_vecLinearForceDirection);
+    SCHEMA_FIELD(bool, m_bForceDirectionIsInLocalSpace);
     SCHEMA_FIELD(bool, m_bConvertToDebrisWhenPossible);
 
 public:

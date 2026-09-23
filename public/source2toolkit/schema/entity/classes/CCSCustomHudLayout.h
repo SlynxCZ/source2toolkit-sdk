@@ -66,6 +66,7 @@ public:
     DECLARE_SCHEMA_CLASS(CCSCustomHudLayout);
 
     SCHEMA_FIELD(CUtlSymbolLarge, m_strLayout);
+    SCHEMA_FIELD(bool, m_bObservable);
     SCHEMA_FIELD(CUtlVector<CCSCustomHudLayoutState>, m_vecPlayerLayoutStates);
     SCHEMA_FIELD(CCSCustomHudLayoutState, m_globalLayoutState);
     SCHEMA_FIELD(CUtlVector<CUtlString>, m_vecPanelIds);

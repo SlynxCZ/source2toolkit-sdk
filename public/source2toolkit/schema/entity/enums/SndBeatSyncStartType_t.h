@@ -35,60 +35,18 @@
  * Project: Source2Toolkit
  */
 
-#ifndef _INCLUDE_CLOGICPLAYERPROXY_H
-#define _INCLUDE_CLOGICPLAYERPROXY_H
+#ifndef _INCLUDE_SNDBEATSYNCSTARTTYPE_T_H
+#define _INCLUDE_SNDBEATSYNCSTARTTYPE_T_H
 
 #pragma once
 
-#include "CBaseEntity.h"
-#include "igameevents.h"
-#include "ehandle.h"
-#include "entityhandle.h"
-#include "vector.h"
-#include "utlbinaryblock.h"
-#include "utlsymbol.h"
-#include "utlsymbollarge.h"
-#include "utlstring.h"
-#include "utlstringtoken.h"
-#include "source2toolkit/IToolkitPlugin.h"
-#include "source2toolkit/schema/entityio.h"
-#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
-#include "CLogicalEntity.h"
-
-class CBaseEntity;
-
-class CLogicPlayerProxy : public CLogicalEntity
+enum class SndBeatSyncStartType_t : uint32_t
 {
-public:
-    DECLARE_SCHEMA_CLASS(CLogicPlayerProxy);
-
-    SCHEMA_FIELD(CEntityIOOutput, m_PlayerHasAmmo);
-    SCHEMA_FIELD(CEntityIOOutput, m_PlayerHasNoAmmo);
-    SCHEMA_FIELD(CEntityIOOutput, m_PlayerDied);
-    SCHEMA_FIELD(CHandle<CBaseEntity>, m_hPlayer);
-
-public:
-    static CLogicPlayerProxy* New(const char* className)
-    {
-        return CBaseEntity::New<CLogicPlayerProxy>(className);
-    }
-
-    static CLogicPlayerProxy* FromIndex(int iIndex)
-    {
-        return CBaseEntity::FromIndex<CLogicPlayerProxy>(iIndex);
-    }
-
-    static CLogicPlayerProxy* FromIndex(CEntityIndex index)
-    {
-        return FromIndex(index.Get());
-    }
-
-    CHandle<CLogicPlayerProxy> GetHandle()
-    {
-        return CBaseEntity::GetHandle<CLogicPlayerProxy>();
-    }
+    eSndBeatSyncStartTypeInvalid = 0,
+    eSndBeatSyncStartTypeImmediate = 1,
+    eSndBeatSyncStartTypeQueue = 2,
 };
 
-#endif // _INCLUDE_CLOGICPLAYERPROXY_H
+#endif // _INCLUDE_SNDBEATSYNCSTARTTYPE_T_H

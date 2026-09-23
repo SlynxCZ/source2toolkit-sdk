@@ -61,6 +61,7 @@
 #include "../enums/EChickenActivity.h"
 
 class CBaseEntity;
+class CCSPlayerController;
 class CCSPlayerPawn;
 
 class CChicken : public CDynamicProp
@@ -83,6 +84,7 @@ public:
     SCHEMA_FIELD(CountdownTimer, m_startleTimer);
     SCHEMA_FIELD(CountdownTimer, m_vocalizeTimer);
     SCHEMA_FIELD(CHandle<CCSPlayerPawn>, m_leader);
+    SCHEMA_FIELD(CHandle<CCSPlayerController>, m_owner);
     SCHEMA_FIELD(CountdownTimer, m_reuseTimer);
     SCHEMA_FIELD(CountdownTimer, m_jumpTimer);
     SCHEMA_FIELD(float, m_flLastJumpTime);
@@ -91,6 +93,7 @@ public:
     SCHEMA_FIELD(float, m_flActiveFollowStartTime);
     SCHEMA_FIELD(CountdownTimer, m_followMinuteTimer);
     SCHEMA_FIELD(CountdownTimer, m_BlockDirectionTimer);
+    SCHEMA_FIELD(bool, m_bSpawnDyingParticles);
 
 public:
     static CChicken* New(const char* className)

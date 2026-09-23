@@ -35,17 +35,54 @@
  * Project: Source2Toolkit
  */
 
-#ifndef _INCLUDE_ROTATORTARGETSPACE_T_H
-#define _INCLUDE_ROTATORTARGETSPACE_T_H
+#ifndef _INCLUDE_CCSGO_RUSHINTROCHARACTERPOSITION_H
+#define _INCLUDE_CCSGO_RUSHINTROCHARACTERPOSITION_H
 
 #pragma once
 
+#include "CBaseEntity.h"
+#include "igameevents.h"
+#include "ehandle.h"
+#include "entityhandle.h"
+#include "vector.h"
+#include "utlbinaryblock.h"
+#include "utlsymbol.h"
+#include "utlsymbollarge.h"
+#include "utlstring.h"
+#include "utlstringtoken.h"
+#include "source2toolkit/IToolkitPlugin.h"
+#include "source2toolkit/schema/entityio.h"
+#include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
-enum class RotatorTargetSpace_t : uint32_t
+#include "CCSGO_TeamIntroCharacterPosition.h"
+
+class CCSGO_RushIntroCharacterPosition : public CCSGO_TeamIntroCharacterPosition
 {
-    ROTATOR_TARGET_WORLDSPACE = 0,
-    ROTATOR_TARGET_LOCALSPACE = 1,
+public:
+    DECLARE_SCHEMA_CLASS(CCSGO_RushIntroCharacterPosition);
+
+
+public:
+    static CCSGO_RushIntroCharacterPosition* New(const char* className)
+    {
+        return CBaseEntity::New<CCSGO_RushIntroCharacterPosition>(className);
+    }
+
+    static CCSGO_RushIntroCharacterPosition* FromIndex(int iIndex)
+    {
+        return CBaseEntity::FromIndex<CCSGO_RushIntroCharacterPosition>(iIndex);
+    }
+
+    static CCSGO_RushIntroCharacterPosition* FromIndex(CEntityIndex index)
+    {
+        return FromIndex(index.Get());
+    }
+
+    CHandle<CCSGO_RushIntroCharacterPosition> GetHandle()
+    {
+        return CBaseEntity::GetHandle<CCSGO_RushIntroCharacterPosition>();
+    }
 };
 
-#endif // _INCLUDE_ROTATORTARGETSPACE_T_H
+#endif // _INCLUDE_CCSGO_RUSHINTROCHARACTERPOSITION_H

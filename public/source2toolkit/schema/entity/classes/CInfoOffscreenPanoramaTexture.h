@@ -65,6 +65,7 @@ public:
     DECLARE_SCHEMA_CLASS(CInfoOffscreenPanoramaTexture);
 
     SCHEMA_FIELD(bool, m_bDisabled);
+    SCHEMA_FIELD(bool, m_bEnableMipGen);
     SCHEMA_FIELD(int32_t, m_nResolutionX);
     SCHEMA_FIELD(int32_t, m_nResolutionY);
     SCHEMA_FIELD(CUtlSymbolLarge, m_szPanelType);

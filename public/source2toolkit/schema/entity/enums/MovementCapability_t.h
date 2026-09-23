@@ -53,7 +53,8 @@ enum class MovementCapability_t : uint32_t
     ePlantedTurn = 6,
     eUseStartAsPlantedTurn = 7,
     eLean = 8,
-    eCount = 9,
+    eForwardStartOnly = 9,
+    eCount = 10,
 };
 
 #endif // _INCLUDE_MOVEMENTCAPABILITY_T_H

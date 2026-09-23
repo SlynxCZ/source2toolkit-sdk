@@ -71,10 +71,10 @@ public:
     SCHEMA_FIELD(bool, m_bIsRotating);
     SCHEMA_FIELD(SolidType_t, m_eSolidType);
     SCHEMA_FIELD(float, m_flSpeed);
+    SCHEMA_FIELD(float, m_flRotationDistanceDegrees);
     SCHEMA_FIELD(float, m_flTimeToCompleteRotation);
     SCHEMA_FIELD(CHandle<CBaseEntity>, m_hRotatorTarget);
     SCHEMA_FIELD(CUtlSymbolLarge, m_strRotatorTarget);
-    SCHEMA_FIELD(CUtlVector<Quaternion>, m_vecLocalRotationHistory);
     SCHEMA_FIELD(CEntityIOOutput, m_OnRotationStarted);
     SCHEMA_FIELD(CEntityIOOutput, m_OnRotationCompleted);
     SCHEMA_FIELD(CEntityIOOutput, m_OnOscillate);
@@ -91,12 +91,9 @@ public:
     SCHEMA_FIELD(float, m_flTimeRotationStop);
     SCHEMA_FIELD(float, m_flStartSpeed);
     SCHEMA_FIELD(Quaternion, m_qSpawnOrientation);
-    SCHEMA_FIELD(bool, m_bRecordHistory);
-    SCHEMA_FIELD(bool, m_bReturningToPreviousRotation);
     SCHEMA_FIELD(bool, m_bReturningToInitialRotation);
     SCHEMA_FIELD(float, m_flMinYawRotation);
     SCHEMA_FIELD(float, m_flMaxYawRotation);
-    SCHEMA_FIELD(int32_t, m_nOscillationCount);
     SCHEMA_FIELD(bool, m_bOscillationFromStart);
     SCHEMA_FIELD(CGameSoundEventName, m_iszStartSound);
     SCHEMA_FIELD(CGameSoundEventName, m_iszLoopSound);
@@ -105,6 +102,7 @@ public:
     SCHEMA_FIELD(float, m_flCurrentAngle);
     SCHEMA_FIELD(CFuncRotator__RotationAxis_t, m_eRotationAxis);
     SCHEMA_FIELD(float, m_flSpeedDriftFromOverRotate);
+    SCHEMA_FIELD(bool, m_bQueueStop);
 
 public:
     static CFuncRotator* New(const char* className)

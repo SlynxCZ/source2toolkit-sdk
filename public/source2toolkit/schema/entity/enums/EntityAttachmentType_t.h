@@ -48,6 +48,7 @@ enum class EntityAttachmentType_t : uint32_t
     eCenter = 1,
     eEyes = 2,
     eAttachment = 3,
+    eLocalOffset = 4,
 };
 
 #endif // _INCLUDE_ENTITYATTACHMENTTYPE_T_H

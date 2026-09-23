@@ -62,7 +62,6 @@ public:
     DECLARE_SCHEMA_CLASS_INLINE(CCS2ChickenGraphController);
 
     SCHEMA_FIELD(bool, m_bHasActionCompletedEvent);
-    SCHEMA_FIELD(bool, m_bWaitingForCompletedEvent);
 };
 
 #endif // _INCLUDE_CCS2CHICKENGRAPHCONTROLLER_H

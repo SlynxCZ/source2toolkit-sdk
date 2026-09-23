@@ -81,6 +81,7 @@ public:
     SCHEMA_FIELD(PhysicsRagdollPose_t, m_RagdollPose);
     SCHEMA_FIELD(bool, m_bRagdollEnabled);
     SCHEMA_FIELD(bool, m_bRagdollClientSide);
+    SCHEMA_FIELD(bool, m_bShouldUpdateTransformations);
     SCHEMA_FIELD(CTransform, m_xParentedRagdollRootInEntitySpace);
 
 public:

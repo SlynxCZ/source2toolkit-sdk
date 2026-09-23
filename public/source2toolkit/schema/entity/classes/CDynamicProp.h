@@ -63,6 +63,7 @@ class CDynamicProp : public CBreakableProp
 public:
     DECLARE_SCHEMA_CLASS(CDynamicProp);
 
+    SCHEMA_FIELD(bool, m_bGraphControllerEnabled);
     SCHEMA_FIELD(bool, m_bCreateNavObstacle);
     SCHEMA_FIELD(bool, m_bNavObstacleUpdatesOverridden);
     SCHEMA_FIELD(bool, m_bUseHitboxesForRenderBox);

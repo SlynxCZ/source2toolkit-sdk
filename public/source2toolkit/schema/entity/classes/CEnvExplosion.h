@@ -72,6 +72,7 @@ public:
     SCHEMA_FIELD(float, m_flDamageForce);
     SCHEMA_FIELD(CHandle<CBaseEntity>, m_hInflictor);
     SCHEMA_FIELD(DamageTypes_t, m_iCustomDamageType);
+    SCHEMA_FIELD(bool, m_bHasCustomDamageType);
     SCHEMA_FIELD(bool, m_bCreateDebris);
     SCHEMA_FIELD(CUtlSymbolLarge, m_iszCustomEffectName);
     SCHEMA_FIELD(CUtlSymbolLarge, m_iszCustomSoundName);

@@ -63,6 +63,7 @@
 
 class CBaseEntity;
 class CCSBot;
+class CCSMinimapVolume;
 class CCSPlayer_ActionTrackingServices;
 class CCSPlayer_AimPunchServices;
 class CCSPlayer_BulletServices;
@@ -116,6 +117,8 @@ public:
     SCHEMA_FIELD(Vector, m_vRagdollServerOrigin);
     SCHEMA_FIELD(CEconItemView, m_EconGloves);
     SCHEMA_FIELD(uint8_t, m_nEconGlovesChanged);
+    SCHEMA_FIELD(CUtlVector<CHandle<CCSMinimapVolume>>, m_vecCurrentMinimapVolumes);
+    SCHEMA_FIELD(CHandle<CCSMinimapVolume>, m_hActiveMinimapVolume);
     SCHEMA_FIELD(QAngle, m_qDeathEyeAngles);
     SCHEMA_FIELD(bool, m_bLeftHanded);
     SCHEMA_FIELD(float, m_fSwitchedHandednessTime);

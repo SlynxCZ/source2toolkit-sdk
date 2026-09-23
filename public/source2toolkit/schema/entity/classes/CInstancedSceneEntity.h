@@ -69,7 +69,6 @@ public:
     SCHEMA_FIELD(float, m_flPostSpeakDelay);
     SCHEMA_FIELD(float, m_flPreDelay);
     SCHEMA_FIELD(bool, m_bIsBackground);
-    SCHEMA_FIELD(bool, m_bRemoveOnCompletion);
     SCHEMA_FIELD(CHandle<CBaseEntity>, m_hTarget);
 
 public:

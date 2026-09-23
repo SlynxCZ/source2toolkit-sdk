@@ -35,19 +35,18 @@
  * Project: Source2Toolkit
  */
 
-#ifndef _INCLUDE_SNDBEATLAUNCHSYNCTYPE_T_H
-#define _INCLUDE_SNDBEATLAUNCHSYNCTYPE_T_H
+#ifndef _INCLUDE_RADIUSDMGOVERRIDE_T_H
+#define _INCLUDE_RADIUSDMGOVERRIDE_T_H
 
 #pragma once
 
 #include <cstdint>
 
-enum class SndBeatLaunchSyncType_t : uint32_t
+enum class RadiusDmgOverride_t : uint32_t
 {
-    eSndBeatLaunchSyncTypeInvalid = 0,
-    eSndBeatLaunchSyncTypeQueue = 1,
-    eSndBeatLaunchSyncTypeSeek = 2,
-    eSndBeatLaunchSyncTypeReset = 3,
+    RADIUS_DMG_OVERRIDE_NONE = 0,
+    RADIUS_DMG_OVERRIDE_POSITION_ONLY = 1,
+    RADIUS_DMG_OVERRIDE_POSITION_SKIP_TRACES = 2,
 };
 
-#endif // _INCLUDE_SNDBEATLAUNCHSYNCTYPE_T_H
+#endif // _INCLUDE_RADIUSDMGOVERRIDE_T_H

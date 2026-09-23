@@ -96,6 +96,10 @@ public:
     SCHEMA_FIELD(bool, m_bIsHauledBack);
     SCHEMA_FIELD(bool, m_bSilencerOn);
     SCHEMA_FIELD(float, m_flTimeSilencerSwitchComplete);
+    SCHEMA_FIELD(bool, m_bStealthy);
+    SCHEMA_FIELD(bool, m_bInSilentReloadSection);
+    SCHEMA_FIELD(bool, m_bSilentReloadStatCounted);
+    SCHEMA_FIELD(float, m_flStealthHoldStartTime);
     SCHEMA_FIELD(float, m_flWeaponActionPlaybackRate);
     SCHEMA_FIELD(int32_t, m_iOriginalTeamNumber);
     SCHEMA_FIELD(int32_t, m_iMostRecentTeamNumber);

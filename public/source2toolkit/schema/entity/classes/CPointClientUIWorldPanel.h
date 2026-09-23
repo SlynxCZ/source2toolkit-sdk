@@ -68,6 +68,7 @@ public:
     SCHEMA_FIELD(float, m_flWidth);
     SCHEMA_FIELD(float, m_flHeight);
     SCHEMA_FIELD(float, m_flDPI);
+    SCHEMA_FIELD(float, m_flWindowUIScale);
     SCHEMA_FIELD(float, m_flInteractDistance);
     SCHEMA_FIELD(float, m_flDepthOffset);
     SCHEMA_FIELD(uint32_t, m_unOwnerContext);

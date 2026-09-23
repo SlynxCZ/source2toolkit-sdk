@@ -55,19 +55,14 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
-#include "CSoundEventEntity.h"
+#include "CSoundEventMultiPointEntity.h"
 
-class CSoundEventPathCornerEntity : public CSoundEventEntity
+class CSoundEventPathCornerEntity : public CSoundEventMultiPointEntity
 {
 public:
     DECLARE_SCHEMA_CLASS(CSoundEventPathCornerEntity);
 
     SCHEMA_FIELD(CUtlSymbolLarge, m_iszPathCorner);
-    SCHEMA_FIELD(int32_t, m_iCountMax);
-    SCHEMA_FIELD(float, m_flDistanceMax);
-    SCHEMA_FIELD(float, m_flDistMaxSqr);
-    SCHEMA_FIELD(float, m_flDotProductMax);
-    SCHEMA_FIELD(bool, m_bPlaying);
 
 public:
     static CSoundEventPathCornerEntity* New(const char* className)

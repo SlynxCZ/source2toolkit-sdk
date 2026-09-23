@@ -73,6 +73,7 @@ public:
     SCHEMA_FIELD(int32_t, m_nTransitionStartTick);
     SCHEMA_FIELD(int32_t, m_nTransitionDurationTicks);
     SCHEMA_FIELD(float, m_flTransitionStartSpeed);
+    SCHEMA_FIELD(float, m_flFrictionScale);
     SCHEMA_FIELD(CUtlVector<CHandle<CBaseEntity>>, m_hConveyorModels);
 
 public:

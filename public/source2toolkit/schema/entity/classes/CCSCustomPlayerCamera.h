@@ -35,8 +35,8 @@
  * Project: Source2Toolkit
  */
 
-#ifndef _INCLUDE_CBASEMOVEBEHAVIOR_H
-#define _INCLUDE_CBASEMOVEBEHAVIOR_H
+#ifndef _INCLUDE_CCSCUSTOMPLAYERCAMERA_H
+#define _INCLUDE_CCSCUSTOMPLAYERCAMERA_H
 
 #pragma once
 
@@ -55,45 +55,45 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
-#include "CPathKeyFrame.h"
+#include "CBaseEntity.h"
+#include "../enums/CustomCameraMode_t.h"
 
-class CBaseMoveBehavior : public CPathKeyFrame
+class CCSPlayerPawnBase;
+
+class CCSCustomPlayerCamera : public CBaseEntity
 {
 public:
-    DECLARE_SCHEMA_CLASS(CBaseMoveBehavior);
+    DECLARE_SCHEMA_CLASS(CCSCustomPlayerCamera);
 
-    SCHEMA_FIELD(int32_t, m_iPositionInterpolator);
-    SCHEMA_FIELD(int32_t, m_iRotationInterpolator);
-    SCHEMA_FIELD(float, m_flAnimStartTime);
-    SCHEMA_FIELD(float, m_flAnimEndTime);
-    SCHEMA_FIELD(float, m_flAverageSpeedAcrossFrame);
-    SCHEMA_FIELD(CHandle<CPathKeyFrame>, m_pCurrentKeyFrame);
-    SCHEMA_FIELD(CHandle<CPathKeyFrame>, m_pTargetKeyFrame);
-    SCHEMA_FIELD(CHandle<CPathKeyFrame>, m_pPreKeyFrame);
-    SCHEMA_FIELD(CHandle<CPathKeyFrame>, m_pPostKeyFrame);
-    SCHEMA_FIELD(float, m_flTimeIntoFrame);
-    SCHEMA_FIELD(int32_t, m_iDirection);
+    SCHEMA_FIELD(CHandle<CCSPlayerPawnBase>, m_hPawn);
+    SCHEMA_FIELD(CustomCameraMode_t, m_nCameraMode);
+    SCHEMA_FIELD(CHandle<CBaseEntity>, m_hFollowEntity);
+    SCHEMA_FIELD(bool, m_bFollowEyes);
+    SCHEMA_FIELD(Vector, m_vecFollowOffset);
+    SCHEMA_FIELD(Vector, m_vecCameraOffset);
+    SCHEMA_FIELD(bool, m_bClipCameraOffset);
+    SCHEMA_FIELD(float, m_flCameraOffsetReturnStrength);
 
 public:
-    static CBaseMoveBehavior* New(const char* className)
+    static CCSCustomPlayerCamera* New(const char* className)
     {
-        return CBaseEntity::New<CBaseMoveBehavior>(className);
+        return CBaseEntity::New<CCSCustomPlayerCamera>(className);
     }
 
-    static CBaseMoveBehavior* FromIndex(int iIndex)
+    static CCSCustomPlayerCamera* FromIndex(int iIndex)
     {
-        return CBaseEntity::FromIndex<CBaseMoveBehavior>(iIndex);
+        return CBaseEntity::FromIndex<CCSCustomPlayerCamera>(iIndex);
     }
 
-    static CBaseMoveBehavior* FromIndex(CEntityIndex index)
+    static CCSCustomPlayerCamera* FromIndex(CEntityIndex index)
     {
         return FromIndex(index.Get());
     }
 
-    CHandle<CBaseMoveBehavior> GetHandle()
+    CHandle<CCSCustomPlayerCamera> GetHandle()
     {
-        return CBaseEntity::GetHandle<CBaseMoveBehavior>();
+        return CBaseEntity::GetHandle<CCSCustomPlayerCamera>();
     }
 };
 
-#endif // _INCLUDE_CBASEMOVEBEHAVIOR_H
+#endif // _INCLUDE_CCSCUSTOMPLAYERCAMERA_H

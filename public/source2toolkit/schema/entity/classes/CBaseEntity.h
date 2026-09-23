@@ -64,6 +64,7 @@
 
 class CBaseFilter;
 class CBodyComponent;
+class CCSPlayerController;
 class CCollisionProperty;
 class CEntityInstance;
 class CEntityKeyValues;

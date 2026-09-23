@@ -35,17 +35,17 @@
  * Project: Source2Toolkit
  */
 
-#ifndef _INCLUDE_PARTICLEREPLICATIONMODE_T_H
-#define _INCLUDE_PARTICLEREPLICATIONMODE_T_H
+#ifndef _INCLUDE_CNMORIENTATIONWARPNODE__ALIGNMENTMODE_T_H
+#define _INCLUDE_CNMORIENTATIONWARPNODE__ALIGNMENTMODE_T_H
 
 #pragma once
 
 #include <cstdint>
 
-enum class ParticleReplicationMode_t : uint32_t
+enum class CNmOrientationWarpNode__AlignmentMode_t : uint8_t
 {
-    PARTICLE_REPLICATIONMODE_NONE = 0,
-    PARTICLE_REPLICATIONMODE_REPLICATE_FOR_EACH_PARENT_PARTICLE = 1,
+    MovementDirection = 0,
+    AnimationEndFacing = 1,
 };
 
-#endif // _INCLUDE_PARTICLEREPLICATIONMODE_T_H
+#endif // _INCLUDE_CNMORIENTATIONWARPNODE__ALIGNMENTMODE_T_H

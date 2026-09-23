@@ -56,6 +56,7 @@
 #include <cstdint>
 
 #include "CLogicalEntity.h"
+#include "../enums/CPathMoverEntitySpawner__TemplateChoiceStrategy_t.h"
 
 class CFuncMover;
 class CPathMover;
@@ -65,7 +66,10 @@ class CPathMoverEntitySpawner : public CLogicalEntity
 public:
     DECLARE_SCHEMA_CLASS(CPathMoverEntitySpawner);
 
+    SCHEMA_FIELD(CPathMoverEntitySpawner__TemplateChoiceStrategy_t, m_eTemplateChoiceStrategy);
     SCHEMA_FIELD_POINTER(CUtlSymbolLarge, m_szSpawnTemplates);
+    SCHEMA_FIELD_POINTER(int32_t, m_szSpawnTemplateParams);
+    SCHEMA_FIELD_POINTER(int32_t, m_szSpawnTemplateCount);
     SCHEMA_FIELD(int32_t, m_nSpawnIndex);
     SCHEMA_FIELD(CHandle<CPathMover>, m_hPathMover);
     SCHEMA_FIELD(float, m_flSpawnFrequencySeconds);
@@ -80,6 +84,9 @@ public:
     SCHEMA_FIELD(CEntityIOOutput, m_OnTemplateGroupSpawned);
     SCHEMA_FIELD(CUtlSymbolLarge, m_iszPathMoverName);
     SCHEMA_FIELD(bool, m_bPrepopulateOnSpawn);
+    SCHEMA_FIELD(CUtlSymbolLarge, m_iszPathNodeStartName);
+    SCHEMA_FIELD(Vector, m_vMoverSpawnPos);
+    SCHEMA_FIELD(bool, m_bRunningDebugThink);
 
 public:
     static CPathMoverEntitySpawner* New(const char* className)

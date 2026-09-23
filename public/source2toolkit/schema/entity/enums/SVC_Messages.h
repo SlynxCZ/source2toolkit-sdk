@@ -75,6 +75,7 @@ enum class SVC_Messages : uint32_t
     svc_HltvFixupOperatorStatus = 75,
     svc_UserCmds = 76,
     svc_NextMsgPredicted = 77,
+    svc_EncryptedData = 78,
 };
 
 #endif // _INCLUDE_SVC_MESSAGES_H

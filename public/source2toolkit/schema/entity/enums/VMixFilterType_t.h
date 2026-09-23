@@ -42,7 +42,7 @@
 
 #include <cstdint>
 
-enum class VMixFilterType_t : int16_t
+enum class VMixFilterType_t : int8_t
 {
     FILTER_UNKNOWN = -1,
     FILTER_LOWPASS = 0,

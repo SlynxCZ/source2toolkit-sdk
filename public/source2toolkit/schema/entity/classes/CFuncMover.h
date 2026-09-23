@@ -56,6 +56,7 @@
 #include <cstdint>
 
 #include "CBaseModelEntity.h"
+#include "../enums/CFuncMover__FindFollowMoverStrategy_t.h"
 #include "../enums/CFuncMover__FollowConstraint_t.h"
 #include "../enums/CFuncMover__FollowEntityDirection_t.h"
 #include "../enums/CFuncMover__Move_t.h"
@@ -113,6 +114,8 @@ public:
     SCHEMA_FIELD(bool, m_bStartAtClosestPoint);
     SCHEMA_FIELD(bool, m_bStartAtEnd);
     SCHEMA_FIELD(bool, m_bStartFollowingClosestMover);
+    SCHEMA_FIELD(float, m_flStartFollowingClosestMoverWhenWithinDistance);
+    SCHEMA_FIELD(float, m_flStartFollowingClosestMoverWhenOutsideDistance);
     SCHEMA_FIELD(CFuncMover__OrientationUpdate_t, m_eOrientationUpdate);
     SCHEMA_FIELD(float, m_flTimeStartOrientationChange);
     SCHEMA_FIELD(float, m_flTimeToBlendToNewOrientation);
@@ -122,11 +125,15 @@ public:
     SCHEMA_FIELD(bool, m_bAllowMovableNavMeshDockingOnEntireEntity);
     SCHEMA_FIELD(CUtlSymbolLarge, m_iszOrientationMatchEntityName);
     SCHEMA_FIELD(CHandle<CBaseEntity>, m_hOrientationMatchEntity);
-    SCHEMA_FIELD(float, m_flTimeToTraverseToNextNode);
-    SCHEMA_FIELD(Vector, m_vLerpToNewPosStartInPathEntitySpace);
-    SCHEMA_FIELD(Vector, m_vLerpToNewPosEndInPathEntitySpace);
+    SCHEMA_FIELD(Vector, m_vLerpToNewPosStartWS);
+    SCHEMA_FIELD(float, m_flLerpToPositionTargetT);
     SCHEMA_FIELD(float, m_flLerpToPositionT);
     SCHEMA_FIELD(float, m_flLerpToPositionDeltaT);
+    SCHEMA_FIELD(CHandle<CPathMover>, m_hTransitionSourcePath);
+    SCHEMA_FIELD(float, m_flTransitionSourceT);
+    SCHEMA_FIELD(float, m_flTransitionSourcePathLocation);
+    SCHEMA_FIELD(CUtlSymbolLarge, m_iszTransitionSourcePathNodeStart);
+    SCHEMA_FIELD(bool, m_bStoppedDuringTransition);
     SCHEMA_FIELD(CEntityIOOutput, m_OnLerpToPositionComplete);
     SCHEMA_FIELD(bool, m_bIsPaused);
     SCHEMA_FIELD(CFuncMover__TransitionToPathNodeAction_t, m_eTransitionedToPathNodeAction);
@@ -170,6 +177,9 @@ public:
     SCHEMA_FIELD(bool, m_bQueueStopMoving);
     SCHEMA_FIELD(bool, m_bQueueSetupPathMover);
     SCHEMA_FIELD(CFuncMover__PathRebuildStrategy_t, m_ePathRebuildStrategy);
+    SCHEMA_FIELD(CFuncMover__FindFollowMoverStrategy_t, m_eFindFollowMoverStrategy);
+    SCHEMA_FIELD(bool, m_bDisableDecelerationToStop);
+    SCHEMA_FIELD(Vector, m_vOffsetFromPath);
 
 public:
     static CFuncMover* New(const char* className)

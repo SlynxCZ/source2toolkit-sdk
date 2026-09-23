@@ -56,6 +56,7 @@
 #include <cstdint>
 
 #include "CPathSimple.h"
+#include "../enums/DirectionAlongSimplePath_t.h"
 
 class CPathNode;
 
@@ -66,6 +67,8 @@ public:
 
     SCHEMA_FIELD(CUtlVector<CHandle<CPathNode>>, m_vecPathNodes);
     SCHEMA_FIELD(CTransform, m_xInitialPathWorldToLocal);
+    SCHEMA_FIELD(DirectionAlongSimplePath_t, m_eDesiredDirection);
+    SCHEMA_FIELD(bool, m_bIgnoreParentRotation);
 
 public:
     static CPathWithDynamicNodes* New(const char* className)

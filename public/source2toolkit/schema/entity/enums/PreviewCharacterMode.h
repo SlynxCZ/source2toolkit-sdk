@@ -54,7 +54,10 @@ enum class PreviewCharacterMode : int32_t
     WALKING = 6,
     TEAM_INTRO = 7,
     WINGMAN_INTRO = 8,
-    BANNER = 9,
+    RUSH_INTRO = 9,
+    BANNER = 10,
+    CHICK_SNAPSHOT = 11,
+    CHICK_VIEWMODEL = 12,
 };
 
 #endif // _INCLUDE_PREVIEWCHARACTERMODE_H

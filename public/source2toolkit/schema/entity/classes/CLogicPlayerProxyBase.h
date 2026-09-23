@@ -35,8 +35,8 @@
  * Project: Source2Toolkit
  */
 
-#ifndef _INCLUDE_CENVWINDVOLUME_H
-#define _INCLUDE_CENVWINDVOLUME_H
+#ifndef _INCLUDE_CLOGICPLAYERPROXYBASE_H
+#define _INCLUDE_CLOGICPLAYERPROXYBASE_H
 
 #pragma once
 
@@ -55,43 +55,40 @@
 #include "source2toolkit/schema/schema.h"
 #include <cstdint>
 
-#include "CBaseEntity.h"
+#include "CLogicalEntity.h"
 
-class CEnvWindVolume : public CBaseEntity
+class CBaseEntity;
+
+class CLogicPlayerProxyBase : public CLogicalEntity
 {
 public:
-    DECLARE_SCHEMA_CLASS(CEnvWindVolume);
+    DECLARE_SCHEMA_CLASS(CLogicPlayerProxyBase);
 
-    SCHEMA_FIELD(bool, m_bActive);
-    SCHEMA_FIELD(Vector, m_vBoxMins);
-    SCHEMA_FIELD(Vector, m_vBoxMaxs);
-    SCHEMA_FIELD(bool, m_bStartDisabled);
-    SCHEMA_FIELD(int32_t, m_nShape);
-    SCHEMA_FIELD(float, m_fWindSpeedMultiplier);
-    SCHEMA_FIELD(float, m_fWindTurbulenceMultiplier);
-    SCHEMA_FIELD(float, m_fWindSpeedVariationMultiplier);
-    SCHEMA_FIELD(float, m_fWindDirectionVariationMultiplier);
+    SCHEMA_FIELD(CEntityIOOutput, m_PlayerHasAmmo);
+    SCHEMA_FIELD(CEntityIOOutput, m_PlayerHasNoAmmo);
+    SCHEMA_FIELD(CEntityIOOutput, m_PlayerDied);
+    SCHEMA_FIELD(CHandle<CBaseEntity>, m_hPlayer);
 
 public:
-    static CEnvWindVolume* New(const char* className)
+    static CLogicPlayerProxyBase* New(const char* className)
     {
-        return CBaseEntity::New<CEnvWindVolume>(className);
+        return CBaseEntity::New<CLogicPlayerProxyBase>(className);
     }
 
-    static CEnvWindVolume* FromIndex(int iIndex)
+    static CLogicPlayerProxyBase* FromIndex(int iIndex)
     {
-        return CBaseEntity::FromIndex<CEnvWindVolume>(iIndex);
+        return CBaseEntity::FromIndex<CLogicPlayerProxyBase>(iIndex);
     }
 
-    static CEnvWindVolume* FromIndex(CEntityIndex index)
+    static CLogicPlayerProxyBase* FromIndex(CEntityIndex index)
     {
         return FromIndex(index.Get());
     }
 
-    CHandle<CEnvWindVolume> GetHandle()
+    CHandle<CLogicPlayerProxyBase> GetHandle()
     {
-        return CBaseEntity::GetHandle<CEnvWindVolume>();
+        return CBaseEntity::GetHandle<CLogicPlayerProxyBase>();
     }
 };
 
-#endif // _INCLUDE_CENVWINDVOLUME_H
+#endif // _INCLUDE_CLOGICPLAYERPROXYBASE_H

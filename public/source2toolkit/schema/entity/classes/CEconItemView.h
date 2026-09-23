@@ -75,6 +75,8 @@ public:
     SCHEMA_FIELD(CAttributeList, m_NetworkedDynamicAttributes);
     SCHEMA_FIELD_POINTER(char, m_szCustomName);
     SCHEMA_FIELD_POINTER(char, m_szCustomNameOverride);
+    SCHEMA_FIELD_POINTER(char, m_szCustomNameOverride2);
+    SCHEMA_FIELD_POINTER(char, m_szCustomNameOverride3);
 };
 
 #endif // _INCLUDE_CECONITEMVIEW_H
