@@ -988,7 +988,7 @@ def write_enum(enum_name: str, schema_enum: SchemaEnum) -> str:
     lines.append("")
     lines.append(f"#endif // {guard}")
     lines.append("")
-    return LICENSE_HEADER + "\r\n".join(lines)
+    return LICENSE_HEADER + "\n".join(lines)
 
 def collect_referenced_types(
         t: SchemaFieldType,
@@ -1200,7 +1200,7 @@ def write_class(
     lines.append("")
     lines.append(f"#endif // {guard}")
     lines.append("")
-    return LICENSE_HEADER + "\r\n".join(lines)
+    return LICENSE_HEADER + "\n".join(lines)
 
 # ---------------------------------------------------------------------------
 # Main
