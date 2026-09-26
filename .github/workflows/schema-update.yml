@@ -1,0 +1,164 @@
+# Keeps the generated schema headers in step with CS2.
+#
+# Every 30 minutes the manifest of the Linux dedicated server binaries (depot
+# 2347773) is compared with tools/schemadump/manifest, on main and on the open
+# update branch. When the binaries changed, the schema is dumped from a headless
+# server (tools/schemadump/dump.sh), the headers are regenerated
+# (tools/schemagen/generator.py), the SDK is built, and the result goes to a
+# pull request on the schema/auto-update branch -- the build result is in its
+# description, so a CS2 update that removes fields the SDK uses shows up there
+# before anything lands on main.
+#
+# Needs "Allow GitHub Actions to create and approve pull requests" in the
+# repository's Settings -> Actions -> General.
+name: Schema update
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Dump and regenerate even if the server binaries did not change
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: schema-update
+  cancel-in-progress: false
+
+env:
+  PR_BRANCH: schema/auto-update
+  DEPOT_BINARIES: '2347773'
+
+jobs:
+  check:
+    name: Check for a CS2 update
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.check.outputs.changed }}
+      manifest: ${{ steps.check.outputs.manifest }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch DepotDownloader
+        run: |
+          url=$(curl -fsSL https://api.github.com/repos/SteamRE/DepotDownloader/releases/latest \
+            | jq -r '.assets[] | select(.name == "DepotDownloader-linux-x64.zip") | .browser_download_url')
+          curl -fsSL -o dd.zip "$url"
+          mkdir -p "$RUNNER_TEMP/dd" && python3 -m zipfile -e dd.zip "$RUNNER_TEMP/dd"
+          chmod +x "$RUNNER_TEMP/dd/DepotDownloader"
+
+      - name: Compare the binaries manifest
+        id: check
+        run: |
+          out=$("$RUNNER_TEMP/dd/DepotDownloader" -app 730 -depot "$DEPOT_BINARIES" -manifest-only -dir "$RUNNER_TEMP/manifest")
+          manifest=$(grep -oP '^Manifest \K[0-9]+' <<< "$out" | head -1)
+          [ -n "$manifest" ] || { echo "$out"; echo "No manifest id in the DepotDownloader output"; exit 1; }
+
+          on_main=$(cat tools/schemadump/manifest 2>/dev/null || true)
+          on_branch=$(git fetch -q origin "$PR_BRANCH" 2>/dev/null && git show "FETCH_HEAD:tools/schemadump/manifest" 2>/dev/null || true)
+          echo "Current: $manifest, main: ${on_main:-none}, $PR_BRANCH: ${on_branch:-none}"
+
+          changed=false
+          if [ "${{ inputs.force }}" = "true" ] || { [ "$manifest" != "$on_main" ] && [ "$manifest" != "$on_branch" ]; }; then
+            changed=true
+          fi
+          echo "manifest=$manifest" >> "$GITHUB_OUTPUT"
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+
+  update:
+    name: Dump, regenerate, build
+    needs: check
+    if: needs.check.outputs.changed == 'true'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install tools
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -yq cmake ninja-build clang-18
+          python3 -m pip install --quiet --break-system-packages vpk
+
+      - name: Clone the build dependencies
+        run: |
+          # The same ones the toolkit core is built against (source2toolkit docker/docker-entrypoint.sh).
+          git clone -q --recursive --depth 1 --branch cs2 https://github.com/alliedmodders/hl2sdk.git "$RUNNER_TEMP/hl2sdk-cs2"
+          git clone -q --recursive --depth 1 --branch master https://github.com/alliedmodders/metamod-source.git "$RUNNER_TEMP/metamod-source"
+          git clone -q --depth 1 https://github.com/SteamDatabase/Protobufs "$RUNNER_TEMP/Protobufs"
+          echo "HL2SDKCS2=$RUNNER_TEMP/hl2sdk-cs2" >> "$GITHUB_ENV"
+          echo "MMSOURCE_DEV=$RUNNER_TEMP/metamod-source" >> "$GITHUB_ENV"
+          echo "CSGO_PROTO=$RUNNER_TEMP/Protobufs/csgo" >> "$GITHUB_ENV"
+
+      - name: Dump the schema
+        env:
+          CC: clang-18
+          CXX: clang++-18
+        run: |
+          bash tools/schemadump/dump.sh "$RUNNER_TEMP/schemadump" tools/schemagen/server.json | tee "$RUNNER_TEMP/dump.log"
+          echo "${{ needs.check.outputs.manifest }}" > tools/schemadump/manifest
+
+      - name: Regenerate the headers
+        run: |
+          cd tools/schemagen
+          python3 generator.py
+
+      - name: Build the SDK
+        id: build
+        continue-on-error: true
+        run: |
+          cmake -S . -B "$RUNNER_TEMP/build" -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+            -DCMAKE_C_COMPILER=clang-18 -DCMAKE_CXX_COMPILER=clang++-18
+          cmake --build "$RUNNER_TEMP/build" -- -k 0 2>&1 | tee "$RUNNER_TEMP/build.log"
+          exit "${PIPESTATUS[0]}"
+
+      - name: Describe the update
+        id: describe
+        run: |
+          game=$(python3 -c "import json; print(json.load(open('tools/schemagen/server.json'))['game_info'].get('PatchVersion', '?').strip())")
+          echo "game=$game" >> "$GITHUB_OUTPUT"
+          {
+            echo "Automatic schema update for CS2 **$game** (binaries manifest \`${{ needs.check.outputs.manifest }}\`)."
+            echo
+            echo '```'
+            grep -E '^(Metamod|Dumper|defs):' "$RUNNER_TEMP/dump.log" || true
+            echo '```'
+            echo
+            if [ "${{ steps.build.outcome }}" = "success" ]; then
+              echo "The SDK builds with the regenerated headers."
+            else
+              echo "**The SDK does not build with the regenerated headers** -- most likely a field or class the SDK uses is gone:"
+              echo
+              echo '```'
+              grep -E 'error' "$RUNNER_TEMP/build.log" | head -40 || true
+              echo '```'
+            fi
+            echo
+            echo "Header changes: \`git diff --stat\` below."
+            echo
+            echo '```'
+            git diff --stat -- public/source2toolkit/schema/entity | tail -25
+            echo '```'
+            echo
+            echo "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+          } > "$RUNNER_TEMP/pr.md"
+
+      - name: Open or update the pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: ${{ env.PR_BRANCH }}
+          title: 'schema: regenerate for CS2 ${{ steps.describe.outputs.game }}'
+          commit-message: 'schema: regenerate for CS2 ${{ steps.describe.outputs.game }}'
+          body-path: ${{ runner.temp }}/pr.md
+          add-paths: |
+            tools/schemagen/server.json
+            tools/schemadump/manifest
+            public/source2toolkit/schema/entity/**
+          delete-branch: true
