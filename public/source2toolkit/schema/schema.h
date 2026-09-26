@@ -68,6 +68,8 @@
 
 #include <type_traits>
 #include <cstdint>
+#include <string>
+#include <string_view>
 
 /* =========================
 Engine interface getters
@@ -372,6 +374,89 @@ inline constexpr uint64_t hash_64_fnv1a_const(const char* const str,
     return (str[0] == '\0')
                ? value
                : hash_64_fnv1a_const(&str[1], (value ^ uint64_t(str[0])) * 0x100000001b3);
+}
+
+/* =========================
+Schema API by type
+========================= */
+
+namespace schema
+{
+    /**
+     * @brief The C++ name of T at compile time ("CChicken"); schema class names are the C++ ones.
+     */
+    template <typename T>
+    constexpr std::string_view ClassName()
+    {
+#ifdef _MSC_VER
+        // "... schema::ClassName<class CChicken>(void)"
+        std::string_view name = __FUNCSIG__;
+        name.remove_prefix(name.find("ClassName<") + sizeof("ClassName<") - 1);
+        name = name.substr(0, name.rfind(">(void)"));
+        for (std::string_view prefix : {"class ", "struct "})
+        {
+            if (name.substr(0, prefix.size()) == prefix)
+                name.remove_prefix(prefix.size());
+        }
+#else
+        // Clang: "... [T = CChicken]", GCC: "... [with T = CChicken; ...]"
+        std::string_view name = __PRETTY_FUNCTION__;
+        name.remove_prefix(name.find("T = ") + sizeof("T = ") - 1);
+        name = name.substr(0, name.find_first_of(";]"));
+#endif
+        return name;
+    }
+
+    /**
+     * @brief ClassName<T>() as a null-terminated string.
+     */
+    template <typename T>
+    const char* ClassNameCStr()
+    {
+        static const std::string s_className(ClassName<T>());
+        return s_className.c_str();
+    }
+
+    /*
+     * Each function taking a class name also takes the class as a type or as a
+     * pointer (its static type), e.g. schema::GetServerOffset<CChicken>("m_leader")
+     * or schema::GetServerOffset(this, "m_leader"). Fields of base classes are
+     * found too, so the pointer's type need not be the declaring class.
+     */
+
+    template <typename T>
+    int16_t FindChainOffset() { return FindChainOffset(ClassNameCStr<T>()); }
+    template <typename T>
+    int16_t FindChainOffset(const T*) { return FindChainOffset<T>(); }
+
+    template <typename T>
+    SchemaKey GetOffset(const char* memberName)
+    {
+        static const uint32_t s_classKey = hash_32_fnv1a_const(ClassNameCStr<T>());
+        return GetOffset(ClassNameCStr<T>(), s_classKey, memberName, hash_32_fnv1a_const(memberName));
+    }
+    template <typename T>
+    SchemaKey GetOffset(const T*, const char* memberName) { return GetOffset<T>(memberName); }
+
+    template <typename T>
+    int32_t GetServerOffset(const char* pszPropName) { return GetServerOffset(ClassNameCStr<T>(), pszPropName); }
+    template <typename T>
+    int32_t GetServerOffset(const T*, const char* pszPropName) { return GetServerOffset<T>(pszPropName); }
+
+    template <typename T>
+    int32_t GetClassSize() { return GetClassSize(ClassNameCStr<T>()); }
+    template <typename T>
+    int32_t GetClassSize(const T*) { return GetClassSize<T>(); }
+
+    /**
+     * @brief SetStateChanged(entity, "m_iHealth"), the class taken from the entity's type.
+     */
+    template <typename T>
+    void SetStateChanged(T* entity, const char* propName)
+    {
+        static_assert(std::is_base_of_v<CEntityInstance, T>, "SetStateChanged needs an entity");
+        SetStateChanged(entity, ClassNameCStr<T>(), propName);
+    }
 }
 
 /* =========================
@@ -759,9 +844,12 @@ Schema field macros
 #define SCHEMA_FIELD_OLD(type, className, propName)                                                    \
     std::add_lvalue_reference_t<type> propName()                                                       \
     {                                                                                                  \
-        static const int32_t offset = schema::GetServerOffset(#className, #propName);                  \
-        if(offset == -1)                                                                               \
-            std::runtime_error("Failed to find " #propName " in " #className);                         \
+        static const int32_t offset = [] {                                                             \
+            const int32_t nOffset = schema::GetServerOffset(#className, #propName);                    \
+            if (nOffset == -1)                                                                         \
+                Warning("SCHEMA_FIELD_OLD: '" #className "::" #propName "' was not found!\n");         \
+            return nOffset;                                                                            \
+        }();                                                                                           \
         return *reinterpret_cast<std::add_pointer_t<type>>(reinterpret_cast<intptr_t>(this) + offset); \
     }
 
@@ -772,7 +860,7 @@ Schema class macros
 /**
 
 * @brief Declares schema-enabled class.
-* * If the class needs a specific offset for its NetworkStateChanged (like CEconItemView), use this and provide the offset
+* * offset != 0 marks a non-entity (embedded) class; the value itself is not used any more
   */
 #define DECLARE_SCHEMA_CLASS_BASE(ClassName, offset)								\
 	private:																		\
@@ -786,7 +874,8 @@ Schema class macros
 
 * @brief Declares inline schema class (non-entity).
 * * Use this for non-entity classes such as CCollisionProperty or CGlowProperty
-* * The only difference is that their NetworkStateChanged function is index 1 on their vtable rather than being CEntityInstance::NetworkStateChanged
+* * Their NetworkStateChanged is a virtual of the NetworkVar_<field> wrapper the engine embeds them in, not CEntityInstance's;
+* * its vtable slot is found at runtime (NetworkVarStateChanged), so no index is kept per class
 * * Though some classes like CGameRules will instead use their CNetworkVarChainer as a link back to the parent entity
   */
 #define DECLARE_SCHEMA_CLASS_INLINE(className) DECLARE_SCHEMA_CLASS_BASE(className, 1)

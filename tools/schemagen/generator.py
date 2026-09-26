@@ -1143,8 +1143,8 @@ def write_class(
 
     # DECLARE_SCHEMA_CLASS makes the field setters reach NetworkStateChanged
     # through CEntityInstance, which is only valid when `this` really is an
-    # entity. A non-entity schema class has a vtable of its own, with its
-    # NetworkStateChanged at index 1, and calling CEntityInstance's slot on it
+    # entity. A non-entity schema class has a vtable of its own (its NetworkVar
+    # wrapper's; the NetworkStateChanged slot is found at runtime), and calling CEntityInstance's slot on it
     # reads past the end of that vtable -- a near-null jump on the first
     # networked write, not a wrong value. Non-entity classes without a vtable
     # at all have no networked fields, so neither form ever fires for them.
