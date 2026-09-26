@@ -73,6 +73,7 @@ public:
     SCHEMA_FIELD(CUtlVector<uint8_t>, m_VoxelFrameData);
     SCHEMA_FIELD(int32_t, m_nVoxelFrameDataSize);
     SCHEMA_FIELD(int32_t, m_nVoxelUpdate);
+    SCHEMA_FIELD(uint8_t, m_nSmokeLightProbeRegen);
     SCHEMA_FIELD(float, m_flLastBounce);
     SCHEMA_FIELD(float, m_fllastSimulationTime);
     SCHEMA_FIELD(bool, m_bExplodeFromInferno);
