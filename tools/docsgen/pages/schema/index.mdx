@@ -1,0 +1,48 @@
+---
+title: Schema
+description: Entity classes, enums and engine structures, generated from the game's own schema and the SDK headers.
+---
+
+Counter-Strike 2 describes its networked classes to itself through the **schema
+system**: every class, its parent and every field with its offset. The SDK turns a
+dump of that schema into C++ classes, so `pawn->m_iHealth()` resolves the offset at
+runtime from the schema the running game ships — it keeps working after an update
+that moves fields around.
+
+## What is here
+
+<Cards>
+  <Card title="Entity classes" href="/docs/schema/entity/classes/CBaseEntity">
+    Every schema class the SDK generates (`CBaseEntity`, `CCSPlayerController`,
+    `CCSPlayerPawn`, weapons, services, …) with its fields and the toolkit's helper methods.
+  </Card>
+  <Card title="Entity enums" href="/docs/schema/entity/enums/TakeDamageFlags_t">
+    The enums those classes use, with their values.
+  </Card>
+  <Card title="Structures" href="/docs/schema/Takedamageinfo">
+    Engine structures the SDK declares by hand because the schema does not describe
+    them: damage info, recipient filters, entity I/O, move data, server-side clients.
+  </Card>
+</Cards>
+
+## Using a field
+
+```cpp
+CCSPlayerPawn* pawn = controller->GetPlayerPawn();
+
+int health = pawn->m_iHealth();   // read
+pawn->m_iHealth = 150;            // write -- also marks the field for networking
+```
+
+Reads and writes go through accessors that look the offset up once and cache it.
+Writing a networked field notifies the engine, so clients see the change without
+you calling `NetworkStateChanged` yourself. The [Entities](/docs/entities) section
+covers finding entities, helpers and when a manual state change is still needed.
+
+## Helper methods
+
+Next to the generated fields, many classes carry hand-written helpers — `SetModel`,
+`Teleport`, `GiveNamedItem`, `SwitchTeam`, `TakeDamage`, … Helpers that call a
+hookable game function take a last `HookChain` argument: `HookChain::Run` goes through
+every plugin's hooks as if the game made the call, `HookChain::Bypass` calls the
+original directly. See [`HookChain`](/docs/core-api/IToolkitTypes).

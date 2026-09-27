@@ -1,4 +1,4 @@
-﻿"""
+"""
 Source2Toolkit
 Copyright (C) 2025-2026 Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl,
 AlliedModders LLC. All rights reserved.
@@ -30,478 +30,619 @@ Authors:
     - AlliedModders LLC
 
 Project: Source2Toolkit
+
+API reference generator for source2toolkit.net.
+
+    python generator.py <sdk>/public <website>/content/docs
+
+Writes, under the destination:
+    core-api/   one page per IToolkit*.h (+ Schema, utils/*), and meta.json
+    schema/     hand-written schema structs, entity/classes, entity/enums, meta.json
+Everything else in the destination is left alone. The website's sync workflow
+deletes core-api/, schema/ and enums/ before running this, so the folders are
+always exactly what the SDK headers say.
 """
 
+import json
 import os
 import re
-import sys
-import yaml
 import shutil
-import cpp_parser
-import schema_generator
+import sys
 
-script_dir = os.path.dirname(os.path.abspath(__file__))
+import cpp_parser as P
 
-SOURCE_DIR = sys.argv[1] if len(sys.argv) > 1 else os.path.join(script_dir, "../../public")
-DEST_DIR   = sys.argv[2] if len(sys.argv) > 2 else os.path.join(script_dir, "../../docs")
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+SOURCE_DIR = os.path.abspath(sys.argv[1] if len(sys.argv) > 1 else os.path.join(SCRIPT_DIR, '../../public'))
+DEST_DIR = os.path.abspath(sys.argv[2] if len(sys.argv) > 2 else os.path.join(SCRIPT_DIR, '../../docs'))
 
-os.makedirs(DEST_DIR, exist_ok=True)
+REPO_BLOB = 'https://github.com/SlynxCZ/source2toolkit-sdk/blob/main/public/'
 
-def format_title(name):
-    if any(c.isupper() for c in name[1:]):
-        return name
+# --------------------------------------------------------------------------- #
+# Where every header goes
+# --------------------------------------------------------------------------- #
 
-    return name[:1].upper() + name[1:]
+# Titles for the hand-written schema headers (the file names are not names).
+SCHEMA_TITLES = {
+    'attackerinfo': 'AttackerInfo_t',
+    'clientframe': 'Client frames',
+    'entityio': 'Entity I/O',
+    'movedata': 'CMoveData',
+    'navarea': 'Navigation mesh',
+    'netmessages': 'Net message types',
+    'recipientfilter': 'Recipient filters',
+    'serversideclient': 'Server-side clients',
+    'takedamageinfo': 'CTakeDamageInfo',
+    'takedamageresult': 'CTakeDamageResult',
+}
 
-def escape_generics(text):
-    """Escape < and > in generic types for MDX compatibility."""
-    if not text:
-        return text
-    return text.replace('<', '&lt;').replace('>', '&gt;')
+# The API sidebar, grouped. Anything not listed lands at the end.
+API_GROUPS = [
+    ('Plugin', ['IToolkitPlugin', 'IToolkitApi', 'IToolkitTypes']),
+    ('Gameplay', ['IToolkitCommands', 'IToolkitConVars', 'IToolkitEvents', 'IToolkitEntities',
+                  'IToolkitMenus', 'IToolkitCustomHud', 'IToolkitNetworkMessages', 'IToolkitSounds',
+                  'IToolkitTransmit', 'IToolkitTrace', 'IToolkitScheduler']),
+    ('Engine', ['IToolkitAddresses', 'IToolkitHooks', 'IToolkitGameConfig', 'IToolkitGameSystems',
+                'IToolkitMemory', 'IToolkitModule', 'Schema']),
+    ('Services', ['IToolkitHTTP', 'IToolkitJSON', 'IToolkitMySQL', 'IToolkitPaths']),
+]
 
-def fix_html_for_jsx(text):
-    """Convert HTML to Markdown for MDX compatibility."""
-    if not text:
-        return text
 
-    # Convert pre/code blocks to markdown code fences first
-    def convert_code_block(match):
-        lang = ''
-        lang_match = re.search(r'class(?:Name)?="lang-(\w+)"', match.group(0))
-        if lang_match:
-            lang = lang_match.group(1)
-        code_match = re.search(r'<code[^>]*>(.*?)</code>', match.group(0), re.DOTALL)
-        if code_match:
-            content = code_match.group(1)
-            content = content.replace('&gt;', '>').replace('&lt;', '<').replace('&amp;', '&')
-            return f'\n\n```{lang}\n{content}\n```\n\n'
-        return match.group(0)
-    text = re.sub(r'<pre><code[^>]*>.*?</code></pre>', convert_code_block, text, flags=re.DOTALL)
+def pascal(stem):
+    return ''.join(w[:1].upper() + w[1:] for w in stem.split('-'))
 
-    # Convert inline code tags to backticks
-    text = re.sub(r'<code>(.*?)</code>', r'`\1`', text)
 
-    # Remove XML doc tags like <param>, <returns>, <typeparam>, etc.
-    text = re.sub(r'<param\s+name="([^"]+)">(.*?)</param>', r'- `\1`: \2', text)
-    text = re.sub(r'<typeparam\s+name="([^"]+)">(.*?)</typeparam>', r'- `\1`: \2', text)
-    text = re.sub(r'<returns>(.*?)</returns>', r'Returns: \1', text)
-    text = re.sub(r'<see\s+cref="([^"]+)"\s*/>', r'`\1`', text)
-    text = re.sub(r'<seealso\s+cref="([^"]+)"\s*/>', r'`\1`', text)
-
-    # Fix HTML entities
-    text = text.replace('&gt;', '>').replace('&lt;', '<').replace('&amp;', '&')
-
-    # Convert HTML lists to Markdown lists
-    if '<ul>' in text or '<li>' in text:
-        # Process nested lists
-        def convert_list(html):
-            result = []
-            depth = 0
-            parts = re.split(r'(</?(?:ul|li)>)', html)
-            current = ''
-            for part in parts:
-                if part == '<ul>':
-                    depth += 1
-                elif part == '</ul>':
-                    depth = max(0, depth - 1)
-                elif part == '<li>':
-                    current = ''
-                elif part == '</li>':
-                    if current.strip():
-                        indent = '  ' * max(0, depth - 1)
-                        result.append(f'{indent}- {current.strip()}')
-                    current = ''
-                else:
-                    current += part
-            return '\n'.join(result)
-        text = convert_list(text)
-
-    # Convert p tags to paragraphs
-    def convert_p(match):
-        content = match.group(1)
-        # Don't collapse if contains code block
-        if '```' in content:
-            return f'{content.strip()}\n\n'
-        # Collapse whitespace for regular text
-        content = ' '.join(content.split())
-        return f'{content}\n\n'
-    text = re.sub(r'<p>\s*(.*?)\s*</p>', convert_p, text, flags=re.DOTALL)
-
-    # Clean up extra newlines
-    text = re.sub(r'\n{3,}', '\n\n', text)
-
-    return text.strip()
-
-def escape_generics_in_link_text(text):
-    """Escape generics in markdown link text only."""
-    if not text:
-        return text
-    return text.replace('<', '\\<').replace('>', '\\>')
-
-def get_namespace(yaml_data):
-    """Extract namespace from the YAML data."""
-    for item in yaml_data.get('body', []):
-        if 'facts' in item:
-            for fact in item['facts']:
-                if fact.get('name') == 'Namespace':
-                    if isinstance(fact.get('value'), dict):
-                        return fact['value'].get('text', '')
-                    return fact.get('value', '')
-    return ''
-
-def extract_metadata(yaml_data, is_index=False):
-    """Extract front-matter metadata from DocFX ApiPage YAML."""
-    title = yaml_data.get('title', '')
-    if not title:
-        return {}
-
-    # First remove generics and brackets from the full title
-    clean_title = re.sub(r'<[^>]+>', '', title)
-    clean_title = re.sub(r'\[[^\]]+\]', '', clean_title)
-
-    if is_index:
-        clean_title = clean_title.split(".")[-1]
-    else:
-        words = clean_title.split()
-        clean_title = words[-1] if words else ''
-
-    return {'title': clean_title}
-
-def transform_filename(base_name):
-    """
-    If filename ends with -NUMBER, replace with NUMBER times 't'.
-    Example: class-3 -> classttt
-    """
-    match = re.match(r"^(.*?)-(\d+)$", base_name)
-    if match:
-        name, num = match.groups()
-        num = int(num)
-        return name + ("t" * num)
-    return base_name
-
-def generate_markdown(yaml_data):
-    """Generate MDX content from DocFX ApiPage YAML."""
-    md = ""
-    namespace = get_namespace(yaml_data)
-
-    for item in yaml_data.get('body', []):
-        if 'api1' in item:
-            api1_title = str(item.get('api1', ''))
-            api1_title = re.sub(r'<[^>]+>', '', api1_title)
-            md += f"# {api1_title}\n\n"
-            if 'src' in item:
-                src = item['src'].replace('/blob/main', '/blob/master')
-                md += f'<ViewSource href="{src}" />\n\n'
-
-        if 'facts' in item:
-            for fact in item['facts']:
-                fact_name = fact.get('name', '')
-                fact_value = fact.get('value', '')
-                if isinstance(fact_value, dict):
-                    fact_text = fact_value.get('text', '')
-                    fact_url = fact_value.get('url', '')
-                    if fact_url and fact_url.endswith('.html'):
-                        fact_url = "/docs/source2toolkit/" + convert_to_path(fact_url)
-                        fact_url = fact_url.replace('/api/shared/', '/api/').replace('/api/core/', '/api/')
-                        md += f"**{fact_name}**: [{escape_generics_in_link_text(fact_text)}]({fact_url})\n\n"
-                    else:
-                        md += f"**{fact_name}**: {fact_text}\n\n"
-                else:
-                    md += f"**{fact_name}**: {fact_value}\n\n"
-
-        if 'markdown' in item:
-            safe_md = fix_html_for_jsx(item['markdown'])
-            safe_md = safe_md.replace('<', '&lt;').replace('>', '&gt;')
-            md += f"{safe_md}\n\n"
-
-        if 'h2' in item:
-            md += f"## {item['h2']}\n\n"
-
-        if 'h4' in item:
-            h4_text = item['h4']
-            if h4_text in ['Parameters', 'Returns', 'Field Value', 'Property Value', 'Type Parameters', 'Exceptions', 'Remarks', 'Event Type']:
-                md += f"<ApiLabel>{h4_text}</ApiLabel>\n\n"
-            else:
-                md += f"#### {h4_text}\n\n"
-
-        if 'code' in item:
-            md += "```csharp\n" + item['code'] + "\n```\n\n"
-
-        if 'inheritance' in item:
-            for inherit in item['inheritance']:
-                inherit_text = inherit.get('text', '')
-                inherit_url = inherit.get('url', '')
-                if inherit_url:
-                    if inherit_url.endswith('.html'):
-                        inherit_url = "/docs/api/" + convert_to_path(inherit_url)
-                        inherit_url = inherit_url.replace('/api/shared/', '/api/').replace('/api/core/', '/api/')
-                    md += f"- [{escape_generics_in_link_text(inherit_text)}]({inherit_url})\n"
-                else:
-                    md += f"- {inherit_text}\n"
-            md += "\n"
-
-        if 'list' in item:
-            for list_item in item['list']:
-                list_text = list_item.get('text', '')
-                list_url = list_item.get('url', '')
-                if list_url:
-                    if list_url.endswith('.html'):
-                        list_url = "/docs/api/" + convert_to_path(list_url)
-                        list_url = list_url.replace('/api/shared/', '/api/').replace('/api/core/', '/api/')
-                    md += f"- [{escape_generics_in_link_text(list_text)}]({list_url})\n"
-                else:
-                    md += f"- {list_text}\n"
-            md += "\n"
-
-        if 'parameters' in item:
-            for param in item['parameters']:
-                param_name = param.get('name', '')
-                param_default = param.get('default', '')
-                param_description = param.get('description', '')
-
-                type_text = schema_generator.link_type(param.get("type", ""))
-                type_text_escaped = type_text
-
-                parts = []
-                if param_name:
-                    parts.append(f'name="{param_name}"')
-                if type_text_escaped:
-                    safe_type = type_text.replace('<', '&lt;').replace('>', '&gt;')
-                    if "[" not in type_text:
-                        safe_type = type_text.replace('<', '&lt;').replace('>', '&gt;')
-                    else:
-                        safe_type = type_text
-                    parts.append(f'type="{safe_type}"')
-
-                api_param = f"<ApiParam {' '.join(parts)} />"
-
-                if param_description:
-                    md += f"- {api_param} — {fix_html_for_jsx(param_description).replace('<', '&lt;').replace('>', '&gt;')}\n"
-                elif param_default != '':
-                    md += f"- {api_param} = {param_default}\n"
-                else:
-                    md += f"- {api_param}\n"
-            md += "\n"
-
-        if 'api3' in item:
-            src = item.get('src', '')
-            api3_title = str(item.get('api3', ''))
-            # Escape generics for markdown heading (use backslash)
-            api3_title = re.sub(r'<[^>]+>', '', api3_title)
-            api3_title = re.sub(r'\[[^\]]+\]', '', api3_title)
-            md += f"### {api3_title}\n\n"
-            if src != '':
-                src = src.replace('/blob/main', '/blob/master')
-                md += f'<ViewSource href="{src}" />\n\n'
-
-    return md
-
-def resolve_output_path(root, file):
-    rel = os.path.relpath(root, SOURCE_DIR).replace("\\", "/")
-
-    if rel == ".":
-        parts = []
-    else:
-        parts = rel.split("/")
-        if parts[0] == "source2toolkit":
-            parts = parts[1:]
-
-    name = file.replace(".h", "")
-    slug = name
-    slug = slug.replace("itoolkit-", "")
-
-    root_clean = root.replace("\\", "/")
-
-    is_core = "core-api" in root_clean
-    is_schema = "schema" in root_clean
-
-    is_entity = name.lower() in ["entity", "entities"]
-    is_enum = name.endswith("_t")
-
-    def to_pascal_case(s):
-        return ''.join(word.capitalize() for word in s.split('-'))
-
-    if (is_core or is_schema) and not is_entity and not is_enum:
-        slug = to_pascal_case(slug)
-
-    if file.startswith("IToolkit"):
-        return os.path.join(
-            DEST_DIR,
-            "core-api",
-            f"{slug}.mdx"
-        )
-
-    if "schema" in rel and file in ["entity.h", "schema.h"]:
-        return os.path.join(
-            DEST_DIR,
-            "core-api",
-            f"{slug}.mdx"
-        )
-
-    if "utils" in rel:
-        return os.path.join(
-            DEST_DIR,
-            "core-api",
-            f"{slug}.mdx"
-        )
-
-    parts = rel.split("/")
-    if parts[0] == "source2toolkit":
+def page_for(rel):
+    """rel: path under public/, e.g. 'source2toolkit/IToolkitApi.h'.
+    Returns (output path relative to DEST, url, kind) or None."""
+    rel = rel.replace('\\', '/')
+    parts = rel.split('/')
+    if parts[0] == 'source2toolkit':
         parts = parts[1:]
+    stem = parts[-1][:-2]
 
-    rel_clean = "/".join(parts)
+    if len(parts) == 1:
+        return f'core-api/{stem}.mdx', f'/docs/core-api/{stem}', 'api'
+    if parts[0] == 'utils':
+        return f'core-api/utils/{pascal(stem)}.mdx', f'/docs/core-api/utils/{pascal(stem)}', 'api'
+    if parts[0] == 'schema':
+        if len(parts) == 2:
+            if stem == 'schema':
+                return 'core-api/Schema.mdx', '/docs/core-api/Schema', 'api'
+            return f'schema/{pascal(stem)}.mdx', f'/docs/schema/{pascal(stem)}', 'schema'
+        if parts[1] == 'entity' and len(parts) == 4:
+            return (f'schema/entity/{parts[2]}/{stem}.mdx',
+                    f'/docs/schema/entity/{parts[2]}/{stem}',
+                    'entity-class' if parts[2] == 'classes' else 'entity-enum')
+    return None
 
-    return os.path.join(
-        DEST_DIR,
-        rel_clean,
-        f"{slug}.mdx"
-    )
 
-if __name__ == "__main__":
-    for root, dirs, files in os.walk(SOURCE_DIR):
-        for file in files:
-            if not file.endswith(".h"):
+# --------------------------------------------------------------------------- #
+# Markdown helpers
+# --------------------------------------------------------------------------- #
+
+TYPE_MAP = {}          # name -> url (with #anchor for things inside a page)
+GLOBALS = {}           # interface class -> global pointer name
+
+
+def slug(text):
+    """github-slugger, which Fumadocs uses for heading ids."""
+    text = text.lower()
+    text = re.sub(r'[^\w\- ]', '', text)
+    return text.replace(' ', '-')
+
+
+_CODE_SPLIT = re.compile(r'(```.*?```|`[^`\n]*`)', re.S)
+
+
+def escape_prose(text):
+    """Make free text safe for MDX, leaving code spans/blocks alone."""
+    out = []
+    for part in _CODE_SPLIT.split(text or ''):
+        if part.startswith('`'):
+            if not part.startswith('```'):
+                inner = part.strip('`')
+                if inner in TYPE_MAP:
+                    part = f'[{part}]({TYPE_MAP[inner]})'
+            out.append(part)
+            continue
+        part = (part.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+                .replace('{', '\\{').replace('}', '\\}'))
+        out.append(part)
+    return ''.join(out)
+
+
+def cell(text):
+    return escape_prose(text).replace('|', '\\|').replace('\n', ' ')
+
+
+def type_md(typ, own_page=None):
+    """A type as inline code, linked when a known type appears in it."""
+    typ = (typ or '').strip()
+    if not typ:
+        return ''
+    code = '`' + typ.replace('`', '') + '`'
+    for tok in re.findall(r'[A-Za-z_]\w*', typ):
+        if tok in ('const', 'unsigned', 'signed', 'struct', 'class', 'enum', 'volatile'):
+            continue
+        url = TYPE_MAP.get(tok)
+        if url and url != own_page:
+            return f'[{code}]({url})'
+    return code
+
+
+def doc_blocks(doc, notes=True):
+    """brief + body paragraphs + notes/warnings as markdown lines."""
+    lines = []
+    if doc.get('deprecated'):
+        lines.append(f'<Callout type="warn" title="Deprecated">{escape_prose(doc["deprecated"])}</Callout>\n')
+    if doc.get('brief'):
+        lines.append(escape_prose(doc['brief']) + '\n')
+    for block in doc.get('body', []):
+        if block.startswith('```'):
+            lines.append(block + '\n')
+        else:
+            lines.append(escape_prose(block) + '\n')
+    if notes:
+        for n in doc.get('notes', []):
+            lines.append(f'<Callout type="info">{escape_prose(n)}</Callout>\n')
+        for w in doc.get('warnings', []):
+            lines.append(f'<Callout type="warn">{escape_prose(w)}</Callout>\n')
+    return lines
+
+
+def frontmatter(title, description=''):
+    fm = ['---', f'title: {json.dumps(title)}']
+    if description:
+        description = re.sub(r'`', '', description).strip()
+        fm.append(f'description: {json.dumps(description)}')
+    fm.append('---')
+    return '\n'.join(fm) + '\n\n'
+
+
+# --------------------------------------------------------------------------- #
+# Rendering
+# --------------------------------------------------------------------------- #
+
+BOILERPLATE_METHODS = {'New', 'FromIndex', 'GetHandle'}
+
+
+def render_functions(funcs, heading, own_page, cls_name=None):
+    """Methods/functions grouped by name: one heading, every overload's signature."""
+    out = []
+    groups = {}
+    order = []
+    for f in funcs:
+        if f['name'].startswith('~') or f.get('deleted'):
+            continue
+        if f['name'].startswith('operator'):
+            continue
+        groups.setdefault(f['name'], []).append(f)
+        if f['name'] not in order:
+            order.append(f['name'])
+
+    for name in order:
+        overloads = groups[name]
+        title = name
+        if cls_name and name == cls_name:
+            title = f'{name} (constructor)'
+        out.append(f'{heading} `{title}`\n')
+        out.append('```cpp\n' + '\n'.join(f['signature'] for f in overloads) + '\n```\n')
+
+        seen_docs = set()
+        for f in overloads:
+            doc = f['doc']
+            key = (doc['brief'], tuple(doc['body']))
+            if key in seen_docs:
                 continue
+            seen_docs.add(key)
+            out.extend(doc_blocks(doc))
 
-            path = os.path.join(root, file)
+        # parameters of every overload, first description wins
+        params = []
+        names = set()
+        descs = {}
+        for f in overloads:
+            descs.update({k: v for k, v in f['doc']['params'].items() if k not in descs})
+            for p in f['params']:
+                key = (p['name'], p['type'])
+                if key in names:
+                    continue
+                names.add(key)
+                params.append(p)
+        if params:
+            has_default = any(p['default'] for p in params)
+            has_desc = any(descs.get(p['name']) for p in params)
+            head = '| Parameter | Type |' + (' Default |' if has_default else '') + (' Description |' if has_desc else '')
+            sep = '|---|---|' + ('---|' if has_default else '') + ('---|' if has_desc else '')
+            out.append(head)
+            out.append(sep)
+            for p in params:
+                row = f'| `{p["name"] or "—"}` | {type_md(p["type"], own_page)} |'
+                if has_default:
+                    row += f' {("`" + p["default"] + "`") if p["default"] else ""} |'
+                if has_desc:
+                    row += f' {cell(descs.get(p["name"], ""))} |'
+                out.append(row)
+            out.append('')
 
-            with open(path, "r", encoding="utf-8") as f:
-                content = f.read()
+        rets = [f for f in overloads if f['doc']['returns']]
+        if rets:
+            f = rets[0]
+            out.append(f'**Returns** {type_md(f["return"], own_page)} — {escape_prose(f["doc"]["returns"])}\n')
+    return out
 
-            classes = cpp_parser.parse_cpp_file(content)
-            enums = cpp_parser.parse_enums(content)
-            functions = cpp_parser.parse_free_functions(content)
 
-            output_path = resolve_output_path(root, file)
-            web_path = output_path.replace("\\", "/").replace(DEST_DIR, "/docs")
+def render_fields(fields, own_page, schema=False):
+    if not fields:
+        return []
+    has_desc = any(f['doc']['brief'] for f in fields)
+    out = ['| Field | Type |' + (' Description |' if has_desc else ''),
+           '|---|---|' + ('---|' if has_desc else '')]
+    for f in fields:
+        typ = f['type'] + (f.get('array') or '')
+        row = f'| `{f["name"]}` | {type_md(typ, own_page)} |'
+        if has_desc:
+            row += f' {cell(f["doc"]["brief"])} |'
+        out.append(row)
+    out.append('')
+    if schema:
+        out.append('Schema fields are accessors: read with `entity->m_field()`, write with '
+                   '`entity->m_field = value` (the write marks the field for networking).\n')
+    return out
 
-            for cls in classes:
-                schema_generator.TYPE_MAP[cls["name"]] = web_path
 
-            for enum in enums:
-                rel = os.path.relpath(root, SOURCE_DIR).replace("\\", "/")
+def render_enum(e, heading, own_page):
+    out = [f'{heading} `{e["name"]}`\n'] if heading else []
+    decl = 'enum ' + ('class ' if e['is_class'] else '') + e['name'] + \
+           (f' : {e["underlying"]}' if e['underlying'] else '')
+    out.append('```cpp\n' + decl + '\n```\n')
+    out.extend(doc_blocks(e['doc']))
+    if e['values']:
+        has_val = any(v['value'] for v in e['values'])
+        has_desc = any(v['doc']['brief'] for v in e['values'])
+        out.append('| Name |' + (' Value |' if has_val else '') + (' Description |' if has_desc else ''))
+        out.append('|---|' + ('---|' if has_val else '') + ('---|' if has_desc else ''))
+        for v in e['values']:
+            row = f'| `{v["name"]}` |'
+            if has_val:
+                row += f' {("`" + v["value"] + "`") if v["value"] else ""} |'
+            if has_desc:
+                row += f' {cell(v["doc"]["brief"])} |'
+            out.append(row)
+        out.append('')
+    return out
 
-                parts = rel.split("/")
-                if parts[0] == "source2toolkit":
-                    parts = parts[1:]
 
-                clean_parts = [p for p in parts if p]
-                url = "/docs/" + ("/".join(clean_parts) + "/" if clean_parts else "") + f"enums/{enum['name']}"
+def render_typedefs(tds, heading, own_page):
+    out = []
+    seen = set()
+    for t in tds:
+        decls = [x['decl'] for x in tds if x['name'] == t['name']]
+        if t['name'] in seen:
+            continue
+        seen.add(t['name'])
+        out.append(f'{heading} `{t["name"]}`\n')
+        out.append('```cpp\n' + '\n'.join(dict.fromkeys(decls)) + '\n```\n')
+        docs = [x['doc'] for x in tds if x['name'] == t['name'] and not P.is_empty_doc(x['doc'])]
+        if docs:
+            out.extend(doc_blocks(docs[0]))
+        if len(decls) > 1:
+            out.append('<Callout type="info">Declared differently per platform (`#ifdef _WIN32`); '
+                       'the first line is the Windows form, the second the Linux one.</Callout>\n')
+    return out
 
-                schema_generator.TYPE_MAP[enum["name"]] = url
 
-            print(f"\nFILE: {file}")
-            print(f"CLASSES FOUND: {len(classes)}")
-            print(f"ENUMS FOUND: {len(enums)}")
+def render_macros(macros, own_page):
+    shown = [m for m in macros if not m['name'].endswith('_INTERFACE')
+             and (m['params'] or not P.is_empty_doc(m['doc']))]
+    if not shown:
+        return []
+    out = ['## Macros\n']
+    documented = [m for m in shown if not P.is_empty_doc(m['doc'])]
+    plain = [m for m in shown if P.is_empty_doc(m['doc'])]
+    for m in documented:
+        out.append(f'### `{m["name"]}`\n')
+        value = m['value']
+        if len(value) > 400:
+            value = value[:400].rsplit('\n', 1)[0] + '\n    ...'
+        out.append('```cpp\n#define ' + m['name'] + m['params'] + (' \\\n    ' + value if '\n' in value else (' ' + value if value else '')) + '\n```\n')
+        out.extend(doc_blocks(m['doc']))
+    if plain:
+        if documented:
+            out.append('### Other macros\n')
+        out.append('| Macro | Expands to |')
+        out.append('|---|---|')
+        for m in plain:
+            value = re.sub(r'\s+', ' ', m['value'])
+            if len(value) > 110:
+                value = value[:107] + '...'
+            out.append(f'| `{m["name"]}{m["params"]}` | `{value.replace("|", "∣").replace("`", "")}` |')
+        out.append('')
+    return out
 
-            dest_file = resolve_output_path(root, file)
 
-            if file.endswith(".h") and enums and not classes and not functions:
-                dest_file = None
+def render_record(cls, level, own_page, primary):
+    """A class/struct. level 2: '##' for the class, '###' for members."""
+    h_cls = '#' * level
+    h_mem = '#' * (level + 1)
+    out = []
+    if not primary:
+        out.append(f'{h_cls} `{cls["name"]}`\n')
+        out.extend(doc_blocks(cls['doc']))
+    if cls['bases']:
+        out.append('**Inherits** ' + ', '.join(type_md(b, own_page) for b in cls['bases']) + '\n')
 
-            if dest_file:
-                os.makedirs(os.path.dirname(dest_file), exist_ok=True)
+    fields = cls['schema_fields'] or cls['fields']
+    methods = [m for m in cls['methods']
+               if not (cls['schema_class'] and cls['name'] != 'CBaseEntity'
+                       and m['name'] in BOILERPLATE_METHODS and P.is_empty_doc(m['doc']))]
 
-            has_content = False
-            title_written = False
-            body = []
+    if fields:
+        out.append(f'{h_mem if not primary else "##"} Fields\n')
+        out.extend(render_fields(fields, own_page, schema=bool(cls['schema_fields'])))
+    ctors = [m for m in methods if m.get('is_ctor') and not m['name'].startswith('~')]
+    others = [m for m in methods if not m.get('is_ctor')]
+    if ctors:
+        out.append(f'{h_mem if not primary else "##"} Constructors\n')
+        out.append('```cpp\n' + '\n'.join(c['signature'] for c in ctors) + '\n```\n')
+        for c in ctors:
+            if not P.is_empty_doc(c['doc']):
+                out.extend(doc_blocks(c['doc']))
+    if others:
+        if primary:
+            out.append('## Methods\n')
+            out.extend(render_functions(others, '###', own_page, cls['name']))
+        else:
+            out.extend(render_functions(others, h_mem, own_page, cls['name']))
+    for e in cls['enums']:
+        out.extend(render_enum(e, h_mem, own_page))
+    if cls['typedefs']:
+        out.extend(render_typedefs(cls['typedefs'], h_mem, own_page))
+    for n in cls['nested']:
+        if n['fields'] or n['methods'] or n['schema_fields']:
+            out.extend(render_record(n, min(level + 1, 3), own_page, False))
+    return out
 
-            # ===== CLASSES =====
-            if classes:
-                has_content = True
-                multi = len(classes) > 1
-                if multi and not title_written:
-                    page_title = file.replace(".h", "")
-                    body.append({"api1": page_title})
-                    title_written = True
-                for cls in classes:
-                    yaml_data = schema_generator.schema_class_to_yaml(cls)
-                    if not title_written:
-                        if multi:
-                            title_written = True
-                            cls_items = [b for b in yaml_data["body"] if "api1" not in b and b != {"h2": "Methods"}]
-                            if cls_items:
-                                body.append({"h2": cls["name"]})
-                                body.extend(cls_items)
-                        else:
-                            body.extend(yaml_data["body"])
-                            title_written = True
-                    else:
-                        cls_items = [b for b in yaml_data["body"] if "api1" not in b and b != {"h2": "Methods"}]
-                        if cls_items:
-                            body.append({"h2": cls["name"]})
-                            body.extend(cls_items)
 
-            # ===== ENUMS =====
-            if enums:
-                has_content = True
-                rel = os.path.relpath(root, SOURCE_DIR).replace("\\", "/")
+def api_page(rel, parsed, url, title):
+    stem = os.path.basename(rel)[:-2]
+    classes = [c for c in parsed['classes']
+               if c['fields'] or c['methods'] or c['schema_fields'] or not P.is_empty_doc(c['doc'])]
+    primary = next((c for c in classes if c['name'] == title), None)
+    if primary is None and len(classes) == 1:
+        primary = classes[0]
 
-                parts = rel.split("/")
-                if parts[0] == "source2toolkit":
-                    parts = parts[1:]
+    fdoc = parsed['file_doc']
+    description = fdoc['brief'] or (primary['doc']['brief'] if primary else '')
+    if not description and rel.replace('\\', '/').split('/')[-2:-1] == ['schema']:
+        names = ', '.join(c['name'] for c in parsed['classes'][:4]) or title
+        description = f'Engine structures the SDK declares by hand: {names}.'
+    out = [frontmatter(title, description)]
 
-                for enum in enums:
-                    enum_name = enum["name"]
+    body_doc = dict(fdoc)
+    body_doc['brief'] = ''
+    out.extend(doc_blocks(body_doc))
+    if primary and not P.is_empty_doc(primary['doc']) and primary['doc']['brief'] != description:
+        out.extend(doc_blocks(primary['doc']))
+    elif primary:
+        pdoc = dict(primary['doc'])
+        pdoc['brief'] = ''
+        out.extend(doc_blocks(pdoc))
 
-                    enum_yaml = schema_generator.schema_enums_to_yaml([enum], enum_name)
+    # the at-a-glance table
+    info = []
+    for macro, iid in parsed['interfaces'].items():
+        info.append(('Interface id', f'`{iid}` (`{macro}`)'))
+    if primary and primary['name'] in GLOBALS:
+        info.append(('Global', f'`{GLOBALS[primary["name"]]}`'))
+    header = rel.replace('\\', '/')
+    info.append(('Header', f'[`{header}`]({REPO_BLOB}{header})'))
+    out.append(' · '.join(f'**{k}** {v}' for k, v in info) + '\n')
 
-                    if parts and parts[-1] == "enums":
-                        enum_path = os.path.join(
-                            DEST_DIR,
-                            *parts,
-                            f"{enum_name}.mdx"
-                        )
-                    else:
-                        enum_path = os.path.join(
-                            DEST_DIR,
-                            *parts,
-                            "enums",
-                            f"{enum_name}.mdx"
-                        )
+    if parsed['typedefs']:
+        out.append('## Types\n')
+        out.extend(render_typedefs(parsed['typedefs'], '###', url))
 
-                    os.makedirs(os.path.dirname(enum_path), exist_ok=True)
+    # a getter returning a documented alias (IToolkitAddresses: X_t X()) borrows its doc
+    td_docs = {t['name']: t['doc'] for t in parsed['typedefs'] if not P.is_empty_doc(t['doc'])}
+    for c in classes:
+        for m in c['methods']:
+            if P.is_empty_doc(m['doc']) and m['return'] in td_docs:
+                borrowed = dict(td_docs[m['return']])
+                borrowed['body'] = []
+                borrowed['notes'] = []
+                borrowed['warnings'] = []
+                m['doc'] = borrowed
 
-                    md_content = "---\n"
-                    md_content += yaml.safe_dump({"title": enum_name}, sort_keys=False)
-                    md_content += "---\n\n"
-                    md_content += generate_markdown(enum_yaml)
+    if primary:
+        out.extend(render_record(primary, 2, url, True))
+    for c in classes:
+        if c is not primary:
+            out.extend(render_record(c, 2, url, False))
 
-                    with open(enum_path, "w", encoding="utf-8") as out:
-                        out.write(md_content)
+    if parsed['enums']:
+        out.append('## Enums\n')
+        for e in parsed['enums']:
+            out.extend(render_enum(e, '###', url))
 
-            # ===== FUNCTIONS =====
-            if functions:
-                has_content = True
-                yaml_data = schema_generator.schema_functions_to_yaml(functions, file)
-                if not title_written:
-                    body.extend(yaml_data["body"])
-                    title_written = True
-                else:
-                    body.extend([b for b in yaml_data["body"] if "api1" not in b])
+    if parsed['functions']:
+        out.append('## Functions\n')
+        out.extend(render_functions(parsed['functions'], '###', url))
 
-            if has_content and dest_file:
-                name = file.replace(".h", "")
-                clean_name = format_title(name)
+    out.extend(render_macros(parsed['macros'], url))
+    return '\n'.join(out).rstrip() + '\n'
 
-                md_content = "---\n"
-                md_content += yaml.safe_dump({"title": clean_name}, sort_keys=False)
-                md_content += "---\n\n"
-                md_content += generate_markdown({
-                    "title": clean_name,
-                    "body": body
-                })
 
-                with open(dest_file, "w", encoding="utf-8") as out:
-                    out.write(md_content)
+def entity_class_page(rel, parsed, url):
+    cls = next((c for c in parsed['classes'] if c['schema_class'] or c['schema_fields']), None) \
+        or (parsed['classes'][0] if parsed['classes'] else None)
+    if cls is None:
+        return None
+    base = cls['bases'][0] if cls['bases'] else ''
+    base_clean = re.sub(r'CBaseEntity::Factory<.*>', 'CBaseEntity', base)
+    description = f'Schema class {cls["name"]}' + (f', derived from {base_clean}.' if base_clean else '.')
+    out = [frontmatter(cls['name'], description)]
+    if cls['bases']:
+        cls = dict(cls)
+        cls['bases'] = [base_clean] + cls['bases'][1:]
+    header = rel.replace('\\', '/')
+    out.append(f'Generated from the game\'s schema. Header: [`{header}`]({REPO_BLOB}{header})\n')
+    out.extend(render_record(cls, 2, url, True))
+    for c in parsed['classes']:
+        if c is not cls and c['name'] != cls['name'] and (c['fields'] or c['schema_fields']):
+            out.extend(render_record(c, 2, url, False))
+    return '\n'.join(out).rstrip() + '\n'
 
-    index_source = os.path.join(script_dir, "index.mdx")
-    index_dest = os.path.join(DEST_DIR, "index.mdx")
 
-    if os.path.exists(index_source):
-        shutil.copy2(index_source, index_dest)
-        print(f"Copied index.mdx to {index_dest}")
-    else:
-        print(f"Warning: index.mdx not found at {index_source}")
+def entity_enum_page(rel, parsed, url):
+    if not parsed['enums']:
+        return None
+    e = parsed['enums'][0]
+    out = [frontmatter(e['name'], f'Schema enum {e["name"]} ({len(e["values"])} values).')]
+    out.extend(render_enum(e, None, url))
+    for other in parsed['enums'][1:]:
+        out.extend(render_enum(other, '##', url))
+    return '\n'.join(out).rstrip() + '\n'
 
-    print("MDX generation complete!")
+
+# --------------------------------------------------------------------------- #
+# Navigation
+# --------------------------------------------------------------------------- #
+
+def write_json(path, obj):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, 'w', encoding='utf-8', newline='\n') as f:
+        json.dump(obj, f, indent=2, ensure_ascii=False)
+        f.write('\n')
+
+
+def write_navigation(api_pages, schema_pages):
+    listed = set()
+    pages = ['index']
+    for title, names in API_GROUPS:
+        present = [n for n in names if n in api_pages]
+        if present:
+            pages.append(f'---{title}---')
+            pages.extend(present)
+            listed.update(present)
+    rest = sorted(n for n in api_pages if n not in listed)
+    if rest:
+        pages.append('---Other---')
+        pages.extend(rest)
+    pages.append('utils')
+    write_json(os.path.join(DEST_DIR, 'core-api', 'meta.json'), {
+        'title': 'API', 'description': 'Interfaces, types and macros of the SDK', 'root': True,
+        'icon': 'Braces', 'pages': pages})
+    write_json(os.path.join(DEST_DIR, 'core-api', 'utils', 'meta.json'), {'title': 'Utilities'})
+
+    write_json(os.path.join(DEST_DIR, 'schema', 'meta.json'), {
+        'title': 'Schema', 'description': 'Entity classes, enums and engine structures', 'root': True,
+        'icon': 'Database',
+        'pages': ['index', '---Structures---'] + sorted(schema_pages, key=str.lower)
+                 + ['---Entity system---', 'entity']})
+    write_json(os.path.join(DEST_DIR, 'schema', 'entity', 'meta.json'),
+               {'title': 'Entity system', 'defaultOpen': True, 'pages': ['classes', 'enums']})
+    write_json(os.path.join(DEST_DIR, 'schema', 'entity', 'classes', 'meta.json'), {'title': 'Classes'})
+    write_json(os.path.join(DEST_DIR, 'schema', 'entity', 'enums', 'meta.json'), {'title': 'Enums'})
+
+
+def copy_static_pages():
+    src_root = os.path.join(SCRIPT_DIR, 'pages')
+    if not os.path.isdir(src_root):
+        return
+    for root, _, files in os.walk(src_root):
+        for f in files:
+            src = os.path.join(root, f)
+            dst = os.path.join(DEST_DIR, os.path.relpath(src, src_root))
+            os.makedirs(os.path.dirname(dst), exist_ok=True)
+            shutil.copy2(src, dst)
+
+
+# --------------------------------------------------------------------------- #
+# Main
+# --------------------------------------------------------------------------- #
+
+def main():
+    headers = []
+    for root, _, files in os.walk(SOURCE_DIR):
+        for f in sorted(files):
+            if f.endswith('.h'):
+                full = os.path.join(root, f)
+                headers.append(os.path.relpath(full, SOURCE_DIR).replace('\\', '/'))
+    headers.sort()
+
+    parsed = {}
+    for rel in headers:
+        target = page_for(rel)
+        if not target:
+            continue
+        with open(os.path.join(SOURCE_DIR, rel), encoding='utf-8-sig') as fh:
+            parsed[rel] = P.parse_header(fh.read())
+
+    # globals a plugin gets (g_pToolkitX) from TOOLKIT_DEFINE_GLOBALVARS
+    plugin_h = next((r for r in parsed if r.endswith('IToolkitPlugin.h')), None)
+    if plugin_h:
+        text = open(os.path.join(SOURCE_DIR, plugin_h), encoding='utf-8-sig').read()
+        for cls, glob in re.findall(r'\b(IToolkit\w+)\*\s+(g_pToolkit\w+)\s*=', text):
+            GLOBALS[cls] = glob
+        GLOBALS.setdefault('IToolkitAPI', 'g_ToolkitAPI')
+
+    # first pass: every documented name -> url
+    for rel, r in parsed.items():
+        _, url, kind = page_for(rel)
+        stem = os.path.basename(rel)[:-2]
+        for c in r['classes']:
+            if kind in ('entity-class',) or c['name'] == stem or len(r['classes']) == 1:
+                TYPE_MAP.setdefault(c['name'], url)
+            else:
+                TYPE_MAP.setdefault(c['name'], f'{url}#{slug(c["name"])}')
+        for e in r['enums']:
+            TYPE_MAP.setdefault(e['name'], url if kind == 'entity-enum' else f'{url}#{slug(e["name"])}')
+        for t in r['typedefs']:
+            TYPE_MAP.setdefault(t['name'], f'{url}#{slug(t["name"])}')
+
+    # clean the generated folders
+    for d in ('core-api', 'schema', 'enums'):
+        shutil.rmtree(os.path.join(DEST_DIR, d), ignore_errors=True)
+
+    api_pages, schema_pages = [], []
+    written = 0
+    for rel, r in parsed.items():
+        out_rel, url, kind = page_for(rel)
+        stem = os.path.basename(rel)[:-2]
+        if kind == 'entity-class':
+            content = entity_class_page(rel, r, url)
+        elif kind == 'entity-enum':
+            content = entity_enum_page(rel, r, url)
+        else:
+            if kind == 'schema':
+                title = SCHEMA_TITLES.get(stem, pascal(stem))
+            elif stem == 'schema':
+                title = 'Schema'
+            elif out_rel.startswith('core-api/utils/'):
+                title = f'utils/{stem}.h'
+            else:
+                title = stem
+            has = r['classes'] or r['enums'] or r['typedefs'] or r['functions'] or \
+                [m for m in r['macros'] if m['params'] or not P.is_empty_doc(m['doc'])]
+            content = api_page(rel, r, url, title) if has else None
+            if content:
+                if kind == 'schema':
+                    schema_pages.append(os.path.basename(out_rel)[:-4])
+                elif not out_rel.startswith('core-api/utils/'):
+                    api_pages.append(os.path.basename(out_rel)[:-4])
+        if not content:
+            continue
+        path = os.path.join(DEST_DIR, out_rel)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, 'w', encoding='utf-8', newline='\n') as fh:
+            fh.write(content)
+        written += 1
+
+    copy_static_pages()
+    write_navigation(api_pages, schema_pages)
+    print(f'Wrote {written} pages ({len(api_pages)} API, {len(schema_pages)} schema structures) to {DEST_DIR}')
+
+
+if __name__ == '__main__':
+    main()

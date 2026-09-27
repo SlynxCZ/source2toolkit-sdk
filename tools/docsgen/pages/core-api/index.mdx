@@ -1,0 +1,48 @@
+---
+title: API reference
+description: Every interface, type and macro a plugin gets from the Source2Toolkit SDK, generated from the SDK headers.
+---
+
+This reference is generated from the headers in
+[`source2toolkit-sdk/public`](https://github.com/SlynxCZ/source2toolkit-sdk/tree/main/public)
+every hour, so it always matches the SDK on `main`. The guides in the other sections
+explain how the pieces fit together; this is where the exact signatures live.
+
+## How a plugin reaches the API
+
+Every interface is a pure-virtual class the core implements. `TOOLKIT_SAVEVARS()` in
+your `Load()` fills one global per interface, so after that you call them directly:
+
+```cpp
+g_pToolkitCommands->RegisterConCommand(g_PluginID, "sm_hello", handler);
+g_pToolkitScheduler->NextFrame(g_PluginID, [] { /* ... */ });
+auto pfnSetModel = ADDR_SET_MODEL();          // resolved engine function
+```
+
+Each page lists the interface id and the global it lives in, next to a link to the header.
+
+## Sections
+
+<Cards>
+  <Card title="Plugin" href="/docs/core-api/IToolkitPlugin">
+    The plugin interface, the API object handed to `Load()`, and shared types like `Action` and `HookChain`.
+  </Card>
+  <Card title="Gameplay" href="/docs/core-api/IToolkitCommands">
+    Commands, ConVars, events, entities, menus, custom HUD, net messages, sounds, transmit, tracing, scheduler.
+  </Card>
+  <Card title="Engine" href="/docs/core-api/IToolkitAddresses">
+    Resolved engine functions, KHook macros, gamedata, game systems, memory, modules and the schema system.
+  </Card>
+  <Card title="Services" href="/docs/core-api/IToolkitHTTP">
+    HTTP, JSON, MySQL and resolved paths.
+  </Card>
+</Cards>
+
+## Reading the pages
+
+- **Types** lists the aliases a header declares — callback signatures and function
+  pointer types such as the `*_t` returned by `IToolkitAddresses`.
+- **Methods** gives the exact declaration, then the parameters with their types and,
+  where the header documents them, what they mean.
+- Types that have a page of their own are links; schema classes link into the
+  [Schema](/docs/schema) section.
