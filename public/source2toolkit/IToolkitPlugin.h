@@ -88,6 +88,7 @@ class IToolkitMenus;
 class IToolkitMySQL;
 class IToolkitNetworkMessages;
 class IToolkitScheduler;
+class IToolkitScripts;
 class IToolkitSounds;
 class IToolkitTrace;
 class IToolkitTransmit;
@@ -112,6 +113,7 @@ class IToolkitTransmit;
 #include "IToolkitNetworkMessages.h"
 #include "IToolkitPaths.h"
 #include "IToolkitScheduler.h"
+#include "IToolkitScripts.h"
 #include "IToolkitSounds.h"
 #include "IToolkitTrace.h"
 #include "IToolkitTransmit.h"
@@ -408,6 +410,7 @@ Globals
     IToolkitNetworkMessages* g_pToolkitNetworkMessages = nullptr; \
     IToolkitPaths*           g_pToolkitPaths           = nullptr; \
     IToolkitScheduler*       g_pToolkitScheduler       = nullptr; \
+    IToolkitScripts*         g_pToolkitScripts         = nullptr; \
     IToolkitSounds*          g_pToolkitSounds          = nullptr; \
     IToolkitTrace*           g_pToolkitTrace           = nullptr; \
     IToolkitTransmit*        g_pToolkitTransmit        = nullptr;
@@ -448,6 +451,7 @@ Globals
     extern IToolkitNetworkMessages* g_pToolkitNetworkMessages; \
     extern IToolkitPaths*           g_pToolkitPaths; \
     extern IToolkitScheduler*       g_pToolkitScheduler; \
+    extern IToolkitScripts*         g_pToolkitScripts; \
     extern IToolkitSounds*          g_pToolkitSounds; \
     extern IToolkitTrace*           g_pToolkitTrace; \
     extern IToolkitTransmit*        g_pToolkitTransmit; \
@@ -476,6 +480,7 @@ Globals
     g_pToolkitPaths           = (IToolkitPaths*)          (api)->ToolkitFactory(TOOLKIT_PATHS_INTERFACE,           nullptr, nullptr); \
     g_pToolkitJSON            = (IToolkitJSON*)           (api)->ToolkitFactory(TOOLKIT_JSON_INTERFACE,            nullptr, nullptr); \
     g_pToolkitScheduler       = (IToolkitScheduler*)      (api)->ToolkitFactory(TOOLKIT_SCHEDULER_INTERFACE,       nullptr, nullptr); \
+    g_pToolkitScripts         = (IToolkitScripts*)        (api)->ToolkitFactory(TOOLKIT_SCRIPTS_INTERFACE,         nullptr, nullptr); \
     g_pToolkitSounds          = (IToolkitSounds*)         (api)->ToolkitFactory(TOOLKIT_SOUNDS_INTERFACE,          nullptr, nullptr); \
     g_pToolkitTrace           = (IToolkitTrace*)          (api)->ToolkitFactory(TOOLKIT_TRACE_INTERFACE,           nullptr, nullptr); \
     g_pToolkitTransmit        = (IToolkitTransmit*)       (api)->ToolkitFactory(TOOLKIT_TRANSMIT_INTERFACE,        nullptr, nullptr);
