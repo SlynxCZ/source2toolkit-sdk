@@ -90,6 +90,10 @@ using ConVarChangeHandler = std::function<void(ConVarRefAbstract* ref, CSplitScr
 
 #define TOOLKIT_CONVARS_INTERFACE "IToolkitConVars001"
 
+/// Access index meaning "no such ConVar" -- the engine's own invalid index.
+/// 0 is a real ConVar, so test against this, never against zero.
+inline constexpr uint16 TOOLKIT_INVALID_CONVAR_INDEX = 0xFFFF;
+
 class IToolkitConVars
 {
 public:
@@ -100,7 +104,9 @@ public:
     * @brief Retrieves access index of a ConVar by name.
     *
     * @param name ConVar name
-    * @return Access index
+    * @return Access index, or TOOLKIT_INVALID_CONVAR_INDEX if no
+    *         ConVar has that name. 0 is a valid index, so compare against the
+    *         sentinel rather than testing for zero.
       */
     virtual uint16 GetConvarAccessIndexByName(const char* name) = 0;
 
@@ -241,11 +247,18 @@ public:
     * @param flags FCVAR flags
     * @param hasMin Whether min value is enforced
     * @param hasMax Whether max value is enforced
-    * @param defaultValue Default value pointer
-    * @param minValue Minimum value pointer
-    * @param maxValue Maximum value pointer
+    * @param defaultValue Default value pointer (const char* for EConVarType_String)
+    * @param minValue Minimum value pointer; only read when hasMin is true, may be nullptr otherwise
+    * @param maxValue Maximum value pointer; only read when hasMax is true, may be nullptr otherwise
     *
-    * @return Access index of created ConVar
+    * @return Access index of the created ConVar. If a ConVar with that name
+    *         already exists, its index is returned and the arguments are
+    *         ignored. TOOLKIT_INVALID_CONVAR_INDEX on bad arguments or an
+    *         unsupported type.
+    *
+    * @note The engine has no way to unregister a ConVar, so one created here
+    *       outlives the plugin that created it. When the plugin loads again,
+    *       the same call returns the existing ConVar with its current value.
       */
     virtual uint16 CreateConVar(const char* name, EConVarType type, const char* help, uint64 flags, bool hasMin,
                                 bool hasMax, void* defaultValue, const void* minValue, const void* maxValue) = 0;

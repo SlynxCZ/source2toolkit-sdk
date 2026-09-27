@@ -230,7 +230,10 @@ public:
     * @param api Toolkit API instance
     * @param error Buffer for error message
     * @param maxlen Error buffer size
-    * @param late True if loaded after server start
+    * @param late False only when the toolkit's startup pass loads the plugin.
+    *             True for every load after that: "toolkit load", "toolkit
+    *             refresh" and the file watcher's hot reload.
+    *             Players and entities may already exist.
     *
     * @return True on success, false on failure
     *
@@ -277,13 +280,16 @@ class IToolkitListener
 public:
     virtual ~IToolkitListener() = default;
 
-    /// Called when another toolkit plugin (.stx) is loaded.
+    /// Called when a toolkit plugin (.stx) has loaded, after its Load() returned.
     /// The id is a toolkit plugin id -- the one "toolkit list" shows.
+    /// Fires for your own plugin too (a listener added in Load() gets it
+    /// right after Load() returns); compare against your own id to skip it.
     virtual void OnPluginLoad(PluginId id)
     {
     }
 
-    /// Called when another toolkit plugin (.stx) is unloaded.
+    /// Called when a toolkit plugin (.stx) is about to unload, before its
+    /// Unload() runs. Fires for your own plugin too, like OnPluginLoad().
     virtual void OnPluginUnload(PluginId id)
     {
     }

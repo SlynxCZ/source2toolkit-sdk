@@ -110,10 +110,15 @@ public:
     * @brief Registers a chat command listener.
     *
     * @param owner Plugin ID that owns the command
-    * @param pchName Command name (e.g. "!kick", "!test")
+    * @param pchName Command name without a trigger (e.g. "kick", "test")
     * @param handler Callback executed when command is triggered
     *
-    * @note Triggered when a player sends a matching chat message.
+    * @note Only fires for a chat message that starts with one of the
+    *       configured chat triggers (public or silent, "!" and "/" by default),
+    *       e.g. "!kick" or "/kick". Plain "kick" typed into chat does not fire
+    *       it. The trigger is stripped before matching, so args.Arg(0) is the
+    *       bare name. A silent trigger hides the message; a public one lets
+    *       it show.
       */
     virtual void RegisterChatListener(PluginId owner, const char* pchName, ChatHandler handler) = 0;
 
@@ -152,8 +157,11 @@ public:
     *
     * @return Action to control command execution:
     * * Action::Ignore: do nothing
-    * * Action::Override: override return value but still call original (pre only)
-    * * Action::Supersede: block original execution (pre only)
+    * * Action::Override: the original still runs; commands return nothing, so
+    *   this has no further effect. Later pre listeners and all post
+    *   listeners still fire.
+    * * Action::Supersede: block original execution (pre only); the remaining
+    *   pre listeners and all post listeners are skipped
         */
     virtual void RegisterConListener(PluginId owner, const char* pchName, CommandHandler handler, bool post) = 0;
 

@@ -129,7 +129,7 @@ namespace vmt
         if (!pClass)
         {
 #ifdef SOURCE2TOOLKIT_CORE
-FP_WARN("Tried getting virtual function from a null class.");
+            FP_WARN("Tried getting virtual function from a null class.");
 #endif
             return T();
         }
@@ -138,7 +138,7 @@ FP_WARN("Tried getting virtual function from a null class.");
         if (!pVTable)
         {
 #ifdef SOURCE2TOOLKIT_CORE
-FP_WARN("Tried getting virtual function from a null vtable.");
+            FP_WARN("Tried getting virtual function from a null vtable.");
 #endif
             return T();
         }
@@ -171,14 +171,14 @@ FP_WARN("Tried getting virtual function from a null vtable.");
     inline T CallVirtual(uint32 uIndex, void* pClass, Args... args)
     {
 #ifdef _WIN32
-auto pFunc = GetVMethod<T(__thiscall*)(void*, Args...)>(uIndex, pClass);
+        auto pFunc = GetVMethod<T(__thiscall*)(void*, Args...)>(uIndex, pClass);
 #else
         auto pFunc = GetVMethod<T(__cdecl*)(void*, Args...)>(uIndex, pClass);
 #endif
         if (!pFunc)
         {
 #ifdef SOURCE2TOOLKIT_CORE
-FP_WARN("Tried calling a null virtual function.");
+            FP_WARN("Tried calling a null virtual function.");
 #endif
             return T();
         }

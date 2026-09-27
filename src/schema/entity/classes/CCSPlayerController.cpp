@@ -122,6 +122,7 @@ void CCSPlayerController::PrintToCenterHtml(const char* pszMessage, int iDuratio
     event->SetPlayer("userid", GetPlayerSlot());
 
     FireEventToClient(event);
+    GetGameEventManager()->FreeEvent(event);
 }
 
 void CCSPlayerController::TakeDamage(CCSPlayerController* pAttacker, int iDamage, DamageTypes_t bitsDamageType, HookChain eChain)
