@@ -329,7 +329,14 @@ public:
      * @brief Executes a raw SQL query.
      *
      * @param query SQL query string.
-     * @param callback Callback invoked with query result.
+     * @param callback Callback invoked with query result, on the main thread.
+     *
+     * @note The callback always runs, once. On success it gets the query,
+     *       owned by the toolkit and valid only for the duration of the
+     *       callback -- copy anything you keep, do not delete it. On failure
+     *       it gets nullptr: the connection is not up (Connect() has not
+     *       reported true yet, or it failed) or the server rejected the
+     *       query. The reason is written to the server log.
      */
     virtual void Query(char* query, ToolkitMySQLQueryCallbackFunc callback) = 0;
 
@@ -337,16 +344,27 @@ public:
      * @brief Executes a formatted SQL query.
      *
      * @param query SQL format string.
-     * @param callback Callback invoked with query result.
+     * @param callback Callback invoked with query result, on the main thread.
+     *
+     * @note Same callback contract as the overload above: nullptr on failure,
+     *       otherwise a toolkit-owned query valid only during the callback.
      */
     virtual void Query(const char* query, ToolkitMySQLQueryCallbackFunc callback, ...) = 0;
 
     /**
      * @brief Executes multiple queries as a transaction.
      *
+     * Exactly one of the two callbacks runs, on the main thread.
+     *
      * @param txn Transaction query batch.
-     * @param success Callback invoked on success.
-     * @param failure Callback invoked on failure.
+     * @param success Callback invoked on success, with one query per entry of
+     *                @p txn, in order. They are owned by the toolkit and freed
+     *                once the callback returns -- copy anything you keep, do
+     *                not delete them.
+     * @param failure Callback invoked on failure, after the transaction has
+     *                been rolled back, with the error and the index of the
+     *                query that failed -- or -1 when it was not one of them
+     *                (not connected, BEGIN or COMMIT failed).
      */
     virtual void ExecuteTransaction(ToolkitMySQLTransaction txn, ToolkitMySQLTransactionSuccessCallbackFunc success,
                                     ToolkitMySQLTransactionFailureCallbackFunc failure) = 0;
