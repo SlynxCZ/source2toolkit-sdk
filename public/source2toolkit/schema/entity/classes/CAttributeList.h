@@ -68,7 +68,9 @@ public:
 
 public:
     /// <summary>Sets an attribute by name, adding it to the list when it is not there yet.</summary>
-    void SetOrAddAttribute(const char* pszAttributeName, float flValue);
+    void SetOrAddAttribute(const char* pszAttributeName, float flValue, HookChain eChain = HookChain::Run);
+    /// <summary>CAttributeList::SetOrAddAttributeValueByName, the engine's name for SetOrAddAttribute.</summary>
+    void SetOrAddAttributeValueByName(const char* pszAttributeName, float flValue, HookChain eChain = HookChain::Run);
 };
 
 #endif // _INCLUDE_CATTRIBUTELIST_H

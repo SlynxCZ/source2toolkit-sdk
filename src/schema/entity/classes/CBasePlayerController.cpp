@@ -43,20 +43,11 @@
 #include "source2toolkit/schema/entity/classes/CCSPlayerPawn.h"
 #include "source2toolkit/schema/serversideclient.h"
 
-#ifdef SOURCE2TOOLKIT_CORE
-#include "core/addresses.h"
-#include "core/entities.h"
-#include "core/gameconfig.h"
-#include "core/menus.h"
-#include "core/scheduler.h"
-#include "core/shared.h"
-#else
 #include "source2toolkit/IToolkitAddresses.h"
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitGameConfig.h"
 #include "source2toolkit/IToolkitPlugin.h"
 TOOLKIT_GLOBALVARS();
-#endif
 
 #include "iserver.h"
 #include "networksystem/inetworkmessages.h"
@@ -89,12 +80,8 @@ static void ClientPrint(int slot, int hudDestination, const char* message)
     delete data;
 }
 
-void CBasePlayerController::SetPawn(CBasePlayerPawn* pPawn){
-#ifdef SOURCE2TOOLKIT_CORE
-    addresses::toolkitAddresses.CBasePlayerController_SetPawn()(this, pPawn, true, false, false, false);
-#else
-    g_ToolkitAPI->Addresses()->CBasePlayerController_SetPawn()(this, pPawn, true, false, false, false);
-#endif
+void CBasePlayerController::SetPawn(CBasePlayerPawn* pPawn, HookChain eChain){
+    ResolveHookChain(ADDR_SET_PAWN(), eChain)(this, pPawn, true, false, false, false);
 }
 
 void CBasePlayerController::PrintToConsole(const char* pszMessage)
@@ -136,13 +123,8 @@ void CBasePlayerController::Disconnect(ENetworkDisconnectionReason eReason, cons
     const bool bHasReason = pszInternalReason != nullptr;
     std::string sInternalReason = bHasReason ? pszInternalReason : "";
 
-#ifdef SOURCE2TOOLKIT_CORE
-    menus::menuManager.CloseActiveMenu(reinterpret_cast<CCSPlayerController*>(this));
-    scheduler::schedulerManager.NextFrame(0, [hPlayer = this->GetHandle(), eReason, bHasReason, sInternalReason = std::move(sInternalReason)]
-#else
     CLOSE_ACTIVE_MENU(reinterpret_cast<CCSPlayerController*>(this));
     g_pToolkitScheduler->NextFrame(g_PluginID, [hPlayer = this->GetHandle(), eReason, bHasReason, sInternalReason = std::move(sInternalReason)]
-#endif
     {
         if (!hPlayer || hPlayer->m_iConnected() != PlayerConnectedState::Connected)
             return;
@@ -175,11 +157,7 @@ CServerSideClient* CBasePlayerController::GetServerSideClient()
     if (!pServer)
         return nullptr;
 
-#ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CNetworkGameServer::ClientList");
-#else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CNetworkGameServer::ClientList");
-#endif
+    static int offset = g_pToolkitGameConfig->GetOffset("CNetworkGameServer::ClientList");
 
     auto* pClients = reinterpret_cast<CUtlVector<CServerSideClient*>*>(reinterpret_cast<uint8_t*>(pServer) + offset);
 
@@ -281,11 +259,7 @@ void CBasePlayerController::FireEventToClient(IGameEvent* pEvent)
 {
     if (!pEvent) return;
 
-#ifdef SOURCE2TOOLKIT_CORE
-    IGameEventListener2* pListener = addresses::toolkitAddresses.LegacyGameEventListener()(GetPlayerSlot());
-#else
-    IGameEventListener2* pListener = g_ToolkitAPI->Addresses()->LegacyGameEventListener()(GetPlayerSlot());
-#endif
+    IGameEventListener2* pListener = ADDR_LEGACY_GAME_EVENT_LISTENER()(GetPlayerSlot());
     if (!pListener) return;
 
     pListener->FireGameEvent(pEvent);

@@ -18,7 +18,7 @@
 // -- does not describe what the game actually has in memory. Nothing in any SDK
 // we build against declares this class, so the layout below is fixed by
 // observation, the same offsets CounterStrikeSharp reads and the same
-// CCSNavArea::IsValidNavMesh signature is used to find the mesh.
+// CSource2Server::GetNavMeshData signature is used to find the mesh.
 //
 // Nothing here is schema-backed. If the game moves a field, every accessor
 // silently returns rubbish -- there is no check that can catch it.

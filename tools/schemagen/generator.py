@@ -1,4 +1,4 @@
-"""
+﻿"""
 Source2Toolkit
 Copyright (C) 2025-2026 Michal "Slynx (˙·٠● S l y n x ●٠·˙)" Přikryl,
 AlliedModders LLC. All rights reserved.
@@ -479,6 +479,7 @@ NETWORK_CLASSES: list[str] = [
 # Forward declarations, not includes: the headers only ever use these behind a
 # pointer. The .cpp that defines the method includes the real header.
 MANUAL_FORWARDS: dict[str, list[str]] = {
+    "CBaseEntity": ["IRecipientFilter"],
     "CBasePlayerController": ["CCSPlayerPawn", "CServerSideClient"],
     "CBasePlayerPawn": ["CCSPlayerController"],
     "CCSCustomHudLayout": ["CCSPlayerController"],
@@ -493,7 +494,13 @@ MANUAL_FORWARDS: dict[str, list[str]] = {
 MANUAL_METHODS: dict[str, list[str]] = {
     "CAttributeList": [
         "/// <summary>Sets an attribute by name, adding it to the list when it is not there yet.</summary>",
-        "void SetOrAddAttribute(const char* pszAttributeName, float flValue);",
+        "void SetOrAddAttribute(const char* pszAttributeName, float flValue, HookChain eChain = HookChain::Run);",
+        "/// <summary>CAttributeList::SetOrAddAttributeValueByName, the engine's name for SetOrAddAttribute.</summary>",
+        "void SetOrAddAttributeValueByName(const char* pszAttributeName, float flValue, HookChain eChain = HookChain::Run);",
+    ],
+    "CCSWeaponBaseVData": [
+        "/// <summary>Looks weapon VData up by its key, e.g. \"weapon_ak47\". A weapon type other than -1 also requires the data to be of that type. Null when not found.</summary>",
+        "static CCSWeaponBaseVData* FromKey(const char* pszKey, int nWeaponType = -1);",
     ],
     "CGameSceneNode": [
         "/// <summary>Gets the skeleton instance of this scene node, or null when it has none.</summary>",
@@ -501,23 +508,23 @@ MANUAL_METHODS: dict[str, list[str]] = {
     ],
     "CDecoyProjectile": [
         "/// <summary>Spawns a live grenade of this type. Ported from SwiftlyS2.</summary>",
-        "static CDecoyProjectile* EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity, CBaseEntity* pOwner, uint32_t nItemDefIndex);",
+        "static CDecoyProjectile* EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity, CBaseEntity* pOwner, uint32_t nItemDefIndex, HookChain eChain = HookChain::Run);",
     ],
     "CFlashbangProjectile": [
         "/// <summary>Spawns a live grenade of this type. Ported from SwiftlyS2.</summary>",
-        "static CFlashbangProjectile* EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity, CBaseEntity* pOwner, uint32_t nItemDefIndex);",
+        "static CFlashbangProjectile* EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity, CBaseEntity* pOwner, uint32_t nItemDefIndex, HookChain eChain = HookChain::Run);",
     ],
     "CHEGrenadeProjectile": [
         "/// <summary>Spawns a live grenade of this type. Ported from SwiftlyS2.</summary>",
-        "static CHEGrenadeProjectile* EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity, CBaseEntity* pOwner, uint32_t nItemDefIndex);",
+        "static CHEGrenadeProjectile* EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity, CBaseEntity* pOwner, uint32_t nItemDefIndex, HookChain eChain = HookChain::Run);",
     ],
     "CMolotovProjectile": [
         "/// <summary>Spawns a live grenade of this type. Ported from SwiftlyS2.</summary>",
-        "static CMolotovProjectile* EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity, CBaseEntity* pOwner, uint32_t nItemDefIndex);",
+        "static CMolotovProjectile* EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity, CBaseEntity* pOwner, uint32_t nItemDefIndex, HookChain eChain = HookChain::Run);",
     ],
     "CSmokeGrenadeProjectile": [
         "/// <summary>Spawns a live grenade of this type. Ported from SwiftlyS2.</summary>",
-        "static CSmokeGrenadeProjectile* EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity, int nTeam, CBaseEntity* pOwner, uint32_t nItemDefIndex);",
+        "static CSmokeGrenadeProjectile* EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity, int nTeam, CBaseEntity* pOwner, uint32_t nItemDefIndex, HookChain eChain = HookChain::Run);",
     ],
     "CCSCustomHudLayout": [
         "/// <summary>Creates and spawns a custom_hud_layout for a panorama layout, e.g. \"my_panel\" for panorama/layout/custom_game/my_panel.vxml_c.</summary>",
@@ -547,9 +554,9 @@ MANUAL_METHODS: dict[str, list[str]] = {
         "/// <summary>Get entity by entity index.</summary>",
         "template<typename T>\n    static T* FromIndex(CEntityIndex index)\n    {    \n        return FromIndex<T>(index.Get());\n    }",
         "/// <summary>Accepts entity input.</summary>",
-        'void AcceptInput(const char* pszInput, CEntityInstance* pActivator = nullptr, CEntityInstance* pCaller = nullptr, const char* pszValue = "");',
+        'void AcceptInput(const char* pszInput, CEntityInstance* pActivator = nullptr, CEntityInstance* pCaller = nullptr, const char* pszValue = "", HookChain eChain = HookChain::Run);',
         "/// <summary>Add delayed entity IO event.</summary>",
-        'void AddEntityIOEvent(const char* pszInput, CEntityInstance* pActivator = nullptr, CEntityInstance* pCaller = nullptr, const char* pszValue = "", float flDelay = 0.0f);',
+        'void AddEntityIOEvent(const char* pszInput, CEntityInstance* pActivator = nullptr, CEntityInstance* pCaller = nullptr, const char* pszValue = "", float flDelay = 0.0f, HookChain eChain = HookChain::Run);',
         "/// <summary>Add signle entity IO listener.</summary>",
         "CEntityIOListenerHandle* AddSingleEntityIOListener(const char* pszOutput, std::function<Action(const char*, CEntityInstance*, CEntityInstance*, float, bool)> callback, bool post);",
         "/// <summary>Get absolute origin.</summary>",
@@ -573,9 +580,9 @@ MANUAL_METHODS: dict[str, list[str]] = {
         "/// <summary>Get entity VData.</summary>",
         "CEntitySubclassVDataBase* GetVData();",
         "/// <summary>Spawn entity.</summary>",
-        "void DispatchSpawn(CEntityKeyValues* pEntityKeyValues = nullptr);",
+        "void DispatchSpawn(CEntityKeyValues* pEntityKeyValues = nullptr, HookChain eChain = HookChain::Run);",
         "/// <summary>Teleport entity.</summary>",
-        "void Teleport(const Vector* pPosition, const QAngle* pAngles, const Vector* pVelocity);",
+        "void Teleport(const Vector* pPosition, const QAngle* pAngles, const Vector* pVelocity, HookChain eChain = HookChain::Run);",
         "/// <summary>Set move type.</summary>",
         "void SetMoveType(MoveType_t nMoveType);",
         "/// <summary>Get collision group.</summary>",
@@ -590,6 +597,10 @@ MANUAL_METHODS: dict[str, list[str]] = {
         "template<typename T = CBaseEntity>\n    CHandle<T> GetHandle()\n    {    \n        return CHandle<T>(GetRefEHandle());\n    }",
         "/// <summary>Get entity name.</summary>",
         "const char* GetName() const;",
+        "/// <summary>Removes the entity (UTIL_Remove).</summary>",
+        "void Remove(HookChain eChain = HookChain::Run);",
+        "/// <summary>Dispatches a particle effect on this entity. A null filter sends it to everyone.</summary>",
+        "void DispatchParticleEffect(const char* pszParticleName, ParticleAttachment_t nAttachType = ParticleAttachment_t::PATTACH_ABSORIGIN_FOLLOW, uint8 nAttachmentPoint = 0, bool bResetAllParticlesOnEntity = false, IRecipientFilter* pFilter = nullptr, HookChain eChain = HookChain::Run);",
     ],
     "CBaseModelEntity": [
         "/// <summary>Get model name.</summary>",
@@ -597,13 +608,13 @@ MANUAL_METHODS: dict[str, list[str]] = {
         "/// <summary>Get eye position.</summary>",
         "Vector GetEyePosition();",
         "/// <summary>Set entity model.</summary>",
-        "void SetModel(const char* pszModel);",
+        "void SetModel(const char* pszModel, HookChain eChain = HookChain::Run);",
         "/// <summary>Switch a bodygroup on the model.</summary>",
         "void SetBodyGroup(const char* pszName, int nValue);",
     ],
     "CBasePlayerController": [
         "/// <summary>Set pawn for controller.</summary>",
-        "void SetPawn(CBasePlayerPawn* pPawn);",
+        "void SetPawn(CBasePlayerPawn* pPawn, HookChain eChain = HookChain::Run);",
         "/// <summary>Get pawn.</summary>",
         "CCSPlayerPawn* GetPawn();",
         "/// <summary>Print to console.</summary>",
@@ -649,9 +660,9 @@ MANUAL_METHODS: dict[str, list[str]] = {
     ],
     "CBasePlayerPawn": [
         "/// <summary>Force suicide.</summary>",
-        "void CommitSuicide(bool bExplode, bool bForce);",
+        "void CommitSuicide(bool bExplode, bool bForce, HookChain eChain = HookChain::Run);",
         "/// <summary>Snaps the pawn's view angles. No-op where the engine function could not be resolved.</summary>",
-        "void SnapViewAngles(const QAngle& angEyeAngles);",
+        "void SnapViewAngles(const QAngle& angEyeAngles, HookChain eChain = HookChain::Run);",
         "/// <summary>Get controller.</summary>",
         "CCSPlayerController* GetController();",
         "/// <summary>Get default controller.</summary>",
@@ -665,9 +676,9 @@ MANUAL_METHODS: dict[str, list[str]] = {
     ],
     "CCSGameRules": [
         "/// <summary>Ends the match and moves everyone to the intermission screen.</summary>",
-        "void GoToIntermission(bool bAbortedMatch = false);",
+        "void GoToIntermission(bool bAbortedMatch = false, HookChain eChain = HookChain::Run);",
         "/// <summary>Terminate round.</summary>",
-        "void TerminateRound(float flDelay, int32_t eRoundEndReason, uint32 nTeamId = 0);",
+        "void TerminateRound(float flDelay, int32_t eRoundEndReason, uint32 nTeamId = 0, HookChain eChain = HookChain::Bypass);",
         "/// <summary>Find entity player is aiming at.</summary>",
         "CBaseEntity* FindPickerEntity(CBasePlayerController* pPlayer);",
         "/// <summary>Get aim target.</summary>",
@@ -691,13 +702,13 @@ MANUAL_METHODS: dict[str, list[str]] = {
         "/// <summary>Print to center in HTML.</summary>",
         "void PrintToCenterHtml(const char* pszMessage, int iDuration = 5, bool bMenu = false);",
         "/// <summary>Take damage from player</summary>",
-        "void TakeDamage(CCSPlayerController* pAttacker, int iDamage, DamageTypes_t bitsDamageType);",
+        "void TakeDamage(CCSPlayerController* pAttacker, int iDamage, DamageTypes_t bitsDamageType, HookChain eChain = HookChain::Bypass);",
         "/// <summary>Respawn player.</summary>",
-        "void Respawn();",
+        "void Respawn(HookChain eChain = HookChain::Run);",
         "/// <summary>Switch team without killing.</summary>",
-        "void SwitchTeam(int nTeam);",
+        "void SwitchTeam(int nTeam, HookChain eChain = HookChain::Run);",
         "/// <summary>Change team like jointeam.</summary>",
-        "void ChangeTeam(int nTeam);",
+        "void ChangeTeam(int nTeam, HookChain eChain = HookChain::Run);",
         "/// <summary>Get player pawn.</summary>",
         "CCSPlayerPawn* GetPlayerPawn();",
         "/// <summary>Get observer pawn.</summary>",
@@ -706,10 +717,14 @@ MANUAL_METHODS: dict[str, list[str]] = {
     "CCSPlayerPawn": [
         "/// <summary>Get the angles the pawn is actually looking along.</summary>",
         "QAngle GetEyeAngles();",
+        "/// <summary>Runs CCSPlayerPawn::PostThink.</summary>",
+        "void PostThink(HookChain eChain = HookChain::Run);",
     ],
     "CCSPlayerPawnBase": [
         "/// <summary>Get original controller.</summary>",
         "CCSPlayerController* GetOriginalController();",
+        "/// <summary>Whether the pawn may move (false while frozen, defusing, ...).</summary>",
+        "bool CanMove();",
     ],
     "CPlayerControllerComponent": [
         "/// <summary>Get player controller.</summary>",
@@ -721,23 +736,23 @@ MANUAL_METHODS: dict[str, list[str]] = {
     ],
     "CPlayer_ItemServices": [
         "/// <summary>Drop active weapon, recommended to use DropWeapon instead (parameter is ignored here).</summary>",
-        "void DropActivePlayerWeapon(CBasePlayerWeapon* pActiveWeapon);",
+        "void DropActivePlayerWeapon(CBasePlayerWeapon* pActiveWeapon, HookChain eChain = HookChain::Run);",
         "/// <summary>Remove all weapons.</summary>",
-        "void RemoveWeapons(bool bRemoveSuit);",
+        "void RemoveWeapons(bool bRemoveSuit, HookChain eChain = HookChain::Run);",
         "/// <summary>Give item.</summary>",
-        "CBasePlayerWeapon* GiveNamedItem(const char* pszItem);",
+        "CBasePlayerWeapon* GiveNamedItem(const char* pszItem, HookChain eChain = HookChain::Run);",
     ],
     "CPlayer_WeaponServices": [
         "/// <summary>Checks if player can use weapon (fire and maybe acquire).</summary>",
         "bool CanUse(CBasePlayerWeapon *pWeapon);",
         "/// <summary>Drop weapon.</summary>",
-        "void DropWeapon(CBasePlayerWeapon *pWeapon, Vector *pVecTarget = nullptr, Vector *pVelocity = nullptr);",
+        "void DropWeapon(CBasePlayerWeapon *pWeapon, Vector *pVecTarget = nullptr, Vector *pVelocity = nullptr, HookChain eChain = HookChain::Run);",
         "/// <summary>Probably checks weapon validity after CPlayer_ItemServices::GiveNamedItem invoke, may return 2 if CSGameRules()->IsPlayingGunGameDeathmatch, meaning that pWeapon will be deleted.</summary>",
-        "int BumpWeapon(CBasePlayerWeapon *pWeapon);",
+        "int BumpWeapon(CBasePlayerWeapon *pWeapon, HookChain eChain = HookChain::Run);",
         "/// <summary>Select weapon, If unk1 is equal to 3 some code will be executed.</summary>",
-        "void SelectItem(CBasePlayerWeapon *pWeapon, int unk1 = 0);",
+        "void SelectItem(CBasePlayerWeapon *pWeapon, int unk1 = 0, HookChain eChain = HookChain::Run);",
         "/// <summary>Remove and destroy weapon from player.</summary>",
-        "void Destroy(CBasePlayerWeapon *pWeapon);",
+        "void Destroy(CBasePlayerWeapon *pWeapon, HookChain eChain = HookChain::Run);",
     ],
 }
 

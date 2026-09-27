@@ -74,13 +74,13 @@ public:
     /// <summary>Checks if player can use weapon (fire and maybe acquire).</summary>
     bool CanUse(CBasePlayerWeapon *pWeapon);
     /// <summary>Drop weapon.</summary>
-    void DropWeapon(CBasePlayerWeapon *pWeapon, Vector *pVecTarget = nullptr, Vector *pVelocity = nullptr);
+    void DropWeapon(CBasePlayerWeapon *pWeapon, Vector *pVecTarget = nullptr, Vector *pVelocity = nullptr, HookChain eChain = HookChain::Run);
     /// <summary>Probably checks weapon validity after CPlayer_ItemServices::GiveNamedItem invoke, may return 2 if CSGameRules()->IsPlayingGunGameDeathmatch, meaning that pWeapon will be deleted.</summary>
-    int BumpWeapon(CBasePlayerWeapon *pWeapon);
+    int BumpWeapon(CBasePlayerWeapon *pWeapon, HookChain eChain = HookChain::Run);
     /// <summary>Select weapon, If unk1 is equal to 3 some code will be executed.</summary>
-    void SelectItem(CBasePlayerWeapon *pWeapon, int unk1 = 0);
+    void SelectItem(CBasePlayerWeapon *pWeapon, int unk1 = 0, HookChain eChain = HookChain::Run);
     /// <summary>Remove and destroy weapon from player.</summary>
-    void Destroy(CBasePlayerWeapon *pWeapon);
+    void Destroy(CBasePlayerWeapon *pWeapon, HookChain eChain = HookChain::Run);
 };
 
 #endif // _INCLUDE_CPLAYER_WEAPONSERVICES_H

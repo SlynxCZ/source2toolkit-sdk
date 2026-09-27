@@ -39,17 +39,11 @@
 
 #include "source2toolkit/utils/virtual.h"
 
-#ifdef SOURCE2TOOLKIT_CORE
-#include "core/addresses.h"
-#include "core/gameconfig.h"
-#include "core/shared.h"
-#else
 #include "source2toolkit/IToolkitAddresses.h"
 #include "source2toolkit/IToolkitGameConfig.h"
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitPlugin.h"
 TOOLKIT_GLOBALVARS();
-#endif
 
 // The gamedata keys still name CCSPlayer_WeaponServices: that is the class the
 // vtable indices and the Destroy signature were read off. Every weapon services
@@ -58,54 +52,34 @@ TOOLKIT_GLOBALVARS();
 
 bool CPlayer_WeaponServices::CanUse(CBasePlayerWeapon* pWeapon)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_WeaponServices::CanUse");
-#else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_WeaponServices::CanUse");
-#endif
+    static int offset = g_pToolkitGameConfig->GetOffset("CCSPlayer_WeaponServices::CanUse");
     return CALL_VIRTUAL(bool, offset, this, pWeapon);
 }
 
-void CPlayer_WeaponServices::DropWeapon(CBasePlayerWeapon *pWeapon, Vector *pVecTarget, Vector *pVelocity)
+void CPlayer_WeaponServices::DropWeapon(CBasePlayerWeapon *pWeapon, Vector *pVecTarget, Vector *pVelocity, HookChain eChain)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_WeaponServices::DropWeapon");
-#else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_WeaponServices::DropWeapon");
-#endif
-    CALL_VIRTUAL(void, offset, this, pWeapon, pVecTarget, pVelocity);
+    static int offset = g_pToolkitGameConfig->GetOffset("CCSPlayer_WeaponServices::DropWeapon");
+    CALL_VIRTUAL_CHAIN(void, offset, eChain, this, pWeapon, pVecTarget, pVelocity);
 }
 
-int CPlayer_WeaponServices::BumpWeapon(CBasePlayerWeapon* pWeapon)
+int CPlayer_WeaponServices::BumpWeapon(CBasePlayerWeapon* pWeapon, HookChain eChain)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_WeaponServices::BumpWeapon");
-#else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_WeaponServices::BumpWeapon");
-#endif
-    return CALL_VIRTUAL(int, offset, this, pWeapon);
+    static int offset = g_pToolkitGameConfig->GetOffset("CCSPlayer_WeaponServices::BumpWeapon");
+    return CALL_VIRTUAL_CHAIN(int, offset, eChain, this, pWeapon);
 }
 
-void CPlayer_WeaponServices::SelectItem(CBasePlayerWeapon* pWeapon, int unk1)
+void CPlayer_WeaponServices::SelectItem(CBasePlayerWeapon* pWeapon, int unk1, HookChain eChain)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_WeaponServices::SelectItem");
-#else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_WeaponServices::SelectItem");
-#endif
-    CALL_VIRTUAL(void, offset, this, pWeapon, unk1);
+    static int offset = g_pToolkitGameConfig->GetOffset("CCSPlayer_WeaponServices::SelectItem");
+    CALL_VIRTUAL_CHAIN(void, offset, eChain, this, pWeapon, unk1);
 }
 
-void CPlayer_WeaponServices::Destroy(CBasePlayerWeapon* pWeapon)
+void CPlayer_WeaponServices::Destroy(CBasePlayerWeapon* pWeapon, HookChain eChain)
 {
 #ifndef _WIN32
     if(pWeapon)
 #endif
     {
-#ifdef SOURCE2TOOLKIT_CORE
-        addresses::toolkitAddresses.CPlayer_WeaponServices_Destroy()(this, pWeapon);
-#else
-        g_ToolkitAPI->Addresses()->CPlayer_WeaponServices_Destroy()(this, pWeapon);
-#endif
+        ResolveHookChain(ADDR_WEAPON_SERVICES_DESTROY(), eChain)(this, pWeapon);
     }
 }

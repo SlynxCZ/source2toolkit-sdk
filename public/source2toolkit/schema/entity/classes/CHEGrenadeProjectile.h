@@ -68,7 +68,7 @@ public:
 
 public:
     /// <summary>Spawns a live grenade of this type. Ported from SwiftlyS2.</summary>
-    static CHEGrenadeProjectile* EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity, CBaseEntity* pOwner, uint32_t nItemDefIndex);
+    static CHEGrenadeProjectile* EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity, CBaseEntity* pOwner, uint32_t nItemDefIndex, HookChain eChain = HookChain::Run);
 
 public:
     static CHEGrenadeProjectile* New(const char* className)

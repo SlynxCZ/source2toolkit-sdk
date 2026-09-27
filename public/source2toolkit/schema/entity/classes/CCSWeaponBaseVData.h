@@ -63,6 +63,8 @@
 #include "../enums/gear_slot_t.h"
 #include "../enums/loadout_slot_t.h"
 
+class CCSWeaponBase;
+
 class CCSWeaponBaseVData : public CBasePlayerWeaponVData
 {
 public:
@@ -149,6 +151,10 @@ public:
     SCHEMA_FIELD(float, m_flThrowVelocity);
     SCHEMA_FIELD(Vector, m_vSmokeColor);
     SCHEMA_FIELD(CGlobalSymbol, m_szAnimClass);
+
+public:
+    /// <summary>Looks weapon VData up by its key, e.g. "weapon_ak47". A weapon type other than -1 also requires the data to be of that type. Null when not found.</summary>
+    static CCSWeaponBaseVData* FromKey(const char* pszKey, int nWeaponType = -1);
 };
 
 #endif // _INCLUDE_CCSWEAPONBASEVDATA_H

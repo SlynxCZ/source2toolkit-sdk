@@ -70,13 +70,14 @@ class CEntityInstance;
 class CEntityIOOutput;
 class CEntitySystem;
 class CEntityKeyValues;
-class CGameRules;
+class CCSGameRules;
 class CTakeDamageInfo;
 class CTakeDamageResult;
 class IEntityFindFilter;
 class IGameEventListener2;
 class CAttributeList;
 class CCSPlayerPawn;
+class CCSPlayerPawnBase;
 class CDecoyProjectile;
 class CFlashbangProjectile;
 class CHEGrenadeProjectile;
@@ -92,6 +93,14 @@ class CGameTrace;
 class CMoveData;
 class CUserCmd;
 class IGameEventManager2;
+class CCSWeaponBaseVData;
+class IRecipientFilter;
+class CLoggingSystem;
+class CCommand;
+class ConCommandRef;
+class CUtlSymbolLarge;
+class CNavData;
+class ISource2Server;
 
 /* =========================
 Function typedefs
@@ -111,7 +120,7 @@ using CBaseEntity_DispatchSpawn_t = void (FASTCALL*)(CBaseEntity*, CEntityKeyVal
 
 /**
 
-* @brief Takes damage from entity..
+* @brief CBaseEntity::TakeDamageOld -- the game's own asserts name it so.
   */
 using CBaseEntity_TakeDamageOld_t = int64_t (FASTCALL*)(CBaseEntity* pThis, CTakeDamageInfo* pInfo,
                                                         CTakeDamageResult* pResult);
@@ -132,18 +141,11 @@ using CBasePlayerController_SetPawn_t = void (FASTCALL*)(CBasePlayerController*,
 /**
 
 * @brief Snaps a pawn's view angles, as the engine does on teleport.
-*
-* Unresolved on Windows -- no published signature -- so the getter can
-* return null and callers must check.
   */
 using CBasePlayerPawn_SnapViewAngles_t = void (FASTCALL*)(CBasePlayerPawn*, QAngle*);
 
 /**
-
-* @brief Terminates current round.
-  */
-/**
- * @brief CGameRules::TerminateRound
+ * @brief CCSGameRules::TerminateRound
  *
  * The delay and the reason swap places between platforms, and the winning team
  * goes in as a pointer -- null when there is none, which is the ordinary case.
@@ -151,11 +153,11 @@ using CBasePlayerPawn_SnapViewAngles_t = void (FASTCALL*)(CBasePlayerPawn*, QAng
  * reads the reason as the delay.
  */
 #ifdef _WIN32
-using CGameRules_TerminateRound_t = void (FASTCALL*)(CGameRules* pThis, float flDelay,
-                                                     uint32 nReason, uint32* pnTeamId);
+using CCSGameRules_TerminateRound_t = void (FASTCALL*)(CCSGameRules* pThis, float flDelay,
+                                                       uint32 nReason, uint32* pnTeamId);
 #else
-using CGameRules_TerminateRound_t = void (FASTCALL*)(CGameRules* pThis, uint32 nReason,
-                                                     uint32* pnTeamId, float flDelay);
+using CCSGameRules_TerminateRound_t = void (FASTCALL*)(CCSGameRules* pThis, uint32 nReason,
+                                                       uint32* pnTeamId, float flDelay);
 #endif
 
 /**
@@ -172,15 +174,16 @@ using LegacyGameEventListener_t = IGameEventListener2* (FASTCALL*)(CPlayerSlot);
 
 /**
 
-* @brief Switches player team.
+* @brief Switches player team. The team is read as a full int.
   */
-using CCSPlayerController_SwitchTeam_t = void (FASTCALL*)(CCSPlayerController*, unsigned char);
+using CCSPlayerController_SwitchTeam_t = void (FASTCALL*)(CCSPlayerController*, int nTeam);
 
 /**
 
-* @brief Accepts entity input.
+* @brief Accepts entity input. Interns the name and forwards to
+* CEntityIdentity::AcceptInput, returning its result.
   */
-using CEntityInstance_AcceptInput_t = void (FASTCALL*)(CEntityInstance*, const char*, CEntityInstance*,
+using CEntityInstance_AcceptInput_t = bool (FASTCALL*)(CEntityInstance*, const char*, CEntityInstance*,
                                                        CEntityInstance*, const variant_t&);
 
 /**
@@ -237,8 +240,14 @@ matching signatures come from. Their gamedata name is given with each one so a
 prototype can be traced back to the pattern it belongs to.
 ========================= */
 
-/** @brief CEntityIdentity::AcceptInput -- the identity-side entry point. */
-using CEntityIdentity_AcceptInput_t = void (FASTCALL*)(CEntityIdentity* pThis, const char* pszInputName,
+/**
+ * @brief CEntityIdentity::AcceptInput -- the identity-side entry point.
+ *
+ * Takes the input name already interned: CEntityInstance::AcceptInput looks it
+ * up and passes a pointer to the symbol, not the string. a6/a7 point at
+ * objects the caller builds on its stack.
+ */
+using CEntityIdentity_AcceptInput_t = bool (FASTCALL*)(CEntityIdentity* pThis, CUtlSymbolLarge* pInputName,
                                                        CEntityInstance* pActivator, CEntityInstance* pCaller,
                                                        variant_t* pValue, void* a6, void* a7);
 
@@ -246,8 +255,8 @@ using CEntityIdentity_AcceptInput_t = void (FASTCALL*)(CEntityIdentity* pThis, c
 using CCSPlayer_ItemServices_CanAcquire_t = int64_t (FASTCALL*)(CCSPlayer_ItemServices* pThis, CEconItemView* pItem,
                                                                 int nAcquireMethod, void* a4);
 
-/** @brief CCSPlayerPawn::CanMove -- false while frozen, defusing, etc. */
-using CCSPlayerPawn_CanMove_t = bool (FASTCALL*)(CCSPlayerPawn* pThis);
+/** @brief CCSPlayerPawnBase::CanMove -- a CCSPlayerPawnBase virtual; false while frozen, defusing, etc. */
+using CCSPlayerPawnBase_CanMove_t = bool (FASTCALL*)(CCSPlayerPawnBase* pThis);
 
 /** @brief CCSPlayerController::ProcessUserCmd */
 using CCSPlayerController_ProcessUserCmd_t = void* (FASTCALL*)(CCSPlayerController* pThis, void* pUserCmds,
@@ -277,11 +286,13 @@ using CCSPlayer_MovementServices_FullWalkMove_t = void (FASTCALL*)(CCSPlayer_Mov
                                                                    bool bGround);
 using CCSPlayer_MovementServices_LadderMove_t = bool (FASTCALL*)(CCSPlayer_MovementServices* pThis, CMoveData* pMove);
 using CCSPlayer_MovementServices_MoveInit_t = bool (FASTCALL*)(CCSPlayer_MovementServices* pThis, CMoveData* pMove);
-using CCSPlayer_MovementServices_PlayerMove_t = bool (FASTCALL*)(CCSPlayer_MovementServices* pThis, CMoveData* pMove);
+using CCSPlayer_MovementServices_PlayerMove_t = void (FASTCALL*)(CCSPlayer_MovementServices* pThis, CMoveData* pMove);
 using CCSPlayer_MovementServices_ProcessMovement_t = void (FASTCALL*)(CCSPlayer_MovementServices* pThis,
                                                                       CMoveData* pMove);
 using CCSPlayer_MovementServices_SetupMove_t = void (FASTCALL*)(CCSPlayer_MovementServices* pThis, CUserCmd* pCmd,
                                                                 CMoveData* pMove);
+// Leaves a byte in al from its last callee, but no caller reads it on either
+// platform, so it is declared void.
 using CCSPlayer_MovementServices_TryPlayerMove_t = void (FASTCALL*)(CCSPlayer_MovementServices* pThis,
                                                                     CMoveData* pMove, Vector* pFirstDest,
                                                                     CGameTrace* pFirstTrace, bool* pbIsSurfing);
@@ -306,17 +317,16 @@ using CCSPlayer_MovementServices_GroundAccelerate_t = void (FASTCALL*)(CCSPlayer
 #endif
 
 /**
- * @brief The jump handlers take the jump object, not the movement services.
+ * @brief Members of the jump components, not of the movement services: the
+ * movement services call them on m_LegacyJump / m_ModernJump.
  *
  * Which pair is live depends on the sv_jump_impulse-era cvars; the modern and
  * legacy paths are separate functions in the binary.
  */
-using CCSPlayer_MovementServices_OnJumpLegacy_t = void (FASTCALL*)(CCSPlayerLegacyJump* pThis, CMoveData* pMove);
-using CCSPlayer_MovementServices_OnJumpModern_t = void (FASTCALL*)(CCSPlayerModernJump* pThis, CMoveData* pMove);
-using CCSPlayer_MovementServices_CheckJumpButtonLegacy_t = void (FASTCALL*)(CCSPlayerLegacyJump* pThis,
-                                                                            CMoveData* pMove);
-using CCSPlayer_MovementServices_CheckJumpButtonModern_t = void (FASTCALL*)(CCSPlayerModernJump* pThis,
-                                                                            CMoveData* pMove);
+using CCSPlayerLegacyJump_OnJump_t = void (FASTCALL*)(CCSPlayerLegacyJump* pThis, CMoveData* pMove);
+using CCSPlayerModernJump_OnJump_t = void (FASTCALL*)(CCSPlayerModernJump* pThis, CMoveData* pMove);
+using CCSPlayerLegacyJump_CheckJumpButton_t = void (FASTCALL*)(CCSPlayerLegacyJump* pThis, CMoveData* pMove);
+using CCSPlayerModernJump_CheckJumpButton_t = void (FASTCALL*)(CCSPlayerModernJump* pThis, CMoveData* pMove);
 
 
 /** @brief CAttributeList::SetOrAddAttributeValueByName */
@@ -326,9 +336,10 @@ using CAttributeList_SetOrAddAttributeValueByName_t = void (FASTCALL*)(CAttribut
 /**
  * @brief C<Type>Projectile::EmitGrenade -- spawns a live grenade.
  *
- * The fourth argument is a second velocity the game reads as the angular one;
- * swiftly passes the same vector twice. Smoke takes one extra int the others
- * do not have.
+ * The fourth argument (pAngVelocity) is never read on either platform -- every
+ * variant overwrites that register before touching it -- but it keeps its slot,
+ * so pass anything (the helpers pass the velocity again). Smoke takes one
+ * extra int the others do not have.
  */
 using CDecoyProjectile_EmitGrenade_t = CDecoyProjectile* (FASTCALL*)(Vector* pPosition, QAngle* pAngle,
                                                                      Vector* pVelocity, Vector* pAngVelocity,
@@ -349,6 +360,79 @@ using CSmokeGrenadeProjectile_EmitGrenade_t = CSmokeGrenadeProjectile* (FASTCALL
                                                                                    Vector* pAngVelocity,
                                                                                    CBaseEntity* pOwner,
                                                                                    uint32_t nItemDefIndex, int a7);
+
+/* =========================
+Remaining gamedata functions
+
+Checked against the Linux and Windows binaries: argument registers and widths
+come from the function bodies and their call sites, not from older ports.
+========================= */
+
+/**
+ * @brief CCSPlayer_ItemServices::GiveNamedItem -- the full implementation.
+ *
+ * The GiveNamedItem vtable slots are thunks into this one: the plain one passes
+ * (name, 0, nullptr, false, nullptr), the bool-returning one forwards its own
+ * bool as bForce and tests the result. Hooking this catches every give,
+ * virtual or not.
+ */
+using CCSPlayer_ItemServices_GiveNamedItem_t = CBasePlayerWeapon* (FASTCALL*)(CCSPlayer_ItemServices* pThis,
+                                                                             const char* pszItem, int nSubType,
+                                                                             CEconItemView* pScriptItem, bool bForce,
+                                                                             void* a6);
+
+/** @brief CCSPlayerPawn::PostThink -- virtual, takes nothing but the pawn. */
+using CCSPlayerPawn_PostThink_t = void (FASTCALL*)(CCSPlayerPawn* pThis);
+
+/** @brief UTIL_Remove -- queues the entity for deletion; null is ignored. */
+using UTIL_Remove_t = void (FASTCALL*)(CEntityInstance* pEntity);
+
+/**
+ * @brief DispatchParticleEffect
+ *
+ * The attachment name is a 32-bit string token (it arrives in r8d), not the
+ * CUtlSymbolLarge older ports declare. A null filter sends to everyone. The
+ * last byte seeds the effect's flag byte; pass 0.
+ */
+using DispatchParticleEffect_t = void (FASTCALL*)(const char* pszParticleName, int nAttachType,
+                                                  CBaseEntity* pEntity, uint8 nAttachmentPoint,
+                                                  uint32 nAttachmentNameToken, bool bResetAllParticlesOnEntity,
+                                                  int nSplitScreenPlayerSlot, IRecipientFilter* pFilter,
+                                                  uint8 nFlags);
+
+/**
+ * @brief GetWeaponCSDataFromKey -- looks a weapon's VData up by its key
+ * ("weapon_ak47"). nWeaponType -1 accepts any type; any other value returns
+ * null when the found data is of a different type.
+ */
+using GetWeaponCSDataFromKey_t = CCSWeaponBaseVData* (FASTCALL*)(int nWeaponType, const char* pszKey);
+
+/**
+ * @brief CSource2Server::GetNavMeshData -- ISource2Server vtable slot 32.
+ *
+ * The game's implementation ignores the out argument and only reports whether
+ * a nav mesh is loaded (g_pNavMesh != null); CCSNavArea reads that global out
+ * of its body.
+ */
+using CSource2Server_GetNavMeshData_t = bool (FASTCALL*)(ISource2Server* pThis, CNavData* pNavMeshData);
+
+/** @brief CLoggingSystem::LogDirect (tier0) -- the member behind LoggingSystem_LogDirect. */
+using CLoggingSystem_LogDirect_t = LoggingResponse_t (FASTCALL*)(CLoggingSystem* pThis, LoggingChannelID_t nChannelID,
+                                                                 LoggingSeverity_t nSeverity,
+                                                                 const LeafCodeInfo_t* pCodeInfo,
+                                                                 const LoggingMetaData_t* pMetaData, Color color,
+                                                                 const char* pszMessage);
+
+/**
+ * @brief Cmd_ExecuteCommand (engine2) -- runs one parsed command.
+ *
+ * The first argument is the engine's command-buffer owner, not a CCommand:
+ * the deferred-command loop passes itself there. The target is a
+ * CommandTarget_t and the command goes in by value, as ICvar::DispatchConCommand
+ * takes it.
+ */
+using Cmd_ExecuteCommand_t = void (FASTCALL*)(void* pThis, int nTarget, CPlayerSlot nSlot, ConCommandRef hCommand,
+                                              const CCommand* pArgs);
 
 /* =========================
 Core Toolkit Addresses
@@ -378,7 +462,7 @@ public:
     virtual CBaseModelEntity_SetModel_t CBaseModelEntity_SetModel() = 0;
     virtual CBasePlayerController_SetPawn_t CBasePlayerController_SetPawn() = 0;
     virtual CBasePlayerPawn_SnapViewAngles_t CBasePlayerPawn_SnapViewAngles() = 0;
-    virtual CGameRules_TerminateRound_t CGameRules_TerminateRound() = 0;
+    virtual CCSGameRules_TerminateRound_t CCSGameRules_TerminateRound() = 0;
     virtual CPlayer_WeaponServices_Destroy_t CPlayer_WeaponServices_Destroy() = 0;
     virtual LegacyGameEventListener_t LegacyGameEventListener() = 0;
     virtual CCSPlayerController_SwitchTeam_t CCSPlayerController_SwitchTeam() = 0;
@@ -390,10 +474,13 @@ public:
     virtual CTakeDamageInfo_CTakeDamageInfo_t CTakeDamageInfo_CTakeDamageInfo() = 0;
     virtual INetworkMessageProcessingPreFilter_FilterMessage_t INetworkMessageProcessingPreFilter_FilterMessage() = 0;
 
-    // Ported from SwiftlyS2; appended so the indices above stay put.
+    // Ported from SwiftlyS2; appended so the indices above stay put. The ones
+    // an SDK schema helper calls (CanMove, SetOrAddAttributeValueByName, the
+    // EmitGrenade family) are required; the rest are plugin-only hook targets,
+    // resolved optionally, and can be null.
     virtual CEntityIdentity_AcceptInput_t CEntityIdentity_AcceptInput() = 0;
     virtual CCSPlayer_ItemServices_CanAcquire_t CCSPlayer_ItemServices_CanAcquire() = 0;
-    virtual CCSPlayerPawn_CanMove_t CCSPlayerPawn_CanMove() = 0;
+    virtual CCSPlayerPawnBase_CanMove_t CCSPlayerPawnBase_CanMove() = 0;
     virtual CCSPlayerController_ProcessUserCmd_t CCSPlayerController_ProcessUserCmd() = 0;
     virtual CBasePlayerController_OnSimulateUserCommands_t CBasePlayerController_OnSimulateUserCommands() = 0;
     virtual CCSPlayer_MovementServices_AirAccelerate_t CCSPlayer_MovementServices_AirAccelerate() = 0;
@@ -416,20 +503,35 @@ public:
     virtual CCSPlayer_MovementServices_TryPlayerMove_t CCSPlayer_MovementServices_TryPlayerMove() = 0;
     virtual CCSPlayer_MovementServices_WalkMove_t CCSPlayer_MovementServices_WalkMove() = 0;
     virtual CCSPlayer_MovementServices_WaterMove_t CCSPlayer_MovementServices_WaterMove() = 0;
-    virtual CCSPlayer_MovementServices_OnJumpLegacy_t CCSPlayer_MovementServices_OnJumpLegacy() = 0;
-    virtual CCSPlayer_MovementServices_OnJumpModern_t CCSPlayer_MovementServices_OnJumpModern() = 0;
-    virtual CCSPlayer_MovementServices_CheckJumpButtonLegacy_t CCSPlayer_MovementServices_CheckJumpButtonLegacy() = 0;
-    virtual CCSPlayer_MovementServices_CheckJumpButtonModern_t CCSPlayer_MovementServices_CheckJumpButtonModern() = 0;
+    virtual CCSPlayerLegacyJump_OnJump_t CCSPlayerLegacyJump_OnJump() = 0;
+    virtual CCSPlayerModernJump_OnJump_t CCSPlayerModernJump_OnJump() = 0;
+    virtual CCSPlayerLegacyJump_CheckJumpButton_t CCSPlayerLegacyJump_CheckJumpButton() = 0;
+    virtual CCSPlayerModernJump_CheckJumpButton_t CCSPlayerModernJump_CheckJumpButton() = 0;
     virtual CAttributeList_SetOrAddAttributeValueByName_t CAttributeList_SetOrAddAttributeValueByName() = 0;
     virtual CDecoyProjectile_EmitGrenade_t CDecoyProjectile_EmitGrenade() = 0;
     virtual CFlashbangProjectile_EmitGrenade_t CFlashbangProjectile_EmitGrenade() = 0;
     virtual CHEGrenadeProjectile_EmitGrenade_t CHEGrenadeProjectile_EmitGrenade() = 0;
     virtual CMolotovProjectile_EmitGrenade_t CMolotovProjectile_EmitGrenade() = 0;
     virtual CSmokeGrenadeProjectile_EmitGrenade_t CSmokeGrenadeProjectile_EmitGrenade() = 0;
+
+    // Appended so the indices above stay put. GetNavMeshData, LogDirect and
+    // Cmd_ExecuteCommand are resolved optionally (null when the signature
+    // stopped matching, callers must check); the rest are required.
+    virtual CCSPlayerPawn_PostThink_t CCSPlayerPawn_PostThink() = 0;
+    virtual UTIL_Remove_t UTIL_Remove() = 0;
+    virtual DispatchParticleEffect_t DispatchParticleEffect() = 0;
+    virtual GetWeaponCSDataFromKey_t GetWeaponCSDataFromKey() = 0;
+    virtual CSource2Server_GetNavMeshData_t CSource2Server_GetNavMeshData() = 0;
+    virtual CLoggingSystem_LogDirect_t CLoggingSystem_LogDirect() = 0;
+    virtual Cmd_ExecuteCommand_t Cmd_ExecuteCommand() = 0;
+    virtual CCSPlayer_ItemServices_GiveNamedItem_t CCSPlayer_ItemServices_GiveNamedItem() = 0;
 };
 
 /**
  * @brief Calls a function from this interface, bypassing any inline hooks on it.
+ *
+ * The SDK's schema helpers do the same through their HookChain argument
+ * (IToolkitTypes.h); this is for calling an ADDR_* function directly.
  *
  * The ADDR_* macros below hand back the address the signature scan found, which
  * is what you want to hook. It is not always what you want to *call*: once any
@@ -450,7 +552,7 @@ public:
  * plugin that hooked it declared its hook -- the two routinely disagree, and
  * TerminateRound is the standing example: the hook declares (CCSGameRules,
  * RoundEndReason, float, void*, uint8_t) where this interface's typedef says
- * (CGameRules*, uint32, uint32*, float). Unhooked functions come back
+ * (CCSGameRules*, uint32, uint32*, float). Unhooked functions come back
  * unchanged (KHook::FindOriginal hands the address back as is), so this is
  * always safe to apply.
  *
@@ -467,7 +569,7 @@ public:
 #define ADDR_SET_MODEL()                            g_pToolkitAddresses->CBaseModelEntity_SetModel()
 #define ADDR_SET_PAWN()                             g_pToolkitAddresses->CBasePlayerController_SetPawn()
 #define ADDR_SNAP_VIEW_ANGLES()                     g_pToolkitAddresses->CBasePlayerPawn_SnapViewAngles()
-#define ADDR_TERMINATE_ROUND()                      g_pToolkitAddresses->CGameRules_TerminateRound()
+#define ADDR_TERMINATE_ROUND()                      g_pToolkitAddresses->CCSGameRules_TerminateRound()
 #define ADDR_WEAPON_SERVICES_DESTROY()              g_pToolkitAddresses->CPlayer_WeaponServices_Destroy()
 #define ADDR_LEGACY_GAME_EVENT_LISTENER()           g_pToolkitAddresses->LegacyGameEventListener()
 #define ADDR_SWITCH_TEAM()                          g_pToolkitAddresses->CCSPlayerController_SwitchTeam()
@@ -481,7 +583,7 @@ public:
 
 #define ADDR_IDENTITY_ACCEPT_INPUT()                g_pToolkitAddresses->CEntityIdentity_AcceptInput()
 #define ADDR_CAN_ACQUIRE()                          g_pToolkitAddresses->CCSPlayer_ItemServices_CanAcquire()
-#define ADDR_CAN_MOVE()                             g_pToolkitAddresses->CCSPlayerPawn_CanMove()
+#define ADDR_CAN_MOVE()                             g_pToolkitAddresses->CCSPlayerPawnBase_CanMove()
 #define ADDR_PROCESS_USER_CMD()                     g_pToolkitAddresses->CCSPlayerController_ProcessUserCmd()
 #define ADDR_ON_SIMULATE_USER_COMMANDS()            g_pToolkitAddresses->CBasePlayerController_OnSimulateUserCommands()
 #define ADDR_AIR_ACCELERATE()                       g_pToolkitAddresses->CCSPlayer_MovementServices_AirAccelerate()
@@ -504,15 +606,24 @@ public:
 #define ADDR_TRY_PLAYER_MOVE()                      g_pToolkitAddresses->CCSPlayer_MovementServices_TryPlayerMove()
 #define ADDR_WALK_MOVE()                            g_pToolkitAddresses->CCSPlayer_MovementServices_WalkMove()
 #define ADDR_WATER_MOVE()                           g_pToolkitAddresses->CCSPlayer_MovementServices_WaterMove()
-#define ADDR_ON_JUMP_LEGACY()                       g_pToolkitAddresses->CCSPlayer_MovementServices_OnJumpLegacy()
-#define ADDR_ON_JUMP_MODERN()                       g_pToolkitAddresses->CCSPlayer_MovementServices_OnJumpModern()
-#define ADDR_CHECK_JUMP_BUTTON_LEGACY()             g_pToolkitAddresses->CCSPlayer_MovementServices_CheckJumpButtonLegacy()
-#define ADDR_CHECK_JUMP_BUTTON_MODERN()             g_pToolkitAddresses->CCSPlayer_MovementServices_CheckJumpButtonModern()
+#define ADDR_ON_JUMP_LEGACY()                       g_pToolkitAddresses->CCSPlayerLegacyJump_OnJump()
+#define ADDR_ON_JUMP_MODERN()                       g_pToolkitAddresses->CCSPlayerModernJump_OnJump()
+#define ADDR_CHECK_JUMP_BUTTON_LEGACY()             g_pToolkitAddresses->CCSPlayerLegacyJump_CheckJumpButton()
+#define ADDR_CHECK_JUMP_BUTTON_MODERN()             g_pToolkitAddresses->CCSPlayerModernJump_CheckJumpButton()
 #define ADDR_SET_OR_ADD_ATTRIBUTE()                 g_pToolkitAddresses->CAttributeList_SetOrAddAttributeValueByName()
 #define ADDR_EMIT_DECOY()                           g_pToolkitAddresses->CDecoyProjectile_EmitGrenade()
 #define ADDR_EMIT_FLASHBANG()                       g_pToolkitAddresses->CFlashbangProjectile_EmitGrenade()
 #define ADDR_EMIT_HEGRENADE()                       g_pToolkitAddresses->CHEGrenadeProjectile_EmitGrenade()
 #define ADDR_EMIT_MOLOTOV()                         g_pToolkitAddresses->CMolotovProjectile_EmitGrenade()
 #define ADDR_EMIT_SMOKE()                           g_pToolkitAddresses->CSmokeGrenadeProjectile_EmitGrenade()
+
+#define ADDR_POST_THINK()                           g_pToolkitAddresses->CCSPlayerPawn_PostThink()
+#define ADDR_UTIL_REMOVE()                          g_pToolkitAddresses->UTIL_Remove()
+#define ADDR_DISPATCH_PARTICLE_EFFECT()             g_pToolkitAddresses->DispatchParticleEffect()
+#define ADDR_GET_WEAPON_CS_DATA_FROM_KEY()          g_pToolkitAddresses->GetWeaponCSDataFromKey()
+#define ADDR_GET_NAV_MESH_DATA()                    g_pToolkitAddresses->CSource2Server_GetNavMeshData()
+#define ADDR_LOG_DIRECT()                           g_pToolkitAddresses->CLoggingSystem_LogDirect()
+#define ADDR_CMD_EXECUTE_COMMAND()                  g_pToolkitAddresses->Cmd_ExecuteCommand()
+#define ADDR_GIVE_NAMED_ITEM()                      g_pToolkitAddresses->CCSPlayer_ItemServices_GiveNamedItem()
 
 #endif //_INCLUDE_ITOOLKIT_ADDRESSES_H

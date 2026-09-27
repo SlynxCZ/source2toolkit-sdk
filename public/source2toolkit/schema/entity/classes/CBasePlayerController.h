@@ -96,7 +96,7 @@ public:
 
 public:
     /// <summary>Set pawn for controller.</summary>
-    void SetPawn(CBasePlayerPawn* pPawn);
+    void SetPawn(CBasePlayerPawn* pPawn, HookChain eChain = HookChain::Run);
     /// <summary>Get pawn.</summary>
     CCSPlayerPawn* GetPawn();
     /// <summary>Print to console.</summary>

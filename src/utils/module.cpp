@@ -37,30 +37,18 @@
 
 #include "source2toolkit/IToolkitModule.h"
 
-#ifdef SOURCE2TOOLKIT_CORE
-#include "core/module.h"
-#else
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitPlugin.h"
 TOOLKIT_GLOBALVARS();
-#endif
 
 IToolkitModule* IToolkitModule::New(const char* name)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return new ToolkitModule(name);
-#else
     return g_ToolkitAPI->LoadModule(name);
-#endif
 }
 
 IToolkitModule* IToolkitModule::New(uintptr_t ptr)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return new ToolkitModule(ptr);
-#else
     return g_ToolkitAPI->LoadModuleFromMemory(ptr);
-#endif
 }
 
 IToolkitModule* IToolkitModule::New(void* ptr)

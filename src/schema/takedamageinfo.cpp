@@ -37,42 +37,25 @@
 
 #include "source2toolkit/schema/takedamageinfo.h"
 
-#ifdef SOURCE2TOOLKIT_CORE
-#include "core/shared.h"
-#include "core/addresses.h"
-#else
 #include "source2toolkit/IToolkitAddresses.h"
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitGameConfig.h"
 #include "source2toolkit/IToolkitPlugin.h"
 TOOLKIT_GLOBALVARS();
-#endif
 
 CTakeDamageInfo::CTakeDamageInfo()
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    addresses::toolkitAddresses.CTakeDamageInfo_CTakeDamageInfo()(this, nullptr, nullptr, nullptr, &vec3_origin, &vec3_origin, 0.f, 0, 0, nullptr);
-#else
-    g_ToolkitAPI->Addresses()->CTakeDamageInfo_CTakeDamageInfo()(this, nullptr, nullptr, nullptr, &vec3_origin, &vec3_origin, 0.f, 0, 0, nullptr);
-#endif
+    ADDR_TAKE_DAMAGE_INFO()(this, nullptr, nullptr, nullptr, &vec3_origin, &vec3_origin, 0.f, 0, 0, nullptr);
 }
 
 CTakeDamageInfo::CTakeDamageInfo(CBaseEntity* pInflictor, CBaseEntity* pAttacker, CBaseEntity* pAbility, float flDamage, DamageTypes_t bitsDamageType)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    addresses::toolkitAddresses.CTakeDamageInfo_CTakeDamageInfo()(this, pInflictor, pAttacker, pAbility, &vec3_origin, &vec3_origin, flDamage, (int)bitsDamageType, 0, nullptr);
-#else
-    g_ToolkitAPI->Addresses()->CTakeDamageInfo_CTakeDamageInfo()(this, pInflictor, pAttacker, pAbility, &vec3_origin, &vec3_origin, flDamage, (int)bitsDamageType, 0, nullptr);
-#endif
+    ADDR_TAKE_DAMAGE_INFO()(this, pInflictor, pAttacker, pAbility, &vec3_origin, &vec3_origin, flDamage, (int)bitsDamageType, 0, nullptr);
 }
 
 HitGroup_t CTakeDamageInfo::GetHitGroup() const
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CTakeDamageInfo::HitGroup");
-#else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CTakeDamageInfo::HitGroup");
-#endif
+    static int offset = g_pToolkitGameConfig->GetOffset("CTakeDamageInfo::HitGroup");
 
     if (offset <= 0)
         return HitGroup_t::HITGROUP_INVALID;

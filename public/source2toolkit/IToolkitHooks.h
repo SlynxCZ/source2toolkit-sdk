@@ -50,7 +50,7 @@
 * class CHooks
 * {
 * public:
-*     KHook::Return<void> OnPostThink(CCSPlayerPawn* pThis, double a2, float a3);
+*     KHook::Return<void> OnPostThink(CCSPlayerPawn* pThis);
 *     KHook::Return<void> OnGameFrame(ISource2Server* pThis, bool a, bool b, bool c);
 *     KHook::Return<int>  OnLoadEventsFromFile(IGameEventManager2* pThis, const char* pszFile, bool bSearchAll);
 *     KHook::Return<void> OnRespawn(CCSPlayerController* pThis);

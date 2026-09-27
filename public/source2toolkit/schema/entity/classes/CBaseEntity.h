@@ -58,6 +58,7 @@
 #include "CNetworkTransmitComponent.h"
 #include "CNetworkVelocityVector.h"
 #include "../enums/EntityPlatformTypes_t.h"
+#include "../enums/ParticleAttachment_t.h"
 #include "ResponseContext_t.h"
 #include "../enums/TakeDamageFlags_t.h"
 #include "thinkfunc_t.h"
@@ -70,6 +71,7 @@ class CEntityInstance;
 class CEntityKeyValues;
 class CEntitySubclassVDataBase;
 class CPulseGraphInstance_ServerEntity;
+class IRecipientFilter;
 
 class CBaseEntity : public CEntityInstance
 {
@@ -184,9 +186,9 @@ public:
         return FromIndex<T>(index.Get());
     }
     /// <summary>Accepts entity input.</summary>
-    void AcceptInput(const char* pszInput, CEntityInstance* pActivator = nullptr, CEntityInstance* pCaller = nullptr, const char* pszValue = "");
+    void AcceptInput(const char* pszInput, CEntityInstance* pActivator = nullptr, CEntityInstance* pCaller = nullptr, const char* pszValue = "", HookChain eChain = HookChain::Run);
     /// <summary>Add delayed entity IO event.</summary>
-    void AddEntityIOEvent(const char* pszInput, CEntityInstance* pActivator = nullptr, CEntityInstance* pCaller = nullptr, const char* pszValue = "", float flDelay = 0.0f);
+    void AddEntityIOEvent(const char* pszInput, CEntityInstance* pActivator = nullptr, CEntityInstance* pCaller = nullptr, const char* pszValue = "", float flDelay = 0.0f, HookChain eChain = HookChain::Run);
     /// <summary>Add signle entity IO listener.</summary>
     CEntityIOListenerHandle* AddSingleEntityIOListener(const char* pszOutput, std::function<Action(const char*, CEntityInstance*, CEntityInstance*, float, bool)> callback, bool post);
     /// <summary>Get absolute origin.</summary>
@@ -210,9 +212,9 @@ public:
     /// <summary>Get entity VData.</summary>
     CEntitySubclassVDataBase* GetVData();
     /// <summary>Spawn entity.</summary>
-    void DispatchSpawn(CEntityKeyValues* pEntityKeyValues = nullptr);
+    void DispatchSpawn(CEntityKeyValues* pEntityKeyValues = nullptr, HookChain eChain = HookChain::Run);
     /// <summary>Teleport entity.</summary>
-    void Teleport(const Vector* pPosition, const QAngle* pAngles, const Vector* pVelocity);
+    void Teleport(const Vector* pPosition, const QAngle* pAngles, const Vector* pVelocity, HookChain eChain = HookChain::Run);
     /// <summary>Set move type.</summary>
     void SetMoveType(MoveType_t nMoveType);
     /// <summary>Get collision group.</summary>
@@ -233,6 +235,10 @@ public:
     }
     /// <summary>Get entity name.</summary>
     const char* GetName() const;
+    /// <summary>Removes the entity (UTIL_Remove).</summary>
+    void Remove(HookChain eChain = HookChain::Run);
+    /// <summary>Dispatches a particle effect on this entity. A null filter sends it to everyone.</summary>
+    void DispatchParticleEffect(const char* pszParticleName, ParticleAttachment_t nAttachType = ParticleAttachment_t::PATTACH_ABSORIGIN_FOLLOW, uint8 nAttachmentPoint = 0, bool bResetAllParticlesOnEntity = false, IRecipientFilter* pFilter = nullptr, HookChain eChain = HookChain::Run);
 };
 
 #endif // _INCLUDE_CBASEENTITY_H

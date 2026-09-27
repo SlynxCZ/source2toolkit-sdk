@@ -184,13 +184,13 @@ public:
     /// <summary>Print to center in HTML.</summary>
     void PrintToCenterHtml(const char* pszMessage, int iDuration = 5, bool bMenu = false);
     /// <summary>Take damage from player</summary>
-    void TakeDamage(CCSPlayerController* pAttacker, int iDamage, DamageTypes_t bitsDamageType);
+    void TakeDamage(CCSPlayerController* pAttacker, int iDamage, DamageTypes_t bitsDamageType, HookChain eChain = HookChain::Bypass);
     /// <summary>Respawn player.</summary>
-    void Respawn();
+    void Respawn(HookChain eChain = HookChain::Run);
     /// <summary>Switch team without killing.</summary>
-    void SwitchTeam(int nTeam);
+    void SwitchTeam(int nTeam, HookChain eChain = HookChain::Run);
     /// <summary>Change team like jointeam.</summary>
-    void ChangeTeam(int nTeam);
+    void ChangeTeam(int nTeam, HookChain eChain = HookChain::Run);
     /// <summary>Get player pawn.</summary>
     CCSPlayerPawn* GetPlayerPawn();
     /// <summary>Get observer pawn.</summary>

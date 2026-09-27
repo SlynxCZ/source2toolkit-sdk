@@ -35,22 +35,15 @@
  * Project: Source2Toolkit
  */
 
-
-#include "source2toolkit/schema/entity/classes/CCSPlayerPawn.h"
+#include "source2toolkit/schema/entity/classes/CCSWeaponBaseVData.h"
 
 #include "source2toolkit/IToolkitAddresses.h"
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitPlugin.h"
 TOOLKIT_GLOBALVARS();
 
-QAngle CCSPlayerPawn::GetEyeAngles()
+CCSWeaponBaseVData* CCSWeaponBaseVData::FromKey(const char* pszKey, int nWeaponType)
 {
-    // m_angEyeAngles is the networked value the client sends up; the field
-    // is generated, this is the read.
-    return m_angEyeAngles();
-}
-
-void CCSPlayerPawn::PostThink(HookChain eChain)
-{
-    ResolveHookChain(ADDR_POST_THINK(), eChain)(this);
+    // The engine takes the type first; -1 accepts any.
+    return ADDR_GET_WEAPON_CS_DATA_FROM_KEY()(nWeaponType, pszKey);
 }

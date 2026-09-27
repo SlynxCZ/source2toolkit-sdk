@@ -40,9 +40,19 @@
 
 #include "source2toolkit/schema/entity/classes/CCSPlayerController.h"
 
+#include "source2toolkit/IToolkitAddresses.h"
+#include "source2toolkit/IToolkitApi.h"
+#include "source2toolkit/IToolkitPlugin.h"
+TOOLKIT_GLOBALVARS();
+
 CCSPlayerController* CCSPlayerPawnBase::GetOriginalController()
 {
     if (auto handle = m_hOriginalController(); handle.IsValid())
         return handle.Get();
     return nullptr;
+}
+
+bool CCSPlayerPawnBase::CanMove()
+{
+    return ADDR_CAN_MOVE()(this);
 }

@@ -40,24 +40,14 @@
 #include "source2toolkit/schema/entity/classes/CSkeletonInstance.h"
 #include "source2toolkit/utils/virtual.h"
 
-#ifdef SOURCE2TOOLKIT_CORE
-#include "core/addresses.h"
-#include "core/gameconfig.h"
-#include "core/shared.h"
-#else
 #include "source2toolkit/IToolkitAddresses.h"
 #include "source2toolkit/IToolkitGameConfig.h"
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitPlugin.h"
 TOOLKIT_GLOBALVARS();
-#endif
 
 CSkeletonInstance* CGameSceneNode::GetSkeletonInstance()
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CGameSceneNode::GetSkeletonInstance");
-#else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CGameSceneNode::GetSkeletonInstance");
-#endif
+    static int offset = g_pToolkitGameConfig->GetOffset("CGameSceneNode::GetSkeletonInstance");
     return CALL_VIRTUAL(CSkeletonInstance*, offset, this);
 }

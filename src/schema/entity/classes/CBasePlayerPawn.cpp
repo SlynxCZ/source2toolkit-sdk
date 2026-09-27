@@ -41,33 +41,19 @@
 #include "source2toolkit/schema/entity/classes/CCSPlayerController.h"
 #include "source2toolkit/utils/virtual.h"
 
-#ifdef SOURCE2TOOLKIT_CORE
-#include "core/addresses.h"
-#include "core/gameconfig.h"
-#include "core/shared.h"
-#else
 #include "source2toolkit/IToolkitAddresses.h"
 #include "source2toolkit/IToolkitGameConfig.h"
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitPlugin.h"
 TOOLKIT_GLOBALVARS();
-#endif
 
-void CBasePlayerPawn::CommitSuicide(bool bExplode, bool bForce) {
-#ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CBasePlayerPawn::CommitSuicide");
-#else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CBasePlayerPawn::CommitSuicide");
-#endif
-    CALL_VIRTUAL(void, offset, this, bExplode, bForce);
+void CBasePlayerPawn::CommitSuicide(bool bExplode, bool bForce, HookChain eChain) {
+    static int offset = g_pToolkitGameConfig->GetOffset("CBasePlayerPawn::CommitSuicide");
+    CALL_VIRTUAL_CHAIN(void, offset, eChain, this, bExplode, bForce);
 }
 
-void CBasePlayerPawn::SnapViewAngles(const QAngle& angEyeAngles) {
-#ifdef SOURCE2TOOLKIT_CORE
-    const auto fn = addresses::toolkitAddresses.CBasePlayerPawn_SnapViewAngles();
-#else
-    const auto fn = g_ToolkitAPI->Addresses()->CBasePlayerPawn_SnapViewAngles();
-#endif
+void CBasePlayerPawn::SnapViewAngles(const QAngle& angEyeAngles, HookChain eChain) {
+    const auto fn = ResolveHookChain(ADDR_SNAP_VIEW_ANGLES(), eChain);
     // Only resolved where a signature exists for the platform -- currently Linux.
     if (!fn) return;
 

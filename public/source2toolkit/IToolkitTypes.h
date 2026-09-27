@@ -41,7 +41,8 @@
 * @brief Types shared by every toolkit callback.
 *
 * Defines:
-* * Action -- what a callback tells the toolkit to do with the original (KHook::Action)
+* * Action    -- what a callback tells the toolkit to do with the original (KHook::Action)
+* * HookChain -- whether an SDK helper's call into the game runs the hooks on it
   */
 
 #ifndef _INCLUDE_ITOOLKIT_TYPES_H
@@ -70,6 +71,69 @@ Hook control
  * * Supersede -- block the original entirely. Pre only.
  */
 using Action = KHook::Action;
+
+/**
+ * @brief Whether an SDK helper's call into the game goes through the hooks
+ * plugins placed on the function it calls.
+ *
+ * Every schema helper that calls a hookable game function (TakeDamage,
+ * GiveNamedItem, TerminateRound, SetModel, ...) takes one as its last
+ * argument:
+ *
+ * * Run    -- through the Pre/Post chain, as if the game made the call. Right
+ *             when the plugin stands in for the game -- a weapon dealing
+ *             damage, a round reward handing out an item -- and other plugins'
+ *             rules should apply.
+ * * Bypass -- straight to the original, past every hook (inline detours and
+ *             vtable hooks alike). Right when the server was told to do it --
+ *             an admin command, a forced round end -- or when calling the very
+ *             function you are hooking, where Run would recurse.
+ *
+ * The default of each helper is what it always did, so existing calls keep
+ * their behaviour; see the helper's declaration.
+ *
+ * @code
+ * pItemServices->GiveNamedItem("weapon_ak47");                        // hooks run
+ * pController->TakeDamage(pAttacker, 50, DMG_BULLET, HookChain::Run); // opt in
+ * @endcode
+ */
+enum class HookChain : uint8_t
+{
+    Run,
+    Bypass,
+};
+
+/**
+ * @brief The function to call for a resolved address: the address itself, or,
+ * for HookChain::Bypass, the original behind any detour on it.
+ *
+ * Resolve at the call, not once: a hook installed later changes the answer.
+ */
+template <typename FN>
+inline FN ResolveHookChain(FN fn, HookChain eChain)
+{
+    if (eChain != HookChain::Bypass || !fn)
+        return fn;
+
+    return reinterpret_cast<FN>(KHook::FindOriginal(reinterpret_cast<void*>(fn)));
+}
+
+/**
+ * @brief The function to call for vtable slot nIndex of pThis: whatever the
+ * slot holds, or, for HookChain::Bypass, the original behind both a vtable hook
+ * on the slot and a detour on the function it points at.
+ */
+inline void* ResolveHookChainVirtual(void* pThis, int nIndex, HookChain eChain)
+{
+    void** pVTable = pThis ? *static_cast<void***>(pThis) : nullptr;
+    if (!pVTable || nIndex < 0)
+        return nullptr;
+
+    if (eChain != HookChain::Bypass)
+        return pVTable[nIndex];
+
+    return KHook::FindOriginal(KHook::FindOriginalVirtual(pVTable, nIndex));
+}
 
 
 // A raw KHook hook carries the hooked member function and the callbacks in its

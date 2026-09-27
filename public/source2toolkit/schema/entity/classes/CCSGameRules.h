@@ -259,9 +259,9 @@ public:
 
 public:
     /// <summary>Ends the match and moves everyone to the intermission screen.</summary>
-    void GoToIntermission(bool bAbortedMatch = false);
+    void GoToIntermission(bool bAbortedMatch = false, HookChain eChain = HookChain::Run);
     /// <summary>Terminate round.</summary>
-    void TerminateRound(float flDelay, int32_t eRoundEndReason, uint32 nTeamId = 0);
+    void TerminateRound(float flDelay, int32_t eRoundEndReason, uint32 nTeamId = 0, HookChain eChain = HookChain::Bypass);
     /// <summary>Find entity player is aiming at.</summary>
     CBaseEntity* FindPickerEntity(CBasePlayerController* pPlayer);
     /// <summary>Get aim target.</summary>

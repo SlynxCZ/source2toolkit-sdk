@@ -43,14 +43,10 @@
 
 #include <string>
 
-#ifdef SOURCE2TOOLKIT_CORE
-#include "core/customhud.h"
-#else
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitCustomHud.h"
 #include "source2toolkit/IToolkitPlugin.h"
 TOOLKIT_GLOBALVARS();
-#endif
 
 namespace
 {
@@ -173,18 +169,10 @@ bool CCSCustomHudLayout::IsInputCaptureEnabled(CCSPlayerController* pController)
 
 void CCSCustomHudLayout::HookClick(std::function<void(CCSPlayerController*, CCSCustomHudLayout*, const char*)> callback)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    customhud::customHudManager.HookCustomHudClick(0, this, std::move(callback));
-#else
-    g_ToolkitAPI->CustomHud()->HookCustomHudClick(g_PluginID, this, std::move(callback));
-#endif
+    g_pToolkitCustomHud->HookCustomHudClick(g_PluginID, this, std::move(callback));
 }
 
 void CCSCustomHudLayout::UnhookClicks()
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    customhud::customHudManager.UnhookCustomHudClick(this);
-#else
-    g_ToolkitAPI->CustomHud()->UnhookCustomHudClick(this);
-#endif
+    g_pToolkitCustomHud->UnhookCustomHudClick(this);
 }

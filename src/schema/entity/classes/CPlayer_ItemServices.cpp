@@ -39,48 +39,33 @@
 
 #include "source2toolkit/utils/virtual.h"
 
-#ifdef SOURCE2TOOLKIT_CORE
-#include "core/addresses.h"
-#include "core/gameconfig.h"
-#include "core/shared.h"
-#else
 #include "source2toolkit/IToolkitAddresses.h"
 #include "source2toolkit/IToolkitGameConfig.h"
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitPlugin.h"
 TOOLKIT_GLOBALVARS();
-#endif
 
 // The gamedata keys still name CCSPlayer_ItemServices: that is the class the
 // vtable index was read off. Every item services object the game hands out is
 // one, so the call is valid through the base pointer CBasePlayerPawn stores.
 
-void CPlayer_ItemServices::DropActivePlayerWeapon(CBasePlayerWeapon* pActiveWeapon)
+void CPlayer_ItemServices::DropActivePlayerWeapon(CBasePlayerWeapon* pActiveWeapon, HookChain eChain)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_ItemServices::DropActivePlayerWeapon");
-#else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_ItemServices::DropActivePlayerWeapon");
-#endif
-    CALL_VIRTUAL(void, offset, this, pActiveWeapon);
+    static int offset = g_pToolkitGameConfig->GetOffset("CCSPlayer_ItemServices::DropActivePlayerWeapon");
+    CALL_VIRTUAL_CHAIN(void, offset, eChain, this, pActiveWeapon);
 }
 
-void CPlayer_ItemServices::RemoveWeapons(bool bRemoveSuit)
+void CPlayer_ItemServices::RemoveWeapons(bool bRemoveSuit, HookChain eChain)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_ItemServices::RemoveWeapons");
-#else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_ItemServices::RemoveWeapons");
-#endif
-    CALL_VIRTUAL(void, offset, this, bRemoveSuit);
+    static int offset = g_pToolkitGameConfig->GetOffset("CCSPlayer_ItemServices::RemoveWeapons");
+    CALL_VIRTUAL_CHAIN(void, offset, eChain, this, bRemoveSuit);
 }
 
-CBasePlayerWeapon* CPlayer_ItemServices::GiveNamedItem(const char* pszItem)
+CBasePlayerWeapon* CPlayer_ItemServices::GiveNamedItem(const char* pszItem, HookChain eChain)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayer_ItemServices::GiveNamedItem");
-#else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayer_ItemServices::GiveNamedItem");
-#endif
-    return CALL_VIRTUAL(CBasePlayerWeapon*, offset, this, pszItem);
+    // The implementation behind the virtual, called with the arguments the
+    // virtual's thunk passes. Going through it rather than the vtable is what
+    // lets HookChain::Run reach a hook on "CCSPlayer_ItemServices::GiveNamedItem".
+    auto* pThis = reinterpret_cast<CCSPlayer_ItemServices*>(this);
+    return ResolveHookChain(ADDR_GIVE_NAMED_ITEM(), eChain)(pThis, pszItem, 0, nullptr, false, nullptr);
 }

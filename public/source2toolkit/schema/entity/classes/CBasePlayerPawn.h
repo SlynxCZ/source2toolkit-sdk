@@ -106,9 +106,9 @@ public:
 
 public:
     /// <summary>Force suicide.</summary>
-    void CommitSuicide(bool bExplode, bool bForce);
+    void CommitSuicide(bool bExplode, bool bForce, HookChain eChain = HookChain::Run);
     /// <summary>Snaps the pawn's view angles. No-op where the engine function could not be resolved.</summary>
-    void SnapViewAngles(const QAngle& angEyeAngles);
+    void SnapViewAngles(const QAngle& angEyeAngles, HookChain eChain = HookChain::Run);
     /// <summary>Get controller.</summary>
     CCSPlayerController* GetController();
     /// <summary>Get default controller.</summary>

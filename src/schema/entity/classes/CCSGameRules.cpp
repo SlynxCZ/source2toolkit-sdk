@@ -41,27 +41,16 @@
 #include "source2toolkit/schema/entity/classes/CCSPlayerPawn.h"
 #include "source2toolkit/utils/virtual.h"
 
-#ifdef SOURCE2TOOLKIT_CORE
-#include "core/addresses.h"
-#include "core/entities.h"
-#include "core/gameconfig.h"
-#include "core/shared.h"
-#else
 #include "source2toolkit/IToolkitAddresses.h"
 #include "source2toolkit/IToolkitEntities.h"
 #include "source2toolkit/IToolkitGameConfig.h"
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitPlugin.h"
 TOOLKIT_GLOBALVARS();
-#endif
 
-void CCSGameRules::TerminateRound(float flDelay, int32_t eRoundEndReason, uint32 nTeamId)
+void CCSGameRules::TerminateRound(float flDelay, int32_t eRoundEndReason, uint32 nTeamId, HookChain eChain)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    auto pfnTerminateRound = addresses::toolkitAddresses.CGameRules_TerminateRound();
-#else
-    auto pfnTerminateRound = g_ToolkitAPI->Addresses()->CGameRules_TerminateRound();
-#endif
+    auto pfnTerminateRound = ADDR_TERMINATE_ROUND();
     if (!pfnTerminateRound)
         return;
 
@@ -70,17 +59,14 @@ void CCSGameRules::TerminateRound(float flDelay, int32_t eRoundEndReason, uint32
     uint32 nTeam = nTeamId;
     uint32* pnTeamId = nTeamId > 0 ? &nTeam : nullptr;
 
-    // Past every plugin's Pre/Post handler, for the same reason as
-    // CCSPlayerController::TakeDamage: ending the round because the server was
-    // told to is not the game ending the round, and a gamemode's TerminateRound
-    // hook exists to police the latter. This is also where a typed bypass could
-    // not help -- those hooks declare (CCSGameRules, RoundEndReason, float,
-    // void*, uint8_t) against this interface's (CGameRules*, uint32, uint32*,
-    // float), so nothing here matches the shape they were declared with.
+    // Bypass by default, for the same reason as CCSPlayerController::TakeDamage:
+    // ending the round because the server was told to is not the game ending
+    // the round, and a gamemode's TerminateRound hook exists to police the
+    // latter. HookChain::Run lets those hooks see (and veto) this one too.
     //
-    // See the note on CGameRules_TerminateRound_t: the argument order is not
+    // See the note on CCSGameRules_TerminateRound_t: the argument order is not
     // the same on both platforms.
-    auto pfnOriginal = TOOLKIT_ORIGINAL(pfnTerminateRound);
+    auto pfnOriginal = ResolveHookChain(pfnTerminateRound, eChain);
 #ifdef _WIN32
     pfnOriginal(this, flDelay, static_cast<uint32>(eRoundEndReason), pnTeamId);
 #else
@@ -90,11 +76,7 @@ void CCSGameRules::TerminateRound(float flDelay, int32_t eRoundEndReason, uint32
 
 CBaseEntity* CCSGameRules::FindPickerEntity(CBasePlayerController* pPlayer)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return entities::entitiesManager.FindPickerEntity(pPlayer, this);
-#else
-    return g_ToolkitAPI->Entities()->FindPickerEntity(pPlayer, this);
-#endif
+    return g_pToolkitEntities->FindPickerEntity(pPlayer, this);
 }
 
 CCSPlayerController* CCSGameRules::GetClientAimTarget(CCSPlayerController* pPlayer)
@@ -105,12 +87,8 @@ CCSPlayerController* CCSGameRules::GetClientAimTarget(CCSPlayerController* pPlay
     return V_strcmp(pPawn->GetClassname(), "player") == 0 ? pPawn->m_hOriginalController().Get() : nullptr;
 }
 
-void CCSGameRules::GoToIntermission(bool bAbortedMatch)
+void CCSGameRules::GoToIntermission(bool bAbortedMatch, HookChain eChain)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CGameRules::GoToIntermission");
-#else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CGameRules::GoToIntermission");
-#endif
-    CALL_VIRTUAL(void, offset, this, bAbortedMatch);
+    static int offset = g_pToolkitGameConfig->GetOffset("CGameRules::GoToIntermission");
+    CALL_VIRTUAL_CHAIN(void, offset, eChain, this, bAbortedMatch);
 }

@@ -57,6 +57,7 @@
 #include "utils/log.h"
 #endif
 #include "platform.h"
+#include "source2toolkit/IToolkitTypes.h"
 
 /**
 
@@ -72,6 +73,22 @@
   */
 #define CALL_VIRTUAL(retType, idx, ...) \
 vmt::CallVirtual<retType>(idx, __VA_ARGS__)
+
+/**
+
+* @brief CALL_VIRTUAL that runs or bypasses the hooks on the function.
+*
+* @param retType Return type
+* @param idx Virtual table index
+* @param eChain HookChain::Run or HookChain::Bypass
+* @param ... Arguments (must include class pointer as first arg)
+*
+* @code
+* CALL_VIRTUAL_CHAIN(void, offset, HookChain::Bypass, this, bExplode, bForce);
+* @endcode
+  */
+#define CALL_VIRTUAL_CHAIN(retType, idx, eChain, ...) \
+vmt::CallVirtualChain<retType>(idx, eChain, __VA_ARGS__)
 
 /**
 
@@ -202,6 +219,31 @@ FP_WARN("Tried calling a null virtual function.");
         auto pFunc = reinterpret_cast<T(__thiscall*)(void*, Args...)>(pVTable[uIndex]);
 #else
         auto pFunc = reinterpret_cast<T(__cdecl*)(void*, Args...)>(pVTable[uIndex]);
+#endif
+        if (!pFunc)
+        {
+#ifdef SOURCE2TOOLKIT_CORE
+            FP_WARN("Tried calling a null virtual function.");
+#endif
+            return T();
+        }
+
+        return pFunc(pClass, args...);
+    }
+
+    /**
+    * @brief Calls a virtual function by index, running or bypassing the hooks
+    * on it as eChain says (see HookChain in IToolkitTypes.h).
+    *
+    * @return Function result, or a default-constructed T if the slot is null.
+    */
+    template <typename T, typename... Args>
+    inline T CallVirtualChain(uint32 uIndex, HookChain eChain, void* pClass, Args... args)
+    {
+#ifdef _WIN32
+        auto pFunc = reinterpret_cast<T(__thiscall*)(void*, Args...)>(ResolveHookChainVirtual(pClass, static_cast<int>(uIndex), eChain));
+#else
+        auto pFunc = reinterpret_cast<T(__cdecl*)(void*, Args...)>(ResolveHookChainVirtual(pClass, static_cast<int>(uIndex), eChain));
 #endif
         if (!pFunc)
         {

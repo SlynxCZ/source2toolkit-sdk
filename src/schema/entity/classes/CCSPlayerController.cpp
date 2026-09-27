@@ -46,20 +46,12 @@
 #include "source2toolkit/schema/takedamageresult.h"
 #include "source2toolkit/utils/virtual.h"
 
-#ifdef SOURCE2TOOLKIT_CORE
-#include "core/addresses.h"
-#include "core/entities.h"
-#include "core/gameconfig.h"
-#include "core/menus.h"
-#include "core/shared.h"
-#else
 #include "source2toolkit/IToolkitAddresses.h"
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitGameConfig.h"
 #include "source2toolkit/IToolkitMenus.h"
 #include "source2toolkit/IToolkitPlugin.h"
 TOOLKIT_GLOBALVARS();
-#endif
 
 #include "iserver.h"
 
@@ -119,11 +111,7 @@ CCSPlayerController *CCSPlayerController::FromSteamId(CSteamID steamId)
 
 void CCSPlayerController::PrintToCenterHtml(const char* pszMessage, int iDuration, bool bMenu)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    if (!bMenu && menus::menuManager.GetActiveMenu(this))
-#else
-    if (!bMenu && g_ToolkitAPI->Menus()->GetActiveMenu(this))
-#endif
+    if (!bMenu && g_pToolkitMenus->GetActiveMenu(this))
         return;
 
     IGameEvent *event = GetGameEventManager()->CreateEvent("show_survival_respawn_status", true);
@@ -136,7 +124,7 @@ void CCSPlayerController::PrintToCenterHtml(const char* pszMessage, int iDuratio
     FireEventToClient(event);
 }
 
-void CCSPlayerController::TakeDamage(CCSPlayerController* pAttacker, int iDamage, DamageTypes_t bitsDamageType)
+void CCSPlayerController::TakeDamage(CCSPlayerController* pAttacker, int iDamage, DamageTypes_t bitsDamageType, HookChain eChain)
 {
     if (!m_bPawnIsAlive || m_iConnected() != PlayerConnectedState::Connected || !pAttacker || pAttacker->m_iConnected() != PlayerConnectedState::Connected)
         return;
@@ -155,54 +143,39 @@ void CCSPlayerController::TakeDamage(CCSPlayerController* pAttacker, int iDamage
     CTakeDamageResult result(iDamage);
     result.CopyFrom(&info);
 
-#ifdef SOURCE2TOOLKIT_CORE
-    auto pfn = addresses::toolkitAddresses.CBaseEntity_TakeDamageOld();
-#else
-    auto pfn = g_ToolkitAPI->Addresses()->CBaseEntity_TakeDamageOld();
-#endif
+    auto pfn = ADDR_TAKE_DAMAGE_OLD();
 
-    // Past every plugin's Pre/Post handler. Damage the toolkit was asked to
-    // deal is not the game dealing damage, so a plugin hooking TakeDamage to
-    // police the game's own hits should not have to tell the two apart -- and
-    // a handler that supercedes would otherwise silently swallow this.
+    // Bypass by default: damage the toolkit was asked to deal is not the game
+    // dealing damage, so a plugin hooking TakeDamage to police the game's own
+    // hits should not have to tell the two apart -- and a handler that
+    // supercedes would otherwise silently swallow this. HookChain::Run is for
+    // a caller standing in for a weapon.
     //
     // On the pawn, not the controller: the tracing showed a real hit arriving
     // on classname 'player' while this call arrived on 'cs_player_controller',
     // whose m_iHealth is 0.
-    TOOLKIT_ORIGINAL(pfn)(pVictimPawn, &info, &result);
+    ResolveHookChain(pfn, eChain)(pVictimPawn, &info, &result);
 }
 
-void CCSPlayerController::Respawn()
+void CCSPlayerController::Respawn(HookChain eChain)
 {
     if (!m_hPlayerPawn()) return;
 
     // The Call To Arms update appears to have invalidated the need for CCSPlayerPawn_Respawn.
-    SetPawn(m_hPlayerPawn());
-#ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayerController::Respawn");
-#else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayerController::Respawn");
-#endif
-    CALL_VIRTUAL(void, offset, this);
+    SetPawn(m_hPlayerPawn(), eChain);
+    static int offset = g_pToolkitGameConfig->GetOffset("CCSPlayerController::Respawn");
+    CALL_VIRTUAL_CHAIN(void, offset, eChain, this);
 }
 
-void CCSPlayerController::SwitchTeam(int nTeam)
+void CCSPlayerController::SwitchTeam(int nTeam, HookChain eChain)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    addresses::toolkitAddresses.CCSPlayerController_SwitchTeam()(this, static_cast<unsigned char>(nTeam));
-#else
-    g_ToolkitAPI->Addresses()->CCSPlayerController_SwitchTeam()(this, static_cast<unsigned char>(nTeam));
-#endif
+    ResolveHookChain(ADDR_SWITCH_TEAM(), eChain)(this, nTeam);
 }
 
-void CCSPlayerController::ChangeTeam(int nTeam)
+void CCSPlayerController::ChangeTeam(int nTeam, HookChain eChain)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CCSPlayerController::ChangeTeam");
-#else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CCSPlayerController::ChangeTeam");
-#endif
-    CALL_VIRTUAL(void, offset, this, nTeam);
+    static int offset = g_pToolkitGameConfig->GetOffset("CCSPlayerController::ChangeTeam");
+    CALL_VIRTUAL_CHAIN(void, offset, eChain, this, nTeam);
 }
 
 CCSPlayerPawn* CCSPlayerController::GetPlayerPawn()

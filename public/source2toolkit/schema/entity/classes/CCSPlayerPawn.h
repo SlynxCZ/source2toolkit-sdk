@@ -188,6 +188,8 @@ public:
 public:
     /// <summary>Get the angles the pawn is actually looking along.</summary>
     QAngle GetEyeAngles();
+    /// <summary>Runs CCSPlayerPawn::PostThink.</summary>
+    void PostThink(HookChain eChain = HookChain::Run);
 
 public:
     static CCSPlayerPawn* New(const char* className)

@@ -120,7 +120,7 @@ public:
     /// <summary>Get eye position.</summary>
     Vector GetEyePosition();
     /// <summary>Set entity model.</summary>
-    void SetModel(const char* pszModel);
+    void SetModel(const char* pszModel, HookChain eChain = HookChain::Run);
     /// <summary>Switch a bodygroup on the model.</summary>
     void SetBodyGroup(const char* pszName, int nValue);
 

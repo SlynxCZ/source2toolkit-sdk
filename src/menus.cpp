@@ -9,13 +9,9 @@
 
 #include "source2toolkit/schema/entity/classes/CCSPlayerController.h"
 
-#ifdef SOURCE2TOOLKIT_CORE
-#include "core/menus.h"
-#else
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitPlugin.h"
 TOOLKIT_GLOBALVARS();
-#endif
 
 std::function<bool(CCSPlayerController*)> IBaseMenu::s_canSelect =
     [](CCSPlayerController*) { return true; };
@@ -44,12 +40,8 @@ ChatMenuOption& IBaseMenu::AddMenuOptionWithCooldown(
 
             if (close)
             {
-#ifdef SOURCE2TOOLKIT_CORE
-                menus::menuManager.CloseActiveMenu(player);
-#else
-                if (g_ToolkitAPI && g_ToolkitAPI->Menus())
-                    g_ToolkitAPI->Menus()->CloseActiveMenu(player);
-#endif
+                if (g_pToolkitMenus)
+                    g_pToolkitMenus->CloseActiveMenu(player);
 
                 if (player)
                     player->PrintToCenterHtml(optRef.Text.c_str(), 5, true);

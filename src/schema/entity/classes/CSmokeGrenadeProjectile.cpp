@@ -39,20 +39,14 @@
 
 #include "source2toolkit/schema/entity/classes/CBaseEntity.h"
 
-#ifdef SOURCE2TOOLKIT_CORE
-#include "core/addresses.h"
-#include "core/gameconfig.h"
-#include "core/shared.h"
-#else
 #include "source2toolkit/IToolkitAddresses.h"
 #include "source2toolkit/IToolkitGameConfig.h"
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitPlugin.h"
 TOOLKIT_GLOBALVARS();
-#endif
 
 CSmokeGrenadeProjectile* CSmokeGrenadeProjectile::EmitGrenade(const Vector& vecPosition, const QAngle& angAngle, const Vector& vecVelocity,
-                              int nTeam, CBaseEntity* pOwner, uint32_t nItemDefIndex)
+                              int nTeam, CBaseEntity* pOwner, uint32_t nItemDefIndex, HookChain eChain)
 {
     // The game takes non-const pointers and reads the velocity twice, once as
     // the linear one and once as the angular one; SwiftlyS2 passes the same
@@ -61,9 +55,5 @@ CSmokeGrenadeProjectile* CSmokeGrenadeProjectile::EmitGrenade(const Vector& vecP
     QAngle angAng = angAngle;
     Vector vecVel = vecVelocity;
 
-#ifdef SOURCE2TOOLKIT_CORE
-    return addresses::toolkitAddresses.CSmokeGrenadeProjectile_EmitGrenade()(&vecPos, &angAng, &vecVel, &vecVel, pOwner, nItemDefIndex, nTeam);
-#else
-    return g_ToolkitAPI->Addresses()->CSmokeGrenadeProjectile_EmitGrenade()(&vecPos, &angAng, &vecVel, &vecVel, pOwner, nItemDefIndex, nTeam);
-#endif
+    return ResolveHookChain(ADDR_EMIT_SMOKE(), eChain)(&vecPos, &angAng, &vecVel, &vecVel, pOwner, nItemDefIndex, nTeam);
 }

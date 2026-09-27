@@ -38,28 +38,18 @@
 #include "source2toolkit/schema/entityio.h"
 #include "source2toolkit/IToolkitEntities.h"
 
-#ifdef SOURCE2TOOLKIT_CORE
-#include "core/addresses.h"
-#include "core/entities.h"
-#include "core/shared.h"
-#else
 #include "source2toolkit/IToolkitAddresses.h"
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitGameConfig.h"
 #include "source2toolkit/IToolkitPlugin.h"
 TOOLKIT_GLOBALVARS();
-#endif
 
 void CEntityIOListenerHandle::Unhook()
 {
     if (!m_pListener)
         return;
 
-#ifdef SOURCE2TOOLKIT_CORE
-    entities::entitiesManager.RemoveEntityIOListener(m_pListener, m_szClassname.c_str(), m_szOutput.c_str(), m_bPost);
-#else
-    g_ToolkitAPI->Entities()->RemoveEntityIOListener(m_pListener, m_szClassname.c_str(), m_szOutput.c_str(), m_bPost);
-#endif
+    g_pToolkitEntities->RemoveEntityIOListener(m_pListener, m_szClassname.c_str(), m_szOutput.c_str(), m_bPost);
 
     delete m_pListener;
     m_pListener = nullptr;

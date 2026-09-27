@@ -86,6 +86,8 @@ public:
 public:
     /// <summary>Get original controller.</summary>
     CCSPlayerController* GetOriginalController();
+    /// <summary>Whether the pawn may move (false while frozen, defusing, ...).</summary>
+    bool CanMove();
 
 public:
     static CCSPlayerPawnBase* New(const char* className)

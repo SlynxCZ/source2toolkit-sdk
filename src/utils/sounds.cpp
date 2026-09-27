@@ -37,19 +37,11 @@
 
 #include "source2toolkit/IToolkitSounds.h"
 
-#ifdef SOURCE2TOOLKIT_CORE
-#include "core/sounds.h"
-#else
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitPlugin.h"
 TOOLKIT_GLOBALVARS();
-#endif
 
 IToolkitSound* IToolkitSound::New(const char* name)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return sounds::soundsManager.CreateSound(0, name);
-#else
     return g_pToolkitSounds ? g_pToolkitSounds->CreateSound(g_PluginID, name) : nullptr;
-#endif
 }

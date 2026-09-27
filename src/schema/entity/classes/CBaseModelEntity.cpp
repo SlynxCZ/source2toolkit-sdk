@@ -40,14 +40,10 @@
 #include "source2toolkit/schema/entity/classes/CBodyComponent.h"
 #include "source2toolkit/schema/entity/classes/CSkeletonInstance.h"
 
-#ifdef SOURCE2TOOLKIT_CORE
-#include "core/addresses.h"
-#else
 #include "source2toolkit/IToolkitAddresses.h"
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitPlugin.h"
 TOOLKIT_GLOBALVARS();
-#endif
 
 CUtlSymbolLarge CBaseModelEntity::GetModelName()
 {
@@ -71,12 +67,8 @@ Vector CBaseModelEntity::GetEyePosition()
     };
 }
 
-void CBaseModelEntity::SetModel(const char* pszModel) {
-#ifdef SOURCE2TOOLKIT_CORE
-    addresses::toolkitAddresses.CBaseModelEntity_SetModel()(this, pszModel);
-#else
-    g_ToolkitAPI->Addresses()->CBaseModelEntity_SetModel()(this, pszModel);
-#endif
+void CBaseModelEntity::SetModel(const char* pszModel, HookChain eChain) {
+    ResolveHookChain(ADDR_SET_MODEL(), eChain)(this, pszModel);
 }
 
 void CBaseModelEntity::SetBodyGroup(const char* pszName, int nValue)

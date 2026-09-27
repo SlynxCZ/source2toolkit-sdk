@@ -9,15 +9,10 @@
 #include <cmath>
 #include <limits>
 
-#ifdef SOURCE2TOOLKIT_CORE
-#include "core/gameconfig.h"
-#include "core/shared.h"
-#else
 #include "source2toolkit/IToolkitGameConfig.h"
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitPlugin.h"
 TOOLKIT_GLOBALVARS();
-#endif
 
 // The includes above drag in windows.h, whose min/max macros would eat every
 // std::min/std::max and numeric_limits<>::max() below.
@@ -45,7 +40,7 @@ namespace
 		return *reinterpret_cast<const T*>(static_cast<const uint8_t*>(pBase) + nOffset);
 	}
 
-	/// The nav mesh pointer lives in a global that CCSNavArea::IsValidNavMesh
+	/// The nav mesh pointer lives in a global that CSource2Server::GetNavMeshData
 	/// reads through RIP-relative addressing. The signature lands on that
 	/// instruction: bytes 3..6 are the displacement, and it is relative to the
 	/// end of the instruction -- 7 bytes on Linux (lea rax, [rip+disp]), 8 on
@@ -63,15 +58,9 @@ namespace
 
 		s_bResolved = true;
 
-#ifdef SOURCE2TOOLKIT_CORE
-		void* pFunction = shared::g_pGameConfig
-			? shared::g_pGameConfig->ResolveSignature("CCSNavArea::IsValidNavMesh")
+		void* pFunction = g_pToolkitGameConfig
+			? g_pToolkitGameConfig->ResolveSignature("CSource2Server::GetNavMeshData")
 			: nullptr;
-#else
-		void* pFunction = g_ToolkitAPI && g_ToolkitAPI->GameConfig()
-			? g_ToolkitAPI->GameConfig()->ResolveSignature("CCSNavArea::IsValidNavMesh")
-			: nullptr;
-#endif
 		if (!pFunction)
 			return nullptr;
 

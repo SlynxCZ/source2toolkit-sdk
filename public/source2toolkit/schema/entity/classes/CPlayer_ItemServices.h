@@ -66,11 +66,11 @@ public:
 
 public:
     /// <summary>Drop active weapon, recommended to use DropWeapon instead (parameter is ignored here).</summary>
-    void DropActivePlayerWeapon(CBasePlayerWeapon* pActiveWeapon);
+    void DropActivePlayerWeapon(CBasePlayerWeapon* pActiveWeapon, HookChain eChain = HookChain::Run);
     /// <summary>Remove all weapons.</summary>
-    void RemoveWeapons(bool bRemoveSuit);
+    void RemoveWeapons(bool bRemoveSuit, HookChain eChain = HookChain::Run);
     /// <summary>Give item.</summary>
-    CBasePlayerWeapon* GiveNamedItem(const char* pszItem);
+    CBasePlayerWeapon* GiveNamedItem(const char* pszItem, HookChain eChain = HookChain::Run);
 };
 
 #endif // _INCLUDE_CPLAYER_ITEMSERVICES_H

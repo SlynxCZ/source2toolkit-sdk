@@ -382,15 +382,14 @@ Globals
 
 /**
 
-* @brief Defines global plugin variables.
+* @brief Defines the toolkit globals -- the API, the plugin identity and one
+* pointer per toolkit interface.
 *
-* Creates:
-* * g_ToolkitAPI
-* * g_PluginAPI
-* * g_PluginID
-* * KHook::__exported__khook, the detour engine (see TOOLKIT_KHOOK_INTERFACE)
-    */
-#define TOOLKIT_EXPOSE(name, var) \
+* Part of TOOLKIT_EXPOSE for a plugin. The core expands it on its own too and
+* fills the pointers with TOOLKIT_FILLVARS(), so SDK code reads the same
+* globals (ADDR_*, g_pToolkitGameConfig, ...) whichever binary it is linked into.
+  */
+#define TOOLKIT_DEFINE_GLOBALVARS() \
     IToolkitAPI*             g_ToolkitAPI              = nullptr; \
     IToolkitPlugin*          g_PluginAPI               = nullptr; \
     PluginId                 g_PluginID                = 0; \
@@ -411,7 +410,18 @@ Globals
     IToolkitScheduler*       g_pToolkitScheduler       = nullptr; \
     IToolkitSounds*          g_pToolkitSounds          = nullptr; \
     IToolkitTrace*           g_pToolkitTrace           = nullptr; \
-    IToolkitTransmit*        g_pToolkitTransmit        = nullptr; \
+    IToolkitTransmit*        g_pToolkitTransmit        = nullptr;
+
+/**
+
+* @brief Defines global plugin variables.
+*
+* Creates:
+* * everything TOOLKIT_DEFINE_GLOBALVARS() does
+* * KHook::__exported__khook, the detour engine (see TOOLKIT_KHOOK_INTERFACE)
+    */
+#define TOOLKIT_EXPOSE(name, var) \
+    TOOLKIT_DEFINE_GLOBALVARS() \
     namespace KHook { KHook::IKHook* __exported__khook = nullptr; } \
     TOOLKIT_EXPOSURE_FUNC(name, var)
 
@@ -445,6 +455,33 @@ Globals
 
 /**
 
+* @brief Points every toolkit interface global at what the API hands out.
+*
+* Part of TOOLKIT_SAVEVARS() for a plugin; the core calls it once its
+* interfaces exist (see TOOLKIT_DEFINE_GLOBALVARS()).
+  */
+#define TOOLKIT_FILLVARS(api) \
+    g_pToolkitAddresses       = (IToolkitAddresses*)      (api)->ToolkitFactory(TOOLKIT_ADDRESSES_INTERFACE,       nullptr, nullptr); \
+    g_pToolkitCommands        = (IToolkitCommands*)       (api)->ToolkitFactory(TOOLKIT_COMMANDS_INTERFACE,        nullptr, nullptr); \
+    g_pToolkitConVars         = (IToolkitConVars*)        (api)->ToolkitFactory(TOOLKIT_CONVARS_INTERFACE,         nullptr, nullptr); \
+    g_pToolkitCustomHud       = (IToolkitCustomHud*)      (api)->ToolkitFactory(TOOLKIT_CUSTOMHUD_INTERFACE,       nullptr, nullptr); \
+    g_pToolkitEntities        = (IToolkitEntities*)       (api)->ToolkitFactory(TOOLKIT_ENTITIES_INTERFACE,        nullptr, nullptr); \
+    g_pToolkitEvents          = (IToolkitEvents*)         (api)->ToolkitFactory(TOOLKIT_EVENTS_INTERFACE,          nullptr, nullptr); \
+    g_pToolkitGameConfig      = (IToolkitGameConfig*)     (api)->ToolkitFactory(TOOLKIT_GAMECONFIG_INTERFACE,      nullptr, nullptr); \
+    g_pToolkitGameSystems     = (IToolkitGameSystems*)    (api)->ToolkitFactory(TOOLKIT_GAMESYSTEMS_INTERFACE,     nullptr, nullptr); \
+    g_pToolkitHTTP            = (IToolkitHTTP*)           (api)->ToolkitFactory(TOOLKIT_HTTP_INTERFACE,            nullptr, nullptr); \
+    g_pToolkitMenus           = (IToolkitMenus*)          (api)->ToolkitFactory(TOOLKIT_MENUS_INTERFACE,           nullptr, nullptr); \
+    g_pToolkitMySQL           = (IToolkitMySQL*)          (api)->ToolkitFactory(TOOLKIT_MYSQL_INTERFACE,           nullptr, nullptr); \
+    g_pToolkitNetworkMessages = (IToolkitNetworkMessages*)(api)->ToolkitFactory(TOOLKIT_NETWORKMESSAGES_INTERFACE, nullptr, nullptr); \
+    g_pToolkitPaths           = (IToolkitPaths*)          (api)->ToolkitFactory(TOOLKIT_PATHS_INTERFACE,           nullptr, nullptr); \
+    g_pToolkitJSON            = (IToolkitJSON*)           (api)->ToolkitFactory(TOOLKIT_JSON_INTERFACE,            nullptr, nullptr); \
+    g_pToolkitScheduler       = (IToolkitScheduler*)      (api)->ToolkitFactory(TOOLKIT_SCHEDULER_INTERFACE,       nullptr, nullptr); \
+    g_pToolkitSounds          = (IToolkitSounds*)         (api)->ToolkitFactory(TOOLKIT_SOUNDS_INTERFACE,          nullptr, nullptr); \
+    g_pToolkitTrace           = (IToolkitTrace*)          (api)->ToolkitFactory(TOOLKIT_TRACE_INTERFACE,           nullptr, nullptr); \
+    g_pToolkitTransmit        = (IToolkitTransmit*)       (api)->ToolkitFactory(TOOLKIT_TRANSMIT_INTERFACE,        nullptr, nullptr);
+
+/**
+
 * @brief Initializes global variables inside Load().
 *
 * @note Must be called in plugin Load(), with its parameters under their
@@ -467,24 +504,7 @@ Globals
             g_ToolkitAPI->Format(error, maxlen, "%s", toolkitKHookNote); \
         } \
     } \
-    g_pToolkitAddresses       = (IToolkitAddresses*)      api->ToolkitFactory(TOOLKIT_ADDRESSES_INTERFACE,       nullptr, nullptr); \
-    g_pToolkitCommands        = (IToolkitCommands*)       api->ToolkitFactory(TOOLKIT_COMMANDS_INTERFACE,        nullptr, nullptr); \
-    g_pToolkitConVars         = (IToolkitConVars*)        api->ToolkitFactory(TOOLKIT_CONVARS_INTERFACE,         nullptr, nullptr); \
-    g_pToolkitCustomHud       = (IToolkitCustomHud*)      api->ToolkitFactory(TOOLKIT_CUSTOMHUD_INTERFACE,       nullptr, nullptr); \
-    g_pToolkitEntities        = (IToolkitEntities*)       api->ToolkitFactory(TOOLKIT_ENTITIES_INTERFACE,        nullptr, nullptr); \
-    g_pToolkitEvents          = (IToolkitEvents*)         api->ToolkitFactory(TOOLKIT_EVENTS_INTERFACE,          nullptr, nullptr); \
-    g_pToolkitGameConfig      = (IToolkitGameConfig*)     api->ToolkitFactory(TOOLKIT_GAMECONFIG_INTERFACE,      nullptr, nullptr); \
-    g_pToolkitGameSystems     = (IToolkitGameSystems*)    api->ToolkitFactory(TOOLKIT_GAMESYSTEMS_INTERFACE,     nullptr, nullptr); \
-    g_pToolkitHTTP            = (IToolkitHTTP*)           api->ToolkitFactory(TOOLKIT_HTTP_INTERFACE,            nullptr, nullptr); \
-    g_pToolkitMenus           = (IToolkitMenus*)          api->ToolkitFactory(TOOLKIT_MENUS_INTERFACE,           nullptr, nullptr); \
-    g_pToolkitMySQL           = (IToolkitMySQL*)          api->ToolkitFactory(TOOLKIT_MYSQL_INTERFACE,           nullptr, nullptr); \
-    g_pToolkitNetworkMessages = (IToolkitNetworkMessages*)api->ToolkitFactory(TOOLKIT_NETWORKMESSAGES_INTERFACE, nullptr, nullptr); \
-    g_pToolkitPaths           = (IToolkitPaths*)          api->ToolkitFactory(TOOLKIT_PATHS_INTERFACE,           nullptr, nullptr); \
-    g_pToolkitJSON            = (IToolkitJSON*)           api->ToolkitFactory(TOOLKIT_JSON_INTERFACE,            nullptr, nullptr); \
-    g_pToolkitScheduler       = (IToolkitScheduler*)      api->ToolkitFactory(TOOLKIT_SCHEDULER_INTERFACE,       nullptr, nullptr); \
-    g_pToolkitSounds          = (IToolkitSounds*)         api->ToolkitFactory(TOOLKIT_SOUNDS_INTERFACE,          nullptr, nullptr); \
-    g_pToolkitTrace           = (IToolkitTrace*)          api->ToolkitFactory(TOOLKIT_TRACE_INTERFACE,           nullptr, nullptr); \
-    g_pToolkitTransmit        = (IToolkitTransmit*)       api->ToolkitFactory(TOOLKIT_TRANSMIT_INTERFACE,        nullptr, nullptr);
+    TOOLKIT_FILLVARS(api)
 
 /* =========================
 Logging helpers

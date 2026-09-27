@@ -43,45 +43,34 @@
 #include "source2toolkit/schema/entity/classes/CGameSceneNode.h"
 #include "source2toolkit/utils/virtual.h"
 
-#ifdef SOURCE2TOOLKIT_CORE
-#include "core/addresses.h"
-#include "core/entities.h"
-#include "core/gameconfig.h"
-#include "core/shared.h"
-#else
 #include "source2toolkit/IToolkitAddresses.h"
 #include "source2toolkit/IToolkitEntities.h"
 #include "source2toolkit/IToolkitGameConfig.h"
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitPlugin.h"
 TOOLKIT_GLOBALVARS();
-#endif
 
 CBaseEntity* CBaseEntity::CreateEntityByName(const char* pszClassName)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return entities::entitiesManager.CreateEntityByName(pszClassName);
-#else
-    return g_ToolkitAPI->Entities()->CreateEntityByName(pszClassName);
-#endif
+    return g_pToolkitEntities->CreateEntityByName(pszClassName);
 }
 
-void CBaseEntity::AcceptInput(const char* pszInput, CEntityInstance* pActivator, CEntityInstance* pCaller, const char* pszValue)
+// Called here rather than through IToolkitEntities, which has no way to say
+// which chain to take; this is the same call that interface makes.
+void CBaseEntity::AcceptInput(const char* pszInput, CEntityInstance* pActivator, CEntityInstance* pCaller, const char* pszValue, HookChain eChain)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    entities::entitiesManager.AcceptInput(this, pszInput, pActivator, pCaller, pszValue);
-#else
-    g_ToolkitAPI->Entities()->AcceptInput(this, pszInput, pActivator, pCaller, pszValue);
-#endif
+    const auto fn = ResolveHookChain(ADDR_ACCEPT_INPUT(), eChain);
+    fn(this, pszInput, pActivator, pCaller, variant_t(pszValue));
 }
 
-void CBaseEntity::AddEntityIOEvent(const char* pszInput, CEntityInstance* pActivator, CEntityInstance* pCaller, const char* pszValue, float flDelay)
+void CBaseEntity::AddEntityIOEvent(const char* pszInput, CEntityInstance* pActivator, CEntityInstance* pCaller, const char* pszValue, float flDelay, HookChain eChain)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    entities::entitiesManager.AddEntityIOEvent(this, pszInput, pActivator, pCaller, pszValue, flDelay);
-#else
-    g_ToolkitAPI->Entities()->AddEntityIOEvent(this, pszInput, pActivator, pCaller, pszValue, flDelay);
-#endif
+    CGameEntitySystem* pEntitySystem = GetEntitySystem();
+    if (!pEntitySystem)
+        return;
+
+    const auto fn = ResolveHookChain(ADDR_ADD_ENTITY_IO_EVENT(), eChain);
+    fn(reinterpret_cast<CEntitySystem*>(pEntitySystem), this, pszInput, pActivator, pCaller, variant_t(pszValue), flDelay, nullptr, nullptr);
 }
 
 CEntityIOListenerHandle* CBaseEntity::AddSingleEntityIOListener(const char* pszOutput, std::function<Action(const char*, CEntityInstance*, CEntityInstance*, float, bool)> callback, bool post)
@@ -90,13 +79,9 @@ CEntityIOListenerHandle* CBaseEntity::AddSingleEntityIOListener(const char* pszO
 
     const char* classname = GetClassname();
 
-#ifdef SOURCE2TOOLKIT_CORE
-    entities::entitiesManager.AddEntityIOListener(0, listener, classname, pszOutput, post);
-#else
     // The listener and the callback it holds are in whichever plugin called
     // this, so that plugin has to be the one the toolkit drops it with.
-    g_ToolkitAPI->Entities()->AddEntityIOListener(g_PluginID, listener, classname, pszOutput, post);
-#endif
+    g_pToolkitEntities->AddEntityIOListener(g_PluginID, listener, classname, pszOutput, post);
 
     auto* handle = new CEntityIOListenerHandle();
     handle->m_pListener = listener;
@@ -157,23 +142,15 @@ CEntitySubclassVDataBase* CBaseEntity::GetVData()
     return *reinterpret_cast<CEntitySubclassVDataBase**>(reinterpret_cast<uint8*>(m_nSubclassID()) + 4);
 }
 
-void CBaseEntity::DispatchSpawn(CEntityKeyValues* pEntityKeyValues)
+void CBaseEntity::DispatchSpawn(CEntityKeyValues* pEntityKeyValues, HookChain eChain)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    addresses::toolkitAddresses.CBaseEntity_DispatchSpawn()(this, pEntityKeyValues);
-#else
-    g_ToolkitAPI->Addresses()->CBaseEntity_DispatchSpawn()(this, pEntityKeyValues);
-#endif
+    ResolveHookChain(ADDR_DISPATCH_SPAWN(), eChain)(this, pEntityKeyValues);
 }
 
-void CBaseEntity::Teleport(const Vector* pPosition, const QAngle* pAngles, const Vector* pVelocity)
+void CBaseEntity::Teleport(const Vector* pPosition, const QAngle* pAngles, const Vector* pVelocity, HookChain eChain)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CBaseEntity::Teleport");
-#else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CBaseEntity::Teleport");
-#endif
-    CALL_VIRTUAL(void, offset, this, pPosition, pAngles, pVelocity);
+    static int offset = g_pToolkitGameConfig->GetOffset("CBaseEntity::Teleport");
+    CALL_VIRTUAL_CHAIN(void, offset, eChain, this, pPosition, pAngles, pVelocity);
 }
 
 void CBaseEntity::SetMoveType(MoveType_t nMoveType)
@@ -202,11 +179,7 @@ void CBaseEntity::SetCollisionGroup(uint8 nCollisionGroup)
 
 void CBaseEntity::CollisionRulesChanged()
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    static int offset = shared::g_pGameConfig->GetOffset("CBaseEntity::CollisionRulesChanged");
-#else
-    static int offset = g_ToolkitAPI->GameConfig()->GetOffset("CBaseEntity::CollisionRulesChanged");
-#endif
+    static int offset = g_pToolkitGameConfig->GetOffset("CBaseEntity::CollisionRulesChanged");
     CALL_VIRTUAL(void, offset, this);
 }
 
@@ -218,4 +191,19 @@ int CBaseEntity::GetIndex()
 const char* CBaseEntity::GetName() const
 {
     return m_pEntity->m_name.String();
+}
+
+void CBaseEntity::Remove(HookChain eChain)
+{
+    ResolveHookChain(ADDR_UTIL_REMOVE(), eChain)(this);
+}
+
+void CBaseEntity::DispatchParticleEffect(const char* pszParticleName, ParticleAttachment_t nAttachType, uint8 nAttachmentPoint,
+                                         bool bResetAllParticlesOnEntity, IRecipientFilter* pFilter, HookChain eChain)
+{
+    const auto fn = ResolveHookChain(ADDR_DISPATCH_PARTICLE_EFFECT(), eChain);
+
+    // No attachment name token and the default split-screen slot, as the
+    // game's own entity-attached calls pass them.
+    fn(pszParticleName, static_cast<int>(nAttachType), this, nAttachmentPoint, 0, bResetAllParticlesOnEntity, -1, pFilter, 0);
 }

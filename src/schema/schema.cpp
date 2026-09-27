@@ -39,18 +39,10 @@
 #include "source2toolkit/utils/virtual.h"
 #include "source2toolkit/IToolkitModule.h"
 
-#ifdef SOURCE2TOOLKIT_CORE
-// Most engine pointers are interfaces.h's own globals now; shared.h only still
-// carries what that header cannot express (see its comment).
-#include "interfaces/interfaces.h"
-#include "core/shared.h"
-#include "core/gameconfig.h"
-#else
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitGameConfig.h"
 #include "source2toolkit/IToolkitPlugin.h"
 TOOLKIT_GLOBALVARS();
-#endif
 
 #include "platform.h"
 #include "edict.h"
@@ -82,91 +74,51 @@ CGameEntitySystem* GameEntitySystem() { return GetEntitySystem(); }
 
 IGameEventManager2* GetGameEventManager()
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return shared::g_pGameEventManager;
-#else
     return g_ToolkitAPI->GetGameEventManager();
-#endif
 }
 
 CGlobalVars* GetGlobalVars()
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return shared::getGlobalVars();
-#else
     return g_ToolkitAPI->GetGlobalVars();
-#endif
 }
 
 ICvar* GetCVar()
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return g_pCVar;
-#else
     return g_ToolkitAPI->GetCVar();
-#endif
 }
 
 ISource2Server* GetSource2Server()
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return g_pSource2Server;
-#else
     return g_ToolkitAPI->GetSource2Server();
-#endif
 }
 
 IVEngineServer2* GetEngineServer()
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return g_pEngineServer;
-#else
     return g_ToolkitAPI->GetEngineServer();
-#endif
 }
 
 IGameEventSystem* GetGameEventSystem()
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return shared::g_pGameEventSystem;
-#else
     return g_ToolkitAPI->GetGameEventSystem();
-#endif
 }
 INetworkMessages* GetNetworkMessages()
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return g_pNetworkMessages;
-#else
     return g_ToolkitAPI->GetNetworkMessages();
-#endif
 }
 
 INetworkServerService* GetNetworkServerService()
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return g_pNetworkServerService;
-#else
     return g_ToolkitAPI->GetNetworkServerService();
-#endif
 }
 
 CGameEntitySystem* GetEntitySystem()
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return shared::g_pEntitySystem;
-#else
     return g_ToolkitAPI->GetEntitySystem();
-#endif
 }
 
 CSchemaSystem* GetSchemaSystem()
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    return shared::g_pSchemaSystem;
-#else
     return g_ToolkitAPI->GetSchemaSystem();
-#endif
 }
 
 namespace
@@ -401,11 +353,7 @@ static bool IsInModuleText(const void* p, const void* pModuleAddress)
             return IToolkitModule::SectionInfo{0, 0};
 
         const IToolkitModule::SectionInfo text = pModule->GetSectionByName(".text");
-#ifdef SOURCE2TOOLKIT_CORE
-        delete pModule;
-#else
         g_ToolkitAPI->FreeModule(pModule);
-#endif
         return text;
     }();
 
@@ -449,11 +397,7 @@ static std::vector<int> ParseSignature(const char* pszSignature)
 static const std::vector<int>& GetStateChangedSignature()
 {
     static const std::vector<int> s_signature = [] {
-#ifdef SOURCE2TOOLKIT_CORE
-        const char* pszSignature = shared::g_pGameConfig ? shared::g_pGameConfig->GetSignature(g_pszStateChangedSignature) : nullptr;
-#else
         const char* pszSignature = g_pToolkitGameConfig ? g_pToolkitGameConfig->GetSignature(g_pszStateChangedSignature) : nullptr;
-#endif
         std::vector<int> signature = ParseSignature(pszSignature);
         if (signature.empty())
             SchemaWarn("schema: gamedata signature '%s' is missing or malformed, embedded fields will not be networked!", g_pszStateChangedSignature);

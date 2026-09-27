@@ -37,23 +37,18 @@
 
 #include "source2toolkit/schema/entity/classes/CAttributeList.h"
 
-#ifdef SOURCE2TOOLKIT_CORE
-#include "core/addresses.h"
-#include "core/gameconfig.h"
-#include "core/shared.h"
-#else
 #include "source2toolkit/IToolkitAddresses.h"
 #include "source2toolkit/IToolkitGameConfig.h"
 #include "source2toolkit/IToolkitApi.h"
 #include "source2toolkit/IToolkitPlugin.h"
 TOOLKIT_GLOBALVARS();
-#endif
 
-void CAttributeList::SetOrAddAttribute(const char* pszAttributeName, float flValue)
+void CAttributeList::SetOrAddAttribute(const char* pszAttributeName, float flValue, HookChain eChain)
 {
-#ifdef SOURCE2TOOLKIT_CORE
-    addresses::toolkitAddresses.CAttributeList_SetOrAddAttributeValueByName()(this, pszAttributeName, flValue);
-#else
-    g_ToolkitAPI->Addresses()->CAttributeList_SetOrAddAttributeValueByName()(this, pszAttributeName, flValue);
-#endif
+    SetOrAddAttributeValueByName(pszAttributeName, flValue, eChain);
+}
+
+void CAttributeList::SetOrAddAttributeValueByName(const char* pszAttributeName, float flValue, HookChain eChain)
+{
+    ResolveHookChain(ADDR_SET_OR_ADD_ATTRIBUTE(), eChain)(this, pszAttributeName, flValue);
 }
