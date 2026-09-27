@@ -1,5 +1,5 @@
 SOURCE2TOOLKIT SDK LICENSE INFORMATION
-VERSION: 2026-8-30
+VERSION: 2026-9-27
 -----------------------------
 
 Source2Toolkit SDK is licensed under the GNU General Public License, version 3.
@@ -19,6 +19,16 @@ version." As such, you may choose for your derivative work(s) to be compatible
 with the GNU General Public License version 2 as long as it is also compatible
 with the GNU General Public License version 3, via the "or any higher version"
 clause. This is intended for compatibility with other software.
+
+As an additional special exception to the GNU General Public License 3.0,
+Michal "Slynx" Prikryl permits DERIVATIVE WORKS ONLY (that is, Source2Toolkit
+plugins, or any software built from the Source2Toolkit SDK or its header
+files) to be licensed under the MIT License instead, or under any other terms
+of their author's choosing, including closed-source and commercial terms.
+Such derivative works do not have to be published or distributed with their
+source code. This exception does not extend to Source2Toolkit or the
+Source2Toolkit SDK themselves: those, and modified versions of them, remain
+under the GNU General Public License version 3.
 
 A copy of the GNU General Public License 3.0 is available in LICENSE.
 

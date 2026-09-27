@@ -141,9 +141,16 @@ Automatically:
 ## License
 
 This project is licensed under the GNU General Public License v3.0, with a
-linking exception for Valve's engines and games and a dual-licensing exception
-for derivative works. See [LICENSE_INFO.txt](LICENSE_INFO.txt) for the terms
+linking exception for Valve's engines and games, a dual-licensing exception
+and an MIT exception for derivative works. See [LICENSE_INFO.txt](LICENSE_INFO.txt) for the terms
 and [LICENSE](LICENSE) for the full GPLv3 text.
+
+### Do I have to open-source my plugins?
+
+No. The GPLv3 license carries an explicit MIT exception for derivative works:
+your plugins, or anything built against the SDK, can stay closed-source or
+commercial. The exception covers what you build on the toolkit, not the
+toolkit itself -- a modified Source2Toolkit or SDK stays under the GPLv3.
 
 ---
 
