@@ -134,7 +134,7 @@ Automatically:
 
 - Docs: https://www.source2toolkit.net  
 - Getting Started: https://www.source2toolkit.net/docs
-- API Reference: https://www.source2toolkit.net/docs
+- API Reference: https://www.source2toolkit.net/docs/core-api
 
 ---
 
