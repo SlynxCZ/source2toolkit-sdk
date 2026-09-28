@@ -147,6 +147,13 @@ struct HudTextStyle
 {
     HudColor color = HudColor::White;
     HudSize size = HudSize::Normal;
+
+    /// Where the slot sits, relative to the place the stylesheet gives it:
+    /// steps of 40 px on a 1080p reference, -10..10, positive is right and
+    /// down. Classes xm10..xp10 / ym10..yp10 on the slot panel; a value
+    /// outside the range is clamped.
+    int offsetX = 0;
+    int offsetY = 0;
 };
 
 /// The toast and feed styles (t-info, t-success, ...).
@@ -174,7 +181,7 @@ enum class HudOverlay : int
     Count
 };
 
-#define TOOLKIT_HUD_INTERFACE "IToolkitHud002"
+#define TOOLKIT_HUD_INTERFACE "IToolkitHud003"
 
 class IToolkitHud
 {
@@ -197,7 +204,7 @@ public:
      * @param slot    Where
      * @param text    Plain text; "\n" starts a new line, there is no markup
      * @param seconds How long, 0 or less: until HideText()
-     * @param style   Colour and size
+     * @param style   Colour, size and the offset from the slot's place
      */
     virtual void ShowText(CCSPlayerController* player, HudSlot slot, const char* text, float seconds, HudTextStyle style = {}) = 0;
 
