@@ -53,7 +53,6 @@
 #include <type_traits>
 
 #include "khook.hpp"
-#include "IToolkitKHook.h"
 
 /* =========================
 Hook control
