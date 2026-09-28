@@ -61,6 +61,8 @@
  *                                the class `show` and one colour class
  *                                (c-white .. c-grey, see HudColor) and one
  *                                size class (s-small .. s-huge, HudSize)
+ *                                and the offset classes xm10 .. xp10 and
+ *                                ym10 .. yp10 (HudTextStyle::offsetX/Y)
  *   <slot>_text                  a Label inside it with text="{s:text}"
  *   hud_prompt                   the interaction prompt Panel (`show`)
  *   hud_prompt_key               Label text="{s:text}": the key, e.g. "E"
