@@ -111,9 +111,10 @@ class IToolkitTransmit;
 #include "IToolkitGameHooks.h"
 #include "IToolkitGameSystems.h"
 #include "IToolkitHTTP.h"
-#include "IToolkitHud.h"
 #include "IToolkitJSON.h"
+// Menus before the HUD: IToolkitHud.h builds its HudMenu on IBaseMenu.
 #include "IToolkitMenus.h"
+#include "IToolkitHud.h"
 #include "IToolkitMySQL.h"
 #include "IToolkitNetworkMessages.h"
 #include "IToolkitPaths.h"
@@ -509,6 +510,8 @@ Globals
     IToolkitGameHooks*       g_pToolkitGameHooks       = nullptr; \
     IToolkitGameSystems*     g_pToolkitGameSystems     = nullptr; \
     IToolkitHTTP*            g_pToolkitHTTP            = nullptr; \
+    /* Served by the s2t_hud plugin: stays null until the plugin fetches it \
+       in OnAllToolkitPluginsLoaded() -- see IToolkitHud.h. */ \
     IToolkitHud*             g_pToolkitHud             = nullptr; \
     IToolkitJSON*            g_pToolkitJSON            = nullptr; \
     IToolkitMenus*           g_pToolkitMenus           = nullptr; \
@@ -584,7 +587,6 @@ Globals
     g_pToolkitGameHooks       = (IToolkitGameHooks*)      (api)->ToolkitFactory(TOOLKIT_GAMEHOOKS_INTERFACE,       nullptr, nullptr); \
     g_pToolkitGameSystems     = (IToolkitGameSystems*)    (api)->ToolkitFactory(TOOLKIT_GAMESYSTEMS_INTERFACE,     nullptr, nullptr); \
     g_pToolkitHTTP            = (IToolkitHTTP*)           (api)->ToolkitFactory(TOOLKIT_HTTP_INTERFACE,            nullptr, nullptr); \
-    g_pToolkitHud             = (IToolkitHud*)            (api)->ToolkitFactory(TOOLKIT_HUD_INTERFACE,             nullptr, nullptr); \
     g_pToolkitMenus           = (IToolkitMenus*)          (api)->ToolkitFactory(TOOLKIT_MENUS_INTERFACE,           nullptr, nullptr); \
     g_pToolkitMySQL           = (IToolkitMySQL*)          (api)->ToolkitFactory(TOOLKIT_MYSQL_INTERFACE,           nullptr, nullptr); \
     g_pToolkitNetworkMessages = (IToolkitNetworkMessages*)(api)->ToolkitFactory(TOOLKIT_NETWORKMESSAGES_INTERFACE, nullptr, nullptr); \

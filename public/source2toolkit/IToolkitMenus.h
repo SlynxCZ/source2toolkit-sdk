@@ -49,9 +49,15 @@
 #define _INCLUDE_ITOOLKIT_MENUS_H
 
 #pragma once
-#include "IToolkitPlugin.h"
+// Only the types: IToolkitPlugin.h includes this header (and IToolkitHud.h,
+// whose HudMenu builds on IBaseMenu), so it must not include that one back.
+#include "IToolkitTypes.h"
 
 #include "eiface.h"
+
+// The same alias IToolkitTypes.h declares, repeated so this header reads the
+// same whichever header of the SDK pulled it in first.
+using PluginId = int;
 
 #include <string>
 #include <vector>
@@ -334,6 +340,36 @@ public:
      */
     virtual void Close() = 0;
 
+    /* =========================
+    IToolkitMenus005
+    ========================= */
+
+    /**
+     * @brief Once a frame while this is the player's open menu.
+     *
+     * The default redraws, which is what a center HTML menu needs (it
+     * fades). A menu drawn on a HUD layout overrides it to refresh only
+     * when something changed.
+     */
+    virtual void OnFrame() { Display(); }
+
+    /**
+     * @brief Whether the number keys (chat triggers, binds) pick options.
+     *
+     * A menu the player clicks instead returns false and the core drops
+     * the key presses while it is open.
+     */
+    virtual bool AcceptsKeys() const { return true; }
+
+    /**
+     * @brief Destroys the instance.
+     *
+     * The core calls this, never delete, when the menu is closed, replaced
+     * or the player leaves -- so an instance a plugin built (OpenMenu) is
+     * freed by the library that allocated it.
+     */
+    virtual void Destroy() { delete this; }
+
     /**
      * @brief Gets underlying menu.
      *
@@ -462,66 +498,13 @@ public:
 };
 
 /* =========================
-Panorama HUD menu
-========================= */
-
-/**
- * @brief A menu drawn with a custom_hud_layout (IToolkitMenus::OpenHudMenu).
- *
- * The same options and handlers as CenterHtmlMenu; only the screen differs.
- * The player clicks the rows or presses 1-6 (the options of the page), 7
- * (previous page), 8 (next page), 9 (close), so the chat triggers keep
- * working. The navigation texts are the plugin's, which is how they get to
- * be in the player's language.
- *
- * Needs the menu layout (HudMenuLayout in core.json; the reference layout is
- * panorama/layout/custom_game/s2t_menu.xml in the toolkit repository) in an
- * addon the player has. A player without it sees nothing.
- */
-/// Where on the screen a HudMenu is drawn; a class on the layout's menu_root.
-enum class HudMenuPosition : int
-{
-    Left = 0,
-    Center,
-    Right,
-};
-
-class HudMenu : public IBaseMenu
-{
-public:
-    explicit HudMenu(std::string title)
-        : IBaseMenu(std::move(title))
-    {
-        SetExitButton(true);
-    }
-
-    std::string PrevText = "Prev";
-    std::string NextText = "Next";
-    std::string CloseText = "Close";
-
-    /// Dims the screen behind the menu.
-    bool DimBackground = true;
-
-    /// With input capture the player gets a cursor and can click the rows,
-    /// but cannot move or aim while the menu is open. Without it the menu is
-    /// display-only: the number keys (binds, chat triggers) pick the options
-    /// and the player keeps playing. Per menu, so a plugin can make it the
-    /// player's choice.
-    bool CaptureInput = true;
-
-    /// Where the window sits: the core puts one of the classes pos-left,
-    /// pos-center, pos-right on menu_root and the stylesheet places it.
-    HudMenuPosition Position = HudMenuPosition::Left;
-};
-
-/* =========================
 Core Toolkit Menus
 ========================= */
 
 /**
  * @brief Interface for menu system management.
  */
-#define TOOLKIT_MENUS_INTERFACE "IToolkitMenus004"
+#define TOOLKIT_MENUS_INTERFACE "IToolkitMenus005"
 
 class IToolkitMenus
 {
@@ -566,21 +549,22 @@ public:
     virtual void OnKeyPress(CCSPlayerController* player, int key) = 0;
 
     /**
-     * @brief Opens a HudMenu for a player, on the Panorama HUD.
+     * @brief Opens a menu instance another library built.
      *
-     * @param owner Plugin the menu belongs to
-     * @param player Target player
-     * @param menu Menu to open
+     * The instance is drawn, refreshed (OnFrame) and fed the keys by the
+     * core like its own, and Destroy()ed when closed, replaced, the player
+     * leaves or `owner` unloads. This is how the s2t_hud plugin serves its
+     * HudMenu (IToolkitHud::OpenMenu); a plugin with a screen of its own
+     * can do the same.
      *
-     * @note Closed for you as OpenCenterHtmlMenu's are. Draws nothing for a
-     *       player without the layout; where that cannot be assumed, a
-     *       CenterHtmlMenu is the fallback.
+     * @param owner    Plugin the menu belongs to (whose unload closes it)
+     * @param player   Target player
+     * @param instance Built with new by the caller; the core owns it from here
      */
-    virtual void OpenHudMenu(PluginId owner, CCSPlayerController* player, HudMenu* menu) = 0;
+    virtual void OpenMenu(PluginId owner, CCSPlayerController* player, IMenuInstance* instance) = 0;
 };
 
 #define OPEN_CENTER_HTML_MENU(player, menu)  g_pToolkitMenus->OpenCenterHtmlMenu(g_PluginID, player, menu)
-#define OPEN_HUD_MENU(player, menu)          g_pToolkitMenus->OpenHudMenu(g_PluginID, player, menu)
 #define GET_ACTIVE_MENU(player)              g_pToolkitMenus->GetActiveMenu(player)
 #define CLOSE_ACTIVE_MENU(player)            g_pToolkitMenus->CloseActiveMenu(player)
 #define MENU_ON_KEY_PRESS(player, key)       g_pToolkitMenus->OnKeyPress(player, key)

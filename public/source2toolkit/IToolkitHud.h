@@ -44,17 +44,30 @@
  * Text a plugin puts on a player's screen used to be a point_worldtext parented
  * to the pawn or a center HTML print redrawn every tick. This interface draws
  * it with a `custom_hud_layout` instead: crisp, positioned by the stylesheet,
- * per player, and gone when its time is up. The core owns the one layout
- * entity (created on first use, per map) and the per-player state; a plugin
- * calls ShowText() and forgets about it.
+ * per player, and gone when its time is up. The layout entities (created on
+ * first use, per map) and the per-player state belong to the interface; a
+ * plugin calls ShowText() and forgets about it.
  *
- * What the client needs: the layout named by `HudTextLayout` in core.json
- * (default "s2t_hud"), compiled into an addon the players have -- see
- * panorama/README.md in the toolkit repository, which ships the reference
- * layout and stylesheet. The layout has to follow the id contract below; the
- * stylesheet is free.
+ * Served by the s2t_hud plugin, not the core: it is not filled by
+ * TOOLKIT_SAVEVARS(). Fetch it once every plugin is loaded:
  *
- * Layout contract (panel ids the core addresses):
+ *   void MyPlugin::OnAllToolkitPluginsLoaded()
+ *   {
+ *       int ret;
+ *       GET_TOOLKIT_IFACE(g_pToolkitHud, IToolkitHud, TOOLKIT_HUD_INTERFACE, ret);
+ *   }
+ *
+ * and treat a null g_pToolkitHud as "no HUD" (the plugin is not installed,
+ * or it is older than this header). The HudMenu below is a menu drawn by the
+ * same plugin through the core's menu system (IToolkitMenus::OpenMenu).
+ *
+ * What the client needs: the layouts "s2t_hud" (texts) and "s2t_menu"
+ * (menus), compiled into an addon the players have -- see panorama/README.md
+ * in the toolkit repository, which ships the reference layouts and
+ * stylesheets. A layout has to follow the id contract below; the stylesheet
+ * is free.
+ *
+ * Layout contract (panel ids the plugin addresses):
  *
  *   hud_top, hud_topleft, hud_topright, hud_left, hud_right, hud_center,
  *   hud_bottom, hud_panel        one Panel per HudSlot; the core toggles
@@ -90,6 +103,10 @@
  *   hud_feed_N_time, _text       Labels text="{s:text}"
  *   hud_overlay                  full-screen tint (`show`, o-* of HudOverlay)
  *   hud_overlay_text             Label text="{s:text}"
+ *   hud_timer                    the big timer (`show`, c-*, tick-a / tick-b per call)
+ *   hud_timer_tag, _num, _sub    Labels text="{s:text}": the pill, the time, the line under it
+ *   hud_card                     the corner card (`show`, c-*)
+ *   hud_card_tag, _title, _sub   Labels text="{s:text}"
  *
  * Everything is per player: what one player sees, nobody else does.
  */
@@ -99,6 +116,7 @@
 
 #pragma once
 #include "IToolkitPlugin.h"
+#include "IToolkitMenus.h"
 
 class CCSPlayerController;
 
@@ -183,7 +201,66 @@ enum class HudOverlay : int
     Count
 };
 
-#define TOOLKIT_HUD_INTERFACE "IToolkitHud003"
+/* =========================
+Panorama HUD menu
+========================= */
+
+/// Where on the screen a HudMenu is drawn; a class on the layout's menu_root.
+enum class HudMenuPosition : int
+{
+    Left = 0,
+    Center,
+    Right,
+};
+
+/**
+ * @brief A menu drawn with a custom_hud_layout (IToolkitHud::OpenMenu).
+ *
+ * The same options and handlers as CenterHtmlMenu; only the screen differs.
+ * The player clicks the rows or presses 1-6 (the options of the page), 7
+ * (previous page), 8 (next page), 9 (close), so the chat triggers keep
+ * working. The navigation texts are the plugin's, which is how they get to
+ * be in the player's language.
+ *
+ * Needs the menu layout ("s2t_menu"; the reference layout is
+ * panorama/layout/custom_game/s2t_menu.xml in the toolkit repository) in an
+ * addon the player has. A player without it sees nothing.
+ */
+class HudMenu : public IBaseMenu
+{
+public:
+    explicit HudMenu(std::string title)
+        : IBaseMenu(std::move(title))
+    {
+        SetExitButton(true);
+    }
+
+    std::string PrevText = "Prev";
+    std::string NextText = "Next";
+    std::string CloseText = "Close";
+
+    /// Dims the screen behind the menu.
+    bool DimBackground = true;
+
+    /// With input capture the player gets a cursor and can click the rows,
+    /// but cannot move or aim while the menu is open. Without it the menu is
+    /// display-only: the number keys (binds, chat triggers) pick the options
+    /// and the player keeps playing. Per menu, so a plugin can make it the
+    /// player's choice.
+    bool CaptureInput = true;
+
+    /// A dead player cannot use the slot binds (they do nothing without a
+    /// pawn), so a menu without CaptureInput takes the mouse for as long as
+    /// the player is dead and lets go on respawn. The keys and the chat
+    /// triggers keep working meanwhile; the clicks are added, not swapped in.
+    bool CaptureWhenDead = true;
+
+    /// Where the window sits: one of the classes pos-left, pos-center,
+    /// pos-right goes on menu_root and the stylesheet places it.
+    HudMenuPosition Position = HudMenuPosition::Left;
+};
+
+#define TOOLKIT_HUD_INTERFACE "IToolkitHud004"
 
 class IToolkitHud
 {
@@ -321,6 +398,60 @@ public:
     virtual void ShowOverlay(CCSPlayerController* player, HudOverlay overlay, const char* text, float seconds) = 0;
 
     virtual void HideOverlay(CCSPlayerController* player) = 0;
+
+    /* =========================
+    IToolkitHud004
+    ========================= */
+
+    /**
+     * @brief Opens a HudMenu for a player, on the Panorama HUD.
+     *
+     * Goes through the core's menu system (IToolkitMenus::OpenMenu), so it
+     * closes the player's other menu, takes the number keys and the clicks,
+     * and is closed for you when `owner` unloads. Draws nothing for a
+     * player without the layout; where that cannot be assumed, a
+     * CenterHtmlMenu is the fallback.
+     *
+     * @param owner  Plugin the menu belongs to
+     * @param player Target player
+     * @param menu   The menu; must outlive the time it is open
+     */
+    virtual void OpenMenu(PluginId owner, CCSPlayerController* player, HudMenu* menu) = 0;
+
+    /**
+     * @brief The big timer: a tag pill, a large time and a line under it,
+     *        with a halo in the colour; each call pulses the number.
+     *
+     * A countdown is one call a second with the new time; the caller keeps
+     * the clock. Stays until HideTimer().
+     *
+     * @param player Who sees it
+     * @param tag    The pill above the number, e.g. "FREE DAY"; "" for none
+     * @param time   The number, e.g. "2:45"
+     * @param sub    The line under it; "" for none
+     * @param color  The halo and the number
+     */
+    virtual void ShowTimer(CCSPlayerController* player, const char* tag, const char* time, const char* sub, HudColor color) = 0;
+
+    virtual void HideTimer(CCSPlayerController* player) = 0;
+
+    /**
+     * @brief The corner card: a tag, a title and a subtitle in a box at the
+     *        top left -- the day of a jail, the role of a player, the mode.
+     *
+     * Stays until HideCard(); a new call replaces the texts in place.
+     *
+     * @param player Who sees it
+     * @param tag    Small line above the title, e.g. "DAY 3"; "" for none
+     * @param title  The big line
+     * @param sub    The line under it; "" for none
+     * @param color  The edge and the tag
+     */
+    virtual void ShowCard(CCSPlayerController* player, const char* tag, const char* title, const char* sub, HudColor color) = 0;
+
+    virtual void HideCard(CCSPlayerController* player) = 0;
 };
+
+#define OPEN_HUD_MENU(player, menu)  g_pToolkitHud->OpenMenu(g_PluginID, player, menu)
 
 #endif //_INCLUDE_ITOOLKIT_HUD_H
