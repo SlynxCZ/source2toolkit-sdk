@@ -237,6 +237,11 @@ protected:
     // forward-declared where this header lands (the end of IToolkitPlugin.h),
     // so they are defined in the SDK's src/utils/hooks.cpp.
     static void Warn(const char* pszFormat, const char* pszName);
+    // windows.h defines FreeModule as a macro; IToolkitApi.h drops it, but
+    // this header can land first (IToolkitMenus.h -> IToolkitTypes.h).
+#ifdef FreeModule
+#undef FreeModule
+#endif
     static void FreeModule(IToolkitModule* pModule);
     static int GetOffset(const char* pszName);
     static IToolkitMemory ResolveSignature(const char* pszName);
