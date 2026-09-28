@@ -67,8 +67,9 @@
  * original and post after it; in post, `result` holds what the original
  * returned.
  *
- * The handlers are the plugin's until it unhooks them or unloads, whichever
- * comes first; nothing to undo in Unload().
+ * HookX() returns a GameHookId for UnhookX(); a plugin may have several
+ * handlers on one function. The handlers are the plugin's until it unhooks
+ * them or unloads, whichever comes first; nothing to undo in Unload().
  */
 
 #ifndef _INCLUDE_ITOOLKIT_GAMEHOOKS_H
@@ -325,7 +326,12 @@ struct ModernJumpContext
 template <typename CONTEXT>
 using GameHookHandler = std::function<Action(CONTEXT& ctx, bool post)>;
 
-/// The hooks, for Unhook() and IsAvailable().
+/// What HookX() returns and UnhookX() takes: one registered handler. A plugin
+/// may register several handlers on the same function and drop any one of
+/// them; whatever it still holds at unload the core drops for it.
+using GameHookId = int;
+
+/// The hooks, for IsAvailable().
 enum class GameHook : int
 {
     TakeDamage,
@@ -376,47 +382,78 @@ class IToolkitGameHooks
 public:
     virtual ~IToolkitGameHooks() = default;
 
-    virtual void HookTakeDamage(PluginId owner, GameHookHandler<TakeDamageContext> handler, bool post) = 0;
-    virtual void HookCanAcquire(PluginId owner, GameHookHandler<CanAcquireContext> handler, bool post) = 0;
-    virtual void HookCanMove(PluginId owner, GameHookHandler<CanMoveContext> handler, bool post) = 0;
-    virtual void HookCanUse(PluginId owner, GameHookHandler<CanUseContext> handler, bool post) = 0;
-    virtual void HookPostThink(PluginId owner, GameHookHandler<PostThinkContext> handler, bool post) = 0;
-    virtual void HookProcessUsercmds(PluginId owner, GameHookHandler<ProcessUsercmdsContext> handler, bool post) = 0;
-    virtual void HookSimulateUserCommands(PluginId owner, GameHookHandler<SimulateUserCommandsContext> handler, bool post) = 0;
-    virtual void HookRunCommand(PluginId owner, GameHookHandler<RunCommandContext> handler, bool post) = 0;
-    virtual void HookAcceptInput(PluginId owner, GameHookHandler<AcceptInputContext> handler, bool post) = 0;
-    virtual void HookTouch(PluginId owner, GameHookHandler<TouchContext> handler, bool post) = 0;
-    virtual void HookDropWeapon(PluginId owner, GameHookHandler<DropWeaponContext> handler, bool post) = 0;
-    virtual void HookAirAccelerate(PluginId owner, GameHookHandler<AirAccelerateContext> handler, bool post) = 0;
-    virtual void HookAirMove(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
-    virtual void HookCanUnduck(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
-    virtual void HookCategorizePosition(PluginId owner, GameHookHandler<CategorizePositionContext> handler, bool post) = 0;
-    virtual void HookCheckFalling(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
-    virtual void HookCheckParameters(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
-    virtual void HookCheckVelocity(PluginId owner, GameHookHandler<CheckVelocityContext> handler, bool post) = 0;
-    virtual void HookCheckWater(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
-    virtual void HookDuck(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
-    virtual void HookFriction(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
-    virtual void HookFullWalkMove(PluginId owner, GameHookHandler<FullWalkMoveContext> handler, bool post) = 0;
-    virtual void HookGroundAccelerate(PluginId owner, GameHookHandler<GroundAccelerateContext> handler, bool post) = 0;
-    virtual void HookLadderMove(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
-    virtual void HookMoveInit(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
-    virtual void HookPlayerMove(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
-    virtual void HookProcessMovement(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
-    virtual void HookSetupMove(PluginId owner, GameHookHandler<SetupMoveContext> handler, bool post) = 0;
-    virtual void HookTryPlayerMove(PluginId owner, GameHookHandler<TryPlayerMoveContext> handler, bool post) = 0;
-    virtual void HookWalkMove(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
-    virtual void HookWaterMove(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
-    virtual void HookOnJumpLegacy(PluginId owner, GameHookHandler<LegacyJumpContext> handler, bool post) = 0;
-    virtual void HookOnJumpModern(PluginId owner, GameHookHandler<ModernJumpContext> handler, bool post) = 0;
-    virtual void HookCheckJumpButtonLegacy(PluginId owner, GameHookHandler<LegacyJumpContext> handler, bool post) = 0;
-    virtual void HookCheckJumpButtonModern(PluginId owner, GameHookHandler<ModernJumpContext> handler, bool post) = 0;
+    virtual GameHookId HookTakeDamage(PluginId owner, GameHookHandler<TakeDamageContext> handler, bool post) = 0;
+    virtual GameHookId HookCanAcquire(PluginId owner, GameHookHandler<CanAcquireContext> handler, bool post) = 0;
+    virtual GameHookId HookCanMove(PluginId owner, GameHookHandler<CanMoveContext> handler, bool post) = 0;
+    virtual GameHookId HookCanUse(PluginId owner, GameHookHandler<CanUseContext> handler, bool post) = 0;
+    virtual GameHookId HookPostThink(PluginId owner, GameHookHandler<PostThinkContext> handler, bool post) = 0;
+    virtual GameHookId HookProcessUsercmds(PluginId owner, GameHookHandler<ProcessUsercmdsContext> handler, bool post) = 0;
+    virtual GameHookId HookSimulateUserCommands(PluginId owner, GameHookHandler<SimulateUserCommandsContext> handler, bool post) = 0;
+    virtual GameHookId HookRunCommand(PluginId owner, GameHookHandler<RunCommandContext> handler, bool post) = 0;
+    virtual GameHookId HookAcceptInput(PluginId owner, GameHookHandler<AcceptInputContext> handler, bool post) = 0;
+    virtual GameHookId HookTouch(PluginId owner, GameHookHandler<TouchContext> handler, bool post) = 0;
+    virtual GameHookId HookDropWeapon(PluginId owner, GameHookHandler<DropWeaponContext> handler, bool post) = 0;
+    virtual GameHookId HookAirAccelerate(PluginId owner, GameHookHandler<AirAccelerateContext> handler, bool post) = 0;
+    virtual GameHookId HookAirMove(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
+    virtual GameHookId HookCanUnduck(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
+    virtual GameHookId HookCategorizePosition(PluginId owner, GameHookHandler<CategorizePositionContext> handler, bool post) = 0;
+    virtual GameHookId HookCheckFalling(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
+    virtual GameHookId HookCheckParameters(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
+    virtual GameHookId HookCheckVelocity(PluginId owner, GameHookHandler<CheckVelocityContext> handler, bool post) = 0;
+    virtual GameHookId HookCheckWater(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
+    virtual GameHookId HookDuck(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
+    virtual GameHookId HookFriction(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
+    virtual GameHookId HookFullWalkMove(PluginId owner, GameHookHandler<FullWalkMoveContext> handler, bool post) = 0;
+    virtual GameHookId HookGroundAccelerate(PluginId owner, GameHookHandler<GroundAccelerateContext> handler, bool post) = 0;
+    virtual GameHookId HookLadderMove(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
+    virtual GameHookId HookMoveInit(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
+    virtual GameHookId HookPlayerMove(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
+    virtual GameHookId HookProcessMovement(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
+    virtual GameHookId HookSetupMove(PluginId owner, GameHookHandler<SetupMoveContext> handler, bool post) = 0;
+    virtual GameHookId HookTryPlayerMove(PluginId owner, GameHookHandler<TryPlayerMoveContext> handler, bool post) = 0;
+    virtual GameHookId HookWalkMove(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
+    virtual GameHookId HookWaterMove(PluginId owner, GameHookHandler<MovementContext> handler, bool post) = 0;
+    virtual GameHookId HookOnJumpLegacy(PluginId owner, GameHookHandler<LegacyJumpContext> handler, bool post) = 0;
+    virtual GameHookId HookOnJumpModern(PluginId owner, GameHookHandler<ModernJumpContext> handler, bool post) = 0;
+    virtual GameHookId HookCheckJumpButtonLegacy(PluginId owner, GameHookHandler<LegacyJumpContext> handler, bool post) = 0;
+    virtual GameHookId HookCheckJumpButtonModern(PluginId owner, GameHookHandler<ModernJumpContext> handler, bool post) = 0;
 
-    /// Drops every handler `owner` registered on `hook` for that pass.
-    virtual void Unhook(PluginId owner, GameHook hook, bool post) = 0;
-
-    /// Drops every handler `owner` registered. The core does this on unload.
-    virtual void UnhookAll(PluginId owner) = 0;
+    /// Drops the one handler HookX() returned that id for.
+    virtual void UnhookTakeDamage(GameHookId id) = 0;
+    virtual void UnhookCanAcquire(GameHookId id) = 0;
+    virtual void UnhookCanMove(GameHookId id) = 0;
+    virtual void UnhookCanUse(GameHookId id) = 0;
+    virtual void UnhookPostThink(GameHookId id) = 0;
+    virtual void UnhookProcessUsercmds(GameHookId id) = 0;
+    virtual void UnhookSimulateUserCommands(GameHookId id) = 0;
+    virtual void UnhookRunCommand(GameHookId id) = 0;
+    virtual void UnhookAcceptInput(GameHookId id) = 0;
+    virtual void UnhookTouch(GameHookId id) = 0;
+    virtual void UnhookDropWeapon(GameHookId id) = 0;
+    virtual void UnhookAirAccelerate(GameHookId id) = 0;
+    virtual void UnhookAirMove(GameHookId id) = 0;
+    virtual void UnhookCanUnduck(GameHookId id) = 0;
+    virtual void UnhookCategorizePosition(GameHookId id) = 0;
+    virtual void UnhookCheckFalling(GameHookId id) = 0;
+    virtual void UnhookCheckParameters(GameHookId id) = 0;
+    virtual void UnhookCheckVelocity(GameHookId id) = 0;
+    virtual void UnhookCheckWater(GameHookId id) = 0;
+    virtual void UnhookDuck(GameHookId id) = 0;
+    virtual void UnhookFriction(GameHookId id) = 0;
+    virtual void UnhookFullWalkMove(GameHookId id) = 0;
+    virtual void UnhookGroundAccelerate(GameHookId id) = 0;
+    virtual void UnhookLadderMove(GameHookId id) = 0;
+    virtual void UnhookMoveInit(GameHookId id) = 0;
+    virtual void UnhookPlayerMove(GameHookId id) = 0;
+    virtual void UnhookProcessMovement(GameHookId id) = 0;
+    virtual void UnhookSetupMove(GameHookId id) = 0;
+    virtual void UnhookTryPlayerMove(GameHookId id) = 0;
+    virtual void UnhookWalkMove(GameHookId id) = 0;
+    virtual void UnhookWaterMove(GameHookId id) = 0;
+    virtual void UnhookOnJumpLegacy(GameHookId id) = 0;
+    virtual void UnhookOnJumpModern(GameHookId id) = 0;
+    virtual void UnhookCheckJumpButtonLegacy(GameHookId id) = 0;
+    virtual void UnhookCheckJumpButtonModern(GameHookId id) = 0;
 
     /// False when the core's gamedata has no entry for the function on this
     /// platform -- handlers can still be registered, they just never run.
