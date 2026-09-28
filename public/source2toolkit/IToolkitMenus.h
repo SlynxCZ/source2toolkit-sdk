@@ -462,13 +462,47 @@ public:
 };
 
 /* =========================
+Panorama HUD menu
+========================= */
+
+/**
+ * @brief A menu drawn with a custom_hud_layout (IToolkitMenus::OpenHudMenu).
+ *
+ * The same options and handlers as CenterHtmlMenu; only the screen differs.
+ * The player clicks the rows or presses 1-6 (the options of the page), 7
+ * (previous page), 8 (next page), 9 (close), so the chat triggers keep
+ * working. The navigation texts are the plugin's, which is how they get to
+ * be in the player's language.
+ *
+ * Needs the menu layout (HudMenuLayout in core.json; the reference layout is
+ * panorama/layout/custom_game/s2t_menu.xml in the toolkit repository) in an
+ * addon the player has. A player without it sees nothing.
+ */
+class HudMenu : public IBaseMenu
+{
+public:
+    explicit HudMenu(std::string title)
+        : IBaseMenu(std::move(title))
+    {
+        SetExitButton(true);
+    }
+
+    std::string PrevText = "Prev";
+    std::string NextText = "Next";
+    std::string CloseText = "Close";
+
+    /// Dims the screen behind the menu.
+    bool DimBackground = true;
+};
+
+/* =========================
 Core Toolkit Menus
 ========================= */
 
 /**
  * @brief Interface for menu system management.
  */
-#define TOOLKIT_MENUS_INTERFACE "IToolkitMenus002"
+#define TOOLKIT_MENUS_INTERFACE "IToolkitMenus003"
 
 class IToolkitMenus
 {
@@ -511,9 +545,23 @@ public:
      * @param key Pressed key (1-9)
      */
     virtual void OnKeyPress(CCSPlayerController* player, int key) = 0;
+
+    /**
+     * @brief Opens a HudMenu for a player, on the Panorama HUD.
+     *
+     * @param owner Plugin the menu belongs to
+     * @param player Target player
+     * @param menu Menu to open
+     *
+     * @note Closed for you as OpenCenterHtmlMenu's are. Draws nothing for a
+     *       player without the layout; where that cannot be assumed, a
+     *       CenterHtmlMenu is the fallback.
+     */
+    virtual void OpenHudMenu(PluginId owner, CCSPlayerController* player, HudMenu* menu) = 0;
 };
 
 #define OPEN_CENTER_HTML_MENU(player, menu)  g_pToolkitMenus->OpenCenterHtmlMenu(g_PluginID, player, menu)
+#define OPEN_HUD_MENU(player, menu)          g_pToolkitMenus->OpenHudMenu(g_PluginID, player, menu)
 #define GET_ACTIVE_MENU(player)              g_pToolkitMenus->GetActiveMenu(player)
 #define CLOSE_ACTIVE_MENU(player)            g_pToolkitMenus->CloseActiveMenu(player)
 #define MENU_ON_KEY_PRESS(player, key)       g_pToolkitMenus->OnKeyPress(player, key)

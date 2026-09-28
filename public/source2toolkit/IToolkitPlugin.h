@@ -111,6 +111,7 @@ class IToolkitTransmit;
 #include "IToolkitGameHooks.h"
 #include "IToolkitGameSystems.h"
 #include "IToolkitHTTP.h"
+#include "IToolkitHud.h"
 #include "IToolkitJSON.h"
 #include "IToolkitMenus.h"
 #include "IToolkitMySQL.h"
@@ -508,6 +509,7 @@ Globals
     IToolkitGameHooks*       g_pToolkitGameHooks       = nullptr; \
     IToolkitGameSystems*     g_pToolkitGameSystems     = nullptr; \
     IToolkitHTTP*            g_pToolkitHTTP            = nullptr; \
+    IToolkitHud*             g_pToolkitHud             = nullptr; \
     IToolkitJSON*            g_pToolkitJSON            = nullptr; \
     IToolkitMenus*           g_pToolkitMenus           = nullptr; \
     IToolkitMySQL*           g_pToolkitMySQL           = nullptr; \
@@ -551,6 +553,7 @@ Globals
     extern IToolkitGameHooks*       g_pToolkitGameHooks; \
     extern IToolkitGameSystems*     g_pToolkitGameSystems; \
     extern IToolkitHTTP*            g_pToolkitHTTP; \
+    extern IToolkitHud*             g_pToolkitHud; \
     extern IToolkitJSON*            g_pToolkitJSON; \
     extern IToolkitMenus*           g_pToolkitMenus; \
     extern IToolkitMySQL*           g_pToolkitMySQL; \
@@ -581,6 +584,7 @@ Globals
     g_pToolkitGameHooks       = (IToolkitGameHooks*)      (api)->ToolkitFactory(TOOLKIT_GAMEHOOKS_INTERFACE,       nullptr, nullptr); \
     g_pToolkitGameSystems     = (IToolkitGameSystems*)    (api)->ToolkitFactory(TOOLKIT_GAMESYSTEMS_INTERFACE,     nullptr, nullptr); \
     g_pToolkitHTTP            = (IToolkitHTTP*)           (api)->ToolkitFactory(TOOLKIT_HTTP_INTERFACE,            nullptr, nullptr); \
+    g_pToolkitHud             = (IToolkitHud*)            (api)->ToolkitFactory(TOOLKIT_HUD_INTERFACE,             nullptr, nullptr); \
     g_pToolkitMenus           = (IToolkitMenus*)          (api)->ToolkitFactory(TOOLKIT_MENUS_INTERFACE,           nullptr, nullptr); \
     g_pToolkitMySQL           = (IToolkitMySQL*)          (api)->ToolkitFactory(TOOLKIT_MYSQL_INTERFACE,           nullptr, nullptr); \
     g_pToolkitNetworkMessages = (IToolkitNetworkMessages*)(api)->ToolkitFactory(TOOLKIT_NETWORKMESSAGES_INTERFACE, nullptr, nullptr); \
