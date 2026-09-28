@@ -112,9 +112,7 @@ class IToolkitTransmit;
 #include "IToolkitGameSystems.h"
 #include "IToolkitHTTP.h"
 #include "IToolkitJSON.h"
-// Menus before the HUD: IToolkitHud.h builds its HudMenu on IBaseMenu.
 #include "IToolkitMenus.h"
-#include "IToolkitHud.h"
 #include "IToolkitMySQL.h"
 #include "IToolkitNetworkMessages.h"
 #include "IToolkitPaths.h"
@@ -510,9 +508,6 @@ Globals
     IToolkitGameHooks*       g_pToolkitGameHooks       = nullptr; \
     IToolkitGameSystems*     g_pToolkitGameSystems     = nullptr; \
     IToolkitHTTP*            g_pToolkitHTTP            = nullptr; \
-    /* Served by the CustomhudManager_s2t plugin: stays null until the plugin fetches it \
-       in OnAllToolkitPluginsLoaded() -- see IToolkitHud.h. */ \
-    IToolkitHud*             g_pToolkitHud             = nullptr; \
     IToolkitJSON*            g_pToolkitJSON            = nullptr; \
     IToolkitMenus*           g_pToolkitMenus           = nullptr; \
     IToolkitMySQL*           g_pToolkitMySQL           = nullptr; \
@@ -556,7 +551,6 @@ Globals
     extern IToolkitGameHooks*       g_pToolkitGameHooks; \
     extern IToolkitGameSystems*     g_pToolkitGameSystems; \
     extern IToolkitHTTP*            g_pToolkitHTTP; \
-    extern IToolkitHud*             g_pToolkitHud; \
     extern IToolkitJSON*            g_pToolkitJSON; \
     extern IToolkitMenus*           g_pToolkitMenus; \
     extern IToolkitMySQL*           g_pToolkitMySQL; \

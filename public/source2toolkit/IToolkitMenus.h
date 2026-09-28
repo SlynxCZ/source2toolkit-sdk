@@ -49,8 +49,9 @@
 #define _INCLUDE_ITOOLKIT_MENUS_H
 
 #pragma once
-// Only the types: IToolkitPlugin.h includes this header (and IToolkitHud.h,
-// whose HudMenu builds on IBaseMenu), so it must not include that one back.
+// Only the types: IToolkitPlugin.h includes this header, and so does the
+// CustomhudManager_s2t plugin's header (its HudMenu builds on IBaseMenu),
+// so it must not include the plugin header back.
 #include "IToolkitTypes.h"
 
 #include "eiface.h"
@@ -554,7 +555,7 @@ public:
      * The instance is drawn, refreshed (OnFrame) and fed the keys by the
      * core like its own, and Destroy()ed when closed, replaced, the player
      * leaves or `owner` unloads. This is how the CustomhudManager_s2t plugin serves its
-     * HudMenu (IToolkitHud::OpenMenu); a plugin with a screen of its own
+     * HudMenu (ICustomhudManager::OpenMenu); a plugin with a screen of its own
      * can do the same.
      *
      * @param owner    Plugin the menu belongs to (whose unload closes it)
