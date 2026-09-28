@@ -510,7 +510,7 @@ Globals
     IToolkitGameHooks*       g_pToolkitGameHooks       = nullptr; \
     IToolkitGameSystems*     g_pToolkitGameSystems     = nullptr; \
     IToolkitHTTP*            g_pToolkitHTTP            = nullptr; \
-    /* Served by the s2t_hud plugin: stays null until the plugin fetches it \
+    /* Served by the CustomhudManager_s2t plugin: stays null until the plugin fetches it \
        in OnAllToolkitPluginsLoaded() -- see IToolkitHud.h. */ \
     IToolkitHud*             g_pToolkitHud             = nullptr; \
     IToolkitJSON*            g_pToolkitJSON            = nullptr; \

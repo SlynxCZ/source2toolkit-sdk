@@ -553,7 +553,7 @@ public:
      *
      * The instance is drawn, refreshed (OnFrame) and fed the keys by the
      * core like its own, and Destroy()ed when closed, replaced, the player
-     * leaves or `owner` unloads. This is how the s2t_hud plugin serves its
+     * leaves or `owner` unloads. This is how the CustomhudManager_s2t plugin serves its
      * HudMenu (IToolkitHud::OpenMenu); a plugin with a screen of its own
      * can do the same.
      *

@@ -48,7 +48,7 @@
  * first use, per map) and the per-player state belong to the interface; a
  * plugin calls ShowText() and forgets about it.
  *
- * Served by the s2t_hud plugin, not the core: it is not filled by
+ * Served by the CustomhudManager_s2t plugin (customhud_manager.stx), not the core: it is not filled by
  * TOOLKIT_SAVEVARS(). Fetch it once every plugin is loaded:
  *
  *   void MyPlugin::OnAllToolkitPluginsLoaded()
