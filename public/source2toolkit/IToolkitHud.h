@@ -37,7 +37,9 @@
 
 /**
  * @file IToolkitHud.h
- * @brief On-screen text and interaction prompts on the Panorama HUD.
+ * @brief On-screen text, prompts, toasts, announcements, countdowns, status
+ *        chips, progress bars, hit feedback, an event feed and overlays on
+ *        the Panorama HUD.
  *
  * Text a plugin puts on a player's screen used to be a point_worldtext parented
  * to the pawn or a center HTML print redrawn every tick. This interface draws
@@ -65,6 +67,27 @@
  *   hud_prompt_text              Label text="{s:text}": what the key does
  *   hud_prompt_barwrap           Panel shown (`show`) while a progress is given
  *   hud_prompt_bar               Panel that gets one of w0 .. w20 (5 % steps)
+ *   hud_toast_0 .. hud_toast_3   toast cards, newest first (`show`, t-* of
+ *                                HudToastStyle, in-a / in-b to restart the entrance)
+ *   hud_toast_N_title, _text     Labels text="{s:text}"
+ *   hud_announce                 the announcement (`show`, c-*, in-a / in-b)
+ *   hud_announce_title, _sub     Labels text="{s:text}"
+ *   hud_countdown                the countdown (`show`, c-*, pop-a / pop-b per tick)
+ *   hud_countdown_text           Label text="{s:text}"
+ *   hud_status                   the chip row (`show`)
+ *   hud_status_0 .. hud_status_3 chips (`show`, c-*)
+ *   hud_status_N_label, _value   Labels text="{s:text}"
+ *   hud_progress                 the bar (`show`, c-*)
+ *   hud_progress_label, _value   Labels text="{s:text}"
+ *   hud_progress_bar             Panel with w0 .. w20
+ *   hud_hitmarker                crosshair flash (`show`, hit-a / hit-b, headshot, kill)
+ *   hud_damage                   the number next to it (`show`, dmg-a / dmg-b, headshot, kill)
+ *   hud_damage_text              Label text="{s:text}"
+ *   hud_feed                     the feed (`show`)
+ *   hud_feed_0 .. hud_feed_4     rows, newest first (`show`, t-*)
+ *   hud_feed_N_time, _text       Labels text="{s:text}"
+ *   hud_overlay                  full-screen tint (`show`, o-* of HudOverlay)
+ *   hud_overlay_text             Label text="{s:text}"
  *
  * Everything is per player: what one player sees, nobody else does.
  */
@@ -126,7 +149,32 @@ struct HudTextStyle
     HudSize size = HudSize::Normal;
 };
 
-#define TOOLKIT_HUD_INTERFACE "IToolkitHud001"
+/// The toast and feed styles (t-info, t-success, ...).
+enum class HudToastStyle : int
+{
+    Info = 0,
+    Success,
+    Warning,
+    Danger,
+    Neutral,
+
+    Count
+};
+
+/// The full-screen overlays (o-poison, o-burn, ...).
+enum class HudOverlay : int
+{
+    Poison = 0,
+    Burn,
+    Freeze,
+    Heal,
+    Blind,      ///< white-out
+    Black,      ///< fade to black, with an optional label
+
+    Count
+};
+
+#define TOOLKIT_HUD_INTERFACE "IToolkitHud002"
 
 class IToolkitHud
 {
@@ -168,11 +216,102 @@ public:
 
     virtual void HidePrompt(CCSPlayerController* player) = 0;
 
-    /// Every slot and the prompt, for one player.
+    /// Every slot, the prompt and everything below, for one player.
     virtual void HideAll(CCSPlayerController* player) = 0;
 
     /// The layout name the core uses (HudTextLayout in core.json).
     virtual const char* LayoutName() = 0;
+
+    /* =========================
+    IToolkitHud002
+    ========================= */
+
+    /**
+     * @brief A toast: a card in the stack at the top right, newest first.
+     *
+     * Four are kept; a fifth pushes the oldest out. Each goes away after
+     * its own time.
+     *
+     * @param player  Who sees it
+     * @param style   Its colour and the edge (HudToastStyle)
+     * @param title   One line, bold
+     * @param text    The message under it, may wrap; "" for none
+     * @param seconds How long, 0 or less: until ClearToasts() or pushed out
+     */
+    virtual void ShowToast(CCSPlayerController* player, HudToastStyle style, const char* title, const char* text, float seconds) = 0;
+
+    virtual void ClearToasts(CCSPlayerController* player) = 0;
+
+    /**
+     * @brief The big announcement in the upper centre: a title and a line
+     *        under it, with an entrance animation each time.
+     *
+     * @param seconds How long, 0 or less: until HideAnnounce()
+     */
+    virtual void ShowAnnounce(CCSPlayerController* player, const char* title, const char* subtitle, float seconds, HudColor color = HudColor::White) = 0;
+
+    virtual void HideAnnounce(CCSPlayerController* player) = 0;
+
+    /**
+     * @brief The giant centre number or word: "3", "2", "1", "GO". Each call
+     *        pops it again, so a countdown is one call a second.
+     *
+     * @param seconds How long this text stays, 0 or less: until HideCountdown()
+     */
+    virtual void ShowCountdown(CCSPlayerController* player, const char* text, float seconds, HudColor color = HudColor::White) = 0;
+
+    virtual void HideCountdown(CCSPlayerController* player) = 0;
+
+    /**
+     * @brief A status chip in the row under the round timer: a small label
+     *        and a value. Stays until hidden.
+     *
+     * @param chip 0 .. 3, left to right
+     */
+    virtual void ShowStatus(CCSPlayerController* player, int chip, const char* label, const char* value, HudColor color = HudColor::White) = 0;
+
+    /// One chip, or every chip with a negative index.
+    virtual void HideStatus(CCSPlayerController* player, int chip) = 0;
+
+    /**
+     * @brief A labelled progress bar under the crosshair. Stays until
+     *        hidden; call again to move the bar.
+     *
+     * @param value    Text at the right end of the label row, e.g. "7 s"; "" for none
+     * @param progress 0..1
+     */
+    virtual void ShowProgress(CCSPlayerController* player, const char* label, const char* value, float progress, HudColor color = HudColor::White) = 0;
+
+    virtual void HideProgress(CCSPlayerController* player) = 0;
+
+    /**
+     * @brief Hit feedback: the crosshair flashes and the damage drifts up
+     *        next to it, gold on a headshot, red on a kill. Gone by itself.
+     *
+     * @param damage 0 or less: the flash alone
+     */
+    virtual void ShowHit(CCSPlayerController* player, int damage, bool headshot, bool kill) = 0;
+
+    /**
+     * @brief A row in the event feed at the top left, newest first. Five are
+     *        kept; a sixth pushes the oldest out.
+     *
+     * @param time    The short text at the left, e.g. "12:04" or "R3"; "" for none
+     * @param seconds How long the row stays, 0 or less: until ClearFeed() or pushed out
+     */
+    virtual void AddFeed(CCSPlayerController* player, HudToastStyle style, const char* time, const char* text, float seconds) = 0;
+
+    virtual void ClearFeed(CCSPlayerController* player) = 0;
+
+    /**
+     * @brief A full-screen tint: poison, burn, freeze, heal, a white-out or
+     *        a fade to black, with an optional centred label.
+     *
+     * @param seconds How long, 0 or less: until HideOverlay()
+     */
+    virtual void ShowOverlay(CCSPlayerController* player, HudOverlay overlay, const char* text, float seconds) = 0;
+
+    virtual void HideOverlay(CCSPlayerController* player) = 0;
 };
 
 #endif //_INCLUDE_ITOOLKIT_HUD_H
