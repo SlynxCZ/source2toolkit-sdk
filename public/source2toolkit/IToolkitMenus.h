@@ -478,6 +478,14 @@ Panorama HUD menu
  * panorama/layout/custom_game/s2t_menu.xml in the toolkit repository) in an
  * addon the player has. A player without it sees nothing.
  */
+/// Where on the screen a HudMenu is drawn; a class on the layout's menu_root.
+enum class HudMenuPosition : int
+{
+    Left = 0,
+    Center,
+    Right,
+};
+
 class HudMenu : public IBaseMenu
 {
 public:
@@ -493,6 +501,17 @@ public:
 
     /// Dims the screen behind the menu.
     bool DimBackground = true;
+
+    /// With input capture the player gets a cursor and can click the rows,
+    /// but cannot move or aim while the menu is open. Without it the menu is
+    /// display-only: the number keys (binds, chat triggers) pick the options
+    /// and the player keeps playing. Per menu, so a plugin can make it the
+    /// player's choice.
+    bool CaptureInput = true;
+
+    /// Where the window sits: the core puts one of the classes pos-left,
+    /// pos-center, pos-right on menu_root and the stylesheet places it.
+    HudMenuPosition Position = HudMenuPosition::Left;
 };
 
 /* =========================
@@ -502,7 +521,7 @@ Core Toolkit Menus
 /**
  * @brief Interface for menu system management.
  */
-#define TOOLKIT_MENUS_INTERFACE "IToolkitMenus003"
+#define TOOLKIT_MENUS_INTERFACE "IToolkitMenus004"
 
 class IToolkitMenus
 {
