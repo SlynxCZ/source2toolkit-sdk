@@ -1000,8 +1000,10 @@ namespace toolkithook
         using type = POST;
     };
 
-    // Handler with the hooked object first: Virtual and Member hooks.
-    template <typename CALLBACK>
+    // Handler with the hooked object first: Virtual and Member hooks. (The
+    // parameter is not named CALLBACK: windef.h defines that as a macro, and
+    // this header can land after windows.h.)
+    template <typename HANDLER>
     struct MemberTraits;
 
     template <typename CONTEXT, typename RETURN, typename CLASS, typename... ARGS>
@@ -1012,7 +1014,7 @@ namespace toolkithook
     };
 
     // Handler with no hooked object: Function hooks.
-    template <typename CALLBACK>
+    template <typename HANDLER>
     struct FunctionTraits;
 
     template <typename CONTEXT, typename RETURN, typename... ARGS>
