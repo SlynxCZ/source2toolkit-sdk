@@ -284,13 +284,14 @@ public:
     /// The id is a toolkit plugin id -- the one "toolkit list" shows.
     /// Fires for your own plugin too (a listener added in Load() gets it
     /// right after Load() returns); compare against your own id to skip it.
-    virtual void OnPluginLoad(PluginId id)
+    /// The name is what the plugin's GetName() returns.
+    virtual void OnPluginLoad(PluginId id, const char* name)
     {
     }
 
     /// Called when a toolkit plugin (.stx) is about to unload, before its
     /// Unload() runs. Fires for your own plugin too, like OnPluginLoad().
-    virtual void OnPluginUnload(PluginId id)
+    virtual void OnPluginUnload(PluginId id, const char* name)
     {
     }
 
