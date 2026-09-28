@@ -54,6 +54,9 @@
 
 #pragma once
 #include "interfaces/interfaces.h"
+// The engine callbacks on IToolkitListener take the engine's own types.
+#include "eiface.h"
+#include "iserver.h"
 
 #include <cstddef>
 #include <cstdint>
@@ -105,6 +108,7 @@ class IToolkitTransmit;
 #include "IToolkitEntities.h"
 #include "IToolkitEvents.h"
 #include "IToolkitGameConfig.h"
+#include "IToolkitGameHooks.h"
 #include "IToolkitGameSystems.h"
 #include "IToolkitHTTP.h"
 #include "IToolkitJSON.h"
@@ -140,6 +144,7 @@ Export system
 /// to it at load; this is how that same engine reaches a toolkit plugin, so
 /// every hook on the server -- metamod's, the toolkit's, every plugin's --
 /// runs on one instance. TOOLKIT_SAVEVARS() does the fetch.
+#define TOOLKIT_GAMEHOOKS_INTERFACE "IToolkitGameHooks001"
 #define TOOLKIT_KHOOK_INTERFACE "S2ToolkitKHook001"
 
 /// The commit of the KHook the core was compiled against, as a const char*
@@ -197,7 +202,11 @@ inline bool ToolkitKHookVersionMatches(const char* coreCommit, char* error, size
 #define TOOLKIT_INTERFACE_NAME "S2ToolkitPlugin001"
 
 /// Plugin API version
-#define TOOLKIT_PLAPI_VERSION 1
+// 2 (v1.0.26): engine callbacks on IToolkitListener (OnGameFrame ...),
+// IToolkitAPI::GameHooks(). A plugin built against an older version loads
+// (the core calls nothing it does not have); one built against a newer
+// version than the core's is refused.
+#define TOOLKIT_PLAPI_VERSION 2
 
 /// Plugin API interface name
 #define TOOLKIT_PLAPI_NAME "IToolkitPlugin"
@@ -373,6 +382,62 @@ public:
     {
         return OnToolkitQuery(iface, ret);
     }
+
+    /* =========================
+    Engine callbacks -- plugin API 2. Fanned out from the core's own hooks,
+    so a plugin needs no KHook of its own for any of these. "Post" ones run
+    after the engine did its part, the one marked pre before it.
+    ========================= */
+
+    /// Post ISource2Server::GameFrame: once a frame, after the toolkit's own
+    /// per-frame work (timers, menus).
+    virtual void OnGameFrame(bool simulating, bool firstTick, bool lastTick)
+    {
+    }
+
+    /// Post INetworkServerService::StartupServer: a new server session; the
+    /// entity system of the new map is already the toolkit's.
+    virtual void OnStartupServer(const GameSessionConfiguration_t& config, ISource2WorldSession* session, const char* mapName)
+    {
+    }
+
+    /// Post IServerGameClients::ClientPutInServer.
+    virtual void OnClientPutInServer(CPlayerSlot slot, const char* name, int type, uint64 xuid)
+    {
+    }
+
+    /// Post IServerGameClients::ClientVoice.
+    virtual void OnClientVoice(CPlayerSlot slot)
+    {
+    }
+
+    /// Post IServerGameClients::ClientSettingsChanged.
+    virtual void OnClientSettingsChanged(CPlayerSlot slot)
+    {
+    }
+
+    /// Post IServerGameClients::ClientDisconnect.
+    virtual void OnClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char* name, uint64 xuid, const char* networkId)
+    {
+    }
+
+    /// Post ISource2Server::GameServerSteamAPIActivated: the Steam API is up.
+    virtual void OnGameServerSteamAPIActivated()
+    {
+    }
+
+    /// Pre ISource2Server::GameServerSteamAPIDeactivated: the Steam API is
+    /// about to go.
+    virtual void OnGameServerSteamAPIDeactivated()
+    {
+    }
+
+    /// Post IGameEventManager2::LoadEventsFromFile, with the manager it was
+    /// called on: the place to keep it, or to register a .gameevents file of
+    /// your own.
+    virtual void OnLoadEventsFromFile(IGameEventManager2* manager, const char* filename, bool searchAll)
+    {
+    }
 };
 
 /* =========================
@@ -409,6 +474,7 @@ Globals
     IToolkitEntities*        g_pToolkitEntities        = nullptr; \
     IToolkitEvents*          g_pToolkitEvents          = nullptr; \
     IToolkitGameConfig*      g_pToolkitGameConfig      = nullptr; \
+    IToolkitGameHooks*       g_pToolkitGameHooks       = nullptr; \
     IToolkitGameSystems*     g_pToolkitGameSystems     = nullptr; \
     IToolkitHTTP*            g_pToolkitHTTP            = nullptr; \
     IToolkitJSON*            g_pToolkitJSON            = nullptr; \
@@ -450,6 +516,7 @@ Globals
     extern IToolkitEntities*        g_pToolkitEntities; \
     extern IToolkitEvents*          g_pToolkitEvents; \
     extern IToolkitGameConfig*      g_pToolkitGameConfig; \
+    extern IToolkitGameHooks*       g_pToolkitGameHooks; \
     extern IToolkitGameSystems*     g_pToolkitGameSystems; \
     extern IToolkitHTTP*            g_pToolkitHTTP; \
     extern IToolkitJSON*            g_pToolkitJSON; \
@@ -479,6 +546,7 @@ Globals
     g_pToolkitEntities        = (IToolkitEntities*)       (api)->ToolkitFactory(TOOLKIT_ENTITIES_INTERFACE,        nullptr, nullptr); \
     g_pToolkitEvents          = (IToolkitEvents*)         (api)->ToolkitFactory(TOOLKIT_EVENTS_INTERFACE,          nullptr, nullptr); \
     g_pToolkitGameConfig      = (IToolkitGameConfig*)     (api)->ToolkitFactory(TOOLKIT_GAMECONFIG_INTERFACE,      nullptr, nullptr); \
+    g_pToolkitGameHooks       = (IToolkitGameHooks*)      (api)->ToolkitFactory(TOOLKIT_GAMEHOOKS_INTERFACE,       nullptr, nullptr); \
     g_pToolkitGameSystems     = (IToolkitGameSystems*)    (api)->ToolkitFactory(TOOLKIT_GAMESYSTEMS_INTERFACE,     nullptr, nullptr); \
     g_pToolkitHTTP            = (IToolkitHTTP*)           (api)->ToolkitFactory(TOOLKIT_HTTP_INTERFACE,            nullptr, nullptr); \
     g_pToolkitMenus           = (IToolkitMenus*)          (api)->ToolkitFactory(TOOLKIT_MENUS_INTERFACE,           nullptr, nullptr); \

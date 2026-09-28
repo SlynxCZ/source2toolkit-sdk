@@ -106,6 +106,7 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <cstdio>
 #include <type_traits>
 #include <vector>
 
@@ -323,11 +324,32 @@ Virtual
 * @tparam RETURN The hooked function's return type.
 * @tparam ARGS   The hooked function's own arguments.
   */
+/**
+
+* @brief A virtual hook's slot given both ways: the member function pointer
+* the interface header compiles to, and the name of a gamedata offset for the
+* same function. Gamedata wins at KHOOK_INIT(); a difference between the two
+* is reported (one of them is stale), and a missing entry for this platform
+* leaves the interface's index in place. KHOOK_GAMEDATA() makes one.
+  */
+template <typename MFP>
+struct CToolkitVirtualIndex
+{
+    MFP mfp;
+    const char* pszName;
+};
+
+template <typename MFP>
+constexpr CToolkitVirtualIndex<MFP> ToolkitVirtualIndex(MFP mfp, const char* pszName)
+{
+    return { mfp, pszName };
+}
+
 template <typename CLASS, typename RETURN, typename... ARGS>
 class CToolkitVirtualHook : public IToolkitHook
 {
 public:
-    using HookType = KHook::Virtual<CLASS, RETURN, ARGS...>;
+    using HookType = ToolkitKHook::Virtual<CLASS, RETURN, ARGS...>;
 
     /**
 
@@ -511,13 +533,43 @@ private:
         const int index = GetOffset(m_pszIndexName);
         if (index < 0)
         {
+            if (m_bIndexFromInterface)
+            {
+                // No entry for this platform: the index the interface header
+                // compiled in stands, as it would have without the name.
+                char msg[256];
+                snprintf(msg, sizeof(msg), "KHook: gamedata has no offset '%s' for this platform; using the interface's index %d\n", m_pszIndexName, static_cast<int>(m_pHook->GetIndex()));
+                Warn("%s", msg);
+                m_bIndexResolved = true;
+                return true;
+            }
+
             Warn("KHook: offset '%s' is missing from gamedata; hook not installed\n", m_pszIndexName);
             return false;
+        }
+
+        // Gamedata is the one that can be fixed without a rebuild, so it wins;
+        // a difference means the header or the entry is stale, and that is
+        // worth a line either way.
+        if (m_bIndexFromInterface && m_pHook->GetIndex() != index)
+        {
+            char msg[256];
+            snprintf(msg, sizeof(msg), "KHook: gamedata offset '%s' is %d but the interface header compiled in %d; using gamedata\n", m_pszIndexName, index, static_cast<int>(m_pHook->GetIndex()));
+            Warn("%s", msg);
         }
 
         m_pHook->Configure(index);
         m_bIndexResolved = true;
         return true;
+    }
+
+    template <typename MFP, typename CONTEXT, typename PRE, typename POST>
+    void Create(CToolkitVirtualIndex<MFP> index, CONTEXT* pContext, PRE pre, POST post)
+    {
+        // The interface's index now, gamedata's at Init(); see ResolveIndex().
+        Create(index.mfp, pContext, pre, post);
+        m_pszIndexName = index.pszName;
+        m_bIndexFromInterface = true;
     }
 
     template <typename CONTEXT, typename PRE, typename POST>
@@ -571,6 +623,9 @@ private:
 
     HookType* m_pHook = nullptr;
     const char* m_pszIndexName = nullptr;
+    // KHOOK_GAMEDATA(): the name is a check on the interface's index, not the
+    // only source of it.
+    bool m_bIndexFromInterface = false;
     void* m_pInstanceSource = nullptr;
     CLASS* (*m_pfnInstance)(void*) = nullptr;
     CToolkitVTableName m_VTable;
@@ -995,17 +1050,32 @@ Macros
 * @brief Declares a virtual hook as a class member.
 *
 * @param member   Member name.
-* @param function `&Class::Method`, a vtable index, or a gamedata offset name.
+* @param function `&Class::Method`, a vtable index, a gamedata offset name,
+*                 or KHOOK_GAMEDATA(&Class::Method, "gamedata name") -- both,
+*                 gamedata checked against the header and taking precedence.
 * @param target   `&pInstance`, KHOOK_VTABLE(module, class), KHOOK_VTABLE_BASE(module, class, base), or nullptr.
 * @param pre      `&Self::Handler` or nullptr.
 * @param post     `&Self::Handler` or nullptr.
 *
+* Which form to pick: a gamedata name (alone or with KHOOK_GAMEDATA) follows
+* the core's gamedata, so an engine update that moves the slot is fixed by
+* updating the core; a bare `&Class::Method` compiles the slot in from the
+* SDK's header and needs a rebuild when it moves.
+*
 * @code
 * KHOOK_VIRTUAL(m_hGameFrame, &ISource2Server::GameFrame, &g_pSource2Server, nullptr, &Plugin::Hook_GameFrame);
+* KHOOK_VIRTUAL(m_hGameFrame, KHOOK_GAMEDATA(&ISource2Server::GameFrame, "ISource2Server::GameFrame"), &g_pSource2Server, nullptr, &Plugin::Hook_GameFrame);
 * @endcode
   */
 #define KHOOK_VIRTUAL(member, function, target, pre, post) \
     ::toolkithook::VirtualHookFor<decltype(pre), decltype(post)> member { function, target, this, pre, post }
+
+/**
+
+* @brief A virtual hook's slot from the interface header and from gamedata
+* at once, for KHOOK_VIRTUAL's `function`. See there.
+  */
+#define KHOOK_GAMEDATA(function, name) ::ToolkitVirtualIndex(function, name)
 
 /**
 

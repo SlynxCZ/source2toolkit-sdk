@@ -290,12 +290,25 @@ SchemaKey schema::GetOffset(const char* className, uint32_t classKey, const char
     {
         // A class without a chain entity is normal; a missing class was reported above.
         if (memberKey != g_ChainKey && it->second.pClassInfo)
-            SchemaWarn("schema::GetOffset(): '%s' was not found in '%s'!", memberName, className);
+            SchemaWarn("schema::GetOffset(): '%s' was not found in '%s' -- the field does nothing until the plugin is rebuilt against a current schema", memberName, className);
 
-        return {};
+        // Not offset 0: a write there would land on the object's vtable. The
+        // accessors route a key marked invalid to MissingFieldStorage().
+        SchemaKey missing{};
+        missing.valid = false;
+        return missing;
     }
 
     return field->second;
+}
+
+void* schema::MissingFieldStorage(size_t size)
+{
+    // Big enough for any schema field a plugin declares; zeroed so a read
+    // gives the type's "nothing", and a write lands here and nowhere else.
+    alignas(64) static unsigned char s_storage[4096] = {};
+    (void)size;
+    return s_storage;
 }
 
 int32_t schema::GetServerOffset(const char* pszClassName, const char* pszPropName)

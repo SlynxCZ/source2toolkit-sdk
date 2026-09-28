@@ -228,6 +228,12 @@ struct SchemaKey
     /// field; going through it is the only correct way to reach an element.
     /// Null for every other field.
     SchemaCollectionManipulatorFn_t manipulator = nullptr;
+
+    /// False when the field is not in the running game's schema (renamed,
+    /// removed). Reads then come from zeroed scratch memory and writes go
+    /// there, so the plugin keeps running with that one field doing nothing
+    /// -- an error line says which, once.
+    bool valid = true;
 };
 
 /**
@@ -331,6 +337,18 @@ namespace schema
      */
     SchemaKey GetOffset(const char* className, uint32_t classKey,
                         const char* memberName, uint32_t memberKey);
+
+    /**
+     * @brief Scratch memory a missing field reads from and writes to; zeroed,
+     * one block for every such field in the plugin.
+     */
+    void* MissingFieldStorage(size_t size);
+
+    template <typename T>
+    T& MissingField()
+    {
+        return *static_cast<T*>(MissingFieldStorage(sizeof(T)));
+    }
 
     /**
      * @brief Gets server offset (fallback).
@@ -527,6 +545,7 @@ Schema field macros
 		std::add_lvalue_reference_t<type> Get()                                                                              \
 		{                                                                                                                    \
 			static const auto m_key = schema::GetOffset(m_className, m_classNameHash, #varName, m_varNameHash);              \
+			if (!m_key.valid) return schema::MissingField<type>();                                             \
 			static const auto m_offset = offsetof(ThisClass, varName);														 \
 																															 \
 			uintptr_t pThisClass = ((uintptr_t)this - m_offset);                                                             \
@@ -539,6 +558,7 @@ Schema field macros
 		std::add_lvalue_reference_t<const type> Get() const                                                                  \
 		{                                                                                                                    \
 			static const auto m_key = schema::GetOffset(m_className, m_classNameHash, #varName, m_varNameHash);                 \
+			if (!m_key.valid) return schema::MissingField<const type>();                                             \
 			static const auto m_offset = offsetof(ThisClass, varName);                                                          \
                                                                                                                        \
 			uintptr_t pThisClass = ((uintptr_t)this - m_offset);                                                                \
@@ -550,6 +570,7 @@ Schema field macros
 		Set(schema_identity_t<T> val)                                                                                       \
 		{                                                                                                                    \
 			static const auto m_key = schema::GetOffset(m_className, m_classNameHash, #varName, m_varNameHash);              \
+			if (!m_key.valid) return;                                                                          \
 			static const auto m_offset = offsetof(ThisClass, varName);                                                       \
 																															 \
 			uintptr_t pThisClass = ((uintptr_t)this - m_offset);                                                             \
@@ -562,6 +583,7 @@ Schema field macros
 		Set(schema_identity_t<T> val)                                                                                       \
 	    {                                                                                                                 \
     		static const auto m_key = schema::GetOffset(m_className, m_classNameHash, #varName, m_varNameHash);              \
+    		if (!m_key.valid) return;                                                                          \
 			static const auto m_offset = offsetof(ThisClass, varName);                                                       \
 																															 \
 			uintptr_t pThisClass = ((uintptr_t)this - m_offset);                                                             \
@@ -574,6 +596,7 @@ Schema field macros
 		Set(const schema_identity_t<T>& val)                                                                                \
 		{                                                                                                                    \
 			static const auto m_key = schema::GetOffset(m_className, m_classNameHash, #varName, m_varNameHash);              \
+			if (!m_key.valid) return;                                                                          \
 			static const auto m_offset = offsetof(ThisClass, varName);                                                       \
 																															 \
 			uintptr_t pThisClass = ((uintptr_t)this - m_offset);                                                             \
@@ -588,6 +611,7 @@ Schema field macros
 		void NetworkStateChanged()                                                                                           \
 		{                                                                                                                    \
 			static const auto m_key = schema::GetOffset(m_className, m_classNameHash, #varName, m_varNameHash);				 \
+			if (!m_key.valid) return;                                                                          \
 			static const auto m_chain = schema::FindChainOffset(m_className, m_classNameHash);								 \
 			static const auto m_offset = offsetof(ThisClass, varName);														 \
 																															 \
@@ -752,6 +776,7 @@ Schema field macros
 		type* Get()                                                                                                          \
 		{                                                                                                                    \
 			static const auto m_key = schema::GetOffset(m_className, m_classNameHash, #varName, m_varNameHash);				 \
+			if (!m_key.valid) return &schema::MissingField<type>();                                            \
 			static const auto m_offset = offsetof(ThisClass, varName);														 \
 																															 \
 			uintptr_t pThisClass = ((uintptr_t)this - m_offset);                                                             \
@@ -764,6 +789,7 @@ Schema field macros
 		const type* Get() const                                                                                              \
 		{                                                                                                                    \
 			static const auto m_key = schema::GetOffset(m_className, m_classNameHash, #varName, m_varNameHash);                 \
+			if (!m_key.valid) return &schema::MissingField<const type>();                                            \
 			static const auto m_offset = offsetof(ThisClass, varName);                                                          \
                                                                                                                        \
 			uintptr_t pThisClass = ((uintptr_t)this - m_offset);                                                                \
@@ -773,6 +799,7 @@ Schema field macros
 		void NetworkStateChanged() /*Call this after editing the field*/                                                     \
 		{                                                                                                                    \
 			static const auto m_key = schema::GetOffset(m_className, m_classNameHash, #varName, m_varNameHash);				 \
+			if (!m_key.valid) return;                                                                          \
 			static const auto m_chain = schema::FindChainOffset(m_className, m_classNameHash);								 \
 			static const auto m_offset = offsetof(ThisClass, varName);														 \
 																															 \

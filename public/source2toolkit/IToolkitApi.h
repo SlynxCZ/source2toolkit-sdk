@@ -120,6 +120,7 @@ class IToolkitScheduler;
 class IToolkitSounds;
 class IToolkitTrace;
 class IToolkitTransmit;
+class IToolkitGameHooks;
 
 typedef void* (*CreateInterfaceFn)(const char* pName, int* pReturnCode);
 
@@ -413,6 +414,17 @@ public:
     * @brief Formats string using va_list.
       */
     virtual size_t FormatArgs(char* buffer, size_t maxlength, const char* format, va_list ap) = 0;
+
+    /* =========================
+    Added in plugin API 2 -- at the end, so a plugin built against API 1
+    still finds every slot above where it left it.
+    ========================= */
+
+    /**
+
+    * @brief Access the core's hooks on common game functions.
+      */
+    virtual IToolkitGameHooks* GameHooks() = 0;
 };
 
 #endif //_INCLUDE_ITOOLKIT_API_H
