@@ -221,6 +221,12 @@ Plugin Interface
 *
 * Every plugin must implement this interface.
   */
+/// Defined by IToolkitHooks.h for a plugin; the core never asks itself.
+int ToolkitRawHookCount();
+#ifdef SOURCE2TOOLKIT_CORE
+inline int ToolkitRawHookCount() { return 0; }
+#endif
+
 class IToolkitPlugin
 {
 public:
@@ -272,6 +278,30 @@ public:
 
     /// Plugin version
     virtual const char* GetVersion() = 0;
+
+    /* =========================
+    Plugin API 2 -- at the end, so a plugin built against API 1 keeps its
+    slots. Both have defaults the SDK fills in; "toolkit list" shows them.
+    ========================= */
+
+    /// The KHook commit this plugin was built against (the SDK's
+    /// vendor/khook), "" when built without git.
+    virtual const char* GetKHookCommit()
+    {
+#ifdef TOOLKIT_KHOOK_COMMIT
+        return TOOLKIT_KHOOK_COMMIT;
+#else
+        return "";
+#endif
+    }
+
+    /// How many KHook hooks the plugin declared through the KHOOK_* macros:
+    /// none means the plugin is on the stable tier and an engine update is
+    /// the core's problem alone.
+    virtual int GetRawHookCount()
+    {
+        return ::ToolkitRawHookCount();
+    }
 };
 
 /* =========================
@@ -467,6 +497,7 @@ Globals
     IToolkitAPI*             g_ToolkitAPI              = nullptr; \
     IToolkitPlugin*          g_PluginAPI               = nullptr; \
     PluginId                 g_PluginID                = 0; \
+    const char*             g_ToolkitCoreKHookCommit = nullptr; \
     IToolkitAddresses*       g_pToolkitAddresses       = nullptr; \
     IToolkitCommands*        g_pToolkitCommands        = nullptr; \
     IToolkitConVars*         g_pToolkitConVars         = nullptr; \
@@ -509,6 +540,7 @@ Globals
     extern IToolkitAPI*             g_ToolkitAPI; \
     extern IToolkitPlugin*          g_PluginAPI; \
     extern PluginId                 g_PluginID; \
+    extern const char*             g_ToolkitCoreKHookCommit; \
     extern IToolkitAddresses*       g_pToolkitAddresses; \
     extern IToolkitCommands*        g_pToolkitCommands; \
     extern IToolkitConVars*         g_pToolkitConVars; \
@@ -570,20 +602,15 @@ Globals
 *       this plugin was compiled against is not the one the core runs
 *       (see TOOLKIT_KHOOK_VERSION_INTERFACE).
   */
+// The KHook commit check is not here any more: a plugin that never hooks
+// (nothing but the toolkit's own interfaces) does not care which KHook the
+// core runs. KHOOK_INIT() makes the check, the first time KHook is used.
 #define TOOLKIT_SAVEVARS() \
     g_ToolkitAPI = api; \
     g_PluginAPI  = static_cast<IToolkitPlugin*>(this); \
     g_PluginID   = id; \
     KHook::__exported__khook = static_cast<KHook::IKHook*>(api->ToolkitFactory(TOOLKIT_KHOOK_INTERFACE, nullptr, nullptr)); \
-    { \
-        const char* toolkitKHookNote = nullptr; \
-        if (!ToolkitKHookVersionMatches(static_cast<const char*>(api->ToolkitFactory(TOOLKIT_KHOOK_VERSION_INTERFACE, nullptr, nullptr)), error, maxlen, &toolkitKHookNote)) \
-            return false; \
-        if (toolkitKHookNote && error && maxlen) \
-        { \
-            g_ToolkitAPI->Format(error, maxlen, "%s", toolkitKHookNote); \
-        } \
-    } \
+    g_ToolkitCoreKHookCommit = static_cast<const char*>(api->ToolkitFactory(TOOLKIT_KHOOK_VERSION_INTERFACE, nullptr, nullptr)); \
     TOOLKIT_FILLVARS(api)
 
 /* =========================

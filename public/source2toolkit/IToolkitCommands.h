@@ -70,7 +70,70 @@ Forward declarations
 * @param cmd Parsed command arguments
 * @param post false when called before the original, true after
   */
-using ChatHandler = std::function<void(const CCommandContext&, const CCommand&, bool post)>;
+/**
+* @brief Where a command came from, in the toolkit's own layout.
+*
+* The engine's CCommandContext is what the core sees; what a handler gets is
+* this, so the engine type's layout is not part of the plugin API. The two
+* methods handlers use are the same as on the engine type.
+  */
+class ToolkitCommandContext
+{
+public:
+    ToolkitCommandContext(CPlayerSlot slot, int target) : m_slot(slot), m_target(target) {}
+
+    /// The player who issued the command; invalid for the server console.
+    CPlayerSlot GetPlayerSlot() const { return m_slot; }
+
+    /// The engine's CommandTarget_t (CT_NO_TARGET, CT_FIRST_SPLITSCREEN_CLIENT, ...).
+    int GetCommandTarget() const { return m_target; }
+
+private:
+    CPlayerSlot m_slot;
+    int m_target;
+};
+
+/**
+* @brief A command's arguments, in the toolkit's own layout; same accessors
+* as the engine's CCommand. The strings belong to the dispatch and are gone
+* when the handler returns -- copy what has to outlive it.
+  */
+class ToolkitCommandArgs
+{
+public:
+    static constexpr int kMaxArgs = 64;
+
+    ToolkitCommandArgs() = default;
+
+    ToolkitCommandArgs(int argc, const char* const* argv, const char* argS, const char* command)
+        : m_argc(argc < kMaxArgs ? argc : kMaxArgs), m_argS(argS ? argS : ""), m_command(command ? command : "")
+    {
+        for (int i = 0; i < m_argc; i++)
+            m_argv[i] = argv[i] ? argv[i] : "";
+    }
+
+    /// Number of arguments, the command name included.
+    int ArgC() const { return m_argc; }
+
+    /// Argument i, the command name at 0; "" past the end.
+    const char* Arg(int i) const { return (i >= 0 && i < m_argc) ? m_argv[i] : ""; }
+
+    const char* operator[](int i) const { return Arg(i); }
+
+    /// Everything after the command name, as typed.
+    const char* ArgS() const { return m_argS; }
+
+    /// The whole command line, as typed.
+    const char* GetCommandString() const { return m_command; }
+
+private:
+    int m_argc = 0;
+    const char* m_argv[kMaxArgs] = {};
+    const char* m_argS = "";
+    const char* m_command = "";
+};
+
+using ChatHandler = std::function<void(const ToolkitCommandContext&, const ToolkitCommandArgs&, bool post)>;
 
 /**
 
@@ -81,7 +144,7 @@ using ChatHandler = std::function<void(const CCommandContext&, const CCommand&, 
 * @param post false when called before the original, true after
 * @return Action describing how to handle execution (Action::Ignore, Action::Override, Action::Supersede)
   */
-using CommandHandler = std::function<Action(const CCommandContext&, const CCommand&, bool post)>;
+using CommandHandler = std::function<Action(const ToolkitCommandContext&, const ToolkitCommandArgs&, bool post)>;
 
 /* =========================
 Core Toolkit Commands

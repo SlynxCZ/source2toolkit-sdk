@@ -210,6 +210,12 @@ public:
             vecHooks[i]->Destruct();
     }
 
+    /// How many hooks this plugin declared -- IToolkitPlugin::GetRawHookCount().
+    static int Count()
+    {
+        return static_cast<int>(List().size());
+    }
+
 protected:
     IToolkitHook()
     {
@@ -1113,9 +1119,36 @@ Macros
 * @brief Installs every hook declared with the macros above. Call in Load(),
 * after TOOLKIT_SAVEVARS() and once the instance pointers hooks read are set.
 *
-* @return false when any hook could not be resolved (each one is logged).
+* This is also where the KHook commit check happens: a plugin that hooks
+* through KHook shares the detour engine with the core and must have been
+* built against the same KHook (template layout), so a mismatch returns
+* false out of Load() with the reason in `error`. A plugin that never calls
+* this is not checked -- it does not hook, so it does not care. A plugin
+* using raw KHook objects (KHOOK_NEW) without any KHOOK_* macro must call
+* KHOOK_CHECK() itself before the first one.
+*
+* Each hook that could not be resolved is logged and skipped.
   */
-#define KHOOK_INIT()     ::IToolkitHook::InitAll()
+#define KHOOK_CHECK() \
+    do { \
+        const char* toolkitKHookNote = nullptr; \
+        if (!::ToolkitKHookVersionMatches(g_ToolkitCoreKHookCommit, error, maxlen, &toolkitKHookNote)) \
+            return false; \
+        if (toolkitKHookNote) \
+            g_ToolkitAPI->Log(g_PluginAPI, "%s\n", toolkitKHookNote); \
+    } while (0)
+
+#define KHOOK_INIT() \
+    do { \
+        KHOOK_CHECK(); \
+        ::IToolkitHook::InitAll(); \
+    } while (0)
+
+/// See IToolkitPlugin::GetRawHookCount().
+inline int ToolkitRawHookCount()
+{
+    return ::IToolkitHook::Count();
+}
 
 /**
 
