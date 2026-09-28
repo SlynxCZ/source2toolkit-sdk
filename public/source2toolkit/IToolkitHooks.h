@@ -69,7 +69,9 @@
 *
 * `KHOOK_INIT()` in Load() (after TOOLKIT_SAVEVARS()) resolves and installs
 * every hook declared this way; `KHOOK_DESTRUCT()` in Unload() takes them
-* all down. A hook whose target is `nullptr` is left to the caller:
+* all down -- a virtual hook only stops calling back; the toolkit removes it
+* once Unload() has returned, so unloading from inside a hook (any console
+* command) cannot deadlock. A hook whose target is `nullptr` is left to the caller:
 * `m_hX.Init(address)`, `m_hX.Init(pInstance)` or `m_hX.InitGlobal(vtable)`.
 *
 * KHOOK_INIT() only sees the hooks that exist when it runs. A hook that is a
@@ -327,7 +329,7 @@ template <typename CLASS, typename RETURN, typename... ARGS>
 class CToolkitVirtualHook : public IToolkitHook
 {
 public:
-    using HookType = KHook::Virtual<CLASS, RETURN, ARGS...>;
+    using HookType = ToolkitKHook::Virtual<CLASS, RETURN, ARGS...>;
 
     /**
 
@@ -468,7 +470,12 @@ public:
         if (m_pVTable)
             m_pHook->RemoveGlobal(reinterpret_cast<CLASS*>(&m_pVTable));
 
-        delete m_pHook;
+        // Inert from here on (the instance is gone from the hook's filter).
+        // Not deleted: that would wait for the call of the hooked function
+        // this thread may be inside of -- "toolkit unload" arrives through
+        // one. The toolkit takes the hook out once Unload() has returned and
+        // the object goes with the library. See IToolkitKHook.h.
+        ToolkitKHook::Abandon(m_pHook);
         m_pHook = nullptr;
         m_pInstance = nullptr;
         m_pVTable = nullptr;
