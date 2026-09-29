@@ -88,6 +88,6 @@ CCSPlayerController* CCSGameRules::GetClientAimTarget(CCSPlayerController* pPlay
 
 void CCSGameRules::GoToIntermission(bool bAbortedMatch, HookChain eChain)
 {
-    static int offset = g_pToolkitGameConfig->GetOffset("CGameRules::GoToIntermission");
+    static int offset = g_pToolkitGameConfig->GetOffset("CCSGameRules::GoToIntermission");
     CALL_VIRTUAL_CHAIN(void, offset, eChain, this, bAbortedMatch);
 }
