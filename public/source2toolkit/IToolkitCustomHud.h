@@ -130,7 +130,7 @@ public:
 };
 
 /**
- * @brief Hook macros, matching HOOK_GAME_EVENT: the plugin ID is filled in.
+ * @brief Hook macros, matching HOOK_GAME_EVENT.
  */
 #define HOOK_CUSTOM_HUD_CLICK(pLayout, handler) \
     g_pToolkitCustomHud->HookCustomHudClick(pLayout, handler)

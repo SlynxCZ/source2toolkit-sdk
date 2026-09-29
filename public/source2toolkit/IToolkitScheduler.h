@@ -148,8 +148,7 @@ public:
 
     * @brief Executes a task on the next frame.
     *
-    * @param owner Plugin the task belongs to
-    * @param task Callback function
+    * @param task Callback function; the plugin whose code it is owns it
     *
     * @note Runs once on the next game frame
     * @note Dropped if the owning plugin unloads before the frame arrives
@@ -160,7 +159,6 @@ public:
 
     * @brief Adds a timer.
     *
-    * @param owner Plugin the timer belongs to
     * @param interval Time in seconds between executions
     * @param callback Function to execute
     * @param flags Timer behavior flags

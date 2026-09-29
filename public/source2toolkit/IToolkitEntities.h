@@ -129,8 +129,7 @@ public:
 
     * @brief Adds listener for entity spawn, creation, deletion and parent change.
     *
-    * @param owner Plugin the listener belongs to
-    * @param pListener Listener object
+    * @param pListener Listener object; the plugin whose class it is owns it
     *
     * @note Removed for you if the owning plugin unloads. The listener is an
     *       object inside that plugin's library and the engine holds it
@@ -169,9 +168,9 @@ public:
 
     /**
 
-    * @brief Adds listener for entity outputs.
+    * @brief Adds listener for entity outputs; the plugin whose class the
+    *        listener is owns it.
     *
-    * @param owner Plugin the listener belongs to
     *
     * @note Removed for you if the owning plugin unloads, for the same reason
     *       as AddEntityListener().

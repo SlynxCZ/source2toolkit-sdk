@@ -165,7 +165,8 @@ public:
 
     * @brief Issues a request.
     *
-    * @param owner Plugin the request belongs to
+    * The plugin the callback's code lies in owns the request.
+    *
     * @param method HTTP method
     * @param pszUrl Absolute URL
     * @param pszBody Request body, or nullptr for methods that take none

@@ -432,8 +432,7 @@ public:
 #define NET_MSG_SEND_PLAYERS(msg, id, mask)  g_pToolkitNetworkMessages->SendMessageToPlayers(msg, id, mask)
 
 /**
- * @brief Hook macros, matching HOOK_GAME_EVENT and HOOK_CONVAR_CHANGE: the
- *        plugin ID is filled in for you.
+ * @brief Hook macros, matching HOOK_GAME_EVENT and HOOK_CONVAR_CHANGE.
  */
 #define HOOK_SERVER_MESSAGE(handler)             g_pToolkitNetworkMessages->HookServerMessage(handler)
 #define UNHOOK_SERVER_MESSAGE(handler)           g_pToolkitNetworkMessages->UnhookServerMessage(handler)
