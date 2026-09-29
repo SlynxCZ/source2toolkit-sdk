@@ -169,7 +169,7 @@ bool CCSCustomHudLayout::IsInputCaptureEnabled(CCSPlayerController* pController)
 
 void CCSCustomHudLayout::HookClick(std::function<void(CCSPlayerController*, CCSCustomHudLayout*, const char*)> callback)
 {
-    g_pToolkitCustomHud->HookCustomHudClick(g_PluginID, this, std::move(callback));
+    g_pToolkitCustomHud->HookCustomHudClick(this, std::move(callback));
 }
 
 void CCSCustomHudLayout::UnhookClicks()

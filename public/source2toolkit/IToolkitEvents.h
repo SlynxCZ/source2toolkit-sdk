@@ -73,7 +73,7 @@ Forward declarations
 * * Action::Override: modify event but still allow original execution (pre only)
 * * Action::Supersede: block original execution (pre only)
     */
-using GameEventHandler = std::function<Action(IGameEvent* event, bool post, bool& dontBroadcast)>;
+using GameEventHandler = ToolkitCallback<Action(IGameEvent* event, bool post, bool& dontBroadcast)>;
 
 /* =========================
 Core Toolkit Events
@@ -88,7 +88,7 @@ Core Toolkit Events
 * * Modify event data
 * * Block event propagation
     */
-#define TOOLKIT_EVENTS_INTERFACE "IToolkitEvents001"
+#define TOOLKIT_EVENTS_INTERFACE "IToolkitEvents002"
 
 class IToolkitEvents
 {
@@ -96,41 +96,47 @@ public:
     virtual ~IToolkitEvents() = default;
 
     /**
-
-    * @brief Registers a listener for a game event.
-    *
-    * @param owner Plugin ID that owns the listener
-    * @param pchName Event name (e.g. "player_death")
-    * @param handler Callback function
-    * @param post false to be called before the engine processes the event,
-    *             true to be called after
-        */
-    virtual void HookGameEvent(PluginId owner, const char* pchName, GameEventHandler handler, bool post) = 0;
+     * @brief Registers a listener for a game event. The same event may be
+     * hooked as often as a plugin likes; each handler runs.
+     *
+     * Whose it is, the core reads off the handler (see ToolkitCallback); what
+     * a plugin still holds at unload the core drops for it.
+     *
+     * @param pchName Event name (e.g. "player_death")
+     * @param handler A function, an object and a method, or a lambda
+     * @param post false to be called before the engine processes the event,
+     *             true to be called after
+     * @return The id UnhookGameEvent(id) takes
+     */
+    virtual ToolkitHookId HookGameEvent(const char* pchName, GameEventHandler handler, bool post) = 0;
 
     /**
+     * @brief Drops the hook with this handler -- a function or an object and
+     * a method; a lambda goes by its id.
+     *
+     * @return true when one was found
+     */
+    virtual bool UnhookGameEvent(const char* pchName, const GameEventHandler& handler, bool post) = 0;
 
-    * @brief Drops one of this plugin's event hooks.
-    *
-    * @param owner   Plugin ID that owns the listener
-    * @param pchName Event name the hook was registered under
-    * @param post    Which of the two hooks to drop
-      */
-    virtual void UnhookGameEvent(PluginId owner, const char* pchName, bool post) = 0;
+    /**
+     * @brief Drops the hook HookGameEvent() returned the id for.
+     *
+     * @return true when it was still there
+     */
+    virtual bool UnhookGameEvent(ToolkitHookId id) = 0;
 };
 
 /**
  * @brief Macro for hooking a game event.
- *
- * @param passname Event name.
- * @param passfunc Callback function.
  */
 #define HOOK_GAME_EVENT(passname, passfunc, post) \
-    g_pToolkitEvents->HookGameEvent(g_PluginID, passname, passfunc, post)
+    g_pToolkitEvents->HookGameEvent(passname, passfunc, post)
 
 /**
- * @brief Macro for dropping a game event hook.
+ * @brief Macro for dropping a game event hook (a function or an object and a
+ * method; a lambda goes by the id HOOK_GAME_EVENT returned).
  */
-#define UNHOOK_GAME_EVENT(passname, post) \
-    g_pToolkitEvents->UnhookGameEvent(g_PluginID, passname, post)
+#define UNHOOK_GAME_EVENT(passname, passfunc, post) \
+    g_pToolkitEvents->UnhookGameEvent(passname, passfunc, post)
 
 #endif //_INCLUDE_ITOOLKIT_EVENTS_H

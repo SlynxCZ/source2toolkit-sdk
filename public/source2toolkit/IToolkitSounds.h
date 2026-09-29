@@ -325,13 +325,13 @@ Callback types
  *       own footsteps -- is played locally and never passes through here; the
  *       copy of those sounds that goes to everybody else does.
  */
-using SoundHook = std::function<Action(IToolkitSound* sound)>;
+using SoundHook = ToolkitCallback<Action(IToolkitSound* sound)>;
 
 /* =========================
 Core Toolkit Sounds
 ========================= */
 
-#define TOOLKIT_SOUNDS_INTERFACE "IToolkitSounds001"
+#define TOOLKIT_SOUNDS_INTERFACE "IToolkitSounds002"
 
 class IToolkitSounds
 {
@@ -469,18 +469,30 @@ public:
     /**
      * @brief Hooks the sounds the game sends to clients.
      *
-     * One hook per plugin: hooking again replaces the previous handler, and
-     * the toolkit drops it when the plugin unloads.
+     * A plugin may hook as often as it likes; each handler runs.
      *
-     * @param owner   Plugin ID that owns the hook
-     * @param handler Callback, or nullptr to unhook
+     * Whose it is, the core reads off the handler (see ToolkitCallback); what
+     * a plugin still holds at unload the core drops for it.
+     *
+     * @param handler A function, an object and a method, or a lambda
+     * @return The id UnhookSound(id) takes
      */
-    virtual void HookSound(PluginId owner, SoundHook handler) = 0;
+    virtual ToolkitHookId HookSound(SoundHook handler) = 0;
 
     /**
-     * @brief Drops this plugin's sound hook.
+     * @brief Drops the hook with this handler -- a function or an object and
+     * a method; a lambda goes by its id.
+     *
+     * @return true when one was found
      */
-    virtual void UnhookSound(PluginId owner) = 0;
+    virtual bool UnhookSound(const SoundHook& handler) = 0;
+
+    /**
+     * @brief Drops the hook HookSound() returned the id for.
+     *
+     * @return true when it was still there
+     */
+    virtual bool UnhookSound(ToolkitHookId id) = 0;
 };
 
 /* =========================
@@ -505,9 +517,7 @@ inline SoundRecipients SoundRecipientOf(CPlayerSlot slot)
 #define SOUND_EMIT_FROM_ENTITY(entity, ...) g_pToolkitSounds->EmitSoundFromEntity(entity, __VA_ARGS__)
 #define SOUND_STOP(guid)                    g_pToolkitSounds->StopSound(guid)
 
-#define HOOK_SOUND(handler) \
-    g_pToolkitSounds->HookSound(g_PluginID, handler)
-#define UNHOOK_SOUND() \
-    g_pToolkitSounds->UnhookSound(g_PluginID)
+#define HOOK_SOUND(handler)   g_pToolkitSounds->HookSound(handler)
+#define UNHOOK_SOUND(handler) g_pToolkitSounds->UnhookSound(handler)
 
 #endif //_INCLUDE_ITOOLKIT_SOUNDS_H

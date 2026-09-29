@@ -136,7 +136,7 @@ public:
     *       object inside that plugin's library and the engine holds it
     *       directly, so one left behind is a call into unmapped memory.
       */
-    virtual void AddEntityListener(PluginId owner, IEntityListener* pListener) = 0;
+    virtual void AddEntityListener(IEntityListener* pListener) = 0;
 
     /**
 
@@ -176,11 +176,11 @@ public:
     * @note Removed for you if the owning plugin unloads, for the same reason
     *       as AddEntityListener().
       */
-    virtual void AddEntityIOListener(PluginId owner,
-                                     IEntityIOListener* pListener,
+    virtual void AddEntityIOListener(IEntityIOListener* pListener,
                                      const char* pchClassName,
                                      const char* pchOutputName,
                                      bool post = false) = 0;
+
 
     /**
 
@@ -197,11 +197,11 @@ public:
 #define FIND_ENTITY_BY_CLASSNAME(start, name)     g_pToolkitEntities->FindEntityByClassname(start, name)
 #define FIND_ENTITY_BY_NAME(start, name, ...)     g_pToolkitEntities->FindEntityByName(start, name, ##__VA_ARGS__)
 #define CREATE_ENTITY(classname)                  g_pToolkitEntities->CreateEntityByName(classname)
-#define ADD_ENTITY_LISTENER(l)                    g_pToolkitEntities->AddEntityListener(g_PluginID, l)
+#define ADD_ENTITY_LISTENER(l)                    g_pToolkitEntities->AddEntityListener(l)
 #define REMOVE_ENTITY_LISTENER(l)                 g_pToolkitEntities->RemoveEntityListener(l)
 #define ACCEPT_INPUT(target, input, ...)          g_pToolkitEntities->AcceptInput(target, input, ##__VA_ARGS__)
 #define ADD_ENTITY_IO_EVENT(target, input, ...)   g_pToolkitEntities->AddEntityIOEvent(target, input, ##__VA_ARGS__)
-#define ADD_ENTITY_IO_LISTENER(l, cls, out, ...)  g_pToolkitEntities->AddEntityIOListener(g_PluginID, l, cls, out, ##__VA_ARGS__)
+#define ADD_ENTITY_IO_LISTENER(l, cls, out, ...)  g_pToolkitEntities->AddEntityIOListener(l, cls, out, ##__VA_ARGS__)
 #define REMOVE_ENTITY_IO_LISTENER(l, cls, out, ...) g_pToolkitEntities->RemoveEntityIOListener(l, cls, out, ##__VA_ARGS__)
 
 

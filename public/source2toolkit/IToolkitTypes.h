@@ -50,10 +50,196 @@
 
 #pragma once
 #include <cstdint>
+#include <cstring>
+#include <functional>
 #include <type_traits>
+#include <utility>
 
 #include "khook.hpp"
 #include "IToolkitKHook.h"
+
+/// A plugin's id; the core hands it to Load().
+using PluginId = int;
+
+/// What a Register* / Hook* call returns and the matching Unregister* /
+/// Unhook* takes: the one handler it registered. 0 is never handed out.
+using ToolkitHookId = int;
+
+/* =========================
+Callbacks
+========================= */
+
+namespace toolkit_detail
+{
+    /// One per callable type, instantiated where the callable is: its address
+    /// is a code address inside the plugin that made the callable, which is
+    /// how the core tells whose a handler is. Hidden, so the dynamic linker
+    /// never hands another module's copy out for it.
+    template <typename T>
+#if !defined(_MSC_VER)
+    __attribute__((visibility("hidden"), noinline))
+#endif
+    void CallbackOrigin()
+    {
+    }
+
+    /// A code address of a method: its entry, or for a virtual method the
+    /// object's vtable (both live in the module that defined the class).
+    template <typename M>
+    const void* MethodOrigin(const void* object, M method)
+    {
+#if defined(_MSC_VER)
+        // MSVC: the code, or the vcall thunk in the module that formed the pointer.
+        (void)object;
+        const void* code = nullptr;
+        std::memcpy(&code, &method, sizeof(code));
+        return code;
+#else
+        // Itanium: an odd pointer is 1 + a vtable offset.
+        std::uintptr_t ptr = 0;
+        std::memcpy(&ptr, &method, sizeof(ptr));
+        if (ptr & 1)
+            return object ? *static_cast<const void* const*>(object) : nullptr;
+        return reinterpret_cast<const void*>(ptr);
+#endif
+    }
+}
+
+template <typename SIG>
+class ToolkitCallback;
+
+/**
+ * @brief A toolkit handler: a lambda, a free or static function, or an
+ * object and one of its methods -- SourceHook's SH_STATIC / SH_MEMBER.
+ *
+ * @code
+ * g_pToolkitCommands->RegisterConCommand("jbtestend", TestEndRound);               // function
+ * g_pToolkitCommands->RegisterConCommand("jbtestend", &Commands::TestEndRound);    // static method
+ * g_pToolkitCommands->RegisterConCommand("jbtestend", TOOLKIT_MEMBER(this, &Plugin::OnTest));
+ * g_pToolkitCommands->RegisterConCommand("jbtestend", [](auto&, auto&, bool) {});  // lambda
+ * @endcode
+ *
+ * Whose a handler is, the core reads off the handler itself: Origin() is a
+ * code address inside the plugin that made it, which the core maps to that
+ * plugin's library -- so no call takes a plugin id.
+ *
+ * A function or an object-and-method is also remembered by what it is, so
+ * the same one handed to Unregister* / Unhook* finds it again; a lambda has
+ * no such identity and is removed by the id its Register* / Hook* returned.
+ */
+template <typename R, typename... A>
+class ToolkitCallback<R(A...)>
+{
+public:
+    ToolkitCallback() = default;
+
+    /// A free function or a static method. Its signature only has to be
+    /// callable as this one (a game hook handler may answer a bare Action).
+    template <typename FR, typename... FA,
+              typename = std::enable_if_t<std::is_invocable_r_v<R, FR (*)(FA...), A...>>>
+    ToolkitCallback(FR (*fn)(FA...))
+        : m_fn(fn), m_origin(reinterpret_cast<const void*>(fn))
+    {
+        if (fn)
+            Key(nullptr, &fn, sizeof(fn));
+    }
+
+    /// An object and one of its methods.
+    template <typename C, typename MR, typename... MA>
+    ToolkitCallback(C* object, MR (C::*method)(MA...))
+        : m_fn([object, method](A... args) -> R { return (object->*method)(std::forward<A>(args)...); }),
+          m_origin(toolkit_detail::MethodOrigin(object, method))
+    {
+        Key(object, &method, sizeof(method));
+    }
+
+    template <typename C, typename MR, typename... MA>
+    ToolkitCallback(const C* object, MR (C::*method)(MA...) const)
+        : m_fn([object, method](A... args) -> R { return (object->*method)(std::forward<A>(args)...); }),
+          m_origin(toolkit_detail::MethodOrigin(object, method))
+    {
+        Key(object, &method, sizeof(method));
+    }
+
+    /// A lambda or any other callable.
+    template <typename F,
+              typename = std::enable_if_t<!std::is_same_v<std::decay_t<F>, ToolkitCallback> &&
+                                          !std::is_pointer_v<std::decay_t<F>> &&
+                                          !std::is_function_v<std::remove_reference_t<F>> &&
+                                          std::is_invocable_r_v<R, F&, A...>>>
+    ToolkitCallback(F&& callable)
+        : m_fn(std::forward<F>(callable)),
+          m_origin(reinterpret_cast<const void*>(&toolkit_detail::CallbackOrigin<std::decay_t<F>>))
+    {
+    }
+
+    R operator()(A... args) const { return m_fn(std::forward<A>(args)...); }
+
+    explicit operator bool() const { return static_cast<bool>(m_fn); }
+
+    /// A code address inside the plugin that made this handler; the core
+    /// finds the owner by it.
+    const void* Origin() const { return m_origin; }
+
+    /**
+     * @brief For a handler made on behalf of another plugin -- a wrapper one
+     * plugin puts around a handler another one handed it: the registration
+     * then belongs to whoever made `of`, and goes when that plugin unloads.
+     *
+     * @code
+     * ChatHandler wrapped = [handler](auto& ctx, auto& args, bool post) { if (Allowed(ctx)) handler(ctx, args, post); };
+     * g_pToolkitCommands->RegisterConCommand(name, std::move(wrapped.OwnedAs(handler)));
+     * @endcode
+     */
+    template <typename SIG>
+    ToolkitCallback& OwnedAs(const ToolkitCallback<SIG>& of)
+    {
+        m_origin = of.Origin();
+        return *this;
+    }
+
+    /// A function or object-and-method the Unregister* / Unhook* calls can
+    /// find again; false for a lambda.
+    bool HasIdentity() const { return m_keyed; }
+
+    /// The same function, or the same method of the same object.
+    bool SameAs(const ToolkitCallback& other) const
+    {
+        return m_keyed && other.m_keyed && m_object == other.m_object && std::memcmp(m_key, other.m_key, sizeof(m_key)) == 0;
+    }
+
+private:
+    void Key(const void* object, const void* bytes, std::size_t size)
+    {
+        static_assert(sizeof(void (ToolkitCallback::*)()) <= sizeof(m_key), "member pointer too large");
+        m_object = object;
+        std::memcpy(m_key, bytes, size < sizeof(m_key) ? size : sizeof(m_key));
+        m_keyed = true;
+    }
+
+    std::function<R(A...)> m_fn;
+    const void* m_origin = nullptr;
+    const void* m_object = nullptr;
+    unsigned char m_key[16] = {};
+    bool m_keyed = false;
+};
+
+/**
+ * @brief SourceHook's SH_STATIC / SH_MEMBER, for a toolkit handler argument.
+ *
+ * @code
+ * g_pToolkitEvents->HookGameEvent("round_end", TOOLKIT_STATIC(OnRoundEnd), true);
+ * g_pToolkitEvents->HookGameEvent("round_end", TOOLKIT_MEMBER(this, &Plugin::OnRoundEnd), true);
+ * // ... and later the same delegate takes it off again:
+ * g_pToolkitEvents->UnhookGameEvent("round_end", TOOLKIT_MEMBER(this, &Plugin::OnRoundEnd), true);
+ * @endcode
+ *
+ * Plain `OnRoundEnd` / `{ this, &Plugin::OnRoundEnd }` do the same; these
+ * only spell it the SourceHook way. The owner is the plugin whose code the
+ * function or method is, as for every handler.
+ */
+#define TOOLKIT_STATIC(func) (func)
+#define TOOLKIT_MEMBER(inst, func) { inst, func }
 
 /* =========================
 Hook control

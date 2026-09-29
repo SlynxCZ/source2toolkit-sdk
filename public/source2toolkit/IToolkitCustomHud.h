@@ -71,7 +71,7 @@ class CCSPlayerController;
 * @param pLayout Layout the button lives on
 * @param pszButtonId `id` attribute of the clicked panel
   */
-using CustomHudClickHandler = std::function<void(CCSPlayerController* player, CCSCustomHudLayout* pLayout, const char* pszButtonId)>;
+using CustomHudClickHandler = ToolkitCallback<void(CCSPlayerController* player, CCSCustomHudLayout* pLayout, const char* pszButtonId)>;
 
 /* =========================
 Core Toolkit Custom HUD
@@ -86,7 +86,7 @@ Core Toolkit Custom HUD
 * plugin unloads, and the whole registry is cleared on level shutdown along
 * with the entities it points at.
   */
-#define TOOLKIT_CUSTOMHUD_INTERFACE "IToolkitCustomHud001"
+#define TOOLKIT_CUSTOMHUD_INTERFACE "IToolkitCustomHud002"
 
 class IToolkitCustomHud
 {
@@ -94,14 +94,31 @@ public:
     virtual ~IToolkitCustomHud() = default;
 
     /**
+     * @brief Registers a click callback for one layout entity.
+     *
+     * Whose it is, the core reads off the handler (see ToolkitCallback); what
+     * a plugin still holds at unload the core drops for it.
+     *
+     * @param pLayout Layout to listen on
+     * @param handler A function, an object and a method, or a lambda
+     * @return The id UnhookCustomHudClick(id) takes
+     */
+    virtual ToolkitHookId HookCustomHudClick(CCSCustomHudLayout* pLayout, CustomHudClickHandler handler) = 0;
 
-    * @brief Registers a click callback for one layout entity.
-    *
-    * @param owner Plugin ID that owns the callback
-    * @param pLayout Layout to listen on
-    * @param handler Callback function
-      */
-    virtual void HookCustomHudClick(PluginId owner, CCSCustomHudLayout* pLayout, CustomHudClickHandler handler) = 0;
+    /**
+     * @brief Drops the hook with this handler -- a function or an object and
+     * a method; a lambda goes by its id.
+     *
+     * @return true when one was found
+     */
+    virtual bool UnhookCustomHudClick(CCSCustomHudLayout* pLayout, const CustomHudClickHandler& handler) = 0;
+
+    /**
+     * @brief Drops the hook HookCustomHudClick() returned the id for.
+     *
+     * @return true when it was still there
+     */
+    virtual bool UnhookCustomHudClick(ToolkitHookId id) = 0;
 
     /**
 
@@ -116,7 +133,7 @@ public:
  * @brief Hook macros, matching HOOK_GAME_EVENT: the plugin ID is filled in.
  */
 #define HOOK_CUSTOM_HUD_CLICK(pLayout, handler) \
-    g_pToolkitCustomHud->HookCustomHudClick(g_PluginID, pLayout, handler)
+    g_pToolkitCustomHud->HookCustomHudClick(pLayout, handler)
 
 #define UNHOOK_CUSTOM_HUD_CLICK(pLayout) \
     g_pToolkitCustomHud->UnhookCustomHudClick(pLayout)

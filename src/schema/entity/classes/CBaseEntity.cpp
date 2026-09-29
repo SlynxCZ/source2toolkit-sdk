@@ -81,7 +81,7 @@ CEntityIOListenerHandle* CBaseEntity::AddSingleEntityIOListener(const char* pszO
 
     // The listener and the callback it holds are in whichever plugin called
     // this, so that plugin has to be the one the toolkit drops it with.
-    g_pToolkitEntities->AddEntityIOListener(g_PluginID, listener, classname, pszOutput, post);
+    g_pToolkitEntities->AddEntityIOListener(listener, classname, pszOutput, post);
 
     auto* handle = new CEntityIOListenerHandle();
     handle->m_pListener = listener;

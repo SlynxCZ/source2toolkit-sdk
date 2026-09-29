@@ -85,10 +85,10 @@ Core Toolkit ConVars
  * @param pszNewValue Value being set
  * @param pszOldValue Value being replaced
  */
-using ConVarChangeHandler = std::function<void(ConVarRefAbstract* ref, CSplitScreenSlot slot,
-                                               const char* pszNewValue, const char* pszOldValue)>;
+using ConVarChangeHandler = ToolkitCallback<void(ConVarRefAbstract* ref, CSplitScreenSlot slot,
+                                                  const char* pszNewValue, const char* pszOldValue)>;
 
-#define TOOLKIT_CONVARS_INTERFACE "IToolkitConVars001"
+#define TOOLKIT_CONVARS_INTERFACE "IToolkitConVars002"
 
 /// Access index meaning "no such ConVar" -- the engine's own invalid index.
 /// 0 is a real ConVar, so test against this, never against zero.
@@ -212,20 +212,30 @@ public:
      * those and fans out to the handlers registered through this, so a plugin
      * can use a capturing lambda and does not have to unregister on unload.
      *
-     * @param owner Plugin ID that owns the listener
-     * @param handler Callback function
+     * A plugin may register as many as it likes.
+     *
+     * Whose it is, the core reads off the handler (see ToolkitCallback); what
+     * a plugin still holds at unload the core drops for it.
+     *
+     * @param handler A function, an object and a method, or a lambda
+     * @return The id UnhookConVarChange(id) takes
      */
-    virtual void HookConVarChange(PluginId owner, ConVarChangeHandler handler) = 0;
+    virtual ToolkitHookId HookConVarChange(ConVarChangeHandler handler) = 0;
 
     /**
-     * @brief Drops every change listener a plugin registered.
+     * @brief Drops the change listener with this handler -- a function or an
+     * object and a method; a lambda goes by its id.
      *
-     * Done for you when the plugin unloads; call it only to stop listening
-     * earlier than that.
-     *
-     * @param owner Plugin ID whose listeners to drop
+     * @return true when one was found
      */
-    virtual void UnhookConVarChange(PluginId owner) = 0;
+    virtual bool UnhookConVarChange(const ConVarChangeHandler& handler) = 0;
+
+    /**
+     * @brief Drops the change listener HookConVarChange() returned the id for.
+     *
+     * @return true when it was still there
+     */
+    virtual bool UnhookConVarChange(ToolkitHookId id) = 0;
 
     /**
 
@@ -292,13 +302,14 @@ public:
  * @param passfunc Callback function.
  */
 #define HOOK_CONVAR_CHANGE(passfunc) \
-    g_pToolkitConVars->HookConVarChange(g_PluginID, passfunc)
+    g_pToolkitConVars->HookConVarChange(passfunc)
 
 /**
- * @brief Macro for dropping the ConVar change hook.
+ * @brief Macro for dropping a ConVar change hook (a function or an object
+ * and a method; a lambda goes by the id HOOK_CONVAR_CHANGE returned).
  */
-#define UNHOOK_CONVAR_CHANGE() \
-    g_pToolkitConVars->UnhookConVarChange(g_PluginID)
+#define UNHOOK_CONVAR_CHANGE(passfunc) \
+    g_pToolkitConVars->UnhookConVarChange(passfunc)
 
 
 /* =========================

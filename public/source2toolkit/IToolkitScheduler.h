@@ -59,7 +59,9 @@ Callback types
 ========================= */
 
 /// Callback executed by timers
-using TimerCallback = std::function<void()>;
+/// A timer's or a next-frame task's callback: a function, an object and a
+/// method, or a lambda (ToolkitCallback) -- whose it is, the core reads off it.
+using TimerCallback = ToolkitCallback<void()>;
 
 /* =========================
 Timer flags
@@ -152,7 +154,7 @@ public:
     * @note Runs once on the next game frame
     * @note Dropped if the owning plugin unloads before the frame arrives
       */
-    virtual void NextFrame(PluginId owner, std::function<void()>&& task) = 0;
+    virtual void NextFrame(TimerCallback task) = 0;
 
     /**
 
@@ -167,7 +169,7 @@ public:
     *
     * @note Killed automatically when the owning plugin unloads
       */
-    virtual Timer* AddTimer(PluginId owner, float interval, TimerCallback callback, int flags = 0) = 0;
+    virtual Timer* AddTimer(float interval, TimerCallback callback, int flags = 0) = 0;
 
     /**
 
@@ -178,8 +180,8 @@ public:
     virtual void KillTimer(Timer* timer) = 0;
 };
 
-#define NEXT_FRAME(task)                g_pToolkitScheduler->NextFrame(g_PluginID, task)
-#define ADD_TIMER(interval, cb, ...)    g_pToolkitScheduler->AddTimer(g_PluginID, interval, cb, ##__VA_ARGS__)
+#define NEXT_FRAME(task)                g_pToolkitScheduler->NextFrame(task)
+#define ADD_TIMER(interval, cb, ...)    g_pToolkitScheduler->AddTimer(interval, cb, ##__VA_ARGS__)
 #define KILL_TIMER(timer)               g_pToolkitScheduler->KillTimer(timer)
 
 #endif //_INCLUDE_ITOOLKIT_SCHEDULER_H

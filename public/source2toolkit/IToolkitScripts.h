@@ -88,13 +88,13 @@ Types
  * @param pszPayload Everything after the channel name, exactly as sent
  *                   ("" when there was nothing)
  */
-using ScriptMessageHandler = std::function<void(const char* pszChannel, const char* pszPayload)>;
+using ScriptMessageHandler = ToolkitCallback<void(const char* pszChannel, const char* pszPayload)>;
 
 /* =========================
 Core Toolkit Scripts
 ========================= */
 
-#define TOOLKIT_SCRIPTS_INTERFACE "IToolkitScripts001"
+#define TOOLKIT_SCRIPTS_INTERFACE "IToolkitScripts002"
 
 /**
  * @brief Runs cs_script scripts for plugins and carries messages both ways.
@@ -193,15 +193,30 @@ public:
     /**
      * @brief Receives what scripts send on a channel through `toolkit_script`.
      *
-     * Several plugins may hook one channel; each gets every message. A plugin
-     * hooking the same channel again replaces its handler.
+     * Several handlers may hook one channel, from one plugin or more; each
+     * gets every message.
+     *
+     * Whose it is, the core reads off the handler (see ToolkitCallback); what
+     * a plugin still holds at unload the core drops for it.
+     *
+     * @return The id UnhookScriptMessage(id) takes
      */
-    virtual void HookScriptMessage(PluginId owner, const char* pszChannel, ScriptMessageHandler handler) = 0;
+    virtual ToolkitHookId HookScriptMessage(const char* pszChannel, ScriptMessageHandler handler) = 0;
 
     /**
-     * @brief Unhooks this plugin's handler from a channel.
+     * @brief Drops the hook with this handler -- a function or an object and
+     * a method; a lambda goes by its id.
+     *
+     * @return true when one was found
      */
-    virtual void UnhookScriptMessage(PluginId owner, const char* pszChannel) = 0;
+    virtual bool UnhookScriptMessage(const char* pszChannel, const ScriptMessageHandler& handler) = 0;
+
+    /**
+     * @brief Drops the hook HookScriptMessage() returned the id for.
+     *
+     * @return true when it was still there
+     */
+    virtual bool UnhookScriptMessage(ToolkitHookId id) = 0;
 };
 
 /**
@@ -212,9 +227,7 @@ public:
 #define SCRIPTS_RUN_FILE(name, file, persistent)          g_pToolkitScripts->RunFile(g_PluginID, name, file, persistent)
 #define SCRIPTS_FIRE_INPUT(name, input)                   g_pToolkitScripts->FireInput(name, input)
 
-#define HOOK_SCRIPT_MESSAGE(channel, handler) \
-    g_pToolkitScripts->HookScriptMessage(g_PluginID, channel, handler)
-#define UNHOOK_SCRIPT_MESSAGE(channel) \
-    g_pToolkitScripts->UnhookScriptMessage(g_PluginID, channel)
+#define HOOK_SCRIPT_MESSAGE(channel, handler)   g_pToolkitScripts->HookScriptMessage(channel, handler)
+#define UNHOOK_SCRIPT_MESSAGE(channel, handler) g_pToolkitScripts->UnhookScriptMessage(channel, handler)
 
 #endif //_INCLUDE_ITOOLKIT_SCRIPTS_H

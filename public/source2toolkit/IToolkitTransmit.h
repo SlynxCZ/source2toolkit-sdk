@@ -191,13 +191,13 @@ Callback types
  * Runs every tick for every viewer, so do the expensive part (who owns what,
  * who is on which team) once at the top and only the bit work per viewer.
  */
-using CheckTransmitHook = std::function<void(IToolkitTransmitInfo* const* infos, int infoCount, const uint16_t* entityIndices, int entityCount)>;
+using CheckTransmitHook = ToolkitCallback<void(IToolkitTransmitInfo* const* infos, int infoCount, const uint16_t* entityIndices, int entityCount)>;
 
 /* =========================
 Core Toolkit Transmit
 ========================= */
 
-#define TOOLKIT_TRANSMIT_INTERFACE "IToolkitTransmit001"
+#define TOOLKIT_TRANSMIT_INTERFACE "IToolkitTransmit002"
 
 class IToolkitTransmit
 {
@@ -301,19 +301,31 @@ public:
     /**
      * @brief Hooks CheckTransmit itself.
      *
-     * One hook per plugin: hooking again replaces the previous handler, and
-     * the toolkit drops it when the plugin unloads. Handlers run after the
-     * toolkit's own pass, in the order they were added.
+     * Handlers run after the toolkit's own pass, in the order they were
+     * added; a plugin may add as many as it likes.
      *
-     * @param owner   Plugin ID that owns the hook
-     * @param handler Callback, or nullptr to unhook
+     * Whose it is, the core reads off the handler (see ToolkitCallback); what
+     * a plugin still holds at unload the core drops for it.
+     *
+     * @param handler A function, an object and a method, or a lambda
+     * @return The id UnhookCheckTransmit(id) takes
      */
-    virtual void HookCheckTransmit(PluginId owner, CheckTransmitHook handler) = 0;
+    virtual ToolkitHookId HookCheckTransmit(CheckTransmitHook handler) = 0;
 
     /**
-     * @brief Drops this plugin's CheckTransmit hook.
+     * @brief Drops the hook with this handler -- a function or an object and
+     * a method; a lambda goes by its id.
+     *
+     * @return true when one was found
      */
-    virtual void UnhookCheckTransmit(PluginId owner) = 0;
+    virtual bool UnhookCheckTransmit(const CheckTransmitHook& handler) = 0;
+
+    /**
+     * @brief Drops the hook HookCheckTransmit() returned the id for.
+     *
+     * @return true when it was still there
+     */
+    virtual bool UnhookCheckTransmit(ToolkitHookId id) = 0;
 };
 
 /* =========================
@@ -328,9 +340,7 @@ Helpers
 #define TRANSMIT_SET_VISIBLE(entity, ...)   g_pToolkitTransmit->SetVisible(entity, __VA_ARGS__)
 #define TRANSMIT_SET_BLOCK_ALL(entity, on)  g_pToolkitTransmit->SetBlockAll(entity, on)
 
-#define HOOK_CHECK_TRANSMIT(handler) \
-    g_pToolkitTransmit->HookCheckTransmit(g_PluginID, handler)
-#define UNHOOK_CHECK_TRANSMIT() \
-    g_pToolkitTransmit->UnhookCheckTransmit(g_PluginID)
+#define HOOK_CHECK_TRANSMIT(handler)   g_pToolkitTransmit->HookCheckTransmit(handler)
+#define UNHOOK_CHECK_TRANSMIT(handler) g_pToolkitTransmit->UnhookCheckTransmit(handler)
 
 #endif //_INCLUDE_ITOOLKIT_TRANSMIT_H

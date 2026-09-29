@@ -124,7 +124,7 @@ void CBasePlayerController::Disconnect(ENetworkDisconnectionReason eReason, cons
     std::string sInternalReason = bHasReason ? pszInternalReason : "";
 
     CLOSE_ACTIVE_MENU(reinterpret_cast<CCSPlayerController*>(this));
-    g_pToolkitScheduler->NextFrame(g_PluginID, [hPlayer = this->GetHandle(), eReason, bHasReason, sInternalReason = std::move(sInternalReason)]
+    g_pToolkitScheduler->NextFrame([hPlayer = this->GetHandle(), eReason, bHasReason, sInternalReason = std::move(sInternalReason)]
     {
         if (!hPlayer || hPlayer->m_iConnected() != PlayerConnectedState::Connected)
             return;
