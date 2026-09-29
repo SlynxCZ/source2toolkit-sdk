@@ -43,7 +43,7 @@ No setup. No hunting dependencies. Just build.
 ### 1. Add SDK to your project
 
 ```bash
-git submodule add https://github.com/SlynxCZ/source2toolkit-sdk.git
+git submodule add https://github.com/Source2Toolkit/source2toolkit-sdk.git
 git submodule update --init --recursive
 ```
 

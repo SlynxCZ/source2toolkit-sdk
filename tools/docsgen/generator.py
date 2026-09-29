@@ -54,7 +54,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 SOURCE_DIR = os.path.abspath(sys.argv[1] if len(sys.argv) > 1 else os.path.join(SCRIPT_DIR, '../../public'))
 DEST_DIR = os.path.abspath(sys.argv[2] if len(sys.argv) > 2 else os.path.join(SCRIPT_DIR, '../../docs'))
 
-REPO_BLOB = 'https://github.com/SlynxCZ/source2toolkit-sdk/blob/main/public/'
+REPO_BLOB = 'https://github.com/Source2Toolkit/source2toolkit-sdk/blob/main/public/'
 
 # --------------------------------------------------------------------------- #
 # Where every header goes
