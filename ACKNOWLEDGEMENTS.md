@@ -57,3 +57,7 @@ generation (schemagen).
 
 We've used SwiftlyS2 as a reference for signatures and virtual
 function indexes, cross-checking our own gamedata against theirs.
+The gamedata validator (tools/gamedata_validator) is modelled on their
+gamedata-validator (https://github.com/swiftly-solution/gamedata-validator),
+and the sound system's reverse engineering started from what SwiftlyS2
+had already worked out.
