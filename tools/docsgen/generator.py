@@ -81,7 +81,7 @@ API_GROUPS = [
     ('Gameplay', ['IToolkitCommands', 'IToolkitConVars', 'IToolkitEvents', 'IToolkitEntities',
                   'IToolkitMenus', 'IToolkitCustomHud', 'IToolkitNetworkMessages', 'IToolkitSounds',
                   'IToolkitTransmit', 'IToolkitTrace', 'IToolkitScheduler', 'IToolkitScripts']),
-    ('Engine', ['IToolkitAddresses', 'IToolkitHooks', 'IToolkitGameConfig', 'IToolkitGameSystems',
+    ('Engine', ['IToolkitGameHooks', 'IToolkitAddresses', 'IToolkitHooks', 'IToolkitKHook', 'IToolkitGameConfig', 'IToolkitGameSystems',
                 'IToolkitMemory', 'IToolkitModule', 'Schema']),
     ('Services', ['IToolkitHTTP', 'IToolkitJSON', 'IToolkitMySQL', 'IToolkitPaths']),
 ]
