@@ -244,6 +244,25 @@ public:
     static IToolkitModule* New(IToolkitMemory mem);
 };
 
+/**
+ * @brief The Windows or the Linux one of two things -- a pattern, an offset,
+ * a library name -- picked at compile time.
+ *
+ * @code
+ * pServer->FindPattern(WIN_LINUX("48 89 7C 24 ? 55", "55 48 89 E5 41 57"));
+ * @endcode
+ *
+ * Prefer a gamedata entry for anything the game moves: that is updated
+ * without a rebuild. This is for a pattern a plugin keeps to itself.
+ */
+#ifndef WIN_LINUX
+#ifdef _WIN32
+#define WIN_LINUX(win, lin) win
+#else
+#define WIN_LINUX(win, lin) lin
+#endif
+#endif
+
 #define LOAD_MODULE(name)       g_ToolkitAPI->LoadModule(name)
 #define LOAD_MODULE_MEM(ptr)    g_ToolkitAPI->LoadModuleFromMemory(ptr)
 #define FREE_MODULE(mod)        g_ToolkitAPI->FreeModule(mod)
