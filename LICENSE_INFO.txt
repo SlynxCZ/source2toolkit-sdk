@@ -4,8 +4,8 @@ VERSION: 2026-9-27
 
 Source2Toolkit SDK is licensed under the GNU General Public License, version 3.
 
-As a special exception, Michal "Slynx" Prikryl and AlliedModders LLC give you
-permission to link the code of this program (as well as its derivative works) to
+As a special exception, Michal "Slynx" Prikryl gives you permission to link
+the code of this program (as well as its derivative works) to
 "Counter-Strike 2," the "Source 2 Engine," "Steam," and any Game MODs or server
 software that run on software by the Valve Corporation. You must obey the GNU
 General Public License in all respects for all other code used. Additionally,
@@ -34,8 +34,8 @@ A copy of the GNU General Public License 3.0 is available in LICENSE.
 
 Source2Toolkit SDK is Copyright (C) 2025-2026 Michal "Slynx" Prikryl.
 All rights reserved.
-Portions are Copyright (C) AlliedModders LLC. All rights reserved.
-KHook is Copyright (C) Benoist "Kenzzer" André.
+Metamod:Source and HL2SDK are Copyright (C) AlliedModders LLC. KHook is
+Copyright (C) Benoist "Kenzzer" André. Both are credited in ACKNOWLEDGEMENTS.md.
 Source and Source 2 are Copyright (C) Valve Corporation.
 All trademarks are property of their respective owners in the US and other
 countries.
