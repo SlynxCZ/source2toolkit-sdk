@@ -144,7 +144,7 @@ Export system
 /// to it at load; this is how that same engine reaches a toolkit plugin, so
 /// every hook on the server -- metamod's, the toolkit's, every plugin's --
 /// runs on one instance. TOOLKIT_SAVEVARS() does the fetch.
-#define TOOLKIT_GAMEHOOKS_INTERFACE "IToolkitGameHooks002"
+#define TOOLKIT_GAMEHOOKS_INTERFACE "IToolkitGameHooks003"
 #define TOOLKIT_KHOOK_INTERFACE "S2ToolkitKHook001"
 
 /// The commit of the KHook the core was compiled against, as a const char*

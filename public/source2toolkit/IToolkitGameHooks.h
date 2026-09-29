@@ -138,6 +138,31 @@ enum AcquireMethod : std::uint32_t
 Contexts
 ========================= */
 
+/**
+ * Every context ends with CallOriginal(): the game's function, run now with
+ * the arguments the game passed, past every hook on it -- SourceHook's
+ * SH_CALL. What it returns is what the game would have answered.
+ *
+ * In a pre handler the function really runs (with all its side effects), so
+ * a handler that calls it should answer Supersede with ctx.result set to the
+ * value, or the game runs it a second time after the handlers:
+ *
+ *     const AcquireResult game = ctx.CallOriginal();
+ *     ctx.result = game == AcquireResult::Allowed && Blocked(ctx) ? AcquireResult::NotAllowedByMode : game;
+ *     return Action::Supersede;
+ *
+ * A changed pointed-to object (the damage info, the move data) counts; a
+ * scalar field changed in the context does not, the call takes what the
+ * game passed. In a post handler ctx.result already holds the game's answer.
+ *
+ * The two members after it belong to the core; the movement contexts shared
+ * by void and bool functions answer false for the void ones.
+ */
+#define TOOLKIT_GAMEHOOK_CALL_ORIGINAL(RET)                              \
+    RET CallOriginal() const { return callOriginal_(callOriginalData_); } \
+    RET (*callOriginal_)(const void*) = nullptr;                          \
+    const void* callOriginalData_ = nullptr;
+
 /// CBaseEntity::TakeDamageOld(info, result) -> int64
 struct TakeDamageContext
 {
@@ -145,6 +170,8 @@ struct TakeDamageContext
     CTakeDamageInfo* info;
     CTakeDamageResult* damageResult;
     std::int64_t result;
+
+    TOOLKIT_GAMEHOOK_CALL_ORIGINAL(std::int64_t)
 };
 
 /// CCSPlayer_ItemServices::CanAcquire(item, method, unk) -> AcquireResult
@@ -155,6 +182,8 @@ struct CanAcquireContext
     AcquireMethod method;
     void* unk;
     AcquireResult result;
+
+    TOOLKIT_GAMEHOOK_CALL_ORIGINAL(AcquireResult)
 };
 
 /// CCSPlayerPawnBase::CanMove() -> bool; false while frozen, defusing, ...
@@ -162,6 +191,8 @@ struct CanMoveContext
 {
     CCSPlayerPawnBase* pawn;
     bool result;
+
+    TOOLKIT_GAMEHOOK_CALL_ORIGINAL(bool)
 };
 
 /// CCSPlayer_WeaponServices::CanUse(weapon) -> bool
@@ -170,12 +201,16 @@ struct CanUseContext
     CCSPlayer_WeaponServices* services;
     CBasePlayerWeapon* weapon;
     bool result;
+
+    TOOLKIT_GAMEHOOK_CALL_ORIGINAL(bool)
 };
 
 /// CCSPlayerPawn::PostThink()
 struct PostThinkContext
 {
     CCSPlayerPawnBase* pawn;
+
+    TOOLKIT_GAMEHOOK_CALL_ORIGINAL(void)
 };
 
 /// CCSPlayerController::ProcessUserCmd(cmds, count, paused, margin) -> void*.
@@ -188,12 +223,16 @@ struct ProcessUsercmdsContext
     bool paused;
     float margin;
     void* result;
+
+    TOOLKIT_GAMEHOOK_CALL_ORIGINAL(void*)
 };
 
 /// CBasePlayerController::OnSimulateUserCommands()
 struct SimulateUserCommandsContext
 {
     CBasePlayerController* controller;
+
+    TOOLKIT_GAMEHOOK_CALL_ORIGINAL(void)
 };
 
 /// CPlayer_MovementServices::RunCommand(cmd), on CCSPlayer_MovementServices'
@@ -202,6 +241,8 @@ struct RunCommandContext
 {
     CCSPlayer_MovementServices* services;
     void* cmd;
+
+    TOOLKIT_GAMEHOOK_CALL_ORIGINAL(void)
 };
 
 /// CEntityIdentity::AcceptInput(name, activator, caller, value, ...) -> bool
@@ -213,6 +254,8 @@ struct AcceptInputContext
     CEntityInstance* caller;
     variant_t* value;
     bool result;
+
+    TOOLKIT_GAMEHOOK_CALL_ORIGINAL(bool)
 };
 
 /// CBaseEntity::Touch(other), on CBaseEntity's own vtable -- an entity class
@@ -221,6 +264,8 @@ struct TouchContext
 {
     CBaseEntity* entity;
     CBaseEntity* other;
+
+    TOOLKIT_GAMEHOOK_CALL_ORIGINAL(void)
 };
 
 /// CCSPlayer_WeaponServices::DropWeapon(weapon, target, velocity)
@@ -230,6 +275,8 @@ struct DropWeaponContext
     CBasePlayerWeapon* weapon;
     Vector* target;
     Vector* velocity;
+
+    TOOLKIT_GAMEHOOK_CALL_ORIGINAL(void)
 };
 
 /// The CCSPlayer_MovementServices functions that take the move data alone:
@@ -241,6 +288,8 @@ struct MovementContext
     CCSPlayer_MovementServices* services;
     CMoveData* moveData;
     bool result;
+
+    TOOLKIT_GAMEHOOK_CALL_ORIGINAL(bool)
 };
 
 /// CCSPlayer_MovementServices::AirAccelerate(move, wishDirection, wishSpeed, acceleration)
@@ -251,6 +300,8 @@ struct AirAccelerateContext
     Vector* wishDirection;
     float wishSpeed;
     float acceleration;
+
+    TOOLKIT_GAMEHOOK_CALL_ORIGINAL(void)
 };
 
 /// CCSPlayer_MovementServices::GroundAccelerate(move, wishDirection, frameTime, wishSpeed, acceleration).
@@ -264,6 +315,8 @@ struct GroundAccelerateContext
     float frameTime;
     float wishSpeed;
     float acceleration;
+
+    TOOLKIT_GAMEHOOK_CALL_ORIGINAL(void)
 };
 
 /// CCSPlayer_MovementServices::CategorizePosition(move, stayOnGround)
@@ -272,6 +325,8 @@ struct CategorizePositionContext
     CCSPlayer_MovementServices* services;
     CMoveData* moveData;
     bool stayOnGround;
+
+    TOOLKIT_GAMEHOOK_CALL_ORIGINAL(void)
 };
 
 /// CCSPlayer_MovementServices::CheckVelocity(move, unk)
@@ -280,6 +335,8 @@ struct CheckVelocityContext
     CCSPlayer_MovementServices* services;
     CMoveData* moveData;
     void* unk;
+
+    TOOLKIT_GAMEHOOK_CALL_ORIGINAL(void)
 };
 
 /// CCSPlayer_MovementServices::FullWalkMove(move, onGround)
@@ -288,6 +345,8 @@ struct FullWalkMoveContext
     CCSPlayer_MovementServices* services;
     CMoveData* moveData;
     bool onGround;
+
+    TOOLKIT_GAMEHOOK_CALL_ORIGINAL(void)
 };
 
 /// CCSPlayer_MovementServices::SetupMove(cmd, move); the command is a CUserCmd.
@@ -296,6 +355,8 @@ struct SetupMoveContext
     CCSPlayer_MovementServices* services;
     CUserCmd* cmd;
     CMoveData* moveData;
+
+    TOOLKIT_GAMEHOOK_CALL_ORIGINAL(void)
 };
 
 /// CCSPlayer_MovementServices::TryPlayerMove(move, firstDest, firstTrace, isSurfing)
@@ -306,6 +367,8 @@ struct TryPlayerMoveContext
     Vector* firstDest;
     CGameTrace* firstTrace;
     bool* isSurfing;
+
+    TOOLKIT_GAMEHOOK_CALL_ORIGINAL(void)
 };
 
 /// CCSPlayerLegacyJump::OnJump / CheckJumpButton(move)
@@ -313,6 +376,8 @@ struct LegacyJumpContext
 {
     CCSPlayerLegacyJump* jump;
     CMoveData* moveData;
+
+    TOOLKIT_GAMEHOOK_CALL_ORIGINAL(void)
 };
 
 /// CCSPlayerModernJump::OnJump / CheckJumpButton(move)
@@ -320,6 +385,8 @@ struct ModernJumpContext
 {
     CCSPlayerModernJump* jump;
     CMoveData* moveData;
+
+    TOOLKIT_GAMEHOOK_CALL_ORIGINAL(void)
 };
 
 /// A handler: the context, and whether this is the post pass.
