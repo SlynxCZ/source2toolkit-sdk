@@ -14,8 +14,8 @@ Every interface is a pure-virtual class the core implements. `TOOLKIT_SAVEVARS()
 your `Load()` fills one global per interface, so after that you call them directly:
 
 ```cpp
-g_pToolkitCommands->RegisterConCommand(g_PluginID, "sm_hello", handler);
-g_pToolkitScheduler->NextFrame(g_PluginID, [] { /* ... */ });
+g_pToolkitCommands->RegisterConCommand("sm_hello", handler);   // whose handler it is, the core reads off it
+g_pToolkitScheduler->NextFrame([] { /* ... */ });
 auto pfnSetModel = ADDR_SET_MODEL();          // resolved engine function
 ```
 
