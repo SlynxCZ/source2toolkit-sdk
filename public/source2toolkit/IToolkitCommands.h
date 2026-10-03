@@ -76,10 +76,19 @@ Forward declarations
 * this, so the engine type's layout is not part of the plugin API. The two
 * methods handlers use are the same as on the engine type.
   */
+/// Where a command was typed: what ReplyToCommand() answers into.
+enum class ToolkitCommandSource : uint8_t
+{
+    Console,        ///< A console -- the server's or the player's own
+    Chat,           ///< Chat, with a public trigger ("!kick"); the message shows
+    SilentChat,     ///< Chat, with a silent trigger ("/kick"); the message is hidden
+};
+
 class ToolkitCommandContext
 {
 public:
-    ToolkitCommandContext(CPlayerSlot slot, int target) : m_slot(slot), m_target(target) {}
+    ToolkitCommandContext(CPlayerSlot slot, int target, ToolkitCommandSource source = ToolkitCommandSource::Console)
+        : m_slot(slot), m_target(target), m_source(source) {}
 
     /// The player who issued the command; invalid for the server console.
     CPlayerSlot GetPlayerSlot() const { return m_slot; }
@@ -87,9 +96,16 @@ public:
     /// The engine's CommandTarget_t (CT_NO_TARGET, CT_FIRST_SPLITSCREEN_CLIENT, ...).
     int GetCommandTarget() const { return m_target; }
 
+    /// Where it was typed.
+    ToolkitCommandSource GetSource() const { return m_source; }
+
+    /// Typed in chat, with either trigger.
+    bool IsFromChat() const { return m_source != ToolkitCommandSource::Console; }
+
 private:
     CPlayerSlot m_slot;
     int m_target;
+    ToolkitCommandSource m_source;
 };
 
 /**
@@ -162,7 +178,7 @@ Core Toolkit Commands
 *
 * @note Every registration belongs to the plugin whose handler it is.
   */
-#define TOOLKIT_COMMANDS_INTERFACE "IToolkitCommands002"
+#define TOOLKIT_COMMANDS_INTERFACE "IToolkitCommands003"
 
 class IToolkitCommands
 {
@@ -183,9 +199,12 @@ public:
      *
      * @param pchName Command name without a trigger (e.g. "kick")
      * @param handler A function, an object and a method, or a lambda
+     * @param pchPermission What a player needs to run it (see
+     *        IToolkitPermissions); nullptr or "" for everybody. A player
+     *        without it gets the access-denied answer instead.
      * @return The id UnregisterChatListener(id) takes
      */
-    virtual ToolkitHookId RegisterChatListener(const char* pchName, ChatHandler handler) = 0;
+    virtual ToolkitHookId RegisterChatListener(const char* pchName, ChatHandler handler, const char* pchPermission = nullptr) = 0;
 
     /**
      * @brief Drops the chat command with this handler -- a function or an
@@ -211,9 +230,13 @@ public:
      *
      * @param pchName Command name (e.g. "sv_test")
      * @param handler A function, an object and a method, or a lambda
+     * @param pchPermission What a player needs to run it (see
+     *        IToolkitPermissions); nullptr or "" for everybody. The server
+     *        console always may. The owner can re-assign it under
+     *        "Overrides" in permissions.json.
      * @return The id UnregisterConCommand(id) takes
      */
-    virtual ToolkitHookId RegisterConCommand(const char* pchName, ChatHandler handler) = 0;
+    virtual ToolkitHookId RegisterConCommand(const char* pchName, ChatHandler handler, const char* pchPermission = nullptr) = 0;
 
     /**
      * @brief Drops the console command handler -- a function or an object and
@@ -266,10 +289,27 @@ public:
      * @return true when it was still there
      */
     virtual bool UnregisterConListener(ToolkitHookId id) = 0;
+
+    /**
+     * @brief Answers a command where it was typed: to the player's chat when
+     * it came from chat, to the player's console when it came from their
+     * console, to the server console when it came from there. One line; the
+     * newline is added.
+     */
+    virtual void ReplyToCommand(const ToolkitCommandContext& ctx, const char* pszMessage) = 0;
 };
 
-#define REGISTER_CHAT_LISTENER(pchName, handler) g_pToolkitCommands->RegisterChatListener(pchName, handler)
-#define REGISTER_CON_COMMAND(pchName, handler)   g_pToolkitCommands->RegisterConCommand(pchName, handler)
+/// RegisterConCommand(name, handler) or RegisterConCommand(name, handler, permission).
+#define REGISTER_CHAT_LISTENER(pchName, ...) g_pToolkitCommands->RegisterChatListener(pchName, __VA_ARGS__)
+#define REGISTER_CON_COMMAND(pchName, ...)   g_pToolkitCommands->RegisterConCommand(pchName, __VA_ARGS__)
 #define REGISTER_CON_LISTENER(pchName, handler, post) g_pToolkitCommands->RegisterConListener(pchName, handler, post)
+
+/// ReplyToCommand() with printf formatting.
+#define REPLY_TO_COMMAND(ctx, fmt, ...) \
+    do { \
+        char _toolkitReply[512]; \
+        snprintf(_toolkitReply, sizeof(_toolkitReply), fmt, ##__VA_ARGS__); \
+        g_pToolkitCommands->ReplyToCommand(ctx, _toolkitReply); \
+    } while (0)
 
 #endif //_INCLUDE_ITOOLKIT_COMMANDS_H

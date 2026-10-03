@@ -89,6 +89,7 @@ class IToolkitGameConfig;
 class IToolkitMenus;
 class IToolkitMySQL;
 class IToolkitNetworkMessages;
+class IToolkitPermissions;
 class IToolkitScheduler;
 class IToolkitScripts;
 class IToolkitSounds;
@@ -115,6 +116,7 @@ class IToolkitTransmit;
 #include "IToolkitMySQL.h"
 #include "IToolkitNetworkMessages.h"
 #include "IToolkitPaths.h"
+#include "IToolkitPermissions.h"
 #include "IToolkitScheduler.h"
 #include "IToolkitScripts.h"
 #include "IToolkitSounds.h"
@@ -205,7 +207,9 @@ inline bool ToolkitKHookVersionMatches(const char* coreCommit, char* error, size
 // IToolkitAPI::GameHooks(). A plugin built against an older version loads
 // (the core calls nothing it does not have); one built against a newer
 // version than the core's is refused.
-#define TOOLKIT_PLAPI_VERSION 2
+// 3 (v1.0.37): OnClientAuthorized, OnClientAuthorizeFailed and
+// OnPermissionsChanged on IToolkitListener.
+#define TOOLKIT_PLAPI_VERSION 3
 
 /// Plugin API interface name
 #define TOOLKIT_PLAPI_NAME "IToolkitPlugin"
@@ -277,11 +281,6 @@ public:
 
     /// Plugin version
     virtual const char* GetVersion() = 0;
-
-    /* =========================
-    Plugin API 2 -- at the end, so a plugin built against API 1 keeps its
-    slots. Both have defaults the SDK fills in; "toolkit list" shows them.
-    ========================= */
 
     /// The KHook commit this plugin was built against (the SDK's
     /// vendor/khook), "" when built without git.
@@ -412,12 +411,6 @@ public:
         return OnToolkitQuery(iface, ret);
     }
 
-    /* =========================
-    Engine callbacks -- plugin API 2. Fanned out from the core's own hooks,
-    so a plugin needs no KHook of its own for any of these. "Post" ones run
-    after the engine did its part, the one marked pre before it.
-    ========================= */
-
     /// Post ISource2Server::GameFrame: once a frame, after the toolkit's own
     /// per-frame work (timers, menus).
     virtual void OnGameFrame(bool simulating, bool firstTick, bool lastTick)
@@ -435,6 +428,23 @@ public:
     {
     }
 
+    /// Post IServerGameClients::ClientDisconnect.
+    virtual void OnClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char* name, uint64 xuid, const char* networkId)
+    {
+    }
+
+    /// Steam validated the player in this slot: from now on they are checked
+    /// under `steamId` whatever SteamAuthMode says. Not called for bots.
+    virtual void OnClientAuthorized(CPlayerSlot slot, uint64 steamId)
+    {
+    }
+
+    /// Steam refused the ticket of the player in this slot; `steamId` is the
+    /// one they claimed.
+    virtual void OnClientAuthorizeFailed(CPlayerSlot slot, uint64 steamId)
+    {
+    }
+
     /// Post IServerGameClients::ClientVoice.
     virtual void OnClientVoice(CPlayerSlot slot)
     {
@@ -445,8 +455,10 @@ public:
     {
     }
 
-    /// Post IServerGameClients::ClientDisconnect.
-    virtual void OnClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char* name, uint64 xuid, const char* networkId)
+    /// What this SteamID64 holds may have changed -- a grant, a group, a
+    /// reload. 0 when a change can touch anybody (a group was edited,
+    /// permissions.json was re-read).
+    virtual void OnPermissionsChanged(uint64 steamId)
     {
     }
 
@@ -512,6 +524,7 @@ Globals
     IToolkitMySQL*           g_pToolkitMySQL           = nullptr; \
     IToolkitNetworkMessages* g_pToolkitNetworkMessages = nullptr; \
     IToolkitPaths*           g_pToolkitPaths           = nullptr; \
+    IToolkitPermissions*     g_pToolkitPermissions     = nullptr; \
     IToolkitScheduler*       g_pToolkitScheduler       = nullptr; \
     IToolkitScripts*         g_pToolkitScripts         = nullptr; \
     IToolkitSounds*          g_pToolkitSounds          = nullptr; \
@@ -555,6 +568,7 @@ Globals
     extern IToolkitMySQL*           g_pToolkitMySQL; \
     extern IToolkitNetworkMessages* g_pToolkitNetworkMessages; \
     extern IToolkitPaths*           g_pToolkitPaths; \
+    extern IToolkitPermissions*     g_pToolkitPermissions; \
     extern IToolkitScheduler*       g_pToolkitScheduler; \
     extern IToolkitScripts*         g_pToolkitScripts; \
     extern IToolkitSounds*          g_pToolkitSounds; \
@@ -584,6 +598,7 @@ Globals
     g_pToolkitMySQL           = (IToolkitMySQL*)          (api)->ToolkitFactory(TOOLKIT_MYSQL_INTERFACE,           nullptr, nullptr); \
     g_pToolkitNetworkMessages = (IToolkitNetworkMessages*)(api)->ToolkitFactory(TOOLKIT_NETWORKMESSAGES_INTERFACE, nullptr, nullptr); \
     g_pToolkitPaths           = (IToolkitPaths*)          (api)->ToolkitFactory(TOOLKIT_PATHS_INTERFACE,           nullptr, nullptr); \
+    g_pToolkitPermissions     = (IToolkitPermissions*)    (api)->ToolkitFactory(TOOLKIT_PERMISSIONS_INTERFACE,     nullptr, nullptr); \
     g_pToolkitJSON            = (IToolkitJSON*)           (api)->ToolkitFactory(TOOLKIT_JSON_INTERFACE,            nullptr, nullptr); \
     g_pToolkitScheduler       = (IToolkitScheduler*)      (api)->ToolkitFactory(TOOLKIT_SCHEDULER_INTERFACE,       nullptr, nullptr); \
     g_pToolkitScripts         = (IToolkitScripts*)        (api)->ToolkitFactory(TOOLKIT_SCRIPTS_INTERFACE,         nullptr, nullptr); \
