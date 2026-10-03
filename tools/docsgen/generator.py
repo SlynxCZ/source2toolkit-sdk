@@ -77,7 +77,7 @@ SCHEMA_TITLES = {
 # The API sidebar, grouped. Anything not listed lands at the end.
 API_GROUPS = [
     ('Plugin', ['IToolkitPlugin', 'IToolkitApi', 'IToolkitTypes']),
-    ('Gameplay', ['IToolkitCommands', 'IToolkitConVars', 'IToolkitEvents', 'IToolkitEntities',
+    ('Gameplay', ['IToolkitCommands', 'IToolkitPermissions', 'IToolkitConVars', 'IToolkitEvents', 'IToolkitEntities',
                   'IToolkitMenus', 'IToolkitCustomHud', 'IToolkitNetworkMessages', 'IToolkitSounds',
                   'IToolkitTransmit', 'IToolkitTrace', 'IToolkitScheduler', 'IToolkitScripts']),
     ('Engine', ['IToolkitGameHooks', 'IToolkitAddresses', 'IToolkitHooks', 'IToolkitKHook', 'IToolkitGameConfig', 'IToolkitGameSystems',
